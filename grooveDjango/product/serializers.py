@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Category, Product
+from .models import Category, Product, Favourite, FavouriteItem
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -31,5 +31,29 @@ class CategorySerializer(serializers.ModelSerializer):
             "parent",
             "tags",
             "get_absolute_url",
-            "products",
+            "products"
+        )
+
+
+class FavouriteItemSerializer(serializers.ModelSerializer):
+    product = ProductSerializer()
+
+    class Meta:
+        model = FavouriteItem
+        fields = (
+            "favourite",
+            "product",
+            "is_favourite"
+        )
+
+
+class FavouriteSerializer(serializers.ModelSerializer):
+    favourite_items = FavouriteItemSerializer(many=True)
+
+    class Meta:
+        model = Favourite
+        fields = (
+            "id",
+            "user",
+            "favourite_items"
         )

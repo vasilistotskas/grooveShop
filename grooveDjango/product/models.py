@@ -2,6 +2,7 @@ from io import BytesIO
 from PIL import Image
 from django.core.files import File
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -126,3 +127,27 @@ class Product(models.Model):
         thumbnail = File(thumb_io, name=image.name)
 
         return thumbnail
+
+
+# favourite Model
+class Favourite(models.Model):
+    user = models.ForeignKey(User, null=True, blank=True, default=None, on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return f'//{self.id}/'
+
+    def get_items(self):
+        return self.favourite_items.prefetch_related('product').all()
+
+
+# Add To favourite Model
+class FavouriteItem(models.Model):
+    favourite = models.ForeignKey(Favourite, related_name='favourite_items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='favourite_items', on_delete=models.CASCADE)
+    is_favourite = models.BooleanField(default=False)
+
+    def __str__(self):
+        return '%s' % self.id
+
+    def get_favourite(self):
+        return ",".join([str(p) for p in self.favourite.all()])

@@ -1,7 +1,7 @@
 <template>
     <div class="page-product">
         <div class="columns is-multiline">
-            <div class="column is-9">
+            <div class="column is-6">
                 <figure class="image mb-6">
                     <img v-bind:src="product.get_image">
                 </figure>
@@ -11,7 +11,7 @@
                 <p>{{ product.description }}</p>
             </div>
 
-            <div class="column is-3">
+            <div class="column is-6">
                 <h2 class="subtitle">Information</h2>
 
                 <p><strong>Price: </strong>${{ product.price }}</p>
