@@ -1,15 +1,26 @@
 import { createStore } from 'vuex'
+import axios from "axios";
+import { cloneDeep, pickBy } from 'lodash'
 
 export default createStore({
   state: {
     cart: {
         items: [],
     },
+    categories: {
+        items: [],
+    },
     isAuthenticated: false,
     token: '',
     isLoading: false
   },
+    getters: {
+        getStateCategories: state => state.categories
+    },
   mutations: {
+    setCategories(state, categories) {
+        return state.categories = categories
+     },
     initializeStore(state) {
       if (localStorage.getItem('cart')) {
         state.cart = JSON.parse(localStorage.getItem('cart'))
@@ -53,6 +64,11 @@ export default createStore({
     },
   },
   actions: {
+        async getCategories(state, commit) {
+            const categoriesFromRemote = await axios
+                .get('/api/v1/products/categories/')
+                .then(response => this.commit('setCategories', response.data))
+        }
   },
   modules: {
   }
