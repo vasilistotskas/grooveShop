@@ -42,6 +42,14 @@ class CategoryDetail(APIView):
         return Response(serializer.data)
 
 
+
+class AllCategoriesList(APIView):
+    def get(self, request, format=None):
+        categories = Category.objects.all()
+        serializer = CategorySerializer(categories, many=True)
+        return Response(serializer.data)
+
+
 @api_view(['POST'])
 def search(request):
     query = request.data.get('query', '')
