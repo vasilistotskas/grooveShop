@@ -1,60 +1,10 @@
 <template>
   <div id="wrapper">
-    <nav class="navbar is-dark">
-      <div class="navbar-brand">
-        <router-link to="/" class="navbar-item"><strong>grooveShop</strong></router-link>
 
-        <a class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu" @click="showMobileMenu = !showMobileMenu">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
-
-      <div class="navbar-menu" id="navbar-menu" v-bind:class="{'is-active': showMobileMenu }">
-        <div class="navbar-start">
-          <div class="navbar-item">
-            <form method="get" action="/search">
-              <div class="field has-addons">
-                <div class="control">
-                  <input type="text" class="input" placeholder="What are you looking for?" name="query">
-                </div>
-
-                <div class="control">
-                  <button class="button is-success">
-                      <span class="icon">
-                      <i class="fas fa-search"></i>
-                      </span>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <div class="navbar-end">
-          <router-link to="/summer" class="navbar-item">Summer</router-link>
-          <router-link to="/winter" class="navbar-item">Winter</router-link>
-
-          <div class="navbar-item">
-            <div class="buttons">
-              <template v-if="$store.state.isAuthenticated">
-                <router-link to="/my-account" class="button is-light">My account</router-link>
-              </template>
-
-              <template v-else>
-                <router-link to="/log-in" class="button is-light">Log in</router-link>
-              </template>
-
-              <router-link to="/cart" class="button is-success">
-                <span class="icon"><i class="fas fa-shopping-cart"></i></span>
-                <span>Cart ({{ cartTotalLength }})</span>
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <Navbar
+        v-bind:showMobileMenu="showMobileMenu"
+        v-bind:cartTotalLength="cartTotalLength"
+    />
 
     <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading': $store.state.isLoading }">
       <div class="lds-dual-ring"></div>
@@ -72,8 +22,13 @@
 
 <script>
 import axios from 'axios'
+import { mapGetters } from 'vuex'
+import Navbar from '@/components/Navbar'
 
 export default {
+  components: {
+    Navbar
+  },
   data() {
     return {
       showMobileMenu: false,
@@ -84,6 +39,7 @@ export default {
   },
   beforeCreate() {
     this.$store.commit('initializeStore')
+    this.$store.dispatch('getCategories')
 
     const token = this.$store.state.token
 
@@ -97,6 +53,11 @@ export default {
     this.cart = this.$store.state.cart
   },
   computed: {
+    categories: {
+        get() {
+          return this.$store.getters['getStateCategories']
+        }
+      },
       cartTotalLength() {
           let totalLength = 0
 
