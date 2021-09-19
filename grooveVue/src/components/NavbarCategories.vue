@@ -15,14 +15,13 @@
 
 export default {
   name: 'NavbarCategories',
-  computed: {
-  },
+  computed: {},
   data() {
     return {
       categories: this.categories
     }
   },
-  beforeCreate(){
+  beforeCreate() {
     if (localStorage.getItem('categories')) {
       this.categories = JSON.parse(localStorage.getItem('categories'))
     } else {

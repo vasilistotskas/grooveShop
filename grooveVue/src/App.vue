@@ -22,7 +22,7 @@
 
 <script>
 import axios from 'axios'
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 import Navbar from '@/components/Navbar'
 
 export default {
@@ -44,9 +44,9 @@ export default {
     const token = this.$store.state.token
 
     if (token) {
-        axios.defaults.headers.common['Authorization'] = "Token " + token
+      axios.defaults.headers.common['Authorization'] = "Token " + token
     } else {
-        axios.defaults.headers.common['Authorization'] = ""
+      axios.defaults.headers.common['Authorization'] = ""
     }
   },
   mounted() {
@@ -54,19 +54,19 @@ export default {
   },
   computed: {
     categories: {
-        get() {
-          return this.$store.getters['getStateCategories']
-        }
-      },
-      cartTotalLength() {
-          let totalLength = 0
-
-          for (let i = 0; i < this.cart.items.length; i++) {
-              totalLength += this.cart.items[i].quantity
-          }
-
-          return totalLength
+      get() {
+        return this.$store.getters['getStateCategories']
       }
+    },
+    cartTotalLength() {
+      let totalLength = 0
+
+      for (let i = 0; i < this.cart.items.length; i++) {
+        totalLength += this.cart.items[i].quantity
+      }
+
+      return totalLength
+    }
   }
 }
 </script>
@@ -79,6 +79,7 @@ export default {
   width: 80px;
   height: 80px;
 }
+
 .lds-dual-ring:after {
   content: " ";
   display: block;
@@ -90,6 +91,7 @@ export default {
   border-color: #ccc transparent #ccc transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
+
 @keyframes lds-dual-ring {
   0% {
     transform: rotate(0deg);
