@@ -3,6 +3,8 @@ from PIL import Image
 from django.core.files import File
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Category(models.Model):
@@ -131,13 +133,19 @@ class Product(models.Model):
 
 # favourite Model
 class Favourite(models.Model):
-    user = models.ForeignKey(User, null=True, blank=True, default=None, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def get_absolute_url(self):
         return f'//{self.id}/'
 
     def get_items(self):
         return self.favourite_items.prefetch_related('product').all()
+
+    # use Django signals to create user favourite on user creation
+    @receiver(post_save, sender=User)
+    def create_user_favourite(sender, instance, created, **kwargs):
+        if created:
+            Favourite.objects.create(user=instance)
 
 
 # Add To favourite Model
