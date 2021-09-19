@@ -24,6 +24,10 @@
                     <div class="control">
                         <a class="button is-dark" @click="addToCart()">Add to cart</a>
                     </div>
+
+                    <FavouriteButton :productId="product.id">
+
+                    </FavouriteButton>
                 </div>
             </div>
         </div>
@@ -33,9 +37,13 @@
 <script>
 import axios from 'axios'
 import { toast } from 'bulma-toast'
+import FavouriteButton from '@/components/FavouriteButton'
 
 export default {
     name: 'Product',
+    components: {
+      FavouriteButton
+    },
     data() {
         return {
             product: {},
