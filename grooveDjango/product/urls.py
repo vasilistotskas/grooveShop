@@ -1,4 +1,5 @@
 from django.urls import path, include
+from rest_framework.urlpatterns import format_suffix_patterns
 
 from product import views
 
@@ -12,4 +13,7 @@ urlpatterns = [
 
 
     path('favouritelist/', views.FavouriteList.as_view()),
+    path('favouriteremove/<int:favourites_id>/<int:product_id>', views.FavouriteItemRemove.as_view()),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)

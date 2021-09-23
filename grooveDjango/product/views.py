@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework import status, authentication, permissions, generics, viewsets
+from django.http import JsonResponse
 
 from .models import Product, Category, Favourite, FavouriteItem
 from .serializers import ProductSerializer, CategorySerializer, FavouriteSerializer, FavouriteItemSerializer
@@ -60,13 +61,14 @@ class Search(APIView):
             serializer = ProductSerializer(products, many=True, context={'user': self.request.user})
             return Response(serializer.data)
         else:
-            return Response({"products": []})
+            return Response({"products": []}, status=status.HTTP_404_NOT_FOUND)
 
 
 
 class FavouriteList(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
+
     serializer_class = FavouriteItemSerializer
     queryset = FavouriteItem.objects.all()
 
@@ -75,12 +77,36 @@ class FavouriteList(APIView):
         favourite_id = Favourite.objects.get(user=user)
         favourites = FavouriteItem.objects.filter(favourite_id=favourite_id)
         serializer = FavouriteItemSerializer(favourites, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, formate=None):
         serializer = FavouriteItemSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
 
+
+
+class FavouriteItemRemove(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    serializer_class = FavouriteItemSerializer
+    queryset = FavouriteItem.objects.all()
+
+    def get_object(self, favourites_id, product_id):
+        try:
+            return FavouriteItem.objects.filter(favourite__id=favourites_id).get(product__id=product_id)
+        except FavouriteItem.DoesNotExist:
+            raise Http404
+
+    def get(self, request, favourites_id, product_id, format=None):
+        favourite = self.get_object(favourites_id, product_id)
+        serializer = FavouriteItemSerializer(favourite)
+        return Response(serializer.data)
+
+    def delete(self, request, favourites_id, product_id, formate=None):
+        favourite = self.get_object(favourites_id, product_id)
+        favourite.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

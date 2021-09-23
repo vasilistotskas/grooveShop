@@ -29,7 +29,7 @@ export default {
         if (!this.product.is_favourite_for_current_user) {
           this.addToFavourites()
         } else {
-          // this.removeFromFavourites()
+          this.removeFromFavourites()
         }
 
       } else {
@@ -66,6 +66,41 @@ export default {
             toast({
               message: 'The product was added to the favourites',
               type: 'is-success',
+              dismissible: true,
+              pauseOnHover: true,
+              duration: 2000,
+              position: 'bottom-right',
+            })
+          })
+          .catch(error => {
+            this.errors.push('Something went wrong. Please try again')
+
+            console.log(error)
+          })
+
+      this.$store.commit('setIsLoading', false)
+    },
+
+    async removeFromFavourites() {
+
+      const favourite_id = this.$store.state.userProfile.favourite_id
+      const product_id = this.product.id
+
+
+      let token = localStorage.getItem('token');
+
+      await axios
+          .delete(
+              `/api/v1/favouriteremove/${favourite_id}/${product_id}`,
+              {
+                headers: { 'Authorization': "Token " + token },
+              },
+          )
+          .then(response => {
+            this.product.is_favourite_for_current_user = false
+            toast({
+              message: 'The product was removed from favourites',
+              type: 'is-info',
               dismissible: true,
               pauseOnHover: true,
               duration: 2000,
