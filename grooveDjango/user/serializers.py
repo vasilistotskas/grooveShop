@@ -5,9 +5,14 @@ from django.contrib.auth.models import User
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    favourite_id = serializers.SerializerMethodField('get_favourite_id')
+
+    def get_favourite_id(self, request):
+        return request.user.favourite.id
+
     class Meta:
         model = UserProfile
-        fields = ['id', 'first_name', 'last_name', 'address', 'zipcode', 'place', 'phone', 'image']
+        fields = ['user', 'id', 'favourite_id', 'first_name', 'last_name', 'address', 'zipcode', 'place', 'phone', 'image']
 
 
 class UserSerializer(serializers.ModelSerializer):

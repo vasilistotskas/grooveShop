@@ -32,6 +32,16 @@ class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):
             raise Http404
 
 
+class UserProfileDetailAuth(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, format=None):
+        userprofile = UserProfile.objects.filter(user=request.user)
+        serializer = UserProfileSerializer(userprofile, many=True)
+        return Response(serializer.data)
+
+
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer

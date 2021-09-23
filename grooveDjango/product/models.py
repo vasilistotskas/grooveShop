@@ -151,7 +151,7 @@ class Favourite(models.Model):
 # Add To favourite Model
 class FavouriteItem(models.Model):
     favourite = models.ForeignKey(Favourite, related_name='favourite_items', on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, related_name='favourite_items', on_delete=models.CASCADE)
+    product = models.OneToOneField(Product, related_name='favourite_items', on_delete=models.CASCADE)
     is_favourite = models.BooleanField(default=False)
 
     def __str__(self):

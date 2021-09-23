@@ -5,11 +5,22 @@ from .models import Category, Product, Favourite, FavouriteItem
 
 
 class ProductSerializer(serializers.ModelSerializer):
+
+    # Create a custom method field
+    is_favourite_for_current_user = serializers.SerializerMethodField('get_if_current_users_favourite')
+
+    def get_if_current_users_favourite(self, product):
+        if FavouriteItem.objects.filter(product_id=product.id).count() == 0:
+            return False
+        return True
+
+
     class Meta:
         model = Product
         fields = (
             "id",
             "name",
+            "is_favourite_for_current_user",
             "get_absolute_url",
             "description",
             "price",
@@ -26,6 +37,7 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "name",
+            "slug",
             "description",
             "description",
             "image_url",
@@ -37,15 +49,29 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class FavouriteItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer()
+    product = ProductSerializer(many=False)
 
     class Meta:
         model = FavouriteItem
         fields = (
-            "favourite",
-            "product",
-            "is_favourite"
+            'id',
+            "favourite_id",
+            "is_favourite",
+            "product"
         )
+
+    def create(self, validated_data):
+
+        product_data = validated_data.pop('product')
+        user = self.context.get('request').user
+        favourite_id = Favourite.objects.get(user=user).id
+
+        if product_data:
+            product = Product.objects.get_or_create(**product_data)[0]
+            validated_data['product'] = product
+
+
+        return FavouriteItem.objects.create(favourite_id=favourite_id, **validated_data)
 
 
 class FavouriteSerializer(serializers.ModelSerializer):
