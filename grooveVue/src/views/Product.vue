@@ -25,7 +25,7 @@
             <a class="button is-dark" @click="addToCart()">Add to cart</a>
           </div>
 
-          <FavouriteButton :productId="product.id">
+          <FavouriteButton :product="product">
 
           </FavouriteButton>
         </div>

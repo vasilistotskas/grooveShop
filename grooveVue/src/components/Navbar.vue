@@ -35,7 +35,7 @@
       <div class="navbar-end">
 
 
-        <NavbarCategories/>
+        <NavbarCategories :categories="categories"/>
 
 
         <div class="navbar-item">
@@ -73,7 +73,8 @@ export default {
       type: Boolean,
       default: false
     },
-    cartTotalLength: Number
+    cartTotalLength: Number,
+    categories: Object
   }
 }
 </script>

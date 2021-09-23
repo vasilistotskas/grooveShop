@@ -58,6 +58,7 @@ export default {
   methods: {
     async submitForm() {
       axios.defaults.headers.common["Authorization"] = ""
+      this.$store.commit('setIsLoading', true)
 
       localStorage.removeItem("token")
 
@@ -77,9 +78,8 @@ export default {
 
             localStorage.setItem("token", token)
 
-            const toPath = this.$route.query.to || '/cart'
+            window.location.href="/";
 
-            this.$router.push(toPath)
           })
           .catch(error => {
             if (error.response) {
@@ -92,6 +92,8 @@ export default {
               console.log(JSON.stringify(error))
             }
           })
+
+      this.$store.commit('setIsLoading', false)
     }
   }
 }

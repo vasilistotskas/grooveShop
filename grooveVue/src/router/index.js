@@ -77,7 +77,8 @@ const routes = [
     {
         path: '/:category_slug',
         name: 'Category',
-        component: Category
+        component: Category,
+        props: true
     }
 ]
 
