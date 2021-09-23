@@ -53,6 +53,7 @@ export default {
 
       this.$store.commit('removeToken')
       this.$store.commit('unsetUserProfile')
+      this.$store.commit('unsetIsFavourite')
 
       this.$router.push('/')
     },

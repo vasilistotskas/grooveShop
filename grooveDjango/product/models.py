@@ -97,9 +97,9 @@ class Product(models.Model):
     
     def __str__(self):
         return self.name
-    
+
     def get_absolute_url(self):
-        return f'/{self.category.slug}/{self.slug}/'
+        return f'/{self.category.slug}/{self.slug}/{self.id}'
     
     def get_image(self):
         if self.image:
@@ -118,13 +118,13 @@ class Product(models.Model):
             else:
                 return ''
     
-    def make_thumbnail(self, image, size=(300, 200)):
+    def make_thumbnail(self, image, size=(400, 400)):
         img = Image.open(image)
         img.convert('RGB')
         img.thumbnail(size)
 
         thumb_io = BytesIO()
-        img.save(thumb_io, 'JPEG', quality=85)
+        img.save(thumb_io, 'JPEG', quality=100)
 
         thumbnail = File(thumb_io, name=image.name)
 

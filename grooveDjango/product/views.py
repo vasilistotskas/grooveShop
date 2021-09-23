@@ -88,7 +88,7 @@ class FavouriteList(APIView):
 
 
 
-class FavouriteItemRemove(APIView):
+class FavouriteDetail(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
@@ -99,7 +99,7 @@ class FavouriteItemRemove(APIView):
         try:
             return FavouriteItem.objects.filter(favourite__id=favourites_id).get(product__id=product_id)
         except FavouriteItem.DoesNotExist:
-            raise Http404
+            pass
 
     def get(self, request, favourites_id, product_id, format=None):
         favourite = self.get_object(favourites_id, product_id)

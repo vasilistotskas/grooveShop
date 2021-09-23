@@ -14,12 +14,15 @@ export default createStore({
         },
         isAuthenticated: false,
         userProfile: Object,
+        isFavourite: false,
         token: '',
         isLoading: false
     },
     getters: {
         getStateCategories: state => state.categories,
-        getStateUserProfile: state => state.userProfile
+        getStateUserProfile: state => state.userProfile,
+        getStateIsFavourite: state => state.isFavourite,
+        getFavouriteId: state => state.userProfile.favourite_id
     },
     mutations: {
         addToCart(state, item) {
@@ -49,15 +52,21 @@ export default createStore({
         setUserProfile(state, userProfile) {
             state.userProfile = userProfile
         },
+        setFavourite(state, isFavourite) {
+            state.isFavourite = isFavourite
+        },
         // for later to check user profile changes
         updateUserProfile(state, userProfile) {
-            const newUserProfile = cloneDeep(this.userProfile)
-            newUserProfile[userProfile.key] = userProfile.value
-            console.log(newUserProfile)
-            this.userProfile = newUserProfile
+            state.userProfile = userProfile
+        },
+        updateIsFavourite(state, isFavourite) {
+            state.isFavourite = isFavourite
         },
         unsetUserProfile(state) {
             state.userProfile = {}
+        },
+        unsetIsFavourite(state) {
+            state.isFavourite = false
         },
         clearCart(state) {
             state.cart = {items: []}
@@ -127,6 +136,26 @@ export default createStore({
                         console.log(error)
                     })
             }
+        },
+        getIfCurrentProductIsFavourite({commit, state, getters}, product_id) {
+
+            let token = localStorage.getItem('token');
+
+            return new Promise((resolve, reject) => {
+                const favourite_id = getters.getFavouriteId
+                axios
+                    .get(
+                        `/api/v1/favouriteitem/${favourite_id}/${product_id}`,
+                        {
+                            headers: { 'Authorization': "Token " + token },
+                        },
+                    )
+                    .then(response => commit('setFavourite', response.data.is_favourite), resolve('Success'))
+                    .catch(error => {
+                        this.commit('setFavourite', false)
+                        reject(error)
+                    })
+            })
         }
     },
     modules: {}

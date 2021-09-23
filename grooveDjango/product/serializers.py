@@ -5,14 +5,14 @@ from .models import Category, Product, Favourite, FavouriteItem
 
 
 class ProductSerializer(serializers.ModelSerializer):
-
-    # Create a custom method field
-    is_favourite_for_current_user = serializers.SerializerMethodField('get_if_current_users_favourite')
-
-    def get_if_current_users_favourite(self, product):
-        if FavouriteItem.objects.filter(product_id=product.id).count() == 0:
-            return False
-        return True
+    #
+    # # Create a custom method field
+    # is_favourite_for_current_user = serializers.SerializerMethodField('get_if_current_users_favourite')
+    #
+    # def get_if_current_users_favourite(self, product):
+    #     if FavouriteItem.objects.filter(product_id=product.id).count() == 0:
+    #         return False
+    #     return True
 
 
     class Meta:
@@ -20,7 +20,6 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "name",
-            "is_favourite_for_current_user",
             "get_absolute_url",
             "description",
             "price",

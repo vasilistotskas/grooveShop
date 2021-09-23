@@ -13,20 +13,30 @@ import {toast} from "bulma-toast";
 
 export default {
   name: 'FavouriteButton',
-  data() {
-    return {
-      isFavourite: Boolean
-    }
-  },
   props: {
     product: Object
+  },
+  computed: {
+    isFavourite: {
+      get() {
+        return this.$store.getters['getStateIsFavourite']
+      },
+      set(value) {
+        this.$store.commit('updateIsFavourite', value)
+      }
+    },
+  },
+  updated() {
+    if (this.$store.state.isAuthenticated) {
+      this.$store.dispatch('getIfCurrentProductIsFavourite', this.$route.params.product_id)
+    }
   },
   methods: {
     favouriteHandle() {
       if (this.$store.state.isAuthenticated) {
 
       // check if is in favourites already else
-        if (!this.product.is_favourite_for_current_user) {
+        if (!this.isFavourite) {
           this.addToFavourites()
         } else {
           this.removeFromFavourites()
@@ -62,7 +72,7 @@ export default {
               },
             )
           .then(response => {
-            this.product.is_favourite_for_current_user = true
+            this.isFavourite = true
             toast({
               message: 'The product was added to the favourites',
               type: 'is-success',
@@ -73,31 +83,27 @@ export default {
             })
           })
           .catch(error => {
-            this.errors.push('Something went wrong. Please try again')
-
             console.log(error)
           })
 
       this.$store.commit('setIsLoading', false)
     },
-
     async removeFromFavourites() {
 
       const favourite_id = this.$store.state.userProfile.favourite_id
       const product_id = this.product.id
 
-
       let token = localStorage.getItem('token');
 
       await axios
           .delete(
-              `/api/v1/favouriteremove/${favourite_id}/${product_id}`,
+              `/api/v1/favouriteitem/${favourite_id}/${product_id}`,
               {
                 headers: { 'Authorization': "Token " + token },
               },
           )
           .then(response => {
-            this.product.is_favourite_for_current_user = false
+            this.isFavourite = false
             toast({
               message: 'The product was removed from favourites',
               type: 'is-info',
@@ -108,16 +114,12 @@ export default {
             })
           })
           .catch(error => {
-            this.errors.push('Something went wrong. Please try again')
-
             console.log(error)
           })
-
-      this.$store.commit('setIsLoading', false)
     },
 
     getFavouriteIconClass() {
-      return !this.product.is_favourite_for_current_user ? 'far fa-heart' : 'fas fa-heart'
+      return !this.isFavourite ? 'far fa-heart' : 'fas fa-heart'
     }
   }
 }

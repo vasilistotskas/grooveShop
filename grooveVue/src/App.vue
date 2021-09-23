@@ -53,8 +53,6 @@ export default {
   },
   mounted() {
     this.cart = this.$store.state.cart
-    console.log(this.$store.state)
-    console.log(localStorage)
   },
   computed: {
     userProfile: {

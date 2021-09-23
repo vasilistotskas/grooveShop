@@ -70,9 +70,10 @@ const routes = [
         }
     },
     {
-        path: '/:category_slug/:product_slug',
+        path: '/:category_slug/:product_slug/:product_id',
         name: 'Product',
-        component: Product
+        component: Product,
+        props: true
     },
     {
         path: '/:category_slug',

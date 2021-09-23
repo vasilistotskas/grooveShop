@@ -13,7 +13,7 @@ urlpatterns = [
 
 
     path('favouritelist/', views.FavouriteList.as_view()),
-    path('favouriteremove/<int:favourites_id>/<int:product_id>', views.FavouriteItemRemove.as_view()),
+    path('favouriteitem/<int:favourites_id>/<int:product_id>', views.FavouriteDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
