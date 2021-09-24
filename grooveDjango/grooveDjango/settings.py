@@ -45,12 +45,16 @@ INSTALLED_APPS = [
     'djoser',
 
     'product',
-    'order'
+    'order',
+    'user'
 ]
 
+# for dev
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
 ]
+#
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -63,9 +67,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# for dev
-CORS_ORIGIN_ALLOW_ALL = True
-#
+
 
 ROOT_URLCONF = 'grooveDjango.urls'
 

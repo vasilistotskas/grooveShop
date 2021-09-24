@@ -3,7 +3,8 @@
     <div class="navbar-brand">
       <router-link to="/" class="navbar-item"><strong>grooveShop</strong></router-link>
 
-      <a class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu" @click="showMobileMenu = !showMobileMenu">
+      <a class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu"
+         @click="showMobileMenu = !showMobileMenu">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -34,7 +35,7 @@
       <div class="navbar-end">
 
 
-        <NavbarCategories/>
+        <NavbarCategories :categories="categories"/>
 
 
         <div class="navbar-item">
@@ -72,7 +73,8 @@ export default {
       type: Boolean,
       default: false
     },
-    cartTotalLength: Number
+    cartTotalLength: Number,
+    categories: Object
   }
 }
 </script>
