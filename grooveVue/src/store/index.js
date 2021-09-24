@@ -166,14 +166,14 @@ export default createStore({
                 })
         },
 
-        async getIfCurrentProductIsFavourite({commit, state, dispatch, getters}, product_id) {
+        async getIfCurrentProductIsFavourite({commit, state, dispatch, getters}, productId) {
             await dispatch('ensureUserIsAuthenticated')
             if (!getters.isUserInitialized)
                 await dispatch('getUserProfile')
 
-            const favourite_id = getters.getFavouriteId
+            const favouriteId = getters.getFavouriteId
             try {
-                const response = await Api(commit).get('favouriteitem', favourite_id, product_id)
+                const response = await Api(commit).get('favouriteitem', favouriteId, productId)
                 commit('setFavourite', response.data.is_favourite)
             } catch(error) {
                 commit('setFavourite', false)

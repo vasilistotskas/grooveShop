@@ -64,7 +64,6 @@ class Search(APIView):
             return Response({"products": []}, status=status.HTTP_404_NOT_FOUND)
 
 
-
 class FavouriteList(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
@@ -85,7 +84,6 @@ class FavouriteList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 class FavouriteDetail(APIView):
