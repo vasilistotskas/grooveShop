@@ -1,7 +1,6 @@
 import {createStore} from 'vuex'
-import axios from "axios";
-import {cloneDeep, pickBy} from 'lodash'
 import { createLogger } from 'vuex'
+import Api from '@/helpers/api'
 
 export default createStore({
     plugins: [createLogger()],
@@ -13,7 +12,7 @@ export default createStore({
             items: [],
         },
         isAuthenticated: false,
-        userProfile: Object,
+        userProfile: {},
         isFavourite: false,
         token: '',
         isLoading: false
@@ -22,7 +21,8 @@ export default createStore({
         getStateCategories: state => state.categories,
         getStateUserProfile: state => state.userProfile,
         getStateIsFavourite: state => state.isFavourite,
-        getFavouriteId: state => state.userProfile.favourite_id
+        getFavouriteId: state => state.userProfile.favourite_id,
+        isUserInitialized: state => ('id' in state.userProfile)
     },
     mutations: {
         addToCart(state, item) {
@@ -95,67 +95,90 @@ export default createStore({
         },
     },
     actions: {
-        async getCategories(state, commit) {
-            const categoriesFromRemote = await axios
-                .get('/api/v1/products/categories/')
+        async ensureUserIsAuthenticated({ state }) {
+            if (!state.isAuthenticated)
+                throw new Error('User not authenticated')
+        },
+
+        async getCategories({ state, commit }) {
+            const categoriesFromRemote = await Api(commit).get('products/categories/')
                 .then(response => this.commit('setCategories', response.data))
         },
 
-        // hardcoded data pass for better manipulation
-        async getUserProfile(store, tokenFromLogInRequest) {
-            if (store.state.isAuthenticated) {
+        async toggleFavourite({ state, dispatch, getters }, product) {
+            await dispatch('ensureUserIsAuthenticated')
 
-                let token = ''
-                if (tokenFromLogInRequest === undefined) {
-                    token = localStorage.getItem('token');
-                } else {
-                    token = tokenFromLogInRequest
-                }
-
-                const userProfileFromRemote = await axios
-                    .get('/api/v1/userprofile/auth/',
-                        {
-                            headers: {'Authorization': "Token " + token}
-                        })
-                    .then(response =>
-                        this.commit('setUserProfile',
-                            {
-                                'id': response.data[0].id,
-                                'user': response.data[0].user,
-                                'favourite_id': response.data[0].favourite_id,
-                                'address': response.data[0].address,
-                                'first_name': response.data[0].first_name,
-                                'last_name': response.data[0].last_name,
-                                'phone': response.data[0].phone,
-                                'place': response.data[0].place,
-                                'zipcode': response.data[0].zipcode
-                            }
-                        )
-                    )
-                    .catch(error => {
-                        console.log(error)
-                    })
+            if (!getters.getStateIsFavourite) {
+                await dispatch('addToFavourites', product)
+                return 'The product was added to the favourites'
+            } else {
+                await dispatch('removeFromFavourites', product)
+                return 'The product was removed from favourites'
             }
         },
-        getIfCurrentProductIsFavourite({commit, state, getters}, product_id) {
 
-            let token = localStorage.getItem('token');
+        async addToFavourites({ state, commit, dispatch }, product) {
+            await dispatch('ensureUserIsAuthenticated')
+            const data = {
+                "favourite_id": state.userProfile.favourite_id,
+                "is_favourite": true,
+                "product": product
+            }
+            const response = await Api(commit).post('favouritelist', data)
+            commit('setFavourite', true)
+            return response
+        },
 
-            return new Promise((resolve, reject) => {
-                const favourite_id = getters.getFavouriteId
-                axios
-                    .get(
-                        `/api/v1/favouriteitem/${favourite_id}/${product_id}`,
+        async removeFromFavourites({ state, getters, dispatch, commit }, product) {
+            await dispatch('ensureUserIsAuthenticated')
+            const favouriteId = getters.getFavouriteId
+            const response = await Api(commit).delete('favouriteitem', favouriteId, product.id)
+            commit('setFavourite', false)
+            return response;
+        },
+
+        // hardcoded data pass for better manipulation
+        async getUserProfile({ state, dispatch, commit }, tokenFromLogInRequest) {
+            await dispatch('ensureUserIsAuthenticated')
+
+            let token = ''
+            if (tokenFromLogInRequest === undefined) {
+                token = localStorage.getItem('token');
+            } else {
+                token = tokenFromLogInRequest
+            }
+
+            const userProfileFromRemote = await Api(commit, token).get('userprofile/auth')
+                .then(response => {
+                    this.commit('setUserProfile',
                         {
-                            headers: { 'Authorization': "Token " + token },
-                        },
+                            'id': response.data[0].id,
+                            'user': response.data[0].user,
+                            'favourite_id': response.data[0].favourite_id,
+                            'address': response.data[0].address,
+                            'first_name': response.data[0].first_name,
+                            'last_name': response.data[0].last_name,
+                            'phone': response.data[0].phone,
+                            'place': response.data[0].place,
+                            'zipcode': response.data[0].zipcode
+                        }
                     )
-                    .then(response => commit('setFavourite', response.data.is_favourite), resolve('Success'))
-                    .catch(error => {
-                        this.commit('setFavourite', false)
-                        reject(error)
-                    })
-            })
+                })
+        },
+
+        async getIfCurrentProductIsFavourite({commit, state, dispatch, getters}, product_id) {
+            await dispatch('ensureUserIsAuthenticated')
+            if (!getters.isUserInitialized)
+                await dispatch('getUserProfile')
+
+            const favourite_id = getters.getFavouriteId
+            try {
+                const response = await Api(commit).get('favouriteitem', favourite_id, product_id)
+                commit('setFavourite', response.data.is_favourite)
+            } catch(error) {
+                commit('setFavourite', false)
+                throw error
+            }
         }
     },
     modules: {}

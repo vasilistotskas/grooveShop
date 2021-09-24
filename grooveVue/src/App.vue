@@ -59,7 +59,9 @@ export default {
       get() {
         return this.$store.getters['getStateUserProfile']
       },
-      set(value) { this.$store.commit('updateUserProfile', value) }
+      set(value) {
+        this.$store.commit('updateUserProfile', value)
+      }
     },
     categories: {
       get() {
