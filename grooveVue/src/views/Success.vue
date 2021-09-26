@@ -1,6 +1,6 @@
 <template>
   <div class="page-success">
-    <div class="columns is-multiline">
+    <div class="row">
       <div class="col-12">
         <h1 class="title mb-5">Thank you</h1>
 

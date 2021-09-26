@@ -1,14 +1,22 @@
 <template>
   <div class="page-category">
-    <div class="columns is-multiline">
-      <div class="col-12">
-        <h2 class="is-size-2 has-text-centered">{{ category.name }}</h2>
+    <div class="row">
+      <div class="container">
+        <div class="col-12">
+          <h2 class="is-size-2 has-text-centered">{{ category.name }}</h2>
+        </div>
+
+        <div class="col-12">
+          <div class="row">
+            <ProductBox
+                class="col-sm-3"
+                v-for="product in category.products"
+                v-bind:key="product.id"
+                v-bind:product="product"/>
+          </div>
+        </div>
       </div>
 
-      <ProductBox
-          v-for="product in category.products"
-          v-bind:key="product.id"
-          v-bind:product="product"/>
     </div>
   </div>
 </template>

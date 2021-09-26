@@ -3,23 +3,25 @@
     <section class="hero is-medium is-dark mb-6 mt-5">
       <div class="hero-body has-text-centered">
         <p class="title mb-6">
-          Welcome to Djacket
+          Welcome to Groove
         </p>
         <p class="subtitle">
-          The best jacket store online
+          The best online store
         </p>
       </div>
     </section>
 
-    <div class="columns is-multiline">
-      <div class="col-12">
-        <h2 class="is-size-2 has-text-centered">Latest products</h2>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 mb-5">
+          <h2 class="is-size-2 has-text-centered">Latest products</h2>
+        </div>
+        <ProductBox
+            class="col-sm-3"
+            v-for="product in latestProducts"
+            v-bind:key="product.id"
+            v-bind:product="product"/>
       </div>
-
-      <ProductBox
-          v-for="product in latestProducts"
-          v-bind:key="product.id"
-          v-bind:product="product"/>
     </div>
   </div>
 </template>
@@ -31,33 +33,20 @@ import ProductBox from '@/components/ProductBox'
 
 export default {
   name: 'Home',
-  data() {
-    return {
-      latestProducts: []
-    }
-  },
   components: {
     ProductBox
   },
+  beforeCreate() {
+    this.$store.dispatch('getLatestProducts')
+  },
   mounted() {
-    this.getLatestProducts()
-
     document.title = 'Home | grooveShop'
   },
-  methods: {
-    async getLatestProducts() {
-      this.$store.commit('setIsLoading', true)
-
-      await axios
-          .get('/api/v1/latest-products/')
-          .then(response => {
-            this.latestProducts = response.data
-          })
-          .catch(error => {
-            console.log(error)
-          })
-
-      this.$store.commit('setIsLoading', false)
+  computed: {
+    latestProducts: {
+      get() {
+        return this.$store.getters['getStateLatestProducts']
+      }
     }
   }
 }

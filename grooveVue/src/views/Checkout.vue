@@ -1,6 +1,6 @@
 <template>
   <div class="page-checkout container-fluid">
-    <div class="columns is-multiline">
+    <div class="row">
       <div class="col-12">
         <h1 class="title mb-5">Checkout</h1>
       </div>
@@ -43,7 +43,7 @@
 
         <p class="has-text-grey mb-4">* All fields are required</p>
 
-        <div class="columns is-multiline">
+        <div class="row">
           <div class="col-6">
             <div class="field">
               <label>First name*</label>

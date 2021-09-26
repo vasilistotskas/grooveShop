@@ -62,8 +62,8 @@
               </label>
             </div>
           </div>
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary">Sign in</button>
+          <div class="col-12 text-end">
+            <button type="submit" class="button is-success">Save</button>
           </div>
         </form>
       </div>

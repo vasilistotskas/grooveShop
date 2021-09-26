@@ -11,7 +11,7 @@
       <div v-if="$store.state.isLoading" class="lds-dual-ring"></div>
     </div>
 
-    <section class="mt-5 mb-5">
+    <section class="mt-6 mb-5">
       <router-view/>
     </section>
 
@@ -40,7 +40,7 @@ export default {
   },
   beforeCreate() {
     this.$store.commit('initializeStore')
-    this.$store.dispatch('getUserProfile')
+    this.$store.dispatch('getUserData')
     this.$store.dispatch('getCategories')
 
     const token = this.$store.state.token
@@ -55,12 +55,12 @@ export default {
     this.cart = this.$store.state.cart
   },
   computed: {
-    userProfile: {
+    userData: {
       get() {
-        return this.$store.getters['getStateUserProfile']
+        return this.$store.getters['getStateUserData']
       },
       set(value) {
-        this.$store.commit('updateUserProfile', value)
+        this.$store.commit('updateUserData', value)
       }
     },
     categories: {
@@ -83,6 +83,14 @@ export default {
 
 <style lang="scss">
 @import '../node_modules/bulma';
+
+section{
+  padding-top: 75px;
+}
+
+.main-navbar{
+  z-index: 99999!important;
+}
 
 .lds-dual-ring {
   display: inline-block;

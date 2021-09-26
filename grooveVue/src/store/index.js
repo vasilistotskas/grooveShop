@@ -2,6 +2,7 @@ import {createStore} from 'vuex'
 import Api from '@/helpers/api'
 import {filter} from "lodash";
 import router from '@/router'
+import axios from "axios";
 
 export default createStore({
     plugins: [],
@@ -13,8 +14,9 @@ export default createStore({
             items: [],
         },
         product: {},
+        latestProducts: [],
         isAuthenticated: false,
-        userProfile: {},
+        userData: {},
         order: {},
         isFavourite: false,
         token: '',
@@ -23,12 +25,13 @@ export default createStore({
     getters: {
         getStateCategories: state => state.categories,
         getStateProduct: state => state.product,
+        getStateLatestProducts: state => state.latestProducts,
         getStateProductExtraImages: state => state.product.images,
-        getStateUserProfile: state => state.userProfile,
+        getStateUserData: state => state.userData,
         getStateUserOrders: state => state.orders,
         getStateIsFavourite: state => state.isFavourite,
-        getFavouriteId: state => state.userProfile.favourite_id,
-        isUserInitialized: state => ('id' in state.userProfile)
+        getFavouriteId: state => state.userData.favourite_id,
+        isUserInitialized: state => ('id' in state.userData)
     },
     mutations: {
         addToCart(state, item) {
@@ -57,27 +60,31 @@ export default createStore({
         },
         setProduct(state, product) {
             state.product = product
-            state.product.images = filter(product.images, ['is_main', false])
+            // if we need all images except main
+            // state.product.images = filter(product.images, ['is_main', false])
             document.title = state.product.name + ' | grooveShop'
+        },
+        setLatestProducts(state, latestProducts) {
+            state.latestProducts = latestProducts
         },
         setOrders(state, orders) {
             state.orders = orders
         },
-        setUserProfile(state, userProfile) {
-            state.userProfile = userProfile
+        setUserData(state, userData) {
+            state.userData = userData
         },
         setFavourite(state, isFavourite) {
             state.isFavourite = isFavourite
         },
         // for later to check user profile changes
-        updateUserProfile(state, userProfile) {
-            state.userProfile = userProfile
+        updateUserData(state, userData) {
+            state.userData = userData
         },
         updateIsFavourite(state, isFavourite) {
             state.isFavourite = isFavourite
         },
-        unsetUserProfile(state) {
-            state.userProfile = {}
+        unsetUserData(state) {
+            state.userData = {}
         },
         unsetIsFavourite(state) {
             state.isFavourite = false
@@ -122,6 +129,11 @@ export default createStore({
                 .then(response => this.commit('setProduct', response.data))
         },
 
+        async getLatestProducts({commit}) {
+            const latestProductsFromRemote = await Api(commit).get('latest-products/')
+                .then(response => this.commit('setLatestProducts', response.data))
+        },
+
         async getCategories({commit}) {
             const categoriesFromRemote = await Api(commit).get('products/categories/')
                 .then(response => this.commit('setCategories', response.data))
@@ -147,7 +159,7 @@ export default createStore({
         async addToFavourites({state, commit, dispatch}, product) {
             await dispatch('ensureUserIsAuthenticated')
             const data = {
-                "favourite_id": state.userProfile.favourite_id,
+                "favourite_id": state.userData.favourite_id,
                 "is_favourite": true,
                 "product": product
             }
@@ -165,7 +177,7 @@ export default createStore({
         },
 
         // hardcoded data pass for better manipulation
-        async getUserProfile({state, dispatch, commit}, tokenFromLogInRequest) {
+        async getUserData({state, dispatch, commit}, tokenFromLogInRequest) {
             await dispatch('ensureUserIsAuthenticated')
 
             let token = ''
@@ -175,24 +187,24 @@ export default createStore({
                 token = tokenFromLogInRequest
             }
 
-            const userProfileFromRemote = await Api(commit, token).get('userprofile/auth')
+            const userDataFromRemote = await Api(commit, token).get('userprofile/auth')
                 .then(response => {
-                    this.commit('setUserProfile',
+                    this.commit('setUserData',
                         {
                             'id': response.data[0].id,
                             'favourite_id': response.data[0].favourite_id,
                             'user': response.data[0].user,
-                            'first_name': response.data[0].first_name,
-                            'last_name': response.data[0].last_name,
-                            'phone': response.data[0].phone,
-                            'email': response.data[0].email,
-                            'city': response.data[0].city,
-                            'zipcode': response.data[0].zipcode,
-                            'address': response.data[0].address,
-                            'place': response.data[0].place,
-                            'country': response.data[0].country,
-                            'county': response.data[0].county,
-                            'image': response.data[0].image
+                            // 'first_name': response.data[0].first_name,
+                            // 'last_name': response.data[0].last_name,
+                            // 'phone': response.data[0].phone,
+                            // 'email': response.data[0].email,
+                            // 'city': response.data[0].city,
+                            // 'zipcode': response.data[0].zipcode,
+                            // 'address': response.data[0].address,
+                            // 'place': response.data[0].place,
+                            // 'country': response.data[0].country,
+                            // 'county': response.data[0].county,
+                            // 'image': response.data[0].image
                         }
                     )
                 })
@@ -201,7 +213,7 @@ export default createStore({
         async getIfCurrentProductIsFavourite({commit, state, dispatch, getters}, productId) {
             await dispatch('ensureUserIsAuthenticated')
             if (!getters.isUserInitialized)
-                await dispatch('getUserProfile')
+                await dispatch('getUserData')
 
             const favouriteId = getters.getFavouriteId
             try {
