@@ -1,9 +1,10 @@
 import {createStore} from 'vuex'
-import { createLogger } from 'vuex'
 import Api from '@/helpers/api'
+import {filter} from "lodash";
+import router from '@/router'
 
 export default createStore({
-    plugins: [createLogger()],
+    plugins: [],
     state: {
         cart: {
             items: [],
@@ -11,15 +12,20 @@ export default createStore({
         categories: {
             items: [],
         },
+        product: {},
         isAuthenticated: false,
         userProfile: {},
+        order: {},
         isFavourite: false,
         token: '',
         isLoading: false
     },
     getters: {
         getStateCategories: state => state.categories,
+        getStateProduct: state => state.product,
+        getStateProductExtraImages: state => state.product.images,
         getStateUserProfile: state => state.userProfile,
+        getStateUserOrders: state => state.orders,
         getStateIsFavourite: state => state.isFavourite,
         getFavouriteId: state => state.userProfile.favourite_id,
         isUserInitialized: state => ('id' in state.userProfile)
@@ -48,6 +54,14 @@ export default createStore({
         },
         setCategories(state, categories) {
             state.categories = categories
+        },
+        setProduct(state, product) {
+            state.product = product
+            state.product.images = filter(product.images, ['is_main', false])
+            document.title = state.product.name + ' | grooveShop'
+        },
+        setOrders(state, orders) {
+            state.orders = orders
         },
         setUserProfile(state, userProfile) {
             state.userProfile = userProfile
@@ -95,17 +109,30 @@ export default createStore({
         },
     },
     actions: {
-        async ensureUserIsAuthenticated({ state }) {
+        async ensureUserIsAuthenticated({state}) {
             if (!state.isAuthenticated)
                 throw new Error('User not authenticated')
         },
 
-        async getCategories({ state, commit }) {
+        async getProduct({commit, state, getters}, category_slug, product_slug) {
+            category_slug = router.currentRoute.value.params.category_slug
+            product_slug = router.currentRoute.value.params.product_slug
+
+            const productFromRemote = await Api(commit).get(`products/${category_slug}/${product_slug}`)
+                .then(response => this.commit('setProduct', response.data))
+        },
+
+        async getCategories({commit}) {
             const categoriesFromRemote = await Api(commit).get('products/categories/')
                 .then(response => this.commit('setCategories', response.data))
         },
 
-        async toggleFavourite({ state, dispatch, getters }, product) {
+        async getUserOrders({commit}) {
+            const ordersFromRemote = await Api(commit).get('orders/')
+                .then(response => this.commit('setOrders', response.data))
+        },
+
+        async toggleFavourite({state, dispatch, getters}, product) {
             await dispatch('ensureUserIsAuthenticated')
 
             if (!getters.getStateIsFavourite) {
@@ -117,7 +144,7 @@ export default createStore({
             }
         },
 
-        async addToFavourites({ state, commit, dispatch }, product) {
+        async addToFavourites({state, commit, dispatch}, product) {
             await dispatch('ensureUserIsAuthenticated')
             const data = {
                 "favourite_id": state.userProfile.favourite_id,
@@ -129,7 +156,7 @@ export default createStore({
             return response
         },
 
-        async removeFromFavourites({ state, getters, dispatch, commit }, product) {
+        async removeFromFavourites({state, getters, dispatch, commit}, product) {
             await dispatch('ensureUserIsAuthenticated')
             const favouriteId = getters.getFavouriteId
             const response = await Api(commit).delete('favouriteitem', favouriteId, product.id)
@@ -138,7 +165,7 @@ export default createStore({
         },
 
         // hardcoded data pass for better manipulation
-        async getUserProfile({ state, dispatch, commit }, tokenFromLogInRequest) {
+        async getUserProfile({state, dispatch, commit}, tokenFromLogInRequest) {
             await dispatch('ensureUserIsAuthenticated')
 
             let token = ''
@@ -153,14 +180,19 @@ export default createStore({
                     this.commit('setUserProfile',
                         {
                             'id': response.data[0].id,
-                            'user': response.data[0].user,
                             'favourite_id': response.data[0].favourite_id,
-                            'address': response.data[0].address,
+                            'user': response.data[0].user,
                             'first_name': response.data[0].first_name,
                             'last_name': response.data[0].last_name,
                             'phone': response.data[0].phone,
+                            'email': response.data[0].email,
+                            'city': response.data[0].city,
+                            'zipcode': response.data[0].zipcode,
+                            'address': response.data[0].address,
                             'place': response.data[0].place,
-                            'zipcode': response.data[0].zipcode
+                            'country': response.data[0].country,
+                            'county': response.data[0].county,
+                            'image': response.data[0].image
                         }
                     )
                 })
@@ -175,7 +207,7 @@ export default createStore({
             try {
                 const response = await Api(commit).get('favouriteitem', favouriteId, productId)
                 commit('setFavourite', response.data.is_favourite)
-            } catch(error) {
+            } catch (error) {
                 commit('setFavourite', false)
                 throw error
             }

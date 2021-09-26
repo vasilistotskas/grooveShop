@@ -12,7 +12,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ['user', 'id', 'favourite_id', 'first_name', 'last_name', 'address', 'zipcode', 'place', 'phone', 'image']
+        fields = '__all__'
 
 
 class UserSerializer(serializers.ModelSerializer):

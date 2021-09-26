@@ -12,7 +12,7 @@
     </section>
 
     <div class="columns is-multiline">
-      <div class="column is-12">
+      <div class="col-12">
         <h2 class="is-size-2 has-text-centered">Latest products</h2>
       </div>
 

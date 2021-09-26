@@ -1,8 +1,8 @@
 <template>
   <div class="page-sign-up">
-    <div class="columns">
-      <div class="column is-4 is-offset-4">
-        <h1 class="title">Sign up</h1>
+    <div class="container">
+      <div class="col-4 mx-auto">
+        <h1 class="title mb-5">Sign up</h1>
 
         <form @submit.prevent="submitForm">
           <div class="field">
@@ -35,8 +35,6 @@
               <button class="button is-dark">Sign up</button>
             </div>
           </div>
-
-          <hr>
 
           Or
           <router-link to="/log-in">click here</router-link>

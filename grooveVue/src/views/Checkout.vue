@@ -1,11 +1,11 @@
 <template>
   <div class="page-checkout container-fluid">
     <div class="columns is-multiline">
-      <div class="column is-12">
-        <h1 class="title">Checkout</h1>
+      <div class="col-12">
+        <h1 class="title mb-5">Checkout</h1>
       </div>
 
-      <div class="column is-12 box">
+      <div class="col-12 box">
         <table class="table is-fullwidth">
           <thead>
           <tr>
@@ -38,13 +38,13 @@
         </table>
       </div>
 
-      <div class="column is-12 box">
+      <div class="col-12 box">
         <h2 class="subtitle">Shipping details</h2>
 
         <p class="has-text-grey mb-4">* All fields are required</p>
 
         <div class="columns is-multiline">
-          <div class="column is-6">
+          <div class="col-6">
             <div class="field">
               <label>First name*</label>
               <div class="control">
@@ -74,7 +74,7 @@
             </div>
           </div>
 
-          <div class="column is-6">
+          <div class="col-6">
             <div class="field">
               <label>Address*</label>
               <div class="control">
@@ -102,13 +102,9 @@
           <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
         </div>
 
-        <hr>
-
         <div id="card-element" class="mb-5"></div>
 
         <template v-if="cartTotalLength">
-          <hr>
-
           <button class="button is-dark" @click="submitForm">Pay with Stripe</button>
         </template>
       </div>

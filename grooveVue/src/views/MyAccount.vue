@@ -1,24 +1,23 @@
 <template>
-  <div class="page-my-account container-fluid">
-    <div class="columns is-multiline">
-      <div class="column is-12">
-        <h1 class="title">My account</h1>
+  <div class="page-my-account container">
+    <div class="col-12">
+      <h1 class="title mb-5"><router-link :to="{ name: 'MyAccount' }">My account</router-link></h1>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <router-link class="nav-link" :to="{ name: 'Settings' }">Settings</router-link>
+            <router-link class="nav-link" :to="{ name: 'Orders' }">Orders</router-link>
+            <button @click="logout()" class="button is-danger nav-link">Log out</button>
+          </div>
+        </div>
       </div>
+    </nav>
 
-      <div class="column is-12">
-        <button @click="logout()" class="button is-danger">Log out</button>
-      </div>
-
-      <hr>
-
-      <div class="column is-12">
-        <h2 class="subtitle">My orders</h2>
-
-        <OrderSummary
-            v-for="order in orders"
-            v-bind:key="order.id"
-            v-bind:order="order"/>
-      </div>
+    <div class="col-12 mt-5">
+      <router-view :key="$route.path"></router-view>
     </div>
   </div>
 </template>
@@ -33,15 +32,8 @@ export default {
   components: {
     OrderSummary
   },
-  data() {
-    return {
-      orders: []
-    }
-  },
   mounted() {
     document.title = 'My account | grooveShop'
-
-    this.getMyOrders()
   },
   methods: {
     logout() {
@@ -56,20 +48,6 @@ export default {
       this.$store.commit('unsetIsFavourite')
 
       this.$router.push('/')
-    },
-    async getMyOrders() {
-      this.$store.commit('setIsLoading', true)
-
-      await axios
-          .get('/api/v1/orders/')
-          .then(response => {
-            this.orders = response.data
-          })
-          .catch(error => {
-            console.log(error)
-          })
-
-      this.$store.commit('setIsLoading', false)
     }
   }
 }

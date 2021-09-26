@@ -1,8 +1,8 @@
 <template>
   <div class="page-search">
     <div class="columns is-multiline">
-      <div class="column is-12">
-        <h1 class="title">Search</h1>
+      <div class="col-12">
+        <h1 class="title mb-5">Search</h1>
 
         <h2 class="is-size-5 has-text-grey">Search term: "{{ query }}"</h2>
       </div>
