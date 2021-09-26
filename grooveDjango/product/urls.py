@@ -11,7 +11,6 @@ urlpatterns = [
     path('products/categories/', views.AllCategoriesList.as_view()),
     path('products/<slug:category_slug>/', views.CategoryDetail.as_view()),
 
-
     path('favouritelist/', views.FavouriteList.as_view()),
     path('favouriteitem/<int:favourites_id>/<int:product_id>', views.FavouriteDetail.as_view()),
 ]

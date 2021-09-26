@@ -11,7 +11,7 @@
       <div v-if="$store.state.isLoading" class="lds-dual-ring"></div>
     </div>
 
-    <section class="section">
+    <section>
       <router-view/>
     </section>
 
