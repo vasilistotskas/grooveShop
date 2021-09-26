@@ -1,5 +1,5 @@
 <template>
-  <div class="page-cart container-fluid">
+  <div class="page-cart container mt-5">
     <div class="row">
       <div class="col-12">
         <h1 class="title mb-5">Cart</h1>
@@ -34,7 +34,7 @@
 
         <strong>${{ cartTotalPrice.toFixed(2) }}</strong>, {{ cartTotalLength }} items
 
-        <router-link to="/cart/checkout" class="button is-dark">Proceed to checkout</router-link>
+        <router-link to="/cart/checkout" class="button is-dark float-end">Proceed to checkout</router-link>
       </div>
     </div>
   </div>

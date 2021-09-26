@@ -1,5 +1,5 @@
 <template>
-  <div class="page-checkout container-fluid">
+  <div class="page-checkout container mt-5">
     <div class="row">
       <div class="col-12">
         <h1 class="title mb-5">Checkout</h1>

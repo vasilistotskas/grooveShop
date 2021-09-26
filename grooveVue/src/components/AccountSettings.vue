@@ -1,9 +1,9 @@
 <template>
-  <div class="row">
+  <div class="row" v-if="userDetails && Object.keys(userDetails).length > 0">
     <div class="col-lg-3">
       <div class="py-11 px-5 text-center mb-5 box">
-        <img src="https://www.gravatar.com/avatar/d9674a7569882565f21bf2d1047086b8?d=https://assets.e-food.gr/gravatar/no-avatar2.png" class="mb-5" alt="User Avatar" width="72" height="72">
-        <h2 class="fw-bold">Βασιλης Τότσκας</h2>
+        <img v-bind:src="'http://127.0.0.1:8000' + userDetails.image" class="mb-5 rounded-circle" alt="User Avatar" width="72" height="72">
+        <h2 class="fw-bold">{{ fullName }}</h2>
       </div>
     </div>
     <div class="col-lg-9">
@@ -11,59 +11,53 @@
         <form class="row g-3">
           <div class="col-md-6">
             <label for="inputFirstName" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="inputFirstName">
+            <input v-model="userDetails.first_name" type="text" class="form-control" id="inputFirstName">
           </div>
           <div class="col-md-6">
             <label for="inputLastName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="inputLastName">
+            <input v-model="userDetails.last_name" type="text" class="form-control" id="inputLastName">
           </div>
           <div class="col-12">
             <label for="inputPhone" class="form-label">Phone</label>
-            <input type="text" class="form-control" id="inputPhone" placeholder="6943434343">
+            <input v-model="userDetails.phone" type="text" class="form-control" id="inputPhone">
           </div>
           <div class="col-md-9">
             <label for="inputCity" class="form-label">City</label>
-            <input type="text" class="form-control" id="inputCity">
+            <input v-model="userDetails.city" type="text" class="form-control" id="inputCity">
           </div>
           <div class="col-md-3">
             <label for="inputZipcode" class="form-label">Zipcode</label>
-            <input type="text" class="form-control" id="inputZipcode">
+            <input v-model="userDetails.zipcode" type="text" class="form-control" id="inputZipcode">
           </div>
           <div class="col-12">
             <label for="inputAddress" class="form-label">Address</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+            <input v-model="userDetails.address" type="text" class="form-control" id="inputAddress">
           </div>
           <div class="col-12">
             <label for="inputPlace" class="form-label">Place</label>
-            <input type="text" class="form-control" id="inputPlace" placeholder="Attica">
+            <input v-model="userDetails.place" type="text" class="form-control" id="inputPlace">
           </div>
 
           <div class="col-md-6">
             <label for="inputCountry" class="form-label">Country</label>
-            <select id="inputCountry" class="form-select">
-              <option selected>Choose...</option>
-              <option>...</option>
+            <select name="county" id="inputCountry" class="form-select" v-model="userDetails.country_name">
+              <option disabled value="">Choose...</option>
+              <option :value="userDetails.country_name">{{ userDetails.country_name }}</option>
+<!--              <option v-for="(countiesValue, countyKey, index) in availableCounties"-->
+<!--                      :key="index" :value="countyKey">{{ countiesValue }}</option>-->
             </select>
           </div>
 
           <div class="col-md-6">
             <label for="inputCounty" class="form-label">County</label>
-            <select id="inputCounty" class="form-select">
-              <option selected>Choose...</option>
-              <option>...</option>
+            <select v-model="userDetails.county" id="inputCounty" class="form-select">
+              <option disabled>Choose...</option>
+              <option :value="userDetails.county">{{ userDetails.county }}</option>
             </select>
           </div>
 
-          <div class="col-12">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="gridCheck">
-              <label class="form-check-label" for="gridCheck">
-                Check me out
-              </label>
-            </div>
-          </div>
           <div class="col-12 text-end">
-            <button type="submit" class="button is-success">Save</button>
+            <button type="submit" class="button is-success">Update</button>
           </div>
         </form>
       </div>
@@ -79,16 +73,26 @@
 
 export default {
   name: 'AccountSettings',
-  data() {
-    return {
-
-    }
+  beforeCreate() {
+    this.$store.dispatch('getUserDetails')
   },
   mounted() {
     document.title = 'My Settings | grooveShop'
   },
-  methods: {
-
+  computed: {
+    userDetails: {
+      get() {
+        return this.$store.getters['getStateUserDetails']
+      },
+      set(value) {
+        this.$store.commit('updateUserDetails', value)
+      }
+    },
+    fullName: {
+      get() {
+        return this.userDetails.first_name + ' ' + this.userDetails.last_name
+      },
+    }
   }
 }
 </script>

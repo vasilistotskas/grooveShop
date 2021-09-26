@@ -1,5 +1,5 @@
 <template>
-  <div class="page-log-in">
+  <div class="page-log-in mt-5">
     <div class="container">
       <div class="col-4 mx-auto">
         <h1 class="title mb-5">Log in</h1>

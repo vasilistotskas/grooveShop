@@ -17,6 +17,7 @@ export default createStore({
         latestProducts: [],
         isAuthenticated: false,
         userData: {},
+        userDetails: {},
         order: {},
         isFavourite: false,
         token: '',
@@ -28,6 +29,7 @@ export default createStore({
         getStateLatestProducts: state => state.latestProducts,
         getStateProductExtraImages: state => state.product.images,
         getStateUserData: state => state.userData,
+        getStateUserDetails: state => state.UserDetails,
         getStateUserOrders: state => state.orders,
         getStateIsFavourite: state => state.isFavourite,
         getFavouriteId: state => state.userData.favourite_id,
@@ -73,12 +75,18 @@ export default createStore({
         setUserData(state, userData) {
             state.userData = userData
         },
+        setUserDetails(state, UserDetails) {
+            state.UserDetails = UserDetails
+        },
         setFavourite(state, isFavourite) {
             state.isFavourite = isFavourite
         },
         // for later to check user profile changes
         updateUserData(state, userData) {
             state.userData = userData
+        },
+        updateUserDetails(state, UserDetails) {
+            state.UserDetails = UserDetails
         },
         updateIsFavourite(state, isFavourite) {
             state.isFavourite = isFavourite
@@ -193,18 +201,31 @@ export default createStore({
                         {
                             'id': response.data[0].id,
                             'favourite_id': response.data[0].favourite_id,
-                            'user': response.data[0].user,
-                            // 'first_name': response.data[0].first_name,
-                            // 'last_name': response.data[0].last_name,
-                            // 'phone': response.data[0].phone,
-                            // 'email': response.data[0].email,
-                            // 'city': response.data[0].city,
-                            // 'zipcode': response.data[0].zipcode,
-                            // 'address': response.data[0].address,
-                            // 'place': response.data[0].place,
-                            // 'country': response.data[0].country,
-                            // 'county': response.data[0].county,
-                            // 'image': response.data[0].image
+                            'user': response.data[0].user
+                        }
+                    )
+                })
+        },
+
+        async getUserDetails({dispatch, commit}) {
+            await dispatch('ensureUserIsAuthenticated')
+
+            const userDetailsFromRemote = await Api(commit).get('userprofile/auth')
+                .then(response => {
+                    this.commit('setUserDetails',
+                        {
+                            'first_name': response.data[0].first_name,
+                            'last_name': response.data[0].last_name,
+                            'phone': response.data[0].phone,
+                            'email': response.data[0].email,
+                            'city': response.data[0].city,
+                            'zipcode': response.data[0].zipcode,
+                            'address': response.data[0].address,
+                            'place': response.data[0].place,
+                            'country': response.data[0].country,
+                            'country_name': response.data[0].country_name,
+                            'county': response.data[0].county,
+                            'image': response.data[0].image
                         }
                     )
                 })

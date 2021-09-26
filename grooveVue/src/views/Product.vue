@@ -1,34 +1,32 @@
 <template>
-  <div class="container mt-5">
-    <div class="page-product">
-      <div class="row">
-        <div class="col-md-9 page-product-image-col" :style="getProductImageCol()">
-          <figure
-              v-for="image in product.images"
-              :key="image.id"
-              class="image">
-            <img v-bind:src="'http://127.0.0.1:8000' + image.image">
-          </figure>
-        </div>
+  <div class="page-product container mt-5">
+    <div class="row">
+      <div class="col-md-9 page-product-image-col" :style="getProductImageCol()">
+        <figure
+            v-for="image in product.images"
+            :key="image.id"
+            class="image">
+          <img v-bind:src="'http://127.0.0.1:8000' + image.image">
+        </figure>
+      </div>
 
-        <div class="col-md-3">
-          <h1 class="title mb-5">{{ product.name }}</h1>
-          <p class="description mb-4">{{ product.description }}</p>
-          <p><strong>Price: </strong>${{ product.price }}</p>
+      <div class="col-md-3">
+        <h1 class="title mb-5">{{ product.name }}</h1>
+        <p class="description mb-4">{{ product.description }}</p>
+        <p><strong>Price: </strong>${{ product.price }}</p>
 
-          <div class="field has-addons mt-6">
-            <div class="control">
-              <input type="number" class="input" min="1" v-model="quantity">
-            </div>
-
-            <div class="control">
-              <a class="button is-dark" @click="addToCart()">Add to cart</a>
-            </div>
-
-            <FavouriteButton :product="product">
-
-            </FavouriteButton>
+        <div class="field has-addons mt-6">
+          <div class="control">
+            <input type="number" class="input" min="1" v-model="quantity">
           </div>
+
+          <div class="control">
+            <a class="button is-dark" @click="addToCart()">Add to cart</a>
+          </div>
+
+          <FavouriteButton :product="product">
+
+          </FavouriteButton>
         </div>
       </div>
     </div>

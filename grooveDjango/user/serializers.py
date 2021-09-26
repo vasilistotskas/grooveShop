@@ -6,9 +6,13 @@ from django.contrib.auth.models import User
 
 class UserProfileSerializer(serializers.ModelSerializer):
     favourite_id = serializers.SerializerMethodField('get_favourite_id')
+    country_name = serializers.SerializerMethodField('get_country_name')
 
     def get_favourite_id(self, request):
         return request.user.favourite.id
+
+    def get_country_name(self, request):
+        return request.country.name
 
     class Meta:
         model = UserProfile

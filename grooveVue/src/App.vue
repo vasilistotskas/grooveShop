@@ -7,11 +7,12 @@
         v-bind:categories="categories"
     />
 
-    <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading': $store.state.isLoading }">
-      <div v-if="$store.state.isLoading" class="lds-dual-ring"></div>
-    </div>
+  <!-- Loading Spinner -->
+  <!--    <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading': $store.state.isLoading }">-->
+  <!--      <div v-if="$store.state.isLoading" class="lds-dual-ring"></div>-->
+  <!--    </div>-->
 
-    <section class="mt-6 mb-5">
+    <section class="mb-5">
       <router-view/>
     </section>
 

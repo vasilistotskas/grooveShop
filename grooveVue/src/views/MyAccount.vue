@@ -1,5 +1,5 @@
 <template>
-  <div class="page-my-account container">
+  <div class="page-my-account container mt-5">
     <div class="col-12">
       <h1 class="title mb-5"><router-link :to="{ name: 'MyAccount' }" class="my-account-header">My account</router-link></h1>
     </div>
@@ -44,7 +44,7 @@ export default {
       localStorage.removeItem("userid")
 
       this.$store.commit('removeToken')
-      this.$store.commit('unsetUserProfile')
+      this.$store.commit('unsetUserData')
       this.$store.commit('unsetIsFavourite')
 
       this.$router.push('/')

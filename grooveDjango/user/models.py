@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django_countries.fields import CountryField
+from .counties import gr_counties
 
 
 class UserProfile(models.Model):
@@ -15,9 +17,9 @@ class UserProfile(models.Model):
     zipcode = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
     place = models.CharField(max_length=50, blank=True, null=True)
-    country = models.CharField(max_length=50, blank=True, null=True)
-    county = models.CharField(max_length=50, blank=True, null=True)
-    image = models.ImageField(blank=True, null=True, upload_to='images/users/')
+    country = CountryField()
+    county = models.CharField(max_length=50, choices=gr_counties.COUNTIES, blank=True, null=True)
+    image = models.ImageField(blank=True, null=True, upload_to='images/users/', default='images/users/default.png')
 
     class Meta:
         verbose_name_plural = "User's Profile"
