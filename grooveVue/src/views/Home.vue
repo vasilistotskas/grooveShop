@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <section class="hero is-medium is-dark mb-6">
+  <div class="home container-fluid">
+    <section class="hero is-medium is-dark mb-6 mt-5">
       <div class="hero-body has-text-centered">
         <p class="title mb-6">
           Welcome to Djacket

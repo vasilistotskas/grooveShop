@@ -30,7 +30,7 @@ export default {
         .then(success => {
           toast({
             message: success,
-            type: 'is-info',
+            type: 'is-success',
             dismissible: true,
             pauseOnHover: true,
             duration: 2000,

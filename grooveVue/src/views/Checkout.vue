@@ -1,5 +1,5 @@
 <template>
-  <div class="page-checkout">
+  <div class="page-checkout container-fluid">
     <div class="columns is-multiline">
       <div class="column is-12">
         <h1 class="title">Checkout</h1>
@@ -144,7 +144,7 @@ export default {
     this.cart = this.$store.state.cart
 
     if (this.cartTotalLength > 0) {
-      this.stripe = Stripe('pk_test_51H1HiuKBJV2qfWbD2gQe6aqanfw6Eyul5PO2KeOuSRlUMuaV4TxEtaQyzr9DbLITSZweL7XjK3p74swcGYrE2qEX00Hz7GmhMI')
+      this.stripe = Stripe('pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3')
       const elements = this.stripe.elements();
       this.card = elements.create('card', {hidePostalCode: true})
 

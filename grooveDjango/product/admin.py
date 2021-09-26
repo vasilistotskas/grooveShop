@@ -1,6 +1,6 @@
 from django.contrib import admin
-
-from .models import Category, Product, Favourite, FavouriteItem
+import admin_thumbnails
+from .models import Category, Product, ProductImages, Favourite, FavouriteItem
 
 
 def category_update_action(category):
@@ -11,11 +11,20 @@ def category_update_action(category):
     return category_update
 
 
+@admin_thumbnails.thumbnail('image')
+class ProductImageInline(admin.TabularInline):
+    model = ProductImages
+    exclude = ['thumbnail']
+    readonly_fields = ('id',)
+    extra = 1
+
+
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'category', 'price', 'boolean_status']
+    list_display = ['name', 'category', 'price', 'colored_quantity', 'boolean_status', 'image_tag']
     list_filter = ['category']
-    inlines = []
+    inlines = [ProductImageInline]
     prepopulated_fields = {'slug': ('name',)}
+    readonly_fields = ('image_tag',)
     actions = ['']
     # List with actions for mass category set to products
     try:

@@ -2,7 +2,7 @@
   <div class="column is-3">
     <div class="box">
       <figure class="image mb-4">
-        <img v-bind:src="product.get_thumbnail">
+        <img v-bind:src="product.main_image">
       </figure>
 
       <h3 class="is-size-4">{{ product.name }}</h3>

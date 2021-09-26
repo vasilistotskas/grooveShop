@@ -1,10 +1,22 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from .models import Category, Product, ProductImages, Favourite, FavouriteItem
 
-from .models import Category, Product, Favourite, FavouriteItem
+
+class ImagesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ProductImages
+        fields = (
+            "id",
+            "image",
+            "is_main"
+        )
+
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    images = ImagesSerializer(source='productimages_set', many=True, read_only=True)
+
     #
     # # Create a custom method field
     # is_favourite_for_current_user = serializers.SerializerMethodField('get_if_current_users_favourite')
@@ -23,8 +35,8 @@ class ProductSerializer(serializers.ModelSerializer):
             "get_absolute_url",
             "description",
             "price",
-            "get_image",
-            "get_thumbnail"
+            "main_image",
+            "images"
         )
 
 
