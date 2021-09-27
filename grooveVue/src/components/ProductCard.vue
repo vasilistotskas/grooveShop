@@ -28,7 +28,7 @@
 import {toast} from "bulma-toast";
 
 export default {
-  name: 'ProductBox',
+  name: 'ProductCard',
   props: {
     product: Object
   },

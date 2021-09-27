@@ -8,7 +8,7 @@
 
         <div class="col-12">
           <div class="row">
-            <ProductBox
+            <ProductCard
                 class="col-sm-3"
                 v-for="product in category.products"
                 v-bind:key="product.id"
@@ -25,12 +25,12 @@
 import axios from 'axios'
 import {toast} from 'bulma-toast'
 
-import ProductBox from '@/components/ProductBox'
+import ProductCard from '@/components/ProductCard'
 
 export default {
   name: 'Category',
   components: {
-    ProductBox
+    ProductCard
   },
   data() {
     return {

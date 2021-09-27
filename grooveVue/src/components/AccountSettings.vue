@@ -40,7 +40,7 @@
 
           <div class="col-md-6">
             <label for="inputCountry" class="form-label">Country</label>
-            <select name="region" id="inputRegion" class="form-select" v-model="userDetails.country_name">
+            <select name="region" id="inputCountry" class="form-select" v-model="userDetails.country_name">
               <option disabled value="">Choose...</option>
               <option :value="userDetails.country_name">{{ userDetails.country_name }}</option>
 <!--              <option v-for="(regionsValue, regionKey, index) in availableRegions"-->

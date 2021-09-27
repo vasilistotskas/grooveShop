@@ -9,7 +9,7 @@
 
         <div class="col-12">
           <div class="row">
-            <ProductBox
+            <ProductCard
                 class="col-sm-3"
                 v-for="product in products"
                 v-bind:key="product.id"
@@ -24,12 +24,12 @@
 
 <script>
 import axios from 'axios'
-import ProductBox from '@/components/ProductBox.vue'
+import ProductCard from '@/components/ProductCard.vue'
 
 export default {
   name: 'Search',
   components: {
-    ProductBox
+    ProductCard
   },
   data() {
     return {

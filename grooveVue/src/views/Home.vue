@@ -16,7 +16,7 @@
         <div class="col-12 mb-5">
           <h2 class="is-size-2 has-text-centered">Latest products</h2>
         </div>
-        <ProductBox
+        <ProductCard
             class="col-sm-3"
             v-for="product in latestProducts"
             v-bind:key="product.id"
@@ -29,12 +29,12 @@
 <script>
 import axios from 'axios'
 
-import ProductBox from '@/components/ProductBox'
+import ProductCard from '@/components/ProductCard'
 
 export default {
   name: 'Home',
   components: {
-    ProductBox
+    ProductCard
   },
   beforeCreate() {
     this.$store.dispatch('getLatestProducts')
