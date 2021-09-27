@@ -40,19 +40,19 @@
 
           <div class="col-md-6">
             <label for="inputCountry" class="form-label">Country</label>
-            <select name="county" id="inputCountry" class="form-select" v-model="userDetails.country_name">
+            <select name="region" id="inputRegion" class="form-select" v-model="userDetails.country_name">
               <option disabled value="">Choose...</option>
               <option :value="userDetails.country_name">{{ userDetails.country_name }}</option>
-<!--              <option v-for="(countiesValue, countyKey, index) in availableCounties"-->
-<!--                      :key="index" :value="countyKey">{{ countiesValue }}</option>-->
+<!--              <option v-for="(regionsValue, regionKey, index) in availableRegions"-->
+<!--                      :key="index" :value="regionKey">{{ regionsValue }}</option>-->
             </select>
           </div>
 
           <div class="col-md-6">
-            <label for="inputCounty" class="form-label">County</label>
-            <select v-model="userDetails.county" id="inputCounty" class="form-select">
+            <label for="inputRegion" class="form-label">Region</label>
+            <select v-model="userDetails.region" id="inputRegion" class="form-select">
               <option disabled>Choose...</option>
-              <option :value="userDetails.county">{{ userDetails.county }}</option>
+              <option :value="userDetails.region">{{ userDetails.region }}</option>
             </select>
           </div>
 

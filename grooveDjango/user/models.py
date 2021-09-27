@@ -4,7 +4,7 @@ from django.utils.safestring import mark_safe
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_countries.fields import CountryField
-from .counties import gr_counties
+from .regions import gr_regions
 
 
 class UserProfile(models.Model):
@@ -18,7 +18,7 @@ class UserProfile(models.Model):
     address = models.CharField(max_length=100, blank=True, null=True)
     place = models.CharField(max_length=50, blank=True, null=True)
     country = CountryField()
-    county = models.CharField(max_length=50, choices=gr_counties.COUNTIES, blank=True, null=True)
+    region = models.CharField(max_length=50, choices=gr_regions.REGIONS, blank=True, null=True)
     image = models.ImageField(blank=True, null=True, upload_to='images/users/', default='images/users/default.png')
 
     class Meta:

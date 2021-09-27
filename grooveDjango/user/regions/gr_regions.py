@@ -1,4 +1,4 @@
-COUNTIES = [
+REGIONS = [
     ('Attica', 'Attica'),
     ('Central Macedonia', 'Central Macedonia'),
     ('Thessaly', 'Thessaly'),
