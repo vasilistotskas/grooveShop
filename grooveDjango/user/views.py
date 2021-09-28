@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from user.models import UserProfile
+from user.models import UserProfile, Country, Region
 from rest_framework import status, authentication, permissions, generics, viewsets
-from .serializers import UserSerializer, UserProfileSerializer
+from .serializers import UserSerializer, UserProfileSerializer, CountrySerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import Http404
@@ -62,3 +62,6 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
             raise Http404
 
 
+class CountriesList(generics.ListAPIView):
+    queryset = Country.objects.all()
+    serializer_class = CountrySerializer

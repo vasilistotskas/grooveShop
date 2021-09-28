@@ -190,10 +190,12 @@ class ProductImages(models.Model):
         return cls.objects.filter(product_id=product_id)
 
 
-
 # favourite Model
 class Favourite(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
 
     def get_absolute_url(self):
         return f'//{self.id}/'

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import UserProfile
+from .models import UserProfile, Country, Region
 from django.contrib.auth.models import User
 
 
@@ -27,3 +27,16 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'userprofile']
 
+
+class RegionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Region
+        fields = '__all__'
+
+
+class CountrySerializer(serializers.ModelSerializer):
+    regions = RegionSerializer(source='region_set', required=False, many=True)
+
+    class Meta:
+        model = Country
+        fields = ['name', 'alpha_2', 'alpha_3', 'iso_cc', 'phone_code', 'regions']

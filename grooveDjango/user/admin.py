@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import UserProfile
+from .models import UserProfile, Country, Region
 
 
 class UserProfileAdmin(admin.ModelAdmin):
@@ -8,4 +8,15 @@ class UserProfileAdmin(admin.ModelAdmin):
     search_fields = ['user__username', 'email']
 
 
+class RegionInline(admin.TabularInline):
+    model = Region
+    extra = 1
+
+
+class CountryAdmin(admin.ModelAdmin):
+    inlines = [RegionInline]
+
+
 admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.register(Country, CountryAdmin)
+admin.site.register(Region)

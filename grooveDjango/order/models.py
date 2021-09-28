@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
-
 from product.models import Product
+
 
 class Order(models.Model):
     user = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE)
@@ -21,6 +21,7 @@ class Order(models.Model):
     
     def __str__(self):
         return self.first_name
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)

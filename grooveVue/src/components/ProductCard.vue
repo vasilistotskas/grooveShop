@@ -63,10 +63,15 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .image {
   margin-top: -1.25rem;
   margin-left: -1.25rem;
   margin-right: -1.25rem;
+}
+.box{
+  &:hover{
+      box-shadow: rgb(0 0 0 / 20%) 0 3px 5px -1px, rgb(0 0 0 / 14%) 0 6px 10px 0, rgb(0 0 0 / 12%) 0 1px 18px 0;
+   }
 }
 </style>

@@ -4,7 +4,32 @@ from django.utils.safestring import mark_safe
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_countries.fields import CountryField
-from .regions import gr_regions
+
+
+class Country(models.Model):
+    name = models.CharField(max_length=50)
+    alpha_2 = models.CharField(max_length=2, primary_key=True)
+    alpha_3 = models.CharField(max_length=3)
+    iso_cc = models.PositiveSmallIntegerField(blank=True, null=True)
+    phone_code = models.CharField(max_length=10)
+
+    class Meta:
+        verbose_name_plural = "Countries"
+
+    def __str__(self):
+        return self.name
+
+
+class Region(models.Model):
+    name = models.CharField(max_length=100)
+    alpha = models.CharField(max_length=10, primary_key=True)
+    alpha_2 = models.ForeignKey(Country, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = "Regions"
+
+    def __str__(self):
+        return self.name
 
 
 class UserProfile(models.Model):
@@ -17,8 +42,8 @@ class UserProfile(models.Model):
     zipcode = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
     place = models.CharField(max_length=50, blank=True, null=True)
-    country = CountryField()
-    region = models.CharField(max_length=50, choices=gr_regions.REGIONS, blank=True, null=True)
+    country = models.ForeignKey(Country, null=True, blank=True, default=None, on_delete=models.SET_NULL)
+    region = models.ForeignKey(Region, null=True, blank=True, default=None, on_delete=models.SET_NULL)
     image = models.ImageField(blank=True, null=True, upload_to='images/users/', default='images/users/default.png')
 
     class Meta:
