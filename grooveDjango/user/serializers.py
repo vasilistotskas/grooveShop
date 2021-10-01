@@ -4,30 +4,6 @@ from .models import UserProfile, Country, Region
 from django.contrib.auth.models import User
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
-    favourite_id = serializers.SerializerMethodField('get_favourite_id')
-    country_name = serializers.SerializerMethodField('get_country_name')
-
-    def get_favourite_id(self, request):
-        return request.user.favourite.id
-
-    def get_country_name(self, request):
-        return request.country.name
-
-    class Meta:
-        model = UserProfile
-        fields = '__all__'
-
-
-class UserSerializer(serializers.ModelSerializer):
-    # create user profile
-    userprofile = UserProfileSerializer(required=False)
-
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'userprofile']
-
-
 class RegionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Region
@@ -40,3 +16,25 @@ class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
         fields = ['name', 'alpha_2', 'alpha_3', 'iso_cc', 'phone_code', 'regions']
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    favourite_id = serializers.SerializerMethodField('get_favourite_id')
+    country = CountrySerializer(many=False)
+
+    def get_favourite_id(self, request):
+        return request.user.favourite.id
+
+    class Meta:
+        model = UserProfile
+        fields = ['favourite_id', 'first_name', 'last_name', 'phone', 'email', 'city', 'zipcode', 'address',
+                  'place', 'country', 'region', 'image']
+
+
+class UserSerializer(serializers.ModelSerializer):
+    # create user profile
+    userprofile = UserProfileSerializer(required=False)
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'userprofile']

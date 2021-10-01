@@ -101,7 +101,6 @@ export default {
                         'address': response.data[0].address,
                         'place': response.data[0].place,
                         'country': response.data[0].country,
-                        'country_name': response.data[0].country_name,
                         'region': response.data[0].region,
                         'image': response.data[0].image
                     }
