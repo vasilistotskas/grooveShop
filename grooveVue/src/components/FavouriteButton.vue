@@ -1,8 +1,9 @@
 <template>
-  <div class="control">
-    <a @click="favouriteHandle()"><i :class=getFavouriteIconClass()></i></a>
-
-  </div>
+  <a @click="favouriteHandle()">
+    <div class="control favourite-content">
+      <i :class=getFavouriteIconClass()></i>
+    </div>
+  </a>
 </template>
 
 
@@ -39,7 +40,7 @@ export default {
         })
         .catch(error => {
           toast({
-            message: error,
+            message: error.message,
             type: 'is-danger',
             dismissible: true,
             pauseOnHover: true,
@@ -49,10 +50,21 @@ export default {
         })
     },
 
-
     getFavouriteIconClass() {
       return !this.isFavourite ? 'far fa-heart' : 'fas fa-heart'
     }
   }
 }
 </script>
+
+<style lang="scss">
+.favourite-content{
+  padding: 8px;
+  background: #e4e4e4;
+  .fa-heart{ font-size: 20px;
+    &.fas{
+      color: red;
+    }
+  }
+}
+</style>

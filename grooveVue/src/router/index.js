@@ -13,6 +13,8 @@ import LogIn from '../views/LogIn.vue'
 import MyAccount from '../views/MyAccount.vue'
 import Checkout from '../views/Checkout.vue'
 import Success from '../views/Success.vue'
+import OrderSummary from '@/components/OrderSummary'
+import AccountSettings from '@/components/AccountSettings'
 
 const routes = [
     {
@@ -42,6 +44,18 @@ const routes = [
         path: '/my-account',
         name: 'MyAccount',
         component: MyAccount,
+        children: [
+            {
+                path: 'orders',
+                name: 'Orders',
+                component: OrderSummary
+            },
+            {
+                path: 'settings',
+                name: 'Settings',
+                component: AccountSettings
+            }
+        ],
         meta: {
             requireLogin: true
         }

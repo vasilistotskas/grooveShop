@@ -1,11 +1,11 @@
 <template>
-  <div class="page-cart container-fluid">
-    <div class="columns is-multiline">
-      <div class="column is-12">
-        <h1 class="title">Cart</h1>
+  <div class="page-cart container mt-5">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="title mb-5">Cart</h1>
       </div>
 
-      <div class="column is-12 box">
+      <div class="col-12 box">
         <table class="table is-fullwidth" v-if="cartTotalLength">
           <thead>
           <tr>
@@ -29,14 +29,12 @@
         <p v-else>You don't have any products in your cart...</p>
       </div>
 
-      <div class="column is-12 box">
+      <div class="col-12 box">
         <h2 class="subtitle">Summary</h2>
 
         <strong>${{ cartTotalPrice.toFixed(2) }}</strong>, {{ cartTotalLength }} items
 
-        <hr>
-
-        <router-link to="/cart/checkout" class="button is-dark">Proceed to checkout</router-link>
+        <router-link to="/cart/checkout" class="button is-dark float-end">Proceed to checkout</router-link>
       </div>
     </div>
   </div>

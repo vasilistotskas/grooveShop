@@ -1,8 +1,8 @@
 <template>
-  <div class="page-log-in">
-    <div class="columns">
-      <div class="column is-4 is-offset-4">
-        <h1 class="title">Log in</h1>
+  <div class="page-log-in mt-5">
+    <div class="container">
+      <div class="col-4 mx-auto">
+        <h1 class="title mb-5">Log in</h1>
 
         <form @submit.prevent="submitForm">
           <div class="field">
@@ -29,8 +29,6 @@
             </div>
           </div>
 
-          <hr>
-
           Or
           <router-link to="/sign-up">click here</router-link>
           to sign up!
@@ -42,6 +40,7 @@
 
 <script>
 import axios from 'axios'
+import router from "@/router";
 
 export default {
   name: 'LogIn',
@@ -58,42 +57,17 @@ export default {
   methods: {
     async submitForm() {
       axios.defaults.headers.common["Authorization"] = ""
-      this.$store.commit('setIsLoading', true)
-
       localStorage.removeItem("token")
 
       const formData = {
         username: this.username,
         password: this.password
       }
-
-      await axios
-          .post("/api/v1/djoser/token/login/", formData)
-          .then(response => {
-            const token = response.data.auth_token
-
-            this.$store.commit('setToken', token)
-
-            axios.defaults.headers.common["Authorization"] = "Token " + token
-
-            localStorage.setItem("token", token)
-
-            window.location.href="/";
-
-          })
-          .catch(error => {
-            if (error.response) {
-              for (const property in error.response.data) {
-                this.errors.push(`${property}: ${error.response.data[property]}`)
-              }
-            } else {
-              this.errors.push('Something went wrong. Please try again')
-
-              console.log(JSON.stringify(error))
-            }
+      this.$store.dispatch('userLogIn', formData)
+          .then(success => {
+            router.push('/')
           })
 
-      this.$store.commit('setIsLoading', false)
     }
   }
 }

@@ -7,11 +7,12 @@
         v-bind:categories="categories"
     />
 
-    <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading': $store.state.isLoading }">
-      <div v-if="$store.state.isLoading" class="lds-dual-ring"></div>
-    </div>
+   Loading Spinner
+      <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading': $store.state.isLoading }">
+        <div v-if="$store.state.isLoading" class="lds-dual-ring"></div>
+      </div>
 
-    <section>
+    <section class="mb-5">
       <router-view/>
     </section>
 
@@ -32,16 +33,16 @@ export default {
   },
   data() {
     return {
-      showMobileMenu: false,
-      cart: {
-        items: []
-      }
+      showMobileMenu: false
     }
   },
   beforeCreate() {
     this.$store.commit('initializeStore')
-    this.$store.dispatch('getUserProfile')
     this.$store.dispatch('getCategories')
+
+    if (this.$store.state.isAuthenticated) {
+      this.$store.dispatch('getUserData')
+    }
 
     const token = this.$store.state.token
 
@@ -51,16 +52,21 @@ export default {
       axios.defaults.headers.common['Authorization'] = ""
     }
   },
-  mounted() {
-    this.cart = this.$store.state.cart
-  },
   computed: {
-    userProfile: {
+    userData: {
       get() {
-        return this.$store.getters['getStateUserProfile']
+        return this.$store.getters['getStateUserData']
       },
       set(value) {
-        this.$store.commit('updateUserProfile', value)
+        this.$store.commit('updateUserData', value)
+      }
+    },
+    cart: {
+      get() {
+        return this.$store.getters['getStateCartData']
+      },
+      set(value) {
+        this.$store.commit('updateUserData', value)
       }
     },
     categories: {
@@ -83,6 +89,34 @@ export default {
 
 <style lang="scss">
 @import '../node_modules/bulma';
+
+section{
+  padding-top: 75px;
+}
+
+.main-navbar{
+  z-index: 99999!important;
+}
+
+::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #555;
+}
 
 .lds-dual-ring {
   display: inline-block;

@@ -1,10 +1,10 @@
 from django.contrib.auth.models import User
 from django.db import models
-
 from product.models import Product
 
+
 class Order(models.Model):
-    user = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE, null=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
@@ -21,6 +21,7 @@ class Order(models.Model):
     
     def __str__(self):
         return self.first_name
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)

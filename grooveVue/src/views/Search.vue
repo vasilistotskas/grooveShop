@@ -1,34 +1,44 @@
 <template>
-  <div class="page-search">
-    <div class="columns is-multiline">
-      <div class="column is-12">
-        <h1 class="title">Search</h1>
+  <div class="page-search mt-5">
+    <div class="row">
+      <div class="container">
+        <div class="col-12">
+          <h1 class="title mb-5">Search</h1>
+          <h2 class="is-size-5 has-text-grey">Search term: "{{ query }}"</h2>
+        </div>
 
-        <h2 class="is-size-5 has-text-grey">Search term: "{{ query }}"</h2>
+        <div class="col-12">
+          <div class="row">
+            <ProductCard
+                class="col-sm-3"
+                v-for="product in searchProducts"
+                v-bind:key="product.id"
+                v-bind:product="product"/>
+          </div>
+        </div>
+
       </div>
-
-      <ProductBox
-          v-for="product in products"
-          v-bind:key="product.id"
-          v-bind:product="product"/>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import ProductBox from '@/components/ProductBox.vue'
+import ProductCard from '@/components/ProductCard.vue'
+import {mapGetters} from "vuex";
 
 export default {
   name: 'Search',
   components: {
-    ProductBox
+    ProductCard
   },
   data() {
     return {
-      products: [],
       query: ''
     }
+  },
+  computed: {
+    ...mapGetters({'searchProducts': 'getStateSearchProducts'})
   },
   mounted() {
     document.title = 'Search | grooveShop'
@@ -44,18 +54,7 @@ export default {
   },
   methods: {
     async performSearch() {
-      this.$store.commit('setIsLoading', true)
-
-      await axios
-          .post('/api/v1/products/search/', {'query': this.query})
-          .then(response => {
-            this.products = response.data
-          })
-          .catch(error => {
-            console.log(error)
-          })
-
-      this.$store.commit('setIsLoading', false)
+      this.$store.dispatch('getSearchResults', {'query': this.query})
     }
   }
 }

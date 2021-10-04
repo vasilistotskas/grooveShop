@@ -1,8 +1,8 @@
 <template>
-  <div class="page-sign-up">
-    <div class="columns">
-      <div class="column is-4 is-offset-4">
-        <h1 class="title">Sign up</h1>
+  <div class="page-sign-up mt-5">
+    <div class="container">
+      <div class="col-4 mx-auto">
+        <h1 class="title mb-5">Sign up</h1>
 
         <form @submit.prevent="submitForm">
           <div class="field">
@@ -36,8 +36,6 @@
             </div>
           </div>
 
-          <hr>
-
           Or
           <router-link to="/log-in">click here</router-link>
           to log in!
@@ -50,6 +48,7 @@
 <script>
 import axios from 'axios'
 import {toast} from 'bulma-toast'
+import router from "@/router";
 
 export default {
   name: 'SignUp',
@@ -95,7 +94,7 @@ export default {
                 position: 'bottom-right',
               })
 
-              this.$router.push('/log-in')
+              router.push('/log-in')
             })
             .catch(error => {
               if (error.response) {

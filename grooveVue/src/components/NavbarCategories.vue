@@ -1,11 +1,17 @@
 <template>
-  <tr>
-    <td v-for="category in categories"
-        v-bind:key="categories.id">
-      <router-link :to="{ name: 'Category', params: { category_slug: category.slug } }">{{ category.name }}</router-link>
-
-    </td>
-  </tr>
+  <div class="collapse navbar-collapse" id="navbarNavCategories">
+    <ul class="navbar-nav">
+      <li class="nav-item"
+          v-for="category in categories"
+          v-bind:key="categories.id">
+        <router-link
+            class="nav-link active" aria-current="page"
+            :to="{ name: 'Category', params: { category_slug: category.slug } }">
+          {{ category.name }}
+        </router-link>
+      </li>
+    </ul>
+  </div>
 
 </template>
 

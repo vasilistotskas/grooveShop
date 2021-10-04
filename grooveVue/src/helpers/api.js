@@ -56,6 +56,14 @@ export default function Api(commit, alternativeToken = null) {
                 data,
                 { headers: { 'Authorization': "Token " + getUserToken() } },
             ).finally(() => afterResponse())
+        },
+        patch: (endpoint, data, ...idList) => {
+            beforeRequest()
+            return axios.patch(
+                `${baseUrl}/${endpoint}${serializeParams(idList)}`,
+                data,
+                { headers: { 'Authorization': "Token " + getUserToken() } },
+            ).finally(() => afterResponse())
         }
     }
 }
