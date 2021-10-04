@@ -1,14 +1,15 @@
 <template>
   <div class="row" v-if="userDetails && Object.keys(userDetails).length > 0">
     <div class="col-lg-3">
-      <div class="py-11 px-5 text-center mb-5 box">
-        <img v-bind:src="'http://127.0.0.1:8000' + userDetails.image" class="mb-5 rounded-circle" alt="User Avatar" width="72" height="72">
-        <h2 class="fw-bold">{{ fullName }}</h2>
-      </div>
+      <ProfileImage
+          :src="userDetails.image"
+          :fullname="fullName"
+          v-model="userDetails.image"
+      />
     </div>
     <div class="col-lg-9">
       <div class="box">
-        <form class="row g-3">
+        <form id="userDetailsForm" name="userDetailsForm" class="row g-3">
           <div class="col-md-6">
             <label for="inputFirstName" class="form-label">First Name</label>
             <input v-model="userDetails.first_name" type="text" class="form-control" id="inputFirstName">
@@ -40,28 +41,39 @@
 
           <div class="col-md-6">
             <label for="inputCountry" class="form-label">Country</label>
-            <select name="region" id="inputCountry" class="form-select" v-model="userDetails.country_name">
-              <option disabled value="">Choose...</option>
-              <option :value="userDetails.country_name">{{ userDetails.country_name }}</option>
-<!--              <option v-for="(regionsValue, regionKey, index) in availableRegions"-->
-<!--                      :key="index" :value="regionKey">{{ regionsValue }}</option>-->
+            <select name="country" id="inputCountry" class="form-select" v-model="userDetails.country_alpha" @change="resetRegion">
+              <option disabled value="-1">Choose...</option>
+              <option
+                  v-for="country in availableCountries"
+                  :key="country.alpha_2"
+                  :value="country.alpha_2">
+                {{ country.name }}
+              </option>
             </select>
           </div>
 
           <div class="col-md-6">
             <label for="inputRegion" class="form-label">Region</label>
-            <select v-model="userDetails.region" id="inputRegion" class="form-select">
-              <option disabled>Choose...</option>
-              <option :value="userDetails.region">{{ userDetails.region }}</option>
+            <select name="region" id="inputRegion" class="form-select" v-model="userDetails.region">
+              <option disabled value="-1">Choose...</option>
+              <option
+                  v-for="region in regionsBasedOnAlpha"
+                  :key="region.alpha"
+                  :value="region.alpha">
+                {{ region.name }}
+              </option>
             </select>
           </div>
 
-          <div class="col-12 text-end">
-            <button type="submit" class="button is-success">Update</button>
+          <div class="notification is-danger mt-4" v-if="errors.length">
+            <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+          </div>
+
+          <div class="col-12 text-end mt-5">
+            <button type="submit" class="button is-success" @click.prevent="submitForm">Update</button>
           </div>
         </form>
       </div>
-
     </div>
   </div>
 
@@ -71,13 +83,27 @@
 
 <script>
 
+import {toast} from "bulma-toast";
+import ProfileImage from '@/components/ProfileImage'
+import {isEmpty} from 'lodash'
+import Api from "@/helpers/api";
+
 export default {
   name: 'AccountSettings',
+  components: {
+    ProfileImage
+  },
+  data() {
+    return {
+      errors: []
+    }
+  },
   beforeCreate() {
-    this.$store.dispatch('getUserDetails')
+    this.$store.dispatch('getCountries')
   },
   mounted() {
     document.title = 'My Settings | grooveShop'
+    this.$store.dispatch('getUserDetails')
   },
   computed: {
     userDetails: {
@@ -92,6 +118,67 @@ export default {
       get() {
         return this.userDetails.first_name + ' ' + this.userDetails.last_name
       },
+    },
+    availableCountries: {
+      get() {
+        return this.$store.getters['getStateCountries']
+      }
+    },
+    regionsBasedOnAlpha: {
+      get() {
+        return this.$store.getters['getStateRegionsBasedOnAlpha']
+      }
+    }
+  },
+  watch:{
+    'userDetails.country_alpha': function (newVal, oldVal){
+      this.$store.dispatch('getRegionsBasedOnAlpha', newVal)
+    }
+  },
+  methods: {
+    resetRegion() {
+      this.userDetails.region = '-1'
+    },
+    submitForm() {
+      this.errors = []
+      if (this.userDetails.region === '-1') {
+        this.errors.push('The region field is missing!')
+      }
+      if (!this.errors.length) {
+        try {
+          this.updateUserProfile()
+        } catch (error) {
+          throw error
+        }
+      }
+    },
+    updateUserProfile() {
+      const data = new FormData(document.getElementById('userDetailsForm'))
+      data.append('address', this.userDetails.address)
+      data.append('email', this.userDetails.email)
+      data.append('first_name', this.userDetails.first_name)
+      data.append('last_name', this.userDetails.last_name)
+      data.append('phone', this.userDetails.phone)
+      data.append('place', this.userDetails.place)
+      data.append('city', this.userDetails.city)
+      data.append('country_alpha', this.userDetails.country_alpha)
+      data.append('region', this.userDetails.region)
+      data.append('zipcode', this.userDetails.zipcode)
+
+      this.$store.dispatch('updateUserDetailsAction', data)
+          .then(success => {
+            toast({
+              message: 'Success',
+              type: 'is-success',
+              dismissible: true,
+              pauseOnHover: true,
+              duration: 2000,
+              position: 'bottom-right',
+            })
+          })
+          .catch(error => {
+            console.log(error)
+          })
     }
   }
 }

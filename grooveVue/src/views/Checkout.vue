@@ -1,5 +1,5 @@
 <template>
-  <div class="page-checkout container mt-5">
+  <div class="page-checkout container mt-5" v-if="customerDetails && Object.keys(customerDetails).length > 0">
     <div class="row">
       <div class="col-12">
         <h1 class="title mb-5">Checkout</h1>
@@ -48,28 +48,28 @@
             <div class="field">
               <label>First name*</label>
               <div class="control">
-                <input type="text" class="input" v-model="first_name">
+                <input type="text" class="input" v-model="customerDetails.first_name">
               </div>
             </div>
 
             <div class="field">
               <label>Last name*</label>
               <div class="control">
-                <input type="text" class="input" v-model="last_name">
+                <input type="text" class="input" v-model="customerDetails.last_name">
               </div>
             </div>
 
             <div class="field">
               <label>E-mail*</label>
               <div class="control">
-                <input type="email" class="input" v-model="email">
+                <input type="email" class="input" v-model="customerDetails.email">
               </div>
             </div>
 
             <div class="field">
               <label>Phone*</label>
               <div class="control">
-                <input type="text" class="input" v-model="phone">
+                <input type="text" class="input" v-model="customerDetails.phone">
               </div>
             </div>
           </div>
@@ -78,23 +78,50 @@
             <div class="field">
               <label>Address*</label>
               <div class="control">
-                <input type="text" class="input" v-model="address">
+                <input type="text" class="input" v-model="customerDetails.address">
               </div>
             </div>
 
             <div class="field">
               <label>Zip code*</label>
               <div class="control">
-                <input type="text" class="input" v-model="zipcode">
+                <input type="text" class="input" v-model="customerDetails.zipcode">
               </div>
             </div>
 
             <div class="field">
               <label>Place*</label>
               <div class="control">
-                <input type="text" class="input" v-model="place">
+                <input type="text" class="input" v-model="customerDetails.place">
               </div>
             </div>
+
+            <div class="field">
+              <label for="inputCountry" class="form-label">Country</label>
+              <select name="country" id="inputCountry" class="form-select" v-model="customerDetails.country_alpha" @change="resetRegion">
+                <option disabled value="choose">Choose...</option>
+                <option
+                    v-for="country in availableCountries"
+                    :key="country.alpha_2"
+                    :value="country.alpha_2">
+                  {{ country.name }}
+                </option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="inputRegion" class="form-label">Region</label>
+              <select ref="regionElement" name="region" id="inputRegion" class="form-select" v-model="customerDetails.region">
+                <option disabled value="choose">Choose...</option>
+                <option
+                    v-for="region in regionsBasedOnAlpha"
+                    :key="region.alpha"
+                    :value="region.alpha">
+                  {{ region.name }}
+                </option>
+              </select>
+            </div>
+
           </div>
         </div>
 
@@ -102,7 +129,7 @@
           <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
         </div>
 
-        <div id="card-element" class="mb-5"></div>
+        <div ref="stripleElement" id="card-element" class="mb-5 mt-5"></div>
 
         <template v-if="cartTotalLength">
           <button class="button is-dark" @click="submitForm">Pay with Stripe</button>
@@ -114,6 +141,7 @@
 
 <script>
 import axios from 'axios'
+import {toast} from "bulma-toast";
 
 export default {
   name: 'Checkout',
@@ -129,65 +157,142 @@ export default {
       email: '',
       phone: '',
       address: '',
+      city: '',
+      region: '',
+      country_alpha: '',
       zipcode: '',
       place: '',
       errors: []
     }
   },
+  computed: {
+    cartTotalPrice() {
+      return this.cart.items.reduce((acc, curVal) => {
+        return acc += curVal.product.price * curVal.quantity
+      }, 0)
+    },
+    cartTotalLength() {
+      return this.cart.items.reduce((acc, curVal) => {
+        return acc += curVal.quantity
+      }, 0)
+    },
+    userData: {
+      get() {
+        return this.$store.getters['getStateUserData']
+      },
+      set(value) {
+        this.$store.commit('updateUserData', value)
+      }
+    },
+    customerDetails: {
+      get() {
+        return this.$store.state.isAuthenticated ? this.$store.getters['getStateUserDetails'] : {}
+      },
+    },
+    availableCountries: {
+      get() {
+        return this.$store.getters['getStateCountries']
+      }
+    },
+    regionsBasedOnAlpha: {
+      get() {
+        return this.$store.getters['getStateRegionsBasedOnAlpha']
+      }
+    }
+  },
+  created() {
+    this.customerDataInitialize()
+    this.$store.dispatch('getCountries')
+    if (this.$store.state.isAuthenticated) {
+      this.$store.dispatch('getUserData')
+    }
+  },
   mounted() {
     document.title = 'Checkout | grooveShop'
-
     this.cart = this.$store.state.cart
-
-    if (this.cartTotalLength > 0) {
-      this.stripe = Stripe('pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3')
-      const elements = this.stripe.elements();
-      this.card = elements.create('card', {hidePostalCode: true})
-
-      this.card.mount('#card-element')
+  },
+  updated() {
+    if(!this.$refs.stripleElement.classList.contains('StripeElement')){
+      this.stripeElement()
+    }
+  },
+  watch:{
+    'customerDetails.country_alpha': function (newVal, oldVal){
+      this.$store.dispatch('getRegionsBasedOnAlpha', newVal)
     }
   },
   methods: {
+    resetRegion() {
+      // ?????
+      if (!this.$store.state.isAuthenticated) {
+        this.$store.dispatch('getRegionsBasedOnAlpha', this.customerDetails.country_alpha)
+      }
+      this.customerDetails.region = 'choose'
+
+    },
+    customerDataInitialize(){
+      if (this.$store.state.isAuthenticated) {
+        this.$store.dispatch('getUserDetails')
+      } else {
+        this.customerDetails.address = this.address
+        this.customerDetails.city = this.city
+        this.customerDetails.country_alpha = this.country_alpha
+        this.customerDetails.email = this.email
+        this.customerDetails.first_name = this.first_name
+        this.customerDetails.last_name = this.last_name
+        this.customerDetails.phone = this.phone
+        this.customerDetails.place = this.place
+        this.customerDetails.region = this.region
+        this.customerDetails.zipcode = this.zipcode
+      }
+    },
+    stripeElement(){
+      if (this.cartTotalLength > 0) {
+        this.stripe = Stripe('pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3')
+        const elements = this.stripe.elements();
+        this.card = elements.create('card', {hidePostalCode: true})
+
+        this.card.mount('#card-element')
+      }
+    },
     getItemTotal(item) {
       return item.quantity * item.product.price
     },
     submitForm() {
       this.errors = []
 
-      if (this.first_name === '') {
+      if (this.customerDetails.first_name === '') {
         this.errors.push('The first name field is missing!')
       }
 
-      if (this.last_name === '') {
+      if (this.customerDetails.last_name === '') {
         this.errors.push('The last name field is missing!')
       }
 
-      if (this.email === '') {
+      if (this.customerDetails.email === '') {
         this.errors.push('The email field is missing!')
       }
 
-      if (this.phone === '') {
+      if (this.customerDetails.phone === '') {
         this.errors.push('The phone field is missing!')
       }
 
-      if (this.address === '') {
+      if (this.customerDetails.address === '') {
         this.errors.push('The address field is missing!')
       }
 
-      if (this.zipcode === '') {
+      if (this.customerDetails.zipcode === '') {
         this.errors.push('The zip code field is missing!')
       }
 
-      if (this.place === '') {
+      if (this.customerDetails.place === '') {
         this.errors.push('The place field is missing!')
       }
 
       if (!this.errors.length) {
-        this.$store.commit('setIsLoading', true)
 
         this.stripe.createToken(this.card).then(result => {
           if (result.error) {
-            this.$store.commit('setIsLoading', false)
 
             this.errors.push('Something went wrong with Stripe. Please try again')
 
@@ -213,42 +318,19 @@ export default {
       }
 
       const data = {
-        'first_name': this.first_name,
-        'last_name': this.last_name,
-        'email': this.email,
-        'address': this.address,
-        'zipcode': this.zipcode,
-        'place': this.place,
-        'phone': this.phone,
+        'user_id': this.userData.id,
+        'first_name': this.customerDetails.first_name,
+        'last_name': this.customerDetails.last_name,
+        'email': this.customerDetails.email,
+        'address': this.customerDetails.address,
+        'zipcode': this.customerDetails.zipcode,
+        'place': this.customerDetails.place,
+        'phone': this.customerDetails.phone,
         'items': items,
         'stripe_token': token.id
       }
 
-      await axios
-          .post('/api/v1/checkout/', data)
-          .then(response => {
-            this.$store.commit('clearCart')
-            this.$router.push('/cart/success')
-          })
-          .catch(error => {
-            this.errors.push('Something went wrong. Please try again')
-
-            console.log(error)
-          })
-
-      this.$store.commit('setIsLoading', false)
-    }
-  },
-  computed: {
-    cartTotalPrice() {
-      return this.cart.items.reduce((acc, curVal) => {
-        return acc += curVal.product.price * curVal.quantity
-      }, 0)
-    },
-    cartTotalLength() {
-      return this.cart.items.reduce((acc, curVal) => {
-        return acc += curVal.quantity
-      }, 0)
+      this.$store.dispatch('createOrder', data)
     }
   }
 }

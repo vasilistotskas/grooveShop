@@ -48,6 +48,7 @@
 <script>
 import axios from 'axios'
 import {toast} from 'bulma-toast'
+import router from "@/router";
 
 export default {
   name: 'SignUp',
@@ -93,7 +94,7 @@ export default {
                 position: 'bottom-right',
               })
 
-              this.$router.push('/log-in')
+              router.push('/log-in')
             })
             .catch(error => {
               if (error.response) {

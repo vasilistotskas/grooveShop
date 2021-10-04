@@ -7,10 +7,10 @@
         v-bind:categories="categories"
     />
 
-  <!-- Loading Spinner -->
-  <!--    <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading': $store.state.isLoading }">-->
-  <!--      <div v-if="$store.state.isLoading" class="lds-dual-ring"></div>-->
-  <!--    </div>-->
+   Loading Spinner
+      <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading': $store.state.isLoading }">
+        <div v-if="$store.state.isLoading" class="lds-dual-ring"></div>
+      </div>
 
     <section class="mb-5">
       <router-view/>
@@ -33,16 +33,16 @@ export default {
   },
   data() {
     return {
-      showMobileMenu: false,
-      cart: {
-        items: []
-      }
+      showMobileMenu: false
     }
   },
   beforeCreate() {
     this.$store.commit('initializeStore')
-    this.$store.dispatch('getUserData')
     this.$store.dispatch('getCategories')
+
+    if (this.$store.state.isAuthenticated) {
+      this.$store.dispatch('getUserData')
+    }
 
     const token = this.$store.state.token
 
@@ -52,13 +52,18 @@ export default {
       axios.defaults.headers.common['Authorization'] = ""
     }
   },
-  mounted() {
-    this.cart = this.$store.state.cart
-  },
   computed: {
     userData: {
       get() {
         return this.$store.getters['getStateUserData']
+      },
+      set(value) {
+        this.$store.commit('updateUserData', value)
+      }
+    },
+    cart: {
+      get() {
+        return this.$store.getters['getStateCartData']
       },
       set(value) {
         this.$store.commit('updateUserData', value)

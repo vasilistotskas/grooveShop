@@ -5,7 +5,11 @@ export default {
     categories: {
         items: [],
     },
+    category : {},
     product: {},
+    searchProducts: {},
+    countries: {},
+    regionsBasedOnAlpha: {},
     latestProducts: [],
     isAuthenticated: false,
     userData: {},
@@ -13,5 +17,6 @@ export default {
     order: {},
     isFavourite: false,
     token: '',
-    isLoading: false
+    isLoading: false,
+    errors: {}
 }

@@ -11,7 +11,7 @@
           <div class="row">
             <ProductCard
                 class="col-sm-3"
-                v-for="product in products"
+                v-for="product in searchProducts"
                 v-bind:key="product.id"
                 v-bind:product="product"/>
           </div>
@@ -25,6 +25,7 @@
 <script>
 import axios from 'axios'
 import ProductCard from '@/components/ProductCard.vue'
+import {mapGetters} from "vuex";
 
 export default {
   name: 'Search',
@@ -33,9 +34,11 @@ export default {
   },
   data() {
     return {
-      products: [],
       query: ''
     }
+  },
+  computed: {
+    ...mapGetters({'searchProducts': 'getStateSearchProducts'})
   },
   mounted() {
     document.title = 'Search | grooveShop'
@@ -51,18 +54,7 @@ export default {
   },
   methods: {
     async performSearch() {
-      this.$store.commit('setIsLoading', true)
-
-      await axios
-          .post('/api/v1/products/search/', {'query': this.query})
-          .then(response => {
-            this.products = response.data
-          })
-          .catch(error => {
-            console.log(error)
-          })
-
-      this.$store.commit('setIsLoading', false)
+      this.$store.dispatch('getSearchResults', {'query': this.query})
     }
   }
 }

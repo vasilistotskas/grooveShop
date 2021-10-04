@@ -1,5 +1,3 @@
-import {filter} from "lodash";
-
 export default {
     addToCart(state, item) {
         const exists = state.cart.items.filter(i => i.product.id === item.product.id)
@@ -24,6 +22,21 @@ export default {
     },
     setCategories(state, categories) {
         state.categories = categories
+    },
+    setCategory(state, category) {
+        state.category = category
+    },
+    setSearchProducts(state, searchProducts) {
+        state.searchProducts = searchProducts
+    },
+    setCountries(state, countries) {
+        state.countries = countries
+    },
+    setRegionsBasedOnAlpha(state, countryAlpha) {
+        state.regionsBasedOnAlpha = countryAlpha
+    },
+    setRegions(state, regions) {
+        state.regions = regions
     },
     setProduct(state, product) {
         state.product = product
@@ -59,12 +72,14 @@ export default {
     unsetUserData(state) {
         state.userData = {}
     },
+    unsetUserDetails(state) {
+        state.userDetails = {}
+    },
     unsetIsFavourite(state) {
         state.isFavourite = false
     },
     clearCart(state) {
         state.cart = {items: []}
-
         localStorage.setItem('cart', JSON.stringify(state.cart))
     },
     initializeStore(state) {

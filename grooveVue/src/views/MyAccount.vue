@@ -24,6 +24,7 @@
 
 <script>
 import axios from 'axios'
+import router from "@/router";
 
 import OrderSummary from '@/components/OrderSummary.vue'
 
@@ -46,8 +47,9 @@ export default {
       this.$store.commit('removeToken')
       this.$store.commit('unsetUserData')
       this.$store.commit('unsetIsFavourite')
+      this.$store.commit('unsetUserDetails')
 
-      this.$router.push('/')
+      router.push('/')
     }
   }
 }

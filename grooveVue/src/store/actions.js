@@ -1,5 +1,7 @@
 import router from "@/router";
 import Api from "@/helpers/api";
+import axios from "axios";
+import { isEmpty } from 'lodash'
 
 export default {
     async ensureUserIsAuthenticated({state}) {
@@ -7,6 +9,7 @@ export default {
             throw new Error('User not authenticated')
     },
 
+    // Products
     async getProduct({commit, state, getters}, category_slug, product_slug) {
         category_slug = router.currentRoute.value.params.category_slug
         product_slug = router.currentRoute.value.params.product_slug
@@ -20,14 +23,64 @@ export default {
             .then(response => this.commit('setLatestProducts', response.data))
     },
 
+    // Categories
     async getCategories({commit}) {
         const categoriesFromRemote = await Api(commit).get('products/categories/')
             .then(response => this.commit('setCategories', response.data))
     },
 
-    async getUserOrders({commit}) {
-        const ordersFromRemote = await Api(commit).get('orders/')
-            .then(response => this.commit('setOrders', response.data))
+    async fetchCategory({commit}, categorySlug) {
+        const categoryFromRemote = await Api(commit).get(`products/${categorySlug}/`)
+            .then(response => this.commit('setCategory', response.data))
+    },
+
+    // Search
+    async getSearchResults({commit}, data) {
+        const searchResultsFromRemote = await Api(commit).post(`products/search`, data)
+            .then(response => this.commit('setSearchProducts', response.data))
+    },
+
+    // Countries
+    async getCountries({commit}) {
+        const countriesFromRemote = await Api(commit).get('countries/')
+            .then(response => this.commit('setCountries', response.data))
+    },
+
+    async getRegionsBasedOnAlpha({commit, getters, dispatch, state}, alpha_2) {
+        try {
+            const response = await Api(commit).get(`countries/${alpha_2}`)
+            commit('setRegionsBasedOnAlpha', response.data)
+        } catch (error) {
+            throw error
+        }
+    },
+
+    // Order
+    async createOrder({state, commit, dispatch}, data) {
+        const response = await Api(commit).post('checkout', data)
+            .then(response => {
+                this.commit('clearCart')
+                router.push('/cart/success')
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    },
+
+    // Favourites
+    async getIfCurrentProductIsFavourite({commit, state, dispatch, getters}, productId) {
+        await dispatch('ensureUserIsAuthenticated')
+        if (!getters.isUserInitialized)
+            await dispatch('getUserData')
+
+        const favouriteId = getters.getFavouriteId
+        try {
+            const response = await Api(commit).get('favouriteitem', favouriteId, productId)
+            commit('setFavourite', response.data.is_favourite)
+        } catch (error) {
+            commit('setFavourite', false)
+            throw error
+        }
     },
 
     async toggleFavourite({state, dispatch, getters}, product) {
@@ -62,17 +115,30 @@ export default {
         return response;
     },
 
+    // User
+    async getUserOrders({commit}) {
+        const ordersFromRemote = await Api(commit).get('orders/')
+            .then(response => this.commit('setOrders', response.data))
+    },
+
+    async userLogIn({state, getters, dispatch, commit}, formData){
+        const response = await Api(commit).post('djoser/token/login', formData)
+            .then(response => dispatch('getUserData', response.data.auth_token))
+    },
+
     // hardcoded data pass for better manipulation
     async getUserData({state, dispatch, commit}, tokenFromLogInRequest) {
-        await dispatch('ensureUserIsAuthenticated')
+        this.errors = []
 
         let token = ''
         if (tokenFromLogInRequest === undefined) {
             token = localStorage.getItem('token');
         } else {
             token = tokenFromLogInRequest
+            this.commit('setToken', token)
         }
 
+        await dispatch('ensureUserIsAuthenticated')
         const userDataFromRemote = await Api(commit, token).get('userprofile/auth')
             .then(response => {
                 this.commit('setUserData',
@@ -82,13 +148,25 @@ export default {
                         'user': response.data[0].user
                     }
                 )
+                axios.defaults.headers.common["Authorization"] = "Token " + token
+                localStorage.setItem("token", token)
+            })
+            .catch(error => {
+                if (error.response) {
+                    for (const property in error.response.data) {
+                        this.errors.push(`${property}: ${error.response.data[property]}`)
+                    }
+                } else {
+                    console.log(error)
+                    this.errors.push('Something went wrong. Please try again')
+                }
             })
     },
 
-    async getUserDetails({dispatch, commit}) {
-        await dispatch('ensureUserIsAuthenticated')
+    getUserDetails({dispatch, commit}) {
+        dispatch('ensureUserIsAuthenticated')
 
-        const userDetailsFromRemote = await Api(commit).get('userprofile/auth')
+        const userDetailsFromRemote = Api(commit).get('userprofile/auth')
             .then(response => {
                 this.commit('setUserDetails',
                     {
@@ -100,26 +178,23 @@ export default {
                         'zipcode': response.data[0].zipcode,
                         'address': response.data[0].address,
                         'place': response.data[0].place,
-                        'country': response.data[0].country,
+                        'country_alpha': response.data[0].country_alpha,
                         'region': response.data[0].region,
-                        'image': response.data[0].image
+                        'image': 'http://127.0.0.1:8000' + response.data[0].image
                     }
                 )
             })
+
     },
 
-    async getIfCurrentProductIsFavourite({commit, state, dispatch, getters}, productId) {
+    async updateUserDetailsAction({state, commit, dispatch, getters}, data) {
         await dispatch('ensureUserIsAuthenticated')
-        if (!getters.isUserInitialized)
-            await dispatch('getUserData')
+        const user_id = getters.getUserId
 
-        const favouriteId = getters.getFavouriteId
-        try {
-            const response = await Api(commit).get('favouriteitem', favouriteId, productId)
-            commit('setFavourite', response.data.is_favourite)
-        } catch (error) {
-            commit('setFavourite', false)
-            throw error
-        }
+        const response = await Api(commit).patch(`userprofile/${user_id}/`, data)
+            .then(response => this.commit('updateUserDetails', response.data))
+            .catch(error => {
+                console.log(error)
+            })
     }
 }

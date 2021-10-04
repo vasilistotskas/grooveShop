@@ -11,6 +11,7 @@ urlpatterns = [
     path('userprofile/auth/', views.UserProfileDetailAuth.as_view()),
 
     path('countries/', views.CountriesList.as_view()),
+    path('countries/<alpha_2>/', views.CountryDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

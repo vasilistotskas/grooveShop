@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from user.models import UserProfile, Country, Region
 from rest_framework import status, authentication, permissions, generics, viewsets
-from .serializers import UserSerializer, UserProfileSerializer, CountrySerializer
+from .serializers import UserSerializer, UserProfileSerializer, CountrySerializer, RegionSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import Http404
@@ -9,6 +9,7 @@ from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_MET
 from django.contrib.auth.models import User
 from rest_framework import mixins
 from rest_framework import generics
+from rest_framework.parsers import FormParser, MultiPartParser
 
 
 class UserProfileList(generics.ListCreateAPIView):
@@ -17,6 +18,8 @@ class UserProfileList(generics.ListCreateAPIView):
 
 
 class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserProfileSerializer
 
     def get_queryset(self):
@@ -65,3 +68,16 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 class CountriesList(generics.ListAPIView):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
+
+
+class CountryDetail(generics.ListAPIView):
+    serializer_class = RegionSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all models by
+        the maker passed in the URL
+        """
+        alpha_2 = self.kwargs['alpha_2']
+        return Region.objects.filter(alpha_2=alpha_2)
+

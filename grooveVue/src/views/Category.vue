@@ -26,18 +26,12 @@ import axios from 'axios'
 import {toast} from 'bulma-toast'
 
 import ProductCard from '@/components/ProductCard'
+import {mapGetters} from "vuex";
 
 export default {
   name: 'Category',
   components: {
     ProductCard
-  },
-  data() {
-    return {
-      category: {
-        products: []
-      }
-    }
   },
   mounted() {
     this.getCategory()
@@ -49,33 +43,20 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters({'category': 'getStateCategory'})
+  },
   methods: {
     async getCategory() {
       const categorySlug = this.$route.params.category_slug
 
-      this.$store.commit('setIsLoading', true)
-
-      axios
-          .get(`/api/v1/products/${categorySlug}/`)
-          .then(response => {
-            this.category = response.data
-
+      this.$store.dispatch('fetchCategory', categorySlug)
+          .then(success => {
             document.title = this.category.name + ' | grooveShop'
           })
           .catch(error => {
             console.log(error)
-
-            toast({
-              message: 'Something went wrong. Please try again.',
-              type: 'is-danger',
-              dismissible: true,
-              pauseOnHover: true,
-              duration: 2000,
-              position: 'bottom-right',
-            })
           })
-
-      this.$store.commit('setIsLoading', false)
     }
   }
 }

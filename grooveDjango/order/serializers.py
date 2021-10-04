@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from rest_framework.fields import CurrentUserDefault
 from .models import Order, OrderItem
 
 from product.serializers import ProductSerializer
@@ -54,6 +54,7 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = (
             "id",
+            "user",
             "first_name",
             "last_name",
             "email",

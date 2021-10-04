@@ -50,7 +50,6 @@ export default {
         })
     },
 
-
     getFavouriteIconClass() {
       return !this.isFavourite ? 'far fa-heart' : 'fas fa-heart'
     }

@@ -20,15 +20,49 @@ class CountrySerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     favourite_id = serializers.SerializerMethodField('get_favourite_id')
-    country = CountrySerializer(many=False)
+    country = CountrySerializer()
+    country_alpha = serializers.CharField(source='country.alpha_2')
 
     def get_favourite_id(self, request):
         return request.user.favourite.id
 
     class Meta:
         model = UserProfile
-        fields = ['id', 'user', 'favourite_id', 'first_name', 'last_name', 'phone', 'email', 'city', 'zipcode', 'address',
-                  'place', 'country', 'region', 'image']
+        fields = ['id', 'user', 'country', 'country_alpha', 'favourite_id', 'first_name', 'last_name', 'phone', 'email', 'city', 'zipcode', 'address',
+                  'place', 'region', 'image']
+
+    def update(self, instance, validated_data):
+        # * User Profile Info
+        instance.address = validated_data.get(
+            'address', instance.address)
+        instance.email = validated_data.get(
+            'email', instance.email)
+        instance.first_name = validated_data.get(
+            'first_name', instance.first_name)
+        instance.last_name = validated_data.get(
+            'last_name', instance.last_name)
+        instance.phone = validated_data.get(
+            'phone', instance.phone)
+        instance.place = validated_data.get(
+            'place', instance.place)
+        instance.city = validated_data.get(
+            'city', instance.city)
+        instance.region = validated_data.get(
+            'region', instance.region)
+        instance.zipcode = validated_data.get(
+            'zipcode', instance.zipcode)
+        instance.image = validated_data.get(
+            'image', instance.image)
+
+        country = validated_data.get('country')
+        if country:
+            instance.country.alpha_2 = country.get('alpha_2')
+            updated_country = Country.objects.get(alpha_2=instance.country.alpha_2)
+            instance.country = updated_country
+
+        instance.save()
+
+        return instance
 
 
 class UserSerializer(serializers.ModelSerializer):
