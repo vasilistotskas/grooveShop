@@ -20,15 +20,14 @@ class CountrySerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     favourite_id = serializers.SerializerMethodField('get_favourite_id')
-    country = CountrySerializer()
-    country_alpha = serializers.CharField(source='country.alpha_2')
+
 
     def get_favourite_id(self, request):
         return request.user.favourite.id
 
     class Meta:
         model = UserProfile
-        fields = ['id', 'user', 'country', 'country_alpha', 'favourite_id', 'first_name', 'last_name', 'phone', 'email', 'city', 'zipcode', 'address',
+        fields = ['id', 'user', 'country', 'favourite_id', 'first_name', 'last_name', 'phone', 'email', 'city', 'zipcode', 'address',
                   'place', 'region', 'image']
 
     def update(self, instance, validated_data):
@@ -47,18 +46,21 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'place', instance.place)
         instance.city = validated_data.get(
             'city', instance.city)
-        instance.region = validated_data.get(
-            'region', instance.region)
         instance.zipcode = validated_data.get(
             'zipcode', instance.zipcode)
         instance.image = validated_data.get(
             'image', instance.image)
 
         country = validated_data.get('country')
-        if country:
-            instance.country.alpha_2 = country.get('alpha_2')
-            updated_country = Country.objects.get(alpha_2=instance.country.alpha_2)
-            instance.country = updated_country
+        instance.country = country
+        if not instance.country:
+            instance.country = None
+
+        region = validated_data.get('region')
+        instance.region = region
+        if not instance.region:
+            instance.region = None
+
 
         instance.save()
 

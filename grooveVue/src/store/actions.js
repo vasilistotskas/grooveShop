@@ -178,7 +178,7 @@ export default {
                         'zipcode': response.data[0].zipcode,
                         'address': response.data[0].address,
                         'place': response.data[0].place,
-                        'country_alpha': response.data[0].country_alpha,
+                        'country': response.data[0].country,
                         'region': response.data[0].region,
                         'image': 'http://127.0.0.1:8000' + response.data[0].image
                     }
