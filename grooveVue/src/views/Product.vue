@@ -13,7 +13,9 @@
       <div class="col-md-3">
         <h1 class="title mb-5">{{ product.name }}</h1>
         <p class="description mb-4">{{ product.description }}</p>
-        <p><strong>Price: </strong>${{ product.price }}</p>
+        <p class="mb-2"><strong>Price: </strong>${{ product.price }}</p>
+        <p class="mb-2"><strong>Vat: </strong>${{ product.vat_value }}%</p>
+        <p><strong>Total Price: </strong>${{ product.final_price }}</p>
 
         <div class="field has-addons mt-6">
           <div class="control">

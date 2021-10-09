@@ -7,6 +7,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
+from django.db.models import Avg, Count
 
 
 class Category(models.Model):
@@ -84,6 +85,13 @@ class Category(models.Model):
         return list_of_all_sub_categories
 
 
+class Vat(models.Model):
+    value = models.DecimalField(max_digits=11, decimal_places=1)
+
+    def __str__(self):
+        return '%s' % self.value
+
+
 class Product(models.Model):
 
     PRODUCT_STATUS = (
@@ -95,16 +103,47 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField()
     description = models.TextField(blank=True, null=True)
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    price = models.DecimalField(max_digits=11, decimal_places=2, null=True)
     active = models.CharField(max_length=10, choices=PRODUCT_STATUS, default=True)
-    quantity = models.IntegerField(default=1)
+    stock = models.IntegerField(default=1)
     date_added = models.DateTimeField(auto_now_add=True)
+    discount_percent = models.DecimalField(max_digits=11, decimal_places=2, default=0.0)
+    vat = models.ForeignKey(Vat, related_name='vat', blank=True, null=True, on_delete=models.SET_NULL)
+    hits = models.PositiveIntegerField(default=0)
+    likes = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ('-date_added',)
 
     def __str__(self):
         return self.name
+
+    def likes_counter(self):
+        favourites = FavouriteItem.objects.filter(product=self).aggregate(count=Count('id'))
+        cnt = 0
+        if favourites["count"] is not None:
+            cnt = int(favourites["count"])
+        return cnt
+
+    def comment_avarege(self):
+        reviews = Comment.objects.filter(product=self, status='True').aggregate(avarage=Avg('rate'))
+        avg = 0
+        if reviews["avarage"] is not None:
+            avg = float(reviews["avarage"])
+        return avg
+
+    def comment_counter(self):
+        reviews = Comment.objects.filter(product=self, status='True').aggregate(count=Count('id'))
+        cnt = 0
+        if reviews["count"] is not None:
+            cnt = int(reviews["count"])
+        return cnt
+
+    def vat_value(self):
+        return (self.price * self.vat.value) / 100
+
+    def final_price(self):
+        return self.price - self.vat_value()
 
     def main_image(self):
         try:
@@ -132,16 +171,16 @@ class Product(models.Model):
         except:
             return ""
 
-    def colored_quantity(self):
-        if self.quantity > 0:
+    def colored_stock(self):
+        if self.stock > 0:
             return format_html(
                 '<span style="color: #1bff00;">{}</span>',
-                self.quantity,
+                self.stock,
             )
         else:
             return format_html(
                 '<span style="color: #ff0000;">{}</span>',
-                self.quantity,
+                self.stock,
             )
 
     def get_absolute_url(self):
@@ -166,7 +205,7 @@ class ProductImages(models.Model):
 
         super().save(*args, **kwargs)
 
-    def make_thumbnail(self, image, size=(200, 200)):
+    def make_thumbnail(self, image, size=(100, 100)):
         img = Image.open(image)
         img.convert('RGB')
         img.thumbnail(size)
@@ -221,3 +260,25 @@ class FavouriteItem(models.Model):
 
     def get_favourite(self):
         return ",".join([str(p) for p in self.favourite.all()])
+
+
+class Comment(models.Model):
+    STATUS = (
+        ('New', 'New'),
+        ('True', 'True'),
+        ('False', 'False'),
+    )
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    subject = models.CharField(max_length=50, blank=True)
+    comment = models.CharField(max_length=250, blank=True)
+    rate = models.IntegerField(default=1)
+    status = models.CharField(max_length=10, choices=STATUS, default='New')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = "Comments"
+
+    def __str__(self):
+        return self.subject

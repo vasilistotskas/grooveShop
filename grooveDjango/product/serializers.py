@@ -25,8 +25,18 @@ class ProductSerializer(serializers.ModelSerializer):
             "get_absolute_url",
             "description",
             "price",
+            "vat",
+            "vat_value",
+            "final_price",
+            "hits",
+            "likes",
+            "stock",
+            "active",
+            "discount_percent",
+            "date_added",
             "main_image",
-            "images"
+            "images",
+            "likes_counter"
         )
 
 

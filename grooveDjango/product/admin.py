@@ -1,6 +1,6 @@
 from django.contrib import admin
 import admin_thumbnails
-from .models import Category, Product, ProductImages, Favourite, FavouriteItem
+from .models import Category, Product, ProductImages, Favourite, FavouriteItem, Vat
 
 
 def category_update_action(category):
@@ -20,7 +20,8 @@ class ProductImageInline(admin.TabularInline):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'category', 'price', 'colored_quantity', 'boolean_status', 'image_tag']
+    list_display = ['id', 'name', 'category', 'price', 'colored_stock', 'boolean_status', 'image_tag']
+    search_fields = ['id', 'category__name', 'name']
     list_filter = ['category']
     inlines = [ProductImageInline]
     prepopulated_fields = {'slug': ('name',)}
@@ -50,6 +51,7 @@ class FavouriteItemAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Category)
+admin.site.register(Vat)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Favourite, FavouriteAdmin)
 admin.site.register(FavouriteItem, FavouriteItemAdmin)
