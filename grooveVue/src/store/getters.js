@@ -14,5 +14,6 @@ export default {
     getStateIsFavourite: state => state.isFavourite,
     getFavouriteId: state => state.userData.favourite_id,
     getUserId: state => state.userData.id,
-    isUserInitialized: state => ('id' in state.userData)
+    isUserInitialized: state => ('id' in state.userData),
+    isProductInitialized: state => ('id' in state.product)
 }

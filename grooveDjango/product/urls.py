@@ -8,6 +8,7 @@ urlpatterns = [
     path('products/search/', views.Search.as_view()),
 
     path('products/<slug:category_slug>/<slug:product_slug>/', views.ProductDetail.as_view()),
+    path('products/<slug:category_slug>/<slug:product_slug>/hits/', views.ProductHitsDetail.as_view()),
     path('products/categories/', views.AllCategoriesList.as_view()),
     path('products/<slug:category_slug>/', views.CategoryDetail.as_view()),
 

@@ -110,7 +110,6 @@ class Product(models.Model):
     discount_percent = models.DecimalField(max_digits=11, decimal_places=2, default=0.0)
     vat = models.ForeignKey(Vat, related_name='vat', blank=True, null=True, on_delete=models.SET_NULL)
     hits = models.PositiveIntegerField(default=0)
-    likes = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ('-date_added',)
@@ -139,11 +138,17 @@ class Product(models.Model):
             cnt = int(reviews["count"])
         return cnt
 
+    def vat_percent(self):
+        return self.vat.value
+
     def vat_value(self):
         return (self.price * self.vat.value) / 100
 
+    def discount_value(self):
+        return (self.price * self.discount_percent) / 100
+
     def final_price(self):
-        return self.price - self.vat_value()
+        return self.price - self.discount_value()
 
     def main_image(self):
         try:

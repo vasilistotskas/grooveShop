@@ -13,6 +13,15 @@ class ImagesSerializer(serializers.ModelSerializer):
         )
 
 
+class ProductHitsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Product
+        fields = (
+            "id",
+            "hits"
+        )
+
 
 class ProductSerializer(serializers.ModelSerializer):
     images = ImagesSerializer(source='productimages_set', many=True, read_only=True)
@@ -22,21 +31,23 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "name",
+            "category",
             "get_absolute_url",
             "description",
             "price",
             "vat",
+            "vat_percent",
             "vat_value",
             "final_price",
             "hits",
-            "likes",
+            "likes_counter",
             "stock",
             "active",
             "discount_percent",
+            "discount_value",
             "date_added",
             "main_image",
-            "images",
-            "likes_counter"
+            "images"
         )
 
 
@@ -60,29 +71,22 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class FavouriteItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(many=False)
 
     class Meta:
         model = FavouriteItem
         fields = (
-            'id',
             "favourite_id",
             "is_favourite",
             "product"
         )
 
     def create(self, validated_data):
-
         product_data = validated_data.pop('product')
+        is_favourite_data = validated_data.pop('is_favourite')
         user = self.context.get('request').user
         favourite_id = Favourite.objects.get(user=user).id
 
-        if product_data:
-            product = Product.objects.get_or_create(**product_data)[0]
-            validated_data['product'] = product
-
-
-        return FavouriteItem.objects.create(favourite_id=favourite_id, **validated_data)
+        return FavouriteItem.objects.create(favourite_id=favourite_id, product_id=product_data.id, is_favourite=is_favourite_data)
 
 
 class FavouriteSerializer(serializers.ModelSerializer):

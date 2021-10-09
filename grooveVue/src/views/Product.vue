@@ -1,5 +1,5 @@
 <template>
-  <div class="page-product container mt-5">
+  <div class="page-product container mt-5" v-if="product && Object.keys(product).length > 0">
     <div class="row">
       <div class="col-md-9 page-product-image-col" :style="getProductImageCol()">
         <figure
@@ -14,7 +14,13 @@
         <h1 class="title mb-5">{{ product.name }}</h1>
         <p class="description mb-4">{{ product.description }}</p>
         <p class="mb-2"><strong>Price: </strong>${{ product.price }}</p>
-        <p class="mb-2"><strong>Vat: </strong>{{ product.vat_value }}%</p>
+
+        <p class="mb-2"><strong>Discount Percent: </strong>{{ product.discount_percent }}%</p>
+        <p class="mb-2"><strong>Discount Value: </strong>${{ product.discount_value }}</p>
+
+        <p class="mb-2"><strong>Vat Percent: </strong>{{ product.vat_percent }}%</p>
+        <p class="mb-4"><strong>Vat Value: </strong>${{ product.vat_value }}</p>
+
         <p><strong>Total Price: </strong>${{ product.final_price }}</p>
 
         <div class="field has-addons mt-6">
@@ -49,8 +55,9 @@ export default {
       quantity: 1
     }
   },
-  beforeCreate() {
+  mounted() {
     this.$store.dispatch('getProduct')
+    this.updateProductHits()
   },
   computed: {
     product: {
@@ -65,6 +72,9 @@ export default {
     },
   },
   methods: {
+    updateProductHits() {
+      this.$store.dispatch('updateProductHits')
+    },
     addToCart() {
       if (isNaN(this.quantity) || this.quantity < 1) {
         this.quantity = 1

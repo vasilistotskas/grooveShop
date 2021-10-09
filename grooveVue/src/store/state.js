@@ -6,7 +6,9 @@ export default {
         items: [],
     },
     category : {},
-    product: {},
+    product: {
+        id: ''
+    },
     searchProducts: {},
     countries: {},
     regionsBasedOnAlpha: {},

@@ -20,7 +20,7 @@ export default {
   computed: {
     ...mapGetters({'isFavourite': 'getStateIsFavourite'})
   },
-  updated() {
+  beforeCreate() {
     if (this.$store.state.isAuthenticated) {
       this.$store.dispatch('getIfCurrentProductIsFavourite', this.$route.params.product_id)
     }

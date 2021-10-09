@@ -9,7 +9,7 @@ from rest_framework import status, authentication, permissions, generics, viewse
 from django.http import JsonResponse
 
 from .models import Product, Category, Favourite, FavouriteItem
-from .serializers import ProductSerializer, CategorySerializer, FavouriteSerializer, FavouriteItemSerializer
+from .serializers import ProductSerializer, CategorySerializer, FavouriteSerializer, FavouriteItemSerializer, ProductHitsSerializer
 
 
 class LatestProductsList(APIView):
@@ -29,6 +29,28 @@ class ProductDetail(APIView):
     def get(self, request, category_slug, product_slug, format=None):
         product = self.get_object(category_slug, product_slug)
         serializer = ProductSerializer(product)
+        return Response(serializer.data)
+
+
+class ProductHitsDetail(APIView):
+    def get_object(self, category_slug, product_slug):
+        try:
+            return Product.objects.filter(category__slug=category_slug).get(slug=product_slug)
+        except Product.DoesNotExist:
+            raise Http404
+
+    def patch(self, request, category_slug, product_slug):
+        product = self.get_object(category_slug, product_slug)
+        data = {"id": request.data['id'], "hits": request.data['hits'] + 1}
+        serializer = ProductHitsSerializer(product, data=data, partial=True) # set partial=True to update a data partially
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.data)
+
+    def get(self, request, category_slug, product_slug, format=None):
+        product = self.get_object(category_slug, product_slug)
+        serializer = ProductHitsSerializer(product)
         return Response(serializer.data)
 
 
@@ -79,8 +101,10 @@ class FavouriteList(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, formate=None):
+        print(request.data)
         serializer = FavouriteItemSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
+            print(serializer)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)

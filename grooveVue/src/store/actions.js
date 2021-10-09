@@ -18,6 +18,25 @@ export default {
             .then(response => this.commit('setProduct', response.data))
     },
 
+    async updateProductHits({commit, state, getters, dispatch}) {
+        const category_slug = router.currentRoute.value.params.category_slug
+        const product_slug = router.currentRoute.value.params.product_slug
+
+        if (getters.isProductInitialized){
+            await dispatch('getProduct')
+
+            const data = {
+                id: state.product.id,
+                hits: state.product.hits
+            }
+            const productHitsFromRemote = await Api(commit).patch(`products/${category_slug}/${product_slug}/hits/`, data)
+                .catch(error => {
+                    console.log(error)
+                })
+        }
+
+    },
+
     async getLatestProducts({commit}) {
         const latestProductsFromRemote = await Api(commit).get('latest-products/')
             .then(response => this.commit('setLatestProducts', response.data))
@@ -100,7 +119,7 @@ export default {
         const data = {
             "favourite_id": state.userData.favourite_id,
             "is_favourite": true,
-            "product": product
+            "product": state.product.id
         }
         const response = await Api(commit).post('favouritelist', data)
         commit('setFavourite', true)
