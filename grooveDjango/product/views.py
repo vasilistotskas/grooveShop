@@ -54,6 +54,28 @@ class ProductHitsDetail(APIView):
         return Response(serializer.data)
 
 
+class ProductStockDetail(APIView):
+    def get_object(self, category_slug, product_slug):
+        try:
+            return Product.objects.filter(category__slug=category_slug).get(slug=product_slug)
+        except Product.DoesNotExist:
+            raise Http404
+
+    def patch(self, request, category_slug, product_slug):
+        product = self.get_object(category_slug, product_slug)
+        data = {"id": request.data['id'], "stock": request.data['stock']}
+        serializer = ProductHitsSerializer(product, data=data, partial=True) # set partial=True to update a data partially
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.data)
+
+    def get(self, request, category_slug, product_slug, format=None):
+        product = self.get_object(category_slug, product_slug)
+        serializer = ProductHitsSerializer(product)
+        return Response(serializer.data)
+
+
 class CategoryDetail(APIView):
     def get_object(self, category_slug):
         try:

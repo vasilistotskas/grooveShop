@@ -86,6 +86,24 @@ export default {
             })
     },
 
+    async decreaseProductStock({state, commit, dispatch, getters}) {
+        const category_slug = router.currentRoute.value.params.category_slug
+        const product_slug = router.currentRoute.value.params.product_slug
+
+        if (getters.isProductInitialized){
+            await dispatch('getProduct')
+
+            const data = {
+                id: state.product.id,
+                stock: state.product.stock
+            }
+            const productHitsFromRemote = await Api(commit).patch(`products/${category_slug}/${product_slug}/stock/`, data)
+                .catch(error => {
+                    console.log(error)
+                })
+        }
+    },
+
     // Favourites
     async getIfCurrentProductIsFavourite({commit, state, dispatch, getters}, productId) {
         await dispatch('ensureUserIsAuthenticated')
