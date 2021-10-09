@@ -29,7 +29,7 @@
           </div>
 
           <div class="control">
-            <a class="button is-dark" @click="addToCart()">Add to cart</a>
+            <a class="button is-dark addToCartButton" v-bind:class="{'disabled': disabled }" @click="addToCart()">{{ addToCartButtonText() }}</a>
           </div>
 
           <FavouriteButton :product="product">
@@ -70,6 +70,9 @@ export default {
         return this.$store.getters['getStateProductExtraImages']
       }
     },
+    disabled() {
+      return this.product.active === "False" || this.product.stock <= 0
+    }
   },
   methods: {
     updateProductHits() {
@@ -82,22 +85,36 @@ export default {
 
       const item = {
         product: this.product,
-        quantity: this.quantity
+        quantity: this.quantity,
+        disabled: this.disabled
       }
 
-      this.$store.commit('addToCart', item)
-
-      toast({
-        message: 'The product was added to the cart',
-        type: 'is-success',
-        dismissible: true,
-        pauseOnHover: true,
-        duration: 2000,
-        position: 'bottom-right',
-      })
+      if (this.disabled) {
+        toast({
+          message: 'Out of stock',
+          type: 'is-danger',
+          dismissible: true,
+          pauseOnHover: true,
+          duration: 2000,
+          position: 'bottom-right',
+        })
+      } else {
+        this.$store.commit('addToCart', item)
+        toast({
+          message: 'The product was added to the cart',
+          type: 'is-success',
+          dismissible: true,
+          pauseOnHover: true,
+          duration: 2000,
+          position: 'bottom-right',
+        })
+      }
     },
     getProductImageCol() {
       return this.extraImages?.length > 1 ? 'grid-template-columns: repeat(2, 1fr)' : 'grid-template-columns: repeat(1, 1fr)'
+    },
+    addToCartButtonText() {
+      return (this.product.active === "False" || this.product.stock <= 0) ? 'Out Of Stock' : 'Add To Cart'
     }
   }
 }
@@ -106,12 +123,21 @@ export default {
 
 
 <style lang="scss">
-.page-product-image-col{
-  display: grid;
-  grid-template-rows: auto;
-  grid-gap: 1vw;
-  @media screen and (max-width: 767px){
-    margin-bottom: 20px;
+  .page-product-image-col{
+    display: grid;
+    grid-template-rows: auto;
+    grid-gap: 1vw;
+    @media screen and (max-width: 767px){
+      margin-bottom: 20px;
+    }
   }
-}
+  .addToCartButton{
+    &.disabled{
+      background-color: #363636;
+      border-color: transparent;
+      box-shadow: none;
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
 </style>
