@@ -10,7 +10,12 @@ export default {
     },
 
     // Products
-    async getProduct({commit, state, getters}, category_slug, product_slug) {
+    async initializeProduct ({ dispatch }) {
+        await dispatch('getProduct')
+        await dispatch('updateProductHits')
+    },
+
+    async getProduct({commit, state, getters, dispatch}, category_slug, product_slug) {
         category_slug = router.currentRoute.value.params.category_slug
         product_slug = router.currentRoute.value.params.product_slug
 
@@ -25,11 +30,7 @@ export default {
         if (getters.isProductInitialized){
             await dispatch('getProduct')
 
-            const data = {
-                id: state.product.id,
-                hits: state.product.hits
-            }
-            const productHitsFromRemote = await Api(commit).patch(`products/${category_slug}/${product_slug}/hits/`, data)
+            const productHitsFromRemote = await Api(commit).patch(`products/${category_slug}/${product_slug}/`)
                 .catch(error => {
                     console.log(error)
                 })

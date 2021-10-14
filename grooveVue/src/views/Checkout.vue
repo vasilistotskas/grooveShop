@@ -318,7 +318,7 @@ export default {
         items.push(obj)
       }
 
-      const order_data = {
+      const data = {
         'user_id': this.userData.id,
         'first_name': this.customerDetails.first_name,
         'last_name': this.customerDetails.last_name,
@@ -331,13 +331,7 @@ export default {
         'stripe_token': token.id
       }
 
-      const product_data = {
-
-      }
-
-
-      this.$store.dispatch('decreaseProductStock', product_data)
-      this.$store.dispatch('createOrder', order_data)
+      this.$store.dispatch('createOrder', data)
     }
   }
 }

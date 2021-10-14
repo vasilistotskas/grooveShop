@@ -56,8 +56,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('getProduct')
-    this.updateProductHits()
+    this.$store.dispatch('initializeProduct')
   },
   computed: {
     product: {
