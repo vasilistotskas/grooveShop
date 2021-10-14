@@ -8,6 +8,7 @@ from django.dispatch import receiver
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.db.models import Avg, Count
+from helpers.image_resize import make_thumbnail
 
 
 class Category(models.Model):
@@ -139,10 +140,14 @@ class Product(models.Model):
         return cnt
 
     def vat_percent(self):
-        return self.vat.value
+        if self.vat:
+            return self.vat.value
+        return 0
 
     def vat_value(self):
-        return (self.price * self.vat.value) / 100
+        if self.vat:
+            return (self.price * self.vat.value) / 100
+        return 0
 
     def discount_value(self):
         return (self.price * self.discount_percent) / 100
@@ -168,7 +173,7 @@ class Product(models.Model):
                 return mark_safe('<img src="{}"/>'.format(img.thumbnail.url))
             else:
                 if img.image:
-                    img.thumbnail = img.make_thumbnail(self.image)
+                    img.thumbnail = make_thumbnail(self.image, (100, 100))
                     img.save()
                     return mark_safe('<img src="{}"/>'.format(img.thumbnail.url))
                 else:
@@ -206,20 +211,10 @@ class ProductImages(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        self.thumbnail = self.make_thumbnail(self.image)
+        if self.image:
+            self.thumbnail = make_thumbnail(self.image, (100, 100))
 
         super().save(*args, **kwargs)
-
-    def make_thumbnail(self, image, size=(100, 100)):
-        img = Image.open(image)
-        img.convert('RGB')
-        img.thumbnail(size)
-
-        thumb_io = BytesIO()
-        img.save(thumb_io, 'JPEG', quality=100)
-
-        thumbnail = File(thumb_io, name=image.name)
-        return thumbnail
 
     @classmethod
     def find_product_images(cls, product_id):

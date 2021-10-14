@@ -90,10 +90,8 @@ class FavouriteList(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, formate=None):
-        print(request.data)
         serializer = FavouriteItemSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
-            print(serializer)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)

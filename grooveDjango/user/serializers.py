@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import UserProfile, Country, Region
 from django.contrib.auth.models import User
-
+from helpers.image_resize import make_thumbnail
 
 class RegionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -48,8 +48,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'city', instance.city)
         instance.zipcode = validated_data.get(
             'zipcode', instance.zipcode)
-        instance.image = validated_data.get(
-            'image', instance.image)
+
+        original_image = validated_data.get('image')
+        size = (100, 100)
+        image = make_thumbnail(original_image, size)
+
+        instance.image = image
 
         country = validated_data.get('country')
         instance.country = country
