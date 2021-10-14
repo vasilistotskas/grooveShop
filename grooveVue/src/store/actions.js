@@ -177,7 +177,7 @@ export default {
         }
 
         await dispatch('ensureUserIsAuthenticated')
-        const userDataFromRemote = await Api(commit, token).get('userprofile/auth')
+        const userDataFromRemote = await Api(commit, token).get('userprofile/data')
             .then(response => {
                 this.commit('setUserData',
                     {
@@ -204,7 +204,7 @@ export default {
     getUserDetails({dispatch, commit}) {
         dispatch('ensureUserIsAuthenticated')
 
-        const userDetailsFromRemote = Api(commit).get('userprofile/auth')
+        const userDetailsFromRemote = Api(commit).get('userprofile/data')
             .then(response => {
                 this.commit('setUserDetails',
                     {

@@ -12,11 +12,6 @@ from rest_framework import generics
 from rest_framework.parsers import FormParser, MultiPartParser
 
 
-class UserProfileList(generics.ListCreateAPIView):
-    queryset = UserProfile.objects.all()
-    serializer_class = UserProfileSerializer
-
-
 class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
@@ -35,7 +30,7 @@ class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):
             raise Http404
 
 
-class UserProfileDetailAuth(APIView):
+class UserProfileData(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
@@ -43,26 +38,6 @@ class UserProfileDetailAuth(APIView):
         userprofile = UserProfile.objects.filter(user=request.user)
         serializer = UserProfileSerializer(userprofile, many=True)
         return Response(serializer.data)
-
-
-class UserList(generics.ListCreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class UserDetail(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = UserSerializer
-
-    def get_queryset(self):
-        """
-        This view should return a list of authenticated user profile for
-        the user as determined by the pk portion of the URL.
-        """
-        try:
-            pk = self.kwargs['pk']
-            return User.objects.filter(id=pk)
-        except UserProfile.DoesNotExist:
-            raise Http404
 
 
 class CountriesList(generics.ListAPIView):
