@@ -56,6 +56,8 @@ export default {
   },
   methods: {
     async submitForm() {
+      this.errors = []
+
       axios.defaults.headers.common["Authorization"] = ""
       localStorage.removeItem("token")
 
@@ -66,6 +68,18 @@ export default {
       this.$store.dispatch('userLogIn', formData)
           .then(success => {
             router.push('/')
+          })
+          .catch(error => {
+            if (error.response) {
+              for (const property in error.response.data) {
+                this.errors.push(`${property}: ${error.response.data[property]}`)
+              }
+              console.log(JSON.stringify(error.response.data))
+            } else if (error.message) {
+              this.errors.push('Something went wrong. Please try again')
+
+              console.log(JSON.stringify(error))
+            }
           })
 
     }
