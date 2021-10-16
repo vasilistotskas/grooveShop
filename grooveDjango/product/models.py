@@ -116,7 +116,7 @@ class Product(models.Model):
         return self.name
 
     def likes_counter(self):
-        favourites = FavouriteItem.objects.filter(product=self).aggregate(count=Count('id'))
+        favourites = Favourite.objects.filter(product=self).aggregate(count=Count('id'))
         cnt = 0
         if favourites["count"] is not None:
             cnt = int(favourites["count"])
@@ -228,35 +228,14 @@ class ProductImages(models.Model):
 
 # favourite Model
 class Favourite(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.username
 
     def get_absolute_url(self):
         return f'//{self.id}/'
-
-    def get_items(self):
-        return self.favourite_items.prefetch_related('product').all()
-
-    # use Django signals to create user favourite on user creation
-    @receiver(post_save, sender=User)
-    def create_user_favourite(sender, instance, created, **kwargs):
-        if created:
-            Favourite.objects.create(user=instance)
-
-
-# Add To favourite Model
-class FavouriteItem(models.Model):
-    favourite = models.ForeignKey(Favourite, related_name='favourite_items', on_delete=models.CASCADE)
-    product = models.OneToOneField(Product, related_name='favourite_items', on_delete=models.CASCADE)
-    is_favourite = models.BooleanField(default=False)
-
-    def __str__(self):
-        return '%s' % self.id
-
-    def get_favourite(self):
-        return ",".join([str(p) for p in self.favourite.all()])
 
 
 class Comment(models.Model):

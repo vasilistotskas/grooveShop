@@ -46,7 +46,7 @@ export default {
 
       this.$store.commit('removeToken')
       this.$store.commit('unsetUserData')
-      this.$store.commit('unsetIsFavourite')
+      this.$store.commit('unsetUserFavourites')
       this.$store.commit('unsetUserDetails')
 
       router.push('/')

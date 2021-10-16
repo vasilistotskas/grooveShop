@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Product, ProductImages, Favourite, FavouriteItem
+from .models import Category, Product, ProductImages, Favourite
 
 
 class ImagesSerializer(serializers.ModelSerializer):
@@ -10,16 +10,6 @@ class ImagesSerializer(serializers.ModelSerializer):
             "id",
             "image",
             "is_main"
-        )
-
-
-class ProductHitsSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Product
-        fields = (
-            "id",
-            "hits"
         )
 
 
@@ -70,32 +60,12 @@ class CategorySerializer(serializers.ModelSerializer):
         )
 
 
-class FavouriteItemSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = FavouriteItem
-        fields = (
-            "favourite_id",
-            "is_favourite",
-            "product"
-        )
-
-    def create(self, validated_data):
-        product_data = validated_data.pop('product')
-        is_favourite_data = validated_data.pop('is_favourite')
-        user = self.context.get('request').user
-        favourite_id = Favourite.objects.get(user=user).id
-
-        return FavouriteItem.objects.create(favourite_id=favourite_id, product_id=product_data.id, is_favourite=is_favourite_data)
-
-
 class FavouriteSerializer(serializers.ModelSerializer):
-    favourite_items = FavouriteItemSerializer(many=True)
 
     class Meta:
         model = Favourite
         fields = (
             "id",
-            "user",
-            "favourite_items"
+            "user_id",
+            "product_id"
         )

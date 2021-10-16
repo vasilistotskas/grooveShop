@@ -17,7 +17,7 @@ export default {
     userData: {},
     userDetails: {},
     order: {},
-    isFavourite: false,
+    favourites: {},
     token: '',
     isLoading: false,
     errors: {}

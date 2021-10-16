@@ -1,6 +1,6 @@
 from django.contrib import admin
 import admin_thumbnails
-from .models import Category, Product, ProductImages, Favourite, FavouriteItem, Vat
+from .models import Category, Product, ProductImages, Favourite, Vat
 
 
 def category_update_action(category):
@@ -17,6 +17,10 @@ class ProductImageInline(admin.TabularInline):
     exclude = ['thumbnail']
     readonly_fields = ('id',)
     extra = 1
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name',)}
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -43,15 +47,10 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 class FavouriteAdmin(admin.ModelAdmin):
-    list_display = ['user']
+    list_display = ['user', 'product']
 
 
-class FavouriteItemAdmin(admin.ModelAdmin):
-    list_display = ['favourite_id', 'product']
-
-
-admin.site.register(Category)
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(Vat)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Favourite, FavouriteAdmin)
-admin.site.register(FavouriteItem, FavouriteItemAdmin)

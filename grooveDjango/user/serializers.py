@@ -19,15 +19,10 @@ class CountrySerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    favourite_id = serializers.SerializerMethodField('get_favourite_id')
-
-
-    def get_favourite_id(self, request):
-        return request.user.favourite.id
 
     class Meta:
         model = UserProfile
-        fields = ['id', 'user', 'country', 'favourite_id', 'first_name', 'last_name', 'phone', 'email', 'city', 'zipcode', 'address',
+        fields = ['id', 'user', 'country', 'first_name', 'last_name', 'phone', 'email', 'city', 'zipcode', 'address',
                   'place', 'region', 'image']
 
     def update(self, instance, validated_data):

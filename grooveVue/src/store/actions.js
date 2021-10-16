@@ -1,7 +1,6 @@
 import router from "@/router";
 import Api from "@/helpers/api";
 import axios from "axios";
-import { isEmpty } from 'lodash'
 
 export default {
     async ensureUserIsAuthenticated({state}) {
@@ -106,25 +105,11 @@ export default {
     },
 
     // Favourites
-    async getIfCurrentProductIsFavourite({commit, state, dispatch, getters}, productId) {
-        await dispatch('ensureUserIsAuthenticated')
-        if (!getters.isUserInitialized)
-            await dispatch('getUserData')
-
-        const favouriteId = getters.getFavouriteId
-        try {
-            const response = await Api(commit).get('favouriteitem', favouriteId, productId)
-            commit('setFavourite', response.data.is_favourite)
-        } catch (error) {
-            commit('setFavourite', false)
-            throw error
-        }
-    },
 
     async toggleFavourite({state, dispatch, getters}, product) {
         await dispatch('ensureUserIsAuthenticated')
 
-        if (!getters.getStateIsFavourite) {
+        if (!getters.getStateIsCurrentProductInFavourites(product.id)) {
             await dispatch('addToFavourites', product)
             return 'The product was added to the favourites'
         } else {
@@ -133,24 +118,34 @@ export default {
         }
     },
 
-    async addToFavourites({state, commit, dispatch}, product) {
+    async getCurrentUserFavourites({state, commit, dispatch, getters}, user) {
         await dispatch('ensureUserIsAuthenticated')
-        const data = {
-            "favourite_id": state.userData.favourite_id,
-            "is_favourite": true,
-            "product": state.product.id
-        }
-        const response = await Api(commit).post('favouritelist', data)
-        commit('setFavourite', true)
-        return response
+
+        const userFavouritesFromRemote = await Api(commit).get(`favourites/${user}`)
+            .then(response => this.commit('setUserFavourites', response.data))
     },
 
-    async removeFromFavourites({state, getters, dispatch, commit}, product) {
+    async addToFavourites({state, commit, dispatch}) {
         await dispatch('ensureUserIsAuthenticated')
-        const favouriteId = getters.getFavouriteId
-        const response = await Api(commit).delete('favouriteitem', favouriteId, product.id)
-        commit('setFavourite', false)
-        return response;
+
+        const data = {
+            "user_id": state.userData.id,
+            "product_id": state.product.id
+        }
+        const user_id = data.user_id
+
+        const response = await Api(commit).post(`favourites/${user_id}`, data)
+        await dispatch('getCurrentUserFavourites', user_id)
+    },
+
+    async removeFromFavourites({state, commit, dispatch}) {
+        await dispatch('ensureUserIsAuthenticated')
+
+        const user_id = state.userData.id
+        const product_id = state.product.id
+
+        const response = await Api(commit).delete(`favourites/delete/${user_id}/${product_id}`)
+        await dispatch('getCurrentUserFavourites', user_id)
     },
 
     // User
@@ -182,10 +177,13 @@ export default {
                 this.commit('setUserData',
                     {
                         'id': response.data[0].id,
-                        'favourite_id': response.data[0].favourite_id,
                         'user': response.data[0].user
                     }
                 )
+
+                //  User favourites get action here
+                dispatch('getCurrentUserFavourites', response.data[0].user)
+
                 axios.defaults.headers.common["Authorization"] = "Token " + token
                 localStorage.setItem("token", token)
             })

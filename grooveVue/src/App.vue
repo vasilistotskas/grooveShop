@@ -61,12 +61,14 @@ export default {
         this.$store.commit('updateUserData', value)
       }
     },
+    favourites: {
+      get() {
+        return this.$store.getters['getStateUserFavourites']
+      }
+    },
     cart: {
       get() {
         return this.$store.getters['getStateCartData']
-      },
-      set(value) {
-        this.$store.commit('updateUserData', value)
       }
     },
     categories: {

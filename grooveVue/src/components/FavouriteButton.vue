@@ -18,11 +18,11 @@ export default {
     product: Object
   },
   computed: {
-    ...mapGetters({'isFavourite': 'getStateIsFavourite'})
-  },
-  beforeCreate() {
-    if (this.$store.state.isAuthenticated) {
-      this.$store.dispatch('getIfCurrentProductIsFavourite', this.$route.params.product_id)
+    isFavourite: {
+      get() {
+        const productId = this.$store.state.product.id
+        return this.$store.getters.getStateIsCurrentProductInFavourites(productId)
+      }
     }
   },
   methods: {
@@ -49,7 +49,6 @@ export default {
           })
         })
     },
-
     getFavouriteIconClass() {
       return !this.isFavourite ? 'far fa-heart' : 'fas fa-heart'
     }
