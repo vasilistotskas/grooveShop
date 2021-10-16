@@ -44,11 +44,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
         instance.zipcode = validated_data.get(
             'zipcode', instance.zipcode)
 
-        original_image = validated_data.get('image')
-        size = (100, 100)
-        image = make_thumbnail(original_image, size)
-
-        instance.image = image
+        # check if user change image then resize it
+        uploaded_image = validated_data.get('image')
+        if uploaded_image:
+            size = (100, 100)
+            image = make_thumbnail(uploaded_image, size)
+            instance.image = image
 
         country = validated_data.get('country')
         instance.country = country

@@ -116,7 +116,18 @@ export default {
     },
     fullName: {
       get() {
-        return this.userDetails.first_name + ' ' + this.userDetails.last_name
+        let first_name = this.userDetails.first_name
+        let last_name = this.userDetails.last_name
+
+        if (first_name === null) {
+          first_name = ''
+        }
+
+        if (last_name === null) {
+          last_name = ''
+        }
+
+        return first_name + ' ' + last_name
       },
     },
     availableCountries: {
