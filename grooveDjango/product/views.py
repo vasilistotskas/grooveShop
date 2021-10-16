@@ -79,22 +79,30 @@ class FavouriteList(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_object(self, user_id):
+    def filter_objects(self, user_id):
         try:
             return Favourite.objects.filter(user_id=user_id)
         except Favourite.DoesNotExist:
             raise Http404
 
     def get(self, request, user_id, format=None):
-        favourites = self.get_object(user_id)
+        favourites = self.filter_objects(user_id)
         serializer = FavouriteSerializer(favourites, many=True)
         return Response(serializer.data)
 
     def post(self, request, user_id, format=None):
         product_id = request.data.get('product_id')
         serializer = FavouriteSerializer(data=request.data)
+
+        # Check if product is already favourite
+        try:
+            favourite = Favourite.objects.get(user_id=user_id, product_id=product_id)
+            if favourite:
+                return Response('Product Already In Favourites', status=status.HTTP_400_BAD_REQUEST)
+        except Exception:
+            pass
+
         if serializer.is_valid():
-            print(serializer)
             serializer.save(user_id=user_id, product_id=product_id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
