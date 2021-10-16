@@ -3,4 +3,7 @@
   <component name="ProjectRootManager" version="2" languageLevel="JDK_13" project-jdk-name="Python 3.8" project-jdk-type="Python SDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
+  <component name="WebPackConfiguration">
+    <option name="mode" value="DISABLED" />
+  </component>
 </project>

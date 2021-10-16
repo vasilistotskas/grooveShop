@@ -1,6 +1,3 @@
-from io import BytesIO
-from PIL import Image
-from django.core.files import File
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
