@@ -238,6 +238,13 @@ class Favourite(models.Model):
         return f'//{self.id}/'
 
 
+
+# Serializer / views for :
+# All coments for current product(based on product),
+# comment create(based on user,product),
+# comment update(based on user,product),
+# comment delete(based on user,product),
+# all coments of current user(based on user)
 class Comment(models.Model):
     STATUS = (
         ('New', 'New'),

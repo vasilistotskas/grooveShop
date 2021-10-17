@@ -13,6 +13,9 @@ urlpatterns = [
 
     path('favourites/<int:user_id>/', views.FavouriteList.as_view()),
     path('favourites/delete/<int:user_id>/<int:product_id>/', views.FavouriteDelete.as_view()),
+
+    path('comments/product/<int:product_id>/', views.ProductComments.as_view()),
+    path('comments/user/<int:user_id>/', views.UserComments.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

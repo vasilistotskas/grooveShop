@@ -34,7 +34,8 @@ class UserProfileData(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request, format=None):
+    @staticmethod
+    def get(request, format=None):
         userprofile = UserProfile.objects.filter(user=request.user)
         serializer = UserProfileSerializer(userprofile, many=True)
         return Response(serializer.data)

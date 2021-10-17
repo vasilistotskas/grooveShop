@@ -1,6 +1,6 @@
 from django.contrib import admin
 import admin_thumbnails
-from .models import Category, Product, ProductImages, Favourite, Vat
+from .models import Category, Product, ProductImages, Favourite, Vat, Comment
 
 
 def category_update_action(category):
@@ -52,5 +52,6 @@ class FavouriteAdmin(admin.ModelAdmin):
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Vat)
+admin.site.register(Comment)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Favourite, FavouriteAdmin)
