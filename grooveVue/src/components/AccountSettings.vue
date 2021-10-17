@@ -109,9 +109,6 @@ export default {
     userDetails: {
       get() {
         return this.$store.getters['getStateUserDetails']
-      },
-      set(value) {
-        this.$store.commit('updateUserDetails', value)
       }
     },
     fullName: {

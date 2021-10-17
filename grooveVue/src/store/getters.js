@@ -11,6 +11,7 @@ export default {
     getStateProductExtraImages: state => state.product.images,
     getStateUserData: state => state.userData,
     getStateUserFavourites: state => state.favourites,
+    getStateUserReviews: state => state.reviews,
     getStateCartData: state => state.cart,
     getStateUserDetails: state => state.userDetails,
     getStateUserOrders: state => state.orders,

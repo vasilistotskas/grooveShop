@@ -181,8 +181,14 @@ export default {
                     }
                 )
 
-                //  User favourites get action here
-                dispatch('getCurrentUserFavourites', response.data[0].user)
+                try {
+                    //  User favourites get action here
+                    dispatch('getCurrentUserFavourites', response.data[0].user)
+                    //  User reviews get action here
+                    dispatch('getCurrentUserProductReviews', response.data[0].user)
+                } catch (error) {
+                    throw error
+                }
 
                 axios.defaults.headers.common["Authorization"] = "Token " + token
                 localStorage.setItem("token", token)
@@ -232,5 +238,12 @@ export default {
             .catch(error => {
                 console.log(error)
             })
-    }
+    },
+
+    async getCurrentUserProductReviews({state, commit, dispatch, getters}, user) {
+        await dispatch('ensureUserIsAuthenticated')
+
+        const userReviewsFromRemote = await Api(commit).get(`reviews/user/${user}/`)
+            .then(response => this.commit('setUserReviews', response.data))
+    },
 }

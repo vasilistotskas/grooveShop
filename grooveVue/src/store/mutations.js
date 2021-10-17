@@ -59,8 +59,14 @@ export default {
     setUserFavourites(state, favourites) {
         state.favourites = favourites
     },
-    unsetUserFavourites(state, favourites) {
+    unsetUserFavourites(state) {
         state.favourites = {}
+    },
+    setUserReviews(state, reviews) {
+        state.reviews = reviews
+    },
+    unsetUserReviews(state) {
+        state.reviews = {}
     },
     // for later to check user profile changes
     updateUserData(state, userData) {

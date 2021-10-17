@@ -18,6 +18,7 @@ export default {
     userDetails: {},
     order: {},
     favourites: {},
+    reviews: {},
     token: '',
     isLoading: false,
     errors: {}
