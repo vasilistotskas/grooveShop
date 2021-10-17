@@ -18,6 +18,8 @@ def make_thumbnail(image, size):
             background.paste(img, img.split()[-1])
             img = background
             img.save(thumb_io, 'JPEG', quality=95)
+        else:
+            img.save(thumb_io, 'JPEG', quality=95)
 
         thumbnail = File(thumb_io, name=image.name)
         return thumbnail
