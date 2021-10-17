@@ -122,15 +122,15 @@ class Product(models.Model):
             cnt = int(favourites["count"])
         return cnt
 
-    def comment_avarege(self):
-        reviews = Comment.objects.filter(product=self, status='True').aggregate(avarage=Avg('rate'))
+    def review_avarege(self):
+        reviews = Review.objects.filter(product=self, status='True').aggregate(avarage=Avg('rate'))
         avg = 0
         if reviews["avarage"] is not None:
             avg = float(reviews["avarage"])
         return avg
 
-    def comment_counter(self):
-        reviews = Comment.objects.filter(product=self, status='True').aggregate(count=Count('id'))
+    def review_counter(self):
+        reviews = Review.objects.filter(product=self, status='True').aggregate(count=Count('id'))
         cnt = 0
         if reviews["count"] is not None:
             cnt = int(reviews["count"])
@@ -238,14 +238,7 @@ class Favourite(models.Model):
         return f'//{self.id}/'
 
 
-
-# Serializer / views for :
-# All coments for current product(based on product),
-# comment create(based on user,product),
-# comment update(based on user,product),
-# comment delete(based on user,product),
-# all coments of current user(based on user)
-class Comment(models.Model):
+class Review(models.Model):
     STATUS = (
         ('New', 'New'),
         ('True', 'True'),
@@ -261,7 +254,7 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name_plural = "Comments"
+        verbose_name_plural = "Reviews"
 
     def __str__(self):
         return self.subject

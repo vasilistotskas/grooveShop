@@ -14,8 +14,14 @@ urlpatterns = [
     path('favourites/<int:user_id>/', views.FavouriteList.as_view()),
     path('favourites/delete/<int:user_id>/<int:product_id>/', views.FavouriteDelete.as_view()),
 
-    path('comments/product/<int:product_id>/', views.ProductComments.as_view()),
-    path('comments/user/<int:user_id>/', views.UserComments.as_view()),
+    # all Reviews of current product , get and post
+    path('reviews/product/<int:product_id>/', views.ProductReviews.as_view()),
+
+    # all Reviews of current user , get
+    path('reviews/user/<int:user_id>/', views.UserReviews.as_view()),
+
+    # specific Reviews based on user and product , delete and update
+    path('reviews/review/<int:user_id>/<int:product_id>/', views.ReviewDeleteUpdate.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Product, ProductImages, Favourite, Comment
+from .models import Category, Product, ProductImages, Favourite, Review
 
 
 class ImagesSerializer(serializers.ModelSerializer):
@@ -37,8 +37,8 @@ class ProductSerializer(serializers.ModelSerializer):
             "discount_value",
             "date_added",
             "main_image",
-            "comment_avarege",
-            "comment_counter",
+            "review_avarege",
+            "review_counter",
             "images"
         )
 
@@ -73,10 +73,10 @@ class FavouriteSerializer(serializers.ModelSerializer):
         )
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Comment
+        model = Review
         fields = (
             "id",
             "product_id",

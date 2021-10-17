@@ -61,7 +61,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
         if not instance.region:
             instance.region = None
 
-
         instance.save()
 
         return instance

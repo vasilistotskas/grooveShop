@@ -1,6 +1,8 @@
 from django.contrib import admin
 import admin_thumbnails
-from .models import Category, Product, ProductImages, Favourite, Vat, Comment
+from .models import Category, Product, ProductImages, Favourite, Vat, Review
+from django.utils.translation import ngettext
+from django.contrib import messages
 
 
 def category_update_action(category):
@@ -50,8 +52,34 @@ class FavouriteAdmin(admin.ModelAdmin):
     list_display = ['user', 'product']
 
 
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['subject', 'comment', 'status', 'created_at']
+    list_filter = ['status']
+    readonly_fields = ('subject', 'comment', 'user', 'product', 'rate', 'id')
+    actions = ['make_published', 'make_unpublished']
+
+    def make_published(self, request, queryset):
+        updated = queryset.update(status='True')
+        self.message_user(request, ngettext(
+            '%d comment was successfully marked as published.',
+            '%d comments were successfully marked as published.',
+            updated,
+        ) % updated, messages.SUCCESS)
+
+    def make_unpublished(self, request, queryset):
+        updated = queryset.update(status='False')
+        self.message_user(request, ngettext(
+            '%d comment was successfully marked as published.',
+            '%d comments were successfully marked as published.',
+            updated,
+        ) % updated, messages.SUCCESS)
+
+    make_published.short_description = "Mark selected comments as published"
+    make_unpublished.short_description = "Mark selected comments as unpublished"
+
+
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Vat)
-admin.site.register(Comment)
+admin.site.register(Review, ReviewAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Favourite, FavouriteAdmin)
