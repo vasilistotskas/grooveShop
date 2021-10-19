@@ -12,7 +12,10 @@
 
       <div class="col-md-3">
         <h1 class="title mb-1">{{ product.name }}</h1>
-        <h5 class="mb-5"><strong>Product ID: </strong>{{ product.id }}</h5>
+        <h5 class="mb-1"><strong>Product ID: </strong>{{ product.id }}</h5>
+        <!-- Product Review -->
+        <a type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">Product Review</a>
+        <RateProductModal></RateProductModal>
         <p class="description mb-4">{{ product.description }}</p>
         <p class="mb-2"><strong>Price: </strong>${{ product.price }}</p>
 
@@ -37,6 +40,7 @@
 
           </FavouriteButton>
         </div>
+
       </div>
     </div>
   </div>
@@ -45,11 +49,13 @@
 <script>
 import {toast} from 'bulma-toast'
 import FavouriteButton from '@/components/FavouriteButton'
+import RateProductModal from '@/components/RateProductModal'
 
 export default {
   name: 'Product',
   components: {
-    FavouriteButton
+    FavouriteButton,
+    RateProductModal
   },
   data() {
     return {
