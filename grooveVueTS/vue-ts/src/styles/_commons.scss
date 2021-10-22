@@ -1,0 +1,73 @@
+:root {
+  --cp-helper-primary-light-bg: #{$color-palette-helper-light-primary-background};
+  --cp-helper-primary-light-fg: #{$color-palette-helper-light-primary-foreground};
+  --cp-helper-secondary-light-bg: #{$color-palette-helper-light-secondary-background};
+  --cp-helper-secondary-light-fg: #{$color-palette-helper-light-secondary-foreground};
+  --cp-helper-third-light-bg: #{$color-palette-helper-light-third-background};
+  --cp-helper-third-light-fg: #{$color-palette-helper-light-third-foreground};
+  --cp-helper-primary-dark-bg: #{$color-palette-helper-dark-primary-background};
+  --cp-helper-primary-dark-fg: #{$color-palette-helper-dark-primary-foreground};
+  --cp-helper-secondary-dark-bg: #{$color-palette-helper-dark-secondary-background};
+  --cp-helper-secondary-dark-fg: #{$color-palette-helper-dark-secondary-foreground};
+  --cp-helper-third-dark-bg: #{$color-palette-helper-dark-third-background};
+  --cp-helper-third-dark-fg: #{$color-palette-helper-dark-third-foreground};
+}
+
+body {
+  --cp-helper-primary-bg: var(--cp-helper-primary-light-bg);
+  --cp-helper-primary-fg: var(--cp-helper-primary-light-fg);
+  --cp-helper-secondary-bg: var(--cp-helper-secondary-light-bg);
+  --cp-helper-secondary-fg: var(--cp-helper-secondary-light-fg);
+  --cp-helper-third-bg: var(--cp-helper-third-light-bg);
+  --cp-helper-third-fg: var(--cp-helper-third-light-fg);
+  &.dark {
+    --cp-helper-primary-bg: var(--cp-helper-primary-dark-bg);
+    --cp-helper-primary-fg: var(--cp-helper-primary-dark-fg);
+    --cp-helper-secondary-bg: var(--cp-helper-secondary-dark-bg);
+    --cp-helper-secondary-fg: var(--cp-helper-secondary-dark-fg);
+    --cp-helper-third-bg: var(--cp-helper-third-dark-bg);
+    --cp-helper-third-fg: var(--cp-helper-third-dark-fg);
+  }
+
+  background-color: var(--cp-helper-secondary-bg);
+  color: var(--cp-helper-secondary-bg);
+}
+
+* {
+  transition: all .12s ease-in-out;
+  word-break: break-word;
+}
+
+::selection {
+  color: var(--cp-helper-primary-bg);
+  background: var(--cp-helper-primary-fg);
+}
+
+.data_unavailable, .data_loading {
+  padding: 2rem;
+  font-size: 22px;
+  font-weight: 100;
+  opacity: 0.5;
+}
+
+.app-section.page-wrapper {
+  overflow: auto;
+}
+
+.ql-snow, .ql-editor {
+  border: none !important;
+}
+.ql-editor:focus {
+  border-bottom: solid 1px var(--cp-helper-secondary-fg) !important;
+}
+
+.fade {
+  &-enter-active {
+    transition-property: opacity;
+    transition-duration: .12s;
+    opacity: 0;
+  }
+  &-leave-active {
+    display: none;
+  }
+}
