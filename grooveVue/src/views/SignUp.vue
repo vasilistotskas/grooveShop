@@ -47,7 +47,6 @@
 
 <script>
 import axios from 'axios'
-import {toast} from 'bulma-toast'
 import router from "@/router";
 
 export default {

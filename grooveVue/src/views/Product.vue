@@ -47,7 +47,6 @@
 </template>
 
 <script>
-import {toast} from 'bulma-toast'
 import FavouriteButton from '@/components/FavouriteButton'
 import RateProductModal from '@/components/RateProductModal'
 

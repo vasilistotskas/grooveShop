@@ -22,8 +22,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import {toast} from 'bulma-toast'
 
 import ProductCard from '@/components/ProductCard'
 import {mapGetters} from "vuex";

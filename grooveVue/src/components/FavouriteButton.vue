@@ -9,9 +9,6 @@
 
 <script>
 
-import {toast} from "bulma-toast";
-import {mapGetters} from "vuex";
-
 export default {
   name: 'FavouriteButton',
   props: {
