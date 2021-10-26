@@ -33,33 +33,6 @@ export default class App extends Vue {
     return packageMeta.version
   }
 
-  public initializeAuth(): void {
-    this.$store.commit('user/initializeAuth')
-  }
-
-  public initializeCart(): void {
-    this.$store.commit('cart/initializeCart')
-  }
-
-  public initializeToken(): void {
-    const token = this.$store.getters['user/getToken']
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = "Token " + token
-    } else {
-      axios.defaults.headers.common['Authorization'] = ""
-    }
-  }
-
-  mounted(): void {
-    if (this.isAuthenticated) {
-      this.initializeAuth()
-      this.initializeToken()
-      this.$store.dispatch('user/userDataFromRemote')
-    }
-
-    this.initializeCart()
-    this.$store.dispatch('category/categoriesFromRemote')
-  }
 }
 
 </script>

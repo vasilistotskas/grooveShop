@@ -1,7 +1,7 @@
 <template>
   <div class="page-product container mt-5" v-if="product && Object.keys(product).length > 0">
     <div class="row">
-      <div class="col-md-9 page-product-image-col" :style="getProductImageCol()">
+      <div class="col-md-9 page-product-image-col">
         <figure
             v-for="image in product.images"
             :key="image.id"
@@ -32,13 +32,12 @@
             <input type="number" class="input" min="1" v-model="quantity">
           </div>
 
-          <div class="control">
-            <a class="button is-dark addToCartButton" v-bind:class="{'disabled': disabled }" @click="addToCart()">{{ addToCartButtonText() }}</a>
-          </div>
+          <button type="button" class="btn btn-dark addToCartButton" v-bind:class="{'disabled': disabled }" @click="addToCart(product.id, product.price)">Dark</button>
 
-          <FavouriteButton :product="product">
 
-          </FavouriteButton>
+<!--          <FavouriteButton :product="product">-->
+
+<!--          </FavouriteButton>-->
         </div>
 
       </div>
@@ -51,6 +50,10 @@
 // import RateProductModal from '@/modals/Product/RateProductModal'
 import AppBasePage from '@/pages/AppBasePage.vue'
 import { Options } from "vue-class-component";
+import _, {LoDashStatic} from "lodash";
+import packageMeta from "../../../package.json";
+import axios from "axios";
+import Product from "@/state/product/Product";
 
 @Options({
   name: "Product",
@@ -60,8 +63,34 @@ import { Options } from "vue-class-component";
   }
 })
 
-export default class Product extends AppBasePage {
+export default class ProductVue extends AppBasePage {
 
+  quantity = 1
+
+  get product(): Product {
+    return this.$store.getters['product/getProductData']
+  }
+
+  public addToCart(productId: number, productPrice: number) {
+
+    if (isNaN(this.quantity) || this.quantity < 1) {
+      this.quantity = 1
+    }
+
+    const item = {
+      id: productId,
+      quantity: this.quantity,
+      price: productPrice
+    }
+
+    this.$store.commit('cart/addToCart', item)
+  }
+
+
+  async mounted(): Promise<void> {
+    await this.$store.dispatch('product/getProduct')
+    this.$store.dispatch('product/updateProductHits')
+  }
 }
 
 </script>

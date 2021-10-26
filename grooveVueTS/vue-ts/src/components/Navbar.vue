@@ -32,7 +32,7 @@
               </div>
             </form>
             <div class="buttons">
-              <template v-if="getIsAuthenticated">
+              <template v-if="this.isAuthenticated">
                 <router-link to="/my-account" class="button is-light">My account</router-link>
               </template>
 
@@ -57,25 +57,18 @@
 import NavbarCategories from '@/components/NavbarCategories.vue'
 import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
 import { Options } from "vue-class-component";
+import Product from "@/state/product/Product";
 
 @Options({
   name: "Navbar",
   components: {
     NavbarCategories
-  },
-  props: {
-    showMobileMenu: {
-      type: Boolean,
-      default: false
-    },
-    cartTotalLength: Number,
-    categories: Object
   }
 })
 export default class Navbar extends AppBaseLayout {
 
-  get getIsAuthenticated(): boolean {
-    return this.$store.getters['user/getIsAuthenticated']
+  get cartTotalLength(): number {
+    return this.$store.getters['cart/cartTotalLength']
   }
 
 }

@@ -45,6 +45,17 @@ export default {
         })
     },
 
+    patch: function(endpoint: string, data?: Record<string, string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]>): Promise<unknown> {
+        return axios({
+            url: `${baseUrl}/${endpoint}`,
+            method: 'patch',
+            data: qs.stringify(data),
+            headers: {
+                Authorization: "Token " + this.getUserToken()
+            }
+        })
+    },
+
     postRaw: function(endpoint: string, data: unknown): Promise<unknown> {
         return axios({
             url: `${baseUrl}/${endpoint}`,

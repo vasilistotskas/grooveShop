@@ -3,7 +3,7 @@
     <Navbar
         v-bind:showMobileMenu="showMobileMenu"
         v-bind:cartTotalLength="cartTotalLength"
-        v-bind:categories="categories"
+        v-bind:categories="this.categoriesData"
     />
     Loading Spinner
     <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading': this.isLoading }">
@@ -31,26 +31,9 @@
     components: {
       AppBaseLayout,
       Navbar
-    },
-    data() {
-      return {
-        cart: {
-          items: []
-        }
-      }
-    },
+    }
   })
   export default class AppBase extends AppBaseLayout {
-
-    get cartTotalLength(): number {
-      let totalLength = 0
-
-      for (let i = 0; i < this.cart.items.length; i++) {
-        totalLength += this.cart.items[i].quantity
-      }
-
-      return totalLength
-    }
 
     get categoriesData(): Array<any> {
       return this.$store.getters['category/getCategories']
@@ -70,6 +53,34 @@
 
     get cartData(): Array<unknown> {
       return this.$store.getters['cart/getCartData']
+    }
+
+    public initializeAuth(): void {
+      this.$store.commit('user/initializeAuth')
+    }
+
+    public initializeCart(): void {
+      this.$store.commit('cart/initializeCart')
+    }
+
+    public initializeToken(): void {
+      const token = this.$store.getters['user/getToken']
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = "Token " + token
+      } else {
+        axios.defaults.headers.common['Authorization'] = ""
+      }
+    }
+
+    mounted(): void {
+      if (this.isAuthenticated) {
+        this.initializeAuth()
+        this.initializeToken()
+        this.$store.dispatch('user/userDataFromRemote')
+      }
+
+      this.initializeCart()
+      this.$store.dispatch('category/categoriesFromRemote')
     }
 
   }

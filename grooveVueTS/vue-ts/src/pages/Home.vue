@@ -16,21 +16,38 @@
         <div class="col-12 mb-5">
           <h2 class="is-size-2 has-text-centered">{{ $t('eshop.test3') }}</h2>
         </div>
+        <ProductCard
+            class="col-sm-3"
+            v-for="product in LatestProducts"
+            v-bind:key="product.id"
+            v-bind:product="product"/>
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 
 import AppBasePage from '@/pages/AppBasePage.vue'
-import { Options } from "vue-class-component";
+import { Options } from "vue-class-component"
+import ProductCard from "@/components/Product/ProductCard.vue";
 
 @Options({
   name: "Home",
+  components: {
+    ProductCard
+  },
 })
 
 export default class Home extends AppBasePage {
+
+  get LatestProducts(): boolean {
+    return this.$store.getters['product/getLatestProductData']
+  }
+
+  beforeCreate(): void {
+    this.$store.dispatch('product/getLatestProducts')
+  }
 
 }
 </script>

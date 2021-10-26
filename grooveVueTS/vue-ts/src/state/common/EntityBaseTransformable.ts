@@ -1,6 +1,6 @@
 import EntityBase from '@/state/common/EntityBase'
 import { get, set, isUndefined, first, join, keys, pickBy} from 'lodash'
-import Coordinates from '@/state/common/Coordinates'
+
 
 export default abstract class EntityBaseTransformable<DEST, SOURCE extends EntityBase>
 {
@@ -62,19 +62,6 @@ export default abstract class EntityBaseTransformable<DEST, SOURCE extends Entit
 		const fieldValue = <unknown>get(from, sourceField) as Array<string>
 		if (!isUndefined(fieldValue))
 			set(this, destField, join(fieldValue, delimeter))
-	}
-
-	protected setFieldCoordinatesIfExists (
-		destFieldLatitude: keyof DEST,
-		destFieldLongitude: keyof DEST,
-		sourceField: keyof SOURCE,
-		from: Partial<SOURCE>
-	): void {
-		const fieldValue = get(from, sourceField) as unknown as Coordinates
-		if (!isUndefined(fieldValue)) {
-			set(this, destFieldLatitude, fieldValue.latitude)
-			set(this, destFieldLongitude, fieldValue.longitude)
-		}
 	}
 
 	public findFieldTruth<T>(dummyInstance: T): keyof T {

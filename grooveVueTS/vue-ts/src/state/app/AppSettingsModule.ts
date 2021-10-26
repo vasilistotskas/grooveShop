@@ -3,7 +3,6 @@ import { useI18n } from "vue-i18n";
 import { cloneDeep } from 'lodash'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import AppSettings from '@/state/app/AppSettings'
-import AppSettingsUpdatable from '@/state/app/AppSettingsUpdatable'
 import AppSettingsLocalizationOption from '@/state/app/AppSettingsLocalizationOption'
 
 @Module({ namespaced: true })
@@ -47,13 +46,6 @@ export default class AppSettingsModule
         if ('localization' === key) {
             await this.context.dispatch('updateI18n')
         }
-    }
-
-    @Action
-    async createUpdatable(): Promise<void> {
-        const settingsUpdatable = new AppSettingsUpdatable()
-        await settingsUpdatable.transformFromEntityBase(this.context.getters['getSettings'])
-        this.context.commit('setSettingsUpdatable', settingsUpdatable)
     }
 
     @Mutation

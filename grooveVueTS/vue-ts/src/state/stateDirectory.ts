@@ -2,6 +2,7 @@ import AppBaseModule from '@/state/common/AppBaseModule'
 import AppModule from '@/state/app/AppModule'
 import AppSettingsModule from '@/state/app/AppSettingsModule'
 import CategoryModule from '@/state/category/CategoryModule'
+import ProductModule from '@/state/product/ProductModule'
 import UserModule from '@/state/user/UserModule'
 import CartModule from '@/state/cart/CartModule'
 
@@ -17,6 +18,7 @@ const stateDirectory = <Record<string, typeof AppBaseModule>>{
     'app': AppModule,
     'settings': AppSettingsModule,
     'category': CategoryModule,
+    'product': ProductModule,
     'user': UserModule,
     'cart': CartModule,
 }
