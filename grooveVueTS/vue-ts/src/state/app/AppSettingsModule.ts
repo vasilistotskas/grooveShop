@@ -40,7 +40,6 @@ export default class AppSettingsModule
     @Action
     async updateSetting({ key, value } : { key: keyof AppSettings, value: never }): Promise<void> {
         const settings = cloneDeep(this.context.getters['getSettings']) as AppSettings
-        // Vue.set(settings, key, value)
         this.context.commit('setSettings', settings)
         await this.context.dispatch('createUpdatable')
         if ('localization' === key) {

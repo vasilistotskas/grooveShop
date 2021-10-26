@@ -1,13 +1,6 @@
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import Cart from '@/state/cart/Cart'
-import { some } from 'lodash'
-import CartDTO from '@/state/cart/CartDTO'
-import CartKey from "@/state/cart/CartKey";
-import CartItem from '@/state/cart/CartItem'
-import CartItemKey from "@/state/cart/CartItemKey";
 import AppBaseModule from "@/state/common/AppBaseModule";
-import ProductKey from "@/state/product/ProductKey";
-import Product from "@/state/product/Product";
 
 @Module({ namespaced: true })
 export default class CartModule
@@ -36,12 +29,6 @@ export default class CartModule
         }, 0)
     }
 
-    // public cartTotalLength() {
-    //     return this.cart.items.reduce((acc: any, curVal: any) => {
-    //         return acc += curVal.quantity
-    //     }, 0)
-    // }
-    //
 
     @Mutation
     initializeCart() {

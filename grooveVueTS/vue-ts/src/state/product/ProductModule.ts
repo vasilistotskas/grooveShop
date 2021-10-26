@@ -1,12 +1,8 @@
 import {first, filter, map, get} from 'lodash'
 import Product from '@/state/product/Product'
-import ProductDTO from '@/state/product/ProductDTO'
-import ProductKey from '@/state/product/ProductKey'
 import {Module, Action, Mutation} from 'vuex-module-decorators'
 import router from "@/routes";
 import api from "@/api/api.service";
-import AbstractBasketableBaseEntityModule
-	from '@/state/common/AbstractBasketableBaseEntityModule'
 import ResponseData from "@/state/types/ResponseData";
 import AppBaseModule from "@/state/common/AppBaseModule";
 
@@ -20,13 +16,19 @@ export default class ProductModule
 		'', 0, 0, []
 	)
 
-	latestProducts: Record<ProductKey, Product> = []
+	latestProducts = [
+			new Product(
+			0, '', 0, '', '', 0, 0, 0, 0,
+			0, 0, 0, 0, '', 0, 0, '',
+			'', 0, 0, []
+		)
+	]
 
 	get getProductData(): Product {
 		return this.product
 	}
 
-	get getLatestProductData(): Record<ProductKey, Product> {
+	get getLatestProductData(): Product[] {
 		return this.latestProducts
 	}
 
