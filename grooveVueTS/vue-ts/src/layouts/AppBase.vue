@@ -26,6 +26,7 @@
   import { Options } from "vue-class-component";
   import axios from 'axios'
   import Cart from "@/state/Cart/Cart";
+  import Category from "@/state/category/Category";
 
   @Options({
     name: "AppBase",
@@ -42,23 +43,23 @@
       return this.$store.getters['cart/cartTotalLength']
     }
 
-    get categoriesData(): Array<any> {
+    get categoriesData(): Array<Category> {
       return this.$store.getters['category/getCategories']
     }
 
-    get userData(): string {
+    get userData(): Array<any> {
       return this.$store.getters['user/getUserData']
     }
 
-    get userReviews(): string {
+    get userReviews(): Array<any> {
       return this.$store.getters['user/getUserReviews']
     }
 
-    get userFavourites(): string {
+    get userFavourites(): Array<any> {
       return this.$store.getters['user/getUserFavourites']
     }
 
-    get cartData(): Array<unknown> {
+    get cartData(): Array<Cart> {
       return this.$store.getters['cart/getCart']
     }
 
@@ -79,15 +80,16 @@
       }
     }
 
-    mounted(): void {
+    async created(): Promise<void> {
       if (this.isAuthenticated) {
         this.initializeAuth()
         this.initializeToken()
-        this.$store.dispatch('user/userDataFromRemote')
+        await this.$store.dispatch('user/userDataFromRemote')
       }
 
       this.initializeCart()
-      this.$store.dispatch('category/categoriesFromRemote')
+      await this.$store.dispatch('category/categoriesFromRemote')
+
     }
 
   }
