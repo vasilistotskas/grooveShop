@@ -59,7 +59,7 @@
     }
 
     get cartData(): Array<unknown> {
-      return this.$store.getters['cart/getCartData']
+      return this.$store.getters['cart/getCart']
     }
 
     public initializeAuth(): void {

@@ -12,7 +12,7 @@
 
       <div class="navbar-menu" id="navbar-menu" v-bind:class="{'is-active': showMobileMenu }">
         <div class="navbar-start">
-            <NavbarCategories/>
+            <NavbarCategories :categories="this.categories"/>
         </div>
 
         <div class="navbar-end">
@@ -62,16 +62,19 @@ import { Options } from "vue-class-component";
   name: "Navbar",
   components: {
     NavbarCategories
+  },
+  props: {
+    showMobileMenu: {
+      type: Boolean,
+      default: false
+    },
+    cartTotalLength: Number,
+    categories: Array
   }
 })
 export default class Navbar extends AppBaseLayout {
 
   public showMobileMenu = false
-  public categories = []
-
-  get cartTotalLength(): number {
-    return this.$store.getters['cart/cartTotalLength']
-  }
 
 }
 </script>

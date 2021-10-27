@@ -2,7 +2,7 @@
   <div class="collapse navbar-collapse" id="navbarNavCategories">
     <ul class="navbar-nav">
       <li class="nav-item"
-          v-for="category in categoriesData"
+          v-for="category in this.categories"
           v-bind:key="category.id">
         <router-link
             class="nav-link active" aria-current="page"
@@ -17,19 +17,16 @@
 
 <script lang="ts">
   import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
-  import { Options } from "vue-class-component";
+  import { Options } from "vue-class-component"
+  import Category from "@/state/category/Category"
 
   @Options({
     name: "NavbarCategories",
+    props: {
+      categories: Array
+    }
   })
   export default class NavbarCategories extends AppBaseLayout {
 
-    get categoriesData(): Array<any> {
-      return this.$store.getters['category/getCategories']
-    }
-
-    async beforeCreate(): Promise<void> {
-      await this.$store.dispatch('category/categoriesFromRemote')
-    }
   }
 </script>
