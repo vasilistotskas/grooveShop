@@ -50,9 +50,6 @@
 // import RateProductModal from '@/modals/Product/RateProductModal'
 import AppBasePage from '@/pages/AppBasePage.vue'
 import { Options } from "vue-class-component";
-import _, {LoDashStatic} from "lodash";
-import packageMeta from "../../../package.json";
-import axios from "axios";
 import Product from "@/state/product/Product";
 
 @Options({

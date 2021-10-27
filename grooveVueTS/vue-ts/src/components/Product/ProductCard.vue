@@ -7,7 +7,7 @@
         <div class="card-body">
           <h5 class="card-title">{{ product.name }}</h5>
           <p class="card-text">${{ product.price }}</p>
-          <a href="#" class="btn btn-primary" v-bind:class="{'disabled': disabled }" @click.prevent="addToCart(product.id, product.price)">{{ addToCartButtonText}}</a>
+          <a href="#" class="btn btn-primary" v-bind:class="{'disabled': disabled }" @click.prevent="addToCart()">{{ addToCartButtonText}}</a>
         </div>
       </div>
 
@@ -34,18 +34,16 @@ export default class ProductCard extends AppBasePage {
   quantity = 1
   product = new Product()
 
-
-  public addToCart(productId: number, productPrice: number) {
-    console.log(this.product.id)
+  public addToCart() {
 
     if (isNaN(this.quantity) || this.quantity < 1) {
       this.quantity = 1
     }
-    
+
     const item = {
-      id: productId,
+      id: this.product.id,
       quantity: this.quantity,
-      price: productPrice
+      price: this.product.price
     }
 
     this.$store.commit('cart/addToCart', item)
