@@ -10,18 +10,10 @@ import AppBaseModule from "@/state/common/AppBaseModule";
 export default class ProductModule
 	extends AppBaseModule
 {
-	product = new Product(
-		0, '', 0, '', '', 0, 0, 0, 0,
-		0, 0, 0, 0, '', 0, 0, '',
-		'', 0, 0, []
-	)
+	product = new Product()
 
 	latestProducts = [
-			new Product(
-			0, '', 0, '', '', 0, 0, 0, 0,
-			0, 0, 0, 0, '', 0, 0, '',
-			'', 0, 0, []
-		)
+			new Product()
 	]
 
 	get getProductData(): Product {
@@ -49,29 +41,7 @@ export default class ProductModule
 		await api.get(`products/${category_slug}/${product_slug}`)
 			.then((response: ResponseData) => {
 				const data = response.data
-				let product = new Product(
-					data.id,
-					data.name,
-					data.category,
-					data.get_absolute_url,
-					data.description,
-					data.price,
-					data.vat,
-					data.vat_percent,
-					data.vat_value,
-					data.final_price,
-					data.hits,
-					data.likes_counter,
-					data.stock,
-					data.active,
-					data.discount_percent,
-					data.discount_value,
-					data.date_added,
-					data.main_image,
-					data.review_avarege,
-					data.review_counter,
-					data.images
-				)
+				let product = new Product(data)
 				this.context.commit('setProduct', product)
 			})
 			.catch((e: Error) => {
@@ -96,32 +66,7 @@ export default class ProductModule
 		await api.get('latest-products/')
 			.then((response: ResponseData) => {
 				const data = response.data
-				const latestProduct = map(
-					data,
-					product => new Product(
-						product.id,
-						product.name,
-						product.category,
-						product.get_absolute_url,
-						product.description,
-						product.price,
-						product.vat,
-						product.vat_percent,
-						product.vat_value,
-						product.final_price,
-						product.hits,
-						product.likes_counter,
-						product.stock,
-						product.active,
-						product.discount_percent,
-						product.discount_value,
-						product.date_added,
-						product.main_image,
-						product.review_avarege,
-						product.review_counter,
-						product.images
-					)
-				)
+				const latestProduct = map(data, rawProduct => new Product(rawProduct))
 				this.context.commit('setLatestProduct', latestProduct)
 			})
 			.catch((e: Error) => {
