@@ -10,9 +10,7 @@ import Product from "@/state/product/Product";
 export default class CategoryModule
     extends AppBaseModule
 {
-    categories = new Category(
-        0, '', '', '', '', 0, [], '', '',
-    )
+    categories = new Category()
 
     get getCategories(): Category {
         return this.categories
@@ -28,26 +26,12 @@ export default class CategoryModule
         await api.get('products/categories/')
             .then((response: ResponseData) => {
                 const data = response.data
-                const categories = map(
-                    data,
-                    category => new Category(
-                        category.id,
-                        category.description,
-                        category.get_absolute_url,
-                        category.image_url,
-                        category.name,
-                        category.parent,
-                        category.products,
-                        category.slug,
-                        category.tags
-                    )
-                )
+                const categories = map(data, rawCategory => new Category(rawCategory))
                 this.context.commit('setCategories', categories)
             })
             .catch((e: Error) => {
                 console.log(e);
             });
     }
-
 
 }

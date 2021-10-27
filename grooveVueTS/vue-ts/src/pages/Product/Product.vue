@@ -53,7 +53,7 @@ import { Options } from "vue-class-component";
 import Product from "@/state/product/Product";
 
 @Options({
-  name: "Product",
+  name: "ProductVue",
   components: {
     // FavouriteButton,
     // RateProductModal

@@ -41,12 +41,12 @@ import ProductCard from "@/components/Product/ProductCard.vue";
 
 export default class Home extends AppBasePage {
 
-  get LatestProducts(): boolean {
+  get LatestProducts(): [] {
     return this.$store.getters['product/getLatestProductData']
   }
 
-  beforeCreate(): void {
-    this.$store.dispatch('product/getLatestProducts')
+  async beforeCreate(): Promise<void> {
+    await this.$store.dispatch('product/getLatestProducts')
   }
 
 }

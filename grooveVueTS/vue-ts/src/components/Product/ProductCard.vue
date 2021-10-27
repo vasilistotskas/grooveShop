@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="product && Object.keys(product).length > 0">
     <router-link v-bind:to="product.get_absolute_url" class="p-1">
 
       <div class="card" style="width: 18rem;">
@@ -47,6 +47,10 @@ export default class ProductCard extends AppBasePage {
     }
 
     this.$store.commit('cart/addToCart', item)
+  }
+
+  get disabled() {
+    return this.product.active === "False" || this.product.stock <= 0
   }
 
   get addToCartButtonText(): string {

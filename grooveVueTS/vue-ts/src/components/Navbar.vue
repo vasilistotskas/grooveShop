@@ -4,7 +4,7 @@
         <router-link to="/" class="navbar-brand"><strong class="p-1">grooveShop</strong></router-link>
 
         <a class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu"
-           @click="showMobileMenu = !showMobileMenu">
+           @click="this.showMobileMenu = !this.showMobileMenu">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -12,7 +12,7 @@
 
       <div class="navbar-menu" id="navbar-menu" v-bind:class="{'is-active': showMobileMenu }">
         <div class="navbar-start">
-            <NavbarCategories :categories="categories"/>
+            <NavbarCategories/>
         </div>
 
         <div class="navbar-end">
@@ -57,7 +57,6 @@
 import NavbarCategories from '@/components/NavbarCategories.vue'
 import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
 import { Options } from "vue-class-component";
-import Product from "@/state/product/Product";
 
 @Options({
   name: "Navbar",
@@ -66,6 +65,9 @@ import Product from "@/state/product/Product";
   }
 })
 export default class Navbar extends AppBaseLayout {
+
+  public showMobileMenu = false
+  public categories = []
 
   get cartTotalLength(): number {
     return this.$store.getters['cart/cartTotalLength']

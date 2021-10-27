@@ -1,9 +1,9 @@
 <template>
   <div id="wrapper">
-    <Navbar
+    <Navbar v-if="categoriesData && Object.keys(categoriesData).length > 0"
         v-bind:showMobileMenu="showMobileMenu"
         v-bind:cartTotalLength="cartTotalLength"
-        v-bind:categories="this.categoriesData"
+        v-bind:categories="categoriesData"
     />
     Loading Spinner
     <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading': this.isLoading }">
@@ -25,6 +25,7 @@
   import Navbar from '@/components/Navbar.vue'
   import { Options } from "vue-class-component";
   import axios from 'axios'
+  import Cart from "@/state/Cart/Cart";
 
   @Options({
     name: "AppBase",
@@ -34,6 +35,12 @@
     }
   })
   export default class AppBase extends AppBaseLayout {
+
+    public showMobileMenu = false
+
+    get cartTotalLength(): Cart {
+      return this.$store.getters['cart/cartTotalLength']
+    }
 
     get categoriesData(): Array<any> {
       return this.$store.getters['category/getCategories']

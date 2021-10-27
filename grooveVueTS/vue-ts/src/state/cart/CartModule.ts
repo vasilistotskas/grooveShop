@@ -25,7 +25,8 @@ export default class CartModule
 
     get cartTotalPrice(): number {
         return this.cart.reduce((acc: any, curVal: any) => {
-            return acc += curVal.product.price * curVal.quantity
+            console.log(curVal)
+            return acc += curVal.price * curVal.quantity
         }, 0)
     }
 
@@ -53,8 +54,8 @@ export default class CartModule
 
 
     @Action
-    removeFromCart(product: Cart): void {
-        this.cart = this.cart.filter(i => i.id !== product.id)
+    removeFromCart(cart: Cart): void {
+        this.cart = this.cart.filter(i => i.id !== cart.id)
     }
 
 }
