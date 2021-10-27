@@ -25,7 +25,6 @@ export default class CartModule
 
     get cartTotalPrice(): number {
         return this.cart.reduce((acc: any, curVal: any) => {
-            console.log(curVal)
             return acc += curVal.price * curVal.quantity
         }, 0)
     }
