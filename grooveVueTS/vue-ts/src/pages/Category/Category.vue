@@ -21,41 +21,51 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 
-import ProductCard from '@/components/Product/ProductCard'
-import {mapGetters} from "vuex";
+import {Options} from "vue-class-component";
+import AppBasePage from "@/pages/AppBasePage.vue";
+import ProductCard from "@/components/Product/ProductCard.vue";
+import Category from "@/state/category/Category";
 
-export default {
-  name: 'Category',
+@Options({
+  name: "CategoryVue",
   components: {
     ProductCard
   },
-  mounted() {
-    this.getCategory()
-  },
-  watch: {
-    $route(to, from) {
-      if (to.name === 'Category') {
-        this.getCategory()
-      }
-    }
-  },
-  computed: {
-    ...mapGetters({'category': 'getStateCategory'})
-  },
-  methods: {
-    async getCategory() {
-      const categorySlug = this.$route.params.category_slug
-
-      this.$store.dispatch('fetchCategory', categorySlug)
-          .then(success => {
-            document.title = this.category.name + ' | grooveShop'
-          })
-          .catch(error => {
-            console.log(error)
-          })
-    }
+  props: {
+    category_slug: String
   }
+})
+
+export default class CategoryVue extends AppBasePage {
+
+  created() {
+    this.$watch(
+        () => this.$route,
+        (to:any, from:any) => {
+          if (to.name === 'Category') {
+            this.fetchCategory()
+          }
+        }
+    )
+  }
+
+  async mounted(): Promise<void> {
+    await this.fetchCategory()
+    // this.$nextTick(function () {
+    //   console.log('ssss')
+    // })
+  }
+
+  get category(): Category {
+    return this.$store.getters['category/getCategory']
+  }
+
+  public fetchCategory(): void {
+    const categorySlug = this.$route.params.category_slug
+    this.$store.dispatch('category/fetchCategory', categorySlug)
+  }
+
 }
 </script>

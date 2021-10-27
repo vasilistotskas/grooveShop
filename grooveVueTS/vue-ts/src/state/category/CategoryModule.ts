@@ -4,16 +4,25 @@ import api from "@/api/api.service";
 import ResponseData from "@/state/types/ResponseData";
 import Category from "@/state/category/Category";
 import {map} from "lodash";
-import Product from "@/state/product/Product";
 
 @Module({ namespaced: true })
 export default class CategoryModule
     extends AppBaseModule
 {
+    category = new Category()
     categories = new Category()
+
+    get getCategory(): Category {
+        return this.category
+    }
 
     get getCategories(): Category {
         return this.categories
+    }
+
+    @Mutation
+    setCategory(category: Category): void {
+        this.category = category
     }
 
     @Mutation
@@ -30,8 +39,20 @@ export default class CategoryModule
                 this.context.commit('setCategories', categories)
             })
             .catch((e: Error) => {
-                console.log(e);
-            });
+                console.log(e)
+            })
     }
 
+    @Action
+    async fetchCategory(categorySlug: Category['slug']) {
+       await api.get(`products/${categorySlug}/`)
+           .then((response: ResponseData) => {
+               const data = response.data
+               let category = new Category(data)
+               this.context.commit('setCategory', category)
+           })
+           .catch((e: Error) => {
+               console.log(e)
+           })
+    }
 }

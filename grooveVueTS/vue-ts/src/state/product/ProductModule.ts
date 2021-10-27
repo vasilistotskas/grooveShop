@@ -12,9 +12,7 @@ export default class ProductModule
 {
 	product = new Product()
 
-	latestProducts = [
-			new Product()
-	]
+	latestProducts = [new Product()]
 
 	get getProductData(): Product {
 		return this.product

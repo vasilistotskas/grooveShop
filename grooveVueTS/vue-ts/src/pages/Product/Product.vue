@@ -15,7 +15,7 @@
         <h5 class="mb-1"><strong>Product ID: </strong>{{ product.id }}</h5>
         <!-- Product Review -->
         <a type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">Product Review</a>
-        <RateProductModal></RateProductModal>
+<!--        <RateProductModal></RateProductModal>-->
         <p class="description mb-4">{{ product.description }}</p>
         <p class="mb-2"><strong>Price: </strong>${{ product.price }}</p>
 
@@ -57,6 +57,17 @@ import Product from "@/state/product/Product";
   components: {
     // FavouriteButton,
     // RateProductModal
+  },
+  props: {
+    category_slug: {
+      type: String
+    },
+    product_id: {
+      type: String
+    },
+    product_slug: {
+      type: String
+    }
   }
 })
 
@@ -83,6 +94,9 @@ export default class ProductVue extends AppBasePage {
     this.$store.commit('cart/addToCart', item)
   }
 
+  get disabled() {
+    return this.product.active === "False" || this.product.stock <= 0
+  }
 
   async mounted(): Promise<void> {
     await this.$store.dispatch('product/getProduct')
