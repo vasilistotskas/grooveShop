@@ -24,6 +24,10 @@ export default class ProductModule
 		return this.latestProducts
 	}
 
+	get addToCartButtonText(): string {
+		return (this.product.active === "False" || this.product.stock <= 0) ? 'Out Of Stock' : 'Add To Cart'
+	}
+
 	@Mutation
 	setProduct(product: Product): void {
 		this.product = product

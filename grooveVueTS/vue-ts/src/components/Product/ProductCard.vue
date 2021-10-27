@@ -7,7 +7,7 @@
         <div class="card-body">
           <h5 class="card-title">{{ product.name }}</h5>
           <p class="card-text">${{ product.price }}</p>
-          <a href="#" class="btn btn-primary" v-bind:class="{'disabled': disabled }" @click.prevent="">Go somewhere</a>
+          <a href="#" class="btn btn-primary" v-bind:class="{'disabled': disabled }" @click.prevent="addToCart(product.id, product.price)">{{ addToCartButtonText}}</a>
         </div>
       </div>
 
@@ -20,6 +20,7 @@
 
 import {Options} from "vue-class-component";
 import AppBasePage from "@/pages/AppBasePage.vue";
+import Product from "@/state/product/Product";
 
 @Options({
   name: "ProductCard",
@@ -29,6 +30,30 @@ import AppBasePage from "@/pages/AppBasePage.vue";
 })
 
 export default class ProductCard extends AppBasePage {
+
+  quantity = 1
+  product = new Product()
+
+
+  public addToCart(productId: number, productPrice: number) {
+    console.log(this.product.id)
+
+    if (isNaN(this.quantity) || this.quantity < 1) {
+      this.quantity = 1
+    }
+    
+    const item = {
+      id: productId,
+      quantity: this.quantity,
+      price: productPrice
+    }
+
+    this.$store.commit('cart/addToCart', item)
+  }
+
+  get addToCartButtonText(): string {
+    return this.$store.getters['product/addToCartButtonText']
+  }
 
 }
 </script>
