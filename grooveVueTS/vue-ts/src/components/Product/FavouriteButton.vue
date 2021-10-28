@@ -1,16 +1,40 @@
 <template>
-
+  <a @click="favouriteHandle()">
+    <div class="control favourite-content">
+      <i :class=getFavouriteIconClass()></i>
+    </div>
+  </a>
 </template>
 
 
 <script lang="ts">
 import AppBasePage from '@/pages/AppBasePage.vue'
 import { Options } from "vue-class-component";
+import ProductModel from "@/state/product/ProductModel";
+import Product from "@/state/product/ProductModel";
 
 @Options({
   name: "FavouriteButton",
+  props: {
+    product: Object
+  }
 })
 export default class FavouriteButton extends AppBasePage {
+
+  product = new Product()
+
+  get isFavourite(): ProductModel {
+    // const productId = this.product.id
+    return this.$store.getters['user/favourite/getStateIsCurrentProductInFavourites']
+  }
+
+  async favouriteHandle(): Promise<void> {
+    this.$store.dispatch('user/favourite/toggleFavourite', this.product)
+  }
+
+  private getFavouriteIconClass(): string {
+    return !this.isFavourite ? 'far fa-heart' : 'fas fa-heart'
+  }
 
 }
 

@@ -3,6 +3,8 @@ import api from "@/api/api.service";
 import ResponseData from "@/state/types/ResponseData";
 import axios from "axios";
 import AppBaseModule from "@/state/common/AppBaseModule";
+import store from '@/store'
+import UserFavouriteModel from "@/state/user/favourite/UserFavouriteModel";
 
 @Module({ namespaced: true })
 export default class UserDataModule
@@ -11,16 +13,13 @@ export default class UserDataModule
 
     token!: string;
     isAuthenticated!: boolean;
-    data: Array<any> = []
+    user_id!: number;
+    data: object = {}
 
     get getToken(): string { return this.token }
     get getIsAuthenticated(): boolean { return this.isAuthenticated }
-    get getUserData(): Array<any> { return this.data}
-
-    async ensureUserIsAuthenticated() {
-        if (!this.isAuthenticated)
-            throw new Error('User not authenticated')
-    }
+    get getUserId(): number { return this.user_id }
+    get getUserData(): object { return this.data}
 
     @Mutation
     initializeAuth() {
@@ -37,7 +36,10 @@ export default class UserDataModule
     setToken(token: string): void { this.token = token }
 
     @Mutation
-    setUserData(data: Array<any>): void { this.data = data }
+    setUserData(data: object): void { this.data = data }
+
+    @Mutation
+    setUserId(user_id: number) { this.user_id = user_id }
 
     @Mutation
     unsetUserData() {
@@ -54,6 +56,12 @@ export default class UserDataModule
     }
 
     @Action
+    async ensureUserIsAuthenticated(): Promise<void> {
+        if (!this.isAuthenticated)
+            throw new Error('User not authenticated')
+    }
+
+    @Action
     async userDataFromRemote(): Promise<void> {
         let errors: Array<any> = []
 
@@ -63,11 +71,16 @@ export default class UserDataModule
             this.context.commit('setToken', this.token)
         }
 
-        await this.ensureUserIsAuthenticated
+        await this.context.dispatch('ensureUserIsAuthenticated')
         await api.get('userprofile/data')
             .then((response: ResponseData) => {
                 const data = response.data
                 this.context.commit('setUserData', data[0])
+                this.context.commit('setUserId', response.data[0].id)
+                //  User favourites get action here
+                store.dispatch('user/favourite/userFavouritesFromRemote', response.data[0].user)
+                //  User reviews get action here
+                // store.dispatch('getCurrentUserProductReviews', response.data[0].user)
                 axios.defaults.headers.common["Authorization"] = "Token " + this.token
                 localStorage.setItem("token", this.token)
             })

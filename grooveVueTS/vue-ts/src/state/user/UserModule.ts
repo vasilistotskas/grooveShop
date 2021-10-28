@@ -2,7 +2,6 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import api from "@/api/api.service";
 import ResponseData from "@/state/types/ResponseData";
-import axios from "axios";
 
 @Module({ namespaced: true })
 export default class UserModule

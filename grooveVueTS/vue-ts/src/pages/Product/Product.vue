@@ -35,9 +35,9 @@
           <button type="button" class="btn btn-dark addToCartButton" v-bind:class="{'disabled': disabled }" @click="addToCart()">Dark</button>
 
 
-<!--          <FavouriteButton :product="product">-->
+          <FavouriteButton :product="product">
 
-<!--          </FavouriteButton>-->
+          </FavouriteButton>
         </div>
 
       </div>
@@ -46,16 +46,16 @@
 </template>
 
 <script lang="ts">
-// import FavouriteButton from '@/components/Product/FavouriteButton'
+import FavouriteButton from '@/components/Product/FavouriteButton.vue'
 // import RateProductModal from '@/modals/Product/RateProductModal'
 import AppBasePage from '@/pages/AppBasePage.vue'
 import { Options } from "vue-class-component";
-import Product from "@/state/product/ProductModel";
+import ProductModel from "@/state/product/ProductModel";
 
 @Options({
   name: "ProductVue",
   components: {
-    // FavouriteButton,
+    FavouriteButton,
     // RateProductModal
   },
   props: {
@@ -75,7 +75,7 @@ export default class ProductVue extends AppBasePage {
 
   quantity = 1
 
-  get product(): Product {
+  get product(): ProductModel {
     return this.$store.getters['product/getProductData']
   }
 

@@ -7,7 +7,7 @@ import UserModule from '@/state/user/UserModule'
 import SearchModule from '@/state/search/SearchModule'
 import UserDataModule from '@/state/user/data/UserDataModule'
 import UserOrderModule from '@/state/user/order/UserOrderModule'
-// import UserFavouriteModule from '@/state/user/favourite/UserFavouriteModule'
+import UserFavouriteModule from '@/state/user/favourite/UserFavouriteModule'
 // import UserReviewModule from '@/state/user/review/UserReviewModule'
 import CartModule from '@/state/cart/CartModule'
 
@@ -27,7 +27,7 @@ const stateDirectory = <Record<string, typeof AppBaseModule>>{
     'user': UserModule,
     'user.data': UserDataModule,
     'user.order': UserOrderModule,
-    // 'user.favourite': UserFavouriteModule,
+    'user.favourite': UserFavouriteModule,
     // 'user.review': UserReviewModule,
     'cart': CartModule,
     'search': SearchModule

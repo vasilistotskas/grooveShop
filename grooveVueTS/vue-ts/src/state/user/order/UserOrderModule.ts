@@ -1,16 +1,16 @@
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import api from "@/api/api.service";
 import ResponseData from "@/state/types/ResponseData";
-import axios from "axios";
 import AppBaseModule from "@/state/common/AppBaseModule";
+import ProductModel from "@/state/product/ProductModel";
 
 @Module({ namespaced: true })
 export default class UserOrderModule
     extends AppBaseModule
 {
-    orders: Array<any> = []
+    orders = [new ProductModel()]
 
-    get getUserOrders(): Array<any> { return this.orders }
+    get getUserOrders(): ProductModel[] { return this.orders }
 
     @Mutation
     setUserOrders(orders: Array<any>): void { this.orders = orders }
