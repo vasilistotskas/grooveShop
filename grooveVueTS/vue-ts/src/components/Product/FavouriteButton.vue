@@ -11,7 +11,6 @@
 import AppBasePage from '@/pages/AppBasePage.vue'
 import { Options } from "vue-class-component";
 import ProductModel from "@/state/product/ProductModel";
-import Product from "@/state/product/ProductModel";
 
 @Options({
   name: "FavouriteButton",
@@ -21,7 +20,7 @@ import Product from "@/state/product/ProductModel";
 })
 export default class FavouriteButton extends AppBasePage {
 
-  product = new Product()
+  product = new ProductModel()
 
   get isFavourite(): ProductModel {
     // const productId = this.product.id
