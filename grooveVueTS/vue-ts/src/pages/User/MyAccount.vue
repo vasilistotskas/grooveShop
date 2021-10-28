@@ -22,21 +22,17 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import router from "@/routes";
-import OrderSummary from '@/components/Order/OrderSummary.vue'
 import {Options} from "vue-class-component";
 import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
 
 @Options({
   name: "MyAccount",
-  components: {
-    OrderSummary
-  }
 })
 
 export default class MyAccount extends AppBaseLayout {
-  logout() {
+  protected logout(): void {
     this.$store.commit('user/unsetUserData')
     router.push('/')
   }

@@ -13,26 +13,14 @@ export default class UserModule
     data: Array<any> = []
     reviews: Array<any> = []
     favourites: Array<any> = []
+    orders: Array<any> = []
 
-    get getToken(): string {
-        return this.token
-    }
-
-    get getIsAuthenticated(): boolean {
-        return this.isAuthenticated
-    }
-
-    get getUserData(): Array<any> {
-        return this.data
-    }
-
-    get getUserReviews(): Array<any> {
-        return this.reviews
-    }
-
-    get getUserFavourites(): Array<any> {
-        return this.favourites
-    }
+    get getToken(): string { return this.token }
+    get getIsAuthenticated(): boolean { return this.isAuthenticated }
+    get getUserData(): Array<any> { return this.data}
+    get getUserReviews(): Array<any> { return this.reviews }
+    get getUserFavourites(): Array<any> { return this.favourites }
+    get getUserOrders(): Array<any> { return this.orders }
 
     async ensureUserIsAuthenticated() {
         if (!this.isAuthenticated)
@@ -51,22 +39,19 @@ export default class UserModule
     }
 
     @Mutation
-    setToken(
-        token: string,
-    ): void {
-        this.token = token
-    }
+    setToken(token: string): void { this.token = token }
 
     @Mutation
-    setUser(
-        data: Array<any>,
-        reviews: Array<any>,
-        favourites: Array<any>
-    ): void {
-        this.data = data
-        this.reviews = reviews
-        this.favourites = favourites
-    }
+    setUserData(data: Array<any>): void { this.data = data }
+
+    @Mutation
+    setUserOrders(orders: Array<any>): void { this.orders = orders }
+
+    @Mutation
+    setUserReviews(reviews: Array<any>): void { this.reviews = reviews }
+
+    @Mutation
+    setUserFavourites(favourites: Array<any>): void { this.favourites = favourites }
 
     @Mutation
     unsetUserData() {
@@ -79,6 +64,7 @@ export default class UserModule
         this.data = []
         this.reviews = []
         this.favourites = []
+        this.orders = []
     }
 
     @Action
@@ -95,9 +81,22 @@ export default class UserModule
         await api.get('userprofile/data')
             .then((response: ResponseData) => {
                 const data = response.data
-                this.context.commit('setUser', data[0])
+                this.context.commit('setUserData', data[0])
                 axios.defaults.headers.common["Authorization"] = "Token " + this.token
                 localStorage.setItem("token", this.token)
+            })
+            .catch((e: Error) => {
+                console.log(e);
+            })
+    }
+
+    @Action
+    async userOrdersFromRemote(): Promise<void> {
+        await api.get('orders/')
+            .then((response: ResponseData) => {
+                const data = response.data
+                console.log('eww')
+                this.context.commit('setUserOrders', data[0])
             })
             .catch((e: Error) => {
                 console.log(e);

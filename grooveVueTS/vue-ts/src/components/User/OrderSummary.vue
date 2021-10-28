@@ -34,32 +34,32 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
+import {Options} from "vue-class-component";
+import Category from "@/state/category/Category";
 
-export default {
-  name: 'OrderSummary',
+@Options({
+  name: "OrderSummary",
+})
+
+export default class orderSummary extends AppBaseLayout{
   beforeCreate() {
-    this.$store.dispatch('getUserOrders')
-  },
+    this.$store.dispatch('user/userOrdersFromRemote')
+  }
   mounted() {
     document.title = 'My Orders | grooveShop'
-  },
-  computed: {
-    orders: {
-      get() {
-        return this.$store.getters['getStateUserOrders']
-      }
-    }
-  },
-  methods: {
-    getItemTotal(item) {
-      return item.quantity * item.product.price
-    },
-    orderTotalLength(order) {
-      return order.items.reduce((acc, curVal) => {
-        return acc += curVal.quantity
-      }, 0)
-    }
   }
+  // get category(): Category {
+  //   return this.$store.getters['user/userOrders']
+  // }
+  // getItemTotal(item) {
+  //   return item.quantity * item.product.price
+  // }
+  // orderTotalLength(order) {
+  //   return order.items.reduce((acc, curVal) => {
+  //     return acc += curVal.quantity
+  //   }, 0)
+  // }
 }
 </script>

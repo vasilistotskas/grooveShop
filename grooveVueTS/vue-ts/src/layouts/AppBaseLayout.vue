@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Options, Vue } from "vue-class-component"
+import { Options } from "vue-class-component"
 import App from '@/App.vue'
 
 @Options({
