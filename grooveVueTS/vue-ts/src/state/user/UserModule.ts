@@ -95,7 +95,6 @@ export default class UserModule
         await api.get('orders/')
             .then((response: ResponseData) => {
                 const data = response.data
-                console.log('eww')
                 this.context.commit('setUserOrders', data[0])
             })
             .catch((e: Error) => {

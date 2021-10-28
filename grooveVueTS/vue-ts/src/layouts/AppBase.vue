@@ -25,7 +25,7 @@
   import Navbar from '@/components/Navbar/Navbar.vue'
   import { Options } from "vue-class-component";
   import axios from 'axios'
-  import Category from "@/state/category/Category";
+  import CategoryModel from "@/state/category/CategoryModel";
 
   @Options({
     name: "AppBase",
@@ -42,7 +42,7 @@
       return this.$store.getters['cart/cartTotalLength']
     }
 
-    get categoriesData(): Array<Category> {
+    get categoriesData(): Array<CategoryModel> {
       return this.$store.getters['category/getCategories']
     }
 

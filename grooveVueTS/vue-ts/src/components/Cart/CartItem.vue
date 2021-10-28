@@ -19,7 +19,7 @@
 <script lang="ts">
 import AppBasePage from "@/pages/AppBasePage.vue";
 import { Options } from "vue-class-component";
-import CartItem from "@/state/cart/CartItem";
+import CartItemModel from "@/state/cart/CartItemModel";
 
 @Options({
   name: "CartItem",
@@ -32,7 +32,7 @@ import CartItem from "@/state/cart/CartItem";
 
 export default class CartItemVue extends AppBasePage {
 
-    item = new CartItem()
+    item = new CartItemModel()
 
     // prepei na paw sto store kapos
     get getItemTotal(): number {

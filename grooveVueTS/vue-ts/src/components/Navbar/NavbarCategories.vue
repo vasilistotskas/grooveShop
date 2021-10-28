@@ -18,7 +18,6 @@
 <script lang="ts">
   import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
   import { Options } from "vue-class-component"
-  import Category from "@/state/category/Category"
 
   @Options({
     name: "NavbarCategories",

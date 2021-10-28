@@ -1,6 +1,6 @@
 import EntityBase from "@/state/common/EntityBase";
 
-export default class Category extends EntityBase
+export default class CategoryModel extends EntityBase
 {
     id!: number
     description!: string
@@ -12,7 +12,7 @@ export default class Category extends EntityBase
     slug!: string
     tags!: string
 
-    constructor(data?: Partial<Category>) {
+    constructor(data?: Partial<CategoryModel>) {
         super(data)
     }
 }

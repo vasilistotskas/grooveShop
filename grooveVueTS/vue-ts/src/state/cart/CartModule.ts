@@ -1,5 +1,5 @@
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import CartItem from '@/state/cart/CartItem'
+import CartItemModel from '@/state/cart/CartItemModel'
 import AppBaseModule from "@/state/common/AppBaseModule";
 
 @Module({ namespaced: true })
@@ -7,9 +7,9 @@ export default class CartModule
     extends AppBaseModule
 {
 
-    cart: Array<CartItem> = []
+    cart: Array<CartItemModel> = []
 
-    get getCart (): Array<CartItem> {
+    get getCart (): Array<CartItemModel> {
         return this.cart
     }
 
@@ -22,7 +22,7 @@ export default class CartModule
     }
 
     get cartTotalPrice(): number {
-        return this.cart.reduce((acc: number, curVal: CartItem) => {
+        return this.cart.reduce((acc: number, curVal: CartItemModel) => {
             return acc += curVal.product.price * curVal.quantity
         }, 0)
     }
@@ -37,7 +37,7 @@ export default class CartModule
     }
 
     @Mutation
-    public addToCart(item: CartItem): void {
+    public addToCart(item: CartItemModel): void {
         const exists = this.cart.filter(i => i.product.id === item.product.id)
         if (exists.length) {
             exists[0].quantity = exists[0].quantity + item.quantity
@@ -48,13 +48,13 @@ export default class CartModule
     }
 
     @Mutation
-    public removeFromCart(item: CartItem): void {
+    public removeFromCart(item: CartItemModel): void {
         this.cart = this.cart.filter(i => i.product.id !== item.product.id)
         localStorage.setItem('cart', JSON.stringify(this.cart))
     }
 
     @Mutation
-    public decrementQuantity(item: CartItem): void {
+    public decrementQuantity(item: CartItemModel): void {
         item.quantity -= 1
         if (item.quantity === 0) {
             this.cart = this.cart.filter(i => i.product.id !== item.product.id)
@@ -63,7 +63,7 @@ export default class CartModule
     }
 
     @Mutation
-    public incrementQuantity(item: CartItem): void {
+    public incrementQuantity(item: CartItemModel): void {
         item.quantity += 1
         localStorage.setItem('cart', JSON.stringify(this.cart))
     }
