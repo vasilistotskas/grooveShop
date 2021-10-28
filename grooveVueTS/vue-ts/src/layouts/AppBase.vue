@@ -22,10 +22,9 @@
 
 <script lang="ts">
   import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
-  import Navbar from '@/components/Navbar.vue'
+  import Navbar from '@/components/Navbar/Navbar.vue'
   import { Options } from "vue-class-component";
   import axios from 'axios'
-  import Cart from "@/state/Cart/Cart";
   import Category from "@/state/category/Category";
 
   @Options({
@@ -39,7 +38,7 @@
 
     public showMobileMenu = false
 
-    get cartTotalLength(): Cart {
+    get cartTotalLength(): number {
       return this.$store.getters['cart/cartTotalLength']
     }
 
@@ -59,7 +58,7 @@
       return this.$store.getters['user/getUserFavourites']
     }
 
-    get cartData(): Array<Cart> {
+    get cartData(): {} {
       return this.$store.getters['cart/getCart']
     }
 

@@ -19,10 +19,10 @@
 
                     <tbody>
                     <CartItem
-                            v-for="item in cart.items"
-                            v-bind:key="item.product.id"
-                            v-bind:initialItem="item"
-                            v-on:removeFromCart="removeFromCart"/>
+                            v-for="item in cart"
+                            v-bind:key="item.id"
+                            v-bind:item="item"
+                            v-on:removeFromCart="removeFromCart(item)"/>
                     </tbody>
                 </table>
 
@@ -42,7 +42,6 @@
 
 <script lang="ts">
 import AppBasePage from '@/pages/AppBasePage.vue'
-import Cart from "@/state/Cart/Cart";
 import CartItem from '@/components/Cart/CartItem.vue'
 import { Options } from "vue-class-component";
 
@@ -55,16 +54,20 @@ import { Options } from "vue-class-component";
 
 export default class CartVue extends AppBasePage {
 
-    get cart(): Cart {
+    get cart(): {} {
         return this.$store.getters['cart/getCart']
     }
 
-    get cartTotalLength(): Cart {
+    get cartTotalLength(): number {
         return this.$store.getters['cart/cartTotalLength']
     }
 
-    get cartTotalPrice(): Cart {
+    get cartTotalPrice(): number {
         return this.$store.getters['cart/cartTotalPrice']
     }
+
+  public removeFromCart(item: object) {
+    this.$store.commit('cart/removeFromCart', item)
+  }
 }
 </script>

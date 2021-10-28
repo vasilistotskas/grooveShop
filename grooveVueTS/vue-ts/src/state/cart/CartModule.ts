@@ -13,6 +13,10 @@ export default class CartModule
         return this.cart
     }
 
+    // get getItemTotal (): number {
+    //     return item.quantity * item.price
+    // }
+
     get cartTotalLength(): number {
         let totalLength = 0
         for (let i = 0; i < this.cart.length; i++) {
@@ -28,12 +32,17 @@ export default class CartModule
     }
     
     @Mutation
-    initializeCart() {
+    public async initializeCart(): Promise<void> {
         if (localStorage.getItem('cart')) {
             this.cart = JSON.parse(<string>localStorage.getItem('cart'))
         } else {
             localStorage.setItem('cart', JSON.stringify(this.cart))
         }
+    }
+
+    @Mutation
+    public async updateCart(): Promise<void> {
+        localStorage.setItem('cart', JSON.stringify(this.cart))
     }
 
     @Mutation
@@ -50,6 +59,24 @@ export default class CartModule
     @Mutation
     public async removeFromCart(item: CartItem): Promise<void> {
         this.cart = this.cart.filter(i => i.id !== item.id)
+    }
+
+    @Mutation
+    public decrementQuantity(item: CartItem): void {
+        item.quantity -= 1
+
+        if (item.quantity === 0) {
+            this.context.commit('cart/removeFromCart', item)
+        }
+
+        this.context.commit('cart/updateCart')
+    }
+
+    @Mutation
+    public incrementQuantity(item: CartItem): void {
+        item.quantity += 1
+
+        this.context.commit('cart/updateCart')
     }
 
 }

@@ -20,7 +20,7 @@ const stateDirectory = <Record<string, typeof AppBaseModule>>{
     'category': CategoryModule,
     'product': ProductModule,
     'user': UserModule,
-    'cart': CartModule,
+    'cart': CartModule
 }
 
 export default stateDirectory

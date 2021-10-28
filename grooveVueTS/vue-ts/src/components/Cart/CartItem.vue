@@ -1,58 +1,58 @@
 <template>
   <tr>
     <td>
-      <router-link :to="item.product.get_absolute_url">{{ item.product.name }}</router-link>
+<!--      <router-link :to="item">{{ item }}</router-link>-->
+      <h1>{{ item }}</h1>
     </td>
-    <td>${{ item.product.price }}</td>
-    <td>
-      <a @click="decrementQuantity(item)">-</a>
-      {{ item.quantity }}
-      <a @click="incrementQuantity(item)">+</a>
-    </td>
-    <td>${{ getItemTotal(item).toFixed(2) }}</td>
-    <td>
-      <button class="delete" @click="removeFromCart(item)"></button>
-    </td>
+<!--    <td>${{ item.price }}</td>-->
+<!--    <td>-->
+<!--      <a @click="decrementQuantity(item)">-</a>-->
+<!--      {{ item.quantity }}-->
+<!--      <a @click="incrementQuantity(item)">+</a>-->
+<!--    </td>-->
+<!--    <td>${{ getItemTotal(item).toFixed(2) }}</td>-->
+<!--    <td>-->
+<!--      <button class="delete" @click="removeFromCart(item)"></button>-->
+<!--    </td>-->
   </tr>
 </template>
 
-<script>
-export default {
-  name: 'CartItem',
+<script lang="ts">
+import AppBasePage from "@/pages/AppBasePage.vue";
+import { Options } from "vue-class-component";
+
+@Options({
+  name: "CartItem",
+  components: {
+    CartItem
+  },
   props: {
-    initialItem: Object
-  },
-  data() {
-    return {
-      item: this.initialItem
+    item: {
+      type: Object
     }
-  },
-  methods: {
-    getItemTotal(item) {
-      return item.quantity * item.product.price
-    },
-    decrementQuantity(item) {
-      item.quantity -= 1
+  }
+})
 
-      if (item.quantity === 0) {
-        this.$emit('removeFromCart', item)
-      }
+export default class CartItem extends AppBasePage {
 
-      this.updateCart()
-    },
-    incrementQuantity(item) {
-      item.quantity += 1
+    // public getItemTotal(): number {
+    //   // return this.$store.getters['cart/getItemTotal']
+    // }
 
-      this.updateCart()
-    },
-    updateCart() {
-      localStorage.setItem('cart', JSON.stringify(this.$store.state.cart))
-    },
-    removeFromCart(item) {
-      this.$emit('removeFromCart', item)
+   public decrementQuantity(item: object): void {
+     this.$store.commit('cart/decrementQuantity', item)
+    }
 
-      this.updateCart()
-    },
-  },
+    public incrementQuantity(item: object): void {
+      this.$store.commit('cart/incrementQuantity', item)
+    }
+
+    public updateCart(): void {
+      this.$store.commit('cart/updateCart')
+    }
+
+    public removeFromCart(item: object): void {
+      this.$store.commit('cart/removeFromCart', item)
+    }
 }
 </script>
