@@ -47,15 +47,15 @@
     }
 
     get userData(): Array<any> {
-      return this.$store.getters['user/getUserData']
+      return this.$store.getters['user/data/getUserData']
     }
 
     get userReviews(): Array<any> {
-      return this.$store.getters['user/getUserReviews']
+      return this.$store.getters['user/review/getUserReviews']
     }
 
     get userFavourites(): Array<any> {
-      return this.$store.getters['user/getUserFavourites']
+      return this.$store.getters['user/favourite/getUserFavourites']
     }
 
     get cartData(): {} {
@@ -63,7 +63,7 @@
     }
 
     public initializeAuth(): void {
-      this.$store.commit('user/initializeAuth')
+      this.$store.commit('user/data/initializeAuth')
     }
 
     public initializeCart(): void {
@@ -86,7 +86,7 @@
       await this.$store.dispatch('category/categoriesFromRemote')
 
       if (this.isAuthenticated) {
-        await this.$store.dispatch('user/userDataFromRemote')
+        await this.$store.dispatch('user/data/userDataFromRemote')
       }
 
     }

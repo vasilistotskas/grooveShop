@@ -8,8 +8,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    store.commit('user/initializeAuth')
-    const isAuthenticated = store.getters['user/getIsAuthenticated']
+    store.commit('user/data/initializeAuth')
+    const isAuthenticated = store.getters['user/data/getIsAuthenticated']
 
     if (to.matched.some(record => record.meta.requireLogin) && !isAuthenticated) {
         next({name: 'LogIn', query: {to: to.path}});

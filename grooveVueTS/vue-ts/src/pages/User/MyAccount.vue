@@ -33,7 +33,7 @@ import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
 
 export default class MyAccount extends AppBaseLayout {
   protected logout(): void {
-    this.$store.commit('user/unsetUserData')
+    this.$store.commit('user/data/unsetUserData')
     router.push('/')
   }
 }

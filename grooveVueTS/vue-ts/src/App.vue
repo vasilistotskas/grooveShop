@@ -21,7 +21,7 @@ export default class App extends Vue {
   }
 
   get isAuthenticated(): boolean {
-    return this.$store.getters['user/getIsAuthenticated']
+    return this.$store.getters['user/data/getIsAuthenticated']
   }
 
   public updateMetaTagElement(metaName: string, metaAttribute: string, newValue: string): void {

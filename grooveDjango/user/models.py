@@ -39,7 +39,7 @@ class UserProfile(models.Model):
     phone = models.CharField(max_length=20, blank=True, null=True)
     email = models.CharField(max_length=50, blank=True, null=True)
     city = models.CharField(max_length=50, blank=True, null=True)
-    zipcode = models.CharField(max_length=20, blank=True, null=True)
+    zipcode = models.PositiveIntegerField(blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
     place = models.CharField(max_length=50, blank=True, null=True)
     country = models.ForeignKey(Country, null=True, blank=True, default=None, on_delete=models.SET_NULL)

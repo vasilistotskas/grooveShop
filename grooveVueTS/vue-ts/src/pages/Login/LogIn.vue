@@ -75,7 +75,7 @@ export default class LogIn extends AppBaseLayout {
     this.$store.dispatch('user/userLogIn', formData)
         .then((success: any) => {
           router.push('/')
-          this.$store.dispatch('user/userDataFromRemote')
+          this.$store.dispatch('user/data/userDataFromRemote')
         })
         .catch((error: Error) => {
           if (error) {

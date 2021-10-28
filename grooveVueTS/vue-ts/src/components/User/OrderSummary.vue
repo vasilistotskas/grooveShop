@@ -5,7 +5,7 @@
       class="box mb-4"
       v-bind:order="order"
   >
-    <h3 class="is-size-4 mb-6">Order #{{ order.id }}</h3>
+    <h3 class="is-size-4 mb-6 text-black">Order #{{ order.id }}</h3>
 
     <h4 class="is-size-5">Products</h4>
 
@@ -37,7 +37,8 @@
 <script lang="ts">
 import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
 import {Options} from "vue-class-component";
-import CategoryModel from "@/state/category/CategoryModel";
+import UserOrderModel from "@/state/user/order/UserOrderModel";
+import CartItemModel from "@/state/cart/CartItemModel";
 
 @Options({
   name: "OrderSummary",
@@ -45,21 +46,16 @@ import CategoryModel from "@/state/category/CategoryModel";
 
 export default class orderSummary extends AppBaseLayout{
   beforeCreate() {
-    this.$store.dispatch('user/userOrdersFromRemote')
+    this.$store.dispatch('user/order/userOrdersFromRemote')
   }
   mounted() {
     document.title = 'My Orders | grooveShop'
   }
-  // get category(): Category {
-  //   return this.$store.getters['user/userOrders']
-  // }
-  // getItemTotal(item) {
-  //   return item.quantity * item.product.price
-  // }
-  // orderTotalLength(order) {
-  //   return order.items.reduce((acc, curVal) => {
-  //     return acc += curVal.quantity
-  //   }, 0)
-  // }
+  get orders(): UserOrderModel {
+    return this.$store.getters['user/order/getUserOrders']
+  }
+  getItemTotal(item: CartItemModel): number {
+    return item.quantity * item.product.price
+  }
 }
 </script>
