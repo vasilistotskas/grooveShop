@@ -80,14 +80,14 @@
     }
 
     async created(): Promise<void> {
-      if (this.isAuthenticated) {
-        this.initializeAuth()
-        this.initializeToken()
-        await this.$store.dispatch('user/userDataFromRemote')
-      }
-
+      this.initializeAuth()
+      this.initializeToken()
       this.initializeCart()
       await this.$store.dispatch('category/categoriesFromRemote')
+
+      if (this.isAuthenticated) {
+        await this.$store.dispatch('user/userDataFromRemote')
+      }
 
     }
 

@@ -23,9 +23,7 @@
 </template>
 
 <script>
-import axios from 'axios'
 import router from "@/routes";
-
 import OrderSummary from '@/components/Order/OrderSummary.vue'
 import {Options} from "vue-class-component";
 import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
