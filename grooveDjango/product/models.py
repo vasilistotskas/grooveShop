@@ -122,7 +122,7 @@ class Product(models.Model):
             cnt = int(favourites["count"])
         return cnt
 
-    def review_avarege(self):
+    def review_avarage(self):
         reviews = Review.objects.filter(product=self, status='True').aggregate(avarage=Avg('rate'))
         avg = 0
         if reviews["avarage"] is not None:

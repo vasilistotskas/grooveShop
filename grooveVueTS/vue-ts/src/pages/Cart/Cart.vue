@@ -21,8 +21,8 @@
                     <CartItem
                             v-for="item in cart"
                             v-bind:key="item.id"
-                            v-bind:item="item"
-                            v-on:removeFromCart="removeFromCart(item)"/>
+                            v-bind:item="item"/>
+<!--                            v-on:removeFromCart="removeFromCart(item)"-->
                     </tbody>
                 </table>
 

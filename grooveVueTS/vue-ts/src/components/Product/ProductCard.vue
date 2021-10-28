@@ -34,16 +34,15 @@ export default class ProductCard extends AppBasePage {
   quantity = 1
   product = new Product()
 
-  public addToCart() {
+  public addToCart(): void {
 
     if (isNaN(this.quantity) || this.quantity < 1) {
       this.quantity = 1
     }
 
     const item = {
-      id: this.product.id,
-      quantity: this.quantity,
-      price: this.product.price
+      product: this.product,
+      quantity: this.quantity
     }
 
     this.$store.commit('cart/addToCart', item)

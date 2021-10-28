@@ -1,31 +1,28 @@
 <template>
   <tr>
     <td>
-<!--      <router-link :to="item">{{ item }}</router-link>-->
-      <h1>{{ item }}</h1>
+      <router-link :to="item.product.get_absolute_url">{{ item.product.name }}</router-link>
     </td>
-<!--    <td>${{ item.price }}</td>-->
-<!--    <td>-->
-<!--      <a @click="decrementQuantity(item)">-</a>-->
-<!--      {{ item.quantity }}-->
-<!--      <a @click="incrementQuantity(item)">+</a>-->
-<!--    </td>-->
-<!--    <td>${{ getItemTotal(item).toFixed(2) }}</td>-->
-<!--    <td>-->
-<!--      <button class="delete" @click="removeFromCart(item)"></button>-->
-<!--    </td>-->
+    <td>${{ item.product.price }}</td>
+    <td>
+      <a @click="decrementQuantity(item)">-</a>
+      {{ item.quantity }}
+      <a @click="incrementQuantity(item)">+</a>
+    </td>
+    <td>${{ getItemTotal.toFixed(2) }}</td>
+    <td>
+      <button class="delete" @click="removeFromCart(item)"></button>
+    </td>
   </tr>
 </template>
 
 <script lang="ts">
 import AppBasePage from "@/pages/AppBasePage.vue";
 import { Options } from "vue-class-component";
+import CartItem from "@/state/cart/CartItem";
 
 @Options({
   name: "CartItem",
-  components: {
-    CartItem
-  },
   props: {
     item: {
       type: Object
@@ -33,11 +30,14 @@ import { Options } from "vue-class-component";
   }
 })
 
-export default class CartItem extends AppBasePage {
+export default class CartItemVue extends AppBasePage {
 
-    // public getItemTotal(): number {
-    //   // return this.$store.getters['cart/getItemTotal']
-    // }
+    item = new CartItem()
+
+    // prepei na paw sto store kapos
+    get getItemTotal(): number {
+      return this.item.quantity * this.item.product.price
+    }
 
    public decrementQuantity(item: object): void {
      this.$store.commit('cart/decrementQuantity', item)

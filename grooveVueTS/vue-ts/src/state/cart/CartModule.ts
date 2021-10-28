@@ -13,10 +13,6 @@ export default class CartModule
         return this.cart
     }
 
-    // get getItemTotal (): number {
-    //     return item.quantity * item.price
-    // }
-
     get cartTotalLength(): number {
         let totalLength = 0
         for (let i = 0; i < this.cart.length; i++) {
@@ -27,10 +23,10 @@ export default class CartModule
 
     get cartTotalPrice(): number {
         return this.cart.reduce((acc: number, curVal: CartItem) => {
-            return acc += curVal.price * curVal.quantity
+            return acc += curVal.product.price * curVal.quantity
         }, 0)
     }
-    
+
     @Mutation
     public async initializeCart(): Promise<void> {
         if (localStorage.getItem('cart')) {
@@ -41,13 +37,8 @@ export default class CartModule
     }
 
     @Mutation
-    public async updateCart(): Promise<void> {
-        localStorage.setItem('cart', JSON.stringify(this.cart))
-    }
-
-    @Mutation
-    public async addToCart(item: CartItem): Promise<void> {
-        const exists = this.cart.filter(i => i.id === item.id)
+    public addToCart(item: CartItem): void {
+        const exists = this.cart.filter(i => i.product.id === item.product.id)
         if (exists.length) {
             exists[0].quantity = exists[0].quantity + item.quantity
         } else {
@@ -57,26 +48,24 @@ export default class CartModule
     }
 
     @Mutation
-    public async removeFromCart(item: CartItem): Promise<void> {
-        this.cart = this.cart.filter(i => i.id !== item.id)
+    public removeFromCart(item: CartItem): void {
+        this.cart = this.cart.filter(i => i.product.id !== item.product.id)
+        localStorage.setItem('cart', JSON.stringify(this.cart))
     }
 
     @Mutation
     public decrementQuantity(item: CartItem): void {
         item.quantity -= 1
-
         if (item.quantity === 0) {
-            this.context.commit('cart/removeFromCart', item)
+            this.cart = this.cart.filter(i => i.product.id !== item.product.id)
         }
-
-        this.context.commit('cart/updateCart')
+        localStorage.setItem('cart', JSON.stringify(this.cart))
     }
 
     @Mutation
     public incrementQuantity(item: CartItem): void {
         item.quantity += 1
-
-        this.context.commit('cart/updateCart')
+        localStorage.setItem('cart', JSON.stringify(this.cart))
     }
 
 }

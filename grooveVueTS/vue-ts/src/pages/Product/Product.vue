@@ -32,7 +32,7 @@
             <input type="number" class="input" min="1" v-model="quantity">
           </div>
 
-          <button type="button" class="btn btn-dark addToCartButton" v-bind:class="{'disabled': disabled }" @click="addToCart(product.id, product.price)">Dark</button>
+          <button type="button" class="btn btn-dark addToCartButton" v-bind:class="{'disabled': disabled }" @click="addToCart()">Dark</button>
 
 
 <!--          <FavouriteButton :product="product">-->
@@ -79,16 +79,15 @@ export default class ProductVue extends AppBasePage {
     return this.$store.getters['product/getProductData']
   }
 
-  public addToCart(productId: number, productPrice: number) {
+  public addToCart(): void {
 
     if (isNaN(this.quantity) || this.quantity < 1) {
       this.quantity = 1
     }
 
     const item = {
-      id: productId,
-      quantity: this.quantity,
-      price: productPrice
+      product: this.product,
+      quantity: this.quantity
     }
 
     this.$store.commit('cart/addToCart', item)
