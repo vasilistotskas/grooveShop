@@ -11,7 +11,7 @@
           <div class="row">
             <ProductCard
                 class="col-sm-3"
-                v-for="product in searchProducts"
+                v-for="product in searchResults"
                 v-bind:key="product.id"
                 v-bind:product="product"/>
           </div>
@@ -22,25 +22,23 @@
   </div>
 </template>
 
-<script>
-import axios from 'axios'
-import ProductCard from '@/components/Product/ProductCard.vue'
-import {mapGetters} from "vuex";
+<script lang="ts">
 
-export default {
-  name: 'Search',
+import {Options} from "vue-class-component";
+import AppBasePage from "@/pages/AppBasePage.vue";
+import ProductCard from "@/components/Product/ProductCard.vue";
+import ProductModel from "@/state/product/ProductModel";
+
+@Options({
+  name: "SearchVue",
   components: {
     ProductCard
-  },
-  data() {
-    return {
-      query: ''
-    }
-  },
-  computed: {
-    ...mapGetters({'searchProducts': 'getStateSearchProducts'})
-  },
-  mounted() {
+  }
+})
+
+export default class SearchVue extends AppBasePage {
+  query: string | null = ''
+  async mounted(): Promise<void> {
     document.title = 'Search | grooveShop'
 
     let uri = window.location.search.substring(1)
@@ -49,13 +47,17 @@ export default {
     if (params.get('query')) {
       this.query = params.get('query')
 
-      this.performSearch()
-    }
-  },
-  methods: {
-    async performSearch() {
-      this.$store.dispatch('getSearchResults', {'query': this.query})
+      await this.performSearch()
     }
   }
+
+  get searchResults(): ProductModel {
+    return this.$store.getters['search/getResultData']
+  }
+
+  async performSearch(): Promise<void> {
+    this.$store.dispatch('search/getSearchResults', {'query': this.query})
+  }
+
 }
 </script>

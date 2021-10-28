@@ -1,5 +1,5 @@
 import EntityBase from '@/state/common/EntityBase'
-import Product from "@/state/product/Product";
+import Product from "@/state/product/ProductModel";
 
 export default class CartItemModel extends EntityBase {
     id!: number

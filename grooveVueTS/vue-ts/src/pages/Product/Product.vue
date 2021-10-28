@@ -50,7 +50,7 @@
 // import RateProductModal from '@/modals/Product/RateProductModal'
 import AppBasePage from '@/pages/AppBasePage.vue'
 import { Options } from "vue-class-component";
-import Product from "@/state/product/Product";
+import Product from "@/state/product/ProductModel";
 
 @Options({
   name: "ProductVue",

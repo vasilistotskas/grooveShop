@@ -1,5 +1,5 @@
 import {first, filter, map, get} from 'lodash'
-import Product from '@/state/product/Product'
+import ProductModel from '@/state/product/ProductModel'
 import {Module, Action, Mutation} from 'vuex-module-decorators'
 import router from "@/routes";
 import api from "@/api/api.service";
@@ -10,15 +10,15 @@ import AppBaseModule from "@/state/common/AppBaseModule";
 export default class ProductModule
 	extends AppBaseModule
 {
-	product = new Product()
+	product = new ProductModel()
 
-	latestProducts = [new Product()]
+	latestProducts = [new ProductModel()]
 
-	get getProductData(): Product {
+	get getProductData(): ProductModel {
 		return this.product
 	}
 
-	get getLatestProductData(): Product[] {
+	get getLatestProductData(): ProductModel[] {
 		return this.latestProducts
 	}
 
@@ -27,12 +27,12 @@ export default class ProductModule
 	}
 
 	@Mutation
-	setProduct(product: Product): void {
+	setProduct(product: ProductModel): void {
 		this.product = product
 	}
 
 	@Mutation
-	setLatestProduct(latestProducts: Product[]): void {
+	setLatestProduct(latestProducts: ProductModel[]): void {
 		this.latestProducts = latestProducts
 	}
 
@@ -43,7 +43,7 @@ export default class ProductModule
 		await api.get(`products/${category_slug}/${product_slug}`)
 			.then((response: ResponseData) => {
 				const data = response.data
-				let product = new Product(data)
+				let product = new ProductModel(data)
 				this.context.commit('setProduct', product)
 			})
 			.catch((e: Error) => {
@@ -68,7 +68,7 @@ export default class ProductModule
 		await api.get('latest-products/')
 			.then((response: ResponseData) => {
 				const data = response.data
-				const latestProduct = map(data, rawProduct => new Product(rawProduct))
+				const latestProduct = map(data, rawProduct => new ProductModel(rawProduct))
 				this.context.commit('setLatestProduct', latestProduct)
 			})
 			.catch((e: Error) => {
@@ -77,7 +77,7 @@ export default class ProductModule
 	}
 
 	@Action
-	findItemById(itemId: number): Product {
+	findItemById(itemId: number): ProductModel {
 		return first(
 			filter(this.context.getters['getItems'],
 				(item) => item.id === itemId)

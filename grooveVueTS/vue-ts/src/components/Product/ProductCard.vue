@@ -20,7 +20,7 @@
 
 import {Options} from "vue-class-component";
 import AppBasePage from "@/pages/AppBasePage.vue";
-import Product from "@/state/product/Product";
+import Product from "@/state/product/ProductModel";
 
 @Options({
   name: "ProductCard",

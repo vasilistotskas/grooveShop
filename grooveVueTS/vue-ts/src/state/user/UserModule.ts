@@ -21,7 +21,7 @@ export default class UserModule
     // setUserFavourites(favourites: Array<any>): void { this.favourites = favourites }
 
     @Action
-    async userLogIn(formData: object){
+    async userLogIn(formData: object): Promise<void> {
         await api.post('djoser/token/login', formData)
             .then((response: ResponseData) => {
                 const token: string = response.data.auth_token

@@ -1,6 +1,6 @@
 import EntityBase from "@/state/common/EntityBase";
 
-export default class Product extends EntityBase
+export default class ProductModel extends EntityBase
 {
 	id!: number
 	name!: string
@@ -24,7 +24,7 @@ export default class Product extends EntityBase
 	review_counter!: number
 	images!: Array<any>
 
-	public constructor(data?: Partial<Product>) {
+	public constructor(data?: Partial<ProductModel>) {
 		super(data)
 	}
 }
