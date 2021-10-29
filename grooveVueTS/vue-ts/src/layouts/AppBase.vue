@@ -51,6 +51,10 @@
       return store.getters['user/data/getUserData']
     }
 
+    get userDetails(): object {
+      return store.getters['user/data/getUserDetails']
+    }
+
     get userReviews(): Array<any> {
       return store.getters['user/review/getUserReviews']
     }

@@ -10,6 +10,7 @@ import UserOrderModule from '@/state/user/order/UserOrderModule'
 import UserFavouriteModule from '@/state/user/favourite/UserFavouriteModule'
 // import UserReviewModule from '@/state/user/review/UserReviewModule'
 import CartModule from '@/state/cart/CartModule'
+import CountriesModule from '@/state/countries/CountriesModule'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function createDummyModule(moduleName: string): typeof AppBaseModule {
@@ -30,7 +31,8 @@ const stateDirectory = <Record<string, typeof AppBaseModule>>{
     'user.favourite': UserFavouriteModule,
     // 'user.review': UserReviewModule,
     'cart': CartModule,
-    'search': SearchModule
+    'search': SearchModule,
+    'countries': CountriesModule
 }
 
 export default stateDirectory

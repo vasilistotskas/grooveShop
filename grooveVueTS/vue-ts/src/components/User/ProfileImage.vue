@@ -17,33 +17,31 @@
   </form>
 </template>
 
-<script>
-  import store from '@/store'
+<script lang="ts">
+import router from "@/routes";
+import {Options} from "vue-class-component";
+import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
+import store from '@/store'
 
-export default {
-  name: 'ProfileImage',
+@Options({
+  name: "ProfileImage",
   props: {
-    fullname: '',
-    src: ''
-  },
-  methods: {
-    updateUserImage() {
-      const data = new FormData(document.getElementById('uploadImageForm'))
-      store.dispatch('updateUserDetailsAction', data)
-          .then(success => {
-            toast({
-              message: 'Image updated',
-              type: 'is-success',
-              dismissible: true,
-              pauseOnHover: true,
-              duration: 2000,
-              position: 'bottom-right',
-            })
-          })
-          .catch(error => {
-            console.log(error)
-          })
+    fullname: {
+      type: String,
+      default: ''
+    },
+    src: {
+      type: String,
+      default: ''
     }
   }
+})
+
+export default class ProfileImage extends AppBaseLayout {
+
+  updateUserImage() {
+    const formEl = document.getElementById('uploadImageForm') as HTMLFormElement;
+    const data = new FormData(formEl)
+    store.dispatch('updateUserDetailsAction', data)}
 }
 </script>

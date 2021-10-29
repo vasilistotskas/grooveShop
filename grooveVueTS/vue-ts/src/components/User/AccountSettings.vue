@@ -76,135 +76,125 @@
       </div>
     </div>
   </div>
-
-
 </template>
 
 
-<script>
-import ProfileImage from '@/components/User/ProfileImage'
+<script lang="ts">
+import router from "@/routes";
+import {Options} from "vue-class-component";
+import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
 import store from '@/store'
+import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 
-export default {
-  name: 'AccountSettings',
+@Options({
+  name: "AccountSettings",
   components: {
-    ProfileImage
-  },
-  data() {
-    return {
-      errors: []
+    // ProfileImage
+  }
+})
+
+export default class AccountSettings extends AppBaseLayout {
+  errors: Array<any> = []
+
+  userDetails = new UserDetailsModel()
+
+  get fullName(): string {
+    let first_name = this.userDetails.first_name
+    let last_name = this.userDetails.last_name
+
+    if (first_name === null) {
+      first_name = ''
     }
-  },
-  beforeCreate() {
-    store.dispatch('getCountries')
-  },
-  mounted() {
+
+    if (last_name === null) {
+      last_name = ''
+    }
+
+    return first_name + ' ' + last_name
+  }
+
+  get availableCountries(): any {
+    return store.getters['countries/getCountriesData']
+  }
+
+  get regionsBasedOnAlpha(): any {
+    return store.getters['countries/getRegionsBasedOnAlpha']
+  }
+
+  beforeCreate(): void {
+    store.dispatch('countries/countriesFromRemote')
+  }
+
+  //@TODO not good , should have every countries data already in front and not calling api everytime!
+  created() {
+    this.$watch(
+      () => 'userDetails.country',
+      (newVal:any, oldVal:any) => {
+        store.dispatch('countries/regionsBasedOnAlphaFromRemote', newVal)
+      }
+    )
+  }
+
+  mounted(): void {
     document.title = 'My Settings | grooveShop'
-    store.dispatch('getUserDetails')
-  },
-  computed: {
-    userDetails: {
-      get() {
-        return store.getters['getStateUserDetails']
-      }
-    },
-    fullName: {
-      get() {
-        let first_name = this.userDetails.first_name
-        let last_name = this.userDetails.last_name
+    store.dispatch('user/data/userDataFromRemote')
+  }
 
-        if (first_name === null) {
-          first_name = ''
-        }
+  resetRegion(): void {
+    this.userDetails.region = 'choose'
+  }
 
-        if (last_name === null) {
-          last_name = ''
-        }
-
-        return first_name + ' ' + last_name
-      },
-    },
-    availableCountries: {
-      get() {
-        return store.getters['getStateCountries']
-      }
-    },
-    regionsBasedOnAlpha: {
-      get() {
-        return store.getters['getStateRegionsBasedOnAlpha']
-      }
+  private submitForm(): void {
+    if (this.userDetails.region === 'choose') {
+      this.errors.push('The region field is missing!')
     }
-  },
-  watch:{
-    'userDetails.country': function (newVal, oldVal){
-      store.dispatch('getRegionsBasedOnAlpha', newVal)
-    }
-  },
-  methods: {
-    resetRegion() {
-      this.userDetails.region = 'choose'
-    },
-    submitForm() {
-      this.errors = []
-      if (this.userDetails.region === 'choose') {
-        this.errors.push('The region field is missing!')
+    if (!this.errors.length) {
+      try {
+        this.updateUserProfile()
+      } catch (error) {
+        throw error
       }
-      if (!this.errors.length) {
-        try {
-          this.updateUserProfile()
-        } catch (error) {
-          throw error
-        }
-      }
-    },
-    updateUserProfile() {
-      const data = new FormData(document.getElementById('userDetailsForm'))
-
-      if (this.userDetails.address !== null){
-        data.append('address', this.userDetails.address)
-      }
-      if (this.userDetails.email !== null){
-        data.append('email', this.userDetails.email)
-      }
-      if (this.userDetails.first_name !== null){
-        data.append('first_name', this.userDetails.first_name)
-      }
-      if (this.userDetails.last_name !== null){
-        data.append('last_name', this.userDetails.last_name)
-      }
-      if (this.userDetails.phone !== null){
-        data.append('phone', this.userDetails.phone)
-      }
-      if (this.userDetails.place !== null){
-        data.append('place', this.userDetails.place)
-      }
-      if (this.userDetails.city !== null){
-        data.append('city', this.userDetails.city)
-      }
-      if (this.userDetails.zipcode !== null){
-        data.append('zipcode', this.userDetails.zipcode)
-      }
-
-      if (this.userDetails.country !== null){
-        data.append('country', this.userDetails.country)
-        data.append('region', this.userDetails.region)
-      }
-
-      store.dispatch('updateUserDetailsAction', data)
-          .then(success => {
-            toast({
-              message: 'Success',
-              type: 'is-success',
-              dismissible: true,
-              pauseOnHover: true,
-              duration: 2000,
-              position: 'bottom-right',
-            })
-          })
-          .catch(error => {
-            console.log(error)
-          })
     }
   }
+
+  protected updateUserProfile(): void {
+    const formEl = document.getElementById('userDetailsForm') as HTMLFormElement;
+    const data = new FormData(formEl)
+
+    if (this.userDetails.address !== null){
+      data.append('address', this.userDetails.address)
+    }
+    if (this.userDetails.email !== null){
+      data.append('email', this.userDetails.email)
+    }
+    if (this.userDetails.first_name !== null){
+      data.append('first_name', this.userDetails.first_name)
+    }
+    if (this.userDetails.last_name !== null){
+      data.append('last_name', this.userDetails.last_name)
+    }
+    if (this.userDetails.phone !== null){
+      const phone = this.userDetails.phone as unknown as string
+      data.append('phone', phone)
+    }
+    if (this.userDetails.place !== null){
+      data.append('place', this.userDetails.place)
+    }
+    if (this.userDetails.city !== null){
+      data.append('city', this.userDetails.city)
+    }
+    if (this.userDetails.zipcode !== null){
+      const zipcode = this.userDetails.zipcode as unknown as string
+      data.append('zipcode', zipcode)
+    }
+
+    if (this.userDetails.country !== null){
+      data.append('country', this.userDetails.country)
+      data.append('region', this.userDetails.region)
+    }
+
+    store.dispatch('user/data/updateUserDetails', data)
+  }
+
 }
 </script>

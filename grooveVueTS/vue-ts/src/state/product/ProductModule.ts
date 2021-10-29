@@ -37,7 +37,7 @@ export default class ProductModule
 	}
 
 	@Action
-	async getProduct(): Promise<void> {
+	async getProductFromRemote(): Promise<void> {
 		let category_slug = router.currentRoute.value.params.category_slug
 		let product_slug = router.currentRoute.value.params.product_slug
 		await api.get(`products/${category_slug}/${product_slug}`)

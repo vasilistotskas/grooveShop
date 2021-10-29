@@ -71,7 +71,7 @@ export default class UserDataModule
         } else {
             this.context.commit('setToken', this.token)
         }
-        
+
         await api.get('userprofile/data')
             .then((response: ResponseData) => {
                 const data = response.data
