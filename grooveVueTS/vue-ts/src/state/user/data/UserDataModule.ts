@@ -50,9 +50,10 @@ export default class UserDataModule
         localStorage.removeItem("token")
         localStorage.removeItem("username")
         localStorage.removeItem("userid")
-        // this.reviews = []
-        // this.favourites = []
-        // this.orders = []
+
+        store.commit('user/favourite/unsetUserFavourites')
+        store.commit('user/order/unsetUserOrders')
+        // store.commit('user/review/unsetUserReviews')
     }
 
     @Action
@@ -70,8 +71,7 @@ export default class UserDataModule
         } else {
             this.context.commit('setToken', this.token)
         }
-
-        await this.context.dispatch('ensureUserIsAuthenticated')
+        
         await api.get('userprofile/data')
             .then((response: ResponseData) => {
                 const data = response.data

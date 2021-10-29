@@ -15,6 +15,11 @@ export default class UserOrderModule
     @Mutation
     setUserOrders(orders: Array<any>): void { this.orders = orders }
 
+    @Mutation
+    unsetUserOrders() {
+        this.orders = []
+    }
+
     @Action
     async userOrdersFromRemote(): Promise<void> {
         await api.get('orders/')

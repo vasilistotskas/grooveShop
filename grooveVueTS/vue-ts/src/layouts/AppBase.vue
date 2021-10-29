@@ -59,6 +59,10 @@
       return store.getters['user/favourite/getFavouriteData']
     }
 
+    get userOrders(): Array<any> {
+      return store.getters['user/order/getUserOrders']
+    }
+
     get cartData(): {} {
       return store.getters['cart/getCart']
     }
@@ -88,6 +92,7 @@
 
       if (this.isAuthenticated) {
         await store.dispatch('user/data/userDataFromRemote')
+        await store.dispatch('user/order/userOrdersFromRemote')
       }
 
     }
