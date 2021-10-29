@@ -6,6 +6,7 @@ import AppBaseModule from "@/state/common/AppBaseModule";
 export default class CartModule
     extends AppBaseModule
 {
+    //@TODO na fugoun ola ta 'localStorage.setItem' kltp kai na kanw use to vuex-persistedstate
 
     cart: Array<CartItemModel> = []
 

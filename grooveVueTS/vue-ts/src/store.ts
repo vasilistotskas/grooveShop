@@ -9,9 +9,9 @@ import RootState from '@/state/RootState'
 config.rawError = true
 
 const statePersistencePlugin = createPersistedState({
-	key: 'app',
+	key: 'vue-ts',
 	paths: [
-		'app',
+		'cart.cart',
 	]
 })
 
