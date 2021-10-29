@@ -11,6 +11,7 @@
 import AppBasePage from '@/pages/AppBasePage.vue'
 import { Options } from "vue-class-component";
 import ProductModel from "@/state/product/ProductModel";
+import store from '@/store'
 
 @Options({
   name: "FavouriteButton",
@@ -24,11 +25,11 @@ export default class FavouriteButton extends AppBasePage {
 
   get isFavourite(): ProductModel {
     // const productId = this.product.id
-    return this.$store.getters['user/favourite/getStateIsCurrentProductInFavourites']
+    return store.getters['user/favourite/getStateIsCurrentProductInFavourites']
   }
 
   async favouriteHandle(): Promise<void> {
-    this.$store.dispatch('user/favourite/toggleFavourite', this.product)
+    store.dispatch('user/favourite/toggleFavourite', this.product)
   }
 
   private getFavouriteIconClass(): string {

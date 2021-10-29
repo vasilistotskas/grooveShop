@@ -26,6 +26,7 @@
 import router from "@/routes";
 import {Options} from "vue-class-component";
 import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
+import store from '@/store'
 
 @Options({
   name: "MyAccount",
@@ -33,7 +34,7 @@ import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
 
 export default class MyAccount extends AppBaseLayout {
   protected logout(): void {
-    this.$store.commit('user/data/unsetUserData')
+    store.commit('user/data/unsetUserData')
     router.push('/')
   }
 }

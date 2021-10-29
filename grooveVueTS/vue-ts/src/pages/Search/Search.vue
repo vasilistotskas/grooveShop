@@ -28,6 +28,7 @@ import {Options} from "vue-class-component";
 import AppBasePage from "@/pages/AppBasePage.vue";
 import ProductCard from "@/components/Product/ProductCard.vue";
 import ProductModel from "@/state/product/ProductModel";
+import store from '@/store'
 
 @Options({
   name: "SearchVue",
@@ -52,11 +53,11 @@ export default class SearchVue extends AppBasePage {
   }
 
   get searchResults(): ProductModel {
-    return this.$store.getters['search/getResultData']
+    return store.getters['search/getResultData']
   }
 
   async performSearch(): Promise<void> {
-    this.$store.dispatch('search/getSearchResults', {'query': this.query})
+    store.dispatch('search/getSearchResults', {'query': this.query})
   }
 
 }

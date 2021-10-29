@@ -27,6 +27,7 @@ import {Options} from "vue-class-component";
 import AppBasePage from "@/pages/AppBasePage.vue";
 import ProductCard from "@/components/Product/ProductCard.vue";
 import CategoryModel from "@/state/category/CategoryModel";
+import store from '@/store'
 
 @Options({
   name: "CategoryVue",
@@ -59,12 +60,12 @@ export default class CategoryVue extends AppBasePage {
   }
 
   get category(): CategoryModel {
-    return this.$store.getters['category/getCategory']
+    return store.getters['category/getCategory']
   }
 
   public fetchCategory(): void {
     const categorySlug = this.$route.params.category_slug
-    this.$store.dispatch('category/fetchCategory', categorySlug)
+    store.dispatch('category/fetchCategory', categorySlug)
   }
 
 }

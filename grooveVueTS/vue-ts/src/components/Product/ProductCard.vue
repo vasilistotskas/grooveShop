@@ -20,7 +20,8 @@
 
 import {Options} from "vue-class-component";
 import AppBasePage from "@/pages/AppBasePage.vue";
-import Product from "@/state/product/ProductModel";
+import ProductModel from "@/state/product/ProductModel";
+import store from '@/store'
 
 @Options({
   name: "ProductCard",
@@ -32,7 +33,7 @@ import Product from "@/state/product/ProductModel";
 export default class ProductCard extends AppBasePage {
 
   quantity = 1
-  product = new Product()
+  product = new ProductModel()
 
   public addToCart(): void {
 
@@ -45,7 +46,7 @@ export default class ProductCard extends AppBasePage {
       quantity: this.quantity
     }
 
-    this.$store.commit('cart/addToCart', item)
+    store.commit('cart/addToCart', item)
   }
 
   get disabled() {
@@ -53,7 +54,7 @@ export default class ProductCard extends AppBasePage {
   }
 
   get addToCartButtonText(): string {
-    return this.$store.getters['product/addToCartButtonText']
+    return store.getters['product/addToCartButtonText']
   }
 
 }

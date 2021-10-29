@@ -83,6 +83,7 @@
 
 <script>
 import ProfileImage from '@/components/User/ProfileImage'
+import store from '@/store'
 
 export default {
   name: 'AccountSettings',
@@ -95,16 +96,16 @@ export default {
     }
   },
   beforeCreate() {
-    this.$store.dispatch('getCountries')
+    store.dispatch('getCountries')
   },
   mounted() {
     document.title = 'My Settings | grooveShop'
-    this.$store.dispatch('getUserDetails')
+    store.dispatch('getUserDetails')
   },
   computed: {
     userDetails: {
       get() {
-        return this.$store.getters['getStateUserDetails']
+        return store.getters['getStateUserDetails']
       }
     },
     fullName: {
@@ -125,18 +126,18 @@ export default {
     },
     availableCountries: {
       get() {
-        return this.$store.getters['getStateCountries']
+        return store.getters['getStateCountries']
       }
     },
     regionsBasedOnAlpha: {
       get() {
-        return this.$store.getters['getStateRegionsBasedOnAlpha']
+        return store.getters['getStateRegionsBasedOnAlpha']
       }
     }
   },
   watch:{
     'userDetails.country': function (newVal, oldVal){
-      this.$store.dispatch('getRegionsBasedOnAlpha', newVal)
+      store.dispatch('getRegionsBasedOnAlpha', newVal)
     }
   },
   methods: {
@@ -189,7 +190,7 @@ export default {
         data.append('region', this.userDetails.region)
       }
 
-      this.$store.dispatch('updateUserDetailsAction', data)
+      store.dispatch('updateUserDetailsAction', data)
           .then(success => {
             toast({
               message: 'Success',

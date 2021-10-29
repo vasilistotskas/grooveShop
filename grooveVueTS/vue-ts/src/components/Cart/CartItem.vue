@@ -20,6 +20,7 @@
 import AppBasePage from "@/pages/AppBasePage.vue";
 import { Options } from "vue-class-component";
 import CartItemModel from "@/state/cart/CartItemModel";
+import store from '@/store'
 
 @Options({
   name: "CartItem",
@@ -40,19 +41,19 @@ export default class CartItemVue extends AppBasePage {
     }
 
    public decrementQuantity(item: object): void {
-     this.$store.commit('cart/decrementQuantity', item)
+     store.commit('cart/decrementQuantity', item)
     }
 
     public incrementQuantity(item: object): void {
-      this.$store.commit('cart/incrementQuantity', item)
+      store.commit('cart/incrementQuantity', item)
     }
 
     public updateCart(): void {
-      this.$store.commit('cart/updateCart')
+      store.commit('cart/updateCart')
     }
 
     public removeFromCart(item: object): void {
-      this.$store.commit('cart/removeFromCart', item)
+      store.commit('cart/removeFromCart', item)
     }
 }
 </script>

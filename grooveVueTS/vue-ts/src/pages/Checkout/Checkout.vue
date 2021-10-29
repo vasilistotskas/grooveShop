@@ -141,6 +141,7 @@
 
 <script>
 import {isEmpty} from "lodash";
+import store from '@/store'
 
 export default {
   name: 'Checkout',
@@ -177,32 +178,32 @@ export default {
     },
     userData: {
       get() {
-        return this.$store.getters['getStateUserData']
+        return store.getters['getStateUserData']
       },
       set(value) {
-        this.$store.commit('updateUserData', value)
+        store.commit('updateUserData', value)
       }
     },
     customerDetails: {
       get() {
-        return this.$store.state.isAuthenticated ? this.$store.getters['getStateUserDetails'] : {}
+        return store.state.isAuthenticated ? store.getters['getStateUserDetails'] : {}
       },
     },
     availableCountries: {
       get() {
-        return this.$store.getters['getStateCountries']
+        return store.getters['getStateCountries']
       }
     },
     regionsBasedOnAlpha: {
       get() {
-        return this.$store.getters['getStateRegionsBasedOnAlpha']
+        return store.getters['getStateRegionsBasedOnAlpha']
       }
     }
   },
   beforeCreate() {
-    this.$store.dispatch('getCountries')
-    if (this.$store.state.isAuthenticated) {
-      this.$store.dispatch('getUserData')
+    store.dispatch('getCountries')
+    if (store.state.isAuthenticated) {
+      store.dispatch('getUserData')
     }
   },
   created() {
@@ -210,7 +211,7 @@ export default {
   },
   mounted() {
     document.title = 'Checkout | grooveShop'
-    this.cart = this.$store.state.cart
+    this.cart = store.state.cart
   },
   updated() {
     if(!this.$refs.stripleElement.classList.contains('StripeElement')){
@@ -219,21 +220,21 @@ export default {
   },
   watch:{
     'customerDetails.country': function (newVal, oldVal){
-      this.$store.dispatch('getRegionsBasedOnAlpha', newVal)
+      store.dispatch('getRegionsBasedOnAlpha', newVal)
     }
   },
   methods: {
     resetRegion() {
       // ?????
-      if (!this.$store.state.isAuthenticated) {
-        this.$store.dispatch('getRegionsBasedOnAlpha', this.customerDetails.country)
+      if (!store.state.isAuthenticated) {
+        store.dispatch('getRegionsBasedOnAlpha', this.customerDetails.country)
       }
       this.customerDetails.region = 'choose'
 
     },
     customerDataInitialize(){
-      if (this.$store.state.isAuthenticated) {
-        this.$store.dispatch('getUserDetails')
+      if (store.state.isAuthenticated) {
+        store.dispatch('getUserDetails')
       } else {
         this.customerDetails.address = this.address
         this.customerDetails.city = this.city
@@ -331,7 +332,7 @@ export default {
         'stripe_token': token.id
       }
 
-      this.$store.dispatch('createOrder', data)
+      store.dispatch('createOrder', data)
     }
   }
 }

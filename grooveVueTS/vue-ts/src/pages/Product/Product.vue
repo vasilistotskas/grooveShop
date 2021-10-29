@@ -51,6 +51,7 @@ import FavouriteButton from '@/components/Product/FavouriteButton.vue'
 import AppBasePage from '@/pages/AppBasePage.vue'
 import { Options } from "vue-class-component";
 import ProductModel from "@/state/product/ProductModel";
+import store from '@/store'
 
 @Options({
   name: "ProductVue",
@@ -76,7 +77,7 @@ export default class ProductVue extends AppBasePage {
   quantity = 1
 
   get product(): ProductModel {
-    return this.$store.getters['product/getProductData']
+    return store.getters['product/getProductData']
   }
 
   public addToCart(): void {
@@ -90,7 +91,7 @@ export default class ProductVue extends AppBasePage {
       quantity: this.quantity
     }
 
-    this.$store.commit('cart/addToCart', item)
+    store.commit('cart/addToCart', item)
   }
 
   get disabled() {
@@ -98,8 +99,8 @@ export default class ProductVue extends AppBasePage {
   }
 
   async mounted(): Promise<void> {
-    await this.$store.dispatch('product/getProduct')
-    this.$store.dispatch('product/updateProductHits')
+    await store.dispatch('product/getProduct')
+    await store.dispatch('product/updateProductHits')
   }
 }
 

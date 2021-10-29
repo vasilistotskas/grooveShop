@@ -4,7 +4,6 @@ import api from "@/api/api.service";
 import ResponseData from "@/state/types/ResponseData";
 import UserFavouriteModel from "@/state/user/favourite/UserFavouriteModel";
 import router from "@/routes";
-import { some } from 'lodash'
 import store from "@/store";
 
 @Module({ namespaced: true })
@@ -19,9 +18,8 @@ export default class UserFavouriteModule
     }
 
     get getStateIsCurrentProductInFavourites(): boolean {
-        let productId = router.currentRoute.value.params.product_id
-
-        const exists = this.favourites.filter(i => i.user_id === 1)
+        let productId = Number(router.currentRoute.value.params.product_id)
+        const exists = this.favourites.filter(i => i.product_id === productId)
         return !!exists.length
     }
 
@@ -55,8 +53,7 @@ export default class UserFavouriteModule
         await api.get(`favourites/${user_id}`)
             .then((response: ResponseData) => {
                 let data = response.data
-                let product = new UserFavouriteModel(data)
-                this.context.commit('setUserFavourites', product)
+                this.context.commit('setUserFavourites', data)
             })
             .catch((e: Error) => {
                 console.log(e);

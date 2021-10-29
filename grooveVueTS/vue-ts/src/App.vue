@@ -2,7 +2,7 @@
 import { Options, Vue } from "vue-class-component";
 import _, {cloneDeep, get, LoDashStatic, map, pickBy} from 'lodash'
 import packageMeta from '@/../package.json'
-import axios from "axios";
+import store from '@/store'
 
 @Options({
   name: "App",
@@ -17,11 +17,11 @@ export default class App extends Vue {
   }
 
   get isLoading(): boolean {
-    return this.$store.getters['app/getLoading']
+    return store.getters['app/getLoading']
   }
 
   get isAuthenticated(): boolean {
-    return this.$store.getters['user/data/getIsAuthenticated']
+    return store.getters['user/data/getIsAuthenticated']
   }
 
   public updateMetaTagElement(metaName: string, metaAttribute: string, newValue: string): void {

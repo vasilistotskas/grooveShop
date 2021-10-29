@@ -31,6 +31,7 @@
 import AppBasePage from '@/pages/AppBasePage.vue'
 import { Options } from "vue-class-component"
 import ProductCard from "@/components/Product/ProductCard.vue";
+import store from '@/store'
 
 @Options({
   name: "Home",
@@ -42,11 +43,11 @@ import ProductCard from "@/components/Product/ProductCard.vue";
 export default class Home extends AppBasePage {
 
   get LatestProducts(): [] {
-    return this.$store.getters['product/getLatestProductData']
+    return store.getters['product/getLatestProductData']
   }
 
   async beforeCreate(): Promise<void> {
-    await this.$store.dispatch('product/getLatestProducts')
+    await store.dispatch('product/getLatestProducts')
   }
 
 }

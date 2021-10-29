@@ -43,6 +43,7 @@ import { Options, Vue } from "vue-class-component";
 import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
 import axios from 'axios'
 import router from "@/routes";
+import store from '@/store'
 
 @Options({
   name: "LogIn",
@@ -72,10 +73,10 @@ export default class LogIn extends AppBaseLayout {
       username: this.username,
       password: this.password
     }
-    this.$store.dispatch('user/userLogIn', formData)
+    store.dispatch('user/userLogIn', formData)
         .then((success: any) => {
           router.push('/')
-          this.$store.dispatch('user/data/userDataFromRemote')
+          store.dispatch('user/data/userDataFromRemote')
         })
         .catch((error: Error) => {
           if (error) {

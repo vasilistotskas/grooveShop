@@ -18,6 +18,7 @@
 </template>
 
 <script>
+  import store from '@/store'
 
 export default {
   name: 'ProfileImage',
@@ -28,7 +29,7 @@ export default {
   methods: {
     updateUserImage() {
       const data = new FormData(document.getElementById('uploadImageForm'))
-      this.$store.dispatch('updateUserDetailsAction', data)
+      store.dispatch('updateUserDetailsAction', data)
           .then(success => {
             toast({
               message: 'Image updated',

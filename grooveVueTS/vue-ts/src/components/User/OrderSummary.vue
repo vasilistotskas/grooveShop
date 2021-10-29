@@ -39,6 +39,7 @@ import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
 import {Options} from "vue-class-component";
 import UserOrderModel from "@/state/user/order/UserOrderModel";
 import CartItemModel from "@/state/cart/CartItemModel";
+import store from '@/store'
 
 @Options({
   name: "OrderSummary",
@@ -46,13 +47,13 @@ import CartItemModel from "@/state/cart/CartItemModel";
 
 export default class orderSummary extends AppBaseLayout{
   beforeCreate() {
-    this.$store.dispatch('user/order/userOrdersFromRemote')
+    store.dispatch('user/order/userOrdersFromRemote')
   }
   mounted() {
     document.title = 'My Orders | grooveShop'
   }
   get orders(): UserOrderModel {
-    return this.$store.getters['user/order/getUserOrders']
+    return store.getters['user/order/getUserOrders']
   }
   getItemTotal(item: CartItemModel): number {
     return item.quantity * item.product.price

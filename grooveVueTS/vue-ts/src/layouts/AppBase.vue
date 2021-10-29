@@ -26,6 +26,7 @@
   import { Options } from "vue-class-component";
   import axios from 'axios'
   import CategoryModel from "@/state/category/CategoryModel";
+  import store from '@/store'
 
   @Options({
     name: "AppBase",
@@ -39,39 +40,39 @@
     public showMobileMenu = false
 
     get cartTotalLength(): number {
-      return this.$store.getters['cart/cartTotalLength']
+      return store.getters['cart/cartTotalLength']
     }
 
     get categoriesData(): Array<CategoryModel> {
-      return this.$store.getters['category/getCategories']
+      return store.getters['category/getCategories']
     }
 
     get userData(): Array<any> {
-      return this.$store.getters['user/data/getUserData']
+      return store.getters['user/data/getUserData']
     }
 
     get userReviews(): Array<any> {
-      return this.$store.getters['user/review/getUserReviews']
+      return store.getters['user/review/getUserReviews']
     }
 
     get userFavourites(): Array<any> {
-      return this.$store.getters['user/favourite/getUserFavourites']
+      return store.getters['user/favourite/getFavouriteData']
     }
 
     get cartData(): {} {
-      return this.$store.getters['cart/getCart']
+      return store.getters['cart/getCart']
     }
 
     public initializeAuth(): void {
-      this.$store.commit('user/data/initializeAuth')
+      store.commit('user/data/initializeAuth')
     }
 
     public initializeCart(): void {
-      this.$store.commit('cart/initializeCart')
+      store.commit('cart/initializeCart')
     }
 
     public initializeToken(): void {
-      const token = this.$store.getters['user/getToken']
+      const token = store.getters['user/getToken']
       if (token) {
         axios.defaults.headers.common['Authorization'] = "Token " + token
       } else {
@@ -83,10 +84,10 @@
       this.initializeAuth()
       this.initializeToken()
       this.initializeCart()
-      await this.$store.dispatch('category/categoriesFromRemote')
+      await store.dispatch('category/categoriesFromRemote')
 
       if (this.isAuthenticated) {
-        await this.$store.dispatch('user/data/userDataFromRemote')
+        await store.dispatch('user/data/userDataFromRemote')
       }
 
     }
