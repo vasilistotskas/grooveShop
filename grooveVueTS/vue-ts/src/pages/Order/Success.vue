@@ -10,11 +10,15 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Success',
-  mounted() {
-    document.title = 'Success | grooveShop'
-  },
+<script lang="ts">
+import AppBasePage from '@/pages/AppBasePage.vue'
+import { Options } from "vue-class-component";
+
+@Options({
+  name: "Checkout"
+})
+
+export default class Success extends AppBasePage {
+
 }
 </script>
