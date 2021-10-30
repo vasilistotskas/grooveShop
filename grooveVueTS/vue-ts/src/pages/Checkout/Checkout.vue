@@ -1,5 +1,5 @@
 <template>
-  <div class="page-checkout container mt-5" v-if="customerDetails && Object.keys(customerDetails).length > 0">
+  <div class="page-checkout container mt-5">
     <div class="row">
       <div class="col-12">
         <h1 class="title mb-5">Checkout</h1>
@@ -24,7 +24,7 @@
             <td>{{ item.product.name }}</td>
             <td>${{ item.product.price }}</td>
             <td>{{ item.quantity }}</td>
-            <td>${{ getItemTotal(item).toFixed(2) }}</td>
+            <td>${{ itemTotal(item).toFixed(2) }}</td>
           </tr>
           </tbody>
 
@@ -98,7 +98,7 @@
 
             <div class="field">
               <label for="inputCountry" class="form-label">Country</label>
-              <select name="country" id="inputCountry" class="form-select" v-model="customerDetails.country" @change="resetRegion">
+              <select name="country" id="inputCountry" class="form-select" v-model="customerDetails.country" v-on:change="handle">
                 <option disabled value="choose">Choose...</option>
                 <option
                     v-for="country in availableCountries"
@@ -142,6 +142,12 @@
 <script lang="ts">
 import AppBasePage from '@/pages/AppBasePage.vue'
 import { Options } from "vue-class-component";
+import store from "@/store";
+import UserDetailsModel from "@/state/user/data/UserDetailsModel";
+import CartItemModel from "@/state/cart/CartItemModel";
+import CountryModel from "@/state/country/CountryModel";
+import RegionsModel from "@/state/country/RegionsModel";
+import {find} from "lodash";
 
 @Options({
   name: "Checkout"
@@ -149,5 +155,170 @@ import { Options } from "vue-class-component";
 
 export default class Checkout extends AppBasePage {
 
+  // @TODO KATI NA GINEI ME TO STRIPE NA PAEI PISW STO STORE OR SOMETHING
+  $refs!: {
+    stripleElement: HTMLFormElement
+  }
+  // selectedCountry = new CountryModel()
+  errors: Array<any> = []
+  customerDetails = new UserDetailsModel
+  card = {}
+
+
+  get availableCountries(): CountryModel {
+    return store.getters['country/getCountries']
+  }
+
+  get regionsBasedOnAlpha(): RegionsModel {
+    return store.getters['country/getRegionsBasedOnAlpha']
+  }
+
+  get selectedCountry(): CountryModel {
+    return store.getters['country/getSelectedCountry']
+  }
+
+  get cart(): {} {
+    return store.getters['cart/getCart']
+  }
+
+  get userData(): UserDetailsModel {
+    return store.getters['user/data/getUserData']
+  }
+
+  get cartTotalLength(): number {
+    return store.getters['cart/cartTotalLength']
+  }
+
+  get cartTotalPrice(): number {
+    return store.getters['cart/cartTotalPrice']
+  }
+
+  itemTotal(item: CartItemModel): number {
+    return item.quantity * item.product.price
+  }
+
+  async created(): Promise<void> {
+    await store.dispatch('country/getCountriesFromRemote')
+  }
+
+  async mounted(): Promise<void> {
+    document.title = 'Checkout | grooveShop'
+    if(this.isAuthenticated){
+      await store.dispatch('user/data/userDataFromRemote')
+      await store.dispatch('country/findRegionsBasedOnAlphaForLoggedCustomer')
+    }
+    this.customerDetailsInitialize()
+  }
+
+  updated(): void {
+    if (!this.$refs.stripleElement.classList.contains('StripeElement')) {
+      this.updateStripeElement()
+    }
+  }
+
+  async handle(e: any): Promise<void> {
+    const countryAlpha2Key = e.target.value
+    await store.dispatch('country/findRegionsBasedOnAlphaFromInput', countryAlpha2Key)
+  }
+
+  private customerDetailsInitialize(): void {
+    if (this.isAuthenticated) {
+      this.customerDetails = this.userData
+    } else {
+      this.customerDetails.address = ''
+      this.customerDetails.city = ''
+      this.customerDetails.country = ''
+      this.customerDetails.email = ''
+      this.customerDetails.first_name = ''
+      this.customerDetails.last_name = ''
+      this.customerDetails.phone = 0
+      this.customerDetails.place = ''
+      this.customerDetails.region = ''
+      this.customerDetails.zipcode = 0
+      this.customerDetails.country = 'choose'
+      this.customerDetails.region = 'choose'
+    }
+  }
+
+  protected updateStripeElement(): void {
+    if (this.cartTotalLength > 0) {
+      // this.stripe = new Stripe('pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3')
+      // const elements = this.stripe.elements();
+      // this.card = elements.create('card', { hidePostalCode: true })
+      // this.card.mount('#card-element')
+    }
+  }
+
+  protected submitForm(): void {
+    if (this.customerDetails.first_name === '') {
+      this.errors.push('The first name field is missing!')
+    }
+
+    if (this.customerDetails.last_name === '') {
+      this.errors.push('The last name field is missing!')
+    }
+
+    if (this.customerDetails.email === '') {
+      this.errors.push('The email field is missing!')
+    }
+
+    if (this.customerDetails.phone === 0) {
+      this.errors.push('The phone field is missing!')
+    }
+
+    if (this.customerDetails.address === '') {
+      this.errors.push('The address field is missing!')
+    }
+
+    if (this.customerDetails.zipcode === 0) {
+      this.errors.push('The zip code field is missing!')
+    }
+
+    if (this.customerDetails.place === '') {
+      this.errors.push('The place field is missing!')
+    }
+
+    //   if (!this.errors.length) {
+    //   //   this.stripe.createToken(this.card).then((result:any) => {
+    //   //     if (result.error) {
+    //   //       this.errors.push('Something went wrong with Stripe. Please try again')
+    //   //       console.log(result.error.message)
+    //   //     } else {
+    //   //       this.stripeTokenHandler(result.token)
+    //   //     }
+    //   //   })
+    //   // }
+    // }
+  }
+
+  // async stripeTokenHandler(token: string): Promise<void> {
+  //   const items = []
+  //
+  //   for (let i = 0; i < this.cart.items.length; i++) {
+  //     const item = this.cart.items[i]
+  //     const obj = {
+  //       product: item.product.id,
+  //       quantity: item.quantity,
+  //       price: item.product.price * item.quantity
+  //     }
+  //
+  //     items.push(obj)
+  //   }
+  //
+  //   const data = {
+  //     'user_id': this.userDetails.id,
+  //     'first_name': this.userDetails.first_name,
+  //     'last_name': this.userDetails.last_name,
+  //     'email': this.userDetails.email,
+  //     'address': this.userDetails.address,
+  //     'zipcode': this.userDetails.zipcode,
+  //     'place': this.userDetails.place,
+  //     'phone': this.userDetails.phone,
+  //     'items': items,
+  //     'stripe_token': token.id
+  //   }
+  //
+  //   this.$sthis.$store.dispatch('createOrder', data)
+  // }
 }
 </script>

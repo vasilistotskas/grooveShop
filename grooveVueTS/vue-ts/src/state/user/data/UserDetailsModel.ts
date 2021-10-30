@@ -16,7 +16,7 @@ export default class UserDetailsModel extends EntityBase
     region!: string
     zipcode!: number
 
-    public constructor(data?: Partial<UserDetailsModel>) {
+    constructor(data?: Partial<UserDetailsModel>) {
         super(data)
     }
 }

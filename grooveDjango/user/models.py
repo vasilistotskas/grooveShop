@@ -11,7 +11,7 @@ class Country(models.Model):
     alpha_2 = models.CharField(max_length=2, primary_key=True)
     alpha_3 = models.CharField(max_length=3)
     iso_cc = models.PositiveSmallIntegerField(blank=True, null=True)
-    phone_code = models.CharField(max_length=10)
+    phone_code = models.PositiveSmallIntegerField(blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Countries"
