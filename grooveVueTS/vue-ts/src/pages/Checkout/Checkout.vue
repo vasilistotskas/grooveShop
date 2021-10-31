@@ -18,7 +18,7 @@
 
           <tbody>
           <tr
-              v-for="item in cart.items"
+              v-for="item in cart"
               v-bind:key="item.product.id"
           >
             <td>{{ item.product.name }}</td>
