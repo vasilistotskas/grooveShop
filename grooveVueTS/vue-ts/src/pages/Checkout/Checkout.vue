@@ -129,7 +129,10 @@
           <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
         </div>
 
-        <div ref="stripleElement" id="card-element" class="mb-5 mt-5"></div>
+        <div ref="stripleElement" id="stripe-iban-element" class="mb-5 mt-5"></div>
+        <div ref="stripleElement2" id="stripe-card-number-element" class="mb-5 mt-5"></div>
+        <div ref="stripleElement3" id="stripe-card-expiry-element" class="mb-5 mt-5"></div>
+        <div ref="stripleElement4" id="stripe-card-cvc-element" class="mb-5 mt-5"></div>
 
         <template v-if="cartTotalLength">
           <button class="button is-dark" @click="submitForm">Pay with Stripe</button>
@@ -147,12 +150,11 @@ import UserDetailsModel from "@/state/user/data/UserDetailsModel";
 import CartItemModel from "@/state/cart/CartItemModel";
 import CountryModel from "@/state/country/CountryModel";
 import RegionsModel from "@/state/country/RegionsModel";
-import {find} from "lodash";
+import initStripeComponent from "@/libraries/Stripe/Stripe";
 
 @Options({
   name: "Checkout"
 })
-
 export default class Checkout extends AppBasePage {
 
   // @TODO KATI NA GINEI ME TO STRIPE NA PAEI PISW STO STORE OR SOMETHING
@@ -199,6 +201,8 @@ export default class Checkout extends AppBasePage {
 
   async created(): Promise<void> {
     await store.dispatch('country/getCountriesFromRemote')
+    await store.dispatch('stripeIban/initIBANComponent')
+    await store.dispatch('stripeCard/initStripeComponent')
   }
 
   async mounted(): Promise<void> {
@@ -208,12 +212,6 @@ export default class Checkout extends AppBasePage {
       await store.dispatch('country/findRegionsBasedOnAlphaForLoggedCustomer')
     }
     this.customerDetailsInitialize()
-  }
-
-  updated(): void {
-    if (!this.$refs.stripleElement.classList.contains('StripeElement')) {
-      this.updateStripeElement()
-    }
   }
 
   async handle(e: any): Promise<void> {
@@ -237,15 +235,6 @@ export default class Checkout extends AppBasePage {
       this.customerDetails.zipcode = 0
       this.customerDetails.country = 'choose'
       this.customerDetails.region = 'choose'
-    }
-  }
-
-  protected updateStripeElement(): void {
-    if (this.cartTotalLength > 0) {
-      // this.stripe = new Stripe('pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3')
-      // const elements = this.stripe.elements();
-      // this.card = elements.create('card', { hidePostalCode: true })
-      // this.card.mount('#card-element')
     }
   }
 
@@ -318,7 +307,8 @@ export default class Checkout extends AppBasePage {
   //     'stripe_token': token.id
   //   }
   //
-  //   this.$sthis.$store.dispatch('createOrder', data)
+  //   store.dispatch('createOrder', data)
   // }
+
 }
 </script>
