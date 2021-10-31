@@ -312,7 +312,7 @@ export default class Checkout extends AppBasePage {
 
     console.log(data)
 
-    // await store.dispatch('createOrder', data)
+    await store.dispatch('cart/createOrder', data)
   }
 
 }

@@ -1,6 +1,9 @@
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import CartItemModel from '@/state/cart/CartItemModel'
 import AppBaseModule from "@/state/common/AppBaseModule";
+import api from "@/api/api.service";
+import ResponseData from "@/state/types/ResponseData";
+import router from "@/routes";
 
 @Module({ namespaced: true })
 export default class CartModule
@@ -67,6 +70,25 @@ export default class CartModule
     public incrementQuantity(item: CartItemModel): void {
         item.quantity += 1
         localStorage.setItem('cart', JSON.stringify(this.cart))
+    }
+
+    @Mutation
+    public clearCart(){
+        this.cart = []
+        localStorage.setItem('cart', JSON.stringify(this.cart))
+    }
+
+
+    @Action
+    async createOrder(data: any): Promise<void> {
+        await api.post('checkout/', data)
+            .then((response: ResponseData) => {
+                this.context.commit('clearCart')
+                router.push('/cart/success')
+            })
+            .catch((e: Error) => {
+                console.log(e);
+            })
     }
 
 }
