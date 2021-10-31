@@ -5,6 +5,7 @@
         v-bind:cartTotalLength="cartTotalLength"
         v-bind:categories="categoriesData"
     />
+
     Loading Spinner
     <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading': this.isLoading }">
       <div v-if="this.isLoading" class="lds-dual-ring"></div>
@@ -104,6 +105,97 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+section{
+  padding-top: 75px;
+}
 
+.main-navbar{
+  z-index: 99999!important;
+}
+
+::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #555;
+}
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 50%;
+}
+
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #ccc;
+  border-color: #ccc transparent #ccc transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.is-loading-bar {
+  height: 0;
+  overflow: hidden;
+
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+
+  &.is-loading {
+    z-index: 99999;
+    background: aliceblue;
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    background: aliceblue;
+    align-items: flex-end;
+    bottom: 0;
+    display: -webkit-box;
+    width: 100%;
+    height: auto;
+    display: -ms-flexbox;
+    display: block;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    left: 0;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    opacity: 1;
+    visibility: visible;
+    -ms-touch-action: none;
+    touch-action: none;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
 </style>
