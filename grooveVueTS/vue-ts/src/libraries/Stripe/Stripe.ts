@@ -7,12 +7,7 @@
  * @param cbError Callback on error.
  */
 
-export enum StripeElement {
-    IBAN = 'iban',
-    CARD_NUMBER = 'cardNumber',
-    CARD_EXPIRY = 'cardExpiry',
-    CARD_CVC = 'cardCvc'
-}
+import { StripeElement } from "@/libraries/Stripe/StripeElement"
 
 const ELEMENT_CONFIG = {
     [StripeElement.IBAN]: {
@@ -81,6 +76,7 @@ export default async function initStripeComponent(
         const stripeInstance = (window as any).Stripe(stripeKey)
         const stripeEl = stripeInstance
             .elements()
+            // @ts-ignore
             .create(element, { ...COMPONENT_OPTIONS, ...ELEMENT_CONFIG[element] })
         stripeEl.mount(selector)
         stripeEl.on('change', cbOnChange)

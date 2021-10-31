@@ -2,6 +2,7 @@ import initStripeComponent from "@/libraries/Stripe/Stripe";
 import {Action, Module, Mutation} from "vuex-module-decorators";
 import AppBaseModule from "@/state/common/AppBaseModule";
 import { StripeElement } from "@/libraries/Stripe/StripeElement"
+import ProductModel from "@/state/product/ProductModel";
 
 @Module({ namespaced: true })
 export default class StripeCardComponents
@@ -23,6 +24,21 @@ export default class StripeCardComponents
     cardCvcIsCompleted!: any
     cardExpiryEl!: any
     cardCvcEl!: any
+    errors: Array<any> = []
+    resultToken!: any
+    card!: any
+    cardIsCompleted!: any
+    cardError!: any
+
+    get getResultToken(): any {
+        return this.resultToken
+    }
+
+    @Mutation
+    setCard(initCard: any): void {
+        this.stripeInstance = initCard.stripeInstance
+        this.card = initCard.stripeEl
+    }
 
     @Mutation
     setCardNumber(initCardNumber: any): void {
@@ -44,12 +60,17 @@ export default class StripeCardComponents
 
     @Mutation
     setNotifyError(err: any): void {
-        this.notifyError(err)
+        this.notifyError = err
     }
 
     @Mutation
     setCardNumberIsCompleted(complete: any): void {
         this.cardNumberIsCompleted = complete
+    }
+
+    @Mutation
+    setCardIsCompleted(complete: any): void {
+        this.cardIsCompleted = complete
     }
 
     @Mutation
@@ -73,53 +94,100 @@ export default class StripeCardComponents
         this.cardExpiryError = error?.message ?? null
     }
 
+    @Mutation
+    setCardError(error: any): void {
+        this.cardError = error?.message ?? null
+    }
+
+    @Mutation
+    setResultToken(result: any): void {
+        this.resultToken = result.token
+    }
+
+    @Action
+    async createStripeToken(): Promise<void> {
+        let elements = this.card
+        await this.stripeInstance.createToken(elements).then((result:any) => {
+            this.context.commit('setResultToken', result)
+        })
+    }
+
     @Action
     async initStripeComponent(): Promise<void> {
-        /** Card Number */
-        const initCardNumber = await initStripeComponent(
+
+        /** Card */
+        const initCard = await initStripeComponent(
             this.stripeKey,
-            StripeElement.CARD_NUMBER,
-            '#stripe-card-number-element',
-            ({ complete, error }: any) => {
-                if(error) {
-                    this.context.commit('setCardNumberError', error)
+            StripeElement.CARD,
+            '#stripe-card',
+            ({complete, error}: any) => {
+                if (error) {
+                    this.context.commit('setCardError', error)
                 }
-                this.context.commit('setCardNumberIsCompleted', complete)
+                this.context.commit('setCardIsCompleted', complete)
             },
             (err) => this.context.commit('setNotifyError', err)
         )
-        if (initCardNumber) {
-            this.context.commit('setCardNumber', initCardNumber)
+        if (initCard) {
+            this.context.commit('setCard', initCard)
         }
 
-        /** Card Expiry */
-        const initCardExpiry = await initStripeComponent(
-            this.stripeKey,
-            StripeElement.CARD_EXPIRY,
-            '#stripe-card-expiry-element',
-            ({ complete, error }: any) => {
-                if(error) {
-                    this.context.commit('setCardExpiryError', error)
-                }
-                this.context.commit('setCardExpiryIsCompleted', complete)
-            },
-            (err) => this.context.commit('setNotifyError', err)
-        )
-        if (initCardExpiry) {
-            this.context.commit('setCardExpiry', initCardExpiry)
+        /** Card Number */
+        var cardNumberExists = document.getElementById("stripe-card-number-element");
+        if(cardNumberExists) {
+            const initCardNumber = await initStripeComponent(
+                this.stripeKey,
+                StripeElement.CARD_NUMBER,
+                '#stripe-card-number-element',
+                ({complete, error}: any) => {
+                    if (error) {
+                        this.context.commit('setCardNumberError', error)
+                    }
+                    this.context.commit('setCardNumberIsCompleted', complete)
+                },
+                (err) => this.context.commit('setNotifyError', err)
+            )
+            if (initCardNumber) {
+                this.context.commit('setCardNumber', initCardNumber)
+            }
         }
+
+
+        /** Card Expiry */
+        var cardExpiryExists = document.getElementById("stripe-card-expiry-element");
+        if(cardExpiryExists) {
+            const initCardExpiry = await initStripeComponent(
+                this.stripeKey,
+                StripeElement.CARD_EXPIRY,
+                '#stripe-card-expiry-element',
+                ({complete, error}: any) => {
+                    if (error) {
+                        this.context.commit('setCardExpiryError', error)
+                    }
+                    this.context.commit('setCardExpiryIsCompleted', complete)
+                },
+                (err) => this.context.commit('setNotifyError', err)
+            )
+            if (initCardExpiry) {
+                this.context.commit('setCardExpiry', initCardExpiry)
+            }
+        }
+
         /** Card CVC */
-        const initCardCvc = await initStripeComponent(
-            this.stripeKey,
-            StripeElement.CARD_CVC,
-            '#stripe-card-cvc-element',
-            ({ complete }: any) => {
-                this.context.commit('setCardCvcIsCompleted', complete)
-            },
-            (err) => this.context.commit('setNotifyError', err)
-        )
-        if (initCardCvc) {
-            this.context.commit('setCardCvc', initCardCvc)
+        var cardCvcExists = document.getElementById("stripe-card-cvc-element");
+        if(cardCvcExists) {
+            const initCardCvc = await initStripeComponent(
+                this.stripeKey,
+                StripeElement.CARD_CVC,
+                '#stripe-card-cvc-element',
+                ({complete}: any) => {
+                    this.context.commit('setCardCvcIsCompleted', complete)
+                },
+                (err) => this.context.commit('setNotifyError', err)
+            )
+            if (initCardCvc) {
+                this.context.commit('setCardCvc', initCardCvc)
+            }
         }
 
     }

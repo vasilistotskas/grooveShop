@@ -129,10 +129,7 @@
           <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
         </div>
 
-        <div ref="stripleElement" id="stripe-iban-element" class="mb-5 mt-5"></div>
-        <div ref="stripleElement2" id="stripe-card-number-element" class="mb-5 mt-5"></div>
-        <div ref="stripleElement3" id="stripe-card-expiry-element" class="mb-5 mt-5"></div>
-        <div ref="stripleElement4" id="stripe-card-cvc-element" class="mb-5 mt-5"></div>
+        <div ref="stripleElement" id="stripe-card" class="mb-5 mt-5"></div>
 
         <template v-if="cartTotalLength">
           <button class="button is-dark" @click="submitForm">Pay with Stripe</button>
@@ -150,7 +147,7 @@ import UserDetailsModel from "@/state/user/data/UserDetailsModel";
 import CartItemModel from "@/state/cart/CartItemModel";
 import CountryModel from "@/state/country/CountryModel";
 import RegionsModel from "@/state/country/RegionsModel";
-import initStripeComponent from "@/libraries/Stripe/Stripe";
+import { cloneDeep } from  "lodash"
 
 @Options({
   name: "Checkout"
@@ -163,7 +160,7 @@ export default class Checkout extends AppBasePage {
   }
   // selectedCountry = new CountryModel()
   errors: Array<any> = []
-  customerDetails = new UserDetailsModel
+  customerDetails: any = {}
   card = {}
 
 
@@ -179,12 +176,15 @@ export default class Checkout extends AppBasePage {
     return store.getters['country/getSelectedCountry']
   }
 
-  get cart(): {} {
+  get cart(): Array<CartItemModel> {
     return store.getters['cart/getCart']
   }
 
   get userData(): UserDetailsModel {
-    return store.getters['user/data/getUserData']
+    if(this.isAuthenticated) {
+      return store.getters['user/data/getUserData']
+    }
+    return new UserDetailsModel
   }
 
   get cartTotalLength(): number {
@@ -193,6 +193,10 @@ export default class Checkout extends AppBasePage {
 
   get cartTotalPrice(): number {
     return store.getters['cart/cartTotalPrice']
+  }
+
+  get stripeResultToken(): any {
+    return store.getters['stripeCard/getResultToken']
   }
 
   itemTotal(item: CartItemModel): number {
@@ -217,11 +221,12 @@ export default class Checkout extends AppBasePage {
   async handle(e: any): Promise<void> {
     const countryAlpha2Key = e.target.value
     await store.dispatch('country/findRegionsBasedOnAlphaFromInput', countryAlpha2Key)
+    this.customerDetails.region = 'choose'
   }
 
   private customerDetailsInitialize(): void {
     if (this.isAuthenticated) {
-      this.customerDetails = this.userData
+      this.customerDetails = cloneDeep(this.userData)
     } else {
       this.customerDetails.address = ''
       this.customerDetails.city = ''
@@ -238,7 +243,7 @@ export default class Checkout extends AppBasePage {
     }
   }
 
-  protected submitForm(): void {
+  async submitForm(): Promise<void> {
     if (this.customerDetails.first_name === '') {
       this.errors.push('The first name field is missing!')
     }
@@ -267,48 +272,48 @@ export default class Checkout extends AppBasePage {
       this.errors.push('The place field is missing!')
     }
 
-    //   if (!this.errors.length) {
-    //   //   this.stripe.createToken(this.card).then((result:any) => {
-    //   //     if (result.error) {
-    //   //       this.errors.push('Something went wrong with Stripe. Please try again')
-    //   //       console.log(result.error.message)
-    //   //     } else {
-    //   //       this.stripeTokenHandler(result.token)
-    //   //     }
-    //   //   })
-    //   // }
-    // }
+    if (!this.errors.length) {
+      try {
+        await store.dispatch('stripeCard/createStripeToken')
+        await this.stripeTokenHandler(this.stripeResultToken)
+      } catch (e) {
+        console.log(e)
+      }
+    }
   }
 
-  // async stripeTokenHandler(token: string): Promise<void> {
-  //   const items = []
-  //
-  //   for (let i = 0; i < this.cart.items.length; i++) {
-  //     const item = this.cart.items[i]
-  //     const obj = {
-  //       product: item.product.id,
-  //       quantity: item.quantity,
-  //       price: item.product.price * item.quantity
-  //     }
-  //
-  //     items.push(obj)
-  //   }
-  //
-  //   const data = {
-  //     'user_id': this.userDetails.id,
-  //     'first_name': this.userDetails.first_name,
-  //     'last_name': this.userDetails.last_name,
-  //     'email': this.userDetails.email,
-  //     'address': this.userDetails.address,
-  //     'zipcode': this.userDetails.zipcode,
-  //     'place': this.userDetails.place,
-  //     'phone': this.userDetails.phone,
-  //     'items': items,
-  //     'stripe_token': token.id
-  //   }
-  //
-  //   store.dispatch('createOrder', data)
-  // }
+  async stripeTokenHandler(token: any): Promise<void> {
+    const items = []
+    console.log(this.cart)
+
+    for (let i = 0; i < this.cart.length; i++) {
+      const item = this.cart[i]
+      const obj = {
+        product: item.product.id,
+        quantity: item.quantity,
+        price: item.product.price * item.quantity
+      }
+
+      items.push(obj)
+    }
+
+    const data = {
+      'user_id': this.customerDetails.id ? this.customerDetails.id : this.userData.id,
+      'first_name': this.customerDetails.first_name,
+      'last_name': this.customerDetails.last_name,
+      'email': this.customerDetails.email,
+      'address': this.customerDetails.address,
+      'zipcode': this.customerDetails.zipcode,
+      'place': this.customerDetails.place,
+      'phone': this.customerDetails.phone,
+      'items': items,
+      'stripe_token': token.id
+    }
+
+    console.log(data)
+
+    // await store.dispatch('createOrder', data)
+  }
 
 }
 </script>

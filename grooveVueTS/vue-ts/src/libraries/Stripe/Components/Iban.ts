@@ -22,7 +22,7 @@ export default class StripeCardComponents
 
     @Mutation
     setNotifyError(err: any): void {
-        this.notifyError(err)
+        this.notifyError = err
     }
 
     @Mutation
@@ -38,20 +38,23 @@ export default class StripeCardComponents
 
     @Action
     async initIBANComponent(): Promise<void> {
-        const init = await initStripeComponent(
-            this.stripeKey,
-            StripeElement.IBAN,
-            '#stripe-iban-element',
-            ({ complete, error }: any) => {
-                if(error) {
-                    this.context.commit('setIbanError', error)
-                }
-                this.context.commit('setIbanCompleted', complete)
-            },
-            (err) => this.context.commit('setNotifyError', err)
-        )
-        if (init) {
-            this.context.commit('setInstance', init)
+        var ibanElementExists = document.getElementById("stripe-iban-element");
+        if(ibanElementExists) {
+            const init = await initStripeComponent(
+                this.stripeKey,
+                StripeElement.IBAN,
+                '#stripe-iban-element',
+                ({complete, error}: any) => {
+                    if (error) {
+                        this.context.commit('setIbanError', error)
+                    }
+                    this.context.commit('setIbanCompleted', complete)
+                },
+                (err) => this.context.commit('setNotifyError', err)
+            )
+            if (init) {
+                this.context.commit('setInstance', init)
+            }
         }
     }
 }

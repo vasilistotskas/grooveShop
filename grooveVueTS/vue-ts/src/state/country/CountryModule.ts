@@ -22,11 +22,15 @@ export default class CountryModule
         const IsAuthenticated: boolean = store.getters['user/data/getIsAuthenticated']
         if(IsAuthenticated) {
             const userDetails: UserDetailsModel = store.getters['user/data/getUserData']
-            return <CountryModel>find(this.countries, function (o) {
-                return o.alpha_2 = userDetails.country
-            })
+            // check if user has country saved in his profile
+            if(userDetails.country){
+                return <CountryModel>find(this.countries, function (o) {
+                    return o.alpha_2 = userDetails.country
+                })
+            }
+            return <CountryModel>this.selectedCountry
         }
-        return <CountryModel>this.selectedCountry
+        return new CountryModel
     }
 
     @Mutation
@@ -60,8 +64,12 @@ export default class CountryModule
     @Action
     findRegionsBasedOnAlphaForLoggedCustomer(): void {
         const country = this.context.getters['getSelectedCountry']
-        this.context.commit('setSelectedCountry', country)
-        this.context.commit('setRegionsBasedOnAlpha', country.regions)
+        // check if user has country saved in his profile
+        if(country && Object.keys(country).length > 0) {
+            this.context.commit('setSelectedCountry', country)
+            this.context.commit('setRegionsBasedOnAlpha', country.regions)
+        }
+
     }
 
     @Action
