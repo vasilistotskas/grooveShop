@@ -82,7 +82,7 @@ export default class StripeCardComponents
     setCardExpiryIsCompleted(complete: any): void {
         this.cardExpiryIsCompleted = complete
     }
-    
+
     @Mutation
     setCardNumberError(error: any): void {
         this.cardNumberError = error?.message ?? null

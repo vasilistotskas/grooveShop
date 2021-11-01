@@ -12,8 +12,9 @@
             <router-link class="nav-link" :to="{ name: 'Orders' }">Orders</router-link>
           </div>
         </div>
+        <button @click="logout()" class="btn btn-danger float-end">Log out</button>
       </div>
-      <button @click="logout()" class="btn btn-danger float-end">Log out</button>
+
     </nav>
 
     <div class="col-12 mt-5">

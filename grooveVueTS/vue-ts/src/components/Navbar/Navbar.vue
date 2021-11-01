@@ -17,7 +17,7 @@
             </router-link>
           </li>
         </ul>
-        <form method="get" action="/search" class="d-flex">
+        <form method="get" action="/search" class="d-flex navbar-search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
@@ -59,3 +59,8 @@ export default class Navbar extends AppBaseLayout {
 
 }
 </script>
+
+<style lang="scss">
+
+</style>
+

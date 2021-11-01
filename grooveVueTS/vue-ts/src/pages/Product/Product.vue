@@ -1,21 +1,21 @@
 <template>
-  <div class="page-product container mt-5" v-if="product && Object.keys(product).length > 0">
+  <div class="container mt-5" v-if="product && Object.keys(product).length > 0">
     <div class="row">
       <div class="col-md-9 page-product-image-col">
         <figure
-            v-for="image in product.images"
-            :key="image.id"
-            class="image">
+                v-for="image in product.images"
+                :key="image.id"
+                class="image">
           <img v-bind:src="'http://127.0.0.1:8000' + image.image">
         </figure>
       </div>
 
-      <div class="col-md-3">
+      <div class="col-md-3 text-dark">
         <h1 class="title mb-1">{{ product.name }}</h1>
         <h5 class="mb-1"><strong>Product ID: </strong>{{ product.id }}</h5>
         <!-- Product Review -->
         <a type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">Product Review</a>
-<!--        <RateProductModal></RateProductModal>-->
+        <!--        <RateProductModal></RateProductModal>-->
         <p class="description mb-4">{{ product.description }}</p>
         <p class="mb-2"><strong>Price: </strong>${{ product.price }}</p>
 
@@ -39,7 +39,6 @@
 
           </FavouriteButton>
         </div>
-
       </div>
     </div>
   </div>
@@ -106,13 +105,17 @@ export default class ProductVue extends AppBasePage {
 
 </script>
 
-
-
 <style lang="scss">
+  figure{
+    img{
+      max-width: 100%
+    }
+  }
   .page-product-image-col{
     display: grid;
-    grid-template-rows: auto;
-    grid-gap: 1vw;
+    grid-template-columns: repeat(2,1fr);
+    grid-column-gap: 0;
+    grid-row-gap: 0;
     @media screen and (max-width: 767px){
       margin-bottom: 20px;
     }
