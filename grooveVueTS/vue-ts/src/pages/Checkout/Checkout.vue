@@ -2,138 +2,128 @@
   <div class="page-checkout container mt-5">
     <div class="row">
       <div class="col-12">
-        <h1 class="title mb-5">Checkout</h1>
+        <h1 class="title mb-3">Checkout</h1>
       </div>
 
-      <div class="col-12 box">
-        <table class="table is-fullwidth">
-          <thead>
-          <tr>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-          </tr>
-          </thead>
+      <div class="card mb-3">
+        <div class="card-body">
+          <table class="table is-fullwidth">
+            <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+            </tr>
+            </thead>
 
-          <tbody>
-          <tr
-              v-for="item in cart"
-              v-bind:key="item.product.id"
-          >
-            <td>{{ item.product.name }}</td>
-            <td>${{ item.product.price }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>${{ itemTotal(item).toFixed(2) }}</td>
-          </tr>
-          </tbody>
+            <tbody>
+            <tr
+                v-for="item in cart"
+                v-bind:key="item.product.id"
+            >
+              <td>{{ item.product.name }}</td>
+              <td>${{ item.product.price }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>${{ itemTotal(item).toFixed(2) }}</td>
+            </tr>
+            </tbody>
 
-          <tfoot>
-          <tr>
-            <td colspan="2">Total</td>
-            <td>{{ cartTotalLength }}</td>
-            <td>${{ cartTotalPrice.toFixed(2) }}</td>
-          </tr>
-          </tfoot>
-        </table>
+            <tfoot class="border-bottom-0">
+            <tr>
+              <td colspan="2" class="border-bottom-0">Total</td>
+              <td class="border-bottom-0">{{ cartTotalLength }}</td>
+              <td class="border-bottom-0">${{ cartTotalPrice.toFixed(2) }}</td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
       </div>
 
-      <div class="col-12 box">
-        <h2 class="subtitle">Shipping details</h2>
+      <div class="col-12 card">
+        <div class="card-body">
+          <h2 class="subtitle">Shipping details</h2>
 
-        <p class="has-text-grey mb-4">* All fields are required</p>
+          <p class="has-text-grey mb-4">* All fields are required</p>
 
-        <div class="row">
-          <div class="col-6">
-            <div class="field">
-              <label>First name*</label>
-              <div class="control">
-                <input type="text" class="input" v-model="customerDetails.first_name">
+          <div class="row">
+            <div class="col-6">
+              <div class="form-outline">
+                <label class="form-label">First name*</label>
+                <input type="text" class="form-control" v-model="customerDetails.first_name">
+              </div>
+
+              <div class="form-outline">
+                <label class="form-label">Last name*</label>
+                <input type="text" class="form-control" v-model="customerDetails.last_name">
+              </div>
+
+              <div class="form-outline">
+                <label class="form-label">E-mail*</label>
+                <input type="email" class="form-control" v-model="customerDetails.email">
+              </div>
+
+              <div class="form-outline">
+                <label class="form-label">Phone*</label>
+                <input type="text" class="form-control" v-model="customerDetails.phone">
               </div>
             </div>
 
-            <div class="field">
-              <label>Last name*</label>
-              <div class="control">
-                <input type="text" class="input" v-model="customerDetails.last_name">
+            <div class="col-6">
+              <div class="form-outline">
+                <label class="form-label">Address*</label>
+                <input type="text" class="form-control" v-model="customerDetails.address">
               </div>
-            </div>
 
-            <div class="field">
-              <label>E-mail*</label>
-              <div class="control">
-                <input type="email" class="input" v-model="customerDetails.email">
+              <div class="form-outline">
+                <label class="form-label">Zip code*</label>
+                <input type="text" class="form-control" v-model="customerDetails.zipcode">
               </div>
-            </div>
 
-            <div class="field">
-              <label>Phone*</label>
-              <div class="control">
-                <input type="text" class="input" v-model="customerDetails.phone">
+              <div class="form-outline">
+                <label class="form-label">Place*</label>
+                <input type="text" class="form-control" v-model="customerDetails.place">
               </div>
+
+              <div class="form-outline">
+                <label for="inputCountry" class="form-label">Country</label>
+                <select name="country" id="inputCountry" class="form-select" v-model="customerDetails.country" v-on:change="handle">
+                  <option disabled value="choose">Choose...</option>
+                  <option
+                      v-for="country in availableCountries"
+                      :key="country.alpha_2"
+                      :value="country.alpha_2">
+                    {{ country.name }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-outline">
+                <label for="inputRegion" class="form-label">Region</label>
+                <select ref="regionElement" name="region" id="inputRegion" class="form-select" v-model="customerDetails.region">
+                  <option disabled value="choose">Choose...</option>
+                  <option
+                      v-for="region in regionsBasedOnAlpha"
+                      :key="region.alpha"
+                      :value="region.alpha">
+                    {{ region.name }}
+                  </option>
+                </select>
+              </div>
+
             </div>
           </div>
 
-          <div class="col-6">
-            <div class="field">
-              <label>Address*</label>
-              <div class="control">
-                <input type="text" class="input" v-model="customerDetails.address">
-              </div>
-            </div>
-
-            <div class="field">
-              <label>Zip code*</label>
-              <div class="control">
-                <input type="text" class="input" v-model="customerDetails.zipcode">
-              </div>
-            </div>
-
-            <div class="field">
-              <label>Place*</label>
-              <div class="control">
-                <input type="text" class="input" v-model="customerDetails.place">
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="inputCountry" class="form-label">Country</label>
-              <select name="country" id="inputCountry" class="form-select" v-model="customerDetails.country" v-on:change="handle">
-                <option disabled value="choose">Choose...</option>
-                <option
-                    v-for="country in availableCountries"
-                    :key="country.alpha_2"
-                    :value="country.alpha_2">
-                  {{ country.name }}
-                </option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="inputRegion" class="form-label">Region</label>
-              <select ref="regionElement" name="region" id="inputRegion" class="form-select" v-model="customerDetails.region">
-                <option disabled value="choose">Choose...</option>
-                <option
-                    v-for="region in regionsBasedOnAlpha"
-                    :key="region.alpha"
-                    :value="region.alpha">
-                  {{ region.name }}
-                </option>
-              </select>
-            </div>
-
+          <div class="notification is-danger mt-4" v-if="errors.length">
+            <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
           </div>
+
+          <div ref="stripleElement" id="stripe-card" class="mb-5 mt-5"></div>
+
+          <template v-if="cartTotalLength">
+            <button type="button" class="btn btn-success float-end" @click="submitForm">Pay with Stripe</button>
+          </template>
         </div>
-
-        <div class="notification is-danger mt-4" v-if="errors.length">
-          <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
-        </div>
-
-        <div ref="stripleElement" id="stripe-card" class="mb-5 mt-5"></div>
-
-        <template v-if="cartTotalLength">
-          <button class="button is-dark" @click="submitForm">Pay with Stripe</button>
-        </template>
       </div>
     </div>
   </div>

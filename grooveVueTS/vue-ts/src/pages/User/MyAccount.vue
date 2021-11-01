@@ -10,10 +10,10 @@
           <div class="navbar-nav">
             <router-link class="nav-link" :to="{ name: 'Settings' }">Settings</router-link>
             <router-link class="nav-link" :to="{ name: 'Orders' }">Orders</router-link>
-            <button @click="logout()" class="button is-danger position-absolute log-out-button">Log out</button>
           </div>
         </div>
       </div>
+      <button @click="logout()" class="btn btn-danger float-end">Log out</button>
     </nav>
 
     <div class="col-12 mt-5">

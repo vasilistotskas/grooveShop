@@ -1,56 +1,37 @@
 <template>
-  <nav class="navbar main-navbar navbar-dark bg-dark navbar-expand-lg w-100 position-fixed">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
     <div class="container-fluid">
-        <router-link to="/" class="navbar-brand"><strong class="p-1">grooveShop</strong></router-link>
-
-        <a class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu"
-           @click="this.showMobileMenu = !this.showMobileMenu">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-
-      <div class="navbar-menu" id="navbar-menu" v-bind:class="{'is-active': showMobileMenu }">
-        <div class="navbar-start">
-            <NavbarCategories :categories="this.categories"/>
-        </div>
-
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <form method="get" action="/search" class="mr-1">
-              <div class="field has-addons">
-                <div class="control">
-                  <input type="text" class="input" placeholder="What are you looking for?" name="query">
-                </div>
-                <div class="control">
-                  <button class="button is-success">
-                        <span class="icon">
-                        <i class="fas fa-search"></i>
-                        </span>
-                  </button>
-                </div>
-              </div>
-            </form>
-            <div class="buttons">
-              <template v-if="this.isAuthenticated">
-                <router-link to="/my-account" class="button is-light">My account</router-link>
-              </template>
-
-              <template v-else>
-                <router-link to="/log-in" class="button is-light">Log in</router-link>
-              </template>
-
-              <router-link to="/cart" class="button is-success">
-                <span class="icon"><i class="fas fa-shopping-cart"></i></span>
-                <span>Cart ({{ cartTotalLength }})</span>
-              </router-link>
-            </div>
-          </div>
-        </div>
+      <router-link to="/" class="navbar-brand"><strong class="p-1">grooveShop</strong></router-link>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <NavbarCategories :categories="this.categories"/>
+        </ul>
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item">
+            <router-link to="/cart" class="nav-link">
+              <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+              <span>Cart ({{ cartTotalLength }})</span>
+            </router-link>
+          </li>
+        </ul>
+        <form method="get" action="/search" class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item" v-if="this.isAuthenticated">
+            <router-link to="/my-account" class="nav-link">My account</router-link>
+          </li>
+          <li class="nav-item" v-else>
+            <router-link to="/log-in" class="nav-link">Log in</router-link>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>
-
 </template>
 
 <script lang="ts">

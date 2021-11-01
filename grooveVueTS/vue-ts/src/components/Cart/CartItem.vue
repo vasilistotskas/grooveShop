@@ -5,13 +5,15 @@
     </td>
     <td>${{ item.product.price }}</td>
     <td>
-      <a @click="decrementQuantity(item)">-</a>
+      <a type="button" class="btn btn-light" data-mdb-ripple-color="dark" @click="decrementQuantity(item)">-</a>
       {{ item.quantity }}
-      <a @click="incrementQuantity(item)">+</a>
+      <a type="button" class="btn btn-light" data-mdb-ripple-color="dark" @click="incrementQuantity(item)">+</a>
     </td>
     <td>${{ getItemTotal.toFixed(2) }}</td>
     <td>
-      <button class="delete" @click="removeFromCart(item)"></button>
+      <button type="button" class="btn" @click="removeFromCart(item)">
+        <i class="fas fa-times-circle"></i>
+      </button>
     </td>
   </tr>
 </template>

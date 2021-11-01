@@ -1,7 +1,7 @@
 <template>
   <div class="page-search mt-5">
-    <div class="row">
-      <div class="container">
+    <div class="container">
+      <div class="row">
         <div class="col-12">
           <h1 class="title mb-5">Search</h1>
           <h2 class="is-size-5 has-text-grey">Search term: "{{ query }}"</h2>
