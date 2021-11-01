@@ -23,7 +23,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ['id', 'user', 'country', 'first_name', 'last_name', 'phone', 'email', 'city', 'zipcode', 'address',
-                  'place', 'region', 'image']
+                  'place', 'region', 'image', 'image_url']
 
     def update(self, instance, validated_data):
         # * User Profile Info

@@ -62,7 +62,7 @@ export default {
         return axios({
             url: `${baseUrl}/${endpoint}`,
             method: 'patch',
-            data: qs.stringify(data),
+            data: data,
             headers: {
                 Authorization: "Token " + this.getUserToken()
             }

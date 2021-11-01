@@ -1,5 +1,5 @@
 <template>
-  <div class="page-sign-up mt-5 mb-5">
+  <div class="page-sign-up mt-3 mb-5">
     <div class="container">
       <div class="col-4 mx-auto">
         <div class="card">
@@ -51,6 +51,8 @@
 <script lang="ts">
 import AppBasePage from '@/pages/AppBasePage.vue'
 import { Options } from "vue-class-component";
+import store from "@/store";
+import router from "@/routes";
 
 @Options({
   name: "SignUp"
@@ -58,13 +60,31 @@ import { Options } from "vue-class-component";
 
 export default class SignUp extends AppBasePage {
 
-  username!: string
-  password!: string
-  password2!: string
+  username: string = ''
+  password: string = ''
+  password2: string = ''
   errors: Array<any> = []
 
-  async submitForm() {
+  private async submitForm(): Promise<void> {
+    if (this.username === '') {
+      this.errors.push('The username is missing')
+    }
 
+    if (this.password === '') {
+      this.errors.push('The password is too short')
+    }
+
+    if (this.password !== this.password2) {
+      this.errors.push('The passwords doesn\'t match')
+    }
+
+    if (!this.errors.length) {
+      const formData = {
+        username: this.username,
+        password: this.password
+      }
+      await store.dispatch('user/userSignUp', formData)
+    }
   }
 }
 </script>

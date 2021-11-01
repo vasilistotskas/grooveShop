@@ -52,6 +52,10 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+    def image_url(self):
+        print(self.image.url)
+        return 'http://127.0.0.1:8000' + self.image.url
+
     def image_tag(self):
         if self.image:
             return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))

@@ -1,5 +1,5 @@
 <template>
-    <div class="page-cart container mt-5 mb-5">
+    <div class="page-cart container mt-3 mb-5">
         <div class="row">
             <div class="col-12">
                 <h1 class="title mb-5">Cart</h1>

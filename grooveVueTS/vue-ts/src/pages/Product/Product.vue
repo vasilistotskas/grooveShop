@@ -32,12 +32,11 @@
             <input type="number" class="input" min="1" v-model="quantity">
           </div>
 
-          <button type="button" class="btn btn-dark addToCartButton" v-bind:class="{'disabled': disabled }" @click="addToCart()">Dark</button>
+          <div class="row mt-2">
+            <button type="button" class="btn btn-dark addToCartButton col-12 col-md-8" v-bind:class="{'disabled': disabled }" @click="addToCart()">Add to cart</button>
+            <FavouriteButton :product="product"></FavouriteButton>
+          </div>
 
-
-          <FavouriteButton :product="product">
-
-          </FavouriteButton>
         </div>
       </div>
     </div>

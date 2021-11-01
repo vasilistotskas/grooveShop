@@ -1,9 +1,7 @@
 <template>
-  <a @click="favouriteHandle()">
-    <div class="control favourite-content">
-      <i :class=getFavouriteIconClass()></i>
-    </div>
-  </a>
+  <button type="button"  data-mdb-ripple-color="dark" class="btn btn-outline-danger col-12 col-md-4" @click="favouriteHandle()">
+    <i :class=getFavouriteIconClass()></i>
+  </button>
 </template>
 
 

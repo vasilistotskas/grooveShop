@@ -1,5 +1,5 @@
 <template>
-  <div class="page-search mt-5 mb-5">
+  <div class="page-search mt-3 mb-5">
     <div class="container">
       <div class="row">
         <div class="col-12">

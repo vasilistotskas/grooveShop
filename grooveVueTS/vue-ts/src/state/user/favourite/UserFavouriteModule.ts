@@ -48,7 +48,6 @@ export default class UserFavouriteModule
 
     @Action
     async userFavouritesFromRemote(user_id: number): Promise<void> {
-        await store.dispatch('user/data/ensureUserIsAuthenticated')
 
         await api.get(`favourites/${user_id}`)
             .then((response: ResponseData) => {

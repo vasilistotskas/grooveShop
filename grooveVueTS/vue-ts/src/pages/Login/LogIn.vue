@@ -1,5 +1,5 @@
 <template>
-  <div class="page-log-in mt-5 mb-5">
+  <div class="page-log-in mt-3 mb-5">
     <div class="container">
       <div class="col-4 mx-auto">
         <div class="card">
@@ -116,23 +116,14 @@ export default class LogIn extends AppBaseLayout {
       username: this.username,
       password: this.password
     }
-    console.log(formData)
+
     store.dispatch('user/userLogIn', formData)
         .then((success: any) => {
-          router.push('/')
           store.dispatch('user/data/userDataFromRemote')
+          router.push('/')
         })
         .catch((error: Error) => {
-          if (error) {
-            for (const property in error) {
-              this.errors.push(`${error}`)
-            }
-            console.log(JSON.stringify(error))
-          } else if (error) {
-            this.errors.push('Something went wrong. Please try again')
-
-            console.log(JSON.stringify(error))
-          }
+          console.log(error)
         })
 
   }

@@ -4,7 +4,7 @@ import ResponseData from "@/state/types/ResponseData";
 import axios from "axios";
 import AppBaseModule from "@/state/common/AppBaseModule";
 import store from '@/store'
-import UserFavouriteModel from "@/state/user/favourite/UserFavouriteModel";
+import router from "@/routes";
 
 @Module({ namespaced: true })
 export default class UserDataModule
@@ -84,6 +84,18 @@ export default class UserDataModule
                 axios.defaults.headers.common["Authorization"] = "Token " + this.token
                 localStorage.setItem("token", this.token)
             })
+            .catch((e: Error) => {
+                console.log(e);
+            })
+    }
+
+    @Action
+    async updateUserDetails(data: any): Promise<void> {
+        await store.dispatch('user/data/ensureUserIsAuthenticated')
+        const user_id = await this.context.getters['getUserId']
+
+        await api.patch(`userprofile/${user_id}/`, data)
+            .then((response: ResponseData) => this.context.commit('setUserData', response.data))
             .catch((e: Error) => {
                 console.log(e);
             })

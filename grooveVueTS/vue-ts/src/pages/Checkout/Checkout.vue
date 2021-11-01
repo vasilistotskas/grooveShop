@@ -1,5 +1,5 @@
 <template>
-  <div class="page-checkout container mt-5 mb-5">
+  <div class="page-checkout container mt-3 mb-5">
     <div class="row">
       <div class="col-12">
         <h1 class="title mb-3">Checkout</h1>
@@ -118,7 +118,7 @@
             <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
           </div>
 
-          <div ref="stripleElement" id="stripe-card" class="mb-5 mt-5"></div>
+          <div ref="stripleElement" id="stripe-card" class="mb-5 mt-3"></div>
 
           <template v-if="cartTotalLength">
             <button type="button" class="btn btn-success float-end" @click="submitForm">Pay with Stripe</button>
@@ -148,11 +148,9 @@ export default class Checkout extends AppBasePage {
   $refs!: {
     stripleElement: HTMLFormElement
   }
-  // selectedCountry = new CountryModel()
   errors: Array<any> = []
   customerDetails: any = {}
   card = {}
-
 
   get availableCountries(): CountryModel {
     return store.getters['country/getCountries']
@@ -217,6 +215,10 @@ export default class Checkout extends AppBasePage {
   private customerDetailsInitialize(): void {
     if (this.isAuthenticated) {
       this.customerDetails = cloneDeep(this.userData)
+      if(!this.customerDetails.country){
+        this.customerDetails.country = 'choose'
+        this.customerDetails.region = 'choose'
+      }
     } else {
       this.customerDetails.address = ''
       this.customerDetails.city = ''
