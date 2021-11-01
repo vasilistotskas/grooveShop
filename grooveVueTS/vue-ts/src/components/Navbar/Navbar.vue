@@ -10,11 +10,11 @@
           <NavbarCategories :categories="this.categories"/>
         </ul>
         <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item">
-            <router-link to="/cart" class="nav-link">
-              <span class="icon"><i class="fas fa-shopping-cart"></i></span>
-              <span>Cart ({{ cartTotalLength }})</span>
-            </router-link>
+          <li class="nav-item" v-if="this.isAuthenticated">
+            <router-link to="/my-account" class="nav-link">My account</router-link>
+          </li>
+          <li class="nav-item" v-else>
+            <router-link to="/log-in" class="nav-link">Log in</router-link>
           </li>
         </ul>
         <form method="get" action="/search" class="d-flex navbar-search">
@@ -22,11 +22,11 @@
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
         <ul class="navbar-nav mb-2 mb-lg-0">
-          <li class="nav-item" v-if="this.isAuthenticated">
-            <router-link to="/my-account" class="nav-link">My account</router-link>
-          </li>
-          <li class="nav-item" v-else>
-            <router-link to="/log-in" class="nav-link">Log in</router-link>
+          <li class="nav-item">
+            <router-link to="/cart" class="nav-link">
+              <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+              <span>Cart ({{ cartTotalLength }})</span>
+            </router-link>
           </li>
         </ul>
       </div>

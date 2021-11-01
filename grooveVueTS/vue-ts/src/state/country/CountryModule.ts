@@ -14,7 +14,7 @@ export default class CountryModule
 {
     countries: Array<CountryModel> = []
     regionsBasedOnAlpha: Array<RegionsModel> = []
-    selectedCountry: object = CountryModel
+    selectedCountry: {} = CountryModel
 
     get getCountries(): object { return this.countries}
     get getRegionsBasedOnAlpha(): object { return this.regionsBasedOnAlpha}

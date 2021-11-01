@@ -1,7 +1,7 @@
 <template>
-  <div class="page-my-account container mt-5">
+  <div class="page-my-account container mt-5 mb-5">
     <div class="col-12">
-      <h1 class="title mb-5"><router-link :to="{ name: 'MyAccount' }" class="my-account-header">My account</router-link></h1>
+      <h1 class="title mb-2"><router-link :to="{ name: 'MyAccount' }" class="my-account-header">My account</router-link></h1>
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">

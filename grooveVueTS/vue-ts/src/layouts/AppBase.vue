@@ -11,7 +11,7 @@
       <div v-if="this.isLoading" class="lds-dual-ring"></div>
     </div>
 
-    <section class="mb-5 mt-5">
+    <section>
       <router-view/>
     </section>
 
@@ -197,7 +197,7 @@
       <!-- Copyright -->
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         © 2020 Copyright:
-        <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        <a class="text-white" href="#">GrooveBtch</a>
       </div>
       <!-- Copyright -->
     </footer>

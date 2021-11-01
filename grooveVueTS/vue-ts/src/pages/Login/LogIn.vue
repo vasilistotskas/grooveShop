@@ -1,5 +1,5 @@
 <template>
-  <div class="page-log-in mt-5">
+  <div class="page-log-in mt-5 mb-5">
     <div class="container">
       <div class="col-4 mx-auto">
         <div class="card">
@@ -51,21 +51,26 @@
               <div class="text-center">
                 <p>Not a member? <router-link to="/sign-up">Register</router-link></p>
                 <p>or sign up with:</p>
-                <button type="button" class="btn btn-primary btn-floating mx-1">
-                  <i class="fab fa-facebook-f"></i>
-                </button>
+                <!-- Facebook -->
+                <a class="btn btn-primary btn-floating mx-1" style="background-color: #3b5998;" href="#!" role="button"
+                ><i class="fab fa-facebook-f"></i
+                ></a>
 
-                <button type="button" class="btn btn-primary btn-floating mx-1">
-                  <i class="fab fa-google"></i>
-                </button>
+                <!-- Google -->
+                <a class="btn btn-primary btn-floating mx-1" style="background-color: #dd4b39;" href="#!" role="button"
+                ><i class="fab fa-google"></i
+                ></a>
 
-                <button type="button" class="btn btn-primary btn-floating mx-1">
-                  <i class="fab fa-twitter"></i>
-                </button>
+                <!-- Twitter -->
+                <a class="btn btn-primary btn-floating mx-1" style="background-color: #55acee;" href="#!" role="button"
+                ><i class="fab fa-twitter"></i
+                ></a>
 
-                <button type="button" class="btn btn-primary btn-floating mx-1">
-                  <i class="fab fa-github"></i>
-                </button>
+                <!-- Github -->
+                <a class="btn btn-primary btn-floating mx-1" style="background-color: #333333;" href="#!" role="button"
+                ><i class="fab fa-github"></i
+                ></a>
+
               </div>
             </form>
           </div>

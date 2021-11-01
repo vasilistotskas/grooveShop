@@ -1,17 +1,17 @@
 <template>
   <div class="home">
-    <section class="bg-dark mb-6">
-      <div class="text-center p-3">
-        <h1 class="title mb-6 text-light">
-          {{ $t('eshop.test1') }}
-        </h1>
-        <h3 class="subtitle text-light">
-          {{ $t('eshop.test2') }}
-        </h3>
-      </div>
-    </section>
+<!--    <section class="bg-dark mb-6">-->
+<!--      <div class="text-center p-3">-->
+<!--        <h1 class="title mb-6 text-light">-->
+<!--          {{ $t('eshop.test1') }}-->
+<!--        </h1>-->
+<!--        <h3 class="subtitle text-light">-->
+<!--          {{ $t('eshop.test2') }}-->
+<!--        </h3>-->
+<!--      </div>-->
+<!--    </section>-->
 
-    <div class="container mt-4">
+    <div class="container mt-5 mb-5">
       <div class="row">
         <div class="col-12 mb-5">
           <h2 class="is-size-2 has-text-centered">{{ $t('eshop.test3') }}</h2>

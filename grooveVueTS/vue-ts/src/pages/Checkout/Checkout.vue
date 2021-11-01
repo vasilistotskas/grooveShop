@@ -1,5 +1,5 @@
 <template>
-  <div class="page-checkout container mt-5">
+  <div class="page-checkout container mt-5 mb-5">
     <div class="row">
       <div class="col-12">
         <h1 class="title mb-3">Checkout</h1>
@@ -40,7 +40,7 @@
         </div>
       </div>
 
-      <div class="col-12 card">
+      <div class="col-12 card shipping-details-card">
         <div class="card-body">
           <h2 class="subtitle">Shipping details</h2>
 
@@ -307,3 +307,9 @@ export default class Checkout extends AppBasePage {
 
 }
 </script>
+
+<style scoped lang="scss">
+.shipping-details-card{
+  color: #121212;
+}
+</style>

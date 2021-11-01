@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-  <div class="page-category mt-5">
+  <div class="page-category mt-5 mb-5">
     <div class="row">
       <div class="col-12">
         <h2 class="is-size-2 has-text-centered">{{ category.name }}</h2>

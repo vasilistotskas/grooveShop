@@ -1,36 +1,36 @@
 :root {
-  --cp-helper-primary-light-bg: #{$color-palette-helper-light-primary-background};
-  --cp-helper-primary-light-fg: #{$color-palette-helper-light-primary-foreground};
-  --cp-helper-secondary-light-bg: #{$color-palette-helper-light-secondary-background};
-  --cp-helper-secondary-light-fg: #{$color-palette-helper-light-secondary-foreground};
-  --cp-helper-third-light-bg: #{$color-palette-helper-light-third-background};
-  --cp-helper-third-light-fg: #{$color-palette-helper-light-third-foreground};
-  --cp-helper-primary-dark-bg: #{$color-palette-helper-dark-primary-background};
-  --cp-helper-primary-dark-fg: #{$color-palette-helper-dark-primary-foreground};
-  --cp-helper-secondary-dark-bg: #{$color-palette-helper-dark-secondary-background};
-  --cp-helper-secondary-dark-fg: #{$color-palette-helper-dark-secondary-foreground};
-  --cp-helper-third-dark-bg: #{$color-palette-helper-dark-third-background};
-  --cp-helper-third-dark-fg: #{$color-palette-helper-dark-third-foreground};
+  //--cp-helper-primary-light-bg: #{$color-palette-helper-light-primary-background};
+  //--cp-helper-primary-light-fg: #{$color-palette-helper-light-primary-foreground};
+  //--cp-helper-secondary-light-bg: #{$color-palette-helper-light-secondary-background};
+  //--cp-helper-secondary-light-fg: #{$color-palette-helper-light-secondary-foreground};
+  //--cp-helper-third-light-bg: #{$color-palette-helper-light-third-background};
+  //--cp-helper-third-light-fg: #{$color-palette-helper-light-third-foreground};
+  //--cp-helper-primary-dark-bg: #{$color-palette-helper-dark-primary-background};
+  //--cp-helper-primary-dark-fg: #{$color-palette-helper-dark-primary-foreground};
+  //--cp-helper-secondary-dark-bg: #{$color-palette-helper-dark-secondary-background};
+  //--cp-helper-secondary-dark-fg: #{$color-palette-helper-dark-secondary-foreground};
+  //--cp-helper-third-dark-bg: #{$color-palette-helper-dark-third-background};
+  //--cp-helper-third-dark-fg: #{$color-palette-helper-dark-third-foreground};
 }
 
 body {
-  --cp-helper-primary-bg: var(--cp-helper-primary-light-bg);
-  --cp-helper-primary-fg: var(--cp-helper-primary-light-fg);
-  --cp-helper-secondary-bg: var(--cp-helper-secondary-light-bg);
-  --cp-helper-secondary-fg: var(--cp-helper-secondary-light-fg);
-  --cp-helper-third-bg: var(--cp-helper-third-light-bg);
-  --cp-helper-third-fg: var(--cp-helper-third-light-fg);
-  &.dark {
-    --cp-helper-primary-bg: var(--cp-helper-primary-dark-bg);
-    --cp-helper-primary-fg: var(--cp-helper-primary-dark-fg);
-    --cp-helper-secondary-bg: var(--cp-helper-secondary-dark-bg);
-    --cp-helper-secondary-fg: var(--cp-helper-secondary-dark-fg);
-    --cp-helper-third-bg: var(--cp-helper-third-dark-bg);
-    --cp-helper-third-fg: var(--cp-helper-third-dark-fg);
-  }
-
-  background-color: var(--cp-helper-secondary-bg);
-  color: var(--cp-helper-secondary-bg);
+  //--cp-helper-primary-bg: var(--cp-helper-primary-light-bg);
+  //--cp-helper-primary-fg: var(--cp-helper-primary-light-fg);
+  //--cp-helper-secondary-bg: var(--cp-helper-secondary-light-bg);
+  //--cp-helper-secondary-fg: var(--cp-helper-secondary-light-fg);
+  //--cp-helper-third-bg: var(--cp-helper-third-light-bg);
+  //--cp-helper-third-fg: var(--cp-helper-third-light-fg);
+  //&.dark {
+  //  --cp-helper-primary-bg: var(--cp-helper-primary-dark-bg);
+  //  --cp-helper-primary-fg: var(--cp-helper-primary-dark-fg);
+  //  --cp-helper-secondary-bg: var(--cp-helper-secondary-dark-bg);
+  //  --cp-helper-secondary-fg: var(--cp-helper-secondary-dark-fg);
+  //  --cp-helper-third-bg: var(--cp-helper-third-dark-bg);
+  //  --cp-helper-third-fg: var(--cp-helper-third-dark-fg);
+  //}
+  //
+  //background-color: var(--cp-helper-secondary-bg);
+  //color: var(--cp-helper-secondary-bg);
 }
 
 * {
