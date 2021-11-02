@@ -1,5 +1,5 @@
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { Options, Vue } from "vue-class-component"
 import _, {cloneDeep, get, LoDashStatic, map, pickBy} from 'lodash'
 import packageMeta from '@/../package.json'
 import store from '@/store'

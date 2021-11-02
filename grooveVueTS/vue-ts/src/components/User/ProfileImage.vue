@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-body">
       <form id="uploadImageForm" name="uploadImageForm" enctype="multipart/form-data">
-        <div class="text-center box">
+        <div class="text-center">
           <img :src="this.src" class="mb-5 rounded-circle" alt="User Image" width="72" height="72">
           <h4 class="fw-bold">{{this.fullname}}</h4>
           <label class="btn btn-primary mt-5" for="image">
@@ -22,10 +22,9 @@
 </template>
 
 <script lang="ts">
-import {Options} from "vue-class-component";
+import {Options} from "vue-class-component"
 import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
 import store from '@/store'
-import UserDetailsModel from "@/state/user/data/UserDetailsModel";
 
 @Options({
   name: "ProfileImage",

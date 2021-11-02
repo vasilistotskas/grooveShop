@@ -1,10 +1,12 @@
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import api from "@/api/api.service";
-import ResponseData from "@/state/types/ResponseData";
-import axios from "axios";
-import AppBaseModule from "@/state/common/AppBaseModule";
+import api from "@/api/api.service"
+import ResponseData from "@/state/types/ResponseData"
+import axios from "axios"
+import AppBaseModule from "@/state/common/AppBaseModule"
 import store from '@/store'
-import router from "@/routes";
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
 
 @Module({ namespaced: true })
 export default class UserDataModule
@@ -85,7 +87,7 @@ export default class UserDataModule
                 localStorage.setItem("token", this.token)
             })
             .catch((e: Error) => {
-                console.log(e);
+                console.log(e)
             })
     }
 
@@ -94,10 +96,15 @@ export default class UserDataModule
         await store.dispatch('user/data/ensureUserIsAuthenticated')
         const user_id = await this.context.getters['getUserId']
 
+        try {
         await api.patch(`userprofile/${user_id}/`, data)
             .then((response: ResponseData) => this.context.commit('setUserData', response.data))
             .catch((e: Error) => {
-                console.log(e);
+                console.log(e)
             })
+            toast.success("Profile Updated")
+        } catch (error) {
+            throw error
+        }
     }
 }

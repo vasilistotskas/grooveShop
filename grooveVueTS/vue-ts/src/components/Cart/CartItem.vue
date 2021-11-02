@@ -19,9 +19,9 @@
 </template>
 
 <script lang="ts">
-import AppBasePage from "@/pages/AppBasePage.vue";
-import { Options } from "vue-class-component";
-import CartItemModel from "@/state/cart/CartItemModel";
+import AppBasePage from "@/pages/AppBasePage.vue"
+import { Options } from "vue-class-component"
+import CartItemModel from "@/state/cart/CartItemModel"
 import store from '@/store'
 
 @Options({

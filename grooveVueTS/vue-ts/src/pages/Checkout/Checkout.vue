@@ -113,13 +113,7 @@
 
             </div>
           </div>
-
-          <div class="notification is-danger mt-4" v-if="errors.length">
-            <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
-          </div>
-
           <div ref="stripleElement" id="stripe-card" class="mb-5 mt-3"></div>
-
           <template v-if="cartTotalLength">
             <button type="button" class="btn btn-success float-end" @click="submitForm">Pay with Stripe</button>
           </template>
@@ -131,13 +125,16 @@
 
 <script lang="ts">
 import AppBasePage from '@/pages/AppBasePage.vue'
-import { Options } from "vue-class-component";
-import store from "@/store";
-import UserDetailsModel from "@/state/user/data/UserDetailsModel";
-import CartItemModel from "@/state/cart/CartItemModel";
-import CountryModel from "@/state/country/CountryModel";
-import RegionsModel from "@/state/country/RegionsModel";
+import { Options } from "vue-class-component"
+import store from "@/store"
+import UserDetailsModel from "@/state/user/data/UserDetailsModel"
+import CartItemModel from "@/state/cart/CartItemModel"
+import CountryModel from "@/state/country/CountryModel"
+import RegionsModel from "@/state/country/RegionsModel"
 import { cloneDeep } from  "lodash"
+import { useToast } from "vue-toastification"
+
+const toast = useToast()
 
 @Options({
   name: "Checkout"
@@ -267,10 +264,14 @@ export default class Checkout extends AppBasePage {
     if (!this.errors.length) {
       try {
         await store.dispatch('stripeCard/createStripeToken')
-        await this.stripeTokenHandler(this.stripeResultToken)
+        if(this.stripeResultToken){
+          await this.stripeTokenHandler(this.stripeResultToken)
+        }
       } catch (e) {
         console.log(e)
       }
+    } else {
+      toast.error(this.errors)
     }
   }
 
@@ -302,15 +303,13 @@ export default class Checkout extends AppBasePage {
       'stripe_token': token.id
     }
 
-    console.log(data)
-
     await store.dispatch('cart/createOrder', data)
   }
 
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .shipping-details-card{
   color: #121212;
 }

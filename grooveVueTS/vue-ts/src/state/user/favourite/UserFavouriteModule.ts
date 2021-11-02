@@ -1,10 +1,13 @@
-import {Action, Module, Mutation} from "vuex-module-decorators";
-import AppBaseModule from "@/state/common/AppBaseModule";
-import api from "@/api/api.service";
-import ResponseData from "@/state/types/ResponseData";
-import UserFavouriteModel from "@/state/user/favourite/UserFavouriteModel";
-import router from "@/routes";
-import store from "@/store";
+import {Action, Module, Mutation} from "vuex-module-decorators"
+import AppBaseModule from "@/state/common/AppBaseModule"
+import api from "@/api/api.service"
+import ResponseData from "@/state/types/ResponseData"
+import UserFavouriteModel from "@/state/user/favourite/UserFavouriteModel"
+import router from "@/routes"
+import store from "@/store"
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
 
 @Module({ namespaced: true })
 export default class UserFavouriteModule
@@ -34,15 +37,22 @@ export default class UserFavouriteModule
     }
 
     @Action
-    async toggleFavourite(product: UserFavouriteModel): Promise<string> {
-        store.dispatch('user/data/ensureUserIsAuthenticated')
-
-        if (!this.getStateIsCurrentProductInFavourites) {
-            await this.context.dispatch('addToFavourites', product)
-            return 'The product was added to the favourites'
+    async toggleFavourite(product: UserFavouriteModel): Promise<string | undefined> {
+        const IsAuthenticated: boolean = store.getters['user/data/getIsAuthenticated']
+        if(IsAuthenticated){
+            try {
+                if(!this.getStateIsCurrentProductInFavourites) {
+                    await this.context.dispatch('addToFavourites', product)
+                    return 'The product was added to the favourites'
+                } else {
+                    await this.context.dispatch('removeFromFavourites', product)
+                    return 'The product was removed from favourites'
+                }
+            } catch (error) {
+                console.log(error)
+            }
         } else {
-            await this.context.dispatch('removeFromFavourites', product)
-            return 'The product was removed from favourites'
+            toast.error("You are not logged in")
         }
     }
 
@@ -55,13 +65,12 @@ export default class UserFavouriteModule
                 this.context.commit('setUserFavourites', data)
             })
             .catch((e: Error) => {
-                console.log(e);
+                console.log(e)
             })
     }
 
     @Action
     async addToFavourites(): Promise<void> {
-        await store.dispatch('user/data/ensureUserIsAuthenticated')
 
         let productId = router.currentRoute.value.params.product_id
         let data = {
@@ -70,18 +79,29 @@ export default class UserFavouriteModule
         }
         let user_id = data.user_id
 
-        await api.post(`favourites/${user_id}/`, data)
+        try {
+            await api.post(`favourites/${user_id}/`, data)
+            toast.success("Added to favourites")
+        } catch (error) {
+            throw error
+        }
+
         await this.context.dispatch('userFavouritesFromRemote', user_id)
     }
 
     @Action
     async removeFromFavourites(): Promise<void> {
-        await store.dispatch('user/data/ensureUserIsAuthenticated')
 
         let user_id = store.getters['user/data/getUserId']
         let product_id = router.currentRoute.value.params.product_id
 
-        await api.delete(`favourites/delete/${user_id}/${product_id}`)
+        try {
+            await api.delete(`favourites/delete/${user_id}/${product_id}`)
+            toast.success("Removed from favourites")
+        } catch (error) {
+            throw error
+        }
+
         await this.context.dispatch('userFavouritesFromRemote', user_id)
     }
 

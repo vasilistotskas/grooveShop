@@ -1,8 +1,8 @@
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import api from "@/api/api.service";
-import ResponseData from "@/state/types/ResponseData";
-import AppBaseModule from "@/state/common/AppBaseModule";
-import ProductModel from "@/state/product/ProductModel";
+import api from "@/api/api.service"
+import ResponseData from "@/state/types/ResponseData"
+import AppBaseModule from "@/state/common/AppBaseModule"
+import ProductModel from "@/state/product/ProductModel"
 
 @Module({ namespaced: true })
 export default class UserOrderModule
@@ -28,7 +28,7 @@ export default class UserOrderModule
                 this.context.commit('setUserOrders', data)
             })
             .catch((e: Error) => {
-                console.log(e);
+                console.log(e)
             })
     }
 

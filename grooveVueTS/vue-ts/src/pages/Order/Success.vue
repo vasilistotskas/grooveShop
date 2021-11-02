@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import AppBasePage from '@/pages/AppBasePage.vue'
-import { Options } from "vue-class-component";
+import { Options } from "vue-class-component"
 
 @Options({
   name: "Checkout"

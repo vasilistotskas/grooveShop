@@ -1,14 +1,16 @@
-import { Action, Module, Mutation } from 'vuex-module-decorators'
+import { Action, Module } from 'vuex-module-decorators'
 import AppBaseModule from '@/state/common/AppBaseModule'
-import api from "@/api/api.service";
-import ResponseData from "@/state/types/ResponseData";
-import router from "@/routes";
+import api from "@/api/api.service"
+import ResponseData from "@/state/types/ResponseData"
+import router from "@/routes"
+import { useToast } from "vue-toastification"
+
+const toast = useToast()
 
 @Module({ namespaced: true })
 export default class UserModule
     extends AppBaseModule
 {
-    errors: Array<any> = []
     // reviews: Array<any> = []
     // favourites: Array<any> = []
 
@@ -38,18 +40,11 @@ export default class UserModule
     async userSignUp(formData: object): Promise<void> {
         await api.post('djoser/users/', formData)
             .then((response: ResponseData) => {
+                toast.error('Success, you can log in!')
                 router.push('/log-in')
             })
             .catch((error: Error) => {
-                if (error) {
-                    for (const property in error) {
-                        this.errors.push(`${error}`)
-                    }
-                    console.log(JSON.stringify(error))
-                } else if (error) {
-                    this.errors.push('Something went wrong. Please try again')
-                    console.log(JSON.stringify(error))
-                }
+                console.log(error)
             })
     }
 

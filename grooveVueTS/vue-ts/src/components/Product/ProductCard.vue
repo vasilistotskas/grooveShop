@@ -18,9 +18,9 @@
 
 <script lang="ts">
 
-import {Options} from "vue-class-component";
-import AppBasePage from "@/pages/AppBasePage.vue";
-import ProductModel from "@/state/product/ProductModel";
+import {Options} from "vue-class-component"
+import AppBasePage from "@/pages/AppBasePage.vue"
+import ProductModel from "@/state/product/ProductModel"
 import store from '@/store'
 
 @Options({
@@ -60,7 +60,7 @@ export default class ProductCard extends AppBasePage {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .image {
     margin-top: -1.25rem;
     margin-left: -1.25rem;

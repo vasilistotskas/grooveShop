@@ -3,14 +3,24 @@ import { createApp } from 'vue'
 import router from '@/routes'
 import store from './store'
 import axios from 'axios'
-import Toast, { PluginOptions } from "vue-toastification";
-import "vue-toastification/dist/index.css";
+import Toast, { PluginOptions, TYPE } from "vue-toastification"
+import "vue-toastification/dist/index.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 import AppBase from '@/layouts/AppBase.vue'
 
 const ToastOptions: PluginOptions = {
-    // You can set your default options here
+    toastDefaults: {
+        // ToastOptions object for each type of toast
+        [TYPE.ERROR]: {
+            timeout: 2000,
+            closeButton: false,
+        },
+        [TYPE.SUCCESS]: {
+            timeout: 1350,
+            hideProgressBar: true,
+        }
+    }
 };
 
 axios.defaults.baseURL = 'http://127.0.0.1:8000'

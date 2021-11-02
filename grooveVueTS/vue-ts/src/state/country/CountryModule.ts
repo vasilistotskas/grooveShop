@@ -1,12 +1,12 @@
 import {Action, Module, Mutation} from 'vuex-module-decorators'
-import AppBaseModule from "@/state/common/AppBaseModule";
-import api from "@/api/api.service";
-import ResponseData from "@/state/types/ResponseData";
-import CountryModel from "@/state/country/CountryModel";
-import RegionsModel from "@/state/country/RegionsModel";
+import AppBaseModule from "@/state/common/AppBaseModule"
+import api from "@/api/api.service"
+import ResponseData from "@/state/types/ResponseData"
+import CountryModel from "@/state/country/CountryModel"
+import RegionsModel from "@/state/country/RegionsModel"
 import store from '@/store'
 import {find} from 'lodash'
-import UserDetailsModel from "@/state/user/data/UserDetailsModel";
+import UserDetailsModel from "@/state/user/data/UserDetailsModel"
 
 @Module({ namespaced: true })
 export default class CountryModule
@@ -56,7 +56,7 @@ export default class CountryModule
                 this.context.commit('setCountries', data)
             })
             .catch((e: Error) => {
-                console.log(e);
+                console.log(e)
             })
     }
 

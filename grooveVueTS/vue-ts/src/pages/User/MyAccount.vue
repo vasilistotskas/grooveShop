@@ -24,8 +24,8 @@
 </template>
 
 <script lang="ts">
-import router from "@/routes";
-import {Options} from "vue-class-component";
+import router from "@/routes"
+import {Options} from "vue-class-component"
 import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
 import store from '@/store'
 

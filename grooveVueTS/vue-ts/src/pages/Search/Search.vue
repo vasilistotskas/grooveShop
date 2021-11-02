@@ -24,10 +24,10 @@
 
 <script lang="ts">
 
-import {Options} from "vue-class-component";
-import AppBasePage from "@/pages/AppBasePage.vue";
-import ProductCard from "@/components/Product/ProductCard.vue";
-import ProductModel from "@/state/product/ProductModel";
+import {Options} from "vue-class-component"
+import AppBasePage from "@/pages/AppBasePage.vue"
+import ProductCard from "@/components/Product/ProductCard.vue"
+import ProductModel from "@/state/product/ProductModel"
 import store from '@/store'
 
 @Options({

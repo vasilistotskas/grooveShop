@@ -27,10 +27,6 @@
                 </div>
               </div>
 
-              <div class="notification is-danger" v-if="errors.length">
-                <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
-              </div>
-
               <div class="form-outline mb-4">
                 <div class="control">
                   <button class="btn btn-primary btn-block mb-4 w-100">Sign up</button>
@@ -50,9 +46,11 @@
 
 <script lang="ts">
 import AppBasePage from '@/pages/AppBasePage.vue'
-import { Options } from "vue-class-component";
-import store from "@/store";
-import router from "@/routes";
+import { Options } from "vue-class-component"
+import store from "@/store"
+import { useToast } from "vue-toastification"
+
+const toast = useToast()
 
 @Options({
   name: "SignUp"
@@ -84,6 +82,9 @@ export default class SignUp extends AppBasePage {
         password: this.password
       }
       await store.dispatch('user/userSignUp', formData)
+    }
+    else {
+      toast.error(this.errors)
     }
   }
 }

@@ -1,5 +1,5 @@
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import { useI18n } from "vue-i18n";
+import { useI18n } from "vue-i18n"
 import { cloneDeep } from 'lodash'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import AppSettings from '@/state/app/AppSettings'
@@ -51,6 +51,5 @@ export default class AppSettingsModule
     setSettings(settings: AppSettings): void {
         this.settings = settings
     }
-
 
 }

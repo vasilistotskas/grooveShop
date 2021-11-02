@@ -1,4 +1,4 @@
-import EntityBase from "@/state/common/EntityBase";
+import EntityBase from "@/state/common/EntityBase"
 
 export default class UserOrderModel extends EntityBase
 {

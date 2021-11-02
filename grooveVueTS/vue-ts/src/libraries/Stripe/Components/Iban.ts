@@ -1,6 +1,6 @@
-import {Action, Module, Mutation} from "vuex-module-decorators";
-import AppBaseModule from "@/state/common/AppBaseModule";
-import initStripeComponent from "@/libraries/Stripe/Stripe";
+import {Action, Module, Mutation} from "vuex-module-decorators"
+import AppBaseModule from "@/state/common/AppBaseModule"
+import initStripeComponent from "@/libraries/Stripe/Stripe"
 import { StripeElement } from "@/libraries/Stripe/StripeElement"
 
 @Module({ namespaced: true })

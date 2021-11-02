@@ -17,11 +17,6 @@
                 <input type="password" id="form2Example2" class="form-control" v-model="password" />
                 <label class="form-label" for="form2Example2">Password</label>
               </div>
-
-              <div class="notification is-danger" v-if="errors.length">
-                <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
-              </div>
-
               <!-- 2 column grid layout for inline styling -->
               <div class="row mb-4">
                 <div class="col d-flex justify-content-center">
@@ -82,10 +77,10 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { Options } from "vue-class-component"
 import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
 import axios from 'axios'
-import router from "@/routes";
+import router from "@/routes"
 import store from '@/store'
 
 @Options({
@@ -96,8 +91,7 @@ import store from '@/store'
   data() {
     return {
       username: '',
-      password: '',
-      errors: []
+      password: ''
     }
   },
 })
@@ -105,7 +99,6 @@ import store from '@/store'
 export default class LogIn extends AppBaseLayout {
   username!: string
   password!: string
-  errors: Array<any> = []
 
   async submitForm() {
 

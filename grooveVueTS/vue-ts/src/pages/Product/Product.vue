@@ -47,8 +47,8 @@
 import FavouriteButton from '@/components/Product/FavouriteButton.vue'
 // import RateProductModal from '@/modals/Product/RateProductModal'
 import AppBasePage from '@/pages/AppBasePage.vue'
-import { Options } from "vue-class-component";
-import ProductModel from "@/state/product/ProductModel";
+import { Options } from "vue-class-component"
+import ProductModel from "@/state/product/ProductModel"
 import store from '@/store'
 
 @Options({

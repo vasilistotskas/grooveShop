@@ -1,8 +1,8 @@
 import {Module, Action, Mutation} from 'vuex-module-decorators'
-import AppBaseModule from "@/state/common/AppBaseModule";
-import api from "@/api/api.service";
-import ResponseData from "@/state/types/ResponseData";
-import ProductModel from "@/state/product/ProductModel";
+import AppBaseModule from "@/state/common/AppBaseModule"
+import api from "@/api/api.service"
+import ResponseData from "@/state/types/ResponseData"
+import ProductModel from "@/state/product/ProductModel"
 
 @Module({ namespaced: true })
 export default class ProductModule
@@ -26,7 +26,7 @@ export default class ProductModule
                 this.context.commit('setSearchResults', results)
             })
             .catch((e: Error) => {
-                console.log(e);
+                console.log(e)
             })
     }
 

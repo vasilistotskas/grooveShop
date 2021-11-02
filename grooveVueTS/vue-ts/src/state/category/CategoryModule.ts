@@ -1,9 +1,9 @@
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import AppBaseModule from '@/state/common/AppBaseModule'
-import api from "@/api/api.service";
-import ResponseData from "@/state/types/ResponseData";
-import CategoryModel from "@/state/category/CategoryModel";
-import {map} from "lodash";
+import api from "@/api/api.service"
+import ResponseData from "@/state/types/ResponseData"
+import CategoryModel from "@/state/category/CategoryModel"
+import {map} from "lodash"
 
 @Module({ namespaced: true })
 export default class CategoryModule

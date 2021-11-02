@@ -1,9 +1,12 @@
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import CartItemModel from '@/state/cart/CartItemModel'
-import AppBaseModule from "@/state/common/AppBaseModule";
-import api from "@/api/api.service";
-import ResponseData from "@/state/types/ResponseData";
-import router from "@/routes";
+import AppBaseModule from "@/state/common/AppBaseModule"
+import api from "@/api/api.service"
+import ResponseData from "@/state/types/ResponseData"
+import router from "@/routes"
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
 
 @Module({ namespaced: true })
 export default class CartModule
@@ -42,13 +45,19 @@ export default class CartModule
 
     @Mutation
     public addToCart(item: CartItemModel): void {
-        const exists = this.cart.filter(i => i.product.id === item.product.id)
-        if (exists.length) {
-            exists[0].quantity = exists[0].quantity + item.quantity
-        } else {
-            this.cart.push(item)
+        try {
+            const exists = this.cart.filter(i => i.product.id === item.product.id)
+            if (exists.length) {
+                exists[0].quantity = exists[0].quantity + item.quantity
+            } else {
+                this.cart.push(item)
+            }
+            localStorage.setItem('cart', JSON.stringify(this.cart))
+            toast.success("Added to cart")
+        } catch (error) {
+            throw error
         }
-        localStorage.setItem('cart', JSON.stringify(this.cart))
+
     }
 
     @Mutation
@@ -87,7 +96,7 @@ export default class CartModule
                 router.push('/cart/success')
             })
             .catch((e: Error) => {
-                console.log(e);
+                console.log(e)
             })
     }
 

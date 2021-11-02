@@ -1,8 +1,7 @@
-import initStripeComponent from "@/libraries/Stripe/Stripe";
-import {Action, Module, Mutation} from "vuex-module-decorators";
-import AppBaseModule from "@/state/common/AppBaseModule";
+import initStripeComponent from "@/libraries/Stripe/Stripe"
+import {Action, Module, Mutation} from "vuex-module-decorators"
+import AppBaseModule from "@/state/common/AppBaseModule"
 import { StripeElement } from "@/libraries/Stripe/StripeElement"
-import ProductModel from "@/state/product/ProductModel";
 
 @Module({ namespaced: true })
 export default class StripeCardComponents
@@ -24,7 +23,6 @@ export default class StripeCardComponents
     cardCvcIsCompleted!: any
     cardExpiryEl!: any
     cardCvcEl!: any
-    errors: Array<any> = []
     resultToken!: any
     card!: any
     cardIsCompleted!: any

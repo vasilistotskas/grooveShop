@@ -1,6 +1,4 @@
-import EntityBase from "@/state/common/EntityBase";
-import RegionsModel from "@/state/country/RegionsModel";
-
+import EntityBase from "@/state/common/EntityBase"
 
 export default class CountryModel extends EntityBase
 {

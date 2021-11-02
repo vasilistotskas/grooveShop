@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import routes from './main.routes'
 import store from '@/store'
 
+// @TODO should i make routes for every app ?
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes

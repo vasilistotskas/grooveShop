@@ -1,3 +1,5 @@
+# !!!! TODOS !!!!
+
 ## ACTION SUCCESS / ERRORS KLP :
 ```
  mostly after api calls
@@ -37,5 +39,6 @@ SEND EMAIL AT ORDER CREATE/UPDATE
 # UI :
 ```
  MINICART
+ SLIDERS
  MOBILE VIEW / RESPONSIVE
 ```

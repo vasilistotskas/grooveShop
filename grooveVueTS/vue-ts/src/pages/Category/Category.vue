@@ -21,10 +21,10 @@
 
 <script lang="ts">
 
-import {Options} from "vue-class-component";
-import AppBasePage from "@/pages/AppBasePage.vue";
-import ProductCard from "@/components/Product/ProductCard.vue";
-import CategoryModel from "@/state/category/CategoryModel";
+import {Options} from "vue-class-component"
+import AppBasePage from "@/pages/AppBasePage.vue"
+import ProductCard from "@/components/Product/ProductCard.vue"
+import CategoryModel from "@/state/category/CategoryModel"
 import store from '@/store'
 
 @Options({

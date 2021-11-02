@@ -37,7 +37,7 @@
 <script lang="ts">
 import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
 import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
-import { Options } from "vue-class-component";
+import { Options } from "vue-class-component"
 
 @Options({
   name: "Navbar",

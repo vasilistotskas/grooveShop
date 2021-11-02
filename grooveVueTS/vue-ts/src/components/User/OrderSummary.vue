@@ -38,9 +38,9 @@
 
 <script lang="ts">
 import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
-import {Options} from "vue-class-component";
-import UserOrderModel from "@/state/user/order/UserOrderModel";
-import CartItemModel from "@/state/cart/CartItemModel";
+import {Options} from "vue-class-component"
+import UserOrderModel from "@/state/user/order/UserOrderModel"
+import CartItemModel from "@/state/cart/CartItemModel"
 import store from '@/store'
 
 @Options({

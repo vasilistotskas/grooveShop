@@ -57,7 +57,7 @@
 
 <script lang="ts">
 import AppBasePage from '@/pages/AppBasePage.vue'
-import { Options } from "vue-class-component";
+import { Options } from "vue-class-component"
 
 @Options({
   name: "RateProductModal",
@@ -68,7 +68,7 @@ export default class RateProductModal extends AppBasePage {
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .modal-dialog{
     top: 12.5%;
   }

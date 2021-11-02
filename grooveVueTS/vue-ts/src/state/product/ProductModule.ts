@@ -1,10 +1,10 @@
 import {first, filter, map, get} from 'lodash'
 import ProductModel from '@/state/product/ProductModel'
 import {Module, Action, Mutation} from 'vuex-module-decorators'
-import router from "@/routes";
-import api from "@/api/api.service";
-import ResponseData from "@/state/types/ResponseData";
-import AppBaseModule from "@/state/common/AppBaseModule";
+import router from "@/routes"
+import api from "@/api/api.service"
+import ResponseData from "@/state/types/ResponseData"
+import AppBaseModule from "@/state/common/AppBaseModule"
 
 @Module({ namespaced: true })
 export default class ProductModule
@@ -47,7 +47,7 @@ export default class ProductModule
 				this.context.commit('setProduct', product)
 			})
 			.catch((e: Error) => {
-				console.log(e);
+				console.log(e)
 			})
 	}
 
@@ -58,7 +58,7 @@ export default class ProductModule
 		if (this.product){
 			await api.patch(`products/${category_slug}/${product_slug}/`)
 				.catch((e: Error) => {
-					console.log(e);
+					console.log(e)
 				})
 		}
 	}
@@ -72,16 +72,8 @@ export default class ProductModule
 				this.context.commit('setLatestProduct', latestProduct)
 			})
 			.catch((e: Error) => {
-				console.log(e);
+				console.log(e)
 			})
-	}
-
-	@Action
-	findItemById(itemId: number): ProductModel {
-		return first(
-			filter(this.context.getters['getItems'],
-				(item) => item.id === itemId)
-		)
 	}
 
 }

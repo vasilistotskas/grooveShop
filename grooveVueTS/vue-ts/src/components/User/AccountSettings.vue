@@ -65,11 +65,6 @@
                 </option>
               </select>
             </div>
-
-            <div class="notification is-danger mt-4" v-if="errors.length">
-              <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
-            </div>
-
             <div class="col-12 text-end mt-5">
               <button type="submit" class="btn btn-success float-end" @click.prevent="submitForm">Update</button>
             </div>
@@ -83,14 +78,17 @@
 
 
 <script lang="ts">
-import {Options} from "vue-class-component";
+import {Options} from "vue-class-component"
 import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
 import store from '@/store'
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
-import RegionsModel from "@/state/country/RegionsModel";
-import {cloneDeep} from "lodash";
-import CountryModel from "@/state/country/CountryModel";
+import RegionsModel from "@/state/country/RegionsModel"
+import {cloneDeep} from "lodash"
+import CountryModel from "@/state/country/CountryModel"
 import ProfileImage from "@/components/User/ProfileImage.vue"
+import { useToast } from "vue-toastification"
+
+const toast = useToast();
 
 @Options({
   name: "AccountSettings",
@@ -100,7 +98,6 @@ import ProfileImage from "@/components/User/ProfileImage.vue"
 })
 
 export default class AccountSettings extends AppBaseLayout {
-  errors: Array<any> = []
 
   userDetails = new UserDetailsModel()
   profileImageUrl: string = ''
@@ -169,14 +166,12 @@ export default class AccountSettings extends AppBaseLayout {
 
   private submitForm(): void {
     if (this.userDetails.region === 'choose') {
-      this.errors.push('The region field is missing!')
+      toast.error("The region field is missing!")
     }
-    if (!this.errors.length) {
-      try {
-        this.updateUserProfile()
-      } catch (error) {
-        throw error
-      }
+    try {
+      this.updateUserProfile()
+    } catch (error) {
+      throw error
     }
   }
 

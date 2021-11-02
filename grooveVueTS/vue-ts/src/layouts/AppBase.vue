@@ -6,15 +6,15 @@
         v-bind:categories="categoriesData"
     />
 
-<!--    Loading Spinner-->
-    <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading': this.isLoading }">
-      <div v-if="this.isLoading" class="lds-dual-ring"></div>
-    </div>
+    <loading v-model:active="isLoading"
+             :can-cancel="true"
+             :is-full-page="true"/>
 
-    <section>
+    <section class="main-section">
       <router-view/>
     </section>
 
+    <!-- @TODO COMPONENT -->
     <!-- Footer -->
     <footer class="bg-dark text-center text-white">
       <!-- Grid container -->
@@ -209,14 +209,17 @@
 <script lang="ts">
   import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
   import Navbar from '@/components/Navbar/Navbar.vue'
-  import { Options } from "vue-class-component";
+  import { Options } from "vue-class-component"
   import axios from 'axios'
-  import CategoryModel from "@/state/category/CategoryModel";
+  import CategoryModel from "@/state/category/CategoryModel"
   import store from '@/store'
+  import Loading from 'vue-loading-overlay';
+  import 'vue-loading-overlay/dist/vue-loading.css';
 
   @Options({
     name: "AppBase",
     components: {
+      Loading,
       AppBaseLayout,
       Navbar
     }
@@ -290,7 +293,12 @@
   }
 </script>
 
-<style scoped lang="scss">
-
+<style lang="scss">
+.main-section{
+  @media screen and (min-width: 1200px){
+    min-height: 500px;
+    display: grid;
+  }
+}
 
 </style>

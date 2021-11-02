@@ -30,7 +30,7 @@
 
 import AppBasePage from '@/pages/AppBasePage.vue'
 import { Options } from "vue-class-component"
-import ProductCard from "@/components/Product/ProductCard.vue";
+import ProductCard from "@/components/Product/ProductCard.vue"
 import store from '@/store'
 
 @Options({

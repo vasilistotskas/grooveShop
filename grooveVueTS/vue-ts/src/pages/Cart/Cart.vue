@@ -5,7 +5,7 @@
                 <h1 class="title mb-5">Cart</h1>
             </div>
 
-            <div class="col-12 box">
+            <div class="col-12">
                 <table class="table is-fullwidth" v-if="cartTotalLength">
                     <thead>
                     <tr>
@@ -30,7 +30,7 @@
                 <p v-else>You don't have any products in your cart...</p>
             </div>
 
-            <div class="col-12 box">
+            <div class="col-12">
                 <h2 class="subtitle">Summary</h2>
 
                 <strong>${{ cartTotalPrice.toFixed(2) }}</strong>, {{ cartTotalLength }} items
@@ -44,7 +44,7 @@
 <script lang="ts">
 import AppBasePage from '@/pages/AppBasePage.vue'
 import CartItem from '@/components/Cart/CartItem.vue'
-import { Options } from "vue-class-component";
+import { Options } from "vue-class-component"
 import store from '@/store'
 
 @Options({
