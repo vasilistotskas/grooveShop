@@ -5,4 +5,3 @@ djoser==2.1.0
 pillow==8.1.1
 stripe==2.56.0
 django-admin-thumbnails==0.2.6
-django-countries==7.2.1

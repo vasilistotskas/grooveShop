@@ -15,22 +15,43 @@
                 <!-- Product Rating -->
                 <p>1. Rate</p>
                 <div class="col-6" id="full-stars-example-two">
-                  <div class="rating-group">
-                    <input disabled checked class="rating__input rating__input--none" name="rating3" id="rating3-none" value="0" type="radio">
-                    <label aria-label="1 star" class="rating__label" for="rating3-1"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-                    <input class="rating__input" name="rating3" id="rating3-1" value="1" type="radio">
-                    <label aria-label="2 stars" class="rating__label" for="rating3-2"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-                    <input class="rating__input" name="rating3" id="rating3-2" value="2" type="radio">
-                    <label aria-label="3 stars" class="rating__label" for="rating3-3"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-                    <input class="rating__input" name="rating3" id="rating3-3" value="3" type="radio">
-                    <label aria-label="4 stars" class="rating__label" for="rating3-4"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-                    <input class="rating__input" name="rating3" id="rating3-4" value="4" type="radio">
-                    <label aria-label="5 stars" class="rating__label" for="rating3-5"><i class="rating__icon rating__icon--star fa fa-star"></i></label>
-                    <input class="rating__input" name="rating3" id="rating3-5" value="5" type="radio">
+                <div class="rating">
+                  <input type="hidden" :name="name" :value="liveReviewCount" />
+                  <div class="rating-board rating-background"
+                       ref="ratingBoard"
+                       @mousemove="updateNewSelectionRatio($event)"
+                       @mouseenter="unlockSelection($event)"
+                       @mouseleave="reLockSelection($event)"
+                       @touchmove="updateNewSelectionRatio($event)"
+                       @touchstart="unlockSelection($event)"
+                       @touchend="reLockSelection($event)"
+                       @click="lockSelection($event)"
+                  >
+                    <svg v-for="(star, i) of backgroundStars"
+                         aria-hidden="true"
+                         focusable="false"
+                         data-prefix="fas"
+                         data-icon="star"
+                         role="img"
+                         xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 576 512"
+                         :key="i"
+                         class="star star-background"
+                         v-html="star"></svg>
                   </div>
+                  <div class="rating-board rating-foreground">
+                    <svg v-for="(star, i) of foregroundStars"
+                         aria-hidden="true"
+                         focusable="false"
+                         role="img"
+                         xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 576 512"
+                         :key="i"
+                         class="star star-foreground"
+                         v-html="star"></svg>
+                  </div>
+                  {{ reviewScoreText }}
                 </div>
-                <div class="col-6 d-flex align-items-center">
-                  <p class="m-0">Click at stars to choose</p>
                 </div>
                 <p class="mt-3">2. Comment</p>
                 <div class="col-12 review-modal-comment">
@@ -58,237 +79,198 @@
 <script lang="ts">
 import AppBasePage from '@/pages/AppBasePage.vue'
 import { Options } from "vue-class-component"
+import { first, last, filter, times, constant } from 'lodash'
+
+const starSvg = '<path data-v-558dc688="" fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" class=""></path>'
+const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z" class=""></path>'
 
 @Options({
   name: "RateProductModal",
 })
 export default class RateProductModal extends AppBasePage {
 
+  $refs!: {
+    ratingBoard: HTMLElement
+  }
+
+  name: string = ''
+  editingLocked: boolean = false
+  size: number = 16
+  review: string = ''
+  reviewCountMax: number = 10
+  starCountMax: number = 5
+  isEditable: boolean = false
+  newSelectionRatio: number = 0
+  selectedRatio: number = 0
+
+  public lockSelection(event: MouseEvent) {
+    this.updateIsEditable(true)
+    this.updateNewSelectionRatio(event)
+    this.selectedRatio = this.newSelectionRatio
+    this.updateIsEditable(false)
+  }
+
+  public reLockSelection(event: MouseEvent) {
+    this.updateIsEditable(false)
+    this.newSelectionRatio = this.selectedRatio
+  }
+
+  public unlockSelection(event: MouseEvent) {
+    this.updateIsEditable(true)
+  }
+
+  public updateIsEditable(newState: boolean): void {
+    if (!this.editingLocked) {
+      this.isEditable = newState
+    }
+  }
+
+  public updateNewSelectionRatio(event: MouseEvent) {
+    if (!this.isEditable) {
+      return
+    }
+    const target = this.$refs.ratingBoard
+    const leftBound = event.clientX - target.getBoundingClientRect().left
+    const rightBound = target.getBoundingClientRect().right - target.getBoundingClientRect().left
+    this.newSelectionRatio = leftBound / rightBound
+  }
+
+  get reviewCount(): number | null {
+    if (null !== this.review && !isNaN(this.review as unknown as number)) {
+      return Number(this.review)
+    }
+
+    return null
+  }
+
+  get liveReviewCountRatio(): number {
+    let reviewCount = 0
+    if (null !== this.newSelectionRatio) {
+      reviewCount = this.newSelectionRatio * this.reviewCountMax
+    }
+    else if (null !== this.reviewCount) {
+      reviewCount = this.reviewCount - 0.01
+    }
+    if (reviewCount > this.reviewCountMax)
+      reviewCount = this.reviewCountMax
+    if (reviewCount < 0)
+      reviewCount = 0
+    const liveReviewCountRatio = reviewCount / this.reviewCountMax
+    return Number(liveReviewCountRatio.toFixed(1)) - 0.04
+  }
+
+  get liveReviewCount(): number {
+    return Math.round(Number(this.liveReviewCountRatio.toFixed(2)) * this.reviewCountMax)
+  }
+
+  get reviewScoreText(): any {
+    const breakpoints = <Array<{threshold: number, value: string}>> [
+      {
+        threshold: 0.2,
+        value: 'Κακό'
+      },
+      {
+        threshold: 0.3,
+        value: 'Όχι και τόσο καλό'
+      },
+      {
+        threshold: 0.5,
+        value: 'Μέτριο'
+      },
+      {
+        threshold: 0.6,
+        value: 'Σχετικά καλό'
+      },
+      {
+        threshold: 0.7,
+        value: 'Καλό'
+      },
+      {
+        threshold: 0.9,
+        value: 'Πολύ Καλό'
+      },
+      {
+        threshold: 1.0,
+        value: 'Άριστο!'
+      }
+    ]
+
+    if (this.liveReviewCountRatio < 0.01 || (null === this.newSelectionRatio && (null === this.reviewCount || "0" === this.review))) {
+      return ''
+    }
+
+    const matches = filter(
+            breakpoints,
+            (breakpoint) => breakpoint.threshold - 0.1 <= this.liveReviewCountRatio
+    )
+
+    if (undefined !== last(matches)) {
+      return last(matches)?.value
+    }
+    return first(breakpoints)?.value
+  }
+
+  get foregroundStars(): string[] {
+    const reviewStarRatio = this.liveReviewCountRatio * this.starCountMax
+    if (reviewStarRatio < 0.1) {
+      return []
+    }
+    const stars: string[] = times(Math.round(reviewStarRatio), constant(starSvg))
+    if ((reviewStarRatio % 1) < 0.5) {
+      stars.push(starHalfSvg)
+    }
+    return stars
+  }
+
+  get backgroundStars(): string[] {
+    return times(this.starCountMax, constant(starSvg)) as string[]
+  }
+
 }
 
 </script>
 
 <style lang="scss">
-  .modal-dialog{
-    top: 12.5%;
-  }
-
-  .review-modal-comment{
-    display: block;
-    margin-bottom: 16px;
-    width: 100%;
-    overflow: hidden;
+  .rating {
     position: relative;
-    textarea{
-      border-radius: 8px;
-      resize: none;
-      min-height: 78px;
-      line-height: 22px;
-      font-size: 14px;
-      width: 100%;
-      border: 1px solid #dcdcdc;
-      padding: 24px 16px 8px;
-      color: #000;
-    }
-  }
+    height: 16px;
 
-  #full-stars-example {
-
-    /* use display:inline-flex to prevent whitespace issues. alternatively, you can put all the children of .rating-group on a single line */
-    .rating-group {
-      display: inline-flex;
+    &-background {
+      position: relative;
+      z-index: 1;
     }
 
-    /* make hover effect work properly in IE */
-    .rating__icon {
+    &-foreground {
+      position: absolute;
       pointer-events: none;
-    }
-
-    /* hide radio inputs */
-    .rating__input {
-      position: absolute !important;
-      left: -9999px !important;
-    }
-
-    /* set icon padding and size */
-    .rating__label {
-      cursor: pointer;
-      padding: 0 0.1em;
-      font-size: 2rem;
-    }
-
-    /* set default star color */
-    .rating__icon--star {
-      color: orange;
-    }
-
-    /* set color of none icon when unchecked */
-    .rating__icon--none {
-      color: #eee;
-    }
-
-    /* if none icon is checked, make it red */
-    .rating__input--none:checked + .rating__label .rating__icon--none {
-      color: red;
-    }
-
-    /* if any input is checked, make its following siblings grey */
-    .rating__input:checked ~ .rating__label .rating__icon--star {
-      color: #ddd;
-    }
-
-    /* make all stars orange on rating group hover */
-    .rating-group:hover .rating__label .rating__icon--star {
-      color: orange;
-    }
-
-    /* make hovered input's following siblings grey on hover */
-    .rating__input:hover ~ .rating__label .rating__icon--star {
-      color: #ddd;
-    }
-
-    /* make none icon grey on rating group hover */
-    .rating-group:hover .rating__input--none:not(:hover) + .rating__label .rating__icon--none {
-      color: #eee;
-    }
-
-    /* make none icon red on hover */
-    .rating__input--none:hover + .rating__label .rating__icon--none {
-      color: red;
-    }
-  }
-
-  #half-stars-example {
-
-    /* use display:inline-flex to prevent whitespace issues. alternatively, you can put all the children of .rating-group on a single line */
-    .rating-group {
-      display: inline-flex;
-    }
-
-    /* make hover effect work properly in IE */
-    .rating__icon {
-      pointer-events: none;
-    }
-
-    /* hide radio inputs */
-    .rating__input {
-      position: absolute !important;
-      left: -9999px !important;
-    }
-
-    /* set icon padding and size */
-    .rating__label {
-      cursor: pointer;
-      /* if you change the left/right padding, update the margin-right property of .rating__label--half as well. */
-      padding: 0 0.1em;
-      font-size: 2rem;
-    }
-
-    /* add padding and positioning to half star labels */
-    .rating__label--half {
-      padding-right: 0;
-      margin-right: -0.6em;
       z-index: 2;
     }
 
-    /* set default star color */
-    .rating__icon--star {
-      color: orange;
-    }
-
-    /* set color of none icon when unchecked */
-    .rating__icon--none {
-      color: #eee;
-    }
-
-    /* if none icon is checked, make it red */
-    .rating__input--none:checked + .rating__label .rating__icon--none {
-      color: red;
-    }
-
-    /* if any input is checked, make its following siblings grey */
-    .rating__input:checked ~ .rating__label .rating__icon--star {
-      color: #ddd;
-    }
-
-    /* make all stars orange on rating group hover */
-    .rating-group:hover .rating__label .rating__icon--star,
-    .rating-group:hover .rating__label--half .rating__icon--star {
-      color: orange;
-    }
-
-    /* make hovered input's following siblings grey on hover */
-    .rating__input:hover ~ .rating__label .rating__icon--star,
-    .rating__input:hover ~ .rating__label--half .rating__icon--star {
-      color: #ddd;
-    }
-
-    /* make none icon grey on rating group hover */
-    .rating-group:hover .rating__input--none:not(:hover) + .rating__label .rating__icon--none {
-      color: #eee;
-    }
-
-    /* make none icon red on hover */
-    .rating__input--none:hover + .rating__label .rating__icon--none {
-      color: red;
-    }
-  }
-
-  #full-stars-example-two {
-
-    /* use display:inline-flex to prevent whitespace issues. alternatively, you can put all the children of .rating-group on a single line */
-    .rating-group {
+    &-board {
+      top: 0;
+      left: 0;
+      height: 16px;
       display: inline-flex;
+      flex-wrap: nowrap;
+      flex-direction: row;
+      align-content: center;
+      justify-content: flex-start;
+      align-items: center;
     }
 
-    /* make hover effect work properly in IE */
-    .rating__icon {
-      pointer-events: none;
-    }
-
-    /* hide radio inputs */
-    .rating__input {
-      position: absolute !important;
-      left: -9999px !important;
-    }
-
-    /* hide 'none' input from screenreaders */
-    .rating__input--none {
-      display: none
-    }
-
-    /* set icon padding and size */
-    .rating__label {
+    .star {
       cursor: pointer;
-      padding: 0 0.1em;
-      font-size: 2rem;
-    }
 
-    /* set default star color */
-    .rating__icon--star {
-      color: orange;
-    }
+      width: 16px;
+      height: 16px;
 
-    /* if any input is checked, make its following siblings grey */
-    .rating__input:checked ~ .rating__label .rating__icon--star {
-      color: #ddd;
-    }
+      &-foreground {
+        color: #bf8000;
+      }
 
-    /* make all stars orange on rating group hover */
-    .rating-group:hover .rating__label .rating__icon--star {
-      color: orange;
-    }
-
-    /* make hovered input's following siblings grey on hover */
-    .rating__input:hover ~ .rating__label .rating__icon--star {
-      color: #ddd;
+      &-background {
+        color: #ccc;
+      }
     }
   }
-
-
-  body {
-    padding: 1rem;
-    text-align: center;
-  }
-
 </style>
