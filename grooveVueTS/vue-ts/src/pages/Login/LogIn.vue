@@ -113,7 +113,6 @@ export default class LogIn extends AppBaseLayout {
     store.dispatch('user/userLogIn', formData)
         .then((success: any) => {
           store.dispatch('user/data/userDataFromRemote')
-          router.push('/')
         })
         .catch((error: Error) => {
           console.log(error)

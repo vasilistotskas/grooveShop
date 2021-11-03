@@ -11,41 +11,38 @@ const toast = useToast()
 export default class UserModule
     extends AppBaseModule
 {
-    // reviews: Array<any> = []
-    // favourites: Array<any> = []
-
-    // get getUserReviews(): Array<any> { return this.reviews }
-    // get getUserFavourites(): Array<any> { return this.favourites }
-
-    // @Mutation
-    // setUserReviews(reviews: Array<any>): void { this.reviews = reviews }
-    //
-    // @Mutation
-    // setUserFavourites(favourites: Array<any>): void { this.favourites = favourites }
-
     @Action
     async userLogIn(formData: object): Promise<void> {
-        await api.post('djoser/token/login', formData)
-            .then((response: ResponseData) => {
-                const token: string = response.data.auth_token
-                localStorage.setItem("token", token)
-                this.context.commit('data/setToken', token)
-            })
-            .catch((e: Error) => {
-                console.log(e)
-            })
+        try {
+            await api.post('djoser/token/login', formData)
+                .then((response: ResponseData) => {
+                    const token: string = response.data.auth_token
+                    localStorage.setItem("token", token)
+                    this.context.commit('data/setToken', token)
+                    router.push('/')
+                })
+                .catch((e: Error) => {
+                    toast.error('Username or Password field is wrong')
+                })
+        } catch (e) {
+            toast.error(e)
+        }
     }
 
     @Action
     async userSignUp(formData: object): Promise<void> {
-        await api.post('djoser/users/', formData)
-            .then((response: ResponseData) => {
-                toast.error('Success, you can log in!')
-                router.push('/log-in')
-            })
-            .catch((error: Error) => {
-                console.log(error)
-            })
+        try {
+            await api.post('djoser/users/', formData)
+                .then((response: ResponseData) => {
+                    toast.error('Success, you can log in!')
+                    router.push('/log-in')
+                })
+                .catch((error: Error) => {
+                    toast.error('Error')
+                })
+        } catch (e) {
+            toast.error(e)
+        }
     }
 
 }
