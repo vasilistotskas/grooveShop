@@ -22,7 +22,7 @@ export default class UserModule
                     router.push('/')
                 })
                 .catch((e: Error) => {
-                    toast.error('Username or Password field is wrong')
+                    toast.error('Please enter a valid username and password. Note that both fields may be case-sensitive.')
                 })
         } catch (e) {
             toast.error(e)

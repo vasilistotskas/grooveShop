@@ -229,7 +229,7 @@
     public showMobileMenu = false
 
     get cartTotalLength(): number {
-      return store.getters['cart/cartTotalLength']
+      return store.getters['cart/getCartTotalLength']
     }
 
     get categoriesData(): Array<CategoryModel> {

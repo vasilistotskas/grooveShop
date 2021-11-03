@@ -60,7 +60,6 @@ export default class CountryModule
             })
     }
 
-    // @TODO na ginoun ola try?
     @Action
     findRegionsBasedOnAlphaForLoggedCustomer(): void {
         const country = this.context.getters['getSelectedCountry']

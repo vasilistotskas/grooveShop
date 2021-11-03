@@ -14,7 +14,7 @@
               <div class="row">
                 <!-- Product Rating -->
                 <p>1. Rate</p>
-                <div class="col-6" id="full-stars-example-two">
+                <div class="col-12" id="full-stars-example-two">
                 <div class="rating">
                   <input type="hidden" :name="name" :value="liveReviewCount" />
                   <div class="rating-board rating-background"
@@ -50,7 +50,7 @@
                          class="star star-foreground"
                          v-html="star"></svg>
                   </div>
-                  {{ reviewScoreText }}
+                  <span class="px-2">{{ reviewScoreText }}</span>
                 </div>
                 </div>
                 <p class="mt-3">2. Comment</p>
@@ -80,6 +80,8 @@
 import AppBasePage from '@/pages/AppBasePage.vue'
 import { Options } from "vue-class-component"
 import { first, last, filter, times, constant } from 'lodash'
+import CountryModel from "@/state/country/CountryModel";
+import store from "@/store";
 
 const starSvg = '<path data-v-558dc688="" fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" class=""></path>'
 const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z" class=""></path>'
@@ -102,6 +104,10 @@ export default class RateProductModal extends AppBasePage {
   isEditable: boolean = false
   newSelectionRatio: number = 0
   selectedRatio: number = 0
+
+  get availableCountries(): CountryModel {
+    return store.getters['country/getCountries']
+  }
 
   public lockSelection(event: MouseEvent) {
     this.updateIsEditable(true)
@@ -167,23 +173,23 @@ export default class RateProductModal extends AppBasePage {
     const breakpoints = <Array<{threshold: number, value: string}>> [
       {
         threshold: 0.2,
-        value: 'Κακό'
+        value: 'Bad'
       },
       {
         threshold: 0.3,
-        value: 'Όχι και τόσο καλό'
+        value: 'Not that good'
       },
       {
         threshold: 0.5,
-        value: 'Μέτριο'
+        value: 'mehh'
       },
       {
         threshold: 0.6,
-        value: 'Σχετικά καλό'
+        value: 'it\'s ok'
       },
       {
         threshold: 0.7,
-        value: 'Καλό'
+        value: 'good'
       },
       {
         threshold: 0.9,
@@ -233,7 +239,9 @@ export default class RateProductModal extends AppBasePage {
 <style lang="scss">
   .rating {
     position: relative;
-    height: 16px;
+    height: 26px;
+    display: flex;
+    align-items: center;
 
     &-background {
       position: relative;
@@ -249,7 +257,7 @@ export default class RateProductModal extends AppBasePage {
     &-board {
       top: 0;
       left: 0;
-      height: 16px;
+      height: 26px;
       display: inline-flex;
       flex-wrap: nowrap;
       flex-direction: row;
@@ -261,8 +269,8 @@ export default class RateProductModal extends AppBasePage {
     .star {
       cursor: pointer;
 
-      width: 16px;
-      height: 16px;
+      width: 26px;
+      height: 26px;
 
       &-foreground {
         color: #bf8000;

@@ -172,7 +172,7 @@ class UserReviews(APIView):
         return Response(serializer.data)
 
 
-class ReviewDeleteUpdate(APIView):
+class UserToProductReview(APIView):
     # authentication_classes = [authentication.TokenAuthentication]
     # permission_classes = [permissions.IsAuthenticated]
 

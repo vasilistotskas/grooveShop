@@ -44,7 +44,7 @@ export default class CategoryModule
     }
 
     @Action
-    async fetchCategory(categorySlug: CategoryModel['slug']) {
+    async fetchCategoryFromRemote(categorySlug: CategoryModel['slug']) {
        await api.get(`products/${categorySlug}/`)
            .then((response: ResponseData) => {
                const data = response.data

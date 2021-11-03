@@ -20,7 +20,7 @@ export default class CartModule
         return this.cart
     }
 
-    get cartTotalLength(): number {
+    get getCartTotalLength(): number {
         let totalLength = 0
         for (let i = 0; i < this.cart.length; i++) {
             totalLength += this.cart[i].quantity
@@ -28,7 +28,7 @@ export default class CartModule
         return totalLength
     }
 
-    get cartTotalPrice(): number {
+    get getCartTotalPrice(): number {
         return this.cart.reduce((acc: number, curVal: CartItemModel) => {
             return acc += curVal.product.price * curVal.quantity
         }, 0)

@@ -66,7 +66,6 @@ export default class UserDataModule
 
     @Action
     async userDataFromRemote(): Promise<void> {
-        let errors: Array<any> = []
 
         if (this.token === undefined) {
             this.token = localStorage.getItem('token') || ''

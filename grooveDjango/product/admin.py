@@ -55,7 +55,6 @@ class FavouriteAdmin(admin.ModelAdmin):
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ['subject', 'comment', 'status', 'created_at']
     list_filter = ['status']
-    readonly_fields = ('subject', 'comment', 'user', 'product', 'rate', 'id')
     actions = ['make_published', 'make_unpublished']
 
     def make_published(self, request, queryset):

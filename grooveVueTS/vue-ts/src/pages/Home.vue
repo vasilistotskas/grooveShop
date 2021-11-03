@@ -47,7 +47,7 @@ export default class Home extends AppBasePage {
   }
 
   async beforeCreate(): Promise<void> {
-    await store.dispatch('product/getLatestProducts')
+    await store.dispatch('product/latestProductsFromRemote')
   }
 
 }

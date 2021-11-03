@@ -63,7 +63,7 @@ export default class CategoryVue extends AppBasePage {
 
   public fetchCategory(): void {
     const categorySlug = this.$route.params.category_slug
-    store.dispatch('category/fetchCategory', categorySlug)
+    store.dispatch('category/fetchCategoryFromRemote', categorySlug)
   }
 
 }

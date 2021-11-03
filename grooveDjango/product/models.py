@@ -244,11 +244,23 @@ class Review(models.Model):
         ('True', 'True'),
         ('False', 'False'),
     )
+    RATE_CHOICES = (
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
+        (6, 6),
+        (7, 7),
+        (8, 8),
+        (9, 9),
+        (10, 10)
+    )
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.CharField(max_length=50, blank=True)
     comment = models.CharField(max_length=250, blank=True)
-    rate = models.IntegerField(default=1)
+    rate = models.PositiveSmallIntegerField(choices=RATE_CHOICES)
     status = models.CharField(max_length=10, choices=STATUS, default='New')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -173,7 +173,7 @@ export default class Checkout extends AppBasePage {
   }
 
   get cartTotalLength(): number {
-    return store.getters['cart/cartTotalLength']
+    return store.getters['cart/getCartTotalLength']
   }
 
   get cartTotalPrice(): number {

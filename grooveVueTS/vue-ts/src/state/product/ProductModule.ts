@@ -6,6 +6,7 @@ import api from "@/api/api.service"
 import ResponseData from "@/state/types/ResponseData"
 import AppBaseModule from "@/state/common/AppBaseModule"
 import UserReviewModel from "@/state/user/review/UserReviewModel"
+import store from "@/store"
 
 @Module({ namespaced: true })
 export default class ProductModule
@@ -13,7 +14,8 @@ export default class ProductModule
 {
 	product = new ProductModel()
 	latestProducts = [new ProductModel()]
-	reviews = [new UserReviewModel()]
+	productReviews: Array<UserReviewModel> = []
+	userToProductReview = new UserReviewModel()
 
 	get getProductData(): ProductModel {
 		return this.product
@@ -27,7 +29,13 @@ export default class ProductModule
 		return (this.product.active === "False" || this.product.stock <= 0) ? 'Out Of Stock' : 'Add To Cart'
 	}
 
-	get getProductReviews(): UserReviewModel[] { return this.reviews }
+	get getProductReviews(): UserReviewModel[] {
+		return this.productReviews
+	}
+
+	get getUserToProductReview(): UserReviewModel {
+		return this.userToProductReview
+	}
 
 	@Mutation
 	setProduct(product: ProductModel): void {
@@ -40,10 +48,24 @@ export default class ProductModule
 	}
 
 	@Mutation
-	setProductReviews(reviews: Array<any>): void { this.reviews = reviews }
+	setProductReviews(productReviews: UserReviewModel[]): void {
+		this.productReviews = productReviews
+	}
+
+	@Mutation
+	setUserToProductReview(userToProductReview: UserReviewModel): void {
+		this.productReviews.push(userToProductReview)
+		this.userToProductReview = userToProductReview
+	}
+
+	@Mutation
+	updateUserToProductReview(userToProductReview: UserReviewModel): void {
+		// this.userToProductReview = userToProductReview
+		//@TODO edw prepei na kanoume update to product review kai na to vlepei to store
+	}
 
 	@Action
-	async getProductFromRemote(): Promise<void> {
+	async productFromRemote(): Promise<void> {
 		let category_slug = router.currentRoute.value.params.category_slug
 		let product_slug = router.currentRoute.value.params.product_slug
 		await api.get(`products/${category_slug}/${product_slug}`)
@@ -51,6 +73,31 @@ export default class ProductModule
 				const data = response.data
 				let product = new ProductModel(data)
 				this.context.commit('setProduct', product)
+			})
+			.catch((e: Error) => {
+				console.log(e)
+			})
+	}
+
+	@Action
+	async latestProductsFromRemote(): Promise<void> {
+		await api.get('latest-products/')
+			.then((response: ResponseData) => {
+				const data = response.data
+				const latestProduct = map(data, rawProduct => new ProductModel(rawProduct))
+				this.context.commit('setLatestProduct', latestProduct)
+			})
+			.catch((e: Error) => {
+				console.log(e)
+			})
+	}
+
+	@Action
+	async currentProductReviewsFromRemote(productId: number): Promise<void> {
+		await api.get(`reviews/product/${productId}/`)
+			.then((response: ResponseData) => {
+				const data = response.data
+				this.context.commit('setProductReviews', data)
 			})
 			.catch((e: Error) => {
 				console.log(e)
@@ -70,21 +117,10 @@ export default class ProductModule
 	}
 
 	@Action
-	async getLatestProducts(): Promise<void> {
-		await api.get('latest-products/')
-			.then((response: ResponseData) => {
-				const data = response.data
-				const latestProduct = map(data, rawProduct => new ProductModel(rawProduct))
-				this.context.commit('setLatestProduct', latestProduct)
-			})
-			.catch((e: Error) => {
-				console.log(e)
-			})
-	}
+	async createCurrentProductReview(data: any): Promise<void> {
+		let product_id = router.currentRoute.value.params.product_id
 
-	@Action
-	async getCurrentProductReviews(productId: number): Promise<void> {
-		await api.get(`reviews/product/${productId}/`)
+		await api.post(`reviews/product/${product_id}/`, data)
 			.then((response: ResponseData) => {
 				const data = response.data
 				this.context.commit('setProductReviews', data)
@@ -94,12 +130,16 @@ export default class ProductModule
 			})
 	}
 
+
 	@Action
-	async createCurrentProductReview(productId: number, data: any): Promise<void> {
-		await api.post(`reviews/product/${productId}/`, data)
+	async userToProductReviewFromRemote(data: any): Promise<void> {
+		let user_id = store.getters['user/data/getUserId']
+		let product_id = router.currentRoute.value.params.product_id
+
+		await api.get(`reviews/review/${user_id}/${product_id}/`, data)
 			.then((response: ResponseData) => {
 				const data = response.data
-				this.context.commit('setProductReviews', data)
+				this.context.commit('setUserToProductReview', data)
 			})
 			.catch((e: Error) => {
 				console.log(e)
@@ -107,11 +147,14 @@ export default class ProductModule
 	}
 
 	@Action
-	async updateCurrentProductReview(userId:number, productId: number, data: any): Promise<void> {
-		await api.patch(`reviews/review/${userId}/${productId}/`, data)
+	async updateCurrentProductReview(data: any): Promise<void> {
+		let user_id = store.getters['user/data/getUserId']
+		let product_id = router.currentRoute.value.params.product_id
+
+		await api.patch(`reviews/review/${user_id}/${product_id}/`, data)
 			.then((response: ResponseData) => {
 				const data = response.data
-				this.context.commit('setProductReviews', data)
+				this.context.commit('updateUserToProductReview', data)
 			})
 			.catch((e: Error) => {
 				console.log(e)
@@ -119,8 +162,11 @@ export default class ProductModule
 	}
 
 	@Action
-	async deleteCurrentProductReview(userId:number, productId: number): Promise<void> {
-		await api.delete(`reviews/review/${userId}/${productId}/`)
+	async deleteCurrentProductReview(): Promise<void> {
+		let user_id = store.getters['user/data/getUserId']
+		let product_id = router.currentRoute.value.params.product_id
+
+		await api.delete(`reviews/review/${user_id}/${product_id}/`)
 			.then((response: ResponseData) => {
 				const data = response.data
 				this.context.commit('setProductReviews', data)

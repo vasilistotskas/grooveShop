@@ -61,11 +61,11 @@ export default class CartVue extends AppBasePage {
     }
 
     get cartTotalLength(): number {
-        return store.getters['cart/cartTotalLength']
+        return store.getters['cart/getCartTotalLength']
     }
 
     get cartTotalPrice(): number {
-        return store.getters['cart/cartTotalPrice']
+        return store.getters['cart/getCartTotalPrice']
     }
 
   public removeFromCart(item: object) {

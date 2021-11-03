@@ -97,7 +97,7 @@ export default class ProductVue extends AppBasePage {
   }
 
   async mounted(): Promise<void> {
-    await store.dispatch('product/getProductFromRemote')
+    await store.dispatch('product/productFromRemote')
     await store.dispatch('product/updateProductHits')
   }
 }
