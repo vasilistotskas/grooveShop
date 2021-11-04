@@ -7,7 +7,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <NavbarCategories :categories="this.categories"/>
+          <NavbarCategories :categoriesTree="this.categoriesTree" :categoriesUnorganized="this.categoriesUnorganized"/>
         </ul>
         <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item" v-if="this.isAuthenticated">
@@ -50,7 +50,8 @@ import { Options } from "vue-class-component"
       default: false
     },
     cartTotalLength: Number,
-    categories: Array
+    categoriesTree: Array,
+    categoriesUnorganized: Array
   }
 })
 export default class Navbar extends AppBaseLayout {

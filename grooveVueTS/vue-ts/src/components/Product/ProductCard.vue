@@ -1,6 +1,6 @@
 <template>
   <div v-if="product && Object.keys(product).length > 0">
-    <router-link v-bind:to="product.get_absolute_url" class="p-1">
+    <router-link v-bind:to="product.absolute_url" class="p-1">
 
       <div class="card" style="width: 18rem;">
         <img v-bind:src="product.main_image" class="card-img-top" alt="...">

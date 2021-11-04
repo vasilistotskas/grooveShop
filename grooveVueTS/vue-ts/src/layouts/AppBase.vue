@@ -1,9 +1,11 @@
 <template>
   <div id="wrapper">
-    <Navbar v-if="categoriesData && Object.keys(categoriesData).length > 0"
+    <Navbar v-if="categoriesTreeData && Object.keys(categoriesTreeData).length > 0
+     && categoriesUnorganizedData && Object.keys(categoriesUnorganizedData).length > 0"
         v-bind:showMobileMenu="showMobileMenu"
         v-bind:cartTotalLength="cartTotalLength"
-        v-bind:categories="categoriesData"
+        v-bind:categoriesTree="categoriesTreeData"
+        v-bind:categoriesUnorganized="categoriesUnorganizedData"
     />
 
     <loading v-model:active="isLoading"
@@ -232,8 +234,12 @@
       return store.getters['cart/getCartTotalLength']
     }
 
-    get categoriesData(): Array<CategoryModel> {
-      return store.getters['category/getCategories']
+    get categoriesTreeData(): Array<CategoryModel> {
+      return store.getters['category/getCategoriesTree']
+    }
+
+    get categoriesUnorganizedData(): Array<CategoryModel> {
+      return store.getters['category/getCategoriesUnorganized']
     }
 
     get userData(): Array<any> {
@@ -281,7 +287,8 @@
       this.initializeAuth()
       this.initializeToken()
       this.initializeCart()
-      await store.dispatch('category/categoriesFromRemote')
+      await store.dispatch('category/categoriesTreeFromRemote')
+      await store.dispatch('category/categoriesUnorganizedFromRemote')
 
       if (this.isAuthenticated) {
         await store.dispatch('user/data/userDataFromRemote')

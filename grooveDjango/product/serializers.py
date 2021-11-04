@@ -22,7 +22,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "category",
-            "get_absolute_url",
+            "absolute_url",
             "description",
             "price",
             "vat",
@@ -57,7 +57,9 @@ class CategorySerializer(serializers.ModelSerializer):
             "image_url",
             "parent",
             "tags",
-            "get_absolute_url",
+            "level",
+            "tree_id",
+            "absolute_url",
             "products"
         )
 

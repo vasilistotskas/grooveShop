@@ -9,6 +9,7 @@ from rest_framework import status, authentication, permissions, generics, viewse
 from django.http import JsonResponse
 from .models import *
 from .serializers import *
+from rest_framework.generics import GenericAPIView
 
 
 class LatestProductsList(APIView):
@@ -44,21 +45,51 @@ class ProductDetail(APIView):
         return Response(serializer.data)
 
 
-class CategoryDetail(APIView):
-    @staticmethod
-    def get_object(category_slug):
-        try:
-            return Category.objects.get(slug=category_slug)
-        except Category.DoesNotExist:
-            raise Http404
-    
-    def get(self, request, category_slug, format=None):
-        category = self.get_object(category_slug)
-        serializer = CategorySerializer(category)
-        return Response(serializer.data)
+class CategoryDetail(GenericAPIView):
+    serializer_class = CategorySerializer
+
+    def get_queryset(self):
+        category_slug = self.kwargs['category_slug']
+        return Category.objects.get(slug=category_slug)
+
+    def get(self, request, *args, **kwargs):
+        root_nodes = self.get_queryset()
+        data = [self.recursive_node_to_dict(root_nodes)]
+
+        return Response(data)
+
+    def recursive_node_to_dict(self, node):
+        result = self.get_serializer(instance=node).data
+        children = [self.recursive_node_to_dict(c) for c in node.get_children()]
+        if children:
+            result["children"] = children
+        return result
 
 
-class AllCategoriesList(APIView):
+class CategoryTreeView(GenericAPIView):
+    serializer_class = CategorySerializer
+
+    def get_queryset(self):
+        return Category.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        root_nodes = self.get_queryset().get_cached_trees()
+        data = []
+        print(self.get_queryset())
+        for n in root_nodes:
+            data.append(self.recursive_node_to_dict(n))
+
+        return Response(data)
+
+    def recursive_node_to_dict(self, node):
+        result = self.get_serializer(instance=node).data
+        children = [self.recursive_node_to_dict(c) for c in node.get_children()]
+        if children:
+            result["children"] = children
+        return result
+
+
+class CategoriesUnorganized(APIView):
     @staticmethod
     def get(request, format=None):
         categories = Category.objects.all()

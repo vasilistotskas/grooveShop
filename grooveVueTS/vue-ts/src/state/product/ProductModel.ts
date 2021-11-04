@@ -5,7 +5,7 @@ export default class ProductModel extends EntityBase
 	id!: number
 	name!: string
 	category!: number
-	get_absolute_url!: string
+	absolute_url!: string
 	description!: string
 	price!: number
 	vat!: number

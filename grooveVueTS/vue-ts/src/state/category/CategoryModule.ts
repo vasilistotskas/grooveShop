@@ -10,14 +10,19 @@ export default class CategoryModule
     extends AppBaseModule
 {
     category = new CategoryModel()
-    categories = new CategoryModel()
+    categoriesTree = new CategoryModel()
+    categoriesUnorganized = new CategoryModel()
 
     get getCategory(): CategoryModel {
         return this.category
     }
 
-    get getCategories(): CategoryModel {
-        return this.categories
+    get getCategoriesTree(): CategoryModel {
+        return this.categoriesTree
+    }
+
+    get getCategoriesUnorganized(): CategoryModel {
+        return this.categoriesUnorganized
     }
 
     @Mutation
@@ -26,17 +31,35 @@ export default class CategoryModule
     }
 
     @Mutation
-    setCategories(categories: CategoryModel): void {
-        this.categories = categories
+    setCategoriesTree(categories: CategoryModel): void {
+        this.categoriesTree = categories
+    }
+
+    @Mutation
+    setCategoriesUnorganized(categories: CategoryModel): void {
+        this.categoriesUnorganized = categories
     }
 
     @Action
-    async categoriesFromRemote(): Promise<void> {
-        await api.get('products/categories/')
+    async categoriesTreeFromRemote(): Promise<void> {
+        await api.get('products/categoriesTree/')
             .then((response: ResponseData) => {
                 const data = response.data
                 const categories = map(data, rawCategory => new CategoryModel(rawCategory))
-                this.context.commit('setCategories', categories)
+                this.context.commit('setCategoriesTree', categories)
+            })
+            .catch((e: Error) => {
+                console.log(e)
+            })
+    }
+
+    @Action
+    async categoriesUnorganizedFromRemote(): Promise<void> {
+        await api.get('products/categoriesUnorganized/')
+            .then((response: ResponseData) => {
+                const data = response.data
+                const categories = map(data, rawCategory => new CategoryModel(rawCategory))
+                this.context.commit('setCategoriesUnorganized', categories)
             })
             .catch((e: Error) => {
                 console.log(e)
@@ -47,7 +70,7 @@ export default class CategoryModule
     async fetchCategoryFromRemote(categorySlug: CategoryModel['slug']) {
        await api.get(`products/${categorySlug}/`)
            .then((response: ResponseData) => {
-               const data = response.data
+               const data = response.data[0]
                let category = new CategoryModel(data)
                this.context.commit('setCategory', category)
            })

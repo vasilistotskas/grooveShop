@@ -77,7 +77,7 @@ export default class UserDataModule
             .then((response: ResponseData) => {
                 const data = response.data
                 this.context.commit('setUserData', data[0])
-                this.context.commit('setUserId', response.data[0].id)
+                this.context.commit('setUserId', data[0].id)
                 //  User favourites get action here
                 store.dispatch('user/favourite/userFavouritesFromRemote', response.data[0].user)
                 //  User reviews get action here

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link v-bind:to="product.get_absolute_url" class="p-1">
+    <router-link v-bind:to="product.absolute_url" class="p-1">
 
       <div class="box">
         <figure class="image mb-4">

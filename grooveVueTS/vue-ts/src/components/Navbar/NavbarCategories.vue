@@ -1,6 +1,6 @@
 <template>
     <li class="nav-item"
-        v-for="category in this.categories"
+        v-for="category in this.categoriesTree"
         v-bind:key="category.id">
       <router-link
           class="nav-link active" aria-current="page"
@@ -17,7 +17,8 @@
   @Options({
     name: "NavbarCategories",
     props: {
-      categories: Array
+      categoriesTree: Array,
+      categoriesUnorganized: Array
     }
   })
   export default class NavbarCategories extends AppBaseLayout {
