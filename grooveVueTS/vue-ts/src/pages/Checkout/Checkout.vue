@@ -177,7 +177,7 @@ export default class Checkout extends AppBasePage {
   }
 
   get cartTotalPrice(): number {
-    return store.getters['cart/cartTotalPrice']
+    return store.getters['cart/getCartTotalPrice']
   }
 
   get stripeResultToken(): any {
