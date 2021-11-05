@@ -21,6 +21,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "name",
+            "slug",
             "category",
             "absolute_url",
             "description",
@@ -44,7 +45,14 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    products = ProductSerializer(many=True)
+    # products = ProductSerializer(many=True)
+    all_tree_products = serializers.SerializerMethodField('get_all_products_of_tree')
+
+    def get_all_products_of_tree(self, category):
+        # if category.get_children():
+        qs = Product.objects.filter(category__in=category.get_descendants(include_self=True))
+        serializer = ProductSerializer(instance=qs, many=True)
+        return serializer.data
 
     class Meta:
         model = Category
@@ -60,7 +68,9 @@ class CategorySerializer(serializers.ModelSerializer):
             "level",
             "tree_id",
             "absolute_url",
-            "products"
+            # "products",
+            "recursive_product_count",
+            "all_tree_products"
         )
 
 

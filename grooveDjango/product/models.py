@@ -22,6 +22,7 @@ class Category(MPTTModel):
                             blank=True, help_text='SEO keywords')
 
     class Meta:
+        verbose_name_plural = "Categories"
         ordering = ('id',)
 
     class MPTTMeta:
@@ -38,6 +39,9 @@ class Category(MPTTModel):
             full_path.append(k.name)
             k = k.parent
         return ' / '.join(full_path[::-1])
+
+    def recursive_product_count(self):
+        return Product.objects.filter(category__in=self.get_descendants(include_self=True)).count()
 
     def absolute_url(self):
         return '/'.join([x['slug'] for x in self.get_ancestors(include_self=True).values()])

@@ -9,7 +9,7 @@
         <div class="row">
           <ProductCard
           class="col-sm-3"
-          v-for="product in category.products"
+          v-for="product in category.all_tree_products"
           v-bind:key="product.id"
           v-bind:product="product"/>
         </div>

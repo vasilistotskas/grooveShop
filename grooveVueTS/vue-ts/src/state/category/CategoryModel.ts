@@ -8,9 +8,12 @@ export default class CategoryModel extends EntityBase
     image_url!: string
     name!: string
     parent!: number
-    products!: Array<any>
+    all_tree_products!: Array<any>
+    children!: Array<CategoryModel>
     slug!: string
     tags!: string
+    level!: number
+    recursive_product_count!: number
 
     constructor(data?: Partial<CategoryModel>) {
         super(data)

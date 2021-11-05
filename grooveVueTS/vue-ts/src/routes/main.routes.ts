@@ -60,7 +60,7 @@ const routes: Array<RouteRecordRaw> = [
         }
     },
     {
-        path: '/:category_slug/:product_slug/:product_id',
+        path: '/:product_slug',
         name: 'Product',
         component: () => import("@/pages/Product/Product.vue"),
         props: true
