@@ -1,27 +1,50 @@
 <template>
-    <li class="nav-item"
-        v-for="category in this.categoriesTree"
+    <li v-for="category in this.categoriesTree"
+        class="nav-item" v-bind:class="{'dropdown': category?.children }"
         v-bind:key="category.id">
       <router-link
-          class="nav-link active" aria-current="page"
-          :to="({ name: 'Category', params: { category_slug: category.slug } })">
+          v-bind:id="category.children ? `navbarDropdown${category.id}` : '' "
+          v-bind:data-bs-toggle="category.children ? 'dropdown' : '' "
+          v-bind:class="{'dropdown-toggle': category?.children }"
+          role="button"
+          class="nav-link active"
+          aria-expanded="false"
+          aria-current="page"
+          :to="category.slug">
         {{ category.name }}
       </router-link>
+      <ul
+          class="dropdown-menu"
+          :aria-labelledby="`navbarDropdown${category.id}`">
+        <li v-for="children in category.children">
+          <router-link
+              class="dropdown-item"
+              :to="children.slug">
+            {{ children.name }}
+          </router-link>
+        </li>
+        <li v-if="category.children">
+          <hr class="dropdown-divider">
+          <router-link
+              class="dropdown-item"
+              :to="category.slug">
+            Show All
+          </router-link>
+        </li>
+      </ul>
     </li>
 </template>
 
 <script lang="ts">
-  import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
-  import { Options } from "vue-class-component"
+  import { Options, Vue } from "vue-class-component"
 
   @Options({
     name: "NavbarCategories",
     props: {
-      categoriesTree: Array,
-      categoriesUnorganized: Array
+      categoriesTree: Array
     }
   })
-  export default class NavbarCategories extends AppBaseLayout {
+  export default class NavbarCategories extends Vue {
 
   }
 </script>

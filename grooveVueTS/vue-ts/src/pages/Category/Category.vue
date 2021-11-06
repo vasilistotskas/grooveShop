@@ -21,8 +21,8 @@
 
 <script lang="ts">
 
-import {Options} from "vue-class-component"
-import AppBasePage from "@/pages/AppBasePage.vue"
+import { Options, Vue } from "vue-class-component"
+import App from "@/App.vue"
 import ProductCard from "@/components/Product/ProductCard.vue"
 import CategoryModel from "@/state/category/CategoryModel"
 import store from '@/store'
@@ -37,7 +37,7 @@ import store from '@/store'
   }
 })
 
-export default class CategoryVue extends AppBasePage {
+export default class CategoryVue extends Vue {
 
   created() {
     this.$watch(

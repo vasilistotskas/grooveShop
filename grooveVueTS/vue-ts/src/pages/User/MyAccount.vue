@@ -25,15 +25,14 @@
 
 <script lang="ts">
 import router from "@/routes"
-import {Options} from "vue-class-component"
-import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
+import {Options, Vue} from "vue-class-component"
 import store from '@/store'
 
 @Options({
   name: "MyAccount",
 })
 
-export default class MyAccount extends AppBaseLayout {
+export default class MyAccount extends Vue {
   protected logout(): void {
     store.commit('user/data/unsetUserData')
     router.push('/')

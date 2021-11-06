@@ -24,8 +24,8 @@
 
 <script lang="ts">
 
-import {Options} from "vue-class-component"
-import AppBasePage from "@/pages/AppBasePage.vue"
+import { Options, Vue } from "vue-class-component"
+import App from "@/App.vue"
 import ProductCard from "@/components/Product/ProductCard.vue"
 import ProductModel from "@/state/product/ProductModel"
 import store from '@/store'
@@ -37,7 +37,7 @@ import store from '@/store'
   }
 })
 
-export default class SearchVue extends AppBasePage {
+export default class SearchVue extends Vue {
   query: string | null = ''
   async mounted(): Promise<void> {
     document.title = 'Search | grooveShop'

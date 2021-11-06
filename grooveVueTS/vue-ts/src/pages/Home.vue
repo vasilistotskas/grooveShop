@@ -28,8 +28,8 @@
 
 <script lang="ts">
 
-import AppBasePage from '@/pages/AppBasePage.vue'
-import { Options } from "vue-class-component"
+import App from "@/App.vue"
+import { Options, Vue } from "vue-class-component"
 import ProductCard from "@/components/Product/ProductCard.vue"
 import store from '@/store'
 
@@ -40,7 +40,7 @@ import store from '@/store'
   },
 })
 
-export default class Home extends AppBasePage {
+export default class Home extends Vue {
 
   get LatestProducts(): [] {
     return store.getters['product/getLatestProductData']

@@ -11,14 +11,14 @@
 </template>
 
 <script lang="ts">
-import AppBasePage from '@/pages/AppBasePage.vue'
-import { Options } from "vue-class-component"
+import App from "@/App.vue"
+import { Options, Vue } from "vue-class-component"
 
 @Options({
   name: "Checkout"
 })
 
-export default class Success extends AppBasePage {
+export default class Success extends Vue {
 
 }
 </script>

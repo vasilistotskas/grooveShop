@@ -77,10 +77,8 @@
 </template>
 
 <script lang="ts">
-import { Options } from "vue-class-component"
-import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
+import { Options, Vue } from "vue-class-component"
 import axios from 'axios'
-import router from "@/routes"
 import store from '@/store'
 
 @Options({
@@ -96,7 +94,7 @@ import store from '@/store'
   },
 })
 
-export default class LogIn extends AppBaseLayout {
+export default class LogIn extends Vue {
   username!: string
   password!: string
 

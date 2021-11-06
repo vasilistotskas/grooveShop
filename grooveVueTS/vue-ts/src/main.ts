@@ -7,7 +7,7 @@ import Toast, { PluginOptions, TYPE } from "vue-toastification"
 import "vue-toastification/dist/index.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
-import AppBase from '@/layouts/AppBase.vue'
+import App from '@/App.vue'
 
 const ToastOptions: PluginOptions = {
     toastDefaults: {
@@ -25,7 +25,7 @@ const ToastOptions: PluginOptions = {
 
 axios.defaults.baseURL = 'http://127.0.0.1:8000'
 
-createApp(AppBase)
+createApp(App)
     .use(store)
     .use(router, axios)
     .use(i18n)

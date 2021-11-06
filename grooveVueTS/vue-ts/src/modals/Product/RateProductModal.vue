@@ -77,8 +77,8 @@
 </template>
 
 <script lang="ts">
-import AppBasePage from '@/pages/AppBasePage.vue'
-import { Options } from "vue-class-component"
+import App from "@/App.vue"
+import { Options, Vue } from "vue-class-component"
 import { first, last, filter, times, constant } from 'lodash'
 import CountryModel from "@/state/country/CountryModel";
 import store from "@/store";
@@ -89,7 +89,7 @@ const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.
 @Options({
   name: "RateProductModal",
 })
-export default class RateProductModal extends AppBasePage {
+export default class RateProductModal extends Vue {
 
   $refs!: {
     ratingBoard: HTMLElement

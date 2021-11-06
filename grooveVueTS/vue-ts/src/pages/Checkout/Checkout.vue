@@ -124,8 +124,8 @@
 </template>
 
 <script lang="ts">
-import AppBasePage from '@/pages/AppBasePage.vue'
-import { Options } from "vue-class-component"
+import App from "@/App.vue"
+import { Options, Vue } from "vue-class-component"
 import store from "@/store"
 import UserDetailsModel from "@/state/user/data/UserDetailsModel"
 import CartItemModel from "@/state/cart/CartItemModel"
@@ -139,7 +139,7 @@ const toast = useToast()
 @Options({
   name: "Checkout"
 })
-export default class Checkout extends AppBasePage {
+export default class Checkout extends Vue {
 
   // @TODO KATI NA GINEI ME TO STRIPE NA PAEI PISW STO STORE OR SOMETHING
   $refs!: {
@@ -148,6 +148,10 @@ export default class Checkout extends AppBasePage {
   errors: Array<any> = []
   customerDetails: any = {}
   card = {}
+
+  get isAuthenticated(): boolean {
+    return store.getters['user/data/getIsAuthenticated']
+  }
 
   get availableCountries(): CountryModel {
     return store.getters['country/getCountries']

@@ -22,8 +22,7 @@
 </template>
 
 <script lang="ts">
-import {Options} from "vue-class-component"
-import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
+import { Options, Vue} from "vue-class-component"
 import store from '@/store'
 
 @Options({
@@ -40,7 +39,7 @@ import store from '@/store'
   }
 })
 
-export default class ProfileImage extends AppBaseLayout {
+export default class ProfileImage extends Vue {
 
 
   async updateUserImage(): Promise<void> {

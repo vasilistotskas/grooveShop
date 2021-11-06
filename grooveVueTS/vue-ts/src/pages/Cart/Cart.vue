@@ -42,9 +42,9 @@
 </template>
 
 <script lang="ts">
-import AppBasePage from '@/pages/AppBasePage.vue'
+import App from "@/App.vue"
 import CartItem from '@/components/Cart/CartItem.vue'
-import { Options } from "vue-class-component"
+import { Options, Vue } from "vue-class-component"
 import store from '@/store'
 
 @Options({
@@ -54,7 +54,7 @@ import store from '@/store'
     }
 })
 
-export default class CartVue extends AppBasePage {
+export default class CartVue extends Vue {
 
     get cart(): {} {
         return store.getters['cart/getCart']

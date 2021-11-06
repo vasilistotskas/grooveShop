@@ -11,7 +11,6 @@ export default class CategoryModule
 {
     category = new CategoryModel()
     categoriesTree = new CategoryModel()
-    categoriesUnorganized = new CategoryModel()
 
     get getCategory(): CategoryModel {
         return this.category
@@ -19,10 +18,6 @@ export default class CategoryModule
 
     get getCategoriesTree(): CategoryModel {
         return this.categoriesTree
-    }
-
-    get getCategoriesUnorganized(): CategoryModel {
-        return this.categoriesUnorganized
     }
 
     @Mutation
@@ -33,11 +28,6 @@ export default class CategoryModule
     @Mutation
     setCategoriesTree(categories: CategoryModel): void {
         this.categoriesTree = categories
-    }
-
-    @Mutation
-    setCategoriesUnorganized(categories: CategoryModel): void {
-        this.categoriesUnorganized = categories
     }
 
     @Action
@@ -54,21 +44,9 @@ export default class CategoryModule
     }
 
     @Action
-    async categoriesUnorganizedFromRemote(): Promise<void> {
-        await api.get('products/categoriesUnorganized/')
-            .then((response: ResponseData) => {
-                const data = response.data
-                const categories = map(data, rawCategory => new CategoryModel(rawCategory))
-                this.context.commit('setCategoriesUnorganized', categories)
-            })
-            .catch((e: Error) => {
-                console.log(e)
-            })
-    }
-
-    @Action
     async fetchCategoryFromRemote(categorySlug: CategoryModel['slug']) {
-       await api.get(`products/category/${categorySlug}/`)
+        // @todo na parw slug product/category apo state
+        await api.get(`products/${categorySlug}/`)
            .then((response: ResponseData) => {
                const data = response.data[0]
                let category = new CategoryModel(data)

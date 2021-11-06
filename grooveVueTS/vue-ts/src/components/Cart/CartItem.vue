@@ -19,8 +19,8 @@
 </template>
 
 <script lang="ts">
-import AppBasePage from "@/pages/AppBasePage.vue"
-import { Options } from "vue-class-component"
+import App from "@/App.vue"
+import { Options, Vue } from "vue-class-component"
 import CartItemModel from "@/state/cart/CartItemModel"
 import store from '@/store'
 
@@ -33,7 +33,7 @@ import store from '@/store'
   }
 })
 
-export default class CartItemVue extends AppBasePage {
+export default class CartItemVue extends Vue {
 
     item = new CartItemModel()
 

@@ -46,8 +46,8 @@
 <script lang="ts">
 import FavouriteButton from '@/components/Product/FavouriteButton.vue'
 import RateProductModal from '@/modals/Product/RateProductModal.vue'
-import AppBasePage from '@/pages/AppBasePage.vue'
-import { Options } from "vue-class-component"
+import App from "@/App.vue"
+import { Options, Vue } from "vue-class-component"
 import ProductModel from "@/state/product/ProductModel"
 import store from '@/store'
 
@@ -70,7 +70,7 @@ import store from '@/store'
   }
 })
 
-export default class ProductVue extends AppBasePage {
+export default class ProductVue extends Vue {
 
   quantity = 1
 

@@ -78,8 +78,7 @@
 
 
 <script lang="ts">
-import {Options} from "vue-class-component"
-import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
+import { Options , Vue} from "vue-class-component"
 import store from '@/store'
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 import RegionsModel from "@/state/country/RegionsModel"
@@ -97,10 +96,14 @@ const toast = useToast();
   }
 })
 
-export default class AccountSettings extends AppBaseLayout {
+export default class AccountSettings extends Vue {
 
   userDetails = new UserDetailsModel()
   profileImageUrl: string = ''
+
+  get isAuthenticated(): boolean {
+    return store.getters['user/data/getIsAuthenticated']
+  }
 
   get fullname(): string {
     let first_name = this.userDetails.first_name

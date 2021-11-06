@@ -7,7 +7,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <NavbarCategories :categoriesTree="this.categoriesTree" :categoriesUnorganized="this.categoriesUnorganized"/>
+          <NavbarCategories :categoriesTree="this.categoriesTree"/>
         </ul>
         <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item" v-if="this.isAuthenticated">
@@ -36,8 +36,8 @@
 
 <script lang="ts">
 import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
-import AppBaseLayout from '@/layouts/AppBaseLayout.vue'
-import { Options } from "vue-class-component"
+import { Options, Vue } from "vue-class-component"
+import store from "@/store";
 
 @Options({
   name: "Navbar",
@@ -50,14 +50,16 @@ import { Options } from "vue-class-component"
       default: false
     },
     cartTotalLength: Number,
-    categoriesTree: Array,
-    categoriesUnorganized: Array
+    categoriesTree: Array
   }
 })
-export default class Navbar extends AppBaseLayout {
+export default class Navbar extends Vue {
 
   public showMobileMenu = false
 
+  get isAuthenticated(): boolean {
+    return store.getters['user/data/getIsAuthenticated']
+  }
 }
 </script>
 

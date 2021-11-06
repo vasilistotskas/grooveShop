@@ -1,8 +1,13 @@
 from django.db.models import Q
 from django.http import Http404
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework import status, authentication, permissions, generics, viewsets
+from django.http import JsonResponse
+from .models import *
 from .serializers import *
 from rest_framework.generics import GenericAPIView
 
@@ -17,19 +22,19 @@ class LatestProductsList(APIView):
 
 class ProductDetail(APIView):
     @staticmethod
-    def get_object(product_slug):
+    def get_object(category_slug, product_slug):
         try:
-            return Product.objects.filter(slug=product_slug).get()
+            return Product.objects.filter(category__slug=category_slug).get(slug=product_slug)
         except Product.DoesNotExist:
             raise Http404
 
-    def get(self, request, product_slug, format=None):
-        product = self.get_object(product_slug)
+    def get(self, request, category_slug, product_slug, format=None):
+        product = self.get_object(category_slug, product_slug)
         serializer = ProductSerializer(product)
         return Response(serializer.data)
 
-    def patch(self, request, product_slug):
-        product = self.get_object(product_slug)
+    def patch(self, request, category_slug, product_slug):
+        product = self.get_object(category_slug, product_slug)
         data = {
             "hits": product.hits + 1
         }
@@ -70,6 +75,7 @@ class CategoryTreeView(GenericAPIView):
     def get(self, request, *args, **kwargs):
         root_nodes = self.get_queryset().get_cached_trees()
         data = []
+        print(self.get_queryset())
         for n in root_nodes:
             data.append(self.recursive_node_to_dict(n))
 

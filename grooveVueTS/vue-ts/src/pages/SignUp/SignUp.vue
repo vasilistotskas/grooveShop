@@ -45,8 +45,8 @@
 </template>
 
 <script lang="ts">
-import AppBasePage from '@/pages/AppBasePage.vue'
-import { Options } from "vue-class-component"
+import App from "@/App.vue"
+import { Options, Vue } from "vue-class-component"
 import store from "@/store"
 import { useToast } from "vue-toastification"
 
@@ -56,7 +56,7 @@ const toast = useToast()
   name: "SignUp"
 })
 
-export default class SignUp extends AppBasePage {
+export default class SignUp extends Vue {
 
   username: string = ''
   password: string = ''
