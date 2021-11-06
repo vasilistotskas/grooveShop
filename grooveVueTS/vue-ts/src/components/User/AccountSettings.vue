@@ -21,7 +21,7 @@
             </div>
             <div class="col-12">
               <label for="inputPhone" class="form-label">Phone</label>
-              <input v-model="userDetails.phone" type="text" class="form-control" id="inputPhone">
+              <input v-model="userDetails.phone" type="number" class="form-control" id="inputPhone">
             </div>
             <div class="col-md-9">
               <label for="inputCity" class="form-label">City</label>
@@ -196,7 +196,6 @@ export default class AccountSettings extends Vue {
     }
     if (this.userDetails.phone != null){
       const phone = this.userDetails.phone as unknown as string
-      data.append('phone', phone)
     }
     if (this.userDetails.place != null){
       data.append('place', this.userDetails.place)

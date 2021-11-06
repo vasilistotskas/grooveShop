@@ -10,7 +10,7 @@
           class="nav-link active"
           aria-expanded="false"
           aria-current="page"
-          :to="category.slug">
+          :to="({ name: 'Category', params: { category_slug: category.slug } })">
         {{ category.name }}
       </router-link>
       <ul
@@ -19,7 +19,7 @@
         <li v-for="children in category.children">
           <router-link
               class="dropdown-item"
-              :to="children.slug">
+              :to="({ name: 'Category', params: { category_slug: children.slug } })">
             {{ children.name }}
           </router-link>
         </li>
@@ -27,7 +27,7 @@
           <hr class="dropdown-divider">
           <router-link
               class="dropdown-item"
-              :to="category.slug">
+              :to="({ name: 'Category', params: { category_slug: category.slug } })">
             Show All
           </router-link>
         </li>
@@ -45,6 +45,5 @@
     }
   })
   export default class NavbarCategories extends Vue {
-
   }
 </script>

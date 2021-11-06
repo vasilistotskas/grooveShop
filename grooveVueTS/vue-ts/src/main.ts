@@ -8,6 +8,12 @@ import "vue-toastification/dist/index.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 import App from '@/App.vue'
+import { createValidation } from 'vue3-form-validation'
+
+const validation = createValidation({
+    defaultValidationBehavior: 'lazier',
+    validationBehavior: {}
+})
 
 const ToastOptions: PluginOptions = {
     toastDefaults: {
@@ -29,5 +35,6 @@ createApp(App)
     .use(store)
     .use(router, axios)
     .use(i18n)
+    .use(validation)
     .use(Toast, ToastOptions)
     .mount('#app')

@@ -50,39 +50,39 @@
             <div class="col-6">
               <div class="form-outline">
                 <label class="form-label">First name*</label>
-                <input type="text" class="form-control" v-model="customerDetails.first_name">
+                <input type="text" class="form-control" v-model="customerDetails.first_name" required>
               </div>
 
               <div class="form-outline">
                 <label class="form-label">Last name*</label>
-                <input type="text" class="form-control" v-model="customerDetails.last_name">
+                <input type="text" class="form-control" v-model="customerDetails.last_name" required>
               </div>
 
               <div class="form-outline">
                 <label class="form-label">E-mail*</label>
-                <input type="email" class="form-control" v-model="customerDetails.email">
+                <input type="email" class="form-control" v-model="customerDetails.email" required>
               </div>
 
               <div class="form-outline">
                 <label class="form-label">Phone*</label>
-                <input type="text" class="form-control" v-model="customerDetails.phone">
+                <input type="number" class="form-control" v-model="customerDetails.phone" required>
               </div>
             </div>
 
             <div class="col-6">
               <div class="form-outline">
                 <label class="form-label">Address*</label>
-                <input type="text" class="form-control" v-model="customerDetails.address">
+                <input type="text" class="form-control" v-model="customerDetails.address" required>
               </div>
 
               <div class="form-outline">
                 <label class="form-label">Zip code*</label>
-                <input type="text" class="form-control" v-model="customerDetails.zipcode">
+                <input type="text" class="form-control" v-model="customerDetails.zipcode" required>
               </div>
 
               <div class="form-outline">
                 <label class="form-label">Place*</label>
-                <input type="text" class="form-control" v-model="customerDetails.place">
+                <input type="text" class="form-control" v-model="customerDetails.place" required>
               </div>
 
               <div class="form-outline">
@@ -141,7 +141,6 @@ const toast = useToast()
 })
 export default class Checkout extends Vue {
 
-  // @TODO KATI NA GINEI ME TO STRIPE NA PAEI PISW STO STORE OR SOMETHING
   $refs!: {
     stripleElement: HTMLFormElement
   }
@@ -237,31 +236,31 @@ export default class Checkout extends Vue {
   }
 
   async submitForm(): Promise<void> {
-    if (this.customerDetails.first_name === '') {
+    if (this.customerDetails.first_name === '' || this.customerDetails.first_name === null) {
       this.errors.push('The first name field is missing!')
     }
 
-    if (this.customerDetails.last_name === '') {
+    if (this.customerDetails.last_name === '' || this.customerDetails.last_name === null) {
       this.errors.push('The last name field is missing!')
     }
 
-    if (this.customerDetails.email === '') {
+    if (this.customerDetails.email === '' || this.customerDetails.email === null ) {
       this.errors.push('The email field is missing!')
     }
 
-    if (this.customerDetails.phone === 0) {
+    if (this.customerDetails.phone === 0 || this.customerDetails.phone === null) {
       this.errors.push('The phone field is missing!')
     }
 
-    if (this.customerDetails.address === '') {
+    if (this.customerDetails.address === '' || this.customerDetails.address === null) {
       this.errors.push('The address field is missing!')
     }
 
-    if (this.customerDetails.zipcode === 0) {
+    if (this.customerDetails.zipcode === 0 || this.customerDetails.zipcode === null) {
       this.errors.push('The zip code field is missing!')
     }
 
-    if (this.customerDetails.place === '') {
+    if (this.customerDetails.place === '' || this.customerDetails.place === null) {
       this.errors.push('The place field is missing!')
     }
 
@@ -274,8 +273,6 @@ export default class Checkout extends Vue {
       } catch (e) {
         console.log(e)
       }
-    } else {
-      toast.error(this.errors)
     }
   }
 
@@ -307,7 +304,9 @@ export default class Checkout extends Vue {
       'stripe_token': token.id
     }
 
-    await store.dispatch('cart/createOrder', data)
+    if (!this.errors.length){
+      await store.dispatch('cart/createOrder', data)
+    }
   }
 
 }

@@ -96,11 +96,11 @@ export default class UserDataModule
         const user_id = await this.context.getters['getUserId']
 
         try {
-        await api.patch(`userprofile/${user_id}/`, data)
-            .then((response: ResponseData) => this.context.commit('setUserData', response.data))
-            .catch((e: Error) => {
-                console.log(e)
-            })
+            await api.patch(`userprofile/${user_id}/`, data)
+                .then((response: ResponseData) => this.context.commit('setUserData', response.data))
+                .catch((e: Error) => {
+                    console.log(e)
+                })
             toast.success("Profile Updated")
         } catch (error) {
             throw error

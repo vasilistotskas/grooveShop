@@ -34,11 +34,11 @@ export default class UserModule
         try {
             await api.post('djoser/users/', formData)
                 .then((response: ResponseData) => {
-                    toast.error('Success, you can log in!')
+                    toast.success('Success, you can log in!')
                     router.push('/log-in')
                 })
                 .catch((error: Error) => {
-                    toast.error('Error')
+                    toast.error('This name is already taken')
                 })
         } catch (e) {
             toast.error(e)
