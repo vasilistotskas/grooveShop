@@ -38,16 +38,17 @@ import store from '@/store'
 })
 
 export default class SearchVue extends Vue {
+
   query: string | null = ''
+
   async mounted(): Promise<void> {
-    document.title = 'Search | grooveShop'
+    document.title = 'Search'
 
     let uri = window.location.search.substring(1)
     let params = new URLSearchParams(uri)
 
     if (params.get('query')) {
       this.query = params.get('query')
-
       await this.performSearch()
     }
   }
@@ -57,7 +58,7 @@ export default class SearchVue extends Vue {
   }
 
   async performSearch(): Promise<void> {
-    store.dispatch('search/getSearchResults', {'query': this.query})
+    await store.dispatch('search/getSearchResults', {'query': this.query})
   }
 
 }

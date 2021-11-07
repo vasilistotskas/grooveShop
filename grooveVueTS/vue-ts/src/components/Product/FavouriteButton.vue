@@ -1,6 +1,6 @@
 <template>
   <button type="button"  data-mdb-ripple-color="dark" class="btn btn-outline-danger col-12 col-md-4" @click="favouriteHandle()">
-    <i :class=getFavouriteIconClass()></i>
+    <i :class=favouriteIconClass()></i>
   </button>
 </template>
 
@@ -30,7 +30,7 @@ export default class FavouriteButton extends Vue {
     await store.dispatch('user/favourite/toggleFavourite', this.product)
   }
 
-  private getFavouriteIconClass(): string {
+  private favouriteIconClass(): string {
     return !this.isFavourite ? 'far fa-heart' : 'fas fa-heart'
   }
 

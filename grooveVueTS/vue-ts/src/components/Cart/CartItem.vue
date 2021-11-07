@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td>
-      <router-link :to="item.product.absolute_url">{{ item.product.name }}</router-link>
+      <router-link :to="productPath">{{ item.product.name }}</router-link>
     </td>
     <td>${{ item.product.price }}</td>
     <td>
@@ -9,7 +9,7 @@
       {{ item.quantity }}
       <a type="button" class="btn btn-light" data-mdb-ripple-color="dark" @click="incrementQuantity(item)">+</a>
     </td>
-    <td>${{ getItemTotal.toFixed(2) }}</td>
+    <td>${{ itemTotal.toFixed(2) }}</td>
     <td>
       <button type="button" class="btn" @click="removeFromCart(item)">
         <i class="fas fa-times-circle"></i>
@@ -38,11 +38,15 @@ export default class CartItemVue extends Vue {
     item = new CartItemModel()
 
     // prepei na paw sto store kapos
-    get getItemTotal(): number {
+    get itemTotal(): number {
       return this.item.quantity * this.item.product.price
     }
 
-   public decrementQuantity(item: object): void {
+    get productPath() {
+      return '/product/' + this.item.product.slug + '/' + this.item.product.id
+    }
+
+  public decrementQuantity(item: object): void {
      store.commit('cart/decrementQuantity', item)
     }
 

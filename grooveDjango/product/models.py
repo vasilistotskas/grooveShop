@@ -154,7 +154,7 @@ class Product(models.Model):
             )
 
     def absolute_url(self):
-        return f'/{self.category.slug}/{self.slug}/{self.id}'
+        return f'/{self.slug}/{self.category.id}'
 
 
 class ProductImages(models.Model):

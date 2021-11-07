@@ -1,9 +1,8 @@
 <template>
   <div v-if="product && Object.keys(product).length > 0">
-    <router-link v-bind:to="product.absolute_url" class="p-1">
-
+    <router-link :to="productPath" class="p-1">
       <div class="card" style="width: 18rem;">
-        <img v-bind:src="product.main_image" class="card-img-top" alt="...">
+        <img :src="product.main_image" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">{{ product.name }}</h5>
           <p class="card-text">${{ product.price }}</p>
@@ -49,8 +48,12 @@ export default class ProductCard extends Vue {
     store.commit('cart/addToCart', item)
   }
 
-  get disabled() {
+  get disabled(): boolean {
     return this.product.active === "False" || this.product.stock <= 0
+  }
+
+  get productPath() {
+    return '/product' + this.product.absolute_url
   }
 
   get addToCartButtonText(): string {

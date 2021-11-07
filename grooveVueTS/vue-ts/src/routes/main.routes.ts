@@ -60,13 +60,13 @@ const routes: Array<RouteRecordRaw> = [
         }
     },
     {
-        path: '/:category_slug/:product_slug/:product_id',
+        path: '/product/:product_slug/:category_id',
         name: 'Product',
         component: () => import("@/pages/Product/Product.vue"),
         props: true
     },
     {
-        path: '/:category_slug',
+        path: '/category/:absolute_url/:category_id',
         name: 'Category',
         component: () => import("@/pages/Category/Category.vue"),
         props: true

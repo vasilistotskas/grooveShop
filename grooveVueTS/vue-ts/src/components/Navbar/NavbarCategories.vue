@@ -10,7 +10,7 @@
           class="nav-link active"
           aria-expanded="false"
           aria-current="page"
-          :to="({ name: 'Category', params: { category_slug: category.slug } })">
+          :to="({ name: 'Category', params: { absolute_url: category.absolute_url, category_id: category.id } })">
         {{ category.name }}
       </router-link>
       <ul
@@ -19,7 +19,7 @@
         <li v-for="children in category.children">
           <router-link
               class="dropdown-item"
-              :to="({ name: 'Category', params: { category_slug: children.slug } })">
+              :to="({ name: 'Category', params: { absolute_url: category.absolute_url, category_id: children.id } })">
             {{ children.name }}
           </router-link>
         </li>
@@ -27,7 +27,7 @@
           <hr class="dropdown-divider">
           <router-link
               class="dropdown-item"
-              :to="({ name: 'Category', params: { category_slug: category.slug } })">
+              :to="({ name: 'Category', params: { absolute_url: category.absolute_url, category_id: category.id } })">
             Show All
           </router-link>
         </li>

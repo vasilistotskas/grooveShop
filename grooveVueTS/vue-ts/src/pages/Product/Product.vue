@@ -58,10 +58,7 @@ import store from '@/store'
     RateProductModal
   },
   props: {
-    category_slug: {
-      type: String
-    },
-    product_id: {
+    category_id: {
       type: String
     },
     product_slug: {
@@ -92,7 +89,7 @@ export default class ProductVue extends Vue {
     store.commit('cart/addToCart', item)
   }
 
-  get disabled() {
+  get disabled(): boolean {
     return this.product.active === "False" || this.product.stock <= 0
   }
 

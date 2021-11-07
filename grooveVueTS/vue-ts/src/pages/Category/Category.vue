@@ -22,7 +22,6 @@
 <script lang="ts">
 
 import { Options, Vue } from "vue-class-component"
-import App from "@/App.vue"
 import ProductCard from "@/components/Product/ProductCard.vue"
 import CategoryModel from "@/state/category/CategoryModel"
 import store from '@/store'
@@ -33,7 +32,7 @@ import store from '@/store'
     ProductCard
   },
   props: {
-    category_slug: String
+    category_id: String
   }
 })
 
@@ -62,8 +61,8 @@ export default class CategoryVue extends Vue {
   }
 
   public fetchCategory(): void {
-    const categorySlug = this.$route.params.category_slug
-    store.dispatch('category/fetchCategoryFromRemote', categorySlug)
+    const categoryId = this.$route.params.category_id
+    store.dispatch('category/fetchCategoryFromRemote', categoryId)
   }
 
 }

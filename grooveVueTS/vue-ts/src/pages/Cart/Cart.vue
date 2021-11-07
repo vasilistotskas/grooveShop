@@ -46,6 +46,7 @@ import App from "@/App.vue"
 import CartItem from '@/components/Cart/CartItem.vue'
 import { Options, Vue } from "vue-class-component"
 import store from '@/store'
+import CartItemModel from "@/state/cart/CartItemModel";
 
 @Options({
     name: "CartVue",
@@ -56,7 +57,7 @@ import store from '@/store'
 
 export default class CartVue extends Vue {
 
-    get cart(): {} {
+    get cart(): Array<CartItemModel> {
         return store.getters['cart/getCart']
     }
 
@@ -68,7 +69,7 @@ export default class CartVue extends Vue {
         return store.getters['cart/getCartTotalPrice']
     }
 
-  public removeFromCart(item: object) {
+  public removeFromCart(item: CartItemModel) {
     store.commit('cart/removeFromCart', item)
   }
 }

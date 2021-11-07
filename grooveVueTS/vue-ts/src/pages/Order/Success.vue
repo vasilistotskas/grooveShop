@@ -18,7 +18,5 @@ import { Options, Vue } from "vue-class-component"
   name: "Checkout"
 })
 
-export default class Success extends Vue {
-
-}
+export default class Success extends Vue {}
 </script>

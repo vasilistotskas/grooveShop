@@ -14,6 +14,4 @@ const i18n = createI18n({
     silentTranslationWarn: true
 })
 
-
-// @ts-ignore
 export { i18n }

@@ -87,7 +87,7 @@
 
               <div class="form-outline">
                 <label for="inputCountry" class="form-label">Country</label>
-                <select name="country" id="inputCountry" class="form-select" v-model="customerDetails.country" v-on:change="handle">
+                <select name="country" id="inputCountry" class="form-select" v-model="customerDetails.country" @:change="restRegions">
                   <option disabled value="choose">Choose...</option>
                   <option
                       v-for="country in availableCountries"
@@ -183,7 +183,7 @@ export default class Checkout extends Vue {
     return store.getters['cart/getCartTotalPrice']
   }
 
-  get stripeResultToken(): any {
+  get stripeResultToken(): string {
     return store.getters['stripeCard/getResultToken']
   }
 
@@ -206,7 +206,7 @@ export default class Checkout extends Vue {
     this.customerDetailsInitialize()
   }
 
-  async handle(e: any): Promise<void> {
+  async restRegions(e: any): Promise<void> {
     const countryAlpha2Key = e.target.value
     await store.dispatch('country/findRegionsBasedOnAlphaFromInput', countryAlpha2Key)
     this.customerDetails.region = 'choose'

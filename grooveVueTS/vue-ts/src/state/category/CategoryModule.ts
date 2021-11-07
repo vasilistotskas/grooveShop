@@ -44,9 +44,9 @@ export default class CategoryModule
     }
 
     @Action
-    async fetchCategoryFromRemote(categorySlug: CategoryModel['slug']) {
+    async fetchCategoryFromRemote(categoryId: CategoryModel['id']) {
         // @todo na parw slug product/category apo state
-        await api.get(`products/${categorySlug}/`)
+        await api.get(`products/${categoryId}/`)
            .then((response: ResponseData) => {
                const data = response.data[0]
                let category = new CategoryModel(data)

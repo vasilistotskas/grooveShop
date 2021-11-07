@@ -1,7 +1,7 @@
 <template>
   <a @click="favouriteHandle()">
     <div class="control favourite-content">
-      <i :class=getFavouriteIconClass()></i>
+      <i :class=favouriteIconClass()></i>
     </div>
   </a>
 </template>
@@ -46,7 +46,7 @@ export default {
           })
         })
     },
-    getFavouriteIconClass() {
+    favouriteIconClass(): string {
       return !this.isFavourite ? 'far fa-heart' : 'fas fa-heart'
     }
   }

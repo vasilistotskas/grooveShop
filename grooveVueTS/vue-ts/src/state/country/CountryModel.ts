@@ -1,4 +1,5 @@
 import EntityBase from "@/state/common/EntityBase"
+import RegionsModel from "@/state/country/RegionsModel"
 
 export default class CountryModel extends EntityBase
 {
@@ -7,7 +8,7 @@ export default class CountryModel extends EntityBase
     alpha_3!: string
     iso_cc!: number
     phone_code!: number
-    regions!: Array<any>
+    regions!: RegionsModel
 
     constructor(data?: Partial<CountryModel>) {
         super(data)

@@ -42,7 +42,7 @@
 
             <div class="col-md-6">
               <label for="inputCountry" class="form-label">Country</label>
-              <select name="country" id="inputCountry" class="form-select" v-model="userDetails.country" @change="handle">
+              <select name="country" id="inputCountry" class="form-select" v-model="userDetails.country" @change="restRegions">
                 <option disabled value="choose">Choose...</option>
                 <option
                     v-for="country in availableCountries"
@@ -155,7 +155,7 @@ export default class AccountSettings extends Vue {
     this.userDetailsInitialize()
   }
 
-  async handle(e: any): Promise<void> {
+  async restRegions(e: any): Promise<void> {
     const countryAlpha2Key = e.target.value
     await store.dispatch('country/findRegionsBasedOnAlphaFromInput', countryAlpha2Key)
     this.userDetails.region = 'choose'

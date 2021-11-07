@@ -26,7 +26,7 @@
             <td>{{ item.product.name }}</td>
             <td>${{ item.product.price }}</td>
             <td>{{ item.quantity }}</td>
-            <td>${{ getItemTotal(item).toFixed(2) }}</td>
+            <td>${{ itemTotal(item).toFixed(2) }}</td>
           </tr>
           </tbody>
         </table>
@@ -56,7 +56,7 @@ export default class orderSummary extends Vue{
   get orders(): UserOrderModel {
     return store.getters['user/order/getUserOrders']
   }
-  getItemTotal(item: CartItemModel): number {
+  itemTotal(item: CartItemModel): number {
     return item.quantity * item.product.price
   }
 }

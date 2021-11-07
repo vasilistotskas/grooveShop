@@ -33,10 +33,12 @@ import store from '@/store'
 })
 
 export default class MyAccount extends Vue {
+
   protected logout(): void {
     store.commit('user/data/unsetUserData')
     router.push('/')
   }
+
 }
 </script>
 
