@@ -46,7 +46,6 @@
 <script lang="ts">
 import FavouriteButton from '@/components/Product/FavouriteButton.vue'
 import RateProductModal from '@/modals/Product/RateProductModal.vue'
-import App from "@/App.vue"
 import { Options, Vue } from "vue-class-component"
 import ProductModel from "@/state/product/ProductModel"
 import store from '@/store'
@@ -94,6 +93,7 @@ export default class ProductVue extends Vue {
   }
 
   async mounted(): Promise<void> {
+    document.title = <string>this.$route.params.product_slug
     await store.dispatch('product/productFromRemote')
     await store.dispatch('product/updateProductHits')
   }

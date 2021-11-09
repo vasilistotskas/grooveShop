@@ -77,7 +77,6 @@
 </template>
 
 <script lang="ts">
-import App from "@/App.vue"
 import { Options, Vue } from "vue-class-component"
 import { first, last, filter, times, constant } from 'lodash'
 import CountryModel from "@/state/country/CountryModel";

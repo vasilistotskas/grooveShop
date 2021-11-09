@@ -18,7 +18,6 @@
 <script lang="ts">
 
 import {Options, Vue} from "vue-class-component"
-import App from "@/App.vue"
 import ProductModel from "@/state/product/ProductModel"
 import store from '@/store'
 

@@ -7,10 +7,10 @@ import UserModule from '@/state/user/UserModule'
 import SearchModule from '@/state/search/SearchModule'
 import UserDataModule from '@/state/user/data/UserDataModule'
 import UserOrderModule from '@/state/user/order/UserOrderModule'
-import UserFavouriteModule from '@/state/user/favourite/UserFavouriteModule'
+import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 import Iban from '@/libraries/Stripe/Components/Iban'
 import Card from '@/libraries/Stripe/Components/Card'
-import UserReviewModule from '@/state/user/review/UserReviewModule'
+import ProductReviewModule from '@/state/product/review/ProductReviewModule'
 import CartModule from '@/state/cart/CartModule'
 import CountryModule from '@/state/country/CountryModule'
 
@@ -30,8 +30,8 @@ const stateDirectory = <Record<string, typeof AppBaseModule>>{
     'user': UserModule,
     'user.data': UserDataModule,
     'user.order': UserOrderModule,
-    'user.favourite': UserFavouriteModule,
-    'user.review': UserReviewModule,
+    'user.favourite': ProductFavouriteModule,
+    'user.review': ProductReviewModule,
     'cart': CartModule,
     'search': SearchModule,
     'country': CountryModule,

@@ -124,7 +124,6 @@
 </template>
 
 <script lang="ts">
-import App from "@/App.vue"
 import { Options, Vue } from "vue-class-component"
 import store from "@/store"
 import UserDetailsModel from "@/state/user/data/UserDetailsModel"
@@ -198,7 +197,7 @@ export default class Checkout extends Vue {
   }
 
   async mounted(): Promise<void> {
-    document.title = 'Checkout | grooveShop'
+    document.title = 'Checkout'
     if(this.isAuthenticated){
       await store.dispatch('user/data/userDataFromRemote')
       await store.dispatch('country/findRegionsBasedOnAlphaForLoggedCustomer')

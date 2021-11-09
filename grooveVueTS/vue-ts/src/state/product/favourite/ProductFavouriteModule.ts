@@ -2,7 +2,7 @@ import {Action, Module, Mutation} from "vuex-module-decorators"
 import AppBaseModule from "@/state/common/AppBaseModule"
 import api from "@/api/api.service"
 import ResponseData from "@/state/types/ResponseData"
-import UserFavouriteModel from "@/state/user/favourite/UserFavouriteModel"
+import ProductFavouriteModel from "@/state/product/favourite/ProductFavouriteModel"
 import router from "@/routes"
 import store from "@/store"
 import { useToast } from 'vue-toastification'
@@ -10,13 +10,13 @@ import { useToast } from 'vue-toastification'
 const toast = useToast()
 
 @Module({ namespaced: true })
-export default class UserFavouriteModule
+export default class ProductFavouriteModule
     extends AppBaseModule
 {
 
-    favourites = [new UserFavouriteModel()]
+    favourites = [new ProductFavouriteModel()]
 
-    get getFavouriteData(): UserFavouriteModel[] {
+    get getFavouriteData(): ProductFavouriteModel[] {
         return this.favourites
     }
 
@@ -27,7 +27,7 @@ export default class UserFavouriteModule
     }
 
     @Mutation
-    setUserFavourites(favourites: UserFavouriteModel[]) {
+    setUserFavourites(favourites: ProductFavouriteModel[]) {
         this.favourites = favourites
     }
 
@@ -37,7 +37,7 @@ export default class UserFavouriteModule
     }
 
     @Action
-    async toggleFavourite(product: UserFavouriteModel): Promise<string | undefined> {
+    async toggleFavourite(product: ProductFavouriteModel): Promise<string | undefined> {
         const IsAuthenticated: boolean = store.getters['user/data/getIsAuthenticated']
         if(IsAuthenticated){
             try {

@@ -33,6 +33,9 @@ import store from '@/store'
 })
 
 export default class MyAccount extends Vue {
+  mounted() {
+    document.title = 'My Account'
+  }
 
   protected logout(): void {
     store.commit('user/data/unsetUserData')

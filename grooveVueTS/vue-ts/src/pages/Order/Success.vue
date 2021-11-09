@@ -11,12 +11,15 @@
 </template>
 
 <script lang="ts">
-import App from "@/App.vue"
 import { Options, Vue } from "vue-class-component"
 
 @Options({
   name: "Checkout"
 })
 
-export default class Success extends Vue {}
+export default class Success extends Vue {
+  mounted() {
+    document.title = 'Order Success'
+  }
+}
 </script>

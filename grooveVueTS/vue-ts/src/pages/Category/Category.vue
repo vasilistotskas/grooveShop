@@ -51,6 +51,7 @@ export default class CategoryVue extends Vue {
 
   async mounted(): Promise<void> {
     await this.fetchCategory()
+    document.title = this.$route.params.absolute_url + ' Category'
     // this.$nextTick(function () {
     //   console.log('ssss')
     // })

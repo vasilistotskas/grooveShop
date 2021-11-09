@@ -6,7 +6,6 @@
 
 
 <script lang="ts">
-import App from "@/App.vue"
 import { Options, Vue } from "vue-class-component"
 import ProductModel from "@/state/product/ProductModel"
 import store from '@/store'

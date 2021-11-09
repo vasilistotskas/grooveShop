@@ -98,6 +98,10 @@ export default class LogIn extends Vue {
   username!: string
   password!: string
 
+  mounted() {
+    document.title = 'Log In'
+  }
+
   async submitForm() {
 
     axios.defaults.headers.common["Authorization"] = ""

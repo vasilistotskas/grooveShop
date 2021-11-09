@@ -108,6 +108,10 @@ let {
 
 export default class SignUp extends Vue {
 
+  mounted() {
+    document.title = 'Sign Up'
+  }
+
   formManager = {
     form,
     submitting,
@@ -167,7 +171,6 @@ export default class SignUp extends Vue {
         // @ts-ignore
         password: formData.password
       }
-      console.log(apiData)
       await store.dispatch('user/userSignUp', apiData)
     } catch (e) {
       if (e instanceof ValidationError) {

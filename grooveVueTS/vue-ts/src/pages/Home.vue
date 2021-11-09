@@ -1,16 +1,5 @@
 <template>
   <div class="home">
-<!--    <section class="bg-dark mb-6">-->
-<!--      <div class="text-center p-3">-->
-<!--        <h1 class="title mb-6 text-light">-->
-<!--          {{ $t('eshop.test1') }}-->
-<!--        </h1>-->
-<!--        <h3 class="subtitle text-light">-->
-<!--          {{ $t('eshop.test2') }}-->
-<!--        </h3>-->
-<!--      </div>-->
-<!--    </section>-->
-
     <div class="container mt-3 mb-5">
       <div class="row">
         <div class="col-12 mb-5">
@@ -27,8 +16,6 @@
 </template>
 
 <script lang="ts">
-
-import App from "@/App.vue"
 import { Options, Vue } from "vue-class-component"
 import ProductCard from "@/components/Product/ProductCard.vue"
 import store from '@/store'

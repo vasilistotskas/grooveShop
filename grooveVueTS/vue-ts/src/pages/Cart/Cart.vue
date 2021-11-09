@@ -42,7 +42,6 @@
 </template>
 
 <script lang="ts">
-import App from "@/App.vue"
 import CartItem from '@/components/Cart/CartItem.vue'
 import { Options, Vue } from "vue-class-component"
 import store from '@/store'
@@ -56,6 +55,10 @@ import CartItemModel from "@/state/cart/CartItemModel";
 })
 
 export default class CartVue extends Vue {
+
+    mounted() {
+        document.title = 'Cart'
+    }
 
     get cart(): Array<CartItemModel> {
         return store.getters['cart/getCart']
