@@ -102,7 +102,11 @@ class Search(APIView):
         query = request.data.get('query', '')
 
         if query:
-            products = Product.objects.filter(Q(name__icontains=query) | Q(description__icontains=query))
+            products = Product.objects.filter(
+                Q(name__icontains=query) |
+                Q(description__icontains=query) |
+                Q(id__icontains=query)
+            )
             serializer = ProductSerializer(products, many=True, context={'user': self.request.user})
             return Response(serializer.data)
         else:

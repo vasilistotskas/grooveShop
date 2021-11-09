@@ -104,10 +104,6 @@ export default class RateProductModal extends Vue {
   newSelectionRatio: number = 0
   selectedRatio: number = 0
 
-  get availableCountries(): CountryModel {
-    return store.getters['country/getCountries']
-  }
-
   public lockSelection(event: MouseEvent) {
     this.updateIsEditable(true)
     this.updateNewSelectionRatio(event)
