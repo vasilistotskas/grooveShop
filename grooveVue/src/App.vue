@@ -1,66 +1,18 @@
 <template>
   <div id="wrapper">
-    <nav class="navbar is-dark">
-      <div class="navbar-brand">
-        <router-link to="/" class="navbar-item"><strong>grooveShop</strong></router-link>
 
-        <a class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu" @click="showMobileMenu = !showMobileMenu">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
+    <Navbar
+        v-bind:showMobileMenu="showMobileMenu"
+        v-bind:cartTotalLength="cartTotalLength"
+        v-bind:categories="categories"
+    />
+
+   Loading Spinner
+      <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading': $store.state.isLoading }">
+        <div v-if="$store.state.isLoading" class="lds-dual-ring"></div>
       </div>
 
-      <div class="navbar-menu" id="navbar-menu" v-bind:class="{'is-active': showMobileMenu }">
-        <div class="navbar-start">
-          <div class="navbar-item">
-            <form method="get" action="/search">
-              <div class="field has-addons">
-                <div class="control">
-                  <input type="text" class="input" placeholder="What are you looking for?" name="query">
-                </div>
-
-                <div class="control">
-                  <button class="button is-success">
-                      <span class="icon">
-                      <i class="fas fa-search"></i>
-                      </span>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <div class="navbar-end">
-          <router-link to="/summer" class="navbar-item">Summer</router-link>
-          <router-link to="/winter" class="navbar-item">Winter</router-link>
-
-          <div class="navbar-item">
-            <div class="buttons">
-              <template v-if="$store.state.isAuthenticated">
-                <router-link to="/my-account" class="button is-light">My account</router-link>
-              </template>
-
-              <template v-else>
-                <router-link to="/log-in" class="button is-light">Log in</router-link>
-              </template>
-
-              <router-link to="/cart" class="button is-success">
-                <span class="icon"><i class="fas fa-shopping-cart"></i></span>
-                <span>Cart ({{ cartTotalLength }})</span>
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-
-    <div class="is-loading-bar has-text-centered" v-bind:class="{'is-loading': $store.state.isLoading }">
-      <div class="lds-dual-ring"></div>
-    </div>
-
-    <section class="section">
+    <section class="mb-5">
       <router-view/>
     </section>
 
@@ -72,40 +24,69 @@
 
 <script>
 import axios from 'axios'
+import {mapGetters} from 'vuex'
+import Navbar from '@/components/Navbar'
 
 export default {
+  components: {
+    Navbar
+  },
   data() {
     return {
-      showMobileMenu: false,
-      cart: {
-        items: []
-      }
+      showMobileMenu: false
     }
   },
   beforeCreate() {
     this.$store.commit('initializeStore')
+    this.$store.dispatch('getCategories')
+
+    if (this.$store.state.isAuthenticated) {
+      this.$store.dispatch('getUserData')
+    }
 
     const token = this.$store.state.token
 
     if (token) {
-        axios.defaults.headers.common['Authorization'] = "Token " + token
+      axios.defaults.headers.common['Authorization'] = "Token " + token
     } else {
-        axios.defaults.headers.common['Authorization'] = ""
+      axios.defaults.headers.common['Authorization'] = ""
     }
   },
-  mounted() {
-    this.cart = this.$store.state.cart
-  },
   computed: {
-      cartTotalLength() {
-          let totalLength = 0
-
-          for (let i = 0; i < this.cart.items.length; i++) {
-              totalLength += this.cart.items[i].quantity
-          }
-
-          return totalLength
+    userData: {
+      get() {
+        return this.$store.getters['getStateUserData']
       }
+    },
+    favourites: {
+      get() {
+        return this.$store.getters['getStateUserFavourites']
+      }
+    },
+    reviews: {
+      get() {
+        return this.$store.getters['getStateUserReviews']
+      }
+    },
+    cart: {
+      get() {
+        return this.$store.getters['getStateCartData']
+      }
+    },
+    categories: {
+      get() {
+        return this.$store.getters['getStateCategories']
+      }
+    },
+    cartTotalLength() {
+      let totalLength = 0
+
+      for (let i = 0; i < this.cart.items.length; i++) {
+        totalLength += this.cart.items[i].quantity
+      }
+
+      return totalLength
+    }
   }
 }
 </script>
@@ -113,11 +94,42 @@ export default {
 <style lang="scss">
 @import '../node_modules/bulma';
 
+section{
+  padding-top: 75px;
+}
+
+.main-navbar{
+  z-index: 99999!important;
+}
+
+::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #555;
+}
+
 .lds-dual-ring {
   display: inline-block;
   width: 80px;
   height: 80px;
+  position: absolute;
+  top: 50%;
 }
+
 .lds-dual-ring:after {
   content: " ";
   display: block;
@@ -129,6 +141,7 @@ export default {
   border-color: #ccc transparent #ccc transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
+
 @keyframes lds-dual-ring {
   0% {
     transform: rotate(0deg);
@@ -146,7 +159,31 @@ export default {
   transition: all 0.3s;
 
   &.is-loading {
-    height: 80px;
+    z-index: 99999;
+    background: aliceblue;
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    background: aliceblue;
+    align-items: flex-end;
+    bottom: 0;
+    display: -webkit-box;
+    width: 100%;
+    height: auto;
+    display: -ms-flexbox;
+    display: block;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    left: 0;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    opacity: 1;
+    visibility: visible;
+    -ms-touch-action: none;
+    touch-action: none;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
 }
 </style>

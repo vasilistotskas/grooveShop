@@ -1,8 +1,9 @@
 from rest_framework import serializers
-
+from rest_framework.fields import CurrentUserDefault
 from .models import Order, OrderItem
 
 from product.serializers import ProductSerializer
+
 
 class MyOrderItemSerializer(serializers.ModelSerializer):    
     product = ProductSerializer()
@@ -14,6 +15,7 @@ class MyOrderItemSerializer(serializers.ModelSerializer):
             "product",
             "quantity",
         )
+
 
 class MyOrderSerializer(serializers.ModelSerializer):
     items = MyOrderItemSerializer(many=True)
@@ -34,6 +36,7 @@ class MyOrderSerializer(serializers.ModelSerializer):
             "paid_amount"
         )
 
+
 class OrderItemSerializer(serializers.ModelSerializer):    
     class Meta:
         model = OrderItem
@@ -43,6 +46,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
             "quantity",
         )
 
+
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
 
@@ -50,6 +54,7 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = (
             "id",
+            "user",
             "first_name",
             "last_name",
             "email",
