@@ -41,8 +41,8 @@
 
           <div class="col-md-6">
             <label for="inputCountry" class="form-label">Country</label>
-            <select name="country" id="inputCountry" class="form-select" v-model="userDetails.country_alpha" @change="resetRegion">
-              <option disabled value="-1">Choose...</option>
+            <select name="country" id="inputCountry" class="form-select" v-model="userDetails.country" @change="resetRegion">
+              <option disabled value="choose">Choose...</option>
               <option
                   v-for="country in availableCountries"
                   :key="country.alpha_2"
@@ -55,7 +55,7 @@
           <div class="col-md-6">
             <label for="inputRegion" class="form-label">Region</label>
             <select name="region" id="inputRegion" class="form-select" v-model="userDetails.region">
-              <option disabled value="-1">Choose...</option>
+              <option disabled value="choose">Choose...</option>
               <option
                   v-for="region in regionsBasedOnAlpha"
                   :key="region.alpha"
@@ -109,14 +109,22 @@ export default {
     userDetails: {
       get() {
         return this.$store.getters['getStateUserDetails']
-      },
-      set(value) {
-        this.$store.commit('updateUserDetails', value)
       }
     },
     fullName: {
       get() {
-        return this.userDetails.first_name + ' ' + this.userDetails.last_name
+        let first_name = this.userDetails.first_name
+        let last_name = this.userDetails.last_name
+
+        if (first_name === null) {
+          first_name = ''
+        }
+
+        if (last_name === null) {
+          last_name = ''
+        }
+
+        return first_name + ' ' + last_name
       },
     },
     availableCountries: {
@@ -131,17 +139,17 @@ export default {
     }
   },
   watch:{
-    'userDetails.country_alpha': function (newVal, oldVal){
+    'userDetails.country': function (newVal, oldVal){
       this.$store.dispatch('getRegionsBasedOnAlpha', newVal)
     }
   },
   methods: {
     resetRegion() {
-      this.userDetails.region = '-1'
+      this.userDetails.region = 'choose'
     },
     submitForm() {
       this.errors = []
-      if (this.userDetails.region === '-1') {
+      if (this.userDetails.region === 'choose') {
         this.errors.push('The region field is missing!')
       }
       if (!this.errors.length) {
@@ -154,16 +162,36 @@ export default {
     },
     updateUserProfile() {
       const data = new FormData(document.getElementById('userDetailsForm'))
-      data.append('address', this.userDetails.address)
-      data.append('email', this.userDetails.email)
-      data.append('first_name', this.userDetails.first_name)
-      data.append('last_name', this.userDetails.last_name)
-      data.append('phone', this.userDetails.phone)
-      data.append('place', this.userDetails.place)
-      data.append('city', this.userDetails.city)
-      data.append('country_alpha', this.userDetails.country_alpha)
-      data.append('region', this.userDetails.region)
-      data.append('zipcode', this.userDetails.zipcode)
+
+      if (this.userDetails.address !== null){
+        data.append('address', this.userDetails.address)
+      }
+      if (this.userDetails.email !== null){
+        data.append('email', this.userDetails.email)
+      }
+      if (this.userDetails.first_name !== null){
+        data.append('first_name', this.userDetails.first_name)
+      }
+      if (this.userDetails.last_name !== null){
+        data.append('last_name', this.userDetails.last_name)
+      }
+      if (this.userDetails.phone !== null){
+        data.append('phone', this.userDetails.phone)
+      }
+      if (this.userDetails.place !== null){
+        data.append('place', this.userDetails.place)
+      }
+      if (this.userDetails.city !== null){
+        data.append('city', this.userDetails.city)
+      }
+      if (this.userDetails.zipcode !== null){
+        data.append('zipcode', this.userDetails.zipcode)
+      }
+
+      if (this.userDetails.country !== null){
+        data.append('country', this.userDetails.country)
+        data.append('region', this.userDetails.region)
+      }
 
       this.$store.dispatch('updateUserDetailsAction', data)
           .then(success => {

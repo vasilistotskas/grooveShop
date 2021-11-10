@@ -13,6 +13,14 @@ from .models import Order, OrderItem
 from .serializers import OrderSerializer, MyOrderSerializer
 
 
+def decreaseProductStock(product):
+    for item in product:
+        quantity = item.get('quantity')
+        product = item.get('product')
+        product.stock -= quantity
+        product.save(update_fields=['stock'])
+
+
 class Checkout(APIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
@@ -21,7 +29,8 @@ class Checkout(APIView):
         serializer = OrderSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             stripe.api_key = settings.STRIPE_SECRET_KEY
-            paid_amount = sum(item.get('quantity') * item.get('product').price for item in serializer.validated_data['items'])
+            items = serializer.validated_data['items']
+            paid_amount = sum(item.get('quantity') * item.get('product').price for item in items)
 
             try:
                 charge = stripe.Charge.create(
@@ -30,6 +39,8 @@ class Checkout(APIView):
                     description='Charge from grooveShop',
                     source=serializer.validated_data['stripe_token']
                 )
+
+                decreaseProductStock(items)
 
                 if request.data.get('user_id'):
                     user_id = request.data.get('user_id')
@@ -50,7 +61,8 @@ class OrdersList(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request, format=None):
+    @staticmethod
+    def get(request, format=None):
         orders = Order.objects.filter(user=request.user)
         serializer = MyOrderSerializer(orders, many=True)
         return Response(serializer.data)

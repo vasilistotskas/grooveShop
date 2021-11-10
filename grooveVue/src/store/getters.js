@@ -1,3 +1,5 @@
+import { some } from 'lodash'
+
 export default {
     getStateCategories: state => state.categories,
     getStateCategory: state => state.category,
@@ -8,11 +10,15 @@ export default {
     getStateLatestProducts: state => state.latestProducts,
     getStateProductExtraImages: state => state.product.images,
     getStateUserData: state => state.userData,
+    getStateUserFavourites: state => state.favourites,
+    getStateUserReviews: state => state.reviews,
     getStateCartData: state => state.cart,
-    getStateUserDetails: state => state.UserDetails,
+    getStateUserDetails: state => state.userDetails,
     getStateUserOrders: state => state.orders,
-    getStateIsFavourite: state => state.isFavourite,
-    getFavouriteId: state => state.userData.favourite_id,
+    getStateIsCurrentProductInFavourites: (state) => (productId) => {
+        return some(state.favourites, {'product_id': productId})
+    },
     getUserId: state => state.userData.id,
-    isUserInitialized: state => ('id' in state.userData)
+    isUserInitialized: state => ('id' in state.userData),
+    isProductInitialized: state => ('id' in state.product)
 }

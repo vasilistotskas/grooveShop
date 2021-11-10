@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Product, ProductImages, Favourite, FavouriteItem
+from .models import Category, Product, ProductImages, Favourite, Review
 
 
 class ImagesSerializer(serializers.ModelSerializer):
@@ -13,7 +13,6 @@ class ImagesSerializer(serializers.ModelSerializer):
         )
 
 
-
 class ProductSerializer(serializers.ModelSerializer):
     images = ImagesSerializer(source='productimages_set', many=True, read_only=True)
 
@@ -22,16 +21,38 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "name",
-            "get_absolute_url",
+            "slug",
+            "category",
+            "absolute_url",
             "description",
             "price",
+            "vat",
+            "vat_percent",
+            "vat_value",
+            "final_price",
+            "hits",
+            "likes_counter",
+            "stock",
+            "active",
+            "discount_percent",
+            "discount_value",
+            "date_added",
             "main_image",
+            "review_avarage",
+            "review_counter",
             "images"
         )
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    products = ProductSerializer(many=True)
+    # products = ProductSerializer(many=True)
+    all_tree_products = serializers.SerializerMethodField('get_all_products_of_tree')
+
+    def get_all_products_of_tree(self, category):
+        # if category.get_children():
+        qs = Product.objects.filter(category__in=category.get_descendants(include_self=True))
+        serializer = ProductSerializer(instance=qs, many=True)
+        return serializer.data
 
     class Meta:
         model = Category
@@ -44,44 +65,38 @@ class CategorySerializer(serializers.ModelSerializer):
             "image_url",
             "parent",
             "tags",
-            "get_absolute_url",
-            "products"
+            "level",
+            "tree_id",
+            "absolute_url",
+            # "products",
+            "recursive_product_count",
+            "all_tree_products"
         )
-
-
-class FavouriteItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(many=False)
-
-    class Meta:
-        model = FavouriteItem
-        fields = (
-            'id',
-            "favourite_id",
-            "is_favourite",
-            "product"
-        )
-
-    def create(self, validated_data):
-
-        product_data = validated_data.pop('product')
-        user = self.context.get('request').user
-        favourite_id = Favourite.objects.get(user=user).id
-
-        if product_data:
-            product = Product.objects.get_or_create(**product_data)[0]
-            validated_data['product'] = product
-
-
-        return FavouriteItem.objects.create(favourite_id=favourite_id, **validated_data)
 
 
 class FavouriteSerializer(serializers.ModelSerializer):
-    favourite_items = FavouriteItemSerializer(many=True)
 
     class Meta:
         model = Favourite
         fields = (
             "id",
-            "user",
-            "favourite_items"
+            "user_id",
+            "product_id"
+        )
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Review
+        fields = (
+            "id",
+            "product_id",
+            "user_id",
+            "subject",
+            "comment",
+            "rate",
+            "status",
+            "created_at",
+            "updated_at"
         )

@@ -54,29 +54,32 @@ export default {
         state.userData = userData
     },
     setUserDetails(state, UserDetails) {
-        state.UserDetails = UserDetails
+        state.userDetails = UserDetails
     },
-    setFavourite(state, isFavourite) {
-        state.isFavourite = isFavourite
+    setUserFavourites(state, favourites) {
+        state.favourites = favourites
+    },
+    unsetUserFavourites(state) {
+        state.favourites = {}
+    },
+    setUserReviews(state, reviews) {
+        state.reviews = reviews
+    },
+    unsetUserReviews(state) {
+        state.reviews = {}
     },
     // for later to check user profile changes
     updateUserData(state, userData) {
         state.userData = userData
     },
     updateUserDetails(state, UserDetails) {
-        state.UserDetails = UserDetails
-    },
-    updateIsFavourite(state, isFavourite) {
-        state.isFavourite = isFavourite
+        state.userDetails = UserDetails
     },
     unsetUserData(state) {
         state.userData = {}
     },
     unsetUserDetails(state) {
         state.userDetails = {}
-    },
-    unsetIsFavourite(state) {
-        state.isFavourite = false
     },
     clearCart(state) {
         state.cart = {items: []}

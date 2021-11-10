@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import UserProfile, Country, Region
 from django.contrib.auth.models import User
-
+from helpers.image_resize import make_thumbnail
 
 class RegionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,17 +19,11 @@ class CountrySerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    favourite_id = serializers.SerializerMethodField('get_favourite_id')
-    country = CountrySerializer()
-    country_alpha = serializers.CharField(source='country.alpha_2')
-
-    def get_favourite_id(self, request):
-        return request.user.favourite.id
 
     class Meta:
         model = UserProfile
-        fields = ['id', 'user', 'country', 'country_alpha', 'favourite_id', 'first_name', 'last_name', 'phone', 'email', 'city', 'zipcode', 'address',
-                  'place', 'region', 'image']
+        fields = ['id', 'user', 'country', 'first_name', 'last_name', 'phone', 'email', 'city', 'zipcode', 'address',
+                  'place', 'region', 'image', 'image_url']
 
     def update(self, instance, validated_data):
         # * User Profile Info
@@ -47,18 +41,25 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'place', instance.place)
         instance.city = validated_data.get(
             'city', instance.city)
-        instance.region = validated_data.get(
-            'region', instance.region)
         instance.zipcode = validated_data.get(
             'zipcode', instance.zipcode)
-        instance.image = validated_data.get(
-            'image', instance.image)
+
+        # check if user change image then resize it
+        uploaded_image = validated_data.get('image')
+        if uploaded_image:
+            size = (100, 100)
+            image = make_thumbnail(uploaded_image, size)
+            instance.image = image
 
         country = validated_data.get('country')
-        if country:
-            instance.country.alpha_2 = country.get('alpha_2')
-            updated_country = Country.objects.get(alpha_2=instance.country.alpha_2)
-            instance.country = updated_country
+        instance.country = country
+        if not instance.country:
+            instance.country = None
+
+        region = validated_data.get('region')
+        instance.region = region
+        if not instance.region:
+            instance.region = None
 
         instance.save()
 

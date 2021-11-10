@@ -56,17 +56,21 @@ export default {
     userData: {
       get() {
         return this.$store.getters['getStateUserData']
-      },
-      set(value) {
-        this.$store.commit('updateUserData', value)
+      }
+    },
+    favourites: {
+      get() {
+        return this.$store.getters['getStateUserFavourites']
+      }
+    },
+    reviews: {
+      get() {
+        return this.$store.getters['getStateUserReviews']
       }
     },
     cart: {
       get() {
         return this.$store.getters['getStateCartData']
-      },
-      set(value) {
-        this.$store.commit('updateUserData', value)
       }
     },
     categories: {

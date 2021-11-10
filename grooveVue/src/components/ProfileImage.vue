@@ -19,9 +19,6 @@
 
 <script>
 
-
-import {toast} from "bulma-toast";
-
 export default {
   name: 'ProfileImage',
   props: {

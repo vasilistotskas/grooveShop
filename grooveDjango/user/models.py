@@ -11,7 +11,7 @@ class Country(models.Model):
     alpha_2 = models.CharField(max_length=2, primary_key=True)
     alpha_3 = models.CharField(max_length=3)
     iso_cc = models.PositiveSmallIntegerField(blank=True, null=True)
-    phone_code = models.CharField(max_length=10)
+    phone_code = models.PositiveSmallIntegerField(blank=True, null=True)
 
     class Meta:
         verbose_name_plural = "Countries"
@@ -36,10 +36,10 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='userprofile', on_delete=models.CASCADE)
     first_name = models.CharField(max_length=20, blank=True, null=True)
     last_name = models.CharField(max_length=20, blank=True, null=True)
-    phone = models.CharField(max_length=20, blank=True, null=True)
+    phone = models.PositiveIntegerField(blank=True, null=True)
     email = models.CharField(max_length=50, blank=True, null=True)
     city = models.CharField(max_length=50, blank=True, null=True)
-    zipcode = models.CharField(max_length=20, blank=True, null=True)
+    zipcode = models.PositiveIntegerField(blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
     place = models.CharField(max_length=50, blank=True, null=True)
     country = models.ForeignKey(Country, null=True, blank=True, default=None, on_delete=models.SET_NULL)
@@ -51,6 +51,10 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def image_url(self):
+        print(self.image.url)
+        return 'http://127.0.0.1:8000' + self.image.url
 
     def image_tag(self):
         if self.image:

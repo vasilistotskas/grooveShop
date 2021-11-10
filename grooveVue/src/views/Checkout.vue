@@ -98,7 +98,7 @@
 
             <div class="field">
               <label for="inputCountry" class="form-label">Country</label>
-              <select name="country" id="inputCountry" class="form-select" v-model="customerDetails.country_alpha" @change="resetRegion">
+              <select name="country" id="inputCountry" class="form-select" v-model="customerDetails.country" @change="resetRegion">
                 <option disabled value="choose">Choose...</option>
                 <option
                     v-for="country in availableCountries"
@@ -140,8 +140,7 @@
 </template>
 
 <script>
-import axios from 'axios'
-import {toast} from "bulma-toast";
+import {isEmpty} from "lodash";
 
 export default {
   name: 'Checkout',
@@ -159,7 +158,7 @@ export default {
       address: '',
       city: '',
       region: '',
-      country_alpha: '',
+      country: '',
       zipcode: '',
       place: '',
       errors: []
@@ -200,12 +199,14 @@ export default {
       }
     }
   },
-  created() {
-    this.customerDataInitialize()
+  beforeCreate() {
     this.$store.dispatch('getCountries')
     if (this.$store.state.isAuthenticated) {
       this.$store.dispatch('getUserData')
     }
+  },
+  created() {
+    this.customerDataInitialize()
   },
   mounted() {
     document.title = 'Checkout | grooveShop'
@@ -217,7 +218,7 @@ export default {
     }
   },
   watch:{
-    'customerDetails.country_alpha': function (newVal, oldVal){
+    'customerDetails.country': function (newVal, oldVal){
       this.$store.dispatch('getRegionsBasedOnAlpha', newVal)
     }
   },
@@ -225,7 +226,7 @@ export default {
     resetRegion() {
       // ?????
       if (!this.$store.state.isAuthenticated) {
-        this.$store.dispatch('getRegionsBasedOnAlpha', this.customerDetails.country_alpha)
+        this.$store.dispatch('getRegionsBasedOnAlpha', this.customerDetails.country)
       }
       this.customerDetails.region = 'choose'
 
@@ -236,7 +237,7 @@ export default {
       } else {
         this.customerDetails.address = this.address
         this.customerDetails.city = this.city
-        this.customerDetails.country_alpha = this.country_alpha
+        this.customerDetails.country = this.country
         this.customerDetails.email = this.email
         this.customerDetails.first_name = this.first_name
         this.customerDetails.last_name = this.last_name

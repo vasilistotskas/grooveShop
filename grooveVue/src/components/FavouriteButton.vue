@@ -1,7 +1,7 @@
 <template>
   <a @click="favouriteHandle()">
     <div class="control favourite-content">
-      <i :class=getFavouriteIconClass()></i>
+      <i :class=favouriteIconClass()></i>
     </div>
   </a>
 </template>
@@ -9,20 +9,17 @@
 
 <script>
 
-import {toast} from "bulma-toast";
-import {mapGetters} from "vuex";
-
 export default {
   name: 'FavouriteButton',
   props: {
     product: Object
   },
   computed: {
-    ...mapGetters({'isFavourite': 'getStateIsFavourite'})
-  },
-  updated() {
-    if (this.$store.state.isAuthenticated) {
-      this.$store.dispatch('getIfCurrentProductIsFavourite', this.$route.params.product_id)
+    isFavourite: {
+      get() {
+        const productId = this.$store.state.product.id
+        return this.$store.getters.getStateIsCurrentProductInFavourites(productId)
+      }
     }
   },
   methods: {
@@ -49,8 +46,7 @@ export default {
           })
         })
     },
-
-    getFavouriteIconClass() {
+    favouriteIconClass(): string {
       return !this.isFavourite ? 'far fa-heart' : 'fas fa-heart'
     }
   }

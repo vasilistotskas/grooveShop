@@ -6,7 +6,9 @@ export default {
         items: [],
     },
     category : {},
-    product: {},
+    product: {
+        id: ''
+    },
     searchProducts: {},
     countries: {},
     regionsBasedOnAlpha: {},
@@ -15,7 +17,8 @@ export default {
     userData: {},
     userDetails: {},
     order: {},
-    isFavourite: false,
+    favourites: {},
+    reviews: {},
     token: '',
     isLoading: false,
     errors: {}
