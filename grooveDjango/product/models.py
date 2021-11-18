@@ -221,7 +221,6 @@ class Review(models.Model):
     )
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    subject = models.CharField(max_length=50, blank=True)
     comment = models.CharField(max_length=250, blank=True)
     rate = models.PositiveSmallIntegerField(choices=RATE_CHOICES)
     status = models.CharField(max_length=10, choices=STATUS, default='New')
@@ -232,4 +231,4 @@ class Review(models.Model):
         verbose_name_plural = "Reviews"
 
     def __str__(self):
-        return self.subject
+        return self.comment

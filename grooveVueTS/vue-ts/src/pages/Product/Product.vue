@@ -15,7 +15,7 @@
         <h5 class="mb-1"><strong>Product ID: </strong>{{ product.id }}</h5>
         <!-- Product Review -->
         <a type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">Product Review</a>
-                <RateProductModal></RateProductModal>
+                <ProductReviewModal></ProductReviewModal>
         <p class="description mb-4">{{ product.description }}</p>
         <p class="mb-2"><strong>Price: </strong>${{ product.price }}</p>
 
@@ -33,7 +33,7 @@
           </div>
 
           <div class="row mt-2">
-            <button type="button" class="btn btn-dark addToCartButton col-12 col-md-8" v-bind:class="{'disabled': disabled }" @click="addToCart()">Add to cart</button>
+            <button type="button" class="btn btn-dark addToCartButton col-12 col-md-8" v-bind:class="{'disabled': disabled }" @click="addToCart()">{{ addToCartButtonText }}</button>
             <FavouriteButton :product="product"></FavouriteButton>
           </div>
 
@@ -41,20 +41,38 @@
       </div>
     </div>
   </div>
+  <div class="container" id="reviews-container" v-if="productReviews && Object.keys(productReviews).length > 0">
+    <div class="row mt-5">
+      <h5>REVIEW AVARAGE : {{ productReviewAvarage }}</h5>
+      <h5>REVIEW COUNTER : {{ product.review_counter }}</h5>
+    </div>
+    <div class="row mt-5">
+      <h2 class="title section-title">
+        <span class="content">Reviews</span>
+      </h2>
+
+      <ProductReviews
+          v-for="review in productReviews"
+          v-bind:key="review.id"
+          v-bind:review="review"/>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import FavouriteButton from '@/components/Product/FavouriteButton.vue'
-import RateProductModal from '@/modals/Product/RateProductModal.vue'
+import ProductReviewModal from '@/modals/Product/ProductReviewModal.vue'
 import { Options, Vue } from "vue-class-component"
 import ProductModel from "@/state/product/ProductModel"
 import store from '@/store'
+import ProductReviews from "@/components/Product/ProductReviews.vue";
 
 @Options({
   name: "ProductVue",
   components: {
     FavouriteButton,
-    RateProductModal
+    ProductReviewModal,
+    ProductReviews
   },
   props: {
     category_id: {
@@ -72,6 +90,18 @@ export default class ProductVue extends Vue {
 
   get product(): ProductModel {
     return store.getters['product/getProductData']
+  }
+
+  get productReviews(): Array<any> {
+    return store.getters['product/review/getProductReviews']
+  }
+
+  get addToCartButtonText(): string {
+    return store.getters['product/addToCartButtonText']
+  }
+
+  get productReviewAvarage(): number {
+    return Number(this.product.review_avarage.toFixed(1))
   }
 
   public addToCart(): void {
@@ -96,6 +126,7 @@ export default class ProductVue extends Vue {
     document.title = <string>this.$route.params.product_slug
     await store.dispatch('product/productFromRemote')
     await store.dispatch('product/updateProductHits')
+    await store.dispatch('product/review/currentProductReviewsFromRemote')
   }
 }
 
@@ -125,4 +156,10 @@ export default class ProductVue extends Vue {
       cursor: not-allowed;
     }
   }
+  #reviews-container{
+    @media screen and (min-width: 1200px){
+      max-width: 1070px;
+    }
+  }
+
 </style>

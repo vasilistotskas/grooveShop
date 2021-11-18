@@ -2,7 +2,7 @@
   <!-- Button trigger modal -->
   <div class="user-actions">
     <!-- Modal -->
-    <form>
+    <form id="productReviewForm">
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -57,7 +57,7 @@
                 <div class="col-12 review-modal-comment">
                   <div class="form-group">
                     <p>
-                      <textarea placeholder="Share your experience..." class="form-control" id="exampleFormControlTextarea1" rows="6" maxlength="10000"></textarea>
+                      <textarea v-model="comment" placeholder="Share your experience..." class="form-control" id="reviewTextArea" rows="6" maxlength="10000"></textarea>
                     </p>
                   </div>
                 </div>
@@ -66,7 +66,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Share</button>
+              <button type="button" class="btn btn-primary" @click="reviewHandle()">Post</button>
             </div>
           </div>
         </div>
@@ -86,9 +86,9 @@ const starSvg = '<path data-v-558dc688="" fill="currentColor" d="M259.3 17.8L194
 const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z" class=""></path>'
 
 @Options({
-  name: "RateProductModal",
+  name: "ProductReviewModal",
 })
-export default class RateProductModal extends Vue {
+export default class ProductReviewModal extends Vue {
 
   $refs!: {
     ratingBoard: HTMLElement
@@ -98,6 +98,7 @@ export default class RateProductModal extends Vue {
   editingLocked: boolean = false
   size: number = 16
   review: string = ''
+  comment: string = ''
   reviewCountMax: number = 10
   starCountMax: number = 5
   isEditable: boolean = false
@@ -160,7 +161,7 @@ export default class RateProductModal extends Vue {
     return Number(liveReviewCountRatio.toFixed(1)) - 0.04
   }
 
-  get liveReviewCount(): number {
+  get liveReviewCount(): number | any {
     return Math.round(Number(this.liveReviewCountRatio.toFixed(2)) * this.reviewCountMax)
   }
 
@@ -225,6 +226,21 @@ export default class RateProductModal extends Vue {
 
   get backgroundStars(): string[] {
     return times(this.starCountMax, constant(starSvg)) as string[]
+  }
+
+  protected async reviewHandle(): Promise<void> {
+    const formEl = document.getElementById('productReviewForm') as HTMLFormElement;
+    const data = new FormData(formEl)
+
+    if (this.comment != null){
+      data.append('comment', this.comment)
+    }
+
+    if (this.liveReviewCount > 0 && this.liveReviewCount <= 10){
+      data.append('rate', this.liveReviewCount)
+    }
+
+    await store.dispatch('product/review/toggleReview', data)
   }
 
 }

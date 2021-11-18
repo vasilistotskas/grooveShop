@@ -270,11 +270,11 @@ export default class App extends Vue {
   // }
 
   get userReviews(): Array<any> {
-    return store.getters['user/review/getUserReviews']
+    return store.getters['product/review/getUserReviews']
   }
 
   get userFavourites(): Array<any> {
-    return store.getters['user/favourite/getFavouriteData']
+    return store.getters['product/favourite/getFavouriteData']
   }
 
   get userOrders(): Array<any> {

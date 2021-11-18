@@ -75,7 +75,6 @@ class CategoryTreeView(GenericAPIView):
     def get(self, request, *args, **kwargs):
         root_nodes = self.get_queryset().get_cached_trees()
         data = []
-        print(self.get_queryset())
         for n in root_nodes:
             data.append(self.recursive_node_to_dict(n))
 
