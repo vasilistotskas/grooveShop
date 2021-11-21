@@ -19,6 +19,8 @@ export default class ProductReviewModule
 
     userReviews: Array<ProductReviewModel> = []
     userToProductReview = new ProductReviewModel()
+    // @Todo this mutation ? bugs at POST ( review create ) it remains false should be true
+    userHasAlreadyReviewedProductTest: boolean = false
 
     get getProductReviews(): ProductReviewModel[] {
         return this.productReviews
