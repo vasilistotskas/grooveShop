@@ -266,11 +266,24 @@ export default class ProductReviewModal extends Vue {
 
   }
 
+  private clearModule(): void {
+    this.rate = 0
+    this.comment = ''
+  }
+
   created() {
     this.$watch(
         () => this.liveReviewCount,
         (to:any) => {
           this.rate = to
+        }
+    )
+    this.$watch(
+        () => this.userToProductReview,
+        (to:any) => {
+          if(Object.keys(to).length <= 0) {
+            this.clearModule()
+          }
         }
     )
     this.$watch(

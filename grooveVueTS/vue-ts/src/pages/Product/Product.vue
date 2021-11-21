@@ -66,6 +66,7 @@ import { Options, Vue } from "vue-class-component"
 import ProductModel from "@/state/product/ProductModel"
 import store from '@/store'
 import ProductReviews from "@/components/Product/ProductReviews.vue";
+import { cloneDeep } from "lodash"
 
 @Options({
   name: "ProductVue",

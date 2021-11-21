@@ -5,7 +5,7 @@ import AppBaseModule from "@/state/common/AppBaseModule"
 import ProductReviewModel from "@/state/product/review/ProductReviewModel"
 import store from "@/store"
 import { useToast } from 'vue-toastification'
-import { some, find } from 'lodash'
+import { some, reject } from 'lodash'
 
 const toast = useToast()
 
@@ -48,6 +48,16 @@ export default class ProductReviewModule
 
     @Mutation
     setProductReviews(productReviews: ProductReviewModel[]): void {
+
+        let user_id = store.getters['user/data/getUserId']
+
+        productReviews.forEach(function(item,i){
+            if(item.user_id === user_id){
+                productReviews.splice(i, 1);
+                productReviews.unshift(item);
+            }
+        })
+
         this.productReviews = productReviews
     }
 
@@ -69,7 +79,14 @@ export default class ProductReviewModule
 
     @Mutation
     createUserToProductReview(userToProductReview: ProductReviewModel): void {
-        this.productReviews.push(userToProductReview)
+        this.productReviews.unshift(userToProductReview)
+        this.userToProductReview = userToProductReview
+    }
+
+    @Mutation
+    removeUserToProductReview(data: any): void {
+        const reviewId = this.productReviews.findIndex(u => [u.user_id === data.user_id, u.product_id === data.product_id])
+        this.productReviews.splice(reviewId, 1)
     }
 
     @Mutation
@@ -195,14 +212,14 @@ export default class ProductReviewModule
     }
 
     @Action
-    async deleteCurrentProductReview(): Promise<void> {
+    async deleteCurrentProductReview(data: any): Promise<void> {
         let user_id = store.getters['user/data/getUserId']
         let product_id: Number = store.getters['product/getProductId']
 
         await api.delete(`reviews/review/${user_id}/${product_id}/`)
             .then((response: ResponseData) => {
-                const data = response.data
-                this.context.commit('setProductReviews', data)
+                this.context.commit('removeUserToProductReview', data)
+                this.context.commit('unsetUserToProductReview')
             })
             .catch((e: Error) => {
                 console.log(e)
