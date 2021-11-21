@@ -3,10 +3,9 @@ import api from "@/api/api.service"
 import ResponseData from "@/state/types/ResponseData"
 import AppBaseModule from "@/state/common/AppBaseModule"
 import ProductReviewModel from "@/state/product/review/ProductReviewModel"
-import router from "@/routes";
-import store from "@/store";
+import store from "@/store"
 import { useToast } from 'vue-toastification'
-import { some } from 'lodash'
+import { some, find } from 'lodash'
 
 const toast = useToast()
 
@@ -14,16 +13,27 @@ const toast = useToast()
 export default class ProductReviewModule
     extends AppBaseModule
 {
-    reviews = [new ProductReviewModel()]
     productReviews: Array<ProductReviewModel> = []
+    productReviewsAverage: Number = 0
+    productReviewsCounter: Number = 0
+
+    userReviews: Array<ProductReviewModel> = []
     userToProductReview = new ProductReviewModel()
 
-    get getUserReviews(): ProductReviewModel[] {
-        return this.reviews
-
-    }
     get getProductReviews(): ProductReviewModel[] {
         return this.productReviews
+    }
+
+    get getProductReviewsAverage(): Number {
+        return this.productReviewsAverage
+    }
+
+    get getProductReviewsCounter(): Number {
+        return this.productReviewsCounter
+    }
+
+    get getUserReviews(): ProductReviewModel[] {
+        return this.userReviews
     }
 
     get getUserToProductReview(): ProductReviewModel {
@@ -32,12 +42,8 @@ export default class ProductReviewModule
 
     get userHasAlreadyReviewedProduct(): boolean {
         let user_id = store.getters['user/data/getUserId']
-        return some(this.productReviews, ['user_id', user_id])
-    }
-
-    @Mutation
-    setUserReviews(reviews: Array<any>): void {
-        this.reviews = reviews
+        let product_id: Number = store.getters['product/getProductId']
+        return some(this.productReviews, { 'user_id': user_id, 'product_id': product_id })
     }
 
     @Mutation
@@ -46,15 +52,52 @@ export default class ProductReviewModule
     }
 
     @Mutation
-    setUserToProductReview(userToProductReview: ProductReviewModel): void {
+    setProductReviewsAverage(average: Number): void {
+        this.productReviewsAverage = average
+    }
+
+    @Mutation
+    setProductReviewsCounter(counter: Number): void {
+        this.productReviewsCounter = counter
+    }
+
+    @Mutation
+    unsetProductReviews() {
+        // @ts-ignore
+        this.productReviews = {}
+    }
+
+    @Mutation
+    createUserToProductReview(userToProductReview: ProductReviewModel): void {
         this.productReviews.push(userToProductReview)
+    }
+
+    @Mutation
+    setUserReviews(reviews: Array<any>): void {
+        this.userReviews = reviews
+    }
+
+    @Mutation
+    unsetUserReviews() {
+        // @ts-ignore
+        this.userReviews = {}
+    }
+
+    @Mutation
+    setUserToProductReview(userToProductReview: ProductReviewModel): void {
         this.userToProductReview = userToProductReview
     }
 
     @Mutation
-    updateUserToProductReview(userToProductReview: ProductReviewModel): void {
-        // this.userToProductReview = userToProductReview
-        //@TODO edw prepei na kanoume update to product review kai na to vlepei to store
+    updateUserToProductReview(id: Number): void {
+        const reviewId = this.productReviews.findIndex(u => u.id === id)
+        this.productReviews[reviewId] = this.userToProductReview
+    }
+
+    @Mutation
+    unsetUserToProductReview() {
+        // @ts-ignore
+        this.userToProductReview = {}
     }
 
     @Action
@@ -82,7 +125,7 @@ export default class ProductReviewModule
     }
 
     @Action
-    async getCurrentUserProductReviews(userId: number): Promise<void> {
+    async getCurrentUserReviews(userId: number): Promise<void> {
         await api.get(`reviews/user/${userId}/`)
             .then((response: ResponseData) => {
                 const data = response.data
@@ -112,7 +155,7 @@ export default class ProductReviewModule
         await api.post(`reviews/product/${product_id}/`, data)
             .then((response: ResponseData) => {
                 const data = response.data
-                this.context.commit('setUserToProductReview', data)
+                this.context.commit('createUserToProductReview', data)
             })
             .catch((e: Error) => {
                 console.log(e)
@@ -121,11 +164,11 @@ export default class ProductReviewModule
 
 
     @Action
-    async userToProductReviewFromRemote(data: any): Promise<void> {
+    async userToProductReviewFromRemote(): Promise<void> {
         let user_id = store.getters['user/data/getUserId']
         let product_id: Number = store.getters['product/getProductId']
 
-        await api.get(`reviews/review/${user_id}/${product_id}/`, data)
+        await api.get(`reviews/review/${user_id}/${product_id}/`)
             .then((response: ResponseData) => {
                 const data = response.data
                 this.context.commit('setUserToProductReview', data)
@@ -143,7 +186,8 @@ export default class ProductReviewModule
         await api.patch(`reviews/review/${user_id}/${product_id}/`, data)
             .then((response: ResponseData) => {
                 const data = response.data
-                this.context.commit('updateUserToProductReview', data)
+                this.context.commit('setUserToProductReview', data)
+                this.context.commit('updateUserToProductReview', data.id)
             })
             .catch((e: Error) => {
                 console.log(e)

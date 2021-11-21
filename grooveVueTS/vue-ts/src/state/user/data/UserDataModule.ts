@@ -54,6 +54,8 @@ export default class UserDataModule
         localStorage.removeItem("userid")
 
         store.commit('product/favourite/unsetUserFavourites')
+        store.commit('product/review/unsetUserToProductReview')
+        store.commit('product/review/unsetUserReviews')
         store.commit('user/order/unsetUserOrders')
     }
 
@@ -77,10 +79,8 @@ export default class UserDataModule
                 const data = response.data
                 this.context.commit('setUserData', data[0])
                 this.context.commit('setUserId', data[0].id)
-                //  User favourites get action here
                 store.dispatch('product/favourite/userFavouritesFromRemote', response.data[0].user)
-                //  User reviews get action here
-                // store.dispatch('getCurrentUserProductReviews', response.data[0].user)
+                store.dispatch('product/review/getCurrentUserReviews', data[0].id)
                 axios.defaults.headers.common["Authorization"] = "Token " + this.token
                 localStorage.setItem("token", this.token)
             })

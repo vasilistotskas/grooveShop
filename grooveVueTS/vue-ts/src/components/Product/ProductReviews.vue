@@ -5,6 +5,7 @@
       <p class="card-text"> COMMENT : {{ review.comment }}</p>
       <p class="card-text"> RATE: {{ review.rate }}</p>
       <p class="card-text"> CREATED : {{ review.created_at }}</p>
+
     </div>
   </div>
 </template>
@@ -12,6 +13,7 @@
 <script lang="ts">
 
 import {Options, Vue} from "vue-class-component"
+import store from "@/store";
 
 @Options({
   name: "ProductReviews",
@@ -24,6 +26,9 @@ import {Options, Vue} from "vue-class-component"
 
 export default class ProductReviews extends Vue {
 
+  get userId(): number {
+    return store.getters['user/data/getUserId']
+  }
 
 }
 </script>

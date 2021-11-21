@@ -85,11 +85,11 @@ class Product(models.Model):
             cnt = int(favourites["count"])
         return cnt
 
-    def review_avarage(self):
-        reviews = Review.objects.filter(product=self, status='True').aggregate(avarage=Avg('rate'))
+    def review_average(self):
+        reviews = Review.objects.filter(product=self, status='True').aggregate(average=Avg('rate'))
         avg = 0
-        if reviews["avarage"] is not None:
-            avg = float(reviews["avarage"])
+        if reviews["average"] is not None:
+            avg = float(reviews["average"])
         return avg
 
     def review_counter(self):
@@ -223,7 +223,7 @@ class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.CharField(max_length=250, blank=True)
     rate = models.PositiveSmallIntegerField(choices=RATE_CHOICES)
-    status = models.CharField(max_length=10, choices=STATUS, default='New')
+    status = models.CharField(max_length=10, choices=STATUS, default='True')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

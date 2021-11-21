@@ -40,7 +40,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "discount_value",
             "date_added",
             "main_image",
-            "review_avarage",
+            "review_average",
             "review_counter",
             "images"
         )
