@@ -19,8 +19,6 @@ export default class ProductReviewModule
 
     userReviews: Array<ProductReviewModel> = []
     userToProductReview = new ProductReviewModel()
-    // @Todo this mutation ? bugs at POST ( review create ) it remains false should be true
-    userHasAlreadyReviewedProductTest: boolean = false
 
     get getProductReviews(): ProductReviewModel[] {
         return this.productReviews
@@ -42,10 +40,13 @@ export default class ProductReviewModule
         return this.userToProductReview
     }
 
-    get userHasAlreadyReviewedProduct(): boolean {
+    get getUserHasAlreadyReviewedProduct(): boolean {
         let user_id = store.getters['user/data/getUserId']
         let product_id: Number = store.getters['product/getProductId']
-        return some(this.productReviews, { 'user_id': user_id, 'product_id': product_id })
+        return some(this.productReviews, {
+            'user_id': user_id,
+            'product_id': product_id
+        }) || this.userToProductReview && Object.keys(this.userToProductReview).length > 0
     }
 
     @Mutation
@@ -128,7 +129,7 @@ export default class ProductReviewModule
             data.append('user_id', user_id)
             data.append('product_id', product_id)
             try {
-                if(!this.userHasAlreadyReviewedProduct) {
+                if(!this.getUserHasAlreadyReviewedProduct) {
                     await this.context.dispatch('createCurrentProductReview', data)
                     return 'Your review has been created'
                 } else {
@@ -175,6 +176,7 @@ export default class ProductReviewModule
             .then((response: ResponseData) => {
                 const data = response.data
                 this.context.commit('createUserToProductReview', data)
+                toast.success("Your review has been created")
             })
             .catch((e: Error) => {
                 console.log(e)
@@ -207,6 +209,7 @@ export default class ProductReviewModule
                 const data = response.data
                 this.context.commit('setUserToProductReview', data)
                 this.context.commit('updateUserToProductReview', data.id)
+                toast.success("Your review has been updated")
             })
             .catch((e: Error) => {
                 console.log(e)
@@ -222,6 +225,7 @@ export default class ProductReviewModule
             .then((response: ResponseData) => {
                 this.context.commit('removeUserToProductReview', data)
                 this.context.commit('unsetUserToProductReview')
+                toast.error("Your review has been deleted")
             })
             .catch((e: Error) => {
                 console.log(e)
