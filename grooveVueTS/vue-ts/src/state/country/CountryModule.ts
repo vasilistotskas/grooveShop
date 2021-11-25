@@ -34,12 +34,12 @@ export default class CountryModule
     }
 
     @Mutation
-    setCountries(countries: Array<any>): void {
+    setCountries(countries: Array<CountryModel>): void {
         this.countries = countries
     }
 
     @Mutation
-    setRegionsBasedOnAlpha(regions: Array<any>): void {
+    setRegionsBasedOnAlpha(regions: Array<RegionsModel>): void {
         this.regionsBasedOnAlpha = regions
     }
 

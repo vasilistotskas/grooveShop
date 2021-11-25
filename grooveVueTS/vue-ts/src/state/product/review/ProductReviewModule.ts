@@ -14,8 +14,8 @@ export default class ProductReviewModule
     extends AppBaseModule
 {
     productReviews: Array<ProductReviewModel> = []
-    productReviewsAverage: Number = 0
-    productReviewsCounter: Number = 0
+    productReviewsAverage: number = 0
+    productReviewsCounter: number = 0
 
     userReviews: Array<ProductReviewModel> = []
     userToProductReview = new ProductReviewModel()
@@ -24,11 +24,11 @@ export default class ProductReviewModule
         return this.productReviews
     }
 
-    get getProductReviewsAverage(): Number {
+    get getProductReviewsAverage(): number {
         return this.productReviewsAverage
     }
 
-    get getProductReviewsCounter(): Number {
+    get getProductReviewsCounter(): number {
         return this.productReviewsCounter
     }
 
@@ -41,18 +41,13 @@ export default class ProductReviewModule
     }
 
     get getUserHasAlreadyReviewedProduct(): boolean {
-        let user_id = store.getters['user/data/getUserId']
-        let product_id: Number = store.getters['product/getProductId']
-        return some(this.productReviews, {
-            'user_id': user_id,
-            'product_id': product_id
-        }) && this.userToProductReview && Object.keys(this.userToProductReview).length > 0
+        return this.userToProductReview && Object.keys(this.userToProductReview).length > 0
     }
 
     @Mutation
     setProductReviews(productReviews: ProductReviewModel[]): void {
 
-        let user_id = store.getters['user/data/getUserId']
+        let user_id: number = store.getters['user/data/getUserId']
 
         productReviews.forEach(function(item,i){
             if(item.user_id === user_id){
@@ -65,17 +60,17 @@ export default class ProductReviewModule
     }
 
     @Mutation
-    setProductReviewsAverage(average: Number): void {
+    setProductReviewsAverage(average: number): void {
         this.productReviewsAverage = average
     }
 
     @Mutation
-    setProductReviewsCounter(counter: Number): void {
+    setProductReviewsCounter(counter: number): void {
         this.productReviewsCounter = counter
     }
 
     @Mutation
-    unsetProductReviews() {
+    unsetProductReviews(): void {
         // @ts-ignore
         this.productReviews = {}
     }
@@ -98,7 +93,7 @@ export default class ProductReviewModule
     }
 
     @Mutation
-    unsetUserReviews() {
+    unsetUserReviews(): void {
         // @ts-ignore
         this.userReviews = {}
     }
@@ -109,13 +104,13 @@ export default class ProductReviewModule
     }
 
     @Mutation
-    updateUserToProductReview(id: Number): void {
+    updateUserToProductReview(id: number): void {
         const reviewId = this.productReviews.findIndex(u => u.id === id)
         this.productReviews[reviewId] = this.userToProductReview
     }
 
     @Mutation
-    unsetUserToProductReview() {
+    unsetUserToProductReview(): void {
         // @ts-ignore
         this.userToProductReview = {}
     }
@@ -124,8 +119,8 @@ export default class ProductReviewModule
     async toggleReview(data: any): Promise<string | undefined> {
         let IsAuthenticated: boolean = store.getters['user/data/getIsAuthenticated']
         if(IsAuthenticated){
-            let product_id: Number = store.getters['product/getProductId']
-            let user_id = store.getters['user/data/getUserId']
+            let product_id: number = store.getters['product/getProductId']
+            let user_id: number = store.getters['user/data/getUserId']
             data.append('user_id', user_id)
             data.append('product_id', product_id)
             try {
@@ -158,7 +153,7 @@ export default class ProductReviewModule
 
     @Action
     async currentProductReviewsFromRemote(): Promise<void> {
-        let product_id: Number = store.getters['product/getProductId']
+        let product_id: number = store.getters['product/getProductId']
         await api.get(`reviews/product/${product_id}/`)
             .then((response: ResponseData) => {
                 const data = response.data
@@ -171,7 +166,7 @@ export default class ProductReviewModule
 
     @Action
     async createCurrentProductReview(data: any): Promise<void> {
-        let product_id: Number = store.getters['product/getProductId']
+        let product_id: number = store.getters['product/getProductId']
         await api.post(`reviews/product/${product_id}/`, data)
             .then((response: ResponseData) => {
                 const data = response.data
@@ -186,8 +181,8 @@ export default class ProductReviewModule
 
     @Action
     async userToProductReviewFromRemote(): Promise<void> {
-        let user_id = store.getters['user/data/getUserId']
-        let product_id: Number = store.getters['product/getProductId']
+        let user_id: number = store.getters['user/data/getUserId']
+        let product_id: number = store.getters['product/getProductId']
 
         await api.get(`reviews/review/${user_id}/${product_id}/`)
             .then((response: ResponseData) => {
@@ -201,8 +196,8 @@ export default class ProductReviewModule
 
     @Action
     async updateCurrentProductReview(data: any): Promise<void> {
-        let user_id = store.getters['user/data/getUserId']
-        let product_id: Number = store.getters['product/getProductId']
+        let user_id: number = store.getters['user/data/getUserId']
+        let product_id: number = store.getters['product/getProductId']
 
         await api.patch(`reviews/review/${user_id}/${product_id}/`, data)
             .then((response: ResponseData) => {
@@ -218,8 +213,8 @@ export default class ProductReviewModule
 
     @Action
     async deleteCurrentProductReview(data: any): Promise<void> {
-        let user_id = store.getters['user/data/getUserId']
-        let product_id: Number = store.getters['product/getProductId']
+        let user_id: number = store.getters['user/data/getUserId']
+        let product_id: number = store.getters['product/getProductId']
 
         await api.delete(`reviews/review/${user_id}/${product_id}/`)
             .then((response: ResponseData) => {

@@ -12,13 +12,13 @@ export default class ProductModule
 {
 	product = new ProductModel()
 	latestProducts = [new ProductModel()]
-	product_id = Number
+	product_id!: number
 
 	get getProductData(): ProductModel {
 		return this.product
 	}
 
-	get getProductId(): NumberConstructor {
+	get getProductId(): number {
 		return this.product_id
 	}
 
@@ -36,7 +36,7 @@ export default class ProductModule
 	}
 
 	@Mutation
-	setProductId(productId: NumberConstructor): void {
+	setProductId(productId: number): void {
 		this.product_id = productId
 	}
 

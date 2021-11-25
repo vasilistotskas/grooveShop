@@ -44,8 +44,7 @@ export default class CategoryModule
     }
 
     @Action
-    async fetchCategoryFromRemote(categoryId: CategoryModel['id']) {
-        // @todo na parw slug product/category apo state
+    async fetchCategoryFromRemote(categoryId: CategoryModel['id']): Promise<void> {
         await api.get(`products/${categoryId}/`)
            .then((response: ResponseData) => {
                const data = response.data[0]

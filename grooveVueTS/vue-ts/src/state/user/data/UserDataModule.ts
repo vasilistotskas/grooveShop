@@ -15,16 +15,16 @@ export default class UserDataModule
 
     token!: string;
     isAuthenticated!: boolean;
-    user_id!: number;
+    user_id!: number|undefined;
     data: object = {}
 
     get getToken(): string { return this.token }
     get getIsAuthenticated(): boolean { return this.isAuthenticated }
-    get getUserId(): number { return this.user_id }
+    get getUserId(): number|undefined { return this.user_id }
     get getUserData(): object { return this.data}
 
     @Mutation
-    initializeAuth() {
+    initializeAuth(): void {
         if (localStorage.getItem('token')) {
             this.token !== null ? localStorage.getItem('token') : []
             this.isAuthenticated = true
@@ -44,10 +44,11 @@ export default class UserDataModule
     setUserId(user_id: number) { this.user_id = user_id }
 
     @Mutation
-    unsetUserData() {
+    unsetUserData(): void {
         this.token = ''
         this.isAuthenticated = false
         this.data = []
+        this.user_id = undefined
         axios.defaults.headers.common["Authorization"] = ""
         localStorage.removeItem("token")
         localStorage.removeItem("username")

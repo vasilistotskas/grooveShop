@@ -109,7 +109,6 @@ export default class ProductVue extends Vue {
     return store.getters['product/addToCartButtonText']
   }
 
-
   get disabled(): boolean {
     return this.product.active === "False" || this.product.stock <= 0
   }

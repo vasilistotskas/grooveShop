@@ -51,7 +51,7 @@ export default class ProductCard extends Vue {
     return this.product.active === "False" || this.product.stock <= 0
   }
 
-  get productPath() {
+  get productPath(): string {
     return '/product' + this.product.absolute_url
   }
 
