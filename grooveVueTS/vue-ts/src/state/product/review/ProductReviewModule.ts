@@ -46,7 +46,7 @@ export default class ProductReviewModule
         return some(this.productReviews, {
             'user_id': user_id,
             'product_id': product_id
-        }) || this.userToProductReview && Object.keys(this.userToProductReview).length > 0
+        }) && this.userToProductReview && Object.keys(this.userToProductReview).length > 0
     }
 
     @Mutation
