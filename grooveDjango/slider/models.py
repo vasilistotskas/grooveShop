@@ -10,6 +10,7 @@ class Slider(models.Model):
     description = models.CharField(max_length=255, blank=True, null=True)
     image = models.ImageField(upload_to='uploads/sliders/', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='uploads/sliders/thumbnails/', blank=True, null=True)
+    video = models.FileField(upload_to='uploads/sliders/videos/', null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Sliders"

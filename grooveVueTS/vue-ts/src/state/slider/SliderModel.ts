@@ -10,6 +10,7 @@ export default class SliderModel extends EntityBase
 	description!: string
 	image!: string
 	thumbnail!: string
+	video!: string
 	slides!: Array<SlideModel>
 
 	public constructor(data?: Partial<SliderModel>) {

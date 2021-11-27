@@ -36,5 +36,6 @@ class SliderSerializer(serializers.ModelSerializer):
             "description",
             "image",
             "thumbnail",
+            "video",
             "slides",
         )

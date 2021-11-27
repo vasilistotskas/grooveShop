@@ -12,11 +12,16 @@
               "clickable": true,
               "dynamicBullets": false
             }'
-            class="mySwiper"
-        >
-          <swiper-slide v-for="slide in homepageSlider[0].slides">
-            <img v-bind:src="'http://127.0.0.1:8000' + slide.image">
+            class="mySwiper">
+
+          <swiper-slide v-if="homepageSlider[0].video">
+            <video ref="mainSliderVideoRef"></video>
           </swiper-slide>
+
+          <swiper-slide v-for="slide in homepageSlider[0].slides">
+            <img v-bind:src="'http://127.0.0.1:8000' + slide.image" :alt="slide.title">
+          </swiper-slide>
+
         </swiper>
       </div>
     </div>
@@ -56,6 +61,9 @@ import SwiperCore, { Navigation,Pagination,Mousewheel,Keyboard } from 'swiper'
 })
 
 export default class Home extends Vue {
+  $refs!: {
+    mainSliderVideoRef: HTMLVideoElement
+  }
 
   mainSliderStyle = {
     '--swiper-navigation-color': '#fff',
@@ -70,10 +78,20 @@ export default class Home extends Vue {
     return store.getters['slider/getSlidersData']
   }
 
+  private mainSliderVideoInit(): void {
+    this.$refs.mainSliderVideoRef.src = 'http://127.0.0.1:8000' + this.homepageSlider[0].video
+    this.$refs.mainSliderVideoRef.loop = true
+    this.$refs.mainSliderVideoRef.autoplay = true
+    this.$refs.mainSliderVideoRef.playsInline = true
+    this.$refs.mainSliderVideoRef.muted = true
+  }
+
   async beforeCreate(): Promise<void> {
     await Promise.all([
       await store.dispatch('product/latestProductsFromRemote'),
-      await store.dispatch('slider/slidersFromRemote')
+      await store.dispatch('slider/slidersFromRemote'),
+      await this.mainSliderVideoInit(),
+      await this.$refs.mainSliderVideoRef.play()
     ])
   }
 
@@ -107,9 +125,10 @@ export default class Home extends Vue {
   align-items: center;
 }
 
-.swiper-slide img {
+.swiper-slide img, video {
   display: block;
   width: 100%;
+  max-height: 500px;
   height: 100%;
   object-fit: cover;
 }
