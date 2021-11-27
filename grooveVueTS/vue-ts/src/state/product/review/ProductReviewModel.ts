@@ -1,16 +1,17 @@
 import EntityBase from "@/state/common/EntityBase"
+import UserDetailsModel from "@/state/user/data/UserDetailsModel"
 
 export default class ProductReviewModel extends EntityBase
 {
     id!: number
-    productId!: number
-    userId!: number
-    subject!: string
+    product_id!: number
+    user_id!: number
     comment!: string
     rate!: number
     status!: string
-    createdAt!: string
-    updatedAt!: string
+    created_at!: string
+    updated_at!: string
+    userprofile!: UserDetailsModel
 
     constructor(data?: Partial<ProductReviewModel>) {
         super(data)

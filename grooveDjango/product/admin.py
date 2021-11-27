@@ -88,7 +88,7 @@ class FavouriteAdmin(admin.ModelAdmin):
 
 
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ['subject', 'comment', 'status', 'created_at']
+    list_display = ['comment', 'status', 'created_at']
     list_filter = ['status']
     actions = ['make_published', 'make_unpublished']
 

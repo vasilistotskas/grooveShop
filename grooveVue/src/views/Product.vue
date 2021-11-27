@@ -15,7 +15,7 @@
         <h5 class="mb-1"><strong>Product ID: </strong>{{ product.id }}</h5>
         <!-- Product Review -->
         <a type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">Product Review</a>
-        <RateProductModal></RateProductModal>
+        <ProductReviewModal></ProductReviewModal>
         <p class="description mb-4">{{ product.description }}</p>
         <p class="mb-2"><strong>Price: </strong>${{ product.price }}</p>
 
@@ -48,13 +48,13 @@
 
 <script>
 import FavouriteButton from '@/components/FavouriteButton'
-import RateProductModal from '@/components/RateProductModal'
+import ProductReviewModal from '@/components/ProductReviewModal'
 
 export default {
   name: 'Product',
   components: {
     FavouriteButton,
-    RateProductModal
+    ProductReviewModal
   },
   data() {
     return {

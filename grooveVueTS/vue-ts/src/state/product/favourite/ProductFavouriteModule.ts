@@ -21,24 +21,24 @@ export default class ProductFavouriteModule
     }
 
     get getStateIsCurrentProductInFavourites(): boolean {
-        let productId = Number(router.currentRoute.value.params.product_id)
-        const exists = this.favourites.filter(i => i.product_id === productId)
+        let product_id: number = store.getters['product/getProductId']
+        const exists = this.favourites.filter(i => i.product_id === product_id)
         return !!exists.length
     }
 
     @Mutation
-    setUserFavourites(favourites: ProductFavouriteModel[]) {
+    setUserFavourites(favourites: ProductFavouriteModel[]): void {
         this.favourites = favourites
     }
 
     @Mutation
-    unsetUserFavourites() {
+    unsetUserFavourites(): void {
         this.favourites = []
     }
 
     @Action
     async toggleFavourite(product: ProductFavouriteModel): Promise<string | undefined> {
-        const IsAuthenticated: boolean = store.getters['user/data/getIsAuthenticated']
+        let IsAuthenticated: boolean = store.getters['user/data/getIsAuthenticated']
         if(IsAuthenticated){
             try {
                 if(!this.getStateIsCurrentProductInFavourites) {
@@ -72,12 +72,12 @@ export default class ProductFavouriteModule
     @Action
     async addToFavourites(): Promise<void> {
 
-        let productId = router.currentRoute.value.params.product_id
+        let product_id: number = store.getters['product/getProductId']
         let data = {
             "user_id": store.getters['user/data/getUserId'],
-            "product_id": productId
+            "product_id": product_id
         }
-        let user_id = data.user_id
+        let user_id: number = data.user_id
 
         try {
             await api.post(`favourites/${user_id}/`, data)
@@ -92,8 +92,8 @@ export default class ProductFavouriteModule
     @Action
     async removeFromFavourites(): Promise<void> {
 
-        let user_id = store.getters['user/data/getUserId']
-        let product_id = router.currentRoute.value.params.product_id
+        let user_id: number = store.getters['user/data/getUserId']
+        let product_id: number = store.getters['product/getProductId']
 
         try {
             await api.delete(`favourites/delete/${user_id}/${product_id}`)

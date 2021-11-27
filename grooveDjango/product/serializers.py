@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import Category, Product, ProductImages, Favourite, Review
+from user.models import UserProfile
+from user.serializers import UserProfileSerializer
 
 
 class ImagesSerializer(serializers.ModelSerializer):
@@ -38,7 +40,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "discount_value",
             "date_added",
             "main_image",
-            "review_avarage",
+            "review_average",
             "review_counter",
             "images"
         )
@@ -86,6 +88,12 @@ class FavouriteSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    userprofile = serializers.SerializerMethodField('get_userprofile')
+
+    def get_userprofile(self, review):
+        qs = UserProfile.objects.get(user=review.user)
+        serializer = UserProfileSerializer(instance=qs)
+        return serializer.data
 
     class Meta:
         model = Review
@@ -93,10 +101,10 @@ class ReviewSerializer(serializers.ModelSerializer):
             "id",
             "product_id",
             "user_id",
-            "subject",
             "comment",
             "rate",
             "status",
             "created_at",
-            "updated_at"
+            "updated_at",
+            "userprofile"
         )

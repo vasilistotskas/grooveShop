@@ -22,11 +22,11 @@ export default class FavouriteButton extends Vue {
 
   get isFavourite(): ProductModel {
     // const productId = this.product.id
-    return store.getters['user/favourite/getStateIsCurrentProductInFavourites']
+    return store.getters['product/favourite/getStateIsCurrentProductInFavourites']
   }
 
   async favouriteHandle(): Promise<void> {
-    await store.dispatch('user/favourite/toggleFavourite', this.product)
+    await store.dispatch('product/favourite/toggleFavourite', this.product)
   }
 
   private favouriteIconClass(): string {

@@ -9,15 +9,15 @@ const baseUrl = '/api/v1'
 export default {
     alternativeToken: null,
 
-    getUserToken() {
+    getUserToken(): string| null {
         return this.alternativeToken || localStorage.getItem('token');
     },
 
-    beforeRequest() {
+    beforeRequest(): void {
         store.commit('app/setLoading', true)
     },
 
-    afterResponse() {
+    afterResponse(): void {
         store.commit('app/setLoading', false)
     },
 

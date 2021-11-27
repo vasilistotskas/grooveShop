@@ -57,7 +57,7 @@
 
 <script>
 export default {
-  name: "RateProductModal"
+  name: "ProductReviewModal"
 }
 </script>
 

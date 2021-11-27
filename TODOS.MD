@@ -9,7 +9,8 @@
 ```
 # PRODUCT :
 ```
- REVIEWS
+ REVIEWS ---->ok
+ Need to update live review average and counter?
 ```
 # CATEGORY :
 ```

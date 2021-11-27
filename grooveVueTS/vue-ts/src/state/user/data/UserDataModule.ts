@@ -15,16 +15,16 @@ export default class UserDataModule
 
     token!: string;
     isAuthenticated!: boolean;
-    user_id!: number;
+    user_id!: number|undefined;
     data: object = {}
 
     get getToken(): string { return this.token }
     get getIsAuthenticated(): boolean { return this.isAuthenticated }
-    get getUserId(): number { return this.user_id }
+    get getUserId(): number|undefined { return this.user_id }
     get getUserData(): object { return this.data}
 
     @Mutation
-    initializeAuth() {
+    initializeAuth(): void {
         if (localStorage.getItem('token')) {
             this.token !== null ? localStorage.getItem('token') : []
             this.isAuthenticated = true
@@ -44,18 +44,20 @@ export default class UserDataModule
     setUserId(user_id: number) { this.user_id = user_id }
 
     @Mutation
-    unsetUserData() {
+    unsetUserData(): void {
         this.token = ''
         this.isAuthenticated = false
         this.data = []
+        this.user_id = undefined
         axios.defaults.headers.common["Authorization"] = ""
         localStorage.removeItem("token")
         localStorage.removeItem("username")
         localStorage.removeItem("userid")
 
-        store.commit('user/favourite/unsetUserFavourites')
+        store.commit('product/favourite/unsetUserFavourites')
+        store.commit('product/review/unsetUserToProductReview')
+        store.commit('product/review/unsetUserReviews')
         store.commit('user/order/unsetUserOrders')
-        // store.commit('user/review/unsetUserReviews')
     }
 
     @Action
@@ -78,10 +80,8 @@ export default class UserDataModule
                 const data = response.data
                 this.context.commit('setUserData', data[0])
                 this.context.commit('setUserId', data[0].id)
-                //  User favourites get action here
-                store.dispatch('user/favourite/userFavouritesFromRemote', response.data[0].user)
-                //  User reviews get action here
-                // store.dispatch('getCurrentUserProductReviews', response.data[0].user)
+                store.dispatch('product/favourite/userFavouritesFromRemote', response.data[0].user)
+                store.dispatch('product/review/getCurrentUserReviews', data[0].id)
                 axios.defaults.headers.common["Authorization"] = "Token " + this.token
                 localStorage.setItem("token", this.token)
             })

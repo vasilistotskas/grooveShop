@@ -49,7 +49,8 @@ INSTALLED_APPS = [
 
     'product',
     'order',
-    'user'
+    'user',
+    'slider'
 ]
 
 # for dev

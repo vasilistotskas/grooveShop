@@ -12,9 +12,14 @@ export default class ProductModule
 {
 	product = new ProductModel()
 	latestProducts = [new ProductModel()]
+	product_id!: number
 
 	get getProductData(): ProductModel {
 		return this.product
+	}
+
+	get getProductId(): number {
+		return this.product_id
 	}
 
 	get getLatestProductData(): ProductModel[] {
@@ -28,6 +33,11 @@ export default class ProductModule
 	@Mutation
 	setProduct(product: ProductModel): void {
 		this.product = product
+	}
+
+	@Mutation
+	setProductId(productId: number): void {
+		this.product_id = productId
 	}
 
 	@Mutation
@@ -45,6 +55,7 @@ export default class ProductModule
 				const data = response.data
 				let product = new ProductModel(data)
 				this.context.commit('setProduct', product)
+				this.context.commit('setProductId', data.id)
 			})
 			.catch((e: Error) => {
 				console.log(e)

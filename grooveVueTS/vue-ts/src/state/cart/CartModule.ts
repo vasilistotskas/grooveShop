@@ -82,7 +82,7 @@ export default class CartModule
     }
 
     @Mutation
-    public clearCart(){
+    public clearCart(): void{
         this.cart = []
         localStorage.setItem('cart', JSON.stringify(this.cart))
     }
