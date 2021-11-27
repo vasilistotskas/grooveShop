@@ -19,17 +19,21 @@
 import { Options, Vue } from "vue-class-component"
 import ProductCard from "@/components/Product/ProductCard.vue"
 import store from '@/store'
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import ProductModel from "@/state/product/ProductModel";
 
 @Options({
   name: "Home",
   components: {
-    ProductCard
+    ProductCard,
+    Swiper,
+    SwiperSlide
   },
 })
 
 export default class Home extends Vue {
 
-  get LatestProducts(): [] {
+  get LatestProducts(): [ProductModel] {
     return store.getters['product/getLatestProductData']
   }
 

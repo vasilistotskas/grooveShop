@@ -102,7 +102,7 @@ export default class LogIn extends Vue {
     document.title = 'Log In'
   }
 
-  async submitForm() {
+  async submitForm(): Promise<void> {
 
     axios.defaults.headers.common["Authorization"] = ""
     localStorage.removeItem("token")

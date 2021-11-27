@@ -15,7 +15,8 @@
         <h5 class="mb-1"><strong>Product ID: </strong>{{ product.id }}</h5>
         <!-- Product Review -->
         <a type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">Product Review</a>
-                <ProductReviewModal></ProductReviewModal>
+        <ProductReviewModal></ProductReviewModal>
+
         <p class="description mb-4">{{ product.description }}</p>
         <p class="mb-2"><strong>Price: </strong>${{ product.price }}</p>
 
@@ -43,8 +44,8 @@
   </div>
   <div class="container" id="reviews-container" v-if="productReviews && Object.keys(productReviews).length > 0">
     <div class="row mt-5">
-      <h5>REVIEW AVARAGE : {{ productReviewAvarage }}</h5>
-      <h5>REVIEW COUNTER : {{ product.review_counter }}</h5>
+      <h5>REVIEW AVERAGE : {{ productReviewsAverage }}</h5>
+      <h5>REVIEW COUNTER : {{ productReviewsCounter }}</h5>
     </div>
     <div class="row mt-5">
       <h2 class="title section-title">
@@ -96,12 +97,20 @@ export default class ProductVue extends Vue {
     return store.getters['product/review/getProductReviews']
   }
 
+  get productReviewsAverage(): Number {
+    return store.getters['product/review/getProductReviewsAverage']
+  }
+
+  get productReviewsCounter(): Number {
+    return store.getters['product/review/getProductReviewsCounter']
+  }
+
   get addToCartButtonText(): string {
     return store.getters['product/addToCartButtonText']
   }
 
-  get productReviewAvarage(): number {
-    return Number(this.product.review_avarage.toFixed(1))
+  get disabled(): boolean {
+    return this.product.active === "False" || this.product.stock <= 0
   }
 
   public addToCart(): void {
@@ -118,15 +127,17 @@ export default class ProductVue extends Vue {
     store.commit('cart/addToCart', item)
   }
 
-  get disabled(): boolean {
-    return this.product.active === "False" || this.product.stock <= 0
-  }
-
   async mounted(): Promise<void> {
     document.title = <string>this.$route.params.product_slug
-    await store.dispatch('product/productFromRemote')
-    await store.dispatch('product/updateProductHits')
-    await store.dispatch('product/review/currentProductReviewsFromRemote')
+
+    await Promise.all([
+      store.dispatch('product/productFromRemote'),
+      store.dispatch('product/updateProductHits'),
+      store.dispatch('product/review/currentProductReviewsFromRemote'),
+
+      store.commit('product/review/setProductReviewsAverage', this.product.review_average),
+      store.commit('product/review/setProductReviewsCounter', this.product.review_counter)
+    ])
   }
 }
 

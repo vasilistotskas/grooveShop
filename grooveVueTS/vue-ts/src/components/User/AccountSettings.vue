@@ -150,8 +150,10 @@ export default class AccountSettings extends Vue {
 
   async mounted(): Promise<void> {
     document.title = 'My Settings | grooveShop'
-    await store.dispatch('user/data/userDataFromRemote')
-    await store.dispatch('country/findRegionsBasedOnAlphaForLoggedCustomer')
+    await Promise.all([
+      store.dispatch('user/data/userDataFromRemote'),
+      store.dispatch('country/findRegionsBasedOnAlphaForLoggedCustomer')
+    ])
     this.userDetailsInitialize()
   }
 

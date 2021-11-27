@@ -207,8 +207,8 @@ class UserReviews(APIView):
 
 
 class UserToProductReview(APIView):
-    # authentication_classes = [authentication.TokenAuthentication]
-    # permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
 
     @staticmethod
     def get_object(user_id, product_id):
