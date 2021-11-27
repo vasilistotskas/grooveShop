@@ -20,8 +20,7 @@
             <tbody>
             <tr
                 v-for="item in cart"
-                v-bind:key="item.product.id"
-            >
+                v-bind:key="item.product.id">
               <td>{{ item.product.name }}</td>
               <td>${{ item.product.price }}</td>
               <td>{{ item.quantity }}</td>

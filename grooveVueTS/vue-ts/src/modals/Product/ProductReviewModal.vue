@@ -25,8 +25,7 @@
                        @touchmove="updateNewSelectionRatio($event)"
                        @touchstart="unlockSelection($event)"
                        @touchend="reLockSelection($event)"
-                       @click="lockSelection($event)"
-                  >
+                       @click="lockSelection($event)">
                     <svg v-for="(star, i) of backgroundStars"
                          aria-hidden="true"
                          focusable="false"

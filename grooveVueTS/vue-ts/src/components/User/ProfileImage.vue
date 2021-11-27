@@ -11,8 +11,7 @@
                 type="file"
                 id="image"
                 name="image"
-                @change="updateUserImage"
-            >
+                @change="updateUserImage">
             Change Picture
           </label>
         </div>

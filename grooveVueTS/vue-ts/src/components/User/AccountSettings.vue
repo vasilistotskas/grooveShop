@@ -4,8 +4,7 @@
       <ProfileImage
           :src="profileImageUrl"
           :fullname="fullname"
-          v-model="userDetails.image"
-      />
+          v-model="userDetails.image"/>
     </div>
     <div class="col-lg-9">
       <div class="card">

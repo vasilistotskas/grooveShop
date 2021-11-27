@@ -3,8 +3,7 @@
       v-for="order in orders"
       v-bind:key="order.id"
       class="box mb-4"
-      v-bind:order="order"
-  >
+      v-bind:order="order">
     <h3 class="is-size-4 mb-6 text-black">Order #{{ order.id }}</h3>
     <div class="card">
       <div class="card-body">
@@ -21,8 +20,7 @@
           <tbody>
           <tr
               v-for="item in order.items"
-              v-bind:key="item.product.id"
-          >
+              v-bind:key="item.product.id">
             <td>{{ item.product.name }}</td>
             <td>${{ item.product.price }}</td>
             <td>{{ item.quantity }}</td>

@@ -4,15 +4,13 @@
       :style="{
       'column-gap': gap,
       'grid-template-columns': `${r1}fr ${r2}fr`
-    }"
-  >
+    }">
     <BaseButton @click="$emit('reset')" class="reset-button">Reset</BaseButton>
     <BaseButton
         class="submit-button"
         type="primary"
         html-type="submit"
-        :disabled="submitting"
-    >
+        :disabled="submitting">
       {{ submitText }}
     </BaseButton>
   </div>

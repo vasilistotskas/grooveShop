@@ -66,24 +66,24 @@
               <p>Not a member? <router-link to="/sign-up">Register</router-link></p>
               <p>or sign up with:</p>
               <!-- Facebook -->
-              <a class="btn btn-primary btn-floating mx-1" style="background-color: #3b5998;" href="#!" role="button"
-              ><i class="fab fa-facebook-f"></i
-              ></a>
+              <a class="btn btn-primary btn-floating mx-1" style="background-color: #3b5998;" href="#!" role="button">
+                <i class="fab fa-facebook-f"></i>
+              </a>
 
               <!-- Google -->
-              <a class="btn btn-primary btn-floating mx-1" style="background-color: #dd4b39;" href="#!" role="button"
-              ><i class="fab fa-google"></i
-              ></a>
+              <a class="btn btn-primary btn-floating mx-1" style="background-color: #dd4b39;" href="#!" role="button">
+                <i class="fab fa-google"></i>
+              </a>
 
               <!-- Twitter -->
-              <a class="btn btn-primary btn-floating mx-1" style="background-color: #55acee;" href="#!" role="button"
-              ><i class="fab fa-twitter"></i
-              ></a>
+              <a class="btn btn-primary btn-floating mx-1" style="background-color: #55acee;" href="#!" role="button">
+                <i class="fab fa-twitter"></i>
+              </a>
 
               <!-- Github -->
-              <a class="btn btn-primary btn-floating mx-1" style="background-color: #333333;" href="#!" role="button"
-              ><i class="fab fa-github"></i
-              ></a>
+              <a class="btn btn-primary btn-floating mx-1" style="background-color: #333333;" href="#!" role="button">
+                <i class="fab fa-github"></i>
+              </a>
 
             </div>
           </div>
@@ -124,18 +124,10 @@ let {
     BaseInput,
     SubmitButtons,
     ValidationErrors
-  },
-  data() {
-    return {
-      username: '',
-      password: ''
-    }
-  },
+  }
 })
 
 export default class LogIn extends Vue {
-  username!: string
-  password!: string
 
   formManager = {
     form,
@@ -165,7 +157,6 @@ export default class LogIn extends Vue {
   mounted() {
     document.title = 'Log In'
   }
-
 
   handleSubmit = async () => {
     axios.defaults.headers.common["Authorization"] = ""

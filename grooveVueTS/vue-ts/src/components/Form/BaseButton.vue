@@ -2,8 +2,7 @@
   <button
       :class="['button', type, { disabled }]"
       :type="htmlType"
-      :disabled="disabled"
-  >
+      :disabled="disabled">
     <slot></slot>
   </button>
 </template>
