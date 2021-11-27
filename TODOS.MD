@@ -1,26 +1,8 @@
 # !!!! TODOS !!!!
 ~~# VUE: NA PAEI TO FAVOURITE KAI TO REVIEW STO PRODUCT (OPOS STO BACK)~~
-# NA SPASEI KAI BACK KALITERA
 # FORM ERRORS !
-# BLOG
 # PRODUCT LISTS
-~~# Document title~~
-~~## ACTION SUCCESS / ERRORS KLP :~~
-```
- mostly after api calls
-```
-# PRODUCT :
-```
- REVIEWS ---->ok
- Need to update live review average and counter?
-```
-# CATEGORY :
-```
- SORTING (DEFAULT, PRICE + - )
- HOTTEST: BY HITS/LIKES W/E
- LATEST
- FILTERS (FOR LATE)
-```
+# BLOG
 # USER PROFILE :
 ```
  LOGIN/SIGNUP WITH EMAIL
@@ -29,28 +11,47 @@
  PASSWORD CHANGE
  PASSWORD RESET
 ```
-# SEARCH :
-```
- TAGS
- CATEGORY?
-```
 # PAGINATION
 # BREADCRUMBS
-# PAYWAYS:
-```
-CARD
-ANTIKATAVOLI
-ETC
-
-```
 # ORDER:
 ```
 SEND EMAIL AT ORDER CREATE/UPDATE
 
 ```
+# SEARCH :
+```
+ TAGS
+ CATEGORY?
+```
+# PAYWAYS:
+```
+CARD
+ANTIKATAVOLI
+ETC
+```
+# CATEGORY :
+```
+ SORTING (DEFAULT, PRICE + - )
+ HOTTEST: BY HITS/LIKES W/E
+ LATEST
+ FILTERS (FOR LATE)
+```
+
 # UI :
 ```
  MINICART
- SLIDERS
+ SLIDERS --- DONE
  MOBILE VIEW / RESPONSIVE
+```
+# NA SPASEI KAI BACK KALITERA
+
+~~# Document title~~
+~~## ACTION SUCCESS / ERRORS KLP :~~
+```
+ mostly after api calls
+```
+~~# PRODUCT :~~
+```
+ REVIEWS ---->ok
+ Need to update live review average and counter? ----> if need to make endpoint for product average and counter
 ```

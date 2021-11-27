@@ -1,15 +1,14 @@
 <template>
   <div class="page-sign-up mt-3 mb-5">
     <div class="container">
-      <div class="col-4 mx-auto">
+      <div class="col-12 col-md-4 mx-auto">
         <div class="card">
           <div class="card-body">
             <FormProvider
               :form="formManager.form"
               :errors="formManager.errors"
-              title="Register Form"
-              @submit="handleSubmit()"
-            >
+              title="Register"
+              @submit="handleSubmit()">
             <div class="container">
               <div class="name">
                 <label :for="formManager.form.name.$uid" class="label">Name</label>
@@ -19,14 +18,11 @@
                     :validating="formManager.form.name.$validating"
                     @blur="formManager.form.name.onBlur"
                     placeholder="Alice, Bob, Oscar"
-                    :id="formManager.form.name.$uid"
-                />
+                    :id="formManager.form.name.$uid"/>
                 <ValidationErrors
                     class="validation-errros"
-                    :errors="formManager.form.name.$errors"
-                />
+                    :errors="formManager.form.name.$errors"/>
               </div>
-
               <div class="password">
                 <label :for="formManager.form.password.$uid" class="label">Password</label>
                 <BaseInput
@@ -34,9 +30,8 @@
                     :has-error="formManager.form.password.$hasError"
                     @blur="formManager.form.password.onBlur"
                     type="password"
-                    :id="formManager.form.password.$uid"
-                />
-                <ValidationErrors :errors="formManager.form.password.$errors" />
+                    :id="formManager.form.password.$uid"/>
+                <ValidationErrors :errors="formManager.form.password.$errors"/>
               </div>
 
               <div class="confirm-password">
@@ -48,21 +43,16 @@
                     :has-error="formManager.form.confirmPassword.$hasError"
                     @blur="formManager.form.confirmPassword.onBlur"
                     type="password"
-                    :id="formManager.form.confirmPassword.$uid"
-                />
-                <ValidationErrors :errors="formManager.form.confirmPassword.$errors" />
+                    :id="formManager.form.confirmPassword.$uid"/>
+                <ValidationErrors :errors="formManager.form.confirmPassword.$errors"/>
               </div>
-
-                <SubmitButtons
-                    class="buttons"
-                    gap="2rem"
-                    @reset="formManager.resetFields()"
-                    :submitting="formManager.submitting"
-                />
+              <SubmitButtons
+                  class="buttons"
+                  gap="2rem"
+                  @reset="formManager.resetFields()"
+                  :submitting="formManager.submitting"/>
             </div>
-              Or
-              <router-link to="/log-in">click here</router-link>
-              to log in!
+              <p class="mt-4 plr-15">Or <router-link to="/log-in">click here</router-link> to log in!</p>
             </FormProvider>
           </div>
         </div>
@@ -181,7 +171,7 @@ export default class SignUp extends Vue {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .buttons {
   margin-top: 1.25rem;

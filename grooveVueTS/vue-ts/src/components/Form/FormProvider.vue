@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ title }}</h1>
+    <h1 class="plr-15">{{ title }}</h1>
     <form @submit.prevent="$emit('submit')" class="_form">
       <slot></slot>
     </form>
