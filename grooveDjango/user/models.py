@@ -1,9 +1,8 @@
 from django.db import models
+from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django_countries.fields import CountryField
 
 
 class Country(models.Model):
@@ -44,7 +43,7 @@ class UserProfile(models.Model):
     place = models.CharField(max_length=50, blank=True, null=True)
     country = models.ForeignKey(Country, null=True, blank=True, default=None, on_delete=models.SET_NULL)
     region = models.ForeignKey(Region, null=True, blank=True, default=None, on_delete=models.SET_NULL)
-    image = models.ImageField(blank=True, null=True, upload_to='images/users/', default='images/users/default.png')
+    image = models.ImageField(blank=True, null=True, upload_to='uploads/users/', default='uploads/users/default.png')
 
     class Meta:
         verbose_name_plural = "User's Profile"

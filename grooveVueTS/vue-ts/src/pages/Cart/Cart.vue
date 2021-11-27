@@ -42,10 +42,10 @@
 </template>
 
 <script lang="ts">
-import CartItem from '@/components/Cart/CartItem.vue'
-import { Options, Vue } from "vue-class-component"
 import store from '@/store'
-import CartItemModel from "@/state/cart/CartItemModel";
+import { Options, Vue } from "vue-class-component"
+import CartItem from '@/components/Cart/CartItem.vue'
+import CartItemModel from "@/state/cart/CartItemModel"
 
 @Options({
     name: "CartVue",

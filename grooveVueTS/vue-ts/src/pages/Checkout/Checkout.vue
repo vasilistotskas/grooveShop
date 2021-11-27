@@ -124,14 +124,14 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component"
 import store from "@/store"
-import UserDetailsModel from "@/state/user/data/UserDetailsModel"
+import { cloneDeep } from "lodash"
+import { useToast } from "vue-toastification"
+import { Options, Vue } from "vue-class-component"
 import CartItemModel from "@/state/cart/CartItemModel"
 import CountryModel from "@/state/country/CountryModel"
 import RegionsModel from "@/state/country/RegionsModel"
-import { cloneDeep } from  "lodash"
-import { useToast } from "vue-toastification"
+import UserDetailsModel from "@/state/user/data/UserDetailsModel"
 
 const toast = useToast()
 

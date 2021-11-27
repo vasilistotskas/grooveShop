@@ -1,6 +1,6 @@
+import { createI18n } from 'vue-i18n'
 import enBundle from '@/locales/en.messages.json'
 import grBundle from '@/locales/gr.messages.json'
-import { createI18n } from 'vue-i18n'
 
 const i18n = createI18n({
     legacy: false,

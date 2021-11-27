@@ -37,10 +37,10 @@
 </template>
 
 <script lang="ts">
-import {Options, Vue} from "vue-class-component"
-import UserOrderModel from "@/state/user/order/UserOrderModel"
-import CartItemModel from "@/state/cart/CartItemModel"
 import store from '@/store'
+import {Options, Vue} from "vue-class-component"
+import CartItemModel from "@/state/cart/CartItemModel"
+import UserOrderModel from "@/state/user/order/UserOrderModel"
 
 @Options({
   name: "OrderSummary",

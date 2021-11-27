@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import LoadingIcon from "../../assets/LoadingIcon.vue";
+import { defineComponent } from "vue"
+import LoadingIcon from "../../assets/LoadingIcon.vue"
 
 export default defineComponent({
   inheritAttrs: false,

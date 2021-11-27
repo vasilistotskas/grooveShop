@@ -72,15 +72,15 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component"
 import store from "@/store"
 import { useToast } from "vue-toastification"
-import { useValidation, ValidationError } from 'vue3-form-validation'
-import FormProvider from "@/components/Form/FormProvider.vue"
+import { Options, Vue } from "vue-class-component"
 import BaseInput from "@/components/Form/BaseInput.vue"
+import FormProvider from "@/components/Form/FormProvider.vue"
 import SubmitButtons from "@/components/Form/SubmitButtons.vue"
 import ValidationErrors from "@/components/Form/ValidationErrors.vue"
-import { required, min, email, equal } from "@/components/Form/Utils";
+import { useValidation, ValidationError } from 'vue3-form-validation'
+import { required, min, email, equal } from "@/components/Form/Utils"
 
 const toast = useToast()
 

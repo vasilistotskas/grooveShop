@@ -16,8 +16,8 @@
 
 <script lang="ts">
 
-import {Options, Vue} from "vue-class-component"
 import store from "@/store";
+import {Options, Vue} from "vue-class-component"
 
 @Options({
   name: "ProductReviews",

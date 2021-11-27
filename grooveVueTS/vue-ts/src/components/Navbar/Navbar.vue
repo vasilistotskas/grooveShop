@@ -35,9 +35,9 @@
 </template>
 
 <script lang="ts">
-import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
+import store from "@/store"
 import { Options, Vue } from "vue-class-component"
-import store from "@/store";
+import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
 
 @Options({
   name: "Navbar",

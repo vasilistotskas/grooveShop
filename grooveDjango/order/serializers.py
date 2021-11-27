@@ -1,7 +1,5 @@
-from rest_framework import serializers
-from rest_framework.fields import CurrentUserDefault
 from .models import Order, OrderItem
-
+from rest_framework import serializers
 from product.serializers import ProductSerializer
 
 

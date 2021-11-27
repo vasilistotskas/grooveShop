@@ -78,14 +78,14 @@
 
 
 <script lang="ts">
-import { Options , Vue} from "vue-class-component"
 import store from '@/store'
-import UserDetailsModel from '@/state/user/data/UserDetailsModel'
-import RegionsModel from "@/state/country/RegionsModel"
 import {cloneDeep} from "lodash"
+import { useToast } from "vue-toastification"
+import { Options , Vue} from "vue-class-component"
+import RegionsModel from "@/state/country/RegionsModel"
 import CountryModel from "@/state/country/CountryModel"
 import ProfileImage from "@/components/User/ProfileImage.vue"
-import { useToast } from "vue-toastification"
+import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 
 const toast = useToast();
 

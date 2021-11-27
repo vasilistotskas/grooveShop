@@ -208,15 +208,14 @@
 
 
 <script lang="ts">
-import Navbar from '@/components/Navbar/Navbar.vue'
-import { Options, Vue } from "vue-class-component"
 import axios from 'axios'
-import CategoryModel from "@/state/category/CategoryModel"
 import store from '@/store'
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/vue-loading.css';
-import _, {LoDashStatic} from "lodash";
-import UserDetailsModel from "@/state/user/data/UserDetailsModel";
+import _, {LoDashStatic} from "lodash"
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
+import { Options, Vue } from "vue-class-component"
+import Navbar from '@/components/Navbar/Navbar.vue'
+import CategoryModel from "@/state/category/CategoryModel"
 
 @Options({
   name: "App",

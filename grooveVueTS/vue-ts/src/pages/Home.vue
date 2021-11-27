@@ -16,11 +16,11 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component"
-import ProductCard from "@/components/Product/ProductCard.vue"
 import store from '@/store'
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import ProductModel from "@/state/product/ProductModel";
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Options, Vue } from "vue-class-component"
+import ProductModel from "@/state/product/ProductModel"
+import ProductCard from "@/components/Product/ProductCard.vue"
 
 @Options({
   name: "Home",

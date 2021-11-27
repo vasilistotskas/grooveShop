@@ -36,14 +36,13 @@
 </template>
 
 <script lang="ts">
-  import { Options, Vue } from "vue-class-component"
+import { Options, Vue } from "vue-class-component"
 
-  @Options({
-    name: "NavbarCategories",
-    props: {
-      categoriesTree: Array
-    }
-  })
-  export default class NavbarCategories extends Vue {
+@Options({
+  name: "NavbarCategories",
+  props: {
+    categoriesTree: Array
   }
+})
+export default class NavbarCategories extends Vue {}
 </script>

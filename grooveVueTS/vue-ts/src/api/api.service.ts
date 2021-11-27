@@ -1,9 +1,7 @@
-// @ts-ignore
-import { isEmpty, isObject, keys, each, isDate, isNull } from 'lodash'
 import axios from 'axios'
 import store from '@/store'
-// @ts-ignore
 import qs from 'querystring'
+import { isEmpty, isObject, keys, each, isDate, isNull } from 'lodash'
 
 const baseUrl = '/api/v1'
 export default {
