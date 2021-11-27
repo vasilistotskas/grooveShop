@@ -16,6 +16,7 @@
         <!-- Product Review -->
         <a type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">Product Review</a>
         <ProductReviewModal></ProductReviewModal>
+
         <p class="description mb-4">{{ product.description }}</p>
         <p class="mb-2"><strong>Price: </strong>${{ product.price }}</p>
 
@@ -66,7 +67,6 @@ import { Options, Vue } from "vue-class-component"
 import ProductModel from "@/state/product/ProductModel"
 import store from '@/store'
 import ProductReviews from "@/components/Product/ProductReviews.vue";
-import { cloneDeep } from "lodash"
 
 @Options({
   name: "ProductVue",
@@ -129,12 +129,15 @@ export default class ProductVue extends Vue {
 
   async mounted(): Promise<void> {
     document.title = <string>this.$route.params.product_slug
-    await store.dispatch('product/productFromRemote')
-    await store.dispatch('product/updateProductHits')
-    await store.dispatch('product/review/currentProductReviewsFromRemote')
 
-    await store.commit('product/review/setProductReviewsAverage', this.product.review_average)
-    await store.commit('product/review/setProductReviewsCounter', this.product.review_counter)
+    await Promise.all([
+      store.dispatch('product/productFromRemote'),
+      store.dispatch('product/updateProductHits'),
+      store.dispatch('product/review/currentProductReviewsFromRemote'),
+
+      store.commit('product/review/setProductReviewsAverage', this.product.review_average),
+      store.commit('product/review/setProductReviewsCounter', this.product.review_counter)
+    ])
   }
 }
 

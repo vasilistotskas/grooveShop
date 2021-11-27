@@ -88,7 +88,7 @@ export default class ProductReviewModule
     }
 
     @Mutation
-    setUserReviews(reviews: Array<any>): void {
+    setUserReviews(reviews: Array<ProductReviewModel>): void {
         this.userReviews = reviews
     }
 

@@ -309,8 +309,10 @@ export default class App extends Vue {
     await store.dispatch('category/categoriesTreeFromRemote')
 
     if (this.isAuthenticated) {
-      await store.dispatch('user/data/userDataFromRemote')
-      await store.dispatch('user/order/userOrdersFromRemote')
+      await Promise.all([
+        store.dispatch('user/data/userDataFromRemote'),
+        store.dispatch('user/order/userOrdersFromRemote')
+      ])
     }
 
   }
