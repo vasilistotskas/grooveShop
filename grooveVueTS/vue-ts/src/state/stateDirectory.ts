@@ -3,6 +3,7 @@ import CartModule from '@/state/cart/CartModule'
 import UserModule from '@/state/user/UserModule'
 import Iban from '@/libraries/Stripe/Components/Iban'
 import Card from '@/libraries/Stripe/Components/Card'
+import SliderModule from "@/state/slider/SliderModule"
 import SearchModule from '@/state/search/SearchModule'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import ProductModule from '@/state/product/ProductModule'
@@ -35,6 +36,7 @@ const stateDirectory = <Record<string, typeof AppBaseModule>>{
     'cart': CartModule,
     'search': SearchModule,
     'country': CountryModule,
+    'slider': SliderModule,
     'stripeIban': Iban,
     'stripeCard': Card
 }

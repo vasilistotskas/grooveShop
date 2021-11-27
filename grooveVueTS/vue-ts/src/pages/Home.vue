@@ -19,6 +19,7 @@
 import store from '@/store'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Options, Vue } from "vue-class-component"
+import SliderModel from '@/state/slider/SliderModel'
 import ProductModel from "@/state/product/ProductModel"
 import ProductCard from "@/components/Product/ProductCard.vue"
 
@@ -37,8 +38,15 @@ export default class Home extends Vue {
     return store.getters['product/getLatestProductData']
   }
 
+  get homepageSlider(): [SliderModel] {
+    return store.getters['slider/getSlidersData']
+  }
+
   async beforeCreate(): Promise<void> {
-    await store.dispatch('product/latestProductsFromRemote')
+    await Promise.all([
+      await store.dispatch('product/latestProductsFromRemote'),
+      await store.dispatch('slider/slidersFromRemote')
+    ])
   }
 
 }

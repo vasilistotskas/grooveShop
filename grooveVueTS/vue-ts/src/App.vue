@@ -212,10 +212,14 @@ import axios from 'axios'
 import store from '@/store'
 import _, {LoDashStatic} from "lodash"
 import Loading from 'vue-loading-overlay'
+import packageMeta from '@/../package.json'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import { Options, Vue } from "vue-class-component"
 import Navbar from '@/components/Navbar/Navbar.vue'
 import CategoryModel from "@/state/category/CategoryModel"
+import UserDetailsModel from "@/state/user/data/UserDetailsModel"
+import ProductReviewModel from "@/state/product/review/ProductReviewModel"
+import ProductFavouriteModel from "@/state/product/favourite/ProductFavouriteModel"
 
 @Options({
   name: "App",
@@ -232,6 +236,10 @@ export default class App extends Vue {
     return _
   }
 
+  get version(): string {
+    return packageMeta.version
+  }
+
   get isLoading(): boolean {
     return store.getters['app/getLoading']
   }
@@ -245,10 +253,6 @@ export default class App extends Vue {
     metaTagElement.setAttribute(metaAttribute, newValue);
   }
 
-  // get version(): string {
-  //   return packageMeta.version
-  // }
-
   get cartTotalLength(): number {
     return store.getters['cart/getCartTotalLength']
   }
@@ -257,22 +261,18 @@ export default class App extends Vue {
     return store.getters['category/getCategoriesTree']
   }
 
-  // get userData(): UserDetailsModel {
-  //   if(this.isAuthenticated) {
-  //     return store.getters['user/data/getUserData']
-  //   }
-  //   return new UserDetailsModel
-  // }
-  //
-  // get userDetails(): object {
-  //   return store.getters['user/data/getUserDetails']
-  // }
+  get userData(): UserDetailsModel {
+    if(this.isAuthenticated) {
+      return store.getters['user/data/getUserData']
+    }
+    return new UserDetailsModel
+  }
 
-  get userReviews(): Array<any> {
+  get userReviews(): Array<ProductReviewModel> {
     return store.getters['product/review/getUserReviews']
   }
 
-  get userFavourites(): Array<any> {
+  get userFavourites(): Array<ProductFavouriteModel> {
     return store.getters['product/favourite/getFavouriteData']
   }
 
@@ -302,10 +302,13 @@ export default class App extends Vue {
   }
 
   async created(): Promise<void> {
-    this.initializeAuth()
-    this.initializeToken()
-    this.initializeCart()
-    await store.dispatch('category/categoriesTreeFromRemote')
+
+    await Promise.all([
+      this.initializeAuth(),
+      this.initializeToken(),
+      this.initializeCart(),
+      store.dispatch('category/categoriesTreeFromRemote')
+    ])
 
     if (this.isAuthenticated) {
       await Promise.all([

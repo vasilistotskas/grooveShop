@@ -131,7 +131,7 @@ export default class ProductVue extends Vue {
     document.title = <string>this.$route.params.product_slug
 
     await Promise.all([
-      store.dispatch('product/productFromRemote'),
+      await store.dispatch('product/productFromRemote'),
       store.dispatch('product/updateProductHits'),
       store.dispatch('product/review/currentProductReviewsFromRemote'),
 
