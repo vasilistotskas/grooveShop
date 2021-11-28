@@ -1,11 +1,10 @@
-import {Action, Module, Mutation} from "vuex-module-decorators"
-import AppBaseModule from "@/state/common/AppBaseModule"
-import api from "@/api/api.service"
-import ResponseData from "@/state/types/ResponseData"
-import ProductFavouriteModel from "@/state/product/favourite/ProductFavouriteModel"
-import router from "@/routes"
 import store from "@/store"
+import api from "@/api/api.service"
 import { useToast } from 'vue-toastification'
+import ResponseData from "@/state/types/ResponseData"
+import AppBaseModule from "@/state/common/AppBaseModule"
+import {Action, Module, Mutation} from "vuex-module-decorators"
+import ProductFavouriteModel from "@/state/product/favourite/ProductFavouriteModel"
 
 const toast = useToast()
 

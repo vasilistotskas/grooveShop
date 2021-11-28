@@ -6,9 +6,9 @@
 
 
 <script lang="ts">
+import store from '@/store'
 import { Options, Vue } from "vue-class-component"
 import ProductModel from "@/state/product/ProductModel"
-import store from '@/store'
 
 @Options({
   name: "FavouriteButton",

@@ -3,6 +3,8 @@ export const min = (min: number) => (msg: string) => (x: any) =>
   x.length >= min || msg
 export const max = (max: number) => (msg: string) => (x: any) =>
   x.length <= max || msg
+export const exactly = (min: number) => (msg: string) => (x: any) =>
+    x.length == min || msg
 export const minMax = (min: number, max: number) => (msg: string) => (x: any) =>
   (min <= x.length && x.length <= max) || msg
 export const email = (msg: string) => (x: any) => /\S+@\S+\.\S+/.test(x) || msg

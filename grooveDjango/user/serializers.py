@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import UserProfile, Country, Region
-from django.contrib.auth.models import User
 from helpers.image_resize import make_thumbnail
+from .models import UserProfile, Country, Region
+
 
 class RegionSerializer(serializers.ModelSerializer):
     class Meta:

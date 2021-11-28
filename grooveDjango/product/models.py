@@ -1,14 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.utils.html import format_html
-from django.utils.safestring import mark_safe
-from django.db.models import Avg, Count
-from helpers.image_resize import make_thumbnail
 from mptt.models import MPTTModel
 from mptt.fields import TreeForeignKey
-from django.http import JsonResponse
+from django.db.models import Avg, Count
+from django.utils.html import format_html
+from django.contrib.auth.models import User
+from django.utils.safestring import mark_safe
+from helpers.image_resize import make_thumbnail
 
 
 class Category(MPTTModel):
@@ -16,7 +13,7 @@ class Category(MPTTModel):
     slug = models.SlugField()
     description = models.TextField(null=True, blank=True)
     image_url = models.ImageField(
-        upload_to='images/categories', null=True, blank=True)
+        upload_to='uploads/categories/', null=True, blank=True)
     parent = TreeForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
     tags = models.CharField(max_length=100, null=True,
                             blank=True, help_text='SEO keywords')
@@ -160,8 +157,8 @@ class Product(models.Model):
 class ProductImages(models.Model):
     title = models.CharField(max_length=50, blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='uploads/', blank=True, null=True)
-    thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
+    image = models.ImageField(upload_to='uploads/products/', blank=True, null=True)
+    thumbnail = models.ImageField(upload_to='uploads/products/thumbnails/', blank=True, null=True)
     is_main = models.BooleanField(blank=False, null=False, default=False)
 
     class Meta:

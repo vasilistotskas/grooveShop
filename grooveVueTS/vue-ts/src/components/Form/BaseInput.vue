@@ -5,19 +5,17 @@
         :class="['_input', { '_input-error': hasError }]"
         :disabled="disabled"
         :placeholder="placeholder"
-        v-bind="attrsRest"
-    />
+        v-bind="attrsRest"/>
     <LoadingIcon
         class="_loading-icon"
         :class="{ '_loading-icon-error': hasError }"
-        v-if="validating"
-    />
+        v-if="validating"/>
   </div>
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import LoadingIcon from "../../assets/LoadingIcon.vue";
+import { defineComponent } from "vue"
+import LoadingIcon from "../../assets/LoadingIcon.vue"
 
 export default defineComponent({
   inheritAttrs: false,
@@ -34,7 +32,7 @@ export default defineComponent({
       type: Boolean
     },
     placeholder: {
-      type: String
+      type: [String, Number]
     },
     hasError: {
       type: Boolean

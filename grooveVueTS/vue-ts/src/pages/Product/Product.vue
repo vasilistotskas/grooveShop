@@ -61,12 +61,12 @@
 </template>
 
 <script lang="ts">
-import FavouriteButton from '@/components/Product/FavouriteButton.vue'
-import ProductReviewModal from '@/modals/Product/ProductReviewModal.vue'
+import store from '@/store'
 import { Options, Vue } from "vue-class-component"
 import ProductModel from "@/state/product/ProductModel"
-import store from '@/store'
-import ProductReviews from "@/components/Product/ProductReviews.vue";
+import ProductReviews from "@/components/Product/ProductReviews.vue"
+import FavouriteButton from '@/components/Product/FavouriteButton.vue'
+import ProductReviewModal from '@/modals/Product/ProductReviewModal.vue'
 
 @Options({
   name: "ProductVue",
@@ -131,7 +131,7 @@ export default class ProductVue extends Vue {
     document.title = <string>this.$route.params.product_slug
 
     await Promise.all([
-      store.dispatch('product/productFromRemote'),
+      await store.dispatch('product/productFromRemote'),
       store.dispatch('product/updateProductHits'),
       store.dispatch('product/review/currentProductReviewsFromRemote'),
 

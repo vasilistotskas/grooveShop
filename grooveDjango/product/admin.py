@@ -1,9 +1,9 @@
-from django.contrib import admin
 import admin_thumbnails
-from .models import Category, Product, ProductImages, Favourite, Vat, Review
-from django.utils.translation import ngettext
+from django.contrib import admin
 from django.contrib import messages
 from mptt.admin import DraggableMPTTAdmin
+from django.utils.translation import ngettext
+from .models import Category, Product, ProductImages, Favourite, Vat, Review
 
 
 def category_update_action(category):
@@ -20,7 +20,6 @@ class ProductImageInline(admin.TabularInline):
     exclude = ['thumbnail']
     readonly_fields = ('id',)
     extra = 1
-
 
 
 class CategoryAdmin(DraggableMPTTAdmin):

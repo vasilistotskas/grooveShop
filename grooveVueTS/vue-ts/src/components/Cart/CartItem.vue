@@ -19,9 +19,9 @@
 </template>
 
 <script lang="ts">
+import store from '@/store'
 import { Options, Vue } from "vue-class-component"
 import CartItemModel from "@/state/cart/CartItemModel"
-import store from '@/store'
 
 @Options({
   name: "CartItem",

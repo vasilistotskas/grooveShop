@@ -1,14 +1,14 @@
+import "bootstrap"
+import axios from 'axios'
+import App from '@/App.vue'
+import store from './store'
+import router from '@/routes'
 import { i18n } from '@/locales'
 import { createApp } from 'vue'
-import router from '@/routes'
-import store from './store'
-import axios from 'axios'
-import Toast, { PluginOptions, TYPE } from "vue-toastification"
 import "vue-toastification/dist/index.css"
 import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap"
-import App from '@/App.vue'
 import { createValidation } from 'vue3-form-validation'
+import Toast, { PluginOptions, TYPE } from "vue-toastification"
 
 const validation = createValidation({
     defaultValidationBehavior: 'lazier',

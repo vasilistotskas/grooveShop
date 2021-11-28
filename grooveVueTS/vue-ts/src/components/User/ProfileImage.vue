@@ -11,8 +11,7 @@
                 type="file"
                 id="image"
                 name="image"
-                @change="updateUserImage"
-            >
+                @change="updateUserImage">
             Change Picture
           </label>
         </div>
@@ -22,8 +21,8 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue} from "vue-class-component"
 import store from '@/store'
+import { Options, Vue} from "vue-class-component"
 
 @Options({
   name: "ProfileImage",

@@ -1,7 +1,7 @@
-from rest_framework import serializers
-from .models import Category, Product, ProductImages, Favourite, Review
 from user.models import UserProfile
+from rest_framework import serializers
 from user.serializers import UserProfileSerializer
+from .models import Category, Product, ProductImages, Favourite, Review
 
 
 class ImagesSerializer(serializers.ModelSerializer):

@@ -1,11 +1,11 @@
-import {Action, Module, Mutation} from 'vuex-module-decorators'
-import AppBaseModule from "@/state/common/AppBaseModule"
+import {find} from 'lodash'
+import store from '@/store'
 import api from "@/api/api.service"
 import ResponseData from "@/state/types/ResponseData"
 import CountryModel from "@/state/country/CountryModel"
 import RegionsModel from "@/state/country/RegionsModel"
-import store from '@/store'
-import {find} from 'lodash'
+import AppBaseModule from "@/state/common/AppBaseModule"
+import {Action, Module, Mutation} from 'vuex-module-decorators'
 import UserDetailsModel from "@/state/user/data/UserDetailsModel"
 
 @Module({ namespaced: true })

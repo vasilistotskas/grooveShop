@@ -1,7 +1,7 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import routes from './main.routes'
 import store from '@/store'
+import routes from './main.routes'
 import { useToast } from 'vue-toastification'
+import { createRouter, createWebHistory } from 'vue-router'
 
 const toast = useToast()
 
