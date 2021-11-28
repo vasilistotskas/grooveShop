@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1 class="plr-15">{{ title }}</h1>
-    <form @submit.prevent="$emit('submit')" class="_form">
+    <h1 v-if="title" class="plr-15">{{ title }}</h1>
+    <form @submit.prevent="$emit('submit')" class="_form" :class="formClass">
       <slot></slot>
     </form>
 <!--    <PreFormData :form="form" :errors="errors" />-->
@@ -26,6 +26,9 @@ export default defineComponent({
       type: Object,
       required: true
     },
+    formClass: {
+      type: String
+    },
     errors: {
       type: Object,
       required: true
@@ -37,5 +40,8 @@ export default defineComponent({
 <style scoped>
 ._form {
   margin: 2.5rem 0 2.5rem 0;
+}
+.no-margins{
+  margin: 0!important;
 }
 </style>

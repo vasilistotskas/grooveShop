@@ -154,11 +154,9 @@ export default class SignUp extends Vue {
 
   handleSubmit = async () => {
     try {
-      const formData = await validateFields()
+      const formData:any = await validateFields()
       const apiData = {
-        // @ts-ignore
         username: formData.name,
-        // @ts-ignore
         password: formData.password
       }
       await store.dispatch('user/userSignUp', apiData)

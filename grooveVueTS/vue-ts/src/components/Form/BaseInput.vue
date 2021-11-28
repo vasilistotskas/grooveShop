@@ -32,7 +32,7 @@ export default defineComponent({
       type: Boolean
     },
     placeholder: {
-      type: String
+      type: [String, Number]
     },
     hasError: {
       type: Boolean

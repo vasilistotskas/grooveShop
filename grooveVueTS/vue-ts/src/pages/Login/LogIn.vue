@@ -163,11 +163,9 @@ export default class LogIn extends Vue {
     localStorage.removeItem("token")
 
     try {
-      const formData = await validateFields()
+      const formData:any = await validateFields()
       const apiData = {
-        // @ts-ignore
         username: formData.name,
-        // @ts-ignore
         password: formData.password
       }
       await store.dispatch('user/userLogIn', apiData)
