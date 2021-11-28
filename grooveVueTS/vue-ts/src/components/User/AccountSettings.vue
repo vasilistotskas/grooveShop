@@ -162,13 +162,13 @@ import { Options , Vue} from "vue-class-component"
 import RegionsModel from "@/state/country/RegionsModel"
 import CountryModel from "@/state/country/CountryModel"
 import BaseInput from "@/components/Form/BaseInput.vue"
-import {equal, min, exactly, required} from "@/components/Form/Utils"
 import FormProvider from "@/components/Form/FormProvider.vue"
 import ProfileImage from "@/components/User/ProfileImage.vue"
 import SubmitButtons from "@/components/Form/SubmitButtons.vue"
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 import {useValidation, ValidationError} from "vue3-form-validation"
 import ValidationErrors from "@/components/Form/ValidationErrors.vue"
+import {equal, min, exactly, required} from "@/components/Form/Utils"
 
 const toast = useToast()
 
