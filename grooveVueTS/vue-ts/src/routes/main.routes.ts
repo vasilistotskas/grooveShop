@@ -70,6 +70,30 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Category',
         component: () => import("@/pages/Category/Category.vue"),
         props: true
+    },
+    {
+        path: '/blog',
+        name: 'Blog',
+        component: () => import("@/pages/Blog/Blog.vue"),
+        props: true
+    },
+    {
+        path: '/author/:username',
+        name: 'Author',
+        component: () => import("@/components/Blog/Author.vue"),
+        props: true
+    },
+    {
+        path: '/post/:slug',
+        name: 'Post',
+        component: () => import("@/components/Blog/Post.vue"),
+        props: true
+    },
+    {
+        path: '/tag/:tag',
+        name: 'PostsByTag',
+        component: () => import("@/components/Blog/PostsByTag.vue"),
+        props: true
     }
 ]
 
