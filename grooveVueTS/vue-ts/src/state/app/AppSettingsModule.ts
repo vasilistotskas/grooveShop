@@ -1,8 +1,8 @@
-import { Action, Module, Mutation } from 'vuex-module-decorators'
 import { useI18n } from "vue-i18n"
 import { cloneDeep } from 'lodash'
-import AppBaseModule from '@/state/common/AppBaseModule'
 import AppSettings from '@/state/app/AppSettings'
+import AppBaseModule from '@/state/common/AppBaseModule'
+import { Action, Module, Mutation } from 'vuex-module-decorators'
 import AppSettingsLocalizationOption from '@/state/app/AppSettingsLocalizationOption'
 
 @Module({ namespaced: true })

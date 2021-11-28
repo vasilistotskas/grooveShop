@@ -8,6 +8,7 @@ urlpatterns = [
     path('api/v1/', include('product.urls')),
     path('api/v1/', include('order.urls')),
     path('api/v1/', include('user.urls')),
+    path('api/v1/', include('slider.urls')),
     # djoser api views
     path('api/v1/djoser/', include('djoser.urls')),
     path('api/v1/djoser/', include('djoser.urls.authtoken')),

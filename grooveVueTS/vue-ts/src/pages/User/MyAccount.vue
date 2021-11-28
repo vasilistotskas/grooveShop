@@ -24,9 +24,9 @@
 </template>
 
 <script lang="ts">
+import store from '@/store'
 import router from "@/routes"
 import {Options, Vue} from "vue-class-component"
-import store from '@/store'
 
 @Options({
   name: "MyAccount",

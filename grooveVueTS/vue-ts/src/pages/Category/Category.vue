@@ -21,10 +21,10 @@
 
 <script lang="ts">
 
-import { Options, Vue } from "vue-class-component"
-import ProductCard from "@/components/Product/ProductCard.vue"
-import CategoryModel from "@/state/category/CategoryModel"
 import store from '@/store'
+import { Options, Vue } from "vue-class-component"
+import CategoryModel from "@/state/category/CategoryModel"
+import ProductCard from "@/components/Product/ProductCard.vue"
 
 @Options({
   name: "CategoryVue",

@@ -1,15 +1,9 @@
-from django.shortcuts import render
+from django.http import Http404
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from user.models import UserProfile, Country, Region
 from rest_framework import status, authentication, permissions, generics, viewsets
-from .serializers import UserSerializer, UserProfileSerializer, CountrySerializer, RegionSerializer
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from django.http import Http404
-from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
-from django.contrib.auth.models import User
-from rest_framework import mixins
-from rest_framework import generics
-from rest_framework.parsers import FormParser, MultiPartParser
+from .serializers import UserProfileSerializer, CountrySerializer, RegionSerializer
 
 
 class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):
