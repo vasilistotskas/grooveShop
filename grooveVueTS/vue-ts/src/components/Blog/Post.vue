@@ -1,17 +1,20 @@
 <template>
-  <div class="post" v-if="post">
-    <h2>{{ post.title }}: {{ post.subtitle }}</h2>
-    By <AuthorLink :author="post.author" />
-    <div>{{ displayableDate(post.publishDate) }}</div>
-    <p class="post__description">{{ post.metaDescription }}</p>
-    <article>
-      {{ post.body }}
-    </article>
-    <ul>
-      <li class="post__tags" v-for="tag in post.tags" :key="tag.name">
-        <router-link :to="`/tag/${tag.name}`">#{{ tag.name }}</router-link>
-      </li>
-    </ul>
+  <div class="container mt-5 mb-5">
+    <div class="card mb-3">
+      <img v-bind:src="'http://127.0.0.1:8000/media/' + post.image" :alt="post.title">
+      <div class="card-body">
+        <h5 class="card-title">{{ post.title }}: {{ post.subtitle }}</h5>
+        By <AuthorLink :author="post.author" />
+        <p class="card-text">{{ post.metaDescription }}</p>
+        <p class="card-text">{{ post.body }}</p>
+        <p class="card-text"><small class="text-muted">{{ displayableDate(post.publishDate) }}</small></p>
+        <ul>
+          <li class="post__tags" v-for="tag in post.tags" :key="tag.name">
+            <router-link :to="`/tag/${tag.name}`">#{{ tag.name }}</router-link>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -36,6 +39,7 @@ export default {
             subtitle
             publishDate
             metaDescription
+            image
             slug
             body
             author {

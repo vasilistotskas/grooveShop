@@ -1,23 +1,29 @@
 <template>
-  <div>
-    <ol class="post-list">
-      <li class="post" v-for="post in publishedPosts" :key="post.title">
-          <span class="post__title">
-            <router-link :to="`/post/${post.slug}`">{{ post.title }}: {{ post.subtitle }}</router-link>
-          </span>
-        <span v-if="showAuthor">
-            by <AuthorLink :author="post.author" />
-          </span>
-        <div class="post__date">{{ displayableDate(post.publishDate) }}</div>
-        <p class="post__description">{{ post.metaDescription }}</p>
-        <ul>
-          <li class="post__tags" v-for="tag in post.tags" :key="tag.name">
-            <router-link :to="`/tag/${tag.name}`">#{{ tag.name }}</router-link>
-          </li>
-        </ul>
-      </li>
-    </ol>
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col" v-for="post in publishedPosts" :key="post.title">
+      <router-link :to="`/post/${post.slug}`">
+        <div class="card">
+          <img v-bind:src="'http://127.0.0.1:8000/media/' + post.image" :alt="post.title">
+          <div class="card-body">
+            <h5 class="card-title">{{ post.title }}: {{ post.subtitle }}</h5>
+            <span v-if="showAuthor">
+              by <AuthorLink :author="post.author" />
+            </span>
+            <p class="card-text">{{ post.metaDescription }}</p>
+            <ul>
+              <li class="post__tags" v-for="tag in post.tags" :key="tag.name">
+                <router-link :to="`/tag/${tag.name}`">#{{ tag.name }}</router-link>
+              </li>
+            </ul>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">{{ displayableDate(post.publishDate) }}</small>
+          </div>
+        </div>
+      </router-link>
+    </div>
   </div>
+
 </template>
 
 <script>

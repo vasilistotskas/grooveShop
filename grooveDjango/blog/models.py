@@ -32,7 +32,7 @@ class Post(models.Model):
     date_modified = models.DateTimeField(auto_now=True)
     publish_date = models.DateTimeField(blank=True, null=True)
     published = models.BooleanField(default=False)
-
+    image = models.ImageField(upload_to='uploads/blog/', blank=True, null=True)
     author = models.ForeignKey(Profile, on_delete=models.PROTECT)
     tags = models.ManyToManyField(Tag, blank=True)
 

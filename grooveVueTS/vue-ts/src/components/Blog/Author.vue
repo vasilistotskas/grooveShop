@@ -1,5 +1,5 @@
 <template>
-  <div v-if="author">
+  <div v-if="author" class="container mt-5 mb-5">
     <h2>{{ displayName }}</h2>
     <a :href="author.website" target="_blank" rel="noopener noreferrer">Website</a>
     <p>{{ author.bio }}</p>
@@ -39,6 +39,7 @@ export default {
             publishDate
             published
             metaDescription
+            image
             slug
             tags {
               name

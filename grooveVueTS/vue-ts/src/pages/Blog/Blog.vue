@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container mt-5 mb-5">
     <h2>Recent posts</h2>
     <PostList v-if="allPosts" :posts="allPosts" />
   </div>
@@ -22,6 +22,7 @@ export default {
           publishDate
           published
           metaDescription
+          image
           slug
           author {
             user {
