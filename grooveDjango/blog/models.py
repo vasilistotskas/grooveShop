@@ -4,6 +4,7 @@ from django.shortcuts import reverse
 
 
 class Profile(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     website = models.URLField(blank=True, null=True)
     bio = models.CharField(max_length=240, blank=True, null=True)
@@ -13,6 +14,7 @@ class Profile(models.Model):
 
 
 class Tag(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
@@ -20,9 +22,7 @@ class Tag(models.Model):
 
 
 class Post(models.Model):
-    class Meta:
-        ordering = ["-publish_date"]
-
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255, unique=True)
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True)
@@ -35,6 +35,9 @@ class Post(models.Model):
     image = models.ImageField(upload_to='uploads/blog/', blank=True, null=True)
     author = models.ForeignKey(Profile, on_delete=models.PROTECT)
     tags = models.ManyToManyField(Tag, blank=True)
+
+    class Meta:
+        ordering = ["-publish_date"]
 
     def get_absolute_url(self):
         return reverse("blog:post", kwargs={"slug": self.slug})

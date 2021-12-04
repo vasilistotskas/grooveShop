@@ -9,6 +9,7 @@ from helpers.image_resize import make_thumbnail
 
 
 class Category(MPTTModel):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     slug = models.SlugField()
     description = models.TextField(null=True, blank=True)
@@ -45,6 +46,7 @@ class Category(MPTTModel):
 
 
 class Vat(models.Model):
+    id = models.AutoField(primary_key=True)
     value = models.DecimalField(max_digits=11, decimal_places=1)
 
     def __str__(self):
@@ -57,6 +59,7 @@ class Product(models.Model):
         ('True', 'Active'),
         ('False', 'Not Active'),
     )
+    id = models.AutoField(primary_key=True)
     category = TreeForeignKey('Category', on_delete=models.SET_NULL, related_name='products', null=True, blank=True)
     name = models.CharField(max_length=255)
     slug = models.SlugField()
@@ -155,6 +158,7 @@ class Product(models.Model):
 
 
 class ProductImages(models.Model):
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50, blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='uploads/products/', blank=True, null=True)
@@ -188,6 +192,7 @@ class ProductImages(models.Model):
 
 # favourite Model
 class Favourite(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
@@ -216,6 +221,7 @@ class Review(models.Model):
         (9, 9),
         (10, 10)
     )
+    id = models.AutoField(primary_key=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.CharField(max_length=250, blank=True)

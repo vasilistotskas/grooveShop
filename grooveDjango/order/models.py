@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 
 class Order(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE, null=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -24,6 +25,7 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
+    id = models.AutoField(primary_key=True)
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='items', on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=8, decimal_places=2)
