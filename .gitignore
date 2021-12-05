@@ -129,3 +129,70 @@ dmypy.json
 .pyre/
 
 /data
+
+#vscode#
+.vscode
+
+#node#
+node_modules
+
+# Django #
+*.pyc
+__pycache__
+media
+
+# Backup files #
+*.bak
+
+# intellij configs
+.idea/
+
+# celery
+celerybeat-schedule.*
+
+
+# Sublime Text #
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+
+# sftp configuration file
+sftp-config.json
+
+# Package control specific files Package
+Control.last-run
+Control.ca-list
+Control.ca-bundle
+Control.system-ca-bundle
+GitHub.sublime-settings
+
+# Visual Studio Code #
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history
+
+# Extras #
+.ebextensions
+.elasticbeanstalk
+/test/js
+/test/browsertest/js
+/test/fixtures/temp-*
+/test/temp
+/test/ChangesAndRemovals
+/benchmark/js
+/benchmark/fixtures
+/examples/**/dist
+/coverage
+.DS_Store
+.idea
+.eslintcache
+package-lock.json
+build
+dist
+webpack-stats.json
+npm-debug.log
