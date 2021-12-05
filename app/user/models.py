@@ -53,7 +53,7 @@ class UserProfile(models.Model):
         return self.user.username
 
     def image_url(self):
-        return 'http://localhost:8000/' + self.image.url
+        return 'http://localhost:8000' + self.image.url
 
     def image_tag(self):
         if self.image:
