@@ -2,6 +2,7 @@ version: '3.9'
 
 services:
   app:
+    container_name: backend
     build:
       context: .
     command: >
@@ -24,8 +25,25 @@ services:
       - db
 
   db:
+    container_name: postgresql_db
     image: postgres:13-alpine
+    restart: unless-stopped
     environment:
       - POSTGRES_DB=devdb
       - POSTGRES_USER=devuser
       - POSTGRES_PASSWORD=changeme
+    ports:
+    - 5432:5432
+
+  pgadmin:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+        PGADMIN_DEFAULT_EMAIL: devuser@devuser.com
+        PGADMIN_DEFAULT_PASSWORD: changeme
+        PGADMIN_LISTEN_PORT: 5050
+    ports:
+      - "5050:5050"
+    depends_on:
+      -   db
