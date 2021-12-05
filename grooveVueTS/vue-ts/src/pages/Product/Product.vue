@@ -6,7 +6,7 @@
                 v-for="image in product.images"
                 :key="image.id"
                 class="image">
-          <img v-bind:src="'http://127.0.0.1:8000' + image.image">
+          <img v-bind:src="'http://localhost:8000' + image.image">
         </figure>
       </div>
 

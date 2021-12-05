@@ -119,7 +119,7 @@ class Product(models.Model):
         try:
             img = ProductImages.objects.get(product_id=self.id, is_main=True)
             if img.id is not None:
-                image = 'http://127.0.0.1:8000' + img.image.url
+                image = 'http://localhost:8000' + img.image.url
             else:
                 image = ""
             return image
