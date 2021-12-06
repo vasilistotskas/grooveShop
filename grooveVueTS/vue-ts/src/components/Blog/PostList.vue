@@ -1,9 +1,9 @@
 <template>
-  <div class="row row-cols-1 row-cols-md-2 g-4">
+  <div class="row row-cols-1 row-cols-md-2 g-4" v-if="publishedPosts && Object.keys(publishedPosts).length > 0">
     <div class="col" v-for="post in publishedPosts" :key="post.title">
       <router-link :to="`/post/${post.slug}`">
         <div class="card">
-          <img v-bind:src="'http://127.0.0.1:8000/media/' + post.image" :alt="post.title">
+          <img v-bind:src="'http://localhost:8000/static/media/' + post.image" :alt="post.title">
           <div class="card-body">
             <h5 class="card-title">{{ post.title }}: {{ post.subtitle }}</h5>
             <span v-if="showAuthor">

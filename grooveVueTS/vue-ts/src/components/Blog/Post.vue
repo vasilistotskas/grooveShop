@@ -1,7 +1,7 @@
 <template>
-  <div class="container mt-5 mb-5">
+  <div class="container mt-5 mb-5" v-if="post && Object.keys(post).length > 0">
     <div class="card mb-3">
-      <img v-bind:src="'http://127.0.0.1:8000/media/' + post.image" :alt="post.title">
+      <img v-bind:src="'http://localhost:8000/static/media/' + post.image" :alt="post.title">
       <div class="card-body">
         <h5 class="card-title">{{ post.title }}: {{ post.subtitle }}</h5>
         By <AuthorLink :author="post.author" />
