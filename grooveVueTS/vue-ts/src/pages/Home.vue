@@ -2,7 +2,7 @@
   <div class="home">
     <div class="container-fluid">
       <div class="row mb-5">
-        <swiper
+        <swiper v-if="homepageSlider && Object.keys(homepageSlider).length > 0"
             :style="mainSliderStyle"
             :navigation="true"
             :mousewheel="false"
@@ -19,7 +19,7 @@
           </swiper-slide>
 
           <swiper-slide v-for="slide in homepageSlider[0].slides">
-            <img v-bind:src="'http://127.0.0.1:8000' + slide.image" :alt="slide.title">
+            <img v-bind:src="'http://localhost:8000' + slide.image" :alt="slide.title">
           </swiper-slide>
 
         </swiper>
@@ -79,19 +79,21 @@ export default class Home extends Vue {
   }
 
   private mainSliderVideoInit(): void {
-    this.$refs.mainSliderVideoRef.src = 'http://127.0.0.1:8000' + this.homepageSlider[0].video
-    this.$refs.mainSliderVideoRef.loop = true
-    this.$refs.mainSliderVideoRef.autoplay = true
-    this.$refs.mainSliderVideoRef.playsInline = true
-    this.$refs.mainSliderVideoRef.muted = true
+    if (this.homepageSlider && Object.keys(this.homepageSlider).length > 0) {
+      this.$refs.mainSliderVideoRef.src = 'http://localhost:8000' + this.homepageSlider[0].video
+      this.$refs.mainSliderVideoRef.loop = true
+      this.$refs.mainSliderVideoRef.autoplay = true
+      this.$refs.mainSliderVideoRef.playsInline = true
+      this.$refs.mainSliderVideoRef.muted = true
+      this.$refs.mainSliderVideoRef.play()
+    }
   }
 
   async beforeCreate(): Promise<void> {
     await Promise.all([
       await store.dispatch('product/latestProductsFromRemote'),
       await store.dispatch('slider/slidersFromRemote'),
-      await this.mainSliderVideoInit(),
-      await this.$refs.mainSliderVideoRef.play()
+      await this.mainSliderVideoInit()
     ])
   }
 

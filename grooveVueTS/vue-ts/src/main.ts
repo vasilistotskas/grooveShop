@@ -7,6 +7,7 @@ import { i18n } from '@/locales'
 import { createApp } from 'vue'
 import "vue-toastification/dist/index.css"
 import "bootstrap/dist/css/bootstrap.min.css"
+import * as apolloProvider from '../apollo.provider'
 import { createValidation } from 'vue3-form-validation'
 import Toast, { PluginOptions, TYPE } from "vue-toastification"
 
@@ -29,12 +30,13 @@ const ToastOptions: PluginOptions = {
     }
 };
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000'
+axios.defaults.baseURL = 'http://localhost:8000'
 
 createApp(App)
     .use(store)
     .use(router, axios)
     .use(i18n)
     .use(validation)
+    .use(apolloProvider.provider)
     .use(Toast, ToastOptions)
     .mount('#app')

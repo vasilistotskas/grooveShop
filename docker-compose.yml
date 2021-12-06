@@ -1,0 +1,93 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: docker/Backend.Dockerfile
+    restart: always
+    command: >
+      sh -c "python manage.py wait_for_db &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    volumes:
+      - ./app:/app
+      - ./data/web:/vol/web
+    environment:
+      - SECRET_KEY=devsecretkey
+      - DEBUG=1
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
+    depends_on:
+      - db
+      - redis
+
+  db:
+    container_name: postgresql_db
+    image: postgres:13-alpine
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    restart: always
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+    ports:
+      - 5432:5432
+
+  pgadmin:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+        PGADMIN_DEFAULT_EMAIL: devuser@devuser.com
+        PGADMIN_DEFAULT_PASSWORD: changeme
+        PGADMIN_LISTEN_PORT: 5050
+    ports:
+      - 5050:5050
+    depends_on:
+      - db
+
+  celery:
+    container_name: celery
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/Backend.Dockerfile
+    command: celery -A app worker -l info
+    volumes:
+      - ./app:/app
+    env_file:
+      - ./.env.sample
+    depends_on:
+      - db
+      - redis
+      - app
+
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
+
+  vueapp:
+    build:
+      context: .
+      dockerfile: docker/Frontend.Dockerfile
+    restart: always
+    container_name: frontend
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 8080:5000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - app
