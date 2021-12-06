@@ -53,6 +53,21 @@ services:
     depends_on:
       - db
 
+  celery:
+    container_name: celery
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/Backend.Dockerfile
+    command: celery -A app worker -l info
+    volumes:
+      - ./app:/app
+    env_file:
+      - ./.env.sample
+    depends_on:
+      - db
+      - redis
+      - app
 
   redis:
     container_name: redis

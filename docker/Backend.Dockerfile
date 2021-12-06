@@ -2,6 +2,7 @@ FROM python:3.9-alpine3.13
 LABEL maintainer="groove.com"
 
 ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
 
 COPY ./requirements.txt /requirements.txt
 COPY ./app /app
