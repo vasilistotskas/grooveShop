@@ -7,6 +7,7 @@ urlpatterns = [
     path('latest-products/', views.LatestProductsList.as_view()),
     path('products/search/', views.Search.as_view()),
 
+    path('products/all/', views.ProductsAllResults.as_view()),
     path('products/<slug:product_slug>/<int:category_id>/', views.ProductDetail.as_view()),
     path('products/categoriesTree/', views.CategoryTreeView.as_view()),
     path('products/categoriesUnorganized/', views.CategoriesUnorganized.as_view()),

@@ -8,9 +8,10 @@ from blog.models import Profile, Tag, Post
 class Command(BaseCommand):
     def handle(self, *args, **options):
         faker = Faker()
+        user_id = randrange(21, 30)
 
         Profile.objects.get_or_create(
-            user_id=1,
+            user_id=user_id,
             website=faker.text(20),
             bio=faker.text(50),
         )
@@ -29,5 +30,6 @@ class Command(BaseCommand):
                 meta_description=faker.text(10),
                 published=True,
                 image=faker.image_url(),
-                author=Profile.objects.get(id=1),
+                author=Profile.objects.get_or_create(id=user_id),
             )
+        self.stdout.write(self.style.SUCCESS('Success'))

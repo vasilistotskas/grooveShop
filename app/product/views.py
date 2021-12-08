@@ -15,6 +15,14 @@ class LatestProductsList(APIView):
         return Response(serializer.data)
 
 
+class ProductsAllResults(APIView):
+    @staticmethod
+    def get(request, format=None):
+        products = Product.objects.all()
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
+
+
 class ProductDetail(APIView):
     @staticmethod
     def get_object(product_slug, category_id):
