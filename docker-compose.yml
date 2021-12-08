@@ -16,13 +16,8 @@ services:
     volumes:
       - ./app:/app
       - ./data/web:/vol/web
-    environment:
-      - SECRET_KEY=devsecretkey
-      - DEBUG=1
-      - DB_HOST=db
-      - DB_NAME=devdb
-      - DB_USER=devuser
-      - DB_PASS=changeme
+    env_file:
+      - ./.env.sample
     depends_on:
       - db
       - redis
@@ -33,10 +28,9 @@ services:
     restart: always
     volumes:
       - ./data/db:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=devdb
-      - POSTGRES_USER=devuser
-      - POSTGRES_PASSWORD=changeme
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.sample
     ports:
       - 5432:5432
 
@@ -44,10 +38,8 @@ services:
     container_name: pgadmin4
     image: dpage/pgadmin4
     restart: always
-    environment:
-        PGADMIN_DEFAULT_EMAIL: devuser@devuser.com
-        PGADMIN_DEFAULT_PASSWORD: changeme
-        PGADMIN_LISTEN_PORT: 5050
+    env_file:
+      - ./.env.sample
     ports:
       - 5050:5050
     depends_on:
@@ -55,10 +47,10 @@ services:
 
   celery:
     container_name: celery
-    restart: always
     build:
       context: .
       dockerfile: docker/Backend.Dockerfile
+    restart: always
     command: celery -A app worker -l info
     volumes:
       - ./app:/app
@@ -77,17 +69,20 @@ services:
       - 6379:6379
 
   vueapp:
+    container_name: frontend
     build:
       context: .
       dockerfile: docker/Frontend.Dockerfile
     restart: always
-    container_name: frontend
     volumes:
       - .:/app
       - /app/node_modules
     ports:
       - 8080:80
-    environment:
-      - CHOKIDAR_USEPOLLING=true
+    env_file:
+      - ./.env.sample
     depends_on:
       - app
+
+volumes:
+  postgres_data:
