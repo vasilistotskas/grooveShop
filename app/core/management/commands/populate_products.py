@@ -16,7 +16,7 @@ class Command(BaseCommand):
                 value=vat
             )
 
-        for _ in range(10):
+        for _ in range(2):
             name = faker.name()
             category = Category.objects.create(
                 name=name,
@@ -25,7 +25,7 @@ class Command(BaseCommand):
                 image_url='uploads/products/1_jM4xRzn.jpg',
             )
 
-            for _ in range(4):
+            for _ in range(24):
                 product_price = randrange(20, 300)
                 name = 'testproduct' + str(i)
                 product = Product.objects.create(
@@ -49,7 +49,7 @@ class Command(BaseCommand):
                     is_main=True
                 )
 
-                for _ in range(4):
+                for _ in range(2):
                     favourite = Favourite.objects.create(
                         user_id=user_id,
                         product_id=product.id
