@@ -1,5 +1,4 @@
 from .serializers import *
-from django.db.models import Q
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -97,22 +96,6 @@ class CategoriesUnorganized(APIView):
         categories = Category.objects.all()
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
-
-
-class Search(APIView):
-    def post(self, request, format=None):
-        query = request.data.get('query', '')
-
-        if query:
-            products = Product.objects.filter(
-                Q(name__icontains=query) |
-                Q(description__icontains=query) |
-                Q(id__icontains=query)
-            )
-            serializer = ProductSerializer(products, many=True, context={'user': self.request.user})
-            return Response(serializer.data)
-        else:
-            return Response({"products": []}, status=status.HTTP_404_NOT_FOUND)
 
 
 class FavouriteList(APIView):

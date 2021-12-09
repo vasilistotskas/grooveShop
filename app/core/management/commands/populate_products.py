@@ -25,7 +25,7 @@ class Command(BaseCommand):
                 image_url='uploads/products/1_jM4xRzn.jpg',
             )
 
-            for _ in range(24):
+            for _ in range(50):
                 product_price = randrange(20, 300)
                 name = 'testproduct' + str(i)
                 product = Product.objects.create(

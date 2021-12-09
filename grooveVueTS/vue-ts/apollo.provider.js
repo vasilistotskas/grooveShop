@@ -5,9 +5,10 @@ const cache = new InMemoryCache()
 
 const client = new ApolloClient({
     cache: cache,
-    uri: 'http://localhost:8000/graphql',
+    uri: process.env.VUE_APP_GRAPHQL_URL
 })
 
+console.log(process.env)
 export const provider = createApolloProvider({
     defaultClient: client
 })

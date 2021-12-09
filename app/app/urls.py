@@ -14,9 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
 from graphene_django.views import GraphQLView
 from django.views.decorators.csrf import csrf_exempt
 
@@ -26,6 +26,7 @@ urlpatterns = [
     path('api/v1/', include('order.urls')),
     path('api/v1/', include('user.urls')),
     path('api/v1/', include('slider.urls')),
+    path('api/v1/', include('search.urls')),
     # djoser api views
     path('api/v1/djoser/', include('djoser.urls')),
     path('api/v1/djoser/', include('djoser.urls.authtoken')),

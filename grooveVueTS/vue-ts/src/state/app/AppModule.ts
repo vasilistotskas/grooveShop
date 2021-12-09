@@ -1,6 +1,6 @@
+import axios from 'axios'
+import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import AppBaseModule
-    from '@/state/common/AppBaseModule'
 
 @Module({ namespaced: true })
 export default class AppModule
@@ -10,6 +10,10 @@ export default class AppModule
 
     get getLoading(): boolean {
         return this.loading
+    }
+
+    get axiosBaseUrl(): string | undefined {
+        return axios.defaults.baseURL
     }
 
     @Action

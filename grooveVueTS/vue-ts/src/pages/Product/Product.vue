@@ -6,7 +6,7 @@
                 v-for="image in product.images"
                 :key="image.id"
                 class="image">
-          <img v-bind:src="'http://localhost:8000' + image.image">
+          <img v-bind:src="axiosBaseUrl + image.image">
         </figure>
       </div>
 
@@ -89,6 +89,10 @@ export default class ProductVue extends Vue {
 
   quantity = 1
 
+  get axiosBaseUrl(): boolean {
+    return store.getters['app/axiosBaseUrl']
+  }
+
   get product(): ProductModel {
     return store.getters['product/getProductData']
   }
@@ -131,6 +135,7 @@ export default class ProductVue extends Vue {
     document.title = <string>this.$route.params.product_slug
 
     await Promise.all([
+
       await store.dispatch('product/productFromRemote'),
       store.dispatch('product/updateProductHits'),
       store.dispatch('product/review/currentProductReviewsFromRemote'),

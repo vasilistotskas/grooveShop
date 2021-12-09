@@ -19,7 +19,7 @@
           </swiper-slide>
 
           <swiper-slide v-for="slide in homepageSlider[0].slides">
-            <img v-bind:src="'http://localhost:8000' + slide.image" :alt="slide.title">
+            <img v-bind:src="axiosBaseUrl + slide.image" :alt="slide.title">
           </swiper-slide>
 
         </swiper>
@@ -70,6 +70,10 @@ export default class Home extends Vue {
     '--swiper-pagination-color': '#fff'
   }
 
+  get axiosBaseUrl(): boolean {
+    return store.getters['app/axiosBaseUrl']
+  }
+
   get LatestProducts(): [ProductModel] {
     return store.getters['product/getLatestProductData']
   }
@@ -80,7 +84,7 @@ export default class Home extends Vue {
 
   private mainSliderVideoInit(): void {
     if (this.homepageSlider && Object.keys(this.homepageSlider).length > 0) {
-      this.$refs.mainSliderVideoRef.src = 'http://localhost:8000' + this.homepageSlider[0].video
+      this.$refs.mainSliderVideoRef.src = this.axiosBaseUrl + this.homepageSlider[0].video
       this.$refs.mainSliderVideoRef.loop = true
       this.$refs.mainSliderVideoRef.autoplay = true
       this.$refs.mainSliderVideoRef.playsInline = true

@@ -19,7 +19,7 @@ export default class ProductModule
 
     @Action
     async getSearchResults(params: object): Promise<void> {
-        await api.post('products/search/', params)
+        await api.post('search/', params)
             .then((response: ResponseData) => {
                 const data = response.data
                 let results = new ProductModel(data)

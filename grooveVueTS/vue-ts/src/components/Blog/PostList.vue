@@ -3,7 +3,7 @@
     <div class="col" v-for="post in publishedPosts" :key="post.title">
       <router-link :to="`/post/${post.slug}`">
         <div class="card">
-          <img v-bind:src="'http://localhost:8000/static/media/' + post.image" :alt="post.title">
+          <img v-bind:src="axiosBaseUrl + '/static/media/' + post.image" :alt="post.title">
           <div class="card-body">
             <h5 class="card-title">{{ post.title }}: {{ post.subtitle }}</h5>
             <span v-if="showAuthor">
@@ -28,6 +28,7 @@
 
 <script>
 import AuthorLink from '@/components/Blog/AuthorLink.vue'
+import store from "@/store";
 export default {
   name: 'PostList',
   components: {
@@ -47,6 +48,9 @@ export default {
   computed: {
     publishedPosts () {
       return this.posts.filter(post => post.published)
+    },
+    axiosBaseUrl () {
+      return this.$store.getters['app/axiosBaseUrl']
     }
   },
   methods: {
