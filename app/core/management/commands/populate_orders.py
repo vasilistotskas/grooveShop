@@ -7,7 +7,7 @@ from order.models import Order, OrderItem
 class Command(BaseCommand):
     def handle(self, *args, **options):
         faker = Faker()
-        user_id = randrange(0, 10)
+        user_id = randrange(1, 10)
 
         for _ in range(3):
             order = Order.objects.create(
