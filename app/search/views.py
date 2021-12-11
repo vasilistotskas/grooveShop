@@ -13,7 +13,6 @@ class SearchPagination(PageNumberPagination):
 class Search(generics.ListAPIView):
     pagination_class = SearchPagination
 
-    print('opa')
     def post(self, request, format=None):
         query = request.data.get('query', '')
 

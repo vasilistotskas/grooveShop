@@ -9,6 +9,7 @@ services:
     restart: always
     command: >
       sh -c "python manage.py wait_for_db &&
+             python manage.py makemigrations &&
              python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     ports:
@@ -16,8 +17,13 @@ services:
     volumes:
       - ./app:/app
       - ./data/web:/vol/web
-    env_file:
-      - ./.env.sample
+    environment:
+      - SECRET_KEY=devsecretkey
+      - DEBUG=1
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
     depends_on:
       - db
       - redis
@@ -29,8 +35,10 @@ services:
     volumes:
       - ./data/db:/var/lib/postgresql/data
       - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - ./.env.sample
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
     ports:
       - 5432:5432
 
@@ -49,6 +57,7 @@ services:
 
   celery:
     container_name: celery
+    image: celery
     build:
       context: .
       dockerfile: docker/Backend.Dockerfile
@@ -56,8 +65,9 @@ services:
     command: celery -A app worker -l info
     volumes:
       - ./app:/app
-    env_file:
-      - ./.env.sample
+    environment:
+      - SECRET_KEY=devsecretkey
+      - DEBUG=1
     depends_on:
       - db
       - redis
@@ -72,6 +82,7 @@ services:
 
   vueapp:
     container_name: frontend
+    image: vuejs/ci
     build:
       context: .
       dockerfile: docker/Frontend.Dockerfile
@@ -84,8 +95,11 @@ services:
       - /app/node_modules
     ports:
       - 8080:80
-    env_file:
-      - ./.env.sample
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - VUE_APP_API_URL=http://localhost:8000
+      - VUE_APP_GRAPHQL_URL=http://localhost:8000/graphql
+
     depends_on:
       - app
 
