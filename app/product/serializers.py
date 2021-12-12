@@ -87,6 +87,20 @@ class FavouriteSerializer(serializers.ModelSerializer):
         )
 
 
+class FavouriteProductSerializer(serializers.ModelSerializer):
+
+    product_object = serializers.SerializerMethodField('get_product_object')
+
+    def get_product_object(self, favourite):
+        qs = Product.objects.get(id=favourite.product_id)
+        serializer = ProductSerializer(instance=qs)
+        return serializer.data
+
+    class Meta:
+        model = Product
+        fields = ("product_object",)
+
+
 class ReviewSerializer(serializers.ModelSerializer):
     userprofile = serializers.SerializerMethodField('get_userprofile')
 

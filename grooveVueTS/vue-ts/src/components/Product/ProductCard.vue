@@ -1,12 +1,12 @@
 <template>
   <div v-if="product && Object.keys(product).length > 0">
     <router-link :to="productPath" class="p-1">
-      <div class="card" style="width: 18rem;">
+      <div class="card cardEffect" style="width: 18rem;">
         <img :src="product.main_image" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">{{ product.name }}</h5>
           <p class="card-text">${{ product.price }}</p>
-          <a href="#" type="button" class="btn btn-dark" v-bind:class="{'disabled': disabled }" @click.prevent="addToCart()">{{ addToCartButtonText }}</a>
+          <a href="#" type="button" class="btn btn-dark float-end" v-bind:class="{'disabled': disabled }" @click.prevent="addToCart()">{{ addToCartButtonText }}</a>
         </div>
       </div>
 

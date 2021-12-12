@@ -54,6 +54,7 @@ export default class UserDataModule
         localStorage.removeItem("username")
         localStorage.removeItem("userid")
 
+        store.commit('product/favourite/unsetFavourites')
         store.commit('product/favourite/unsetUserFavourites')
         store.commit('product/review/unsetUserToProductReview')
         store.commit('product/review/unsetUserReviews')
@@ -81,6 +82,7 @@ export default class UserDataModule
                 this.context.commit('setUserData', data[0])
                 this.context.commit('setUserId', data[0].id)
                 store.dispatch('product/favourite/userFavouritesFromRemote', response.data[0].user)
+                store.dispatch('product/favourite/userFavouriteProductsFromRemote', response.data[0].user)
                 store.dispatch('product/review/getCurrentUserReviews', data[0].id)
                 axios.defaults.headers.common["Authorization"] = "Token " + this.token
                 localStorage.setItem("token", this.token)
@@ -101,7 +103,7 @@ export default class UserDataModule
                 .catch((e: Error) => {
                     console.log(e)
                 })
-            toast.success("Profile Updated")
+                toast.success("Profile Updated")
         } catch (error) {
             throw error
         }

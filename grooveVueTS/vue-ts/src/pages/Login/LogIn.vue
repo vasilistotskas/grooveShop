@@ -1,16 +1,16 @@
 <template>
-  <div class="page-log-in mt-3 mb-5">
+  <div class="page-log-in mt-5 mb-5">
     <div class="container">
       <div class="col-12 col-md-4 mx-auto">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body card-body-border-top">
             <FormProvider
                 :form="formManager.form"
                 :errors="formManager.errors"
                 title="Log In"
                 @submit="handleSubmit()">
               <div class="container">
-                <div class="name">
+                <div class="name mb-3">
                   <label :for="formManager.form.name.$uid" class="label">Name</label>
                   <BaseInput
                       v-model="formManager.form.name.$value"
@@ -23,7 +23,7 @@
                       class="validation-errros"
                       :errors="formManager.form.name.$errors"/>
                 </div>
-                <div class="password">
+                <div class="password mb-4">
                   <label :for="formManager.form.password.$uid" class="label">Password</label>
                   <BaseInput
                       v-model="formManager.form.password.$value"
@@ -42,11 +42,11 @@
 
               <!-- 2 column grid layout for inline styling -->
               <div class="row mb-4">
-                <div class="col d-flex justify-content-center">
+                <div class="col d-flex justify-content-center align-self-center">
                   <!-- Checkbox -->
                   <div class="form-check">
                     <input
-                      class="form-check-input"
+                      class="form-check-input form-check-input-main"
                       type="checkbox"
                       value=""
                       id="form2Example3"
@@ -54,7 +54,7 @@
                     <label class="form-check-label" for="form2Example3"> Remember me </label>
                   </div>
                 </div>
-                <div class="col">
+                <div class="col d-flex justify-content-center align-self-center">
                   <!-- Simple link -->
                   <a href="#!">Forgot password?</a>
                 </div>
@@ -66,23 +66,23 @@
               <p>Not a member? <router-link to="/sign-up">Register</router-link></p>
               <p>or sign up with:</p>
               <!-- Facebook -->
-              <a class="btn btn-primary btn-floating mx-1" style="background-color: #3b5998;" href="#!" role="button">
-                <i class="fab fa-facebook-f"></i>
+              <a class="btn social-btn btn-floating mx-1" href="#!" role="button">
+                <font-awesome-icon :icon="['fab', 'facebook']" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
               </a>
 
               <!-- Google -->
-              <a class="btn btn-primary btn-floating mx-1" style="background-color: #dd4b39;" href="#!" role="button">
-                <i class="fab fa-google"></i>
+              <a class="btn social-btn btn-floating mx-1" href="#!" role="button">
+                <font-awesome-icon :icon="['fab', 'google']" size="lg" :style="{ color: '#DB4437' }"></font-awesome-icon>
               </a>
 
               <!-- Twitter -->
-              <a class="btn btn-primary btn-floating mx-1" style="background-color: #55acee;" href="#!" role="button">
-                <i class="fab fa-twitter"></i>
+              <a class="btn social-btn btn-floating mx-1" href="#!" role="button">
+                <font-awesome-icon :icon="['fab', 'twitter']" size="lg" :style="{ color: '#1DA1F2' }"></font-awesome-icon>
               </a>
 
               <!-- Github -->
-              <a class="btn btn-primary btn-floating mx-1" style="background-color: #333333;" href="#!" role="button">
-                <i class="fab fa-github"></i>
+              <a class="btn social-btn btn-floating mx-1" href="#!" role="button">
+                <font-awesome-icon :icon="['fab', 'github']" size="lg" :style="{ color: 'white' }"></font-awesome-icon>
               </a>
 
             </div>
@@ -184,3 +184,7 @@ export default class LogIn extends Vue {
 }
 
 </script>
+
+<style lang="scss">
+
+</style>

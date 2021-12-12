@@ -1,10 +1,10 @@
 <template>
   <div class="home">
-    <div class="container-fluid">
-      <div class="row mb-5">
+    <div class="container-fluid mb-7">
+      <div class="row">
         <swiper v-if="homepageSlider && Object.keys(homepageSlider).length > 0"
             :style="mainSliderStyle"
-            :navigation="true"
+            :navigation="!!(homepageSlider[0].video && Object.keys(homepageSlider[0].slides).length > 0)"
             :mousewheel="false"
             :keyboard="true"
             :grabCursor="true"
@@ -27,7 +27,7 @@
     </div>
     <div class="container mb-5">
       <div class="row">
-        <div class="col-12 mb-5">
+        <div class="col-12">
           <h2 class="is-size-2 has-text-centered">{{ $t('eshop.test3') }}</h2>
         </div>
         <ProductCard
@@ -85,7 +85,7 @@ export default class Home extends Vue {
   private mainSliderVideoInit(): void {
     if (this.homepageSlider && Object.keys(this.homepageSlider).length > 0) {
       this.$refs.mainSliderVideoRef.src = this.axiosBaseUrl + this.homepageSlider[0].video
-      this.$refs.mainSliderVideoRef.loop = true
+      this.$refs.mainSliderVideoRef.loop = false
       this.$refs.mainSliderVideoRef.autoplay = true
       this.$refs.mainSliderVideoRef.playsInline = true
       this.$refs.mainSliderVideoRef.muted = true
@@ -99,6 +99,10 @@ export default class Home extends Vue {
       await store.dispatch('slider/slidersFromRemote'),
       await this.mainSliderVideoInit()
     ])
+  }
+
+  mounted(): void {
+    document.title = 'DeepWeb'
   }
 
 }
@@ -146,6 +150,14 @@ export default class Home extends Vue {
 }
 .swiper-pagination-bullet-active {
   opacity: 1;
+}
+
+.swiper-container {
+    @media screen and (min-width:1200px) {
+      height:500px; overflow: hidden;
+  }
+  .swiper-slide {background-color: #191919}
+  &.swiper-container-initialized{overflow-y: auto; max-height: none;}
 }
 
 </style>

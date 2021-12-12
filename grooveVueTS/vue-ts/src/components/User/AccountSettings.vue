@@ -8,7 +8,7 @@
     </div>
     <div class="col-lg-9">
       <div class="card">
-        <div class="card-body">
+        <div class="card-body card-body-border-top">
           <FormProvider
               id="userDetailsForm"
               name="userDetailsForm"
@@ -223,31 +223,31 @@ export default class AccountSettings extends Vue {
     phone: {
       $value: "",
       $rules: [
-        exactly(10)("Phone number has to be 10 characters")
+        // exactly(10)("Phone number has to be 10 characters")
       ]
     },
     city: {
       $value: "",
       $rules: [
-        min(2)("City has to be longer than 1 characters")
+        // min(2)("City has to be longer than 1 characters")
       ]
     },
     zipcode: {
       $value: "",
       $rules: [
-        exactly(5)("Zipcode has to be 5 characters")
+        // exactly(5)("Zipcode has to be 5 characters")
       ]
     },
     address: {
       $value: "",
       $rules: [
-        min(2)("City has to be longer than 1 characters")
+        // min(2)("City has to be longer than 1 characters")
       ]
     },
     place: {
       $value: "",
       $rules: [
-        min(2)("Place has to be longer than 1 characters")
+        // min(2)("Place has to be longer than 1 characters")
       ]
     }
   })
@@ -356,6 +356,7 @@ export default class AccountSettings extends Vue {
     try {
       const formData:any = await validateFields()
       const apiData = {
+        user_id: 1,
         first_name: formData.first_name,
         last_name: formData.last_name,
         phone: formData.phone,
@@ -366,6 +367,7 @@ export default class AccountSettings extends Vue {
         country: this.userDetails.country,
         region: this.userDetails.region
       }
+      console.log(apiData)
       await store.dispatch('user/data/updateUserDetails', apiData)
 
     } catch (e) {

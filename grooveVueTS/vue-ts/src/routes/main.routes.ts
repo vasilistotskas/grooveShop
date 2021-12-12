@@ -30,6 +30,11 @@ const routes: Array<RouteRecordRaw> = [
                 path: 'settings',
                 name: 'Settings',
                 component: () => import("@/components/User/AccountSettings.vue"),
+            },
+            {
+                path: 'favourites',
+                name: 'Favourites',
+                component: () => import("@/components/User/Favourites.vue"),
             }
         ],
         meta: {

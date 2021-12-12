@@ -1,6 +1,6 @@
 <template>
   <button
-      :class="['button', type, { disabled }]"
+      :class="['button buttonEffect', type, { disabled }]"
       :type="htmlType"
       :disabled="disabled">
     <slot></slot>
@@ -40,51 +40,62 @@ export default defineComponent({
 
 .button {
   display: block;
-  color: black;
+  color: white;
   outline: none;
   cursor: pointer;
   background: transparent;
   border-width: 1px;
-  border-color: $gray-200;
+  border-color: transparent;
   box-shadow: none;
   padding: 1rem 2rem;
   border-radius: 0.25rem;
   min-width: 6rem;
   transition: all 100ms;
 }
+.buttonEffect {
+  transition: all .3s ease-in-out;
+    &:hover {
+      transition: all .3s ease-in-out;
+      transform: scale(1.02);
+      box-shadow: 0 0 10px 3px #1f1f1f;
+    }
+}
 
+.default {
+  background-color: #212529!important;
+}
 .default:hover {
-  border-color: $green-500;
+  border-color: #212529!important;
 }
 
 .default:focus {
-  border-color: $green-500;
-  box-shadow: 0 0 3px $green-500;
+  border-color: #212529!important;
+  box-shadow: 0 0 3px #212529!important;
 }
 
 .primary {
-  background-color: $green-50;
-  border-color: $green-500;
+  background-color: #d51c12!important;
+  border-color: #d51c12!important;
 }
 
 .primary:hover {
-  background-color: $green-100;
+  background-color: #d51c12!important;
 }
 
 .primary:focus {
-  box-shadow: 0 0 3px $green-500;
+  box-shadow: 0 0 3px #d51c12!important;
 }
 
 .danger {
   background-color: $red-50;
-  border-color: $red-500;
+  border-color: $red-50;
 }
 
 .danger:hover {
-  background-color: $red-100;
+  background-color: $red-50;
 }
 
 .danger:focus {
-  box-shadow: 0 0 3px $red-500;
+  box-shadow: 0 0 3px $red-50;
 }
 </style>

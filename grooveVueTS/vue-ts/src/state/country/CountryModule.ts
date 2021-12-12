@@ -1,4 +1,4 @@
-import {find} from 'lodash'
+import { find } from 'lodash'
 import store from '@/store'
 import api from "@/api/api.service"
 import ResponseData from "@/state/types/ResponseData"

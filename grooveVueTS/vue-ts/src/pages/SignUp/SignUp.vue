@@ -1,16 +1,16 @@
 <template>
-  <div class="page-sign-up mt-3 mb-5">
+  <div class="page-sign-up mt-5 mb-5">
     <div class="container">
       <div class="col-12 col-md-4 mx-auto">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body card-body-border-top">
             <FormProvider
               :form="formManager.form"
               :errors="formManager.errors"
               title="Register"
               @submit="handleSubmit()">
             <div class="container">
-              <div class="name">
+              <div class="name mb-3">
                 <label :for="formManager.form.name.$uid" class="label">Name</label>
                 <BaseInput
                     v-model="formManager.form.name.$value"
@@ -23,7 +23,7 @@
                     class="validation-errros"
                     :errors="formManager.form.name.$errors"/>
               </div>
-              <div class="password">
+              <div class="password mb-3">
                 <label :for="formManager.form.password.$uid" class="label">Password</label>
                 <BaseInput
                     v-model="formManager.form.password.$value"
@@ -34,7 +34,7 @@
                 <ValidationErrors :errors="formManager.form.password.$errors"/>
               </div>
 
-              <div class="confirm-password">
+              <div class="confirm-password mb-4">
                 <label :for="formManager.form.confirmPassword.$uid" class="label">
                   Confirm Password
                 </label>

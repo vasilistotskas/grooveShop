@@ -4,12 +4,13 @@
       <h1 class="title mb-2"><router-link :to="{ name: 'MyAccount' }" class="my-account-header">My account</router-link></h1>
     </div>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar-my-account navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarNavAccount">
           <div class="navbar-nav">
             <router-link class="nav-link" :to="{ name: 'Settings' }">Settings</router-link>
             <router-link class="nav-link" :to="{ name: 'Orders' }">Orders</router-link>
+            <router-link class="nav-link" :to="{ name: 'Favourites' }">Favourites</router-link>
           </div>
         </div>
         <button @click="logout()" class="btn btn-danger float-end">Log out</button>
@@ -35,6 +36,7 @@ import {Options, Vue} from "vue-class-component"
 export default class MyAccount extends Vue {
   mounted() {
     document.title = 'My Account'
+    console.log(this.$route.name)
   }
 
   protected logout(): void {
@@ -47,11 +49,13 @@ export default class MyAccount extends Vue {
 
 <style lang="scss">
   .my-account-header{
-    color: black;
     font-weight: 700;
     &:hover{
       color: #616161;
     }
+  }
+  .navbar-my-account {
+    border-radius: 10px;
   }
   .log-out-button{
     right: 20px;

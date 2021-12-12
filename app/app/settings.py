@@ -28,8 +28,12 @@ environ.Env.read_env(os.path.join(BASE_DIR.parent, '.env'))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
+STRIPE_SECRET_KEY = 'pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get('DEBUG', 0)))
+
+if "celery" in sys.argv[0]:
+    DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS.extend(

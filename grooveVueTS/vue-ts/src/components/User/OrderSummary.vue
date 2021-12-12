@@ -5,10 +5,10 @@
         v-bind:key="order.id"
         class="mb-4"
         v-bind:order="order">
-      <h3 class="is-size-4 mb-6 text-black">Order #{{ order.id }}</h3>
+      <h3 class="is-size-4 mb-3">Order #{{ order.id }}</h3>
       <div class="box">
         <div class="card">
-          <div class="card-body">
+          <div class="card-body card-body-border-top">
             <table class="table is-fullwidth">
               <thead>
               <tr>

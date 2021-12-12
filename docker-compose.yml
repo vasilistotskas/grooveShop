@@ -86,9 +86,6 @@ services:
     build:
       context: .
       dockerfile: docker/Frontend.Dockerfile
-      args:
-        - VUE_APP_API_URL=${VUE_APP_API_URL}
-        - VUE_APP_GRAPHQL_URL=${VUE_APP_GRAPHQL_URL}
     restart: always
     volumes:
       - .:/app
@@ -96,7 +93,9 @@ services:
     ports:
       - 8080:80
     environment:
-      - CHOKIDAR_USEPOLLING=true
+      - BASE_URL=http://localhost:5000
+      - VUE_APP_I18N_LOCALE=en
+      - VUE_APP_I18N_FALLBACK_LOCALE=en
       - VUE_APP_API_URL=http://localhost:8000
       - VUE_APP_GRAPHQL_URL=http://localhost:8000/graphql
 

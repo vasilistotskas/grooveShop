@@ -30,7 +30,7 @@ class Command(BaseCommand):
                 body=faker.text(100),
                 meta_description=faker.text(10),
                 published=True,
-                image=faker.image_url(),
+                image='uploads/blog/websiteLogo.png',
                 author=Profile.objects.get(id=profile.id),
             )
 

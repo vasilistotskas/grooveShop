@@ -132,6 +132,23 @@ class FavouriteList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class FavouriteProduct(APIView):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    @staticmethod
+    def filter_objects(user_id):
+        try:
+            return Favourite.objects.filter(user_id=user_id)
+        except Favourite.DoesNotExist:
+            raise Http404
+
+    def get(self, request, user_id, format=None):
+        favourites = self.filter_objects(user_id)
+        serializer = FavouriteProductSerializer(favourites, many=True)
+        return Response(serializer.data)
+
+
 class FavouriteDelete(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]

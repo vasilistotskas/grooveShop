@@ -14,6 +14,7 @@ urlpatterns = [
 
     path('favourites/<int:user_id>/', views.FavouriteList.as_view()),
     path('favourites/delete/<int:user_id>/<int:product_id>/', views.FavouriteDelete.as_view()),
+    path('favourites/products/<int:user_id>/', views.FavouriteProduct.as_view()),
 
     # all Reviews of current product , get and post
     path('reviews/product/<int:product_id>/', views.ProductReviews.as_view()),

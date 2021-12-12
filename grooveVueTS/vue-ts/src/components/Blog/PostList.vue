@@ -1,6 +1,6 @@
 <template>
-  <div class="row row-cols-1 row-cols-md-2 g-4" v-if="publishedPosts && Object.keys(publishedPosts).length > 0">
-    <div class="col" v-for="post in publishedPosts" :key="post.title">
+  <div class="grid-post-list" v-if="publishedPosts && Object.keys(publishedPosts).length > 0">
+    <div v-for="post in publishedPosts" :key="post.title" class="cardSpecialEffect">
       <router-link :to="`/post/${post.slug}`">
         <div class="card">
           <img v-bind:src="axiosBaseUrl + '/static/media/' + post.image" :alt="post.title">
@@ -15,10 +15,12 @@
                 <router-link :to="`/tag/${tag.name}`">#{{ tag.name }}</router-link>
               </li>
             </ul>
-          </div>
-          <div class="card-footer">
             <small class="text-muted">{{ displayableDate(post.publishDate) }}</small>
           </div>
+          <span class="line-1"></span>
+          <span class="line-2"></span>
+          <span class="line-3"></span>
+          <span class="line-4"></span>
         </div>
       </router-link>
     </div>
@@ -62,8 +64,18 @@ export default {
 </script>
 
 <style>
-  .post-list {
-    list-style: none;
+  .grid-post-list {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-column-gap: 5px;
+    grid-row-gap: 10px;
+  }
+  .card-body {
+    min-height: 170px;
+    width: 100%;
+  }
+  .card {
+    padding: 0;
   }
   .post {
     border-bottom: 1px solid #ccc;

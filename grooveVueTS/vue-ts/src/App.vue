@@ -1,13 +1,11 @@
 <template>
   <div id="wrapper">
-    <Navbar v-if="categoriesTreeData && Object.keys(categoriesTreeData).length > 0"
-            v-bind:showMobileMenu="showMobileMenu"
-            v-bind:cartTotalLength="cartTotalLength"
-            v-bind:categoriesTree="categoriesTreeData"/>
-
     <loading v-model:active="isLoading"
              :can-cancel="true"
              :is-full-page="true"/>
+
+    <Navbar v-bind:showMobileMenu="showMobileMenu"
+            v-bind:cartTotalLength="cartTotalLength"/>
 
     <section class="main-section">
       <router-view/>
@@ -15,39 +13,39 @@
 
     <!-- @TODO COMPONENT -->
     <!-- Footer -->
-    <footer class="bg-dark text-center text-white">
+    <footer class="main-footer text-center text-white">
       <!-- Grid container -->
       <div class="container p-4">
         <!-- Section: Social media -->
         <section class="mb-4">
           <!-- Facebook -->
-          <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-            <i class="fab fa-facebook-f"></i>
+          <a class="btn social-btn btn-floating m-1" href="#!" role="button">
+            <font-awesome-icon :icon="['fab', 'facebook']" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
           </a>
 
           <!-- Twitter -->
-          <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-            <i class="fab fa-twitter"></i>
+          <a class="btn social-btn btn-floating m-1" href="#!" role="button">
+            <font-awesome-icon :icon="['fab', 'twitter']" size="lg" :style="{ color: '#1DA1F2' }"></font-awesome-icon>
           </a>
 
           <!-- Google -->
-          <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-            <i class="fab fa-google"></i>
+          <a class="btn social-btn btn-floating m-1" href="#!" role="button">
+            <font-awesome-icon :icon="['fab', 'google']" size="lg" :style="{ color: '#DB4437' }"></font-awesome-icon>
           </a>
 
           <!-- Instagram -->
-          <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-            <i class="fab fa-instagram"></i>
+          <a class="btn social-btn btn-floating m-1" href="#!" role="button">
+            <font-awesome-icon :icon="['fab', 'instagram']" size="lg" :style="{ color: '#E1306C' }"></font-awesome-icon>
           </a>
 
           <!-- Linkedin -->
-          <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-            <i class="fab fa-linkedin-in"></i>
+          <a class="btn social-btn btn-floating m-1" href="#!" role="button">
+            <font-awesome-icon :icon="['fab', 'linkedin']" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
           </a>
 
           <!-- Github -->
-          <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-            <i class="fab fa-github"></i>
+          <a class="btn social-btn btn-floating m-1" href="#!" role="button">
+            <font-awesome-icon :icon="['fab', 'github']" size="lg" :style="{ color: 'white' }"></font-awesome-icon>
           </a>
         </section>
         <!-- Section: Social media -->
@@ -78,7 +76,7 @@
               <!--Grid column-->
               <div class="col-auto">
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-outline-light mb-4">
+                <button type="submit" class="btn social-btn mb-4">
                   Subscribe
                 </button>
               </div>
@@ -194,7 +192,7 @@
       <!-- Grid container -->
 
       <!-- Copyright -->
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      <div class="main-copyright text-center p-3">
         © 2020 Copyright:
         <a class="text-white" href="#">GrooveBtch</a>
       </div>
@@ -256,10 +254,6 @@ export default class App extends Vue {
     return store.getters['cart/getCartTotalLength']
   }
 
-  get categoriesTreeData(): Array<CategoryModel> {
-    return store.getters['category/getCategoriesTree']
-  }
-
   get userData(): UserDetailsModel {
     if(this.isAuthenticated) {
       return store.getters['user/data/getUserData']
@@ -269,10 +263,6 @@ export default class App extends Vue {
 
   get userReviews(): Array<ProductReviewModel> {
     return store.getters['product/review/getUserReviews']
-  }
-
-  get userFavourites(): Array<ProductFavouriteModel> {
-    return store.getters['product/favourite/getFavouriteData']
   }
 
   get userOrders(): Array<any> {
@@ -322,11 +312,164 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
-.main-section{
-  @media screen and (min-width: 1200px){
-    min-height: 500px;
-    display: grid;
+   .form-check-input-main {
+     &:checked {
+       background-color: #d51c12!important;
+       border-color: #d51c12!important;
+     }
+   }
+  .router-link-active {
+    color: #d51c12!important;
   }
-}
+  .cardEffect {
+    &:hover {
+      border-radius: 10px;
+      transform: scale(1.02);
+      box-shadow: 0 0 10px 3px #d51c12;
+      .card-img-top, .card-body {
+        transition: all .3s ease-in-out;
+      }
+    }
+  }
+  .cardSpecialEffect {
+      position: relative;
+      padding: 20px 15px;
+      color: white;
+      font-size: 20px;
+      font-family: 'Open Sans', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all .3s ease-in-out;
+      img {
+        background: #191919;
+        transition: all .3s ease-in-out;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+
+      &:hover {
+        border: none;
+        transform: scale(1.02);
+        transition: all .3s ease-in-out;
+
+        .line-1 {
+          animation: move1 1500ms infinite ease;
+        }
+
+        .line-2 {
+          animation: move2 1500ms infinite ease;
+        }
+
+        .line-3 {
+          animation: move3 1500ms infinite ease;
+        }
+
+        .line-4 {
+          animation: move4 1500ms infinite ease;
+        }
+      }
+
+    img {
+      display: block;
+      height: 100%;
+      max-width: 100%;
+    }
+    .line-1 {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 1px;
+      background-color: red;
+      left: 0;
+      bottom: 0;
+    }
+    .line-2 {
+      content: "";
+      display: block;
+      position: absolute;
+      height: 1px;
+      background-color: red;
+      left: 0;
+      top: 0;
+    }
+    .line-3 {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 1px;
+      background-color: red;
+      right: 0;
+      top: 0;
+    }
+    .line-4 {
+      content: "";
+      display: block;
+      position: absolute;
+      height: 1px;
+      background-color: red;
+      right: 0;
+      bottom: 0;
+    }
+  }
+  .card {
+    transition: all .3s ease-in-out;
+    background-color: transparent!important;
+    .card-img-top {
+      transition: all .3s ease-in-out;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    .card-body{
+      transition: all .3s ease-in-out;
+      background: #191919;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      .card-title{color: white}
+      .card-text{color: white}
+    }
+    .card-body-border-top{
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+  }
+  .social-btn{
+    color: white!important;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid #3b3b3b!important;
+    background-color: rgb(51, 51, 51)!important;
+    &:hover {
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 0 10px 3px #757575;
+      transform: scale(1.02);
+      svg {
+        transition: all 0.3s ease-in-out;
+        transform: scale(1.1);
+      }
+    }
+  }
+  .main-section{
+    @media screen and (min-width: 1200px){
+      min-height: 500px;
+      display: grid;
+    }
+  }
+  .main-footer{
+    background-color: #191919;
+  }
+  .main-copyright{
+    background-color: #080808;
+  }
+
+  .form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+  }
 
 </style>

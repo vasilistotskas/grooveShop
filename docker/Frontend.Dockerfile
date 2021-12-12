@@ -1,11 +1,6 @@
 FROM node:14.18.1 as build
 WORKDIR /vueapp
 
-ARG VUE_APP_API_URL
-ARG VUE_APP_GRAPHQL_URL
-ENV VUE_APP_API_URL=$VUE_APP_API_URL
-ENV VUE_APP_GRAPHQL_URL=$VUE_APP_GRAPHQL_URL
-
 COPY ../grooveVueTS/vue-ts/package.json .
 RUN npm install
 COPY ../grooveVueTS/vue-ts .

@@ -9,11 +9,24 @@ import "vue-toastification/dist/index.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 import * as apolloProvider from '../apollo.provider'
 import { createValidation } from 'vue3-form-validation'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faFontAwesome } from '@fortawesome/free-brands-svg-icons'
 import Toast, { PluginOptions, TYPE } from "vue-toastification"
+import { faCoffee } from '@fortawesome/free-solid-svg-icons/faCoffee'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+
+
+library.add(faFontAwesome, faCoffee, fas, fab)
 
 const validation = createValidation({
-    defaultValidationBehavior: 'lazier',
-    validationBehavior: {}
+    defaultValidationBehavior: <never>'lazy',
+    validationBehavior: {
+        change: ({ force }: any) => !force,
+        lazy: ({ touched }: any) => touched,
+        submit: ({ submit, hasError }: any) => submit || hasError
+    }
 })
 
 const ToastOptions: PluginOptions = {
@@ -39,4 +52,5 @@ createApp(App)
     .use(validation)
     .use(apolloProvider.provider)
     .use(Toast, ToastOptions)
+    .component('font-awesome-icon', FontAwesomeIcon)
     .mount('#app')

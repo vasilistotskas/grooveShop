@@ -1,4 +1,5 @@
 import store from "@/store"
+import { forEach } from 'lodash'
 import api from "@/api/api.service"
 import { useToast } from 'vue-toastification'
 import ResponseData from "@/state/types/ResponseData"
@@ -14,9 +15,14 @@ export default class ProductFavouriteModule
 {
 
     favourites = [new ProductFavouriteModel()]
+    userFavourites = [new ProductFavouriteModel()]
 
     get getFavouriteData(): ProductFavouriteModel[] {
         return this.favourites
+    }
+
+    get getUserFavouriteData(): ProductFavouriteModel[] {
+        return this.userFavourites
     }
 
     get getStateIsCurrentProductInFavourites(): boolean {
@@ -26,13 +32,23 @@ export default class ProductFavouriteModule
     }
 
     @Mutation
-    setUserFavourites(favourites: ProductFavouriteModel[]): void {
+    setFavourites(favourites: ProductFavouriteModel[]): void {
         this.favourites = favourites
     }
 
     @Mutation
-    unsetUserFavourites(): void {
+    unsetFavourites(): void {
         this.favourites = []
+    }
+
+    @Mutation
+    setUserFavourites(favourites: ProductFavouriteModel[]): void {
+        this.userFavourites = favourites
+    }
+
+    @Mutation
+    unsetUserFavourites(): void {
+        this.userFavourites = []
     }
 
     @Action
@@ -61,7 +77,24 @@ export default class ProductFavouriteModule
         await api.get(`favourites/${user_id}`)
             .then((response: ResponseData) => {
                 let data = response.data
-                this.context.commit('setUserFavourites', data)
+                this.context.commit('setFavourites', data)
+            })
+            .catch((e: Error) => {
+                console.log(e)
+            })
+    }
+
+    @Action
+    async userFavouriteProductsFromRemote(user_id: number): Promise<void> {
+
+        await api.get(`favourites/products/${user_id}`)
+            .then((response: ResponseData) => {
+                let data = response.data
+                const transformedData: any[] = []
+                forEach(data, function(value, key) {
+                    transformedData.push(value.product_object)
+                });
+                this.context.commit('setUserFavourites', transformedData)
             })
             .catch((e: Error) => {
                 console.log(e)

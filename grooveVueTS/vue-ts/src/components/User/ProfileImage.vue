@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <div class="card-body">
+    <div class="card-body card-body-border-top">
       <form id="uploadImageForm" name="uploadImageForm" enctype="multipart/form-data">
         <div class="text-center">
           <img :src="this.src" class="mb-5 rounded-circle" alt="User Image" width="72" height="72">
