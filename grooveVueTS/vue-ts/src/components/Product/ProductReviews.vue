@@ -44,7 +44,7 @@ export default class ProductReviews extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .user-review-card{
   border: 1px solid rgb(255 141 0)
 }

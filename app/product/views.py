@@ -1,24 +1,44 @@
 from .serializers import *
 from django.http import Http404
+from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from rest_framework.pagination import PageNumberPagination
 from rest_framework import status, authentication, permissions
+from django.views.decorators.vary import vary_on_cookie, vary_on_headers
+
+
+class ProductsPagination(PageNumberPagination):
+    page_size = 16
 
 
 class LatestProductsList(APIView):
-    @staticmethod
-    def get(request, format=None):
+
+    @method_decorator(cache_page(60))
+    def get(self, format=None):
         products = Product.objects.all()[0:4]
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
 
-class ProductsAllResults(APIView):
-    @staticmethod
-    def get(request, format=None):
-        products = Product.objects.all()
-        serializer = ProductSerializer(products, many=True)
+class ProductsAllResults(generics.ListCreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    pagination_class = ProductsPagination
+
+    def list(self, request, *args, **kwargs):
+
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
 
@@ -74,6 +94,7 @@ class CategoryTreeView(GenericAPIView):
     def get_queryset(self):
         return Category.objects.all()
 
+    @method_decorator(cache_page(60*30))
     def get(self, request, *args, **kwargs):
         root_nodes = self.get_queryset().get_cached_trees()
         data = []

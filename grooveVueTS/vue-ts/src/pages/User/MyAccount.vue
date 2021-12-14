@@ -47,7 +47,7 @@ export default class MyAccount extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .my-account-header{
     font-weight: 700;
     &:hover{

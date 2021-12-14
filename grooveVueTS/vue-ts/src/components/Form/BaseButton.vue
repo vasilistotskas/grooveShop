@@ -40,7 +40,7 @@ export default defineComponent({
 
 .button {
   display: block;
-  color: white;
+  color: $primary-color-4;;
   outline: none;
   cursor: pointer;
   background: transparent;
@@ -74,16 +74,16 @@ export default defineComponent({
 }
 
 .primary {
-  background-color: #d51c12!important;
-  border-color: #d51c12!important;
+  background-color: $primary-color-1!important;
+  border-color: $primary-color-1!important;
 }
 
 .primary:hover {
-  background-color: #d51c12!important;
+  background-color: $primary-color-1!important;
 }
 
 .primary:focus {
-  box-shadow: 0 0 3px #d51c12!important;
+  box-shadow: 0 0 3px $primary-color-1!important;
 }
 
 .danger {

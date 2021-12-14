@@ -3,7 +3,7 @@
     <div class="card-body card-body-border-top">
       <form id="uploadImageForm" name="uploadImageForm" enctype="multipart/form-data">
         <div class="text-center">
-          <img :src="this.src" class="mb-5 rounded-circle" alt="User Image" width="72" height="72">
+          <img :src="this.src" class="mb-5 rounded-circle img-fluid" alt="User Image" width="72" height="72">
           <h4 class="fw-bold">{{this.fullname}}</h4>
           <label class="btn btn-primary mt-5" for="image">
             <input

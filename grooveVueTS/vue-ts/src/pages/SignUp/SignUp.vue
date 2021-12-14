@@ -2,7 +2,7 @@
   <div class="page-sign-up mt-5 mb-5">
     <div class="container">
       <div class="col-12 col-md-4 mx-auto">
-        <div class="card">
+        <div class="card sign-up-card">
           <div class="card-body card-body-border-top">
             <FormProvider
               :form="formManager.form"
@@ -11,7 +11,7 @@
               @submit="handleSubmit()">
             <div class="container">
               <div class="name mb-3">
-                <label :for="formManager.form.name.$uid" class="label">Name</label>
+                <label :for="formManager.form.name.$uid" class="label mb-2">Name</label>
                 <BaseInput
                     v-model="formManager.form.name.$value"
                     :has-error="formManager.form.name.$hasError"
@@ -24,7 +24,7 @@
                     :errors="formManager.form.name.$errors"/>
               </div>
               <div class="password mb-3">
-                <label :for="formManager.form.password.$uid" class="label">Password</label>
+                <label :for="formManager.form.password.$uid" class="label mb-2">Password</label>
                 <BaseInput
                     v-model="formManager.form.password.$value"
                     :has-error="formManager.form.password.$hasError"
@@ -35,7 +35,7 @@
               </div>
 
               <div class="confirm-password mb-4">
-                <label :for="formManager.form.confirmPassword.$uid" class="label">
+                <label :for="formManager.form.confirmPassword.$uid" class="label mb-2">
                   Confirm Password
                 </label>
                 <BaseInput
@@ -52,7 +52,7 @@
                   @reset="formManager.resetFields()"
                   :submitting="formManager.submitting"/>
             </div>
-              <p class="mt-4 plr-15">Or <router-link to="/log-in">click here</router-link> to log in!</p>
+              <p class="mt-4 mb-4 plr-15">Or <router-link to="/log-in">click here</router-link> to log in!</p>
             </FormProvider>
           </div>
         </div>
@@ -192,4 +192,12 @@ export default class SignUp extends Vue {
   grid-area: confirm-password;
 }
 
+.sign-up-card {
+  max-width: 500px;
+  display: block;
+  margin: 0 auto;
+  .card-body {
+    grid-template-rows: unset;
+  }
+}
 </style>

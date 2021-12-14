@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 v-if="title" class="plr-15">{{ title }}</h1>
+    <h1 v-if="title" class="plr-15 mb-3 mt-3">{{ title }}</h1>
     <form @submit.prevent="$emit('submit')" class="_form" :class="formClass">
       <slot></slot>
     </form>
@@ -37,11 +37,6 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-._form {
-  margin: 2.5rem 0 2.5rem 0;
-}
-.no-margins{
-  margin: 0!important;
-}
+<style lang="scss" scoped>
+
 </style>

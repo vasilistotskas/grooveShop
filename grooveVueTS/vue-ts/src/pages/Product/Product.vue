@@ -6,7 +6,7 @@
                 v-for="image in product.images"
                 :key="image.id"
                 class="image">
-          <img v-bind:src="axiosBaseUrl + image.image">
+          <img class="img-fluid" v-bind:src="axiosBaseUrl + image.image">
         </figure>
       </div>
 
@@ -34,7 +34,7 @@
           </div>
 
           <div class="row mt-2">
-            <button type="button" class="btn btn-dark addToCartButton col-12 col-md-8" v-bind:class="{'disabled': disabled }" @click="addToCart()">{{ addToCartButtonText }}</button>
+            <button type="button" class="btn btn-outline-primary addToCartButton col-12 col-md-8" v-bind:class="{'disabled': disabled }" @click="addToCart()">{{ addToCartButtonText }}</button>
             <FavouriteButton :product="product"></FavouriteButton>
           </div>
 
@@ -148,7 +148,7 @@ export default class ProductVue extends Vue {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   figure{
     img{
       max-width: 100%

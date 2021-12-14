@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-5 mb-5" v-if="post && Object.keys(post).length > 0">
     <div class="card mb-3">
-      <img v-bind:src="axiosBaseUrl + '/static/media/' + post.image" :alt="post.title">
+      <img class="img-fluid" v-bind:src="axiosBaseUrl + '/static/media/' + post.image" :alt="post.title">
       <div class="card-body">
         <h5 class="card-title">{{ post.title }}: {{ post.subtitle }}</h5>
         By <AuthorLink :author="post.author" />
@@ -72,6 +72,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

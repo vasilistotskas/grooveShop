@@ -258,10 +258,14 @@ export default class ProductReviewModal extends Vue {
 
   private async reviewModuleInitialize(): Promise<void> {
     await store.dispatch('product/productFromRemote')
-    await store.dispatch('product/review/userToProductReviewFromRemote')
+    let IsAuthenticated: boolean = store.getters['user/data/getIsAuthenticated']
 
-    this.comment = cloneDeep(this.userToProductReview.comment)
-    this.rate = cloneDeep(this.userToProductReview.rate)
+    if (IsAuthenticated) {
+      await store.dispatch('product/review/userToProductReviewFromRemote')
+
+      this.comment = cloneDeep(this.userToProductReview.comment)
+      this.rate = cloneDeep(this.userToProductReview.rate)
+    }
 
   }
 
@@ -302,7 +306,7 @@ export default class ProductReviewModal extends Vue {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .rating {
     position: relative;
     height: 26px;

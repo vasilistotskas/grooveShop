@@ -6,10 +6,10 @@
   </div>
 
     <nav class="main-navbar">
-        <div class="grid-header">
+        <div class="grid-header container">
           <div class="logo-header">
             <router-link to="/" class="navbar-brand">
-              <img src="http://localhost:8000/static/media/uploads/logos/websiteLogo.png" alt="Website Logo" class="main-logo" loading="lazy" width="175">
+              <img src="http://localhost:8000/static/media/uploads/logos/websiteLogo.png" alt="Website Logo" class="main-logo img-fluid" loading="lazy" width="175">
             </router-link>
           </div>
           <div class="products-header" >
@@ -25,7 +25,8 @@
 <!--          <NavbarCategories v-if="categoriesTreeData && Object.keys(categoriesTreeData).length > 0" :categoriesTree="categoriesTreeData"/>-->
           <div class="blog-header">
             <router-link to="/blog" class="btn-w-effect">
-              <font-awesome-icon size="2x" icon="blog"></font-awesome-icon>
+              <font-awesome-icon v-if="isMobile" icon="blog"></font-awesome-icon>
+              <font-awesome-icon v-else size="2x" icon="blog"></font-awesome-icon>
               <span>BLOG</span>
               <span class="line-1"></span>
               <span class="line-2"></span>
@@ -34,31 +35,34 @@
             </router-link>
           </div>
           <div class="search-header">
-            <form method="get" action="/search" class="d-flex navbar-search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
-              <button class="btn btn-outline-danger" type="submit">Search</button>
-            </form>
+              <input v-model="searchQuery" @keyup.enter='searchPerform' class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
+              <button class="btn btn-outline-primary" @click="searchPerform">Search</button>
           </div>
           <div class="navigation-header">
             <div class="navigation-header-part">
               <router-link v-if="this.isAuthenticated" :to="{ name: 'Favourites' }">
-                <font-awesome-icon size="2x" icon="heart" :style="{ color: 'red' }"></font-awesome-icon>
+                <font-awesome-icon v-if="isMobile" icon="heart" :style="{ color: '#F80000' }"></font-awesome-icon>
+                <font-awesome-icon v-else size="2x" icon="heart" :style="{ color: '#F80000' }"></font-awesome-icon>
               </router-link>
               <router-link v-else to="/log-in">
-                <font-awesome-icon size="2x" icon="heart" :style="{ color: 'white' }"></font-awesome-icon>
+                <font-awesome-icon v-if="isMobile" icon="heart" :style="{ color: 'white' }"></font-awesome-icon>
+                <font-awesome-icon v-else size="2x" icon="heart" :style="{ color: 'white' }"></font-awesome-icon>
               </router-link>
             </div>
             <div class="navigation-header-part">
               <router-link v-if="this.isAuthenticated" to="/my-account">
-                <font-awesome-icon size="2x" icon="user" :style="{ color: 'red' }"></font-awesome-icon>
+                <font-awesome-icon v-if="isMobile" icon="user" :style="{ color: '#F80000' }"></font-awesome-icon>
+                <font-awesome-icon v-else size="2x" icon="user" :style="{ color: '#F80000' }"></font-awesome-icon>
               </router-link>
               <router-link v-else to="/log-in">
-                <font-awesome-icon size="2x" icon="user" :style="{ color: 'white' }"></font-awesome-icon>
+                <font-awesome-icon v-if="isMobile" icon="user" :style="{ color: 'white' }"></font-awesome-icon>
+                <font-awesome-icon v-else size="2x" icon="user" :style="{ color: 'white' }"></font-awesome-icon>
               </router-link>
             </div>
             <div class="navigation-header-part">
               <router-link to="/cart">
-                <font-awesome-icon size="2x" icon="shopping-cart" :style="{ color: 'white' }"></font-awesome-icon>
+                <font-awesome-icon v-if="isMobile" icon="shopping-cart" :style="{ color: 'white' }"></font-awesome-icon>
+                <font-awesome-icon v-else size="2x" icon="shopping-cart" :style="{ color: 'white' }"></font-awesome-icon>
                 <span class="cart-total-length">{{ cartTotalLength }}</span>
               </router-link>
             </div>
@@ -73,6 +77,7 @@
 
 <script lang="ts">
 import store from "@/store"
+import router from '@/routes'
 import { Options, Vue } from "vue-class-component"
 import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
 import CategoryModel from "@/state/category/CategoryModel";
@@ -91,37 +96,51 @@ import CategoryModel from "@/state/category/CategoryModel";
   }
 })
 export default class Navbar extends Vue {
-
+  searchQuery: string = ''
   public showMobileMenu = false
+
+  get isMobile(): boolean {
+    return store.getters['app/isMobile']
+  }
 
   get categoriesTreeData(): Array<CategoryModel> {
     return store.getters['category/getCategoriesTree']
   }
 
+  get currentPageNumber(): number {
+    return store.getters['search/getCurrentPageNumber']
+  }
+
   get isAuthenticated(): boolean {
     return store.getters['user/data/getIsAuthenticated']
+  }
+
+  async searchPerform(): Promise<void> {
+    await store.commit('search/setCurrentQuery', this.searchQuery)
+    await store.dispatch('search/getSearchResults', {'page_number': this.currentPageNumber, 'query': this.searchQuery })
+    await router.push({ path: '/search', query: { ...this.$route.query, query: this.searchQuery, page: this.currentPageNumber }})
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .main-navbar{
     padding: 0!important;
     background-color: #080808;
   }
   .btn-w-effect {
     position: relative;
-    padding: 20px 15px;
-    color: white;
+    color: $primary-color-4;
     font-size: 20px;
-    font-family: 'Open Sans', sans-serif;
     text-transform: uppercase;
     letter-spacing: 2px;
     -webkit-font-smoothing: antialiased;
     display: flex;
     justify-content: center;
     align-items: center;
-
+    span {
+      color: $primary-color-4;
+    }
     &:hover {
       border: none;
 
@@ -182,33 +201,40 @@ export default class Navbar extends Vue {
     background-color: #191919;
     text-align: center;
     font-size: 14px;
-    color: white!important;
-    p{
-      color: white;
+    color: $primary-color-4!important;
+    p {
+      color: $primary-color-4;
       padding-top: 5px;
       padding-bottom: 5px;
       margin: 0;
     }
-    a{
-      color: white;
+    a {
+      color: $primary-color-4;;
       font-weight: 700;
+      span {
+        color: $primary-color-4;;
+      }
     }
   }
-  .grid-header{
+  .grid-header {
     display: grid;
-    grid-template-columns: 18% 11% 11% 40% 20%;
+    grid-template-columns: 18% 15% 13% 34% 20%;
     grid-column-gap: 0;
     grid-row-gap: 0;
+    @media screen and (max-width: 990px) {
+
+    }
+
   }
-  .logo-header{
+  .logo-header {
     position: relative;
     display: grid;
     justify-content: center;
     align-items: center;
   }
-  .products-header{
+  .products-header {
     position: relative;
-    color: white;
+    color: $primary-color-4;;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -217,21 +243,30 @@ export default class Navbar extends Vue {
     width: 100%;
     height: 100%;
     text-align: center;
-    &:hover{
+    &:hover {
       cursor: pointer;
     }
-    a{
-      &.products-a{
+    a {
+      &.products-a {
         width: 100%;
         height: 100%;
       }
     }
-    span.title{
+    span.title {
       position: relative;
       left: 15px;
       font-weight: 700;
+      @media screen and (max-width: 1420px) {
+        font-size: 12px;
+      }
+      @media screen and (max-width: 767px) {
+        font-size: 10px;
+      }
+      @media screen and (max-width: 576px) {
+        font-size: 8px;
+      }
     }
-    span.burgermain{
+    span.burgermain {
       position: absolute;
       width: 30px;
       height: 23px;
@@ -239,9 +274,25 @@ export default class Navbar extends Vue {
       background-repeat: no-repeat;
       background-position: center center;
       cursor: pointer;
-      border-bottom: 2px solid #fff;
+      border-bottom: 2px solid $primary-color-4;;
       transform-origin: center;
       transition: all 0.3s ease-in-out;
+      @media screen and (max-width: 1420px) {
+        width: 30px;
+        height: 20px;
+      }
+      @media screen and (max-width: 1200px) {
+        width: 24px;
+        height: 15px;
+      }
+      @media screen and (max-width: 990px) {
+        width: 16px;
+        height: 13px;
+      }
+      @media screen and (max-width: 767px) {
+        width: 12px;
+        height: 9px;
+      }
       &:before{
         content: "";
         height: 2px;
@@ -249,7 +300,7 @@ export default class Navbar extends Vue {
         right: 0;
         top: 0;
         position: absolute;
-        background: #fff;
+        background: $primary-color-4;;
         transition: all 0.3s ease-in-out;
       }
       &:after{
@@ -260,13 +311,13 @@ export default class Navbar extends Vue {
         top: 50%;
         position: absolute;
         transition: all 0.3s ease-in-out;
-        background: #fff;
+        background: $primary-color-4;;
       }
     }
   }
-  .blog-header{
+  .blog-header {
     position: relative;
-    color: white;
+    color: $primary-color-4;;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -282,46 +333,59 @@ export default class Navbar extends Vue {
       width: 100%;
       height: 100%;
       &:hover{
-        color: white;
+        color: $primary-color-4;;
       }
       span{
         font-weight: 700;
+        @media screen and (max-width: 1420px) {
+          font-size: 12px;
+        }
+        @media screen and (max-width: 767px) {
+          font-size: 10px;
+        }
       }
     }
   }
   .search-header {
     position: relative;
-    color: white;
-    padding: 25px;
+    color: $primary-color-4;;
     display: grid;
+    grid-template-columns: 50% 25%;
+    gap: 10px;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100%;
   }
-  .navigation-header{
+  .navigation-header {
     position: relative;
-    color: white;
-    padding: 25px;
+    text-align: center;
+    color: $primary-color-4;;
     display: grid;
     grid-template-columns: repeat(3,1fr);
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100%;
-    .navigation-header-part{
+    .navigation-header-part {
       position: relative;
     }
-    .cart-total-length{
+    .cart-total-length {
       position: absolute;
       bottom: 30px;
       width: 20px;
       height: 20px;
-      background: #fff;
+      background: $primary-color-4;;
       border-radius: 100%;
       text-align: center;
       color: #000;
       line-height: 20px;
+      @media screen and (max-width: 990px) {
+        width: 14px;
+        height: 14px;
+        line-height: 15px;
+        bottom: 16px;
+      }
     }
   }
 

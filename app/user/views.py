@@ -2,7 +2,7 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from user.models import UserProfile, Country, Region
-from rest_framework import status, authentication, permissions, generics, viewsets
+from rest_framework import authentication, permissions, generics
 from .serializers import UserProfileSerializer, CountrySerializer, RegionSerializer
 
 

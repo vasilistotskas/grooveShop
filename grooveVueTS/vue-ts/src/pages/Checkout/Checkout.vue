@@ -49,7 +49,7 @@
               id="userDetailsForm"
               name="userDetailsForm"
               title=""
-              :formClass="'no-margins'"
+              :formClass="'form-class'"
               :form="formManager.form"
               :errors="formManager.errors"
               @submit="handleSubmit()">
@@ -472,7 +472,7 @@ export default class Checkout extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .shipping-details-card{
   color: #121212;
 }

@@ -3,7 +3,7 @@
     <div v-for="post in publishedPosts" :key="post.title" class="cardSpecialEffect">
       <router-link :to="`/post/${post.slug}`">
         <div class="card">
-          <img v-bind:src="axiosBaseUrl + '/static/media/' + post.image" :alt="post.title">
+          <img class="img-fluid" v-bind:src="axiosBaseUrl + '/static/media/' + post.image" :alt="post.title">
           <div class="card-body">
             <h5 class="card-title">{{ post.title }}: {{ post.subtitle }}</h5>
             <span v-if="showAuthor">
@@ -63,15 +63,14 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
   .grid-post-list {
     display: grid;
     grid-template-columns: repeat(3,1fr);
-    grid-column-gap: 5px;
-    grid-row-gap: 10px;
+    grid-column-gap: 15px;
+    grid-row-gap: 15px;
   }
   .card-body {
-    min-height: 170px;
     width: 100%;
   }
   .card {

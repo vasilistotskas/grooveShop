@@ -1,4 +1,4 @@
-FROM node:14.18.1 as build
+FROM node:14-alpine as build
 WORKDIR /vueapp
 
 COPY ../grooveVueTS/vue-ts/package.json .

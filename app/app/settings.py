@@ -76,7 +76,9 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ORIGIN_WHITELIST = ("http://localhost:8080",)
 
 REST_FRAMEWORK = {
-    'COERCE_DECIMAL_TO_STRING': False
+    'COERCE_DECIMAL_TO_STRING': False,
+    'DEFAULT_PAGINATION_CLASS': 'helpers.paginator.CountPaginator',
+    'PAGE_SIZE': 100
 }
 
 MIDDLEWARE = [

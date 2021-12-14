@@ -13,7 +13,6 @@
               id="userDetailsForm"
               name="userDetailsForm"
               title=""
-              :formClass="'no-margins'"
               :form="formManager.form"
               :errors="formManager.errors"
               @submit="handleSubmit()">

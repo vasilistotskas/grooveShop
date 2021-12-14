@@ -1,12 +1,19 @@
 <template>
   <div v-if="product && Object.keys(product).length > 0">
-    <router-link :to="productPath" class="p-1">
-      <div class="card cardEffect" style="width: 18rem;">
-        <img :src="product.main_image" class="card-img-top" alt="...">
+    <router-link :to="productPath">
+      <div class="card cardEffect">
+        <img :src="product.main_image" class="card-img-top img-fluid" alt="...">
         <div class="card-body">
-          <h5 class="card-title">{{ product.name }}</h5>
-          <p class="card-text">${{ product.price }}</p>
-          <a href="#" type="button" class="btn btn-dark float-end" v-bind:class="{'disabled': disabled }" @click.prevent="addToCart()">{{ addToCartButtonText }}</a>
+          <div class="card-title">
+            <h5>{{ product.name }}</h5>
+          </div>
+
+          <div class="card-text">
+            <p>${{ product.price }}</p>
+          </div>
+          <div class="card-footer">
+            <a href="#" type="button" class="btn btn-product-card" v-bind:class="{'disabled': disabled }" @click.prevent="addToCart()">{{ addToCartButtonText }}</a>
+          </div>
         </div>
       </div>
 
@@ -62,7 +69,13 @@ export default class ProductCard extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+  .grid-item {
+    a {
+      position: relative;
+      display: block;
+    }
+  }
   .image {
     margin-top: -1.25rem;
     margin-left: -1.25rem;

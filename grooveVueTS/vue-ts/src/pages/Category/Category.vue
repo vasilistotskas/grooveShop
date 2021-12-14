@@ -3,7 +3,7 @@
   <div class="page-category mt-3 mb-5">
     <div class="row">
       <div class="col-12">
-        <h2 class="is-size-2 has-text-centered">{{ category.name }}</h2>
+        <h2 class="mb-2">{{ category.name }}</h2>
       </div>
       <div class="col-12">
         <div class="row">
