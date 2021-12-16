@@ -145,6 +145,9 @@ export default class ProductVue extends Vue {
   }
 
   async mounted(): Promise<void> {
+    // TODO breadcrumbs
+    console.log(this.$route.params)
+
     document.title = <string>this.$route.params.product_slug
 
     await Promise.all([
@@ -154,7 +157,8 @@ export default class ProductVue extends Vue {
       store.dispatch('product/review/currentProductReviewsFromRemote'),
 
       store.commit('product/review/setProductReviewsAverage', this.product.review_average),
-      store.commit('product/review/setProductReviewsCounter', this.product.review_counter)
+      store.commit('product/review/setProductReviewsCounter', this.product.review_counter),
+      await store.dispatch('app/updateMetaTagElement', {'metaName' : 'description', 'metaAttribute': 'content', 'newValue' : this.product.description})
     ])
   }
 }

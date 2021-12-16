@@ -237,7 +237,7 @@ export default class App extends Vue {
     return store.getters['app/getLoading']
   }
 
-  mounted() {
+  mounted(): void {
     window.addEventListener('resize', () => {
       store.commit('app/setWindowWidth', window.innerWidth)
     })
@@ -245,11 +245,6 @@ export default class App extends Vue {
 
   get isAuthenticated(): boolean {
     return store.getters['user/data/getIsAuthenticated']
-  }
-
-  public updateMetaTagElement(metaName: string, metaAttribute: string, newValue: string): void {
-    const metaTagElement = <Element> document.querySelector(`meta[name=${metaName}]`);
-    metaTagElement.setAttribute(metaAttribute, newValue);
   }
 
   get cartTotalLength(): number {
@@ -293,7 +288,6 @@ export default class App extends Vue {
   }
 
   async created(): Promise<void> {
-
     await Promise.all([
       this.initializeAuth(),
       this.initializeToken(),
@@ -307,7 +301,6 @@ export default class App extends Vue {
         store.dispatch('user/order/userOrdersFromRemote')
       ])
     }
-
   }
 
 }

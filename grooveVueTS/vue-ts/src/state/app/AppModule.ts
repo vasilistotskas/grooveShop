@@ -40,4 +40,9 @@ export default class AppModule
         this.context.commit('setLoading', false)
     }
 
+    @Action
+    updateMetaTagElement(metaData: any): void {
+        const metaTagElement = <Element> document.querySelector(`meta[name=${metaData.metaName}]`);
+        metaTagElement.setAttribute(metaData.metaAttribute, metaData.newValue);
+    }
 }

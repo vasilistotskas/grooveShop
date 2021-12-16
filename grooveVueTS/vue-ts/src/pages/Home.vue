@@ -171,8 +171,14 @@ export default class Home extends Vue {
     ])
   }
 
-  mounted(): void {
+  async mounted(): Promise<void> {
     document.title = 'DeepWeb'
+
+    await store.dispatch('app/updateMetaTagElement', {
+      'metaName': 'description',
+      'metaAttribute': 'content',
+      'newValue': 'test'
+    })
   }
 
 }

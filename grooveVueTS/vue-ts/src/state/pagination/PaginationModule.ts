@@ -1,4 +1,5 @@
-import api from "@/api/api.service"
+import axios from "axios"
+import store from "@/store"
 import ResponseData from "@/state/types/ResponseData"
 import ProductModel from "@/state/product/ProductModel"
 import AppBaseModule from "@/state/common/AppBaseModule"
@@ -13,12 +14,17 @@ export default class PaginationModule
     results_next_page: string = ''
     results_previous_page: string = ''
     results_total_pages: number = 0
+    alternativeToken: string = ''
 
     current_page_number: number = 1
     current_query: string = ''
 
     show_next_button = false
     show_previous_button = false
+
+    get getUserToken(): string| null {
+        return this.alternativeToken || localStorage.getItem('token');
+    }
 
     get getResultData(): ProductModel[] {
         return this.results
@@ -119,9 +125,16 @@ export default class PaginationModule
 
     @Action
     async getPaginatedResults(params:any): Promise<void> {
-
-        await api.post(`${params.endpointUrl}/${params.query}?p=${params.pageNumber}`, params)
-            .then((response: ResponseData) => {
+        const baseUrl = '/api/v1'
+        await store.commit('app/setLoading', true)
+        axios({
+            url: `${baseUrl}/${params.endpointUrl}/${params.query}?p=${params.pageNumber}`,
+            method: 'post',
+            data: params,
+            headers: {
+                Authorization: "Token " + this.getUserToken
+            }
+        }).then((response: ResponseData) => {
                 const results_data = response.data.results
                 const count_data = response.data.count
                 const next_url_data = response.data.links.next
@@ -152,6 +165,8 @@ export default class PaginationModule
                 this.context.commit('unsetResults')
                 console.log(e)
             })
+            .finally(() => store.commit('app/setLoading', false))
+
     }
 
 }
