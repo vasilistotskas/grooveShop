@@ -70,8 +70,7 @@ export default class ProductReviewModule
 
     @Mutation
     unsetProductReviews(): void {
-        // @ts-ignore
-        this.productReviews = {}
+        this.productReviews = <ProductReviewModel[]>{}
     }
 
     @Mutation
@@ -93,8 +92,7 @@ export default class ProductReviewModule
 
     @Mutation
     unsetUserReviews(): void {
-        // @ts-ignore
-        this.userReviews = {}
+        this.userReviews = <ProductReviewModel[]>{}
     }
 
     @Mutation
@@ -110,8 +108,7 @@ export default class ProductReviewModule
 
     @Mutation
     unsetUserToProductReview(): void {
-        // @ts-ignore
-        this.userToProductReview = {}
+        this.userToProductReview = <ProductReviewModel>{}
     }
 
     @Action

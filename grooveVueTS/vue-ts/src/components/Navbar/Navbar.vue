@@ -8,23 +8,19 @@
     <nav class="main-navbar">
         <div class="grid-header container">
           <div class="logo-header">
-            <router-link to="/" class="navbar-brand">
-              <img src="http://localhost:8000/static/media/uploads/logos/websiteLogo.png" alt="Website Logo" class="main-logo img-fluid" loading="lazy" width="175">
+            <router-link to="/" class="navbar-brand" aria-label="Home">
+              <img src="http://localhost:8000/static/media/uploads/logos/websiteLogo.png" width="175" height="85" alt="Website Logo" class="main-logo img-fluid">
             </router-link>
           </div>
           <div class="products-header" >
-            <a class="products-a btn-w-effect" href="#">
+            <a class="products-a btn" href="#">
               <span class="burgermain"></span>
-              <span class="title">ΠΡΟΪΟΝΤΑ</span>
-              <span class="line-1"></span>
-              <span class="line-2"></span>
-              <span class="line-3"></span>
-              <span class="line-4"></span>
+              <span class="title">PRODUCTS</span>
             </a>
           </div>
 <!--          <NavbarCategories v-if="categoriesTreeData && Object.keys(categoriesTreeData).length > 0" :categoriesTree="categoriesTreeData"/>-->
           <div class="blog-header">
-            <router-link to="/blog" class="btn-w-effect">
+            <router-link to="/blog" class="btn-w-effect" aria-label="Blog">
               <font-awesome-icon v-if="isMobile" icon="blog"></font-awesome-icon>
               <font-awesome-icon v-else size="2x" icon="blog"></font-awesome-icon>
               <span>BLOG</span>
@@ -40,27 +36,27 @@
           </div>
           <div class="navigation-header">
             <div class="navigation-header-part">
-              <router-link v-if="this.isAuthenticated" :to="{ name: 'Favourites' }">
+              <router-link v-if="this.isAuthenticated" :to="{ name: 'Favourites' }" aria-label="Favourites">
                 <font-awesome-icon v-if="isMobile" icon="heart" :style="{ color: '#F80000' }"></font-awesome-icon>
                 <font-awesome-icon v-else size="2x" icon="heart" :style="{ color: '#F80000' }"></font-awesome-icon>
               </router-link>
-              <router-link v-else to="/log-in">
+              <router-link v-else to="/log-in" aria-label="Favourites">
                 <font-awesome-icon v-if="isMobile" icon="heart" :style="{ color: 'white' }"></font-awesome-icon>
                 <font-awesome-icon v-else size="2x" icon="heart" :style="{ color: 'white' }"></font-awesome-icon>
               </router-link>
             </div>
             <div class="navigation-header-part">
-              <router-link v-if="this.isAuthenticated" to="/my-account">
+              <router-link v-if="this.isAuthenticated" to="/my-account" aria-label="Account">
                 <font-awesome-icon v-if="isMobile" icon="user" :style="{ color: '#F80000' }"></font-awesome-icon>
                 <font-awesome-icon v-else size="2x" icon="user" :style="{ color: '#F80000' }"></font-awesome-icon>
               </router-link>
-              <router-link v-else to="/log-in">
+              <router-link v-else to="/log-in" aria-label="Account">
                 <font-awesome-icon v-if="isMobile" icon="user" :style="{ color: 'white' }"></font-awesome-icon>
                 <font-awesome-icon v-else size="2x" icon="user" :style="{ color: 'white' }"></font-awesome-icon>
               </router-link>
             </div>
             <div class="navigation-header-part">
-              <router-link to="/cart">
+              <router-link to="/cart" aria-label="Cart">
                 <font-awesome-icon v-if="isMobile" icon="shopping-cart" :style="{ color: 'white' }"></font-awesome-icon>
                 <font-awesome-icon v-else size="2x" icon="shopping-cart" :style="{ color: 'white' }"></font-awesome-icon>
                 <span class="cart-total-length">{{ cartTotalLength }}</span>
@@ -108,7 +104,7 @@ export default class Navbar extends Vue {
   }
 
   get currentPageNumber(): number {
-    return store.getters['search/getCurrentPageNumber']
+    return store.getters['pagination/getCurrentPageNumber']
   }
 
   get isAuthenticated(): boolean {
@@ -116,8 +112,9 @@ export default class Navbar extends Vue {
   }
 
   async searchPerform(): Promise<void> {
-    await store.commit('search/setCurrentQuery', this.searchQuery)
-    await store.dispatch('search/getSearchResults', {'page_number': this.currentPageNumber, 'query': this.searchQuery })
+    await store.commit('pagination/unsetResults')
+    await store.commit('pagination/setCurrentQuery', this.searchQuery)
+    await store.dispatch('pagination/getPaginatedResults', {'pageNumber': this.currentPageNumber, 'endpointUrl': `search`, 'query': this.searchQuery })
     await router.push({ path: '/search', query: { ...this.$route.query, query: this.searchQuery, page: this.currentPageNumber }})
   }
 }
@@ -131,7 +128,7 @@ export default class Navbar extends Vue {
   .btn-w-effect {
     position: relative;
     color: $primary-color-4;
-    font-size: 20px;
+    font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 2px;
     -webkit-font-smoothing: antialiased;
@@ -209,10 +206,10 @@ export default class Navbar extends Vue {
       margin: 0;
     }
     a {
-      color: $primary-color-4;;
+      color: $primary-color-4;
       font-weight: 700;
       span {
-        color: $primary-color-4;;
+        color: $primary-color-4;
       }
     }
   }
@@ -221,25 +218,22 @@ export default class Navbar extends Vue {
     grid-template-columns: 18% 15% 13% 34% 20%;
     grid-column-gap: 0;
     grid-row-gap: 0;
-    @media screen and (max-width: 990px) {
-
+    @media screen and (min-width: 1400px) {
+      max-width: 1330px;
     }
 
   }
   .logo-header {
     position: relative;
     display: grid;
-    justify-content: center;
     align-items: center;
   }
   .products-header {
     position: relative;
-    color: $primary-color-4;;
+    color: $primary-color-4;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-right: 1px solid rgba(112,112,112,.43);
-    border-left: 1px solid rgba(112,112,112,.43);
     width: 100%;
     height: 100%;
     text-align: center;
@@ -250,12 +244,18 @@ export default class Navbar extends Vue {
       &.products-a {
         width: 100%;
         height: 100%;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        span.title {
+          color: white;
+        }
       }
     }
     span.title {
       position: relative;
       left: 15px;
-      font-weight: 700;
+      font-weight: 500;
       @media screen and (max-width: 1420px) {
         font-size: 12px;
       }
@@ -274,7 +274,7 @@ export default class Navbar extends Vue {
       background-repeat: no-repeat;
       background-position: center center;
       cursor: pointer;
-      border-bottom: 2px solid $primary-color-4;;
+      border-bottom: 2px solid $primary-color-4;
       transform-origin: center;
       transition: all 0.3s ease-in-out;
       @media screen and (max-width: 1420px) {
@@ -300,7 +300,7 @@ export default class Navbar extends Vue {
         right: 0;
         top: 0;
         position: absolute;
-        background: $primary-color-4;;
+        background: $primary-color-4;
         transition: all 0.3s ease-in-out;
       }
       &:after{
@@ -311,18 +311,16 @@ export default class Navbar extends Vue {
         top: 50%;
         position: absolute;
         transition: all 0.3s ease-in-out;
-        background: $primary-color-4;;
+        background: $primary-color-4;
       }
     }
   }
   .blog-header {
     position: relative;
-    color: $primary-color-4;;
+    color: $primary-color-4;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-right: 1px solid rgba(112,112,112,.43);
-    border-left: 1px solid rgba(112,112,112,.43);
     width: 100%;
     height: 100%;
     text-align: center;
@@ -333,10 +331,10 @@ export default class Navbar extends Vue {
       width: 100%;
       height: 100%;
       &:hover{
-        color: $primary-color-4;;
+        color: $primary-color-4;
       }
       span{
-        font-weight: 700;
+        font-weight: 500;
         @media screen and (max-width: 1420px) {
           font-size: 12px;
         }
@@ -348,7 +346,7 @@ export default class Navbar extends Vue {
   }
   .search-header {
     position: relative;
-    color: $primary-color-4;;
+    color: $primary-color-4;
     display: grid;
     grid-template-columns: 50% 25%;
     gap: 10px;
@@ -360,7 +358,7 @@ export default class Navbar extends Vue {
   .navigation-header {
     position: relative;
     text-align: center;
-    color: $primary-color-4;;
+    color: $primary-color-4;
     display: grid;
     grid-template-columns: repeat(3,1fr);
     justify-content: center;
@@ -373,9 +371,11 @@ export default class Navbar extends Vue {
     .cart-total-length {
       position: absolute;
       bottom: 30px;
+      font-size: 12px;
+      font-weight: 500;
       width: 20px;
       height: 20px;
-      background: $primary-color-4;;
+      background: $primary-color-4;
       border-radius: 100%;
       text-align: center;
       color: #000;

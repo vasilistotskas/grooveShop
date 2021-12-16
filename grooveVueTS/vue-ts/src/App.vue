@@ -1,8 +1,13 @@
 <template>
   <div id="wrapper">
     <loading v-model:active="isLoading"
-             :can-cancel="true"
-             :is-full-page="true"/>
+             :can-cancel="false"
+             :is-full-page="true"
+             :loader="'dots'"
+             :color="'#F80000'"
+             :background-color="'#000000'"
+
+    />
 
     <Navbar v-bind:showMobileMenu="showMobileMenu"
             v-bind:cartTotalLength="cartTotalLength"/>
@@ -16,47 +21,16 @@
     <footer class="main-footer text-center text-white">
       <!-- Grid container -->
       <div class="container p-4">
-        <!-- Section: Social media -->
-        <section class="grid-section-socials pb-4 pt-4">
-          <!-- Facebook -->
-          <a class="btn btn-outline-primary btn-floating m-1" href="#!" role="button">
-            <font-awesome-icon :icon="['fab', 'facebook']" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
-          </a>
 
-          <!-- Twitter -->
-          <a class="btn btn-outline-primary btn-floating m-1" href="#!" role="button">
-            <font-awesome-icon :icon="['fab', 'twitter']" size="lg" :style="{ color: '#1DA1F2' }"></font-awesome-icon>
-          </a>
-
-          <!-- Google -->
-          <a class="btn btn-outline-primary btn-floating m-1" href="#!" role="button">
-            <font-awesome-icon :icon="['fab', 'google']" size="lg" :style="{ color: '#DB4437' }"></font-awesome-icon>
-          </a>
-
-          <!-- Instagram -->
-          <a class="btn btn-outline-primary btn-floating m-1" href="#!" role="button">
-            <font-awesome-icon :icon="['fab', 'instagram']" size="lg" :style="{ color: '#E1306C' }"></font-awesome-icon>
-          </a>
-
-          <!-- Linkedin -->
-          <a class="btn btn-outline-primary btn-floating m-1" href="#!" role="button">
-            <font-awesome-icon :icon="['fab', 'linkedin']" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
-          </a>
-
-          <!-- Github -->
-          <a class="btn btn-outline-primary btn-floating m-1" href="#!" role="button">
-            <font-awesome-icon :icon="['fab', 'github']" size="lg" :style="{ color: 'white' }"></font-awesome-icon>
-          </a>
-        </section>
         <!-- Section: Social media -->
 
         <!-- Section: Form -->
-        <section class="footer-section-newsletter mb-4">
+        <section class="footer-section-newsletter mb-4 pt-4">
           <form action="">
             <!--Grid row-->
             <div class="footer-grid-newsletter">
               <!--Grid column-->
-              <div class="grid-item-one">
+              <div class="grid-item-one mb-2">
                 <p>
                   <strong>Sign up for our newsletter</strong>
                 </p>
@@ -66,10 +40,8 @@
               <!--Grid column-->
               <div class="grid-item-two">
                 <!-- Email input -->
-                <div>
                   <input type="email" id="form5Example21" class="form-control" />
-                  <label class="form-label" for="form5Example21">Email address</label>
-                </div>
+                  <label class="form-label mt-2" for="form5Example21">Email address</label>
               </div>
               <!--Grid column-->
 
@@ -91,7 +63,7 @@
         <section class="footer-section-links mb-4 mt-4">
           <!--Grid column-->
           <div class="grid-item-one">
-            <h5 class="text-uppercase">Links</h5>
+            <span class="text-uppercase">Links</span>
 
             <ul>
               <li>
@@ -112,7 +84,7 @@
 
           <!--Grid column-->
           <div class="grid-item-two">
-            <h5 class="text-uppercase">Links</h5>
+            <span class="text-uppercase">Links</span>
 
             <ul>
               <li>
@@ -133,7 +105,7 @@
 
           <!--Grid column-->
           <div class="grid-item-three">
-            <h5 class="text-uppercase">Links</h5>
+            <span class="text-uppercase">Links</span>
 
             <ul>
               <li>
@@ -154,7 +126,7 @@
 
           <!--Grid column-->
           <div class="grid-item-four">
-            <h5 class="text-uppercase">Links</h5>
+            <span class="text-uppercase">Links</span>
 
             <ul>
               <li>
@@ -186,6 +158,45 @@
     </footer>
     <!-- Footer -->
 
+    <ul id="social-sidebar">
+      <li>
+        <a class="entypo entypo-facebook" href="https://www.facebook.com/" aria-label="Facebook" target="_blank" rel="noopener">
+          <font-awesome-icon :icon="['fab', 'facebook']" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
+          <span>Facebook</span>
+        </a>
+      </li>
+      <li>
+        <a class="entypo entypo-gplus" href="https://www.google.com/" aria-label="Google" target="_blank" rel="noopener">
+          <font-awesome-icon :icon="['fab', 'google']" size="lg" :style="{ color: '#DB4437' }"></font-awesome-icon>
+          <span>Google+</span>
+        </a>
+      </li>
+      <li>
+        <a class="entypo entypo-twitter" href="https://www.twitter.com/" aria-label="Twitter" target="_blank" rel="noopener">
+          <font-awesome-icon :icon="['fab', 'twitter']" size="lg" :style="{ color: '#1DA1F2' }"></font-awesome-icon>
+          <span>Tweeter</span>
+        </a>
+      </li>
+      <li>
+        <a class="entypo entypo-instagram" href="https://www.instagram.com/" aria-label="Instagram" target="_blank" rel="noopener">
+          <font-awesome-icon :icon="['fab', 'instagram']" size="lg" :style="{ color: '#E1306C' }"></font-awesome-icon>
+          <span>Instagram</span>
+        </a>
+      </li>
+      <li>
+        <a class="entypo entypo-linkedin" href="https://www.linkedin.com/" aria-label="Linkedin" target="_blank" rel="noopener">
+          <font-awesome-icon :icon="['fab', 'linkedin']" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
+          <span>Linkedin</span>
+        </a>
+      </li>
+      <li>
+        <a class="entypo entypo-github" href="https://www.github.com/" aria-label="Github" target="_blank" rel="noopener">
+          <font-awesome-icon :icon="['fab', 'github']" size="lg" :style="{ color: 'white' }"></font-awesome-icon>
+          <span>Github</span>
+        </a>
+      </li>
+
+    </ul>
 
   </div>
 </template>
@@ -456,6 +467,11 @@ export default class App extends Vue {
         grid-column-end: span col4-start;
         grid-row-start: 1;
       }
+      &-two {
+        label {
+          display: block;
+        }
+      }
     }
   }
 
@@ -463,7 +479,9 @@ export default class App extends Vue {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     .grid-item {
-
+      &-one, &-two, &-three, &-four {
+        text-align: center;
+      }
     }
   }
 

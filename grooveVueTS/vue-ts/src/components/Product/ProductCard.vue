@@ -1,11 +1,11 @@
 <template>
   <div v-if="product && Object.keys(product).length > 0">
-    <router-link :to="productPath">
+    <router-link :to="productPath" aria-label="Product">
       <div class="card cardEffect">
-        <img :src="product.main_image" class="card-img-top img-fluid" alt="...">
+        <img :src="product.main_image" width="308" height="320" class="card-img-top img-fluid" :alt="product.name">
         <div class="card-body">
           <div class="card-title">
-            <h5>{{ product.name }}</h5>
+            <span>{{ product.name }}</span>
           </div>
 
           <div class="card-text">

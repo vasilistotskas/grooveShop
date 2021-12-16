@@ -1,63 +1,76 @@
 <template>
-  <div class="container mt-5" v-if="product && Object.keys(product).length > 0">
-    <div class="row">
-      <div class="col-md-9 page-product-image-col">
-        <figure
-                v-for="image in product.images"
-                :key="image.id"
-                class="image">
-          <img class="img-fluid" v-bind:src="axiosBaseUrl + image.image">
-        </figure>
-      </div>
+  <div class="container">
+    <div class="product-page-grid-container mt-5 mb-5" v-if="product && Object.keys(product).length > 0">
+        <div class="product-page-grid-image">
+          <figure
+                  v-for="image in product.images"
+                  :key="image.id"
+                  class="image"
+                  v-bind:class="{'image-main': image.is_main }"
+          >
+            <img class="img-fluid" v-bind:src="axiosBaseUrl + image.image">
+          </figure>
+        </div>
+        <div class="product-page-grid-right">
+          <div class="product-page-grid-info-part-one">
+            <div class="product-page-grid-info">
+              <h1 class="title mb-1">{{ product.name }}</h1>
+              <h5 class="mb-1"><strong>Product ID: </strong>{{ product.id }}</h5>
+              <!-- Product Review -->
+              <a type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">Product Review</a>
+              <p class="description">{{ product.description }}</p>
+            </div>
 
-      <div class="col-md-3 text-dark">
-        <h1 class="title mb-1">{{ product.name }}</h1>
-        <h5 class="mb-1"><strong>Product ID: </strong>{{ product.id }}</h5>
-        <!-- Product Review -->
-        <a type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">Product Review</a>
-        <ProductReviewModal></ProductReviewModal>
+            <div class="product-page-grid-price">
+              <p class="mb-2"><strong>Price: </strong>${{ product.price }}</p>
 
-        <p class="description mb-4">{{ product.description }}</p>
-        <p class="mb-2"><strong>Price: </strong>${{ product.price }}</p>
+              <p class="mb-2"><strong>Discount Percent: </strong>{{ product.discount_percent }}%</p>
+              <p class="mb-2"><strong>Discount Value: </strong>${{ product.discount_value }}</p>
 
-        <p class="mb-2"><strong>Discount Percent: </strong>{{ product.discount_percent }}%</p>
-        <p class="mb-2"><strong>Discount Value: </strong>${{ product.discount_value }}</p>
+              <p class="mb-2"><strong>Vat Percent: </strong>{{ product.vat_percent }}%</p>
+              <p class="mb-4"><strong>Vat Value: </strong>${{ product.vat_value }}</p>
 
-        <p class="mb-2"><strong>Vat Percent: </strong>{{ product.vat_percent }}%</p>
-        <p class="mb-4"><strong>Vat Value: </strong>${{ product.vat_value }}</p>
+              <p><strong>Final Price: </strong>${{ product.final_price }}</p>
+            </div>
 
-        <p><strong>Total Price: </strong>${{ product.final_price }}</p>
-
-        <div class="field has-addons mt-6">
-          <div class="control">
-            <input type="number" class="input" min="1" v-model="quantity">
+            <div class="product-page-grid-buttons">
+                <input type="number" class="input" min="1" v-model="quantity">
+                <button type="button" class="btn btn-outline-primary addToCartButton col-12 col-md-8" v-bind:class="{'disabled': disabled }" @click="addToCart()">{{ addToCartButtonText }}</button>
+                <FavouriteButton :product="product"></FavouriteButton>
+            </div>
           </div>
 
-          <div class="row mt-2">
-            <button type="button" class="btn btn-outline-primary addToCartButton col-12 col-md-8" v-bind:class="{'disabled': disabled }" @click="addToCart()">{{ addToCartButtonText }}</button>
-            <FavouriteButton :product="product"></FavouriteButton>
+          <div class="product-page-grid-info-part-two">
+            <div class="product-page-grid-modal">
+              <ProductReviewModal></ProductReviewModal>
+            </div>
           </div>
 
         </div>
+    </div>
+  </div>
+
+  <!-- Component must be -->
+  <div class="container-small">
+    <div class="product-page-grid-review" id="reviews-container" v-if="productReviews && Object.keys(productReviews).length > 0">
+      <div class="grid-item-two">
+        <h5>REVIEW AVERAGE : {{ productReviewsAverage }}</h5>
+        <h5>REVIEW COUNTER : {{ productReviewsCounter }}</h5>
+      </div>
+      <div class="grid-item-two">
+        <h2 class="title section-title">
+          <span class="content">Reviews</span>
+        </h2>
+
+        <ProductReviews
+            v-for="review in productReviews"
+            v-bind:key="review.id"
+            v-bind:review="review"/>
       </div>
     </div>
   </div>
-  <div class="container" id="reviews-container" v-if="productReviews && Object.keys(productReviews).length > 0">
-    <div class="row mt-5">
-      <h5>REVIEW AVERAGE : {{ productReviewsAverage }}</h5>
-      <h5>REVIEW COUNTER : {{ productReviewsCounter }}</h5>
-    </div>
-    <div class="row mt-5">
-      <h2 class="title section-title">
-        <span class="content">Reviews</span>
-      </h2>
 
-      <ProductReviews
-          v-for="review in productReviews"
-          v-bind:key="review.id"
-          v-bind:review="review"/>
-    </div>
-  </div>
+
 </template>
 
 <script lang="ts">
@@ -149,18 +162,68 @@ export default class ProductVue extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  figure{
-    img{
-      max-width: 100%
-    }
-  }
-  .page-product-image-col{
+  .product-page-grid-container {
     display: grid;
     grid-template-columns: repeat(2,1fr);
-    grid-column-gap: 0;
-    grid-row-gap: 0;
+    gap: 25px;
+  }
+  .product-page-grid-image{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: minmax(90px, 1fr);
+    gap: 20px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 5px;
+    .image-main {
+      grid-column: 1/4;
+      grid-row: 1;
+    }
     @media screen and (max-width: 767px){
       margin-bottom: 20px;
+    }
+  }
+  .product-page-grid-right {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 30px;
+    border-radius: 5px;
+    .product-page-grid-info-part {
+      &-one, &-two {
+        border-radius: 5px;
+        background-color: white;
+      }
+      &-one {
+        padding: 30px 30px 15px;
+      }
+      &-two {
+        padding: 15px 30px 30px;
+      }
+    }
+  }
+
+  .product-page-grid-price {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .product-page-grid-buttons {
+    max-width: 330px;
+    display: grid;
+    grid-template-columns: 20% 62% 18%;
+    gap: 15px;
+    input {
+      color: black;
+      background-color: white;
+      margin-left: 0;
+      text-align: center;
+      align-self: center;
+      justify-self: center;
+      border: 1px solid #e8e8e8;
+      border-radius: 5px;
+      height: 100%;
+      width: 100%;
     }
   }
   .addToCartButton{
@@ -170,11 +233,6 @@ export default class ProductVue extends Vue {
       box-shadow: none;
       opacity: 0.5;
       cursor: not-allowed;
-    }
-  }
-  #reviews-container{
-    @media screen and (min-width: 1200px){
-      max-width: 1070px;
     }
   }
 

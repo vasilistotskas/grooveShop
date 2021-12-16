@@ -1,8 +1,9 @@
 <template>
+
   <div class="container" v-if="favourites && Object.keys(favourites).length > 0">
-    <div class="row">
+    <div class="product-listing-grid">
       <ProductCard
-          class="col-sm-3"
+          class="grid-item"
           v-for="product in favourites"
           v-bind:key="product.id"
           v-bind:product="product"/>

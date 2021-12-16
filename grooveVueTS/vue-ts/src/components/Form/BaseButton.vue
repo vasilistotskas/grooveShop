@@ -40,7 +40,7 @@ export default defineComponent({
 
 .button {
   display: block;
-  color: $primary-color-4;;
+  color: $primary-color-4;
   outline: none;
   cursor: pointer;
   background: transparent;

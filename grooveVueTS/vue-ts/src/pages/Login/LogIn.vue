@@ -63,7 +63,7 @@
 
             <!-- Register buttons -->
             <div class="text-center">
-              <p class="mb-1">Not a member? <router-link to="/sign-up">Register</router-link></p>
+              <p class="mb-1">Not a member? <router-link to="/sign-up" aria-label="Sign Up">Register</router-link></p>
               <p class="mb-3">or sign up with:</p>
             </div>
 

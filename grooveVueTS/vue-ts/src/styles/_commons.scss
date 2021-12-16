@@ -1,6 +1,6 @@
 $primary-color-1: #F80000;
 $primary-color-2: #080808;
-$primary-color-3: #191919;
+$primary-color-3: #3b3b3b;
 $primary-color-4: #f8f8ff;
 
 
@@ -34,10 +34,12 @@ a:hover {
 }
 
 a, p, span, label, h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
   color: $primary-color-2;
 }
 footer {
   a, p, span, label, h1, h2, h3, h4, h5, h6 {
+    font-weight: 300;
     color: $primary-color-4;
   }
 }
@@ -304,7 +306,7 @@ table {
 }
 
 
-.container, .container-fluid {
+.container, .container-small, .container-fluid {
   width: 100%;
   margin-right: auto;
   margin-left: auto;
@@ -340,6 +342,24 @@ table {
   }
 }
 
+.container-small {
+  @media screen and (min-width: 1400px) {
+    max-width: 1140px;
+  }
+  @media sceen and (min-width: 1200px) {
+    max-width: 1140px;
+  }
+  @media sceen and (min-width: 992px) {
+    max-width: 960px;
+  }
+  @media sceen and (min-width: 768px) {
+    max-width: 720px;
+  }
+  @media sceen and (min-width: 576px) {
+    max-width: 540px;
+  }
+}
+
 .row {
   --bs-gutter-x: 1.5rem;
   --bs-gutter-y: 0;
@@ -360,7 +380,7 @@ table {
   font-weight: 400;
   line-height: 1.5;
   color: #212529;
-  background-color: $primary-color-4;;
+  background-color: $primary-color-4;
   background-clip: padding-box;
   border: 1px solid #ced4da;
   -webkit-appearance: none;
@@ -403,7 +423,7 @@ table {
   background-color: transparent;
   border: 1px solid transparent;
   padding: 6px 12px;
-  font-size: 1rem;
+  font-size: 14px;
   border-radius: 0.25rem;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   @media screen and (max-width: 1420px) {
@@ -444,14 +464,14 @@ table {
 #social-sidebar li:last-child a { border-bottom-right-radius: 5px; }
 
 #social-sidebar a {
-  background: rgba(0, 0, 0, .7);
+  background: #191919;
   color: #fff;
   text-decoration: none;
   display: block;
-  height: 50px;
-  width: 50px;
-  font-size: 24px;
-  line-height: 50px;
+  height: 40px;
+  width: 40px;
+  font-size: 18px;
+  line-height: 42px;
   position: relative;
   text-align: center;
   cursor: pointer;
@@ -486,6 +506,24 @@ table {
   top: 50%;
   transform: rotate(45deg);
 }
+.entypo {
+  transition: all 0.3s ease-in-out;
+  svg {
+    transition: all 0.3s ease-in-out;
+    width: 100% !important;
+    height: 100%;
+    padding: 10px;
+  }
+  &:hover {
+    transition: all 0.3s ease-in-out;
+    svg {
+      transition: all 0.3s ease-in-out;
+      background-color: #191919;
+      transform: scale(1.01);
+      box-shadow: 0 0 8px 1px #ffa1a1;
+    }
+  }
+}
 
 #social-sidebar a[class*="twitter"]:hover,
 #social-sidebar a[class*="twitter"] span,
@@ -514,3 +552,11 @@ table {
 #social-sidebar a[class*="evernote"]:hover,
 #social-sidebar a[class*="evernote"] span,
 #social-sidebar a[class*="evernote"] span:before {background: #6BB130;}
+
+#social-sidebar a[class*="instagram"]:hover,
+#social-sidebar a[class*="instagram"] span,
+#social-sidebar a[class*="instagram"] span:before {background: #e1306c;}
+
+#social-sidebar a[class*="linkedin"]:hover,
+#social-sidebar a[class*="linkedin"] span,
+#social-sidebar a[class*="linkedin"] span:before {background: #4267b2;}

@@ -52,7 +52,7 @@
                   @reset="formManager.resetFields()"
                   :submitting="formManager.submitting"/>
             </div>
-              <p class="mt-4 mb-4 plr-15">Or <router-link to="/log-in">click here</router-link> to log in!</p>
+              <p class="mt-4 mb-4 plr-15">Or <router-link to="/log-in" aria-label="Log in">click here</router-link> to log in!</p>
             </FormProvider>
           </div>
         </div>

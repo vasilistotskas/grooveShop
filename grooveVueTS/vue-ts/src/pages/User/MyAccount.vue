@@ -1,16 +1,16 @@
 <template>
   <div class="page-my-account container mt-3 mb-5">
     <div class="col-12">
-      <h1 class="title mb-2"><router-link :to="{ name: 'MyAccount' }" class="my-account-header">My account</router-link></h1>
+      <h1 class="title mb-2"><router-link :to="{ name: 'MyAccount' }" class="my-account-header" aria-label="Account">My account</router-link></h1>
     </div>
 
     <nav class="navbar-my-account navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarNavAccount">
           <div class="navbar-nav">
-            <router-link class="nav-link" :to="{ name: 'Settings' }">Settings</router-link>
-            <router-link class="nav-link" :to="{ name: 'Orders' }">Orders</router-link>
-            <router-link class="nav-link" :to="{ name: 'Favourites' }">Favourites</router-link>
+            <router-link class="nav-link" :to="{ name: 'Settings' }" aria-label="Settings">Settings</router-link>
+            <router-link class="nav-link" :to="{ name: 'Orders' }" aria-label="Orders">Orders</router-link>
+            <router-link class="nav-link" :to="{ name: 'Favourites' }" aria-label="Favourites">Favourites</router-link>
           </div>
         </div>
         <button @click="logout()" class="btn btn-danger float-end">Log out</button>

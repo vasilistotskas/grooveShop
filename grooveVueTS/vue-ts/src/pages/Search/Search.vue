@@ -6,21 +6,16 @@
           <h2 class="is-size-5 has-text-grey">Search term: "{{ currentPageQuery }}"</h2>
         </div>
 
-        <div class="col-12 mb-3 mt-3 product-listing-grid-header">
-          <div class="pagination-buttons">
-            <button class="btn btn-outline-primary" @click="goToPreviousPage()" v-if="showPreviousButton">Previous</button>
-            <button class="btn btn-outline-primary"
-                    v-if="Object.keys(this.searchResults).length !== 0"
-                    v-for="(n,index) in this.searchResultsTotalPages"
-                    :key="index" :class="{'active': this.currentPageNumber === n }"
-                    @click="goToThisPage(n)">
-              {{ n }}
-            </button>
-            <button class="btn btn-outline-primary" @click="goToNextPage()" v-if="showNextButton">Next</button>
-          </div>
-        </div>
+        <Pagination
+            v-if="Object.keys(this.searchResults).length !== 0"
+            :total-pages="this.searchResultsTotalPages"
+            :max-visible-buttons="3"
+            :route="'Search'"
+            :endpointUrl="'search'"
+            @pagechanged="onPageChange"
+        />
 
-        <div class="product-listing-grid">
+        <div class="product-listing-grid mt-3 mb-3">
             <ProductCard
                 class="grid-item"
                 v-for="product in searchResults"
@@ -28,19 +23,6 @@
                 v-bind:product="product"/>
         </div>
 
-        <div class="col-12 mb-3 mt-3 product-listing-grid-header">
-          <div class="pagination-buttons">
-            <button class="btn btn-outline-primary" @click="goToPreviousPage()" v-if="showPreviousButton">Previous</button>
-            <button class="btn btn-outline-primary"
-                    v-if="Object.keys(this.searchResults).length !== 0"
-                    v-for="(n,index) in this.searchResultsTotalPages"
-                    :key="index" :class="{'active': this.currentPageNumber === n }"
-                    @click="goToThisPage(n)">
-              {{ n }}
-            </button>
-            <button class="btn btn-outline-primary" @click="goToNextPage()" v-if="showNextButton">Next</button>
-          </div>
-        </div>
 
       </div>
     </div>
@@ -50,32 +32,38 @@
 <script lang="ts">
 
 import store from '@/store'
-import router from '@/routes'
 import { Options, Vue } from "vue-class-component"
 import ProductModel from "@/state/product/ProductModel"
 import ProductCard from "@/components/Product/ProductCard.vue"
+import Pagination from "@/components/Pagination/Pagination.vue"
 
 @Options({
   name: "SearchVue",
   components: {
-    ProductCard
+    ProductCard,
+    Pagination
   }
 })
 
 export default class SearchVue extends Vue {
 
+  currentPage: number = 1
   query: string | null = ''
   uri = window.location.search.substring(1)
   params = new URLSearchParams(this.uri)
+
+  onPageChange(page: any) {
+    this.currentPage = page;
+  }
 
   async mounted(): Promise<void> {
     document.title = 'Search'
 
     if (this.params.get('query')) {
-      store.commit('search/setCurrentQuery', this.params.get('query'))
+      store.commit('pagination/setCurrentQuery', this.params.get('query'))
     }
     if (this.params.get('page')) {
-      store.commit('search/setCurrentPageNumber', Number(this.params.get('page')))
+      store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
     }
 
     await this.performSearch()
@@ -83,67 +71,42 @@ export default class SearchVue extends Vue {
   }
 
   async unmounted(): Promise<void>{
-    store.commit('search/unsetSearchResults')
+    store.commit('pagination/unsetResults')
   }
 
   get searchResults(): ProductModel {
-    return store.getters['search/getResultData']
+    return store.getters['pagination/getResultData']
   }
 
   get searchResultsCount(): number {
-    return store.getters['search/getResultCountData']
+    return store.getters['pagination/getResultCountData']
   }
 
   get searchResultsNextPageUrl(): string {
-    return store.getters['search/getResultNextPageUrl']
+    return store.getters['pagination/getResultNextPageUrl']
   }
 
   get searchResultsPreviousPageUrl(): string {
-    return store.getters['search/getResultPreviousPageUrl']
+    return store.getters['pagination/getResultPreviousPageUrl']
   }
 
   get searchResultsTotalPages(): number {
-    return store.getters['search/getResultTotalPages']
+    return store.getters['pagination/getResultTotalPages']
   }
 
   get currentPageNumber(): number {
-    return store.getters['search/getCurrentPageNumber']
+    return store.getters['pagination/getCurrentPageNumber']
   }
 
   get currentPageQuery(): string {
-    return store.getters['search/getCurrentQuery']
-  }
-
-  get showNextButton(): boolean {
-    return store.getters['search/getShowNextButton']
-  }
-
-  get showPreviousButton(): boolean {
-    return store.getters['search/getShowPreviousButton']
+    return store.getters['pagination/getCurrentQuery']
   }
 
   async performSearch(): Promise<void> {
-
-    await store.dispatch('search/getSearchResults', {'page_number': this.currentPageNumber, 'query': this.currentPageQuery })
+    await store.dispatch('pagination/getPaginatedResults', { 'pageNumber': this.currentPageNumber, 'endpointUrl': `search`, 'query': this.currentPageQuery })
   }
 
-  async goToNextPage(): Promise<void> {
-    await store.commit('search/setCurrentPageNumber', this.currentPageNumber + 1)
-    await store.dispatch('search/getSearchResults', {'page_number': this.currentPageNumber, 'query': this.currentPageQuery })
-    await router.replace({name: "Search", query: {...this.$route.query, 'query': this.params.get('query'), 'page': this.currentPageNumber }})
-  }
 
-  async goToPreviousPage(): Promise<void> {
-    await store.commit('search/setCurrentPageNumber', this.currentPageNumber - 1)
-    await store.dispatch('search/getSearchResults', {'page_number': this.currentPageNumber, 'query': this.currentPageQuery })
-    await router.replace({name: "Search", query: {...this.$route.query, 'query': this.params.get('query'), 'page': this.currentPageNumber }})
-  }
-
-  async goToThisPage(n: number) {
-    await store.commit('search/setCurrentPageNumber', n)
-    await store.dispatch('search/getSearchResults', {'page_number': n, 'query': this.currentPageQuery })
-    await router.replace({name: "Search", query: {...this.$route.query, 'query': this.params.get('query'), 'page': n }})
-  }
 
 }
 </script>

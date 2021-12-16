@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <div class="container-fluid-mlr-0 mb-5">
-      <div class="row">
-        <swiper v-if="homepageSlider && Object.keys(homepageSlider).length > 0"
+    <div class="container mt-5 mb-5">
+      <div class="home-top-grid-content">
+        <swiper v-if="homepageSlider[0] && Object.keys(homepageSlider[0]).length > 0"
             :style="mainSliderStyle"
             :navigation="!!(homepageSlider[0].video && Object.keys(homepageSlider[0].slides).length > 0)"
             :mousewheel="false"
@@ -12,33 +12,98 @@
               "clickable": true,
               "dynamicBullets": false
             }'
-            class="mySwiper">
+            class="grid-item-swipper">
 
           <swiper-slide v-if="homepageSlider[0].video">
             <video ref="mainSliderVideoRef"></video>
           </swiper-slide>
 
           <swiper-slide v-for="slide in homepageSlider[0].slides">
-            <img class="img-fluid" v-bind:src="axiosBaseUrl + slide.image" :alt="slide.title">
+            <img class="img-fluid" width="839" height="510"  v-bind:src="axiosBaseUrl + slide.image" :alt="slide.title ? slide.title : 'no-alt'">
           </swiper-slide>
-
         </swiper>
+
+        <div class="grid-item-right">
+          <div class="grid-item-content-one">
+            <swiper v-if="homepageSlider[1] && Object.keys(homepageSlider[1]).length > 0"
+                    :style="mainSliderStyle"
+                    :navigation="false"
+                    :mousewheel="false"
+                    :bullets="false"
+                    :keyboard="true"
+                    :grabCursor="true"
+                    class="grid-item-swipper">
+
+              <swiper-slide v-if="homepageSlider[1].video">
+                <video ref="mainSliderVideoRef"></video>
+              </swiper-slide>
+
+              <swiper-slide v-for="slide in homepageSlider[1].slides">
+                <img class="img-fluid" width="425" height="250" v-bind:src="axiosBaseUrl + slide.image" :alt="slide.title ? slide.title : 'no-alt'">
+              </swiper-slide>
+
+            </swiper>
+          </div>
+          <div class="grid-item-content-two">
+            <swiper v-if="homepageSlider[2] && Object.keys(homepageSlider[2]).length > 0"
+                    :style="mainSliderStyle"
+                    :navigation="false"
+                    :mousewheel="false"
+                    :keyboard="true"
+                    :grabCursor="true"
+                    class="grid-item-swipper">
+
+              <swiper-slide v-if="homepageSlider[2].video">
+                <video ref="mainSliderVideoRef"></video>
+              </swiper-slide>
+
+              <swiper-slide v-for="slide in homepageSlider[2].slides">
+                <img class="img-fluid" width="425" height="250" v-bind:src="axiosBaseUrl + slide.image" :alt="slide.title ? slide.title : 'no-alt'">
+              </swiper-slide>
+            </swiper>
+          </div>
+        </div>
       </div>
     </div>
+
+    <div class="home-usp-grid-container">
+      <div class="home-usp-grid-content mb-5">
+
+        <div class="grid-usp-item">
+          <font-awesome-icon :icon="['fa', 'phone']" size="3x" :style="{ color: '#080808' }"></font-awesome-icon>
+          <span>Lorem Ipsum
+            <span>Lorem Ipsum</span>
+          </span>
+        </div>
+        <div class="grid-usp-item">
+          <font-awesome-icon :icon="['fa', 'envelope']" size="3x" :style="{ color: '#080808' }"></font-awesome-icon>
+          <span>Lorem Ipsum
+            <span>Lorem Ipsum</span>
+          </span>
+        </div>
+        <div class="grid-usp-item">
+          <font-awesome-icon :icon="['fa', 'comment']" size="3x" :style="{ color: '#080808' }"></font-awesome-icon>
+          <span>Lorem Ipsum
+            <span>Lorem Ipsum</span>
+          </span>
+
+        </div>
+      </div>
+    </div>
+
+
     <div class="product-listing-container">
       <div class="container mb-5">
-        <div class="row">
           <div class="col-12">
             <h2 class="mb-2">{{ $t('eshop.test3') }}</h2>
           </div>
-          <div class="grid-content-4">
+          <div class="grid-content-six">
             <ProductCard
                 class="grid-item"
                 v-for="product in LatestProducts"
                 v-bind:key="product.id"
                 v-bind:product="product"/>
           </div>
-        </div>
       </div>
     </div>
 
@@ -114,10 +179,86 @@ export default class Home extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  .grid-content-4 {
+  .home-usp-grid-container {
+    background: white;
+  }
+  .home-usp-grid-content {
     display: grid;
-    grid-template-columns: repeat(4,1fr);
-    grid-gap: 75px;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 20px;
+    background: white;
+    max-width: 1320px;
+    margin: 0 auto;
+    .grid-usp-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-self: center;
+      justify-self: center;
+      gap: 20px;
+      svg {
+        width: 100%;
+        border-right: 2px solid #e7e7e7;
+      }
+      span {
+        display: grid;
+        align-self: center;
+        justify-self: center;
+        width: 100%;
+        height: 100%;
+        font-size: 18px;
+        font-weight: 500;
+        &:first-child {
+          font-size: 12px;
+          font-weight: 300;
+        }
+      }
+    }
+  }
+  .home-top-grid-content {
+    display: grid;
+    grid-template-columns: 65% 35%;
+  }
+  .grid-item-swipper {
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    img, video, .swiper-slide {
+      border-radius: 8px;
+    }
+    &:hover {
+      transition: all 0.3s ease-in-out;
+    }
+  }
+  .grid-item-right {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    overflow: hidden;
+    max-height: 520px;
+    gap: 10px;
+    .grid-item-content {
+      position: relative;
+      height: 250px !important;
+      &-one {
+        .swiper-container-initialized {
+          height: 250px !important;
+          width: 425px !important;
+          margin: 0 auto;
+
+        }
+      }
+      &-two {
+        .swiper-container-initialized {
+          height: 250px !important;
+          width: 425px !important;
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+  .grid-content-six {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    grid-gap: 20px;
     @media screen and (max-width: 1200px) {
       grid-template-columns: repeat(3,1fr);
     }
@@ -134,7 +275,7 @@ export default class Home extends Vue {
     width: 100% !important;
     text-align: center;
     font-size: 18px;
-    background: $primary-color-4;;
+    background: $primary-color-4;
 
     /* Center slide text vertically */
     display: -webkit-box;
@@ -154,7 +295,6 @@ export default class Home extends Vue {
   .swiper-slide img, video {
     display: block;
     width: 100%;
-    max-height: 500px;
     height: 100%;
     object-fit: cover;
   }
@@ -169,9 +309,6 @@ export default class Home extends Vue {
   }
 
   .swiper-container {
-      @media screen and (min-width:1200px) {
-        height:500px; overflow: hidden;
-    }
     .swiper-slide {background-color: #191919}
     &.swiper-container-initialized{overflow-y: auto; max-height: none;}
   }

@@ -12,6 +12,7 @@ import CategoryModule from '@/state/category/CategoryModule'
 import AppSettingsModule from '@/state/app/AppSettingsModule'
 import UserDataModule from '@/state/user/data/UserDataModule'
 import UserOrderModule from '@/state/user/order/UserOrderModule'
+import PaginationModule from "@/state/pagination/PaginationModule"
 import ProductReviewModule from '@/state/product/review/ProductReviewModule'
 import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 
@@ -35,6 +36,7 @@ const stateDirectory = <Record<string, typeof AppBaseModule>>{
     'user.order': UserOrderModule,
     'cart': CartModule,
     'search': SearchModule,
+    'pagination': PaginationModule,
     'country': CountryModule,
     'slider': SliderModule,
     'stripeIban': Iban,

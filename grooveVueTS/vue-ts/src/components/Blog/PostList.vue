@@ -1,18 +1,18 @@
 <template>
   <div class="grid-post-list" v-if="publishedPosts && Object.keys(publishedPosts).length > 0">
     <div v-for="post in publishedPosts" :key="post.title" class="cardSpecialEffect">
-      <router-link :to="`/post/${post.slug}`">
+      <router-link :to="`/post/${post.slug}`" aria-label="Blog Post">
         <div class="card">
           <img class="img-fluid" v-bind:src="axiosBaseUrl + '/static/media/' + post.image" :alt="post.title">
           <div class="card-body">
-            <h5 class="card-title">{{ post.title }}: {{ post.subtitle }}</h5>
+            <span class="card-title">{{ post.title }}: {{ post.subtitle }}</span>
             <span v-if="showAuthor">
               by <AuthorLink :author="post.author" />
             </span>
             <p class="card-text">{{ post.metaDescription }}</p>
             <ul>
               <li class="post__tags" v-for="tag in post.tags" :key="tag.name">
-                <router-link :to="`/tag/${tag.name}`">#{{ tag.name }}</router-link>
+                <router-link :to="`/tag/${tag.name}`" aria-label="Blog Tag">#{{ tag.name }}</router-link>
               </li>
             </ul>
             <small class="text-muted">{{ displayableDate(post.publishDate) }}</small>

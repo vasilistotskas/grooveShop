@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="`/author/${author.user.username}`">{{ displayName }}</router-link>
+  <router-link :to="`/author/${author.user.username}`" aria-label="Blog Author">{{ displayName }}</router-link>
 </template>
 
 <script>

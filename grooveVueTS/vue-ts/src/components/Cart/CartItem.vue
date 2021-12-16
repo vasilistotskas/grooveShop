@@ -1,21 +1,21 @@
 <template>
-  <tr>
-    <td>
-      <router-link :to="productPath">{{ item.product.name }}</router-link>
-    </td>
-    <td>${{ item.product.price }}</td>
-    <td>
-      <a type="button" class="btn btn-light" data-mdb-ripple-color="dark" @click="decrementQuantity(item)">-</a>
+  <div class="grid-container-cart">
+    <div class="grid-container-cart-item-one">
+      <router-link :to="productPath" aria-label="Product">{{ item.product.name }}</router-link>
+    </div>
+    <div class="grid-container-cart-item-two">${{ item.product.price }}</div>
+    <div class="grid-container-cart-item-three">
+      <a type="button" class="btn btn-outline-primary" data-mdb-ripple-color="dark" @click="decrementQuantity(item)">-</a>
       {{ item.quantity }}
-      <a type="button" class="btn btn-light" data-mdb-ripple-color="dark" @click="incrementQuantity(item)">+</a>
-    </td>
-    <td>${{ itemTotal.toFixed(2) }}</td>
-    <td>
+      <a type="button" class="btn btn-outline-primary" data-mdb-ripple-color="dark" @click="incrementQuantity(item)">+</a>
+    </div>
+    <div class="grid-container-cart-item-four">${{ itemTotal.toFixed(2) }}</div>
+    <div class="grid-container-cart-item-five">
       <button type="button" class="btn" @click="removeFromCart(item)">
-        <i class="fas fa-times-circle"></i>
+        <font-awesome-icon icon="trash" :style="{ color: '#3b3b3b' }"></font-awesome-icon>
       </button>
-    </td>
-  </tr>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -36,6 +36,9 @@ export default class CartItemVue extends Vue {
 
     item = new CartItemModel()
 
+    get isMobile(): boolean {
+      return store.getters['app/isMobile']
+    }
     // prepei na paw sto store kapos
     get itemTotal(): number {
       return this.item.quantity * this.item.product.price
@@ -62,3 +65,38 @@ export default class CartItemVue extends Vue {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+  .grid-container-cart {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: relative;
+    background-color: #f8f8ff;
+    border-radius: 5px;
+    align-items: center;
+    justify-items: center;
+    padding: 5px;
+    a {
+      color: $primary-color-2;
+    }
+    .grid-container-cart-item-five {
+      position: absolute;
+      right: 0;
+    }
+  }
+  .grid-container-table-items {
+    display: grid;
+    gap: 10px;
+  }
+  .grid-container-cart-item-three {
+    grid-template-columns: repeat(3, 1fr);
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    a {
+      font-size: 14px;
+      padding: 4px 10px;
+    }
+  }
+
+</style>

@@ -1,43 +1,37 @@
 <template>
-    <div class="page-cart container mt-3 mb-5">
-        <div class="row">
-            <div class="col-12">
-                <h1 class="title mb-5">Cart</h1>
-            </div>
-
-            <div class="col-12">
-                <table class="table is-fullwidth" v-if="cartTotalLength">
-                    <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-                    <CartItem
-                            v-for="item in cart"
-                            v-bind:key="item.id"
-                            v-bind:item="item"
-                            v-on:removeFromCart="removeFromCart(item)"/>
-
-                    </tbody>
-                </table>
-
-                <p v-else>You don't have any products in your cart...</p>
-            </div>
-
-            <div class="col-12">
-                <h2 class="subtitle">Summary</h2>
-
-                <strong>${{ cartTotalPrice.toFixed(2) }}</strong>, {{ cartTotalLength }} items
-
-                <router-link to="/cart/checkout" type="button" class="btn btn-success float-end">Proceed to checkout</router-link>
-            </div>
+    <div class="container mt-5 mb-5">
+      <div class="cart-grid-container">
+        <div class="grid-container-item-two" v-if="cartTotalLength">
+          <div class="grid-container-table">
+              <div>Product</div>
+              <div>Price</div>
+              <div>Quantity</div>
+              <div>Total</div>
+          </div>
+          <div class="grid-container-table-items">
+            <CartItem
+                v-for="item in cart"
+                v-bind:key="item.id"
+                v-bind:item="item"
+                v-on:removeFromCart="removeFromCart(item)"/>
+          </div>
         </div>
+        <div v-else>
+          <p>You don't have any products in your cart...</p>
+        </div>
+
+
+        <div class="grid-container-item-three">
+          <div class="grid-container-child-one">
+            <h2 class="subtitle">Summary</h2>
+            <strong>${{ cartTotalPrice.toFixed(2) }}</strong>, {{ cartTotalLength }} items
+          </div>
+          <div class="grid-container-child-two">
+            <router-link to="/cart/checkout" type="button" class="btn btn-outline-primary" aria-label="Checkout">Proceed to checkout</router-link>
+          </div>
+
+        </div>
+      </div>
     </div>
 </template>
 
@@ -77,3 +71,47 @@ export default class CartVue extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .cart-grid-container {
+    display: grid;
+    grid-template-rows: minmax(90px, 1fr);
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px 30px 30px;
+    gap: 25px;
+    a, h2 {
+      color: $primary-color-2;
+    }
+    .grid-container-item {
+      &-one {
+
+      }
+      &-two {
+        display: grid;
+        grid-template-rows: minmax(50px, 1fr);
+        gap: 10px;
+        .grid-container-table {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          align-items: center;
+          justify-items: center;
+        }
+      }
+      &-three {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-content: center;
+        align-items: center;
+        .grid-container-child-two {
+          justify-self: end;
+          align-self: end;
+        }
+      }
+    }
+    .grid-container-table-items {
+      display: grid;
+      gap: 10px;
+    }
+  }
+</style>

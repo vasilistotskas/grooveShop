@@ -67,18 +67,6 @@ export default {
         }).finally(() => this.afterResponse())
     },
 
-    postRaw: function(endpoint: string, data: unknown): Promise<unknown> {
-        this.beforeRequest()
-        return axios({
-            url: `${baseUrl}/${endpoint}`,
-            method: 'post',
-            data: data,
-            headers: {
-                Authorization: "Token " + this.getUserToken()
-            }
-        }).finally(() => this.afterResponse())
-    },
-
     delete: function(endpoint: string): Promise<unknown> {
         this.beforeRequest()
         return axios({
@@ -89,30 +77,5 @@ export default {
             }
         }).finally(() => this.afterResponse())
     },
-
-    buildFormData: function (formData: FormData, data: never, parentKey?: string | number): void {
-        if (
-            !isEmpty(data)
-            && isObject(data)
-            && !(isDate(data))
-            && !((data as File) instanceof File)
-            && !((data as Blob) instanceof Blob)
-        ) {
-            each(keys(data), (key: string | number) => {
-                this.buildFormData(
-                    formData,
-                    data[key],
-                    parentKey ? `${parentKey}[${key}]` : key
-                )
-            })
-        } else {
-            if (typeof parentKey === "string") {
-                formData.append(
-                    parentKey,
-                    isNull(data) ? '' : data
-                )
-            }
-        }
-    }
 
 }
