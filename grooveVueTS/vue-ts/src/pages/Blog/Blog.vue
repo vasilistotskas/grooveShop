@@ -1,6 +1,5 @@
 <template>
-  <div class="container mt-5 mb-5">
-    <h2>Recent posts</h2>
+  <div class="container content-min-height mt-8 mb-5">
     <PostList v-if="allPosts" :posts="allPosts" />
   </div>
 </template>

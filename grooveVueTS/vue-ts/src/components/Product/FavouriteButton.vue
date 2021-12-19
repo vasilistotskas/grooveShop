@@ -2,7 +2,7 @@
   <button type="button"  data-mdb-ripple-color="dark" class="btn btn-outline-primary col-12 col-md-4" @click="favouriteHandle()">
     <i :class=favouriteIconClass()></i>
     <font-awesome-icon v-if="!this.isFavourite" size="2x" icon="heart" :style="{ color: 'white' }"></font-awesome-icon>
-    <font-awesome-icon v-else size="2x" icon="heart" :style="{ color: '#F80000' }"></font-awesome-icon>
+    <font-awesome-icon v-else size="2x" icon="heart" :style="{ color: '#f80000e0' }"></font-awesome-icon>
   </button>
 </template>
 

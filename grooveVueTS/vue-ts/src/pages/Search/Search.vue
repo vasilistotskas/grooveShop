@@ -1,7 +1,7 @@
 <template>
-  <div class="page-search mt-3 mb-5">
+  <div class="page-search mt-9 mb-5">
     <div class="container">
-      <div class="row">
+      <div class="row content-min-height">
         <div class="col-12 mb-3 mt-3">
           <h2 class="is-size-5 has-text-grey">Search term: "{{ currentPageQuery }}"</h2>
         </div>
@@ -110,3 +110,7 @@ export default class SearchVue extends Vue {
 
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>

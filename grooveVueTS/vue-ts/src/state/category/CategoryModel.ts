@@ -5,7 +5,9 @@ export default class CategoryModel extends EntityBase
     id!: number
     description!: string
     absolute_url!: string
-    image_url!: string
+    menu_image_one!: string
+    menu_image_two!: string
+    menu_main_banner!: string
     name!: string
     parent!: number
     all_tree_products!: Array<any>

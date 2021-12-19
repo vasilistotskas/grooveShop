@@ -59,6 +59,7 @@ export default class UserDataModule
         store.commit('product/review/unsetUserToProductReview')
         store.commit('product/review/unsetUserReviews')
         store.commit('user/order/unsetUserOrders')
+        store.commit('country/unsetUserCountryData')
     }
 
     @Action
@@ -81,6 +82,7 @@ export default class UserDataModule
                 const data = response.data
                 this.context.commit('setUserData', data[0])
                 this.context.commit('setUserId', data[0].id)
+                store.dispatch('country/findRegionsBasedOnAlphaForLoggedCustomer')
                 store.dispatch('product/favourite/userFavouritesFromRemote', response.data[0].user)
                 store.dispatch('product/favourite/userFavouriteProductsFromRemote', response.data[0].user)
                 store.dispatch('product/review/getCurrentUserReviews', data[0].id)
@@ -94,7 +96,6 @@ export default class UserDataModule
 
     @Action
     async updateUserDetails(data: any): Promise<void> {
-        await store.dispatch('user/data/ensureUserIsAuthenticated')
         const user_id = await this.context.getters['getUserId']
 
         try {

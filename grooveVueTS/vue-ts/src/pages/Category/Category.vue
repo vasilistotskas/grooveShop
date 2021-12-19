@@ -1,18 +1,16 @@
 <template>
-<div class="container">
-  <div class="page-category mt-3 mb-5">
-    <div class="row">
+<div class="page-category mt-8 mb-5">
+  <div class="container">
+    <div class="row content-min-height">
       <div class="col-12">
-        <h2 class="mb-2">{{ category.name }}</h2>
+        <img v-if="category.menu_main_banner" :src="category.menu_main_banner" :alt="category.name" class="img-fluid">
       </div>
-      <div class="col-12">
-        <div class="row">
-          <ProductCard
-          class="col-sm-3"
-          v-for="product in category.all_tree_products"
-          v-bind:key="product.id"
-          v-bind:product="product"/>
-        </div>
+      <div class="product-listing-grid mt-3 mb-3">
+        <ProductCard
+        class="col-sm-3"
+        v-for="product in category.all_tree_products"
+        v-bind:key="product.id"
+        v-bind:product="product"/>
       </div>
     </div>
   </div>
@@ -32,11 +30,12 @@ import ProductCard from "@/components/Product/ProductCard.vue"
     ProductCard
   },
   props: {
-    category_id: String
+    category_slug: String
   }
 })
 
 export default class CategoryVue extends Vue {
+  formEl = document.getElementById('burgerButton') as HTMLFormElement
 
   created() {
     this.$watch(
@@ -45,16 +44,26 @@ export default class CategoryVue extends Vue {
           if (to.name === 'Category') {
             this.fetchCategory()
           }
+          if (to.path !== from.path && to.name === 'Category') {
+            this.formEl.classList.toggle('opened');
+            this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)
+            store.commit('app/setNavbarMenuHidden', true)
+          }
         }
     )
   }
 
   async mounted(): Promise<void> {
     await this.fetchCategory()
-    document.title = this.$route.params.absolute_url + ' Category'
-    // this.$nextTick(function () {
-    //   console.log('ssss')
-    // })
+    this.formEl.classList.remove('opened');
+    this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)
+    store.commit('app/setNavbarMenuHidden', true)
+    document.title = this.$route.params.category_slug + ' Category'
+  }
+
+  unmounted() {
+    this.formEl.classList.remove('opened');
+    this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)
   }
 
   get category(): CategoryModel {
@@ -62,7 +71,7 @@ export default class CategoryVue extends Vue {
   }
 
   public fetchCategory(): void {
-    const categoryId = this.$route.params.category_id
+    const categoryId = this.$route.params.category_slug
     store.dispatch('category/fetchCategoryFromRemote', categoryId)
   }
 

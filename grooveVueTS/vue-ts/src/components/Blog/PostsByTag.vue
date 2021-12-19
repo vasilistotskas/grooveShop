@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5 mb-5">
+  <div class="container mt-8 mb-5">
     <h2>Posts in #{{ $route.params.tag }}</h2>
     <PostList :posts="posts" v-if="posts" />
   </div>

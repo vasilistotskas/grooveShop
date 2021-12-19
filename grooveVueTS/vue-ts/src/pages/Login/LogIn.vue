@@ -1,5 +1,5 @@
 <template>
-  <div class="page-log-in mt-5 mb-5">
+  <div class="page-log-in mt-8 mb-5">
     <div class="container">
       <div class="col-12 col-md-4 mx-auto">
         <div class="card login-card">

@@ -22,7 +22,9 @@ class Command(BaseCommand):
                 name=name,
                 slug=name,
                 description=faker.text(5),
-                image_url='uploads/products/1_jM4xRzn.jpg',
+                menu_image_one='uploads/categories/console.jpg',
+                menu_image_two='uploads/categories/console.jpg',
+                menu_main_banner='uploads/categories/console.jpg',
             )
 
             for _ in range(50):
@@ -44,8 +46,8 @@ class Command(BaseCommand):
                 product_images = ProductImages.objects.create(
                     title=faker.text(5),
                     product_id=product.id,
-                    image='uploads/products/1_jM4xRzn.jpg',
-                    thumbnail='uploads/products/thumbnails/1_p66QWaF.jpg',
+                    image='uploads/products/mobile1.jpg',
+                    thumbnail='uploads/products/thumbnails/mobile1.jpg',
                     is_main=True
                 )
 

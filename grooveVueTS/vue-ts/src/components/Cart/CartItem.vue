@@ -1,7 +1,10 @@
 <template>
   <div class="grid-container-cart">
     <div class="grid-container-cart-item-one">
-      <router-link :to="productPath" aria-label="Product">{{ item.product.name }}</router-link>
+      <router-link :to="productPath" aria-label="Product">
+        <img :src="item.product.main_image" width="75" height="75" class="card-img-top img-fluid" :alt="item.product.name">
+        <span>{{ item.product.name }}</span>
+      </router-link>
     </div>
     <div class="grid-container-cart-item-two">${{ item.product.price }}</div>
     <div class="grid-container-cart-item-three">
@@ -79,7 +82,26 @@ export default class CartItemVue extends Vue {
     a {
       color: $primary-color-2;
     }
-    .grid-container-cart-item-five {
+    &-item-one {
+      a {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        justify-items: center;
+        width: 250px;
+      }
+    }
+    &-item-three {
+      grid-template-columns: repeat(3, 1fr);
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      a {
+        font-size: 14px;
+        padding: 4px 10px;
+      }
+    }
+    &-item-five {
       position: absolute;
       right: 0;
     }
@@ -87,16 +109,6 @@ export default class CartItemVue extends Vue {
   .grid-container-table-items {
     display: grid;
     gap: 10px;
-  }
-  .grid-container-cart-item-three {
-    grid-template-columns: repeat(3, 1fr);
-    display: grid;
-    align-items: center;
-    justify-items: center;
-    a {
-      font-size: 14px;
-      padding: 4px 10px;
-    }
   }
 
 </style>

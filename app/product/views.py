@@ -29,6 +29,7 @@ class ProductsAllResults(generics.ListCreateAPIView):
     serializer_class = ProductSerializer
     pagination_class = ProductsPagination
 
+    @method_decorator(cache_page(60*30))
     def list(self, request, *args, **kwargs):
 
         queryset = self.filter_queryset(self.get_queryset())
@@ -44,19 +45,19 @@ class ProductsAllResults(generics.ListCreateAPIView):
 
 class ProductDetail(APIView):
     @staticmethod
-    def get_object(product_slug, category_id):
+    def get_object(category_slug, product_slug):
         try:
-            return Product.objects.filter(category__id=category_id).get(slug=product_slug)
+            return Product.objects.filter(category__slug=category_slug).get(slug=product_slug)
         except Product.DoesNotExist:
             raise Http404
 
-    def get(self, request, product_slug, category_id, format=None):
-        product = self.get_object(product_slug, category_id)
+    def get(self, request, category_slug, product_slug, format=None):
+        product = self.get_object(category_slug, product_slug)
         serializer = ProductSerializer(product)
         return Response(serializer.data)
 
-    def patch(self, request, product_slug, category_id):
-        product = self.get_object(product_slug, category_id)
+    def patch(self, request, category_slug, product_slug):
+        product = self.get_object(category_slug, product_slug)
         data = {
             "hits": product.hits + 1
         }
@@ -71,8 +72,8 @@ class CategoryDetail(GenericAPIView):
     serializer_class = CategorySerializer
 
     def get_queryset(self):
-        category_id = self.kwargs['category_id']
-        return Category.objects.get(id=category_id)
+        category_slug = self.kwargs['category_slug']
+        return Category.objects.get(slug=category_slug)
 
     def get(self, request, *args, **kwargs):
         root_nodes = self.get_queryset()

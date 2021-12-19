@@ -10,10 +10,14 @@ from helpers.image_resize import make_thumbnail
 
 class Category(MPTTModel):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    slug = models.SlugField()
+    name = models.CharField(max_length=255, unique=True)
+    slug = models.SlugField(unique=True)
     description = models.TextField(null=True, blank=True)
-    image_url = models.ImageField(
+    menu_image_one = models.ImageField(
+        upload_to='uploads/categories/', null=True, blank=True)
+    menu_image_two = models.ImageField(
+        upload_to='uploads/categories/', null=True, blank=True)
+    menu_main_banner = models.ImageField(
         upload_to='uploads/categories/', null=True, blank=True)
     parent = TreeForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
     tags = models.CharField(max_length=100, null=True,
@@ -154,7 +158,7 @@ class Product(models.Model):
             )
 
     def absolute_url(self):
-        return f'/{self.slug}/{self.category.id}'
+        return f'/{self.category.slug}/{self.slug}'
 
 
 class ProductImages(models.Model):

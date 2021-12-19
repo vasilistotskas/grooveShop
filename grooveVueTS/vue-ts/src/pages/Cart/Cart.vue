@@ -1,5 +1,5 @@
 <template>
-    <div class="container mt-5 mb-5">
+    <div class="container mt-8 mb-5 content-min-height">
       <div class="cart-grid-container">
         <div class="grid-container-item-two" v-if="cartTotalLength">
           <div class="grid-container-table">

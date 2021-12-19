@@ -1,73 +1,85 @@
 <template>
-  <div class="preheadcust" style="">
-    <p>Groove <a href="http://localhost:5000/">
-      <span style="text-decoration: underline;">Here</span>!</a>
-    </p>
-  </div>
+  <nav class="main-navbar">
+    <div class="grid-header container">
+      <div class="logo-header">
+        <router-link to="/" class="navbar-brand" aria-label="Home">
+          <img src="http://localhost:8000/static/media/uploads/logos/websiteLogo.png" width="175" height="85" alt="Website Logo" class="main-logo img-fluid">
+        </router-link>
+      </div>
 
-    <nav class="main-navbar">
-        <div class="grid-header container">
-          <div class="logo-header">
-            <router-link to="/" class="navbar-brand" aria-label="Home">
-              <img src="http://localhost:8000/static/media/uploads/logos/websiteLogo.png" width="175" height="85" alt="Website Logo" class="main-logo img-fluid">
-            </router-link>
+      <div class="navbar-categories-loading" v-bind:class="{'wrapper': Object.keys(categoriesTreeData).length === 0 }">
+        <div @click="menuToggle" class="products-header" v-bind:class="{'content wrapper-cell': Object.keys(categoriesTreeData).length === 0 }">
+          <div class="products-a btn" ref="navbarProductsButton">
+            <button id="burgerButton" ref="mainToggleButton" class="menu" aria-label="Main Menu">
+              <svg width="65" height="65" viewBox="0 0 100 100">
+                <path class="line line-one" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
+                <path class="line line-two" d="M 20,50 H 80" />
+                <path class="line line-three" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942" />
+              </svg>
+            </button>
+            <span class="title">PRODUCTS</span>
           </div>
-          <div class="products-header" >
-            <a class="products-a btn" href="#">
-              <span class="burgermain"></span>
-              <span class="title">PRODUCTS</span>
-            </a>
-          </div>
-<!--          <NavbarCategories v-if="categoriesTreeData && Object.keys(categoriesTreeData).length > 0" :categoriesTree="categoriesTreeData"/>-->
-          <div class="blog-header">
-            <router-link to="/blog" class="btn-w-effect" aria-label="Blog">
-              <font-awesome-icon v-if="isMobile" icon="blog"></font-awesome-icon>
-              <font-awesome-icon v-else size="2x" icon="blog"></font-awesome-icon>
-              <span>BLOG</span>
-              <span class="line-1"></span>
-              <span class="line-2"></span>
-              <span class="line-3"></span>
-              <span class="line-4"></span>
-            </router-link>
-          </div>
-          <div class="search-header">
-              <input v-model="searchQuery" @keyup.enter='searchPerform' class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
-              <button class="btn btn-outline-primary" @click="searchPerform">Search</button>
-          </div>
-          <div class="navigation-header">
-            <div class="navigation-header-part">
-              <router-link v-if="this.isAuthenticated" :to="{ name: 'Favourites' }" aria-label="Favourites">
-                <font-awesome-icon v-if="isMobile" icon="heart" :style="{ color: '#F80000' }"></font-awesome-icon>
-                <font-awesome-icon v-else size="2x" icon="heart" :style="{ color: '#F80000' }"></font-awesome-icon>
-              </router-link>
-              <router-link v-else to="/log-in" aria-label="Favourites">
-                <font-awesome-icon v-if="isMobile" icon="heart" :style="{ color: 'white' }"></font-awesome-icon>
-                <font-awesome-icon v-else size="2x" icon="heart" :style="{ color: 'white' }"></font-awesome-icon>
-              </router-link>
-            </div>
-            <div class="navigation-header-part">
-              <router-link v-if="this.isAuthenticated" to="/my-account" aria-label="Account">
-                <font-awesome-icon v-if="isMobile" icon="user" :style="{ color: '#F80000' }"></font-awesome-icon>
-                <font-awesome-icon v-else size="2x" icon="user" :style="{ color: '#F80000' }"></font-awesome-icon>
-              </router-link>
-              <router-link v-else to="/log-in" aria-label="Account">
-                <font-awesome-icon v-if="isMobile" icon="user" :style="{ color: 'white' }"></font-awesome-icon>
-                <font-awesome-icon v-else size="2x" icon="user" :style="{ color: 'white' }"></font-awesome-icon>
-              </router-link>
-            </div>
-            <div class="navigation-header-part">
-              <router-link to="/cart" aria-label="Cart">
-                <font-awesome-icon v-if="isMobile" icon="shopping-cart" :style="{ color: 'white' }"></font-awesome-icon>
-                <font-awesome-icon v-else size="2x" icon="shopping-cart" :style="{ color: 'white' }"></font-awesome-icon>
-                <span class="cart-total-length">{{ cartTotalLength }}</span>
-              </router-link>
-            </div>
-          </div>
-
         </div>
+      </div>
 
-    </nav>
+      <div class="blog-header">
+        <router-link to="/blog" class="btn-w-effect" aria-label="Blog">
+          <font-awesome-icon v-if="isMobile" icon="blog"></font-awesome-icon>
+          <font-awesome-icon v-else size="2x" icon="blog"></font-awesome-icon>
+          <span>BLOG</span>
+          <span class="line-1"></span>
+          <span class="line-2"></span>
+          <span class="line-3"></span>
+          <span class="line-4"></span>
+        </router-link>
+      </div>
+      <div class="search-header">
+        <div class="search-buttons-container">
+          <input v-model="searchQuery" @keyup.enter='searchPerform' class="form-control search-form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
+          <button class="btn" @click="searchPerform">
+            <font-awesome-icon icon="search" size="lg" :style="{ color: '#3b3b3b' }"></font-awesome-icon>
+          </button>
+        </div>
+      </div>
+      <div class="navigation-header">
+        <div class="navigation-header-part">
+          <router-link v-if="this.isAuthenticated" :to="{ name: 'Favourites' }" aria-label="Favourites">
+            <font-awesome-icon v-if="isMobile" icon="heart" :style="{ color: '#f80000e0' }"></font-awesome-icon>
+            <font-awesome-icon v-else size="2x" icon="heart" :style="{ color: '#f80000e0' }"></font-awesome-icon>
+          </router-link>
+          <router-link v-else to="/log-in" aria-label="Favourites">
+            <font-awesome-icon v-if="isMobile" icon="heart" :style="{ color: 'white' }"></font-awesome-icon>
+            <font-awesome-icon v-else size="2x" icon="heart" :style="{ color: 'white' }"></font-awesome-icon>
+          </router-link>
+        </div>
+        <div class="navigation-header-part">
+          <router-link v-if="this.isAuthenticated" to="/my-account" aria-label="Account">
+            <font-awesome-icon v-if="isMobile" icon="user" :style="{ color: '#f80000e0' }"></font-awesome-icon>
+            <font-awesome-icon v-else size="2x" icon="user" :style="{ color: '#f80000e0' }"></font-awesome-icon>
+          </router-link>
+          <router-link v-else to="/log-in" aria-label="Account">
+            <font-awesome-icon v-if="isMobile" icon="user" :style="{ color: 'white' }"></font-awesome-icon>
+            <font-awesome-icon v-else size="2x" icon="user" :style="{ color: 'white' }"></font-awesome-icon>
+          </router-link>
+        </div>
+        <div class="navigation-header-part">
+          <router-link to="/cart" aria-label="Cart">
+            <font-awesome-icon v-if="isMobile" icon="shopping-cart" :style="{ color: 'white' }"></font-awesome-icon>
+            <font-awesome-icon v-else size="2x" icon="shopping-cart" :style="{ color: 'white' }"></font-awesome-icon>
+            <span class="cart-total-length">{{ cartTotalLength }}</span>
+          </router-link>
+        </div>
+      </div>
+    </div>
 
+<!--    <transition name="fade">-->
+      <NavbarCategories v-if="categoriesTreeData && Object.keys(categoriesTreeData).length > 0 && !this.navbarMenuHidden"
+                        :categoriesTree="categoriesTreeData"
+                        :mainToggleButton="this.$refs.mainToggleButton"
+                        :navbarProductsButton="this.$refs.navbarProductsButton"
+      />
+<!--    </transition>-->
+  </nav>
 
 </template>
 
@@ -75,8 +87,8 @@
 import store from "@/store"
 import router from '@/routes'
 import { Options, Vue } from "vue-class-component"
+import CategoryModel from "@/state/category/CategoryModel"
 import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
-import CategoryModel from "@/state/category/CategoryModel";
 
 @Options({
   name: "Navbar",
@@ -84,7 +96,7 @@ import CategoryModel from "@/state/category/CategoryModel";
     NavbarCategories
   },
   props: {
-    showMobileMenu: {
+    modal: {
       type: Boolean,
       default: false
     },
@@ -93,7 +105,16 @@ import CategoryModel from "@/state/category/CategoryModel";
 })
 export default class Navbar extends Vue {
   searchQuery: string = ''
-  public showMobileMenu = false
+  public modal = false
+
+  $refs!: {
+    mainToggleButton: HTMLElement
+    navbarProductsButton: HTMLElement
+  }
+
+  get navbarMenuHidden(): boolean {
+    return store.getters['app/getNavbarMenuHidden']
+  }
 
   get isMobile(): boolean {
     return store.getters['app/isMobile']
@@ -111,6 +132,13 @@ export default class Navbar extends Vue {
     return store.getters['user/data/getIsAuthenticated']
   }
 
+  public menuToggle(): void {
+    this.$refs.mainToggleButton.classList.toggle('opened');
+    this.$refs.mainToggleButton.setAttribute('aria-expanded', this.$refs.mainToggleButton.classList.contains('opened') as unknown as string)
+
+    store.commit('app/setNavbarMenuHidden', !this.navbarMenuHidden)
+  }
+
   async searchPerform(): Promise<void> {
     await store.commit('pagination/unsetResults')
     await store.commit('pagination/setCurrentQuery', this.searchQuery)
@@ -123,7 +151,7 @@ export default class Navbar extends Vue {
 <style lang="scss" scoped>
   .main-navbar{
     padding: 0!important;
-    background-color: #080808;
+    background-color: $primary-color-2;
   }
   .btn-w-effect {
     position: relative;
@@ -194,25 +222,6 @@ export default class Navbar extends Vue {
     right: 0;
     bottom: 0;
   }
-  .preheadcust {
-    background-color: #191919;
-    text-align: center;
-    font-size: 14px;
-    color: $primary-color-4!important;
-    p {
-      color: $primary-color-4;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      margin: 0;
-    }
-    a {
-      color: $primary-color-4;
-      font-weight: 700;
-      span {
-        color: $primary-color-4;
-      }
-    }
-  }
   .grid-header {
     display: grid;
     grid-template-columns: 18% 15% 13% 34% 20%;
@@ -240,21 +249,21 @@ export default class Navbar extends Vue {
     &:hover {
       cursor: pointer;
     }
-    a {
+    div {
       &.products-a {
         width: 100%;
         height: 100%;
         display: grid;
+        grid-template-columns: 1fr 1fr;
         justify-content: center;
         align-items: center;
         span.title {
-          color: white;
+          color: $primary-color-4;
         }
       }
     }
     span.title {
       position: relative;
-      left: 15px;
       font-weight: 500;
       @media screen and (max-width: 1420px) {
         font-size: 12px;
@@ -266,54 +275,50 @@ export default class Navbar extends Vue {
         font-size: 8px;
       }
     }
-    span.burgermain {
-      position: absolute;
-      width: 30px;
-      height: 23px;
-      left: 15px;
-      background-repeat: no-repeat;
-      background-position: center center;
+
+    button.menu {
+      background-color: transparent;
+      border: none;
       cursor: pointer;
-      border-bottom: 2px solid $primary-color-4;
-      transform-origin: center;
-      transition: all 0.3s ease-in-out;
-      @media screen and (max-width: 1420px) {
-        width: 30px;
-        height: 20px;
-      }
-      @media screen and (max-width: 1200px) {
-        width: 24px;
-        height: 15px;
-      }
-      @media screen and (max-width: 990px) {
-        width: 16px;
-        height: 13px;
-      }
-      @media screen and (max-width: 767px) {
-        width: 12px;
-        height: 9px;
-      }
-      &:before{
-        content: "";
-        height: 2px;
-        left: 0;
-        right: 0;
-        top: 0;
-        position: absolute;
-        background: $primary-color-4;
-        transition: all 0.3s ease-in-out;
-      }
-      &:after{
-        content: "";
-        height: 2px;
-        left: 0;
-        right: 0;
-        top: 50%;
-        position: absolute;
-        transition: all 0.3s ease-in-out;
-        background: $primary-color-4;
-      }
+      padding: 0;
     }
+    .line {
+      fill: none;
+      stroke: white;
+      stroke-width: 6;
+      transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+      stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    }
+    .line-one {
+      stroke-dasharray: 60 207;
+      stroke-width: 6;
+    }
+    .line-two {
+      stroke-dasharray: 60 60;
+      stroke-width: 6;
+    }
+    .line-three {
+      stroke-dasharray: 60 207;
+      stroke-width: 6;
+    }
+    .opened .line-one {
+      stroke-dasharray: 90 207;
+      stroke-dashoffset: -134;
+      stroke-width: 6;
+    }
+    .opened .line-two {
+      stroke-dasharray: 1 60;
+      stroke-dashoffset: -30;
+      stroke-width: 6;
+    }
+    .opened .line-three {
+      stroke-dasharray: 90 207;
+      stroke-dashoffset: -134;
+      stroke-width: 6;
+    }
+
+
   }
   .blog-header {
     position: relative;
@@ -346,14 +351,41 @@ export default class Navbar extends Vue {
   }
   .search-header {
     position: relative;
-    color: $primary-color-4;
+    color: white;
     display: grid;
-    grid-template-columns: 50% 25%;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
+    .search-buttons-container {
+      display: grid;
+      grid-template-columns: auto 25%;
+      background: white;
+      border-radius: 10px;
+      justify-self: center;
+      align-self: center;
+      &:hover {
+        border: 1px solid $primary-color-1;
+        border-radius: 10px;
+      }
+      input:focus-visible {
+        outline: unset!important;
+      }
+      .search-form-control {
+        border: unset;
+        border-radius: unset;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+      }
+      .btn {
+        border-radius: unset;
+        padding: 0 12px;
+        margin-top: 6px;
+        margin-bottom: 6px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        background-color: white;
+        border-left: 2px solid #e8e8e8;
+      }
+    }
+
+
   }
   .navigation-header {
     position: relative;
@@ -457,6 +489,52 @@ export default class Navbar extends Vue {
       right: 100%;
     }
   }
+
+  .navbar-categories-loading {
+
+  }
+
+  .wrapper {
+    z-index: 20;
+    pointer-events: none;
+    display: grid;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .wrapper-cell {
+    display: flex;
+  }
+
+  // Animation
+  @keyframes placeHolderShimmer{
+    0%{
+      background-position: -450px 0
+    }
+    100%{
+      background-position: 450px 0
+    }
+  }
+
+  .animated-background {
+    animation-duration: 1.25s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: linear-gradient(to right, #c1c1c1 8%, #d6d6d6 18%, #d0d0d0 33%);
+    background-size: 800px 104px;
+    height: 96px;
+    position: relative;
+  }
+
+  // Page Elements
+  .content {
+    height: auto;
+    @extend .animated-background;
+  }
+
+
 
 </style>
 

@@ -4,13 +4,13 @@
              :can-cancel="false"
              :is-full-page="true"
              :loader="'dots'"
-             :color="'#F80000'"
+             :color="'#f80000e0'"
              :background-color="'#000000'"
+             id="mainLoader"
 
     />
 
-    <Navbar v-bind:showMobileMenu="showMobileMenu"
-            v-bind:cartTotalLength="cartTotalLength"/>
+    <Header/>
 
     <section class="main-section">
       <router-view/>
@@ -210,15 +210,17 @@ import Loading from 'vue-loading-overlay'
 import packageMeta from '@/../package.json'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import {Options, Vue} from "vue-class-component"
-import Navbar from '@/components/Navbar/Navbar.vue'
+import Header from '@/components/Navbar/Header.vue'
 import UserDetailsModel from "@/state/user/data/UserDetailsModel"
 import ProductReviewModel from "@/state/product/review/ProductReviewModel"
+import CountryModel from "@/state/country/CountryModel";
+import RegionsModel from "@/state/country/RegionsModel";
 
 @Options({
   name: "App",
   components: {
     Loading,
-    Navbar
+    Header
   }
 })
 export default class App extends Vue {
@@ -266,6 +268,14 @@ export default class App extends Vue {
     return store.getters['user/order/getUserOrders']
   }
 
+  get availableCountries(): CountryModel {
+    return store.getters['country/getCountries']
+  }
+
+  get regionsBasedOnAlpha(): RegionsModel {
+    return store.getters['country/getRegionsBasedOnAlpha']
+  }
+
   get cartData(): {} {
     return store.getters['cart/getCart']
   }
@@ -298,7 +308,8 @@ export default class App extends Vue {
     if (this.isAuthenticated) {
       await Promise.all([
         store.dispatch('user/data/userDataFromRemote'),
-        store.dispatch('user/order/userOrdersFromRemote')
+        store.dispatch('user/order/userOrdersFromRemote'),
+        store.dispatch('country/getCountriesFromRemote'),
       ])
     }
   }
@@ -307,9 +318,12 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
+  .vld-overlay {
+    pointer-events: none;
+  }
   .btn-product-card {
     color: black!important;
-    background-color: white!important;
+    background-color: $primary-color-4!important;
     border-color: #191919!important;
   }
    .form-check-input-main {
@@ -320,6 +334,11 @@ export default class App extends Vue {
    }
   .router-link-active {
     color: $primary-color-1!important;
+  }
+  .navbar-menu-grid-head {
+    .router-link-active {
+      background-color: $primary-color-1;
+    }
   }
   .cardEffect {
     &:hover {
@@ -415,13 +434,6 @@ export default class App extends Vue {
       background-color: $primary-color-1!important;
       border: 1px solid $primary-color-4!important;
     }
-    &:hover {
-      box-shadow: 0 0 5px 2px #757575;
-      transform: scale(1.005);
-      svg {
-        transform: scale(1.1);
-      }
-    }
   }
 
   .main-section{
@@ -434,7 +446,7 @@ export default class App extends Vue {
     background-color: #191919;
   }
   .main-copyright{
-    background-color: #080808;
+    background-color: $primary-color-2;
     text-align: center;
     padding: 5px;
     span {

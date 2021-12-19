@@ -8,7 +8,14 @@ const toast = useToast()
 // @TODO should i make routes for every app ?
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
-    routes
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { top: 0 }
+        }
+    }
 })
 
 router.beforeEach((to, from, next) => {

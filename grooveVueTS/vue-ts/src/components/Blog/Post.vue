@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5 mb-5" v-if="post && Object.keys(post).length > 0">
+  <div class="container mt-8 mb-5" v-if="post && Object.keys(post).length > 0">
     <div class="card mb-3">
       <img class="img-fluid" v-bind:src="axiosBaseUrl + '/static/media/' + post.image" :alt="post.title">
       <div class="card-body">

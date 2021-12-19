@@ -47,10 +47,10 @@ export default class ProductModule
 
 	@Action
 	async productFromRemote(): Promise<void> {
-		let category_id = router.currentRoute.value.params.category_id
+		let category_slug = router.currentRoute.value.params.category_slug
 		let product_slug = router.currentRoute.value.params.product_slug
 
-		await api.get(`products/${product_slug}/${category_id}`)
+		await api.get(`products/${category_slug}/${product_slug}`)
 			.then((response: ResponseData) => {
 				const data = response.data
 				let product = new ProductModel(data)
@@ -77,11 +77,11 @@ export default class ProductModule
 
 	@Action
 	async updateProductHits(): Promise<void> {
-		let category_id = router.currentRoute.value.params.category_id
+		let category_slug = router.currentRoute.value.params.category_slug
 		let product_slug = router.currentRoute.value.params.product_slug
 
 		if (this.product){
-			await api.patch(`products/${product_slug}/${category_id}/`)
+			await api.patch(`products/${category_slug}/${product_slug}/`)
 				.catch((e: Error) => {
 					console.log(e)
 				})

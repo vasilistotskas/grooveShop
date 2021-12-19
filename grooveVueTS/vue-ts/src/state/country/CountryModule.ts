@@ -16,18 +16,15 @@ export default class CountryModule
     regionsBasedOnAlpha: Array<RegionsModel> = []
     selectedCountry: {} = CountryModel
 
-    get getCountries(): object { return this.countries}
-    get getRegionsBasedOnAlpha(): object { return this.regionsBasedOnAlpha}
+    get getCountries(): object {
+        return this.countries
+    }
+    get getRegionsBasedOnAlpha(): object {
+        return this.regionsBasedOnAlpha
+    }
     get getSelectedCountry(): CountryModel {
-        const IsAuthenticated: boolean = store.getters['user/data/getIsAuthenticated']
-        if(IsAuthenticated) {
-            const userDetails: UserDetailsModel = store.getters['user/data/getUserData']
-            // check if user has country saved in his profile
-            if(userDetails.country){
-                return <CountryModel>find(this.countries, function (o) {
-                    return o.alpha_2 = userDetails.country
-                })
-            }
+        const isAuthenticated: boolean = store.getters['user/data/getIsAuthenticated']
+        if(isAuthenticated) {
             return <CountryModel>this.selectedCountry
         }
         return new CountryModel
@@ -48,6 +45,12 @@ export default class CountryModule
         this.selectedCountry = country
     }
 
+    @Mutation
+    unsetUserCountryData(): void {
+        this.regionsBasedOnAlpha = []
+        this.selectedCountry = {}
+    }
+
     @Action
     async getCountriesFromRemote(): Promise<void> {
         await api.get('countries/')
@@ -61,14 +64,17 @@ export default class CountryModule
     }
 
     @Action
-    findRegionsBasedOnAlphaForLoggedCustomer(): void {
-        const country = this.context.getters['getSelectedCountry']
-        // check if user has country saved in his profile
-        if(country && Object.keys(country).length > 0) {
-            this.context.commit('setSelectedCountry', country)
-            this.context.commit('setRegionsBasedOnAlpha', country.regions)
+    async findRegionsBasedOnAlphaForLoggedCustomer(): Promise<void> {
+        const userDetails: UserDetailsModel = store.getters['user/data/getUserData']
+        if(userDetails.country){
+            let result = this.countries.find(obj => {
+                return obj.alpha_2 === userDetails.country
+            })
+            if(result) {
+                this.context.commit('setSelectedCountry', result)
+                this.context.commit('setRegionsBasedOnAlpha', result.regions)
+            }
         }
-
     }
 
     @Action

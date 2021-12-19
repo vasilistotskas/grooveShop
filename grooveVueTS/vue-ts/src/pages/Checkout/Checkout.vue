@@ -1,154 +1,144 @@
 <template>
-  <div class="page-checkout container mt-3 mb-5">
-    <div class="row">
-      <div class="col-12">
-        <h1 class="title mb-3">Checkout</h1>
+  <div class="page-checkout container mt-8 mb-5 ">
+    <div class="checkout-grid-container content-min-height">
+      <div class="checkout-grid-title">
+        <h1 class="title">Checkout</h1>
       </div>
 
-      <div class="card mb-3">
-        <div class="card-body">
-          <table class="table is-fullwidth">
-            <thead>
-            <tr>
-              <th>Product</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Total</th>
-            </tr>
-            </thead>
+      <div class="checkout-grid-head">
 
-            <tbody>
-            <tr
-                v-for="item in cart"
-                v-bind:key="item.product.id">
-              <td>{{ item.product.name }}</td>
-              <td>${{ item.product.price }}</td>
-              <td>{{ item.quantity }}</td>
-              <td>${{ itemTotal(item).toFixed(2) }}</td>
-            </tr>
-            </tbody>
+          <div class="checkout-grid-head-part-one">
+            <span>Product</span>
+            <span>Price</span>
+            <span>Quantity</span>
+            <span>Total</span>
+          </div>
 
-            <tfoot class="border-bottom-0">
-            <tr>
-              <td colspan="2" class="border-bottom-0">Total</td>
-              <td class="border-bottom-0">{{ cartTotalLength }}</td>
-              <td class="border-bottom-0">${{ cartTotalPrice.toFixed(2) }}</td>
-            </tr>
-            </tfoot>
-          </table>
-        </div>
+          <div class="checkout-grid-head-part-two"
+              v-for="item in cart"
+              v-bind:key="item.product.id">
+            <span>{{ item.product.name }}</span>
+            <span>${{ item.product.price }}</span>
+            <span>{{ item.quantity }}</span>
+            <span>${{ itemTotal(item).toFixed(2) }}</span>
+          </div>
+
+          <div class="checkout-grid-head-part-three">
+              <span>Total</span>
+              <span>{{ cartTotalLength }}</span>
+              <span>${{ cartTotalPrice.toFixed(2) }}</span>
+          </div>
+
       </div>
 
-      <div class="col-12 card shipping-details-card">
-        <div class="card-body">
-          <h2 class="subtitle">Shipping details</h2>
+      <div class="checkout-grid-content">
+        <h2 class="subtitle">Shipping details</h2>
+        <p class="has-text-grey mb-4">* All fields are required</p>
+        <FormProvider
+            id="userDetailsForm"
+            name="userDetailsForm"
+            title=""
+            :formClass="'form-class checkout-grid-form'"
+            :form="formManager.form"
+            :errors="formManager.errors"
+            @submit="handleSubmit()">
 
-          <p class="has-text-grey mb-4">* All fields are required</p>
-
-          <FormProvider
-              id="userDetailsForm"
-              name="userDetailsForm"
-              title=""
-              :formClass="'form-class'"
-              :form="formManager.form"
-              :errors="formManager.errors"
-              @submit="handleSubmit()">
-            <div class="row">
-              <div class="col-6">
-                <div class="first_name col-12 mb-3">
-                  <label :for="formManager.form.first_name.$uid" class="label">First Name</label>
-                  <BaseInput
-                      v-model="formManager.form.first_name.$value"
-                      :has-error="formManager.form.first_name.$hasError"
-                      :validating="formManager.form.first_name.$validating"
-                      :placeholder="customerDetails.first_name"
-                      :id="formManager.form.first_name.$uid"/>
-                  <ValidationErrors
-                      class="validation-errros"
-                      :errors="formManager.form.first_name.$errors"/>
-                </div>
-
-                <div class="last_name col-12 mb-3">
-                  <label :for="formManager.form.last_name.$uid" class="label">Last Name</label>
-                  <BaseInput
-                      v-model="formManager.form.last_name.$value"
-                      :has-error="formManager.form.last_name.$hasError"
-                      :validating="formManager.form.last_name.$validating"
-                      :placeholder="customerDetails.last_name"
-                      :id="formManager.form.last_name.$uid"/>
-                  <ValidationErrors
-                      class="validation-errros"
-                      :errors="formManager.form.last_name.$errors"/>
-                </div>
-
-                <div class="last_name col-12 mb-3">
-                  <label :for="formManager.form.email.$uid" class="label">Email</label>
-                  <BaseInput
-                      v-model="formManager.form.email.$value"
-                      :has-error="formManager.form.email.$hasError"
-                      :validating="formManager.form.email.$validating"
-                      :placeholder="customerDetails.email"
-                      :id="formManager.form.email.$uid"/>
-                  <ValidationErrors
-                      class="validation-errros"
-                      :errors="formManager.form.email.$errors"/>
-                </div>
-
-                <div class="last_name col-12 mb-3">
-                  <label :for="formManager.form.phone.$uid" class="label">Phone</label>
-                  <BaseInput
-                      v-model="formManager.form.phone.$value"
-                      :has-error="formManager.form.phone.$hasError"
-                      :validating="formManager.form.phone.$validating"
-                      :placeholder="customerDetails.phone"
-                      :id="formManager.form.phone.$uid"/>
-                  <ValidationErrors
-                      class="validation-errros"
-                      :errors="formManager.form.phone.$errors"/>
-                </div>
-
+            <div class="checkout-grid-form-part-left">
+              <div class="first_name col-12 mb-3">
+                <label :for="formManager.form.first_name.$uid" class="label">First Name</label>
+                <BaseInput
+                    v-model="formManager.form.first_name.$value"
+                    :has-error="formManager.form.first_name.$hasError"
+                    :validating="formManager.form.first_name.$validating"
+                    :placeholder="customerDetails.first_name"
+                    :id="formManager.form.first_name.$uid"/>
+                <ValidationErrors
+                    class="validation-errros"
+                    :errors="formManager.form.first_name.$errors"/>
               </div>
 
-              <div class="col-6">
-                <div class="last_name col-12 mb-3">
-                  <label :for="formManager.form.address.$uid" class="label">Address</label>
-                  <BaseInput
-                      v-model="formManager.form.address.$value"
-                      :has-error="formManager.form.address.$hasError"
-                      :validating="formManager.form.address.$validating"
-                      :placeholder="customerDetails.address"
-                      :id="formManager.form.address.$uid"/>
-                  <ValidationErrors
-                      class="validation-errros"
-                      :errors="formManager.form.address.$errors"/>
-                </div>
+              <div class="last_name col-12 mb-3">
+                <label :for="formManager.form.last_name.$uid" class="label">Last Name</label>
+                <BaseInput
+                    v-model="formManager.form.last_name.$value"
+                    :has-error="formManager.form.last_name.$hasError"
+                    :validating="formManager.form.last_name.$validating"
+                    :placeholder="customerDetails.last_name"
+                    :id="formManager.form.last_name.$uid"/>
+                <ValidationErrors
+                    class="validation-errros"
+                    :errors="formManager.form.last_name.$errors"/>
+              </div>
 
-                <div class="last_name col-12 mb-3">
-                  <label :for="formManager.form.zipcode.$uid" class="label">Zipcode</label>
-                  <BaseInput
-                      v-model="formManager.form.zipcode.$value"
-                      :has-error="formManager.form.zipcode.$hasError"
-                      :validating="formManager.form.zipcode.$validating"
-                      :placeholder="customerDetails.zipcode"
-                      :id="formManager.form.zipcode.$uid"/>
-                  <ValidationErrors
-                      class="validation-errros"
-                      :errors="formManager.form.zipcode.$errors"/>
-                </div>
+              <div class="last_name col-12 mb-3">
+                <label :for="formManager.form.email.$uid" class="label">Email</label>
+                <BaseInput
+                    v-model="formManager.form.email.$value"
+                    :has-error="formManager.form.email.$hasError"
+                    :validating="formManager.form.email.$validating"
+                    :placeholder="customerDetails.email"
+                    :id="formManager.form.email.$uid"/>
+                <ValidationErrors
+                    class="validation-errros"
+                    :errors="formManager.form.email.$errors"/>
+              </div>
 
-                <div class="last_name col-12 mb-3">
-                  <label :for="formManager.form.place.$uid" class="label">Place</label>
-                  <BaseInput
-                      v-model="formManager.form.place.$value"
-                      :has-error="formManager.form.place.$hasError"
-                      :validating="formManager.form.place.$validating"
-                      :placeholder="customerDetails.place"
-                      :id="formManager.form.place.$uid"/>
-                  <ValidationErrors
-                      class="validation-errros"
-                      :errors="formManager.form.place.$errors"/>
-                </div>
+              <div class="last_name col-12 mb-3">
+                <label :for="formManager.form.phone.$uid" class="label">Phone</label>
+                <BaseInput
+                    v-model="formManager.form.phone.$value"
+                    :has-error="formManager.form.phone.$hasError"
+                    :validating="formManager.form.phone.$validating"
+                    :placeholder="customerDetails.phone"
+                    :id="formManager.form.phone.$uid"/>
+                <ValidationErrors
+                    class="validation-errros"
+                    :errors="formManager.form.phone.$errors"/>
+              </div>
 
+            </div>
+
+            <div class="checkout-grid-form-part-right">
+              <div class="last_name col-12 mb-3">
+                <label :for="formManager.form.address.$uid" class="label">Address</label>
+                <BaseInput
+                    v-model="formManager.form.address.$value"
+                    :has-error="formManager.form.address.$hasError"
+                    :validating="formManager.form.address.$validating"
+                    :placeholder="customerDetails.address"
+                    :id="formManager.form.address.$uid"/>
+                <ValidationErrors
+                    class="validation-errros"
+                    :errors="formManager.form.address.$errors"/>
+              </div>
+
+              <div class="last_name col-12 mb-3">
+                <label :for="formManager.form.zipcode.$uid" class="label">Zipcode</label>
+                <BaseInput
+                    v-model="formManager.form.zipcode.$value"
+                    :has-error="formManager.form.zipcode.$hasError"
+                    :validating="formManager.form.zipcode.$validating"
+                    :placeholder="customerDetails.zipcode"
+                    :id="formManager.form.zipcode.$uid"/>
+                <ValidationErrors
+                    class="validation-errros"
+                    :errors="formManager.form.zipcode.$errors"/>
+              </div>
+
+              <div class="last_name col-12 mb-3">
+                <label :for="formManager.form.place.$uid" class="label">Place</label>
+                <BaseInput
+                    v-model="formManager.form.place.$value"
+                    :has-error="formManager.form.place.$hasError"
+                    :validating="formManager.form.place.$validating"
+                    :placeholder="customerDetails.place"
+                    :id="formManager.form.place.$uid"/>
+                <ValidationErrors
+                    class="validation-errros"
+                    :errors="formManager.form.place.$errors"/>
+              </div>
+
+              <div class="checkout-grid-country-region">
                 <div class="form-outline">
                   <label for="inputCountry" class="form-label">Country</label>
                   <select name="country" id="inputCountry" class="form-select" v-model="customerDetails.country" v-on:change="restRegions">
@@ -174,16 +164,17 @@
                     </option>
                   </select>
                 </div>
-
               </div>
-            </div>
-          </FormProvider>
 
-          <div ref="stripleElement" id="stripe-card" class="mb-5 mt-3"></div>
-          <template v-if="cartTotalLength">
-            <button type="button" class="btn btn-success float-end" @click="submitForm">Pay with Stripe</button>
-          </template>
-        </div>
+            </div>
+
+        </FormProvider>
+
+        <div ref="stripleElement" id="stripe-card" class="mb-5 mt-3"></div>
+        <template v-if="cartTotalLength">
+          <button type="button" class="btn btn-outline-primary" @click="submitForm">Pay with Stripe</button>
+        </template>
+
       </div>
     </div>
   </div>
@@ -310,10 +301,6 @@ export default class Checkout extends Vue {
     return store.getters['country/getRegionsBasedOnAlpha']
   }
 
-  get selectedCountry(): CountryModel {
-    return store.getters['country/getSelectedCountry']
-  }
-
   get cart(): Array<CartItemModel> {
     return store.getters['cart/getCart']
   }
@@ -352,10 +339,7 @@ export default class Checkout extends Vue {
   async mounted(): Promise<void> {
     document.title = 'Checkout'
     if(this.isAuthenticated){
-      await Promise.all([
-        await store.dispatch('user/data/userDataFromRemote'),
-        store.dispatch('country/findRegionsBasedOnAlphaForLoggedCustomer')
-      ])
+      await store.dispatch('user/data/userDataFromRemote')
     }
     this.customerDetailsInitialize()
   }
@@ -473,7 +457,59 @@ export default class Checkout extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.shipping-details-card{
-  color: #121212;
-}
+  .checkout-grid-container {
+    display: grid;
+    grid-template-rows: minmax(47px, 1fr);
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px 30px 30px;
+    gap: 25px;
+    a, h2 {
+      color: $primary-color-2;
+    }
+    .checkout-grid-head {
+      display: grid;
+      gap: 10px;
+      &-part {
+        &-two, &-three {
+          background-color: #f8f8ff;
+          border-radius: 5px;
+          align-items: center;
+          justify-items: center;
+          padding: 5px;
+        }
+        &-one {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          border-radius: 5px;
+          align-items: center;
+          justify-items: center;
+          padding: 5px;
+          font-size: 20px;
+        }
+        &-two {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+        }
+        &-three {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+    }
+    .checkout-grid-content {
+      display: grid;
+      button {
+        justify-self: end;
+        align-self: end;
+      }
+    }
+    .checkout-grid-country-region {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      justify-items: center;
+    }
+  }
+
 </style>

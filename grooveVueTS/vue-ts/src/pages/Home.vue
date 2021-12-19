@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="container mt-5 mb-5">
+    <div class="container mt-9 mb-5">
       <div class="home-top-grid-content">
         <swiper v-if="homepageSlider[0] && Object.keys(homepageSlider[0]).length > 0"
             :style="mainSliderStyle"
@@ -39,7 +39,7 @@
               </swiper-slide>
 
               <swiper-slide v-for="slide in homepageSlider[1].slides">
-                <img class="img-fluid" width="425" height="250" v-bind:src="axiosBaseUrl + slide.image" :alt="slide.title ? slide.title : 'no-alt'">
+                <img class="img-fluid" width="500" height="275" v-bind:src="axiosBaseUrl + slide.image" :alt="slide.title ? slide.title : 'no-alt'">
               </swiper-slide>
 
             </swiper>
@@ -58,7 +58,7 @@
               </swiper-slide>
 
               <swiper-slide v-for="slide in homepageSlider[2].slides">
-                <img class="img-fluid" width="425" height="250" v-bind:src="axiosBaseUrl + slide.image" :alt="slide.title ? slide.title : 'no-alt'">
+                <img class="img-fluid" width="500" height="275" v-bind:src="axiosBaseUrl + slide.image" :alt="slide.title ? slide.title : 'no-alt'">
               </swiper-slide>
             </swiper>
           </div>
@@ -70,19 +70,22 @@
       <div class="home-usp-grid-content mb-5">
 
         <div class="grid-usp-item">
-          <font-awesome-icon :icon="['fa', 'phone']" size="3x" :style="{ color: '#080808' }"></font-awesome-icon>
+          <font-awesome-icon v-if="isMobile" :icon="['fa', 'phone']" :style="{ color: '#080808' }"></font-awesome-icon>
+          <font-awesome-icon v-else :icon="['fa', 'phone']" size="3x" :style="{ color: '#080808' }"></font-awesome-icon>
           <span>Lorem Ipsum
             <span>Lorem Ipsum</span>
           </span>
         </div>
         <div class="grid-usp-item">
-          <font-awesome-icon :icon="['fa', 'envelope']" size="3x" :style="{ color: '#080808' }"></font-awesome-icon>
+          <font-awesome-icon v-if="isMobile" :icon="['fa', 'envelope']" :style="{ color: '#080808' }"></font-awesome-icon>
+          <font-awesome-icon v-else :icon="['fa', 'envelope']" size="3x" :style="{ color: '#080808' }"></font-awesome-icon>
           <span>Lorem Ipsum
             <span>Lorem Ipsum</span>
           </span>
         </div>
         <div class="grid-usp-item">
-          <font-awesome-icon :icon="['fa', 'comment']" size="3x" :style="{ color: '#080808' }"></font-awesome-icon>
+          <font-awesome-icon v-if="isMobile" :icon="['fa', 'comment']" :style="{ color: '#080808' }"></font-awesome-icon>
+          <font-awesome-icon v-else :icon="['fa', 'comment']" size="3x" :style="{ color: '#080808' }"></font-awesome-icon>
           <span>Lorem Ipsum
             <span>Lorem Ipsum</span>
           </span>
@@ -138,6 +141,10 @@ export default class Home extends Vue {
   mainSliderStyle = {
     '--swiper-navigation-color': '#fff',
     '--swiper-pagination-color': '#fff'
+  }
+
+  get isMobile(): boolean {
+    return store.getters['app/isMobile']
   }
 
   get axiosBaseUrl(): boolean {
@@ -217,12 +224,24 @@ export default class Home extends Vue {
           font-size: 12px;
           font-weight: 300;
         }
+        @media screen and (max-width: 767px) {
+          font-size: 14px;
+          &:first-child {
+            font-size: 10px;
+          }
+        }
       }
     }
   }
   .home-top-grid-content {
     display: grid;
-    grid-template-columns: 65% 35%;
+    grid-template-columns: 61.5% 35%;
+    gap: 45px;
+    @media screen and (max-width: 767px){
+      gap: 10px;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+    }
   }
   .grid-item-swipper {
     border-radius: 8px;
@@ -239,24 +258,51 @@ export default class Home extends Vue {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
     overflow: hidden;
-    max-height: 520px;
+    max-height: 575px;
     gap: 10px;
+    @media screen and (max-width: 767px) {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+    }
     .grid-item-content {
       position: relative;
-      height: 250px !important;
+      height: 275px !important;
       &-one {
         .swiper-container-initialized {
-          height: 250px !important;
-          width: 425px !important;
+          height: 275px !important;
+          width: 100%!important;
           margin: 0 auto;
-
+          @media screen and (max-width: 767px) {
+            height: 200px !important;
+            width: 300px !important;
+          }
+          @media screen and (max-width: 576px) {
+            height: 125px !important;
+            width: 175px !important;
+          }
+          @media screen and (max-width: 380px) {
+            height: 110px !important;
+            width: 125px !important;
+          }
         }
       }
       &-two {
         .swiper-container-initialized {
-          height: 250px !important;
-          width: 425px !important;
+          height: 275px !important;
+          width: 100%!important;
           margin: 0 auto;
+          @media screen and (max-width: 767px) {
+            height: 200px !important;
+            width: 300px !important;
+          }
+          @media screen and (max-width: 576px) {
+            height: 125px !important;
+            width: 175px !important;
+          }
+          @media screen and (max-width: 380px) {
+            height: 110px !important;
+            width: 125px !important;
+          }
         }
       }
     }

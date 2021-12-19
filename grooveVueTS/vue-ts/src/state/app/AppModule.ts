@@ -8,9 +8,14 @@ export default class AppModule
 {
     loading = false
     windowWidth  = window.innerWidth
+    navbarMenuHidden = true
 
     get getLoading(): boolean {
         return this.loading
+    }
+
+    get getNavbarMenuHidden(): boolean {
+        return this.navbarMenuHidden
     }
 
     get axiosBaseUrl(): string | undefined {
@@ -26,13 +31,18 @@ export default class AppModule
     }
 
     @Mutation
-    setWindowWidth(width: number): void {
-        this.windowWidth = width
+    setNavbarMenuHidden(shouldBeLoad: boolean): void {
+        this.navbarMenuHidden = shouldBeLoad
     }
 
     @Mutation
     setLoading(shouldBeLoad: boolean): void {
         this.loading = shouldBeLoad
+    }
+
+    @Mutation
+    setWindowWidth(width: number): void {
+        this.windowWidth = width
     }
 
     @Action

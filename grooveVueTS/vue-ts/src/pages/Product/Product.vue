@@ -1,6 +1,7 @@
 <template>
-  <div class="container">
-    <div class="product-page-grid-container mt-5 mb-5" v-if="product && Object.keys(product).length > 0">
+  <div class="container mt-7" v-if="product && Object.keys(product).length > 0">
+    <Breadcrumbs :routeParams="this.$route.params"></Breadcrumbs>
+    <div class="product-page-grid-container mb-5">
         <div class="product-page-grid-image">
           <figure
                   v-for="image in product.images"
@@ -77,6 +78,7 @@
 import store from '@/store'
 import { Options, Vue } from "vue-class-component"
 import ProductModel from "@/state/product/ProductModel"
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import ProductReviews from "@/components/Product/ProductReviews.vue"
 import FavouriteButton from '@/components/Product/FavouriteButton.vue'
 import ProductReviewModal from '@/modals/Product/ProductReviewModal.vue'
@@ -86,10 +88,11 @@ import ProductReviewModal from '@/modals/Product/ProductReviewModal.vue'
   components: {
     FavouriteButton,
     ProductReviewModal,
-    ProductReviews
+    ProductReviews,
+    Breadcrumbs
   },
   props: {
-    category_id: {
+    category_slug: {
       type: String
     },
     product_slug: {

@@ -8,11 +8,12 @@ from django.db.models.signals import post_save
 
 
 class Country(models.Model):
-    name = models.CharField(max_length=50)
-    alpha_2 = models.CharField(max_length=2, primary_key=True)
-    alpha_3 = models.CharField(max_length=3)
-    iso_cc = models.PositiveSmallIntegerField(blank=True, null=True)
-    phone_code = models.PositiveSmallIntegerField(blank=True, null=True)
+    name = models.CharField(max_length=50, unique=True)
+    alpha_2 = models.CharField(max_length=2, primary_key=True, unique=True)
+    alpha_3 = models.CharField(max_length=3, unique=True)
+    iso_cc = models.PositiveSmallIntegerField(blank=True, null=True, unique=True)
+    phone_code = models.PositiveSmallIntegerField(blank=True, null=True, unique=True)
+    image_flag = models.ImageField(blank=True, null=True, upload_to='uploads/country/')
 
     class Meta:
         verbose_name_plural = "Countries"
@@ -22,8 +23,8 @@ class Country(models.Model):
 
 
 class Region(models.Model):
-    name = models.CharField(max_length=100)
-    alpha = models.CharField(max_length=10, primary_key=True)
+    name = models.CharField(max_length=100, unique=True)
+    alpha = models.CharField(max_length=10, primary_key=True, unique=True)
     alpha_2 = models.ForeignKey(Country, on_delete=models.CASCADE)
 
     class Meta:
@@ -38,7 +39,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='userprofile', on_delete=models.CASCADE)
     first_name = models.CharField(max_length=20, blank=True, null=True)
     last_name = models.CharField(max_length=20, blank=True, null=True)
-    phone = models.PositiveIntegerField(blank=True, null=True)
+    phone = models.PositiveBigIntegerField(blank=True, null=True)
     email = models.CharField(max_length=50, blank=True, null=True)
     city = models.CharField(max_length=50, blank=True, null=True)
     zipcode = models.PositiveIntegerField(blank=True, null=True)

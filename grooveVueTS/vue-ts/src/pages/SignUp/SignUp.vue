@@ -1,5 +1,5 @@
 <template>
-  <div class="page-sign-up mt-5 mb-5">
+  <div class="page-sign-up mt-8 mb-5">
     <div class="container">
       <div class="col-12 col-md-4 mx-auto">
         <div class="card sign-up-card">
