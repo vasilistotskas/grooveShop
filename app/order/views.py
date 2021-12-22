@@ -2,7 +2,8 @@ import stripe
 from .models import Order
 from django.conf import settings
 from rest_framework.views import APIView
-from django.contrib.auth.models import User
+from django.conf import settings
+User = settings.AUTH_USER_MODEL
 from rest_framework.response import Response
 from .serializers import OrderSerializer, MyOrderSerializer
 from rest_framework import status, authentication, permissions

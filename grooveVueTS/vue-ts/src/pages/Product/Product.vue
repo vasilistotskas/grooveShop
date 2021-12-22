@@ -148,9 +148,6 @@ export default class ProductVue extends Vue {
   }
 
   async mounted(): Promise<void> {
-    // TODO breadcrumbs
-    console.log(this.$route.params)
-
     document.title = <string>this.$route.params.product_slug
 
     await Promise.all([

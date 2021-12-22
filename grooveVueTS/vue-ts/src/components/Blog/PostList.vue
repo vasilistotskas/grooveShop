@@ -30,7 +30,7 @@
 
 <script>
 import AuthorLink from '@/components/Blog/AuthorLink.vue'
-import store from "@/store";
+import store from "@/state";
 export default {
   name: 'PostList',
   components: {

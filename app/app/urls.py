@@ -19,6 +19,8 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from graphene_django.views import GraphQLView
 from django.views.decorators.csrf import csrf_exempt
+from django.urls import path, include, re_path
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),

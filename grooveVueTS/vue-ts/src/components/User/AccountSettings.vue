@@ -245,7 +245,7 @@ export default class AccountSettings extends Vue {
   submitButtonText: string = 'Update'
 
   get isAuthenticated(): boolean {
-    return store.getters['user/data/getIsAuthenticated']
+    return store.getters['auth/isAuthenticated']
   }
 
   get availableCountries(): CountryModel {
@@ -317,7 +317,7 @@ export default class AccountSettings extends Vue {
         country: this.userDetails.country,
         region: this.userDetails.region
       }
-      console.log(apiData)
+
       await store.dispatch('user/data/updateUserDetails', apiData)
 
     } catch (e) {

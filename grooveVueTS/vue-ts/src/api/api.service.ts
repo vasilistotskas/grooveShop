@@ -1,14 +1,14 @@
-import axios from 'axios'
 import store from '@/store'
 import qs from 'querystring'
-import { isEmpty, isObject, keys, each, isDate, isNull } from 'lodash'
+import session from './session'
 
 const baseUrl = '/api/v1'
+
 export default {
     alternativeToken: null,
 
     getUserToken(): string| null {
-        return this.alternativeToken || localStorage.getItem('token');
+        return this.alternativeToken || localStorage.getItem('TOKEN_STORAGE_KEY');
     },
 
     beforeRequest(): void {
@@ -21,7 +21,7 @@ export default {
 
     get: function(endpoint: string, data?: Record<string, string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]>): Promise<unknown> {
         this.beforeRequest()
-        return axios({
+        return session({
             url: `${baseUrl}/${endpoint}`,
             method: 'get',
             params: data,
@@ -33,7 +33,7 @@ export default {
 
     post: function(endpoint: string, data: object): Promise<unknown> {
         this.beforeRequest()
-        return axios({
+        return session({
             url: `${baseUrl}/${endpoint}`,
             method: 'post',
             data: data,
@@ -45,7 +45,7 @@ export default {
 
     put: function(endpoint: string, data: Record<string, string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]>): Promise<unknown> {
         this.beforeRequest()
-        return axios({
+        return session({
             url: `${baseUrl}/${endpoint}`,
             method: 'put',
             data: qs.stringify(data),
@@ -57,7 +57,7 @@ export default {
 
     patch: function(endpoint: string, data?: Record<string, string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]>): Promise<unknown> {
         this.beforeRequest()
-        return axios({
+        return session({
             url: `${baseUrl}/${endpoint}`,
             method: 'patch',
             data: data,
@@ -69,7 +69,7 @@ export default {
 
     delete: function(endpoint: string): Promise<unknown> {
         this.beforeRequest()
-        return axios({
+        return session({
             url: `${baseUrl}/${endpoint}`,
             method: 'delete',
             headers: {

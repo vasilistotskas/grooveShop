@@ -53,7 +53,7 @@ export default class ProductFavouriteModule
 
     @Action
     async toggleFavourite(product: ProductFavouriteModel): Promise<string | undefined> {
-        let IsAuthenticated: boolean = store.getters['user/data/getIsAuthenticated']
+        let IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
         if(IsAuthenticated){
             try {
                 if(!this.getStateIsCurrentProductInFavourites) {

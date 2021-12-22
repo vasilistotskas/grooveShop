@@ -19,15 +19,14 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    store.commit('user/data/initializeAuth')
-    const isAuthenticated = store.getters['user/data/getIsAuthenticated']
-
-    if (to.matched.some(record => record.meta.requireLogin) && !isAuthenticated) {
-        toast.error("You are not logged in")
-        next({name: 'LogIn', query: {to: to.path}});
-    } else {
-        next()
-    }
+    store.dispatch('auth/initialize').then(() => {
+        if (to.matched.some(record => record.meta.requireLogin) && !store.getters['auth/isAuthenticated']) {
+            toast.error("You are not logged in")
+            next({name: 'LogIn', query: {to: to.path}});
+        } else {
+            next()
+        }
+    })
 })
 
 export default router

@@ -10,18 +10,18 @@
                 title="Log In"
                 @submit="handleSubmit()">
               <div class="container">
-                <div class="name mb-3">
-                  <label :for="formManager.form.name.$uid" class="label mb-2">Name</label>
+                <div class="email mb-3">
+                  <label :for="formManager.form.email.$uid" class="label mb-2">Email</label>
                   <BaseInput
-                      v-model="formManager.form.name.$value"
-                      :has-error="formManager.form.name.$hasError"
-                      :validating="formManager.form.name.$validating"
-                      @blur="formManager.form.name.onBlur"
+                      v-model="formManager.form.email.$value"
+                      :has-error="formManager.form.email.$hasError"
+                      :validating="formManager.form.email.$validating"
+                      @blur="formManager.form.email.onBlur"
                       placeholder="Alice, Bob, Oscar"
-                      :id="formManager.form.name.$uid"/>
+                      :id="formManager.form.email.$uid"/>
                   <ValidationErrors
                       class="validation-errros"
-                      :errors="formManager.form.name.$errors"/>
+                      :errors="formManager.form.email.$errors"/>
                 </div>
                 <div class="password mb-4">
                   <label :for="formManager.form.password.$uid" class="label mb-2">Password</label>
@@ -46,11 +46,11 @@
                   <!-- Checkbox -->
                   <div class="form-check">
                     <input
-                      class="form-check-input form-check-input-main"
-                      type="checkbox"
-                      value=""
-                      id="form2Example3"
-                      checked/>
+                        class="form-check-input form-check-input-main"
+                        type="checkbox"
+                        value=""
+                        id="form2Example3"
+                        checked/>
                     <label class="form-check-label" for="form2Example3"> Remember me </label>
                   </div>
                 </div>
@@ -97,8 +97,8 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios'
 import store from '@/store'
+import session from '@/api/session'
 import { Options, Vue } from "vue-class-component"
 import { required } from "@/components/Form/Utils"
 import BaseInput from "@/components/Form/BaseInput.vue"
@@ -142,10 +142,10 @@ export default class LogIn extends Vue {
     add,
     remove
   } = useValidation({
-    name: {
+    email: {
       $value: "",
       $rules: [
-        required("Name is required")
+        required("Email is required")
       ]
     },
     password: {
@@ -161,16 +161,16 @@ export default class LogIn extends Vue {
   }
 
   handleSubmit = async () => {
-    axios.defaults.headers.common["Authorization"] = ""
+    session.defaults.headers.common["Authorization"] = ""
     localStorage.removeItem("token")
 
     try {
       const formData:any = await validateFields()
       const apiData = {
-        username: formData.name,
+        email: formData.email,
         password: formData.password
       }
-      await store.dispatch('user/userLogIn', apiData)
+      await store.dispatch('auth/login', apiData)
           .then((success: any) => {
             store.dispatch('user/data/userDataFromRemote')
           })
@@ -188,27 +188,27 @@ export default class LogIn extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  .login-card {
-    max-width: 500px;
-    display: block;
-    margin: 0 auto;
-    .card-body {
-      grid-template-rows: unset!important;
+.login-card {
+  max-width: 500px;
+  display: block;
+  margin: 0 auto;
+  .card-body {
+    grid-template-rows: unset!important;
+  }
+}
+.login-grid-part {
+  &-one {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    .form-check {
+      display: grid;
+      grid-template-columns: 20% 80%;
     }
   }
-  .login-grid-part {
-    &-one {
-      display: grid;
-      grid-template-columns: repeat(2,1fr);
-      .form-check {
-        display: grid;
-        grid-template-columns: 20% 80%;
-      }
-    }
-    &-socials {
-      display: grid;
-      grid-template-columns: repeat(4,1fr);
-      gap: 5px;
-    }
+  &-socials {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 5px;
   }
+}
 </style>

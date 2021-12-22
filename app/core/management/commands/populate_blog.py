@@ -1,5 +1,6 @@
 from django.core.management import BaseCommand
-from django.contrib.auth.models import User
+from django.conf import settings
+User = settings.AUTH_USER_MODEL
 from faker import Faker
 from random import randrange
 from blog.models import Profile, Tag, Post
@@ -9,7 +10,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         faker = Faker()
 
-        user_id = randrange(1, 10)
+        user_id = 1
         website = faker.text(20)
         bio = faker.text(50)
 

@@ -113,7 +113,7 @@ export default class ProductReviewModule
 
     @Action
     async toggleReview(data: any): Promise<string | undefined> {
-        let IsAuthenticated: boolean = store.getters['user/data/getIsAuthenticated']
+        let IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
         if(IsAuthenticated){
             let product_id: number = store.getters['product/getProductId']
             let user_id: number = store.getters['user/data/getUserId']

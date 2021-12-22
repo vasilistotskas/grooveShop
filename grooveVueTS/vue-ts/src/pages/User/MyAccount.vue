@@ -63,7 +63,7 @@ export default class MyAccount extends Vue {
   }
 
   get isAuthenticated(): boolean {
-    return store.getters['user/data/getIsAuthenticated']
+    return store.getters['auth/isAuthenticated']
   }
 
   get userData(): UserDetailsModel {
@@ -87,7 +87,7 @@ export default class MyAccount extends Vue {
 
     return first_name + ' ' + last_name
   }
-  protected logout(): void {
+  public logout(): void {
     store.commit('user/data/unsetUserData')
     router.push('/')
   }

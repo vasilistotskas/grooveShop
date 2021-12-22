@@ -12,30 +12,12 @@ const toast = useToast()
 export default class UserDataModule
     extends AppBaseModule
 {
-
-    token!: string;
-    isAuthenticated!: boolean;
     user_id!: number|undefined;
     data: object = {}
 
-    get getToken(): string { return this.token }
-    get getIsAuthenticated(): boolean { return this.isAuthenticated }
     get getUserId(): number|undefined { return this.user_id }
     get getUserData(): object { return this.data}
 
-    @Mutation
-    initializeAuth(): void {
-        if (localStorage.getItem('token')) {
-            this.token !== null ? localStorage.getItem('token') : []
-            this.isAuthenticated = true
-        } else {
-            this.token = ''
-            this.isAuthenticated = false
-        }
-    }
-
-    @Mutation
-    setToken(token: string): void { this.token = token }
 
     @Mutation
     setUserData(data: object): void { this.data = data }
@@ -45,37 +27,21 @@ export default class UserDataModule
 
     @Mutation
     unsetUserData(): void {
-        this.token = ''
-        this.isAuthenticated = false
         this.data = []
         this.user_id = undefined
-        axios.defaults.headers.common["Authorization"] = ""
-        localStorage.removeItem("token")
-        localStorage.removeItem("username")
-        localStorage.removeItem("userid")
 
-        store.commit('product/favourite/unsetFavourites')
-        store.commit('product/favourite/unsetUserFavourites')
-        store.commit('product/review/unsetUserToProductReview')
-        store.commit('product/review/unsetUserReviews')
-        store.commit('user/order/unsetUserOrders')
-        store.commit('country/unsetUserCountryData')
-    }
-
-    @Action
-    async ensureUserIsAuthenticated(): Promise<void> {
-        if (!this.isAuthenticated)
-            throw new Error('User not authenticated')
+        store.dispatch('auth/logout').then(() => {
+            store.commit('product/favourite/unsetFavourites')
+            store.commit('product/favourite/unsetUserFavourites')
+            store.commit('product/review/unsetUserToProductReview')
+            store.commit('product/review/unsetUserReviews')
+            store.commit('user/order/unsetUserOrders')
+            store.commit('country/unsetUserCountryData')
+        })
     }
 
     @Action
     async userDataFromRemote(): Promise<void> {
-
-        if (this.token === undefined) {
-            this.token = localStorage.getItem('token') || ''
-        } else {
-            this.context.commit('setToken', this.token)
-        }
 
         await api.get('userprofile/data')
             .then((response: ResponseData) => {
@@ -86,8 +52,6 @@ export default class UserDataModule
                 store.dispatch('product/favourite/userFavouritesFromRemote', response.data[0].user)
                 store.dispatch('product/favourite/userFavouriteProductsFromRemote', response.data[0].user)
                 store.dispatch('product/review/getCurrentUserReviews', data[0].id)
-                axios.defaults.headers.common["Authorization"] = "Token " + this.token
-                localStorage.setItem("token", this.token)
             })
             .catch((e: Error) => {
                 console.log(e)

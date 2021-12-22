@@ -1,5 +1,3 @@
 import State from '@/state/State'
 
-export default interface RootState extends State {
-
-}
+export default interface RootState extends State {}

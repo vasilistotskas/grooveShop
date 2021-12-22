@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 import sys
+from datetime import timedelta
+
 import environ
 from pathlib import Path
 
@@ -43,23 +45,16 @@ ALLOWED_HOSTS.extend(
     )
 )
 
-
 # Application definition
-
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'rest_framework.authtoken',
-    'corsheaders',
-    'graphene_django',
-    'djoser',
-    'mptt',
-
+    'django.contrib.staticfiles'
+]
+PROJECT_APPS = [
     'core',
     'product',
     'order',
@@ -68,16 +63,43 @@ INSTALLED_APPS = [
     'slider',
     'blog'
 ]
+THIRD_PARTY_APPS = [
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
+    'graphene_django',
+    'djoser',
+    'social_django',
+    'mptt'
+]
+INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_NAME = "csrftoken"
+
+CSRF_COOKIE_SAMESITE = 'Strict'
+SESSION_COOKIE_SAMESITE = 'Strict'
+CSRF_COOKIE_HTTPONLY = True
+SESSION_COOKIE_HTTPONLY = True
+
+# PROD ONLY
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+
+CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
+# PROD ONLY
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
 ]
-CORS_ORIGIN_WHITELIST = ("http://localhost:8080",)
-
-REST_FRAMEWORK = {
-    'COERCE_DECIMAL_TO_STRING': False
-}
+CORS_ORIGIN_WHITELIST = ("http://localhost:8080", "http://localhost:5000",)
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8080',
+    'http://localhost:5000',
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -91,6 +113,15 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'app.urls'
+
+SITE_NAME = "DeepWeb"
+SITE_ID = 1
+
+PROTOCOL = "http"
+DOMAIN = "localhost:8000"
+if not DEBUG:
+    PROTOCOL = "https"
+    DOMAIN = "deepweb.gr"
 
 TEMPLATES = [
     {
@@ -167,7 +198,23 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Email Settings FOR PRODUCTION
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = '[YOUR EMAIL THAT WILL SEND]'
+# EMAIL_HOST_PASSWORD = '[YOUR EMAIL APP PASSWORD]'
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = '[YOUR EMAIL THAT WILL SEND]'
 
+# Email Settings FOR DEV
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+EMAIL_HOST = 'localhost'
+EMAIL_HOST_USER = 'artandtravelpath@gmail.com'
+EMAIL_HOST_PASSWORD = 'xsrd vcue bxpu imgu'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = False
+DEFAULT_FROM_EMAIL = 'artandtravelpath@gmail.com'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -186,6 +233,32 @@ GRAPHENE = {
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'COERCE_DECIMAL_TO_STRING': False,
+}
+
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'SEND_CONFIRMATION_EMAIL': True,
+    'SET_USERNAME_RETYPE': True,
+    'SET_PASSWORD_RETYPE': True,
+    'PASSWORD_RESET_CONFIRM_URL': 'accounts/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': 'accounts/email/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'accounts/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SERIALIZERS': {
+        'user_create': 'user.serializers.UserCreateSerializer',
+        'user': 'user.serializers.UserCreateSerializer',
+        'current_user': 'user.serializers.UserCreateSerializer',
+        'user_delete': 'djoser.serializers.UserDeleteSerializer',
+    }
+}
+
+AUTH_USER_MODEL = 'user.UserAccount'
 
 # logs
 LOGGING = {

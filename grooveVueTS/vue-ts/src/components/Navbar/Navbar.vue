@@ -129,7 +129,7 @@ export default class Navbar extends Vue {
   }
 
   get isAuthenticated(): boolean {
-    return store.getters['user/data/getIsAuthenticated']
+    return store.getters['auth/isAuthenticated']
   }
 
   public menuToggle(): void {

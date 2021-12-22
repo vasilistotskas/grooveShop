@@ -23,7 +23,7 @@ export default class PaginationModule
     show_previous_button = false
 
     get getUserToken(): string| null {
-        return this.alternativeToken || localStorage.getItem('token');
+        return this.alternativeToken || localStorage.getItem('TOKEN_STORAGE_KEY');
     }
 
     get getResultData(): ProductModel[] {

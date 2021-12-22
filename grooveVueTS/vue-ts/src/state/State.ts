@@ -1,3 +1,1 @@
-export default interface State {
-
-}
+export default interface State {}

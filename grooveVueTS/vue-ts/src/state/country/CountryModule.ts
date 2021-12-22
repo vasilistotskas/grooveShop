@@ -23,7 +23,7 @@ export default class CountryModule
         return this.regionsBasedOnAlpha
     }
     get getSelectedCountry(): CountryModel {
-        const isAuthenticated: boolean = store.getters['user/data/getIsAuthenticated']
+        const isAuthenticated: boolean = store.getters['auth/isAuthenticated']
         if(isAuthenticated) {
             return <CountryModel>this.selectedCountry
         }

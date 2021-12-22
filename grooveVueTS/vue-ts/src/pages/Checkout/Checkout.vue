@@ -290,7 +290,7 @@ export default class Checkout extends Vue {
   card = {}
 
   get isAuthenticated(): boolean {
-    return store.getters['user/data/getIsAuthenticated']
+    return store.getters['auth/isAuthenticated']
   }
 
   get availableCountries(): CountryModel {

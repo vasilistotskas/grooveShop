@@ -1,6 +1,9 @@
 import AppModule from '@/state/app/AppModule'
 import CartModule from '@/state/cart/CartModule'
 import UserModule from '@/state/user/UserModule'
+import AuthModule from '@/state/auth/auth/AuthModule'
+import PasswordModule from '@/state/auth/password/PasswordModule'
+import SignUpModule from '@/state/auth/signup/SignUpModule'
 import Iban from '@/libraries/Stripe/Components/Iban'
 import Card from '@/libraries/Stripe/Components/Card'
 import SliderModule from "@/state/slider/SliderModule"
@@ -40,7 +43,10 @@ const stateDirectory = <Record<string, typeof AppBaseModule>>{
     'country': CountryModule,
     'slider': SliderModule,
     'stripeIban': Iban,
-    'stripeCard': Card
+    'stripeCard': Card,
+    'auth': AuthModule,
+    'password': PasswordModule,
+    'signup': SignUpModule,
 }
 
 export default stateDirectory

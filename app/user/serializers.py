@@ -1,7 +1,15 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
 from helpers.image_resize import make_thumbnail
 from .models import UserProfile, Country, Region
+from djoser.serializers import UserCreateSerializer
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
+
+class UserCreateSerializer(UserCreateSerializer):
+    class Meta(UserCreateSerializer.Meta):
+        model = User
+        fields = ('id', 'email', 'first_name', 'last_name', 'password')
 
 
 class RegionSerializer(serializers.ModelSerializer):
@@ -22,7 +30,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ['id', 'user', 'country', 'first_name', 'last_name', 'phone', 'email', 'city', 'zipcode', 'address',
+        fields = ['id', 'user', 'email', 'country', 'first_name', 'last_name', 'phone', 'email', 'city', 'zipcode', 'address',
                   'place', 'region', 'image', 'image_url']
 
     def update(self, instance, validated_data):
@@ -72,4 +80,4 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'userprofile']
+        fields = ['id', 'email', 'userprofile']

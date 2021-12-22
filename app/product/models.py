@@ -3,7 +3,8 @@ from mptt.models import MPTTModel
 from mptt.fields import TreeForeignKey
 from django.db.models import Avg, Count
 from django.utils.html import format_html
-from django.contrib.auth.models import User
+from django.conf import settings
+User = settings.AUTH_USER_MODEL
 from django.utils.safestring import mark_safe
 from helpers.image_resize import make_thumbnail
 
@@ -201,7 +202,7 @@ class Favourite(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.username
+        return self.user.email
 
     def absolute_url(self):
         return f'//{self.id}/'

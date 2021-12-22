@@ -1,4 +1,4 @@
-import axios from 'axios'
+import session from '@/api/session'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 
@@ -19,7 +19,7 @@ export default class AppModule
     }
 
     get axiosBaseUrl(): string | undefined {
-        return axios.defaults.baseURL
+        return session.defaults.baseURL
     }
 
     get getWindowWidth(): number {

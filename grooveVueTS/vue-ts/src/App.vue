@@ -246,7 +246,7 @@ export default class App extends Vue {
   }
 
   get isAuthenticated(): boolean {
-    return store.getters['user/data/getIsAuthenticated']
+    return store.getters['auth/isAuthenticated']
   }
 
   get cartTotalLength(): number {
@@ -281,26 +281,16 @@ export default class App extends Vue {
   }
 
   public initializeAuth(): void {
-    store.commit('user/data/initializeAuth')
+    store.dispatch('auth/initialize')
   }
 
   public initializeCart(): void {
     store.commit('cart/initializeCart')
   }
 
-  public initializeToken(): void {
-    const token = store.getters['user/getToken']
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = "Token " + token
-    } else {
-      axios.defaults.headers.common['Authorization'] = ""
-    }
-  }
-
   async created(): Promise<void> {
     await Promise.all([
       this.initializeAuth(),
-      this.initializeToken(),
       this.initializeCart(),
       store.dispatch('category/categoriesTreeFromRemote')
     ])

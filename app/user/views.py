@@ -1,9 +1,26 @@
 from django.http import Http404
+from rest_framework import status
+from djoser.views import UserViewSet
 from rest_framework.views import APIView
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from user.models import UserProfile, Country, Region
 from rest_framework import authentication, permissions, generics
 from .serializers import UserProfileSerializer, CountrySerializer, RegionSerializer
+
+
+class ActivateUser(UserViewSet):
+    def get_serializer(self, *args, **kwargs):
+        serializer_class = self.get_serializer_class()
+        kwargs.setdefault('context', self.get_serializer_context())
+        kwargs['data'] = {"uid": self.kwargs['uid'], "token": self.kwargs['token']}
+
+        return serializer_class(*args, **kwargs)
+
+    @action(["post"], detail=False)
+    def activation(self, request, *args, **kwargs):
+        super().activation(request, *args, **kwargs)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):

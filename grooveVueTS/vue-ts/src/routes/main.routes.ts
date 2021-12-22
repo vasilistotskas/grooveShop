@@ -9,12 +9,27 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/sign-up',
         name: 'SignUp',
-        component: () => import("@/pages/SignUp/SignUp.vue"),
+        component: () => import("@/pages/Auth/SignUp.vue"),
+    },
+    {
+        path: '/accounts/activate/:uid/:token',
+        name: 'VerifyEmail',
+        component: () => import("@/pages/Auth/VerifyEmail.vue"),
     },
     {
         path: '/log-in',
         name: 'LogIn',
-        component: () => import("@/pages/Login/LogIn.vue"),
+        component: () => import("@/pages/Auth/LogIn.vue"),
+    },
+    {
+        path: '/password_reset',
+        name: 'PasswordReset',
+        component: () => import("@/pages/Auth/PasswordReset.vue"),
+    },
+    {
+        path: '/password_reset/:uid/:token',
+        name: 'PasswordResetConfirm',
+        component: () => import("@/pages/Auth/PasswordResetConfirm.vue"),
     },
     {
         path: '/my-account',

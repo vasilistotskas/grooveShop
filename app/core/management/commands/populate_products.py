@@ -7,7 +7,7 @@ from product.models import Category, Vat, Product, ProductImages, Favourite, Rev
 class Command(BaseCommand):
     def handle(self, *args, **options):
         faker = Faker()
-        user_id = randrange(1, 10)
+        user_id = 1
         i = 1
 
         for _ in range(3):
