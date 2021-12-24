@@ -8,7 +8,6 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import status, authentication, permissions
-from django.views.decorators.vary import vary_on_cookie, vary_on_headers
 
 
 class ProductsPagination(PageNumberPagination):
@@ -121,7 +120,7 @@ class CategoriesUnorganized(APIView):
 
 
 class FavouriteList(APIView):
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     @staticmethod
@@ -155,7 +154,7 @@ class FavouriteList(APIView):
 
 
 class FavouriteProduct(APIView):
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     @staticmethod
@@ -172,7 +171,7 @@ class FavouriteProduct(APIView):
 
 
 class FavouriteDelete(APIView):
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     # One way to delete
@@ -215,7 +214,7 @@ class ProductReviews(APIView):
 
 
 class UserReviews(APIView):
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     @staticmethod
@@ -232,7 +231,7 @@ class UserReviews(APIView):
 
 
 class UserToProductReview(APIView):
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     @staticmethod

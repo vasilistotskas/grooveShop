@@ -15,14 +15,28 @@ services:
       - 8000:8000
     volumes:
       - ./app:/app
-      - ./data/web:/vol/web
+      - production_static_data:/vol/web
     environment:
-      - SECRET_KEY=devsecretkey
-      - DEBUG=1
-      - DB_HOST=db
-      - DB_NAME=devdb
-      - DB_USER=devuser
-      - DB_PASS=changeme
+      - DEBUG=${DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+      - APPEND_SLASH=${APPEND_SLASH}
+      - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - EMAIL_BACKEND=${EMAIL_BACKEND}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
+      - LANGUAGE_CODE=${LANGUAGE_CODE}
+      - TIME_ZONE=${TIME_ZONE}
+      - USE_I18N=${USE_I18N}
+      - USE_L10N=${USE_L10N}
+      - USE_TZ=${USE_TZ}
     depends_on:
       - db
       - redis
@@ -35,9 +49,9 @@ services:
       - ./data/db:/var/lib/postgresql/data
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_DB=devdb
-      - POSTGRES_USER=devuser
-      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - 5432:5432
 
@@ -46,9 +60,9 @@ services:
     image: dpage/pgadmin4
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: devuser@devuser.com
-      PGADMIN_DEFAULT_PASSWORD: changeme
-      PGADMIN_LISTEN_PORT: 5050
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_LISTEN_PORT=${PGADMIN_LISTEN_PORT}
     ports:
       - 5050:5050
     depends_on:
@@ -65,8 +79,8 @@ services:
     volumes:
       - ./app:/app
     environment:
-      - SECRET_KEY=devsecretkey
-      - DEBUG=1
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=${DEBUG}
     depends_on:
       - db
       - redis
@@ -79,28 +93,38 @@ services:
     ports:
       - 6379:6379
 
-  vueapp:
-    container_name: frontend
-    image: vuejs/ci
+  nginx:
     build:
-      context: .
-      dockerfile: docker/Frontend.Dockerfile
-    restart: always
+      context: ./nginx
+      dockerfile: Nginx.Dockerfile
     volumes:
-      - .:/app
-      - ./frontend:/app
-      - /app/node_modules
+      - production_static_data:/vol/static
     ports:
-      - 8080:80
-    environment:
-      - BASE_URL=http://localhost:5000
-      - VUE_APP_I18N_LOCALE=en
-      - VUE_APP_I18N_FALLBACK_LOCALE=en
-      - VUE_APP_API_URL=http://localhost:8000
-      - VUE_APP_GRAPHQL_URL=http://localhost:8000/graphql
-
+      - 80:80
     depends_on:
       - app
+    restart: always
+
+#  frontend:
+#    container_name: frontend
+#    image: vuejs/ci
+#    build:
+#      context: .
+#      dockerfile: docker/Frontend.Dockerfile
+#    restart: always
+#    volumes:
+#      - ./app/frontend:/frontend
+#      - /app/node_modules
+#    environment:
+#      - NODE_ENV=development
+#      - BASE_URL=http://localhost:8000
+#      - VUE_APP_I18N_LOCALE=en
+#      - VUE_APP_I18N_FALLBACK_LOCALE=en
+#      - VUE_APP_API_URL=http://localhost:8000
+#      - VUE_APP_GRAPHQL_URL=http://localhost:8000/graphql
+#    depends_on:
+#      - app
 
 volumes:
   postgres_data:
+  production_static_data:

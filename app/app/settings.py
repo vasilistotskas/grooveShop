@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 import sys
-from datetime import timedelta
-
 import environ
 from pathlib import Path
 
@@ -30,7 +28,8 @@ environ.Env.read_env(os.path.join(BASE_DIR.parent, '.env'))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-STRIPE_SECRET_KEY = 'pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3'
+# STRIPE_SECRET_KEY = 'pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3'
+STRIPE_SECRET_KEY = 'sk_test_wKFGpTy9h1zpwqo0wNxRNlK400dNnJS7L5'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 
@@ -70,36 +69,10 @@ THIRD_PARTY_APPS = [
     'graphene_django',
     'djoser',
     'social_django',
-    'mptt'
+    'mptt',
+    'tinymce'
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
-
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
-CSRF_COOKIE_NAME = "csrftoken"
-
-CSRF_COOKIE_SAMESITE = 'Strict'
-SESSION_COOKIE_SAMESITE = 'Strict'
-CSRF_COOKIE_HTTPONLY = True
-SESSION_COOKIE_HTTPONLY = True
-
-# PROD ONLY
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
-
-CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
-# PROD ONLY
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",
-]
-CORS_ORIGIN_WHITELIST = ("http://localhost:8080", "http://localhost:5000",)
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:8080',
-    'http://localhost:5000',
-]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -114,19 +87,26 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'app.urls'
 
+# Site info
 SITE_NAME = "DeepWeb"
 SITE_ID = 1
 
-PROTOCOL = "http"
-DOMAIN = "localhost:8000"
-if not DEBUG:
-    PROTOCOL = "https"
-    DOMAIN = "deepweb.gr"
+# Slash append
+APPEND_SLASH = os.environ.get('APPEND_SLASH')
+
+# User model
+AUTH_USER_MODEL = 'user.UserAccount'
+
+# Sessions and Cookies
+CSRF_COOKIE_SAMESITE = 'Strict'
+SESSION_COOKIE_SAMESITE = 'Strict'
+CSRF_COOKIE_HTTPONLY = False  # False since we will grab it via universal-cookies
+SESSION_COOKIE_HTTPONLY = True
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR.joinpath('frontend')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -153,6 +133,7 @@ DATABASES = {
     }
 }
 
+# Cache
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -163,6 +144,7 @@ CACHES = {
     }
 }
 
+# Celery
 CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = "redis://redis:6379"
 
@@ -184,49 +166,60 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = os.environ.get('LANGUAGE_CODE')
+TIME_ZONE = os.environ.get('TIME_ZONE')
+USE_I18N = os.environ.get('USE_I18N')
+USE_L10N = os.environ.get('USE_L10N')
+USE_TZ = os.environ.get('USE_TZ')
 
-TIME_ZONE = 'Europe/Athens'
+# Email Settings
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 
-USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
-# Email Settings FOR PRODUCTION
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = '[YOUR EMAIL THAT WILL SEND]'
-# EMAIL_HOST_PASSWORD = '[YOUR EMAIL APP PASSWORD]'
-# EMAIL_USE_TLS = True
-# DEFAULT_FROM_EMAIL = '[YOUR EMAIL THAT WILL SEND]'
-
-# Email Settings FOR DEV
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
-EMAIL_HOST = 'localhost'
-EMAIL_HOST_USER = 'artandtravelpath@gmail.com'
-EMAIL_HOST_PASSWORD = 'xsrd vcue bxpu imgu'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = False
-DEFAULT_FROM_EMAIL = 'artandtravelpath@gmail.com'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/static/'
-MEDIA_URL = '/static/media/'
-
-MEDIA_ROOT = '/vol/web/media'
 STATIC_ROOT = '/vol/web/static'
+
+MEDIA_URL = '/static/media/'
+MEDIA_ROOT = '/vol/web/media'
+
+# Vue project location
+FRONTEND_DIR = os.path.join(BASE_DIR, 'frontend')
+
+STATICFILES_DIRS = (
+    'static',
+    os.path.join(FRONTEND_DIR, 'dist/static/static'),
+    BASE_DIR.joinpath('frontend', 'dist'),
+)
 
 # graphql schema
 GRAPHENE = {
     "SCHEMA": "blog.schema.schema",
+}
+
+# Tinymce admin panel editor config
+TINYMCE_DEFAULT_CONFIG = {
+    "theme": "silver",
+    "height": 500,
+    "width": 960,
+    "menubar": 'file edit view insert format tools table help',
+    "plugins": "advlist,autolink,lists,link,image,charmap,print,preview,anchor,"
+               "searchreplace,visualblocks,code,fullscreen,insertdatetime,media,table,paste,"
+               "code,help,wordcount",
+    "toolbar": "undo redo | formatselect | "
+               "bold italic backcolor | alignleft aligncenter "
+               "alignright alignjustify | bullist numlist outdent indent | "
+               "removeformat | code | help",
 }
 
 # Default primary key field type
@@ -235,7 +228,7 @@ GRAPHENE = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'COERCE_DECIMAL_TO_STRING': False,
+    'COERCE_DECIMAL_TO_STRING': os.environ.get('COERCE_DECIMAL_TO_STRING'),
 }
 
 DJOSER = {
@@ -257,8 +250,6 @@ DJOSER = {
         'user_delete': 'djoser.serializers.UserDeleteSerializer',
     }
 }
-
-AUTH_USER_MODEL = 'user.UserAccount'
 
 # logs
 LOGGING = {

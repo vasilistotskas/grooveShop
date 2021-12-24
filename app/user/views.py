@@ -1,12 +1,18 @@
+import json
 from django.http import Http404
 from rest_framework import status
+from django.http import JsonResponse
 from djoser.views import UserViewSet
 from rest_framework.views import APIView
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from user.models import UserProfile, Country, Region
+from django.views.decorators.http import require_POST
+from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import authentication, permissions, generics
 from .serializers import UserProfileSerializer, CountrySerializer, RegionSerializer
+
 
 
 class ActivateUser(UserViewSet):
@@ -23,8 +29,43 @@ class ActivateUser(UserViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+@require_POST
+def login_view(request):
+    data = json.loads(request.body)
+    email = data.get('email')
+    password = data.get('password')
+
+    if email is None or password is None:
+        return JsonResponse({'detail': 'Please provide email and password.'}, status=400)
+
+    user = authenticate(email=email, password=password)
+
+    if user is None:
+        return JsonResponse({'detail': 'Invalid credentials.'}, status=400)
+
+    login(request, user)
+    return JsonResponse({'detail': 'Successfully logged in.'})
+
+
+@require_POST
+def logout_view(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'detail': 'You\'re not logged in.'}, status=400)
+
+    logout(request)
+    return JsonResponse({'detail': 'Successfully logged out.'})
+
+
+@ensure_csrf_cookie
+def session_view(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'isAuthenticated': False})
+
+    return JsonResponse({'isAuthenticated': True})
+
+
 class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserProfileSerializer
 
@@ -42,7 +83,7 @@ class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class UserProfileData(APIView):
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     @staticmethod

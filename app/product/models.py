@@ -1,19 +1,21 @@
 from django.db import models
+from django.conf import settings
 from mptt.models import MPTTModel
+from tinymce.models import HTMLField
 from mptt.fields import TreeForeignKey
 from django.db.models import Avg, Count
 from django.utils.html import format_html
-from django.conf import settings
-User = settings.AUTH_USER_MODEL
 from django.utils.safestring import mark_safe
 from helpers.image_resize import make_thumbnail
+
+User = settings.AUTH_USER_MODEL
 
 
 class Category(MPTTModel):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(unique=True)
-    description = models.TextField(null=True, blank=True)
+    description = HTMLField(null=True, blank=True)
     menu_image_one = models.ImageField(
         upload_to='uploads/categories/', null=True, blank=True)
     menu_image_two = models.ImageField(
@@ -66,9 +68,9 @@ class Product(models.Model):
     )
     id = models.AutoField(primary_key=True)
     category = TreeForeignKey('Category', on_delete=models.SET_NULL, related_name='products', null=True, blank=True)
-    name = models.CharField(max_length=255)
-    slug = models.SlugField()
-    description = models.TextField(blank=True, null=True)
+    name = models.CharField(unique=True, max_length=255)
+    slug = models.SlugField(unique=True)
+    description = HTMLField(null=True, blank=True)
     price = models.DecimalField(max_digits=11, decimal_places=2, null=True)
     active = models.CharField(max_length=10, choices=PRODUCT_STATUS, default=True)
     stock = models.IntegerField(default=1)

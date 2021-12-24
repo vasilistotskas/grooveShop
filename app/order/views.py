@@ -2,11 +2,12 @@ import stripe
 from .models import Order
 from django.conf import settings
 from rest_framework.views import APIView
-from django.conf import settings
-User = settings.AUTH_USER_MODEL
 from rest_framework.response import Response
+from django.contrib.auth import get_user_model
 from .serializers import OrderSerializer, MyOrderSerializer
 from rest_framework import status, authentication, permissions
+
+User = get_user_model()
 
 
 def decreaseProductStock(product):
@@ -46,7 +47,6 @@ class Checkout(APIView):
                     serializer.save(user=None, paid_amount=paid_amount)
 
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-
             except Exception:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -54,7 +54,7 @@ class Checkout(APIView):
 
 
 class OrdersList(APIView):
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     @staticmethod

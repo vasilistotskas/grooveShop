@@ -31,7 +31,7 @@ class Command(BaseCommand):
                 body=faker.text(100),
                 meta_description=faker.text(10),
                 published=True,
-                image='uploads/blog/websiteLogo.png',
+                image='uploads/slides/WallpaperDog-10724660.jpg',
                 author=Profile.objects.get(id=profile.id),
             )
 

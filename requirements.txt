@@ -14,3 +14,4 @@ django-redis==4.12.1
 celery==5.2.1
 Faker==6.6.1
 django-environ==0.8.1
+django-tinymce==3.4.0

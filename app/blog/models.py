@@ -1,6 +1,8 @@
 from django.db import models
-from django.shortcuts import reverse
 from django.conf import settings
+from tinymce.models import HTMLField
+from django.shortcuts import reverse
+
 User = settings.AUTH_USER_MODEL
 
 
@@ -27,7 +29,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255, unique=True)
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True)
-    body = models.TextField()
+    body = HTMLField()
     meta_description = models.CharField(max_length=150, blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
