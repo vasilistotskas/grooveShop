@@ -1,5 +1,4 @@
 import store from '@/store'
-import qs from 'querystring'
 import session from './session'
 
 const baseUrl = '/api/v1'
@@ -48,7 +47,7 @@ export default {
         return session({
             url: `${baseUrl}/${endpoint}`,
             method: 'put',
-            data: qs.stringify(data),
+            data: data,
             headers: {
                 Authorization: "Token " + this.getUserToken()
             }
