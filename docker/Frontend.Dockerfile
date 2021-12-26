@@ -1,13 +1,14 @@
-FROM node:14.18.1 as build
-WORKDIR /vueapp
-COPY ../grooveVueTS/vue-ts/package.json .
+FROM node:14-alpine as build
+WORKDIR /frontend
+
+COPY ../app/frontend/package.json .
 RUN npm install
-COPY ../grooveVueTS/vue-ts .
+COPY ../app/frontend .
 RUN npm run build
 
-FROM nginx:1.19
+FROM nginx:latest
 COPY ../nginx/nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /vueapp/dist /usr/share/nginx/html
+COPY --from=build /frontend/dist /usr/share/nginx/html
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

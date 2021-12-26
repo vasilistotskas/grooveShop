@@ -1,7 +1,7 @@
 import graphene
 from . import models
-from django.contrib.auth import get_user_model
 from graphene_django import DjangoObjectType
+from django.contrib.auth import get_user_model
 
 
 class UserType(DjangoObjectType):
@@ -26,9 +26,9 @@ class TagType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
     all_posts = graphene.List(PostType)
-    author_by_username = graphene.Field(AuthorType, username=graphene.String())
+    author_by_email = graphene.Field(AuthorType, email=graphene.String())
     post_by_slug = graphene.Field(PostType, slug=graphene.String())
-    posts_by_author = graphene.List(PostType, username=graphene.String())
+    posts_by_author = graphene.List(PostType, email=graphene.String())
     posts_by_tag = graphene.List(PostType, tag=graphene.String())
 
     @staticmethod
@@ -40,9 +40,9 @@ class Query(graphene.ObjectType):
         )
 
     @staticmethod
-    def resolve_author_by_username(root, info, username):
+    def resolve_author_by_email(root, info, email):
         return models.Profile.objects.select_related("user").get(
-            user__username=username
+            user__email=email
         )
 
     @staticmethod
@@ -54,11 +54,11 @@ class Query(graphene.ObjectType):
         )
 
     @staticmethod
-    def resolve_posts_by_author(root, info, username):
+    def resolve_posts_by_author(root, info, email):
         return (
             models.Post.objects.prefetch_related("tags")
                 .select_related("author")
-                .filter(author__user__username=username)
+                .filter(author__user__email=email)
         )
 
     @staticmethod

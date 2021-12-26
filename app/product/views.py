@@ -1,43 +1,62 @@
 from .serializers import *
-from django.db.models import Q
 from django.http import Http404
+from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from rest_framework.pagination import PageNumberPagination
 from rest_framework import status, authentication, permissions
 
 
+class ProductsPagination(PageNumberPagination):
+    page_size = 16
+
+
 class LatestProductsList(APIView):
-    @staticmethod
-    def get(request, format=None):
-        products = Product.objects.all()[0:4]
+
+    @method_decorator(cache_page(60))
+    def get(self, format=None):
+        products = Product.objects.all()[0:5]
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
 
-class ProductsAllResults(APIView):
-    @staticmethod
-    def get(request, format=None):
-        products = Product.objects.all()
-        serializer = ProductSerializer(products, many=True)
+class ProductsAllResults(generics.ListCreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    pagination_class = ProductsPagination
+
+    @method_decorator(cache_page(60*30))
+    def list(self, request, *args, **kwargs):
+
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
 
 class ProductDetail(APIView):
     @staticmethod
-    def get_object(product_slug, category_id):
+    def get_object(category_slug, product_slug):
         try:
-            return Product.objects.filter(category__id=category_id).get(slug=product_slug)
+            return Product.objects.filter(category__slug=category_slug).get(slug=product_slug)
         except Product.DoesNotExist:
             raise Http404
 
-    def get(self, request, product_slug, category_id, format=None):
-        product = self.get_object(product_slug, category_id)
+    def get(self, request, category_slug, product_slug, format=None):
+        product = self.get_object(category_slug, product_slug)
         serializer = ProductSerializer(product)
         return Response(serializer.data)
 
-    def patch(self, request, product_slug, category_id):
-        product = self.get_object(product_slug, category_id)
+    def patch(self, request, category_slug, product_slug):
+        product = self.get_object(category_slug, product_slug)
         data = {
             "hits": product.hits + 1
         }
@@ -52,8 +71,8 @@ class CategoryDetail(GenericAPIView):
     serializer_class = CategorySerializer
 
     def get_queryset(self):
-        category_id = self.kwargs['category_id']
-        return Category.objects.get(id=category_id)
+        category_slug = self.kwargs['category_slug']
+        return Category.objects.get(slug=category_slug)
 
     def get(self, request, *args, **kwargs):
         root_nodes = self.get_queryset()
@@ -75,6 +94,7 @@ class CategoryTreeView(GenericAPIView):
     def get_queryset(self):
         return Category.objects.all()
 
+    @method_decorator(cache_page(60*30))
     def get(self, request, *args, **kwargs):
         root_nodes = self.get_queryset().get_cached_trees()
         data = []
@@ -99,24 +119,8 @@ class CategoriesUnorganized(APIView):
         return Response(serializer.data)
 
 
-class Search(APIView):
-    def post(self, request, format=None):
-        query = request.data.get('query', '')
-
-        if query:
-            products = Product.objects.filter(
-                Q(name__icontains=query) |
-                Q(description__icontains=query) |
-                Q(id__icontains=query)
-            )
-            serializer = ProductSerializer(products, many=True, context={'user': self.request.user})
-            return Response(serializer.data)
-        else:
-            return Response({"products": []}, status=status.HTTP_404_NOT_FOUND)
-
-
 class FavouriteList(APIView):
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     @staticmethod
@@ -149,8 +153,25 @@ class FavouriteList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class FavouriteProduct(APIView):
+    authentication_classes = [authentication.SessionAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    @staticmethod
+    def filter_objects(user_id):
+        try:
+            return Favourite.objects.filter(user_id=user_id)
+        except Favourite.DoesNotExist:
+            raise Http404
+
+    def get(self, request, user_id, format=None):
+        favourites = self.filter_objects(user_id)
+        serializer = FavouriteProductSerializer(favourites, many=True)
+        return Response(serializer.data)
+
+
 class FavouriteDelete(APIView):
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     # One way to delete
@@ -193,7 +214,7 @@ class ProductReviews(APIView):
 
 
 class UserReviews(APIView):
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     @staticmethod
@@ -210,7 +231,7 @@ class UserReviews(APIView):
 
 
 class UserToProductReview(APIView):
-    authentication_classes = [authentication.TokenAuthentication]
+    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     @staticmethod

@@ -64,7 +64,9 @@ class CategorySerializer(serializers.ModelSerializer):
             "slug",
             "description",
             "description",
-            "image_url",
+            "menu_image_one",
+            "menu_image_two",
+            "menu_main_banner",
             "parent",
             "tags",
             "level",
@@ -85,6 +87,20 @@ class FavouriteSerializer(serializers.ModelSerializer):
             "user_id",
             "product_id"
         )
+
+
+class FavouriteProductSerializer(serializers.ModelSerializer):
+
+    product_object = serializers.SerializerMethodField('get_product_object')
+
+    def get_product_object(self, favourite):
+        qs = Product.objects.get(id=favourite.product_id)
+        serializer = ProductSerializer(instance=qs)
+        return serializer.data
+
+    class Meta:
+        model = Product
+        fields = ("product_object",)
 
 
 class ReviewSerializer(serializers.ModelSerializer):

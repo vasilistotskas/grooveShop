@@ -1,19 +1,26 @@
 from django.db import models
+from django.conf import settings
 from mptt.models import MPTTModel
+from tinymce.models import HTMLField
 from mptt.fields import TreeForeignKey
 from django.db.models import Avg, Count
 from django.utils.html import format_html
-from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from helpers.image_resize import make_thumbnail
+
+User = settings.AUTH_USER_MODEL
 
 
 class Category(MPTTModel):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    slug = models.SlugField()
-    description = models.TextField(null=True, blank=True)
-    image_url = models.ImageField(
+    name = models.CharField(max_length=255, unique=True)
+    slug = models.SlugField(unique=True)
+    description = HTMLField(null=True, blank=True)
+    menu_image_one = models.ImageField(
+        upload_to='uploads/categories/', null=True, blank=True)
+    menu_image_two = models.ImageField(
+        upload_to='uploads/categories/', null=True, blank=True)
+    menu_main_banner = models.ImageField(
         upload_to='uploads/categories/', null=True, blank=True)
     parent = TreeForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
     tags = models.CharField(max_length=100, null=True,
@@ -61,9 +68,9 @@ class Product(models.Model):
     )
     id = models.AutoField(primary_key=True)
     category = TreeForeignKey('Category', on_delete=models.SET_NULL, related_name='products', null=True, blank=True)
-    name = models.CharField(max_length=255)
-    slug = models.SlugField()
-    description = models.TextField(blank=True, null=True)
+    name = models.CharField(unique=True, max_length=255)
+    slug = models.SlugField(unique=True)
+    description = HTMLField(null=True, blank=True)
     price = models.DecimalField(max_digits=11, decimal_places=2, null=True)
     active = models.CharField(max_length=10, choices=PRODUCT_STATUS, default=True)
     stock = models.IntegerField(default=1)
@@ -154,7 +161,7 @@ class Product(models.Model):
             )
 
     def absolute_url(self):
-        return f'/{self.slug}/{self.category.id}'
+        return f'/{self.category.slug}/{self.slug}'
 
 
 class ProductImages(models.Model):
@@ -197,7 +204,7 @@ class Favourite(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.username
+        return self.user.email
 
     def absolute_url(self):
         return f'//{self.id}/'
