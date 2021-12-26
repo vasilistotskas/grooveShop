@@ -12,7 +12,7 @@ module.exports = {
 
   publicPath: process.env.NODE_ENV ==='production' ? '/' : '/',
   // assetsDir must match Django's STATIC_URL
-  assetsDir: 'static/static/',
+  assetsDir: 'static/',
   // outputDir must be added to Django's TEMPLATE_DIRS
   outputDir: './dist/',
   productionSourceMap: false,
@@ -39,7 +39,7 @@ module.exports = {
   },
 
   devServer: {
-    before(app) {
+    onBeforeSetupMiddleware({ app }) {
       app.use('*.js', (req, res, next) => {
         if (req.get('Accept-Encoding').includes('gz')) {
           req.url += '.gz'

@@ -160,8 +160,9 @@ export default class Home extends Vue {
   }
 
   private mainSliderVideoInit(): void {
-    if (this.homepageSlider && Object.keys(this.homepageSlider).length > 0) {
+    if (this.homepageSlider && Object.keys(this.homepageSlider).length > 0 && this.$refs.mainSliderVideoRef) {
       this.$refs.mainSliderVideoRef.src = this.axiosBaseUrl + this.homepageSlider[0].video
+      this.$refs.mainSliderVideoRef.crossOrigin = "anonymous"
       this.$refs.mainSliderVideoRef.loop = false
       this.$refs.mainSliderVideoRef.autoplay = true
       this.$refs.mainSliderVideoRef.playsInline = true

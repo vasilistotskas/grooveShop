@@ -76,6 +76,7 @@ INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -187,21 +188,21 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/static/'
-STATIC_ROOT = '/vol/web/static'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-MEDIA_URL = '/static/media/'
-MEDIA_ROOT = '/vol/web/media'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Vue project location
 FRONTEND_DIR = os.path.join(BASE_DIR, 'frontend')
 
 STATICFILES_DIRS = (
-    'static',
-    os.path.join(FRONTEND_DIR, 'dist/static/static'),
+    'files',
+    os.path.join(FRONTEND_DIR, 'dist/static'),
     BASE_DIR.joinpath('frontend', 'dist'),
 )
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # graphql schema
 GRAPHENE = {
     "SCHEMA": "blog.schema.schema",
