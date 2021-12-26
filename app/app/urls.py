@@ -22,6 +22,7 @@ from django.middleware.csrf import get_token
 from graphene_django.views import GraphQLView
 from django.views.decorators.gzip import gzip_page
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 @gzip_page
@@ -85,3 +86,4 @@ if settings.DEBUG:
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT,
     )
+    urlpatterns += staticfiles_urlpatterns()

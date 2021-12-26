@@ -9,8 +9,9 @@ services:
     restart: always
     command: >
       sh -c "python manage.py wait_for_db &&
+             python manage.py collectstatic --noinput &&
              python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000"
+             gunicorn app.wsgi:application --bind 0.0.0.0:8000"
     ports:
       - 8000:8000
     volumes:
@@ -94,11 +95,12 @@ services:
       - 6379:6379
 
   nginx:
+    image: nginx:latest
     build:
       context: ./nginx
       dockerfile: Nginx.Dockerfile
     volumes:
-      - production_static_data:/vol/static
+      - ./config/nginx/:/etc/nginx/conf.d
     ports:
       - 80:80
     depends_on:
