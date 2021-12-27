@@ -161,37 +161,37 @@
     <ul id="social-sidebar">
       <li>
         <a class="entypo entypo-facebook" href="https://www.facebook.com/" aria-label="Facebook" target="_blank" rel="noopener">
-          <font-awesome-icon :icon="['fab', 'facebook']" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
+          <font-awesome-icon :icon="facebookIcon" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
           <span>Facebook</span>
         </a>
       </li>
       <li>
         <a class="entypo entypo-gplus" href="https://www.google.com/" aria-label="Google" target="_blank" rel="noopener">
-          <font-awesome-icon :icon="['fab', 'google']" size="lg" :style="{ color: '#DB4437' }"></font-awesome-icon>
+          <font-awesome-icon :icon="googleIcon" size="lg" :style="{ color: '#DB4437' }"></font-awesome-icon>
           <span>Google+</span>
         </a>
       </li>
       <li>
         <a class="entypo entypo-twitter" href="https://www.twitter.com/" aria-label="Twitter" target="_blank" rel="noopener">
-          <font-awesome-icon :icon="['fab', 'twitter']" size="lg" :style="{ color: '#1DA1F2' }"></font-awesome-icon>
+          <font-awesome-icon :icon="twitterIcon" size="lg" :style="{ color: '#1DA1F2' }"></font-awesome-icon>
           <span>Tweeter</span>
         </a>
       </li>
       <li>
         <a class="entypo entypo-instagram" href="https://www.instagram.com/" aria-label="Instagram" target="_blank" rel="noopener">
-          <font-awesome-icon :icon="['fab', 'instagram']" size="lg" :style="{ color: '#E1306C' }"></font-awesome-icon>
+          <font-awesome-icon :icon="instagramIcon" size="lg" :style="{ color: '#E1306C' }"></font-awesome-icon>
           <span>Instagram</span>
         </a>
       </li>
       <li>
         <a class="entypo entypo-linkedin" href="https://www.linkedin.com/" aria-label="Linkedin" target="_blank" rel="noopener">
-          <font-awesome-icon :icon="['fab', 'linkedin']" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
+          <font-awesome-icon :icon="linkedinIcon" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
           <span>Linkedin</span>
         </a>
       </li>
       <li>
         <a class="entypo entypo-github" href="https://www.github.com/" aria-label="Github" target="_blank" rel="noopener">
-          <font-awesome-icon :icon="['fab', 'github']" size="lg" :style="{ color: 'white' }"></font-awesome-icon>
+          <font-awesome-icon :icon="githubIcon" size="lg" :style="{ color: 'white' }"></font-awesome-icon>
           <span>Github</span>
         </a>
       </li>
@@ -203,7 +203,6 @@
 
 
 <script lang="ts">
-import axios from 'axios'
 import store from '@/store'
 import _, {LoDashStatic} from "lodash"
 import Loading from 'vue-loading-overlay'
@@ -211,10 +210,16 @@ import packageMeta from '@/../package.json'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import {Options, Vue} from "vue-class-component"
 import Header from '@/components/Navbar/Header.vue'
+import CountryModel from "@/state/country/CountryModel"
+import RegionsModel from "@/state/country/RegionsModel"
 import UserDetailsModel from "@/state/user/data/UserDetailsModel"
+import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
+import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub'
+import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter'
 import ProductReviewModel from "@/state/product/review/ProductReviewModel"
-import CountryModel from "@/state/country/CountryModel";
-import RegionsModel from "@/state/country/RegionsModel";
+import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
+import { faLinkedin } from '@fortawesome/free-brands-svg-icons/faLinkedin'
+import { faInstagram } from '@fortawesome/free-brands-svg-icons/faInstagram'
 
 @Options({
   name: "App",
@@ -226,6 +231,25 @@ import RegionsModel from "@/state/country/RegionsModel";
 export default class App extends Vue {
 
   public showMobileMenu = false
+
+  get facebookIcon(): typeof faFacebook {
+    return faFacebook
+  }
+  get googleIcon(): typeof faGoogle {
+    return faGoogle
+  }
+  get twitterIcon(): typeof faTwitter {
+    return faTwitter
+  }
+  get instagramIcon(): typeof faInstagram {
+    return faInstagram
+  }
+  get linkedinIcon(): typeof faLinkedin {
+    return faLinkedin
+  }
+  get githubIcon(): typeof faGithub {
+    return faGithub
+  }
 
   get lodash(): LoDashStatic {
     return _

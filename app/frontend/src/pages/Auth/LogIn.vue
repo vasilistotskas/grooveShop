@@ -70,23 +70,14 @@
             <div class="login-grid-part-socials mb-3">
               <!-- Facebook -->
               <a class="btn btn-outline-primary btn-floating mx-1" href="#!" role="button">
-                <font-awesome-icon :icon="['fab', 'facebook']" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
+                <font-awesome-icon :icon="facebookIcon" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
               </a>
 
               <!-- Google -->
               <a class="btn btn-outline-primary btn-floating mx-1" href="#!" role="button">
-                <font-awesome-icon :icon="['fab', 'google']" size="lg" :style="{ color: '#DB4437' }"></font-awesome-icon>
+                <font-awesome-icon :icon="googleIcon" size="lg" :style="{ color: '#DB4437' }"></font-awesome-icon>
               </a>
 
-              <!-- Twitter -->
-              <a class="btn btn-outline-primary btn-floating mx-1" href="#!" role="button">
-                <font-awesome-icon :icon="['fab', 'twitter']" size="lg" :style="{ color: '#1DA1F2' }"></font-awesome-icon>
-              </a>
-
-              <!-- Github -->
-              <a class="btn btn-outline-primary btn-floating mx-1" href="#!" role="button">
-                <font-awesome-icon :icon="['fab', 'github']" size="lg" :style="{ color: 'white' }"></font-awesome-icon>
-              </a>
             </div>
 
           </div>
@@ -105,7 +96,9 @@ import BaseInput from "@/components/Form/BaseInput.vue"
 import FormProvider from "@/components/Form/FormProvider.vue"
 import SubmitButtons from "@/components/Form/SubmitButtons.vue"
 import ValidationErrors from "@/components/Form/ValidationErrors.vue"
+import { faGoogle } from "@fortawesome/free-brands-svg-icons/faGoogle"
 import { useValidation, ValidationError } from 'vue3-form-validation'
+import { faFacebook } from "@fortawesome/free-brands-svg-icons/faFacebook"
 
 let {
   form,
@@ -130,6 +123,13 @@ let {
 })
 
 export default class LogIn extends Vue {
+
+  get facebookIcon(): typeof faFacebook {
+    return faFacebook
+  }
+  get googleIcon(): typeof faGoogle {
+    return faGoogle
+  }
 
   formManager = {
     form,

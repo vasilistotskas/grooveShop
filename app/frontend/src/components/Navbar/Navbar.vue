@@ -24,8 +24,8 @@
 
       <div class="blog-header">
         <router-link to="/blog" class="btn-w-effect" aria-label="Blog">
-          <font-awesome-icon v-if="isMobile" icon="blog"></font-awesome-icon>
-          <font-awesome-icon v-else size="2x" icon="blog"></font-awesome-icon>
+          <font-awesome-icon v-if="isMobile" :icon="blogIcon"></font-awesome-icon>
+          <font-awesome-icon v-else size="2x" :icon="blogIcon"></font-awesome-icon>
           <span>BLOG</span>
           <span class="line-1"></span>
           <span class="line-2"></span>
@@ -37,35 +37,35 @@
         <div class="search-buttons-container">
           <input v-model="searchQuery" @keyup.enter='searchPerform' class="form-control search-form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
           <button class="btn" type="submit" aria-label="search" @click="searchPerform">
-            <font-awesome-icon icon="search" size="lg" :style="{ color: '#3b3b3b' }"></font-awesome-icon>
+            <font-awesome-icon :icon="searchIcon" size="lg" :style="{ color: '#3b3b3b' }"></font-awesome-icon>
           </button>
         </div>
       </div>
       <div class="navigation-header">
         <div class="navigation-header-part">
           <router-link v-if="this.isAuthenticated" :to="{ name: 'Favourites' }" aria-label="Favourites">
-            <font-awesome-icon v-if="isMobile" icon="heart" :style="{ color: '#f80000e0' }"></font-awesome-icon>
-            <font-awesome-icon v-else size="2x" icon="heart" :style="{ color: '#f80000e0' }"></font-awesome-icon>
+            <font-awesome-icon v-if="isMobile" :icon="heartIcon" :style="{ color: '#f80000e0' }"></font-awesome-icon>
+            <font-awesome-icon v-else size="2x" :icon="heartIcon" :style="{ color: '#f80000e0' }"></font-awesome-icon>
           </router-link>
           <router-link v-else to="/log-in" aria-label="Favourites">
-            <font-awesome-icon v-if="isMobile" icon="heart" :style="{ color: 'white' }"></font-awesome-icon>
-            <font-awesome-icon v-else size="2x" icon="heart" :style="{ color: 'white' }"></font-awesome-icon>
+            <font-awesome-icon v-if="isMobile" :icon="heartIcon" :style="{ color: 'white' }"></font-awesome-icon>
+            <font-awesome-icon v-else size="2x" :icon="heartIcon" :style="{ color: 'white' }"></font-awesome-icon>
           </router-link>
         </div>
         <div class="navigation-header-part">
           <router-link v-if="this.isAuthenticated" to="/my-account" aria-label="Account">
-            <font-awesome-icon v-if="isMobile" icon="user" :style="{ color: '#f80000e0' }"></font-awesome-icon>
-            <font-awesome-icon v-else size="2x" icon="user" :style="{ color: '#f80000e0' }"></font-awesome-icon>
+            <font-awesome-icon v-if="isMobile" :icon="userIcon" :style="{ color: '#f80000e0' }"></font-awesome-icon>
+            <font-awesome-icon v-else size="2x" :icon="userIcon" :style="{ color: '#f80000e0' }"></font-awesome-icon>
           </router-link>
           <router-link v-else to="/log-in" aria-label="Account">
-            <font-awesome-icon v-if="isMobile" icon="user" :style="{ color: 'white' }"></font-awesome-icon>
-            <font-awesome-icon v-else size="2x" icon="user" :style="{ color: 'white' }"></font-awesome-icon>
+            <font-awesome-icon v-if="isMobile" :icon="userIcon" :style="{ color: 'white' }"></font-awesome-icon>
+            <font-awesome-icon v-else size="2x" :icon="userIcon" :style="{ color: 'white' }"></font-awesome-icon>
           </router-link>
         </div>
         <div class="navigation-header-part">
           <router-link to="/cart" aria-label="Cart">
-            <font-awesome-icon v-if="isMobile" icon="shopping-cart" :style="{ color: 'white' }"></font-awesome-icon>
-            <font-awesome-icon v-else size="2x" icon="shopping-cart" :style="{ color: 'white' }"></font-awesome-icon>
+            <font-awesome-icon v-if="isMobile" :icon="shoppingCartIcon" :style="{ color: 'white' }"></font-awesome-icon>
+            <font-awesome-icon v-else size="2x" :icon="shoppingCartIcon" :style="{ color: 'white' }"></font-awesome-icon>
             <span class="cart-total-length">{{ cartTotalLength }}</span>
           </router-link>
         </div>
@@ -89,6 +89,11 @@ import router from '@/routes'
 import { Options, Vue } from "vue-class-component"
 import CategoryModel from "@/state/category/CategoryModel"
 import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
+import { faHeart } from "@fortawesome/free-solid-svg-icons/faHeart"
+import { faBlog } from "@fortawesome/free-solid-svg-icons/faBlog"
+import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch"
+import { faUser } from "@fortawesome/free-solid-svg-icons/faUser"
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons/faShoppingCart"
 
 @Options({
   name: "Navbar",
@@ -110,6 +115,22 @@ export default class Navbar extends Vue {
   $refs!: {
     mainToggleButton: HTMLElement
     navbarProductsButton: HTMLElement
+  }
+
+  get blogIcon(): typeof faBlog {
+    return faBlog
+  }
+  get searchIcon(): typeof faSearch {
+    return faSearch
+  }
+  get userIcon(): typeof faUser {
+    return faUser
+  }
+  get shoppingCartIcon(): typeof faShoppingCart {
+    return faShoppingCart
+  }
+  get heartIcon(): typeof faHeart {
+    return faHeart
   }
 
   get navbarMenuHidden(): boolean {

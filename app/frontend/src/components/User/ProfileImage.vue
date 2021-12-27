@@ -18,7 +18,7 @@
                 id="image"
                 name="image"
                 @change="updateUserImage">
-            <font-awesome-icon icon="camera" size="3x" :style="{ color: 'white' }"></font-awesome-icon>
+            <font-awesome-icon :icon="cameraIcon" size="3x" :style="{ color: 'white' }"></font-awesome-icon>
           </label>
         </div>
         <div class="profile-fullname-part">
@@ -34,6 +34,7 @@
 <script lang="ts">
 import store from '@/store'
 import { Options, Vue} from "vue-class-component"
+import { faCamera } from "@fortawesome/free-solid-svg-icons/faCamera"
 
 @Options({
   name: "ProfileImage",
@@ -50,6 +51,10 @@ import { Options, Vue} from "vue-class-component"
 })
 
 export default class ProfileImage extends Vue {
+
+  get cameraIcon(): typeof faCamera {
+    return faCamera
+  }
 
   profileImageHovering: boolean = false
 
