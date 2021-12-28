@@ -15,3 +15,6 @@ docker exec -it c0c5 /bin/sh
 
 REM FOR OTHER ENVS
 docker exec -it c0c5 bash
+
+REM NAMED DOCKER YML FILES RUN
+docker-compose -f docker-compose-dev.yml up --build
