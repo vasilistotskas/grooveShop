@@ -2,19 +2,19 @@
   <div class="grid-container-cart">
     <div class="grid-container-cart-item-one">
       <router-link :to="productPath" aria-label="Product">
-        <img :src="item.product.main_image" width="75" height="75" class="card-img-top img-fluid" :alt="item.product.name">
+        <img :src="item.product.main_image" width="75" height="75" class="border-radius-img img-fluid" :alt="item.product.name">
         <span>{{ item.product.name }}</span>
       </router-link>
     </div>
     <div class="grid-container-cart-item-two">${{ item.product.price }}</div>
     <div class="grid-container-cart-item-three">
-      <a type="button" class="btn btn-outline-primary" data-mdb-ripple-color="dark" @click="decrementQuantity(item)">-</a>
+      <a type="button" class="btn-outline-primary-main" data-mdb-ripple-color="dark" @click="decrementQuantity(item)">-</a>
       {{ item.quantity }}
-      <a type="button" class="btn btn-outline-primary" data-mdb-ripple-color="dark" @click="incrementQuantity(item)">+</a>
+      <a type="button" class="btn-outline-primary-main" data-mdb-ripple-color="dark" @click="incrementQuantity(item)">+</a>
     </div>
     <div class="grid-container-cart-item-four">${{ itemTotal.toFixed(2) }}</div>
     <div class="grid-container-cart-item-five">
-      <button type="button" class="btn" @click="removeFromCart(item)">
+      <button type="button" class="btn-outline-primary-main" @click="removeFromCart(item)">
         <font-awesome-icon :icon="trashIcon" :style="{ color: '#3b3b3b' }"></font-awesome-icon>
       </button>
     </div>

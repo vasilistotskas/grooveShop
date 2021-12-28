@@ -4,41 +4,26 @@
   </div>
 </template>
 
-<script>
-import gql from 'graphql-tag'
+<script lang="ts">
+import store from "@/store"
+import PostModel from "@/state/blog/PostModel"
+import { Options, Vue } from "vue-class-component"
 import PostList from '@/components/Blog/PostList.vue'
-export default {
-  name: 'Blog',
+
+@Options({
+  name: "Blog",
   components: {
-    PostList,
-  },
-  apollo: {
-    allPosts: {
-      query: gql`query {
-        allPosts {
-          title
-          subtitle
-          publishDate
-          published
-          metaDescription
-          image
-          slug
-          author {
-            user {
-              email
-              firstName
-              lastName
-            }
-          }
-          tags {
-            name
-          }
-        }
-      }`,
-    }
-  },
-  mounted() {
+    PostList
+  }
+})
+
+export default class Blog extends Vue {
+  get allPosts(): PostModel[] {
+    return store.getters['blog/getAllPosts']
+  }
+  async mounted(): Promise<void> {
     document.title = 'Blog'
+    await store.dispatch('blog/allPostsFromRemote')
   }
 }
 </script>

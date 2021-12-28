@@ -115,7 +115,7 @@ export default class ProfileImage extends Vue {
       }
       label {
         position: absolute;
-        left: 38px;
+        left: 32px;
         top: 30px;
         &:hover {
           cursor: pointer;

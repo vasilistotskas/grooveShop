@@ -78,11 +78,6 @@ table {
   color: $primary-color-4!important;
 }
 
-.btn:focus {
-  outline: none;
-  box-shadow: none;
-}
-
 .plr-15 {
   padding-left: 15px;
   padding-right: 15px;
@@ -426,43 +421,6 @@ table {
   }
 }
 
-.btn {
-  display: inline-block;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #212529;
-  text-align: center;
-  text-decoration: none;
-  vertical-align: middle;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  background-color: transparent;
-  border: 1px solid transparent;
-  padding: 6px 12px;
-  font-size: 14px;
-  border-radius: 0.25rem;
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-  @media screen and (max-width: 1420px) {
-    font-size: 12px;
-  }
-  @media screen and (max-width: 1200px) {
-
-  }
-  @media screen and (max-width: 990px) {
-
-  }
-  @media screen and (max-width: 767px) {
-    font-size: 10px;
-    padding: 5px 10px;
-  }
-  @media screen and (max-width: 576px) {
-
-  }
-}
-
 .col-12 {
   position: relative;
   width: 100%;
@@ -606,5 +564,69 @@ table {
   }
   &-from {
 
+  }
+}
+
+.min-height-container {
+  min-height: 500px;
+}
+
+.border-radius-img {
+  border-radius: 10px;
+}
+
+.btn-outline-primary {
+  &-one, &-two, &-main {
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 7px;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    user-select: none;
+    border: 1px solid transparent;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    background-color: transparent;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border: unset;
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &-main {
+    background-color: transparent;
+    border: unset;
+  }
+  &-one {
+    color: #f8f8ff;
+    border: 1px solid #3b3b3b;
+    background-color: #333333;
+    a {
+      color: #f8f8ff;
+    }
+  }
+  &-two {
+    color: #f8f8ff;
+    border: 1px solid rgba(245, 30, 30, 0.7);
+    background-color: #f80000e0;
+    a {
+      color: #f8f8ff;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    font-size: 10px;
+    padding: 5px 10px;
   }
 }

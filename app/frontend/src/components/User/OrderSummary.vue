@@ -8,28 +8,26 @@
       <h3 class="is-size-4 mb-3">Order #{{ order.id }}</h3>
       <div class="box">
         <div class="card">
-          <div class="card-body card-body-border-top">
-            <table class="table is-fullwidth">
-              <thead>
-              <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-              </tr>
-              </thead>
-
-              <tbody>
-              <tr
-                  v-for="item in order.items"
-                  v-bind:key="item.product.id">
-                <td>{{ item.product.name }}</td>
-                <td>${{ item.product.price }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>${{ itemTotal(item).toFixed(2) }}</td>
-              </tr>
-              </tbody>
-            </table>
+          <div class="card-body card-body-order-history">
+            <div class="order-history-grid-head">
+              <span></span>
+              <span>Product</span>
+              <span>Price</span>
+              <span>Quantity</span>
+              <span>Total</span>
+            </div>
+            <div class="order-history-grid-body" v-for="item in order.items"
+                v-bind:key="item.product.id">
+                <router-link :to="'/product' + item.product.absolute_url" aria-label="Product">
+                  <span>
+                    <img :src="item.product.main_image" width="75" height="75" class="border-radius-img img-fluid" :alt="item.product.name">
+                  </span>
+                  <span>{{ item.product.name }}</span>
+                  <span>${{ item.product.price }}</span>
+                  <span>{{ item.quantity }}</span>
+                  <span>${{ itemTotal(item).toFixed(2) }}</span>
+                </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -67,3 +65,36 @@ export default class orderSummary extends Vue{
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .order-history-grid {
+    &-head, &-body a{
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 70px;
+      align-items: center;
+      justify-items: center;
+    }
+    &-head {
+      padding-bottom: 10px;
+    }
+    &-body {
+      padding: 10px;
+      box-shadow: 0 0 2px 1px rgb(0 0 0 / 25%);
+      border-radius: 5px;
+      background-color: white;
+      &:hover {
+        box-shadow: 0 0 2px 1px #f800007d;
+      }
+    }
+  }
+  .card-body-order-history {
+    background-color: $primary-color-4!important;
+    border-radius: 10px;
+    padding-top: 30px!important;
+    padding-bottom: 30px!important;
+    span, a {
+      color: $primary-color-2!important;
+    }
+  }
+</style>

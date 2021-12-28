@@ -1,62 +1,44 @@
 <template>
-  <div v-if="author" class="container mt-8 mb-5">
+  <div v-if="authorByEmail" class="container mt-8 mb-5">
     <h2>{{ displayName }}</h2>
-    <a :href="author.website" target="_blank" rel="noopener noreferrer">Website</a>
-    <p>{{ author.bio }}</p>
+    <a :href="authorByEmail.website" target="_blank" rel="noopener noreferrer">Website</a>
+    <p>{{ authorByEmail.bio }}</p>
 
     <h3>Posts by {{ displayName }}</h3>
-    <PostList :posts="author.postSet" :showAuthor="false" />
+    <PostList v-if="authorPostSet" :posts="authorPostSet" :showAuthor="false" />
   </div>
 </template>
 
-<script>
-import gql from 'graphql-tag'
+<script lang="ts">
+import store from "@/store"
+import PostModel from "@/state/blog/PostModel"
+import AuthorModel from "@/state/blog/AuthorModel"
+import { Options, Vue } from "vue-class-component"
 import PostList from '@/components/Blog/PostList.vue'
-export default {
-  name: 'Author',
+
+@Options({
+  name: "Author",
   components: {
-    PostList,
-  },
-  data () {
-    return {
-      author: null,
-    }
-  },
-  async created () {
-    const user = await this.$apollo.query({
-      query: gql`query ($email: String!) {
-        authorByEmail(email: $email) {
-          website
-          bio
-          user {
-            firstName
-            lastName
-            email
-          }
-          postSet {
-            title
-            subtitle
-            publishDate
-            published
-            metaDescription
-            image
-            slug
-            tags {
-              name
-            }
-          }
-        }
-      }`,
-      variables: {
-        email: this.$route.params.email,
-      },
-    })
-    this.author = user.data.authorByEmail
-  },
-  computed: {
-    displayName () {
-      return (this.author.user.firstName && this.author.user.lastName && `${this.author.user.firstName} ${this.author.user.lastName}`) || `${this.author.user.email}`
-    },
-  },
+    PostList
+  }
+})
+
+export default class Author extends Vue {
+
+  get authorByEmail(): AuthorModel {
+    return store.getters['blog/getAuthorByEmail']
+  }
+
+  get authorPostSet(): PostModel[] {
+    return this.authorByEmail.postSet
+  }
+
+  async created(): Promise<void> {
+    await store.dispatch('blog/authorByEmailFromRemote')
+  }
+
+  get displayName (): string {
+    return (this.authorByEmail.user?.firstName && this.authorByEmail.user?.lastName && `${this.authorByEmail.user?.firstName} ${this.authorByEmail.user?.lastName}`) || `${this.authorByEmail.user?.email}`
+  }
 }
 </script>

@@ -1,51 +1,36 @@
 <template>
   <div class="container mt-8 mb-5">
     <h2>Posts in #{{ $route.params.tag }}</h2>
-    <PostList :posts="posts" v-if="posts" />
+    <PostList :posts="postsByTag" v-if="postsByTag" />
   </div>
 </template>
 
-<script>
-import gql from 'graphql-tag'
+<script lang="ts">
+import store from "@/store"
+import PostModel from "@/state/blog/PostModel"
+import { Options, Vue } from "vue-class-component"
 import PostList from '@/components/Blog/PostList.vue'
-export default {
-  name: 'PostsByTag',
+
+@Options({
+  name: "PostsByTag",
   components: {
-    PostList,
-  },
-  data () {
-    return {
-      posts: null,
-    }
-  },
-  async created () {
-    const posts = await this.$apollo.query({
-      query: gql`query ($tag: String!) {
-        postsByTag(tag: $tag) {
-          title
-          subtitle
-          publishDate
-          published
-          metaDescription
-          image
-          slug
-          author {
-            user {
-              email
-              firstName
-              lastName
-            }
-          }
-          tags {
-            name
-          }
-        }
-      }`,
-      variables: {
-        tag: this.$route.params.tag,
-      },
-    })
-    this.posts = posts.data.postsByTag
-  },
+    PostList
+  }
+})
+
+export default class PostsByTag extends Vue {
+
+  get postsByTag(): PostModel[] {
+    return store.getters['blog/getPostsByTag']
+  }
+
+  async created(): Promise<void> {
+    await store.dispatch('blog/postsByTagFromRemote')
+  }
+
+  async updated(): Promise<void> {
+    await store.dispatch('blog/postsByTagFromRemote')
+  }
+
 }
 </script>

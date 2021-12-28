@@ -12,7 +12,7 @@
             <p>${{ product.price }}</p>
           </div>
           <div class="card-footer">
-            <a href="#" type="button" class="btn btn-product-card" v-bind:class="{'disabled': disabled }" @click.prevent="addToCart()">{{ addToCartButtonText }}</a>
+            <a href="#" type="button" class="btn-outline-primary-one btn-product-card" v-bind:class="{'disabled': disabled }" @click.prevent="addToCart()">{{ addToCartButtonText }}</a>
           </div>
         </div>
       </div>

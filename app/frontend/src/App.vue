@@ -48,7 +48,7 @@
               <!--Grid column-->
               <div class="grid-item-three">
                 <!-- Submit button -->
-                <button type="submit" class="btn btn-outline-primary mb-4">
+                <button type="submit" class="btn-outline-primary-one mb-4">
                   Subscribe
                 </button>
               </div>
@@ -358,7 +358,7 @@ export default class App extends Vue {
     &:hover {
       border-radius: 10px;
       transform: scale(1.01);
-      box-shadow: 0 0 10px 1px #ff7b7b;
+      box-shadow: 0 0 3px 1px #ff7b7b8a;
     }
   }
   .cardSpecialEffect {
@@ -439,20 +439,9 @@ export default class App extends Vue {
       bottom: 0;
     }
   }
-
-  .btn-outline-primary{
-    color: $primary-color-4!important;
-    border: 1px solid #3b3b3b!important;
-    background-color: rgb(51, 51, 51)!important;
-    &.active {
-      background-color: $primary-color-1!important;
-      border: 1px solid $primary-color-4!important;
-    }
-  }
-
   .main-section{
     @media screen and (min-width: 1200px){
-      min-height: 500px;
+      min-height: 750px;
       display: grid;
     }
   }

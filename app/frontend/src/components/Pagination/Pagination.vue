@@ -4,7 +4,7 @@
 
         <button
             type="button"
-            class="btn btn-outline-primary"
+            class="btn-outline-primary-one"
             @click="onClickFirstPage"
             :disabled="isInFirstPage"
             aria-label="Go to first page"
@@ -14,7 +14,7 @@
 
 
         <button
-            class="btn btn-outline-primary"
+            class="btn-outline-primary-one"
             type="button"
             @click="onClickPreviousPage"
             :disabled="isInFirstPage"
@@ -25,7 +25,7 @@
         </button>
 
         <button v-for="page in pages"
-            class="btn btn-outline-primary"
+            class="btn-outline-primary-one"
             type="button"
             @click="onClickPage(page.name)"
             :disabled="page.isDisabled"
@@ -37,7 +37,7 @@
         </button>
 
         <button
-            class="btn btn-outline-primary"
+            class="btn-outline-primary-one"
             type="button"
             @click="onClickNextPage"
             :disabled="isInLastPage"
@@ -47,7 +47,7 @@
         </button>
 
         <button
-            class="btn btn-outline-primary"
+            class="btn-outline-primary-one"
             type="button"
             @click="onClickLastPage"
             :disabled="isInLastPage"

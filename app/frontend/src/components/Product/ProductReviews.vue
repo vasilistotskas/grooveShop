@@ -1,14 +1,13 @@
 <template>
   <div class="card text-start col-sm-12 mt-2 mb-2" v-bind:class="{'user-review-card': this.review.user_id == userId }">
-    <div class="card-body">
+    <div class="card-body card-body-review">
       <p class="card-text"> USER NAME : {{ review.userprofile.first_name }}</p>
       <p class="card-text"> COMMENT : {{ review.comment }}</p>
       <p class="card-text"> RATE: {{ review.rate }}</p>
       <p class="card-text"> CREATED : {{ review.created_at }}</p>
 
-      <button v-if="this.review.user_id == userId" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button>
-
-      <button v-if="this.review.user_id == userId" class="btn btn-danger" @click="deleteReview(this.review.user_id, this.review.product_id)">Delete</button>
+      <button v-if="this.review.user_id == userId" class="btn-outline-primary-one">Update</button>
+      <button v-if="this.review.user_id == userId" class="btn-outline-primary-two" @click="deleteReview(this.review.user_id, this.review.product_id)">Delete</button>
 
     </div>
   </div>
@@ -45,7 +44,11 @@ export default class ProductReviews extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.user-review-card{
-  border: 1px solid rgb(255 141 0)
-}
+  .card-body-review {
+    background-color: $primary-color-4!important;
+    border-radius: 10px;
+    span, a, p {
+      color: $primary-color-2!important;
+    }
+  }
 </style>

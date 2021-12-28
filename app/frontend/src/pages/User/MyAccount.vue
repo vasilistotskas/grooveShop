@@ -20,7 +20,7 @@
             <font-awesome-icon :icon="heartIcon" size="1x" :style="{ color: 'white' }"></font-awesome-icon>
           </router-link>
         </div>
-        <button @click="logout()" class="btn">Log out</button>
+        <button @click="logout()" class="btn btn-outline-primary-two">Log out</button>
       </nav>
     </div>
 

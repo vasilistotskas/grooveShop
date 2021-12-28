@@ -3,7 +3,7 @@
   <div class="user-actions">
     <!-- Modal -->
     <form id="productReviewForm">
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -64,8 +64,7 @@
 
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="reviewHandle()">{{ reviewButtonText }}</button>
+              <button type="button" class="btn-outline-primary-one" @click="reviewHandle()">{{ reviewButtonText }}</button>
             </div>
           </div>
         </div>
@@ -186,7 +185,7 @@ export default class ProductReviewModal extends Vue {
   }
 
   get foregroundStars(): string[] {
-    const reviewStarRatio = this.rate * 0.1 * this.starCountMax
+    const reviewStarRatio = this.rate * 0.099 * this.starCountMax
     if (reviewStarRatio < 0.1) {
       return []
     }
@@ -202,7 +201,7 @@ export default class ProductReviewModal extends Vue {
   }
 
   get userHasAlreadyReviewedProduct(): boolean {
-    return store.getters['product/review/userHasAlreadyReviewedProduct']
+    return store.getters['product/review/getUserHasAlreadyReviewedProduct']
   }
 
   get userToProductReview(): ProductReviewModel {
@@ -349,6 +348,17 @@ export default class ProductReviewModal extends Vue {
       &-background {
         color: #ccc;
       }
+    }
+  }
+  #productReviewForm {
+    .modal-footer {
+      display: grid;
+      justify-content: end;
+      align-content: end;
+    }
+    .btn-outline-primary-one {
+      max-width: 130px;
+      min-width: 130px;
     }
   }
 </style>

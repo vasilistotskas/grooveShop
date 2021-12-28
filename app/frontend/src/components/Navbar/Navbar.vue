@@ -36,7 +36,7 @@
       <div class="search-header">
         <div class="search-buttons-container">
           <input v-model="searchQuery" @keyup.enter='searchPerform' class="form-control search-form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
-          <button class="btn" type="submit" aria-label="search" @click="searchPerform">
+          <button class="btn-outline-primary-main" type="submit" aria-label="search" @click="searchPerform">
             <font-awesome-icon :icon="searchIcon" size="lg" :style="{ color: '#3b3b3b' }"></font-awesome-icon>
           </button>
         </div>

@@ -27,7 +27,7 @@
             <strong>${{ cartTotalPrice.toFixed(2) }}</strong>, {{ cartTotalLength }} items
           </div>
           <div class="grid-container-child-two">
-            <router-link to="/cart/checkout" type="button" class="btn btn-outline-primary" aria-label="Checkout">Proceed to checkout</router-link>
+            <router-link to="/cart/checkout" type="button" class="btn-outline-primary-one" aria-label="Checkout">Proceed to checkout</router-link>
           </div>
 
         </div>
@@ -80,7 +80,7 @@ export default class CartVue extends Vue {
     border-radius: 10px;
     padding: 15px 30px 30px;
     gap: 25px;
-    a, h2 {
+    h2 {
       color: $primary-color-2;
     }
     .grid-container-item {

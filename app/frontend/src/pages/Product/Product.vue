@@ -1,7 +1,7 @@
 <template>
-  <div class="container mt-7" v-if="product && Object.keys(product).length > 0">
+  <div class="container min-height-container mt-7">
     <Breadcrumbs :routeParams="this.$route.params"></Breadcrumbs>
-    <div class="product-page-grid-container mb-5">
+    <div class="product-page-grid-container mb-5" v-if="product && Object.keys(product).length > 0">
         <div class="product-page-grid-image">
           <figure
                   v-for="image in product.images"
@@ -15,11 +15,10 @@
         <div class="product-page-grid-right">
           <div class="product-page-grid-info-part-one">
             <div class="product-page-grid-info">
-              <h1 class="title mb-1">{{ product.name }}</h1>
-              <h5 class="mb-1"><strong>Product ID: </strong>{{ product.id }}</h5>
+              <h1 class="title mb-2">{{ product.name }}</h1>
+              <h5 class="mb-2"><strong>Product ID: </strong>{{ product.id }}</h5>
               <!-- Product Review -->
-              <a type="button" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">Product Review</a>
-              <p class="description">{{ product.description }}</p>
+              <p class="description mb-2" v-html="product.description"></p>
             </div>
 
             <div class="product-page-grid-price">
@@ -36,7 +35,7 @@
 
             <div class="product-page-grid-buttons">
                 <input type="number" class="input" min="1" v-model="quantity">
-                <button type="button" class="btn btn-outline-primary addToCartButton col-12 col-md-8" v-bind:class="{'disabled': disabled }" @click="addToCart()">{{ addToCartButtonText }}</button>
+                <button type="button" class="btn-outline-primary-one addToCartButton" v-bind:class="{'disabled': disabled }" @click="addToCart()">{{ addToCartButtonText }}</button>
                 <FavouriteButton :product="product"></FavouriteButton>
             </div>
           </div>
@@ -52,24 +51,27 @@
   </div>
 
   <!-- Component must be -->
-  <div class="container-small">
-    <div class="product-page-grid-review" id="reviews-container" v-if="productReviews && Object.keys(productReviews).length > 0">
-      <div class="grid-item-two">
-        <h5>REVIEW AVERAGE : {{ productReviewsAverage }}</h5>
-        <h5>REVIEW COUNTER : {{ productReviewsCounter }}</h5>
-      </div>
-      <div class="grid-item-two">
-        <h2 class="title section-title">
-          <span class="content">Reviews</span>
-        </h2>
+  <div class="product-reviews-container">
+    <div class="container-small">
+      <div class="product-page-grid-review" id="reviews-container" v-if="productReviews && Object.keys(productReviews).length > 0">
+        <div class="grid-item-two">
+          <h5>REVIEW AVERAGE : {{ productReviewsAverage }}</h5>
+          <h5>REVIEW COUNTER : {{ productReviewsCounter }}</h5>
+        </div>
+        <div class="grid-item-two">
+          <h2 class="title section-title">
+            <span class="content">Reviews</span>
+          </h2>
 
-        <ProductReviews
-            v-for="review in productReviews"
-            v-bind:key="review.id"
-            v-bind:review="review"/>
+          <ProductReviews
+              v-for="review in productReviews"
+              v-bind:key="review.id"
+              v-bind:review="review"/>
+        </div>
       </div>
     </div>
   </div>
+
 
 
 </template>
@@ -182,6 +184,10 @@ export default class ProductVue extends Vue {
     .image-main {
       grid-column: 1/4;
       grid-row: 1;
+      img {
+        display: block;
+        margin: 0 auto;
+      }
     }
     @media screen and (max-width: 767px){
       margin-bottom: 20px;
@@ -238,6 +244,13 @@ export default class ProductVue extends Vue {
       opacity: 0.5;
       cursor: not-allowed;
     }
+  }
+  .container-small {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  .product-reviews-container {
+    background-color: white;
   }
 
 </style>

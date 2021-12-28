@@ -1,9 +1,9 @@
 <template>
-  <div class="grid-post-list" v-if="publishedPosts && Object.keys(publishedPosts).length > 0">
-    <div v-for="post in publishedPosts" :key="post.title" class="cardSpecialEffect">
+  <div class="grid-post-list" v-if="posts && Object.keys(posts).length > 0">
+    <div v-for="post in posts" :key="post.title" class="cardSpecialEffect">
       <router-link :to="`/post/${post.slug}`" aria-label="Blog Post">
         <div class="card blog-card">
-          <img class="img-fluid" v-bind:src="axiosBaseUrl + '/static/media/' + post.image" :alt="post.title">
+          <img class="img-fluid" v-bind:src="axiosBaseUrl + '/media/' + post.image" :alt="post.title">
           <div class="card-body">
             <span class="card-title">{{ post.title }}: {{ post.subtitle }}</span>
             <span v-if="showAuthor">
@@ -28,13 +28,16 @@
 
 </template>
 
-<script>
+<script lang="ts">
+import store from "@/store"
+import PostModel from "@/state/blog/PostModel"
+import { Options, Vue } from "vue-class-component"
 import AuthorLink from '@/components/Blog/AuthorLink.vue'
-import store from "@/state";
-export default {
-  name: 'PostList',
+
+@Options({
+  name: "PostList",
   components: {
-    AuthorLink,
+    AuthorLink
   },
   props: {
     posts: {
@@ -45,21 +48,31 @@ export default {
       type: Boolean,
       required: false,
       default: true,
-    },
-  },
-  computed: {
-    publishedPosts () {
-      return this.posts.filter(post => post.published)
-    },
-    axiosBaseUrl () {
-      return this.$store.getters['app/axiosBaseUrl']
     }
-  },
-  methods: {
-    displayableDate (date) {
-      return new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(new Date(date))
-    }
-  },
+  }
+})
+
+export default class PostList extends Vue {
+  showAuthor: boolean = false
+  posts: PostModel[] = []
+
+  get publishedPosts(): PostModel[] {
+    return store.getters['blog/getPublishedPosts']
+  }
+
+  get postsByTag(): PostModel[] {
+    return store.getters['blog/getPostsByTag']
+  }
+
+  get axiosBaseUrl(): string {
+    return store.getters['app/axiosBaseUrl']
+  }
+
+  public displayableDate(date: string): string {
+    const options: any = { dateStyle: "full", timeStyle: "medium" }
+    return new Intl.DateTimeFormat('en-US', options).format(new Date(date))
+  }
+
 }
 </script>
 
