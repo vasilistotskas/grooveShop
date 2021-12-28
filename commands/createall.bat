@@ -4,8 +4,11 @@ REM createproductfaker.bat
 REM createordersfaker.bat
 REM createblogfaker.bat
 
-docker exec -it a3ac56249ac3 python manage.py populate_orders
-docker exec -it fb3ae7fa4bec python manage.py collectstatic --noinput
+docker exec -it 285fd21a2e1d python manage.py populate_users
+docker exec -it 285fd21a2e1d python manage.py populate_products
+docker exec -it 285fd21a2e1d python manage.py populate_orders
+docker exec -it 285fd21a2e1d python manage.py populate_blog
+docker exec -it 285fd21a2e1d python manage.py collectstatic --noinput
 
 REM FOR PYTHON ENV
 docker exec -it c0c5 /bin/sh
