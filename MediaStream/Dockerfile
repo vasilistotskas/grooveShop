@@ -1,4 +1,4 @@
-FROM node:16.13.1-alpine AS development
+FROM node:16.13.1-alpine as development
 
 WORKDIR /usr/src/app
 
@@ -27,5 +27,8 @@ COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
 
+ENV PORT=3003
+
+EXPOSE 3003
 
 CMD ["node", "dist/main"]
