@@ -111,6 +111,26 @@ services:
       - app
     restart: always
 
+  service-media_stream:
+    container_name: service-media_stream
+    image: service-manager:${SERVICE_MANAGER_IMAGE_REV}-dev
+    build:
+      context: ./MediaStream
+      target: production
+      dockerfile: ./Dockerfile
+    command: npm run start:prod
+    ports:
+      - 3003:3003
+    volumes:
+      - ./MediaStream:/usr/src/app
+      - /usr/src/app/node_modules
+      - service-media_stream:/usr/src/app/storage
+    restart: unless-stopped
+    depends_on:
+      - db
+      - redis
+      - app
+
 #  frontend:
 #    container_name: frontend
 #    image: vuejs/ci
@@ -134,3 +154,4 @@ services:
 volumes:
   postgres_data:
   production_static_data:
+  service-media_stream:
