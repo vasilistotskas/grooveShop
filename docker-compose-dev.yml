@@ -9,15 +9,13 @@ services:
     restart: always
     command: >
       sh -c "python manage.py wait_for_db &&
-             python manage.py collectstatic --noinput &&
              python manage.py migrate &&
-             gunicorn app.wsgi:application --bind 0.0.0.0:8000"
+             python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
     volumes:
       - ./app:/app
-      - ./app/static:/backend/static
-      - ./app/media:/backend/media
-    expose:
-      - 8000
+      - production_static_data:/vol/web
     environment:
       - DEBUG=${DEBUG}
       - SECRET_KEY=${SECRET_KEY}
@@ -70,24 +68,6 @@ services:
     depends_on:
       - db
 
-  celery:
-    container_name: celery
-    image: celery
-    build:
-      context: .
-      dockerfile: docker/Backend.Dockerfile
-    restart: always
-    command: celery -A app worker -l info
-    volumes:
-      - ./app:/app
-    environment:
-      - SECRET_KEY=${SECRET_KEY}
-      - DEBUG=${DEBUG}
-    depends_on:
-      - db
-      - redis
-      - app
-
   redis:
     container_name: redis
     image: redis
@@ -95,41 +75,23 @@ services:
     ports:
       - 6379:6379
 
-  nginx:
-    image: nginx:mainline
-    build:
-      context: ./nginx
-      dockerfile: Nginx.Dockerfile
-    volumes:
-      - ./app:/app
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./app/static:/static
-      - ./app/media:/media
-    ports:
-      - 8000:8000
-    depends_on:
-      - app
-    restart: always
-
-  service-media_stream:
-    container_name: service-media_stream
-    image: service-manager:${SERVICE_MANAGER_IMAGE_REV}-dev
-    build:
-      context: ./MediaStream
-      target: production
-      dockerfile: ./Dockerfile
-    command: npm run start:prod
-    ports:
-      - 3003:3003
-    volumes:
-      - ./MediaStream:/usr/src/app
-      - /usr/src/app/node_modules
-      - service-media_stream:/usr/src/app/storage
-    restart: unless-stopped
-    depends_on:
-      - db
-      - redis
-      - app
+#  celery:
+#    container_name: celery
+#    image: celery
+#    build:
+#      context: .
+#      dockerfile: docker/Backend.Dockerfile
+#    restart: always
+#    command: celery -A app worker -l info
+#    volumes:
+#      - ./app:/app
+#    environment:
+#      - SECRET_KEY=${SECRET_KEY}
+#      - DEBUG=${DEBUG}
+#    depends_on:
+#      - db
+#      - redis
+#      - app
 
 #  frontend:
 #    container_name: frontend
@@ -154,4 +116,3 @@ services:
 volumes:
   postgres_data:
   production_static_data:
-  service-media_stream:

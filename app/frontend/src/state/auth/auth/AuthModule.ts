@@ -18,6 +18,7 @@ export default class AuthModule
 {
     TOKEN_STORAGE_KEY = 'TOKEN_STORAGE_KEY'
     isProduction = process.env.NODE_ENV === 'production'
+    isSessionAuthenticated = false
 
     initialState = {
         authenticating: false,
@@ -30,11 +31,17 @@ export default class AuthModule
     }
 
     get isAuthenticated (): boolean {
-        return this.initialState.token != null
+        return this.isSessionAuthenticated
+        // return this.initialState.token != null  <--- this for token auth
     }
 
     get authToken (): null | string {
         return this.initialState.token
+    }
+
+    @Mutation
+    [BaseAuthenticationTypes.SET_SESSION_AUTH](payload: any) {
+        this.isSessionAuthenticated = payload
     }
 
     @Mutation
@@ -59,6 +66,7 @@ export default class AuthModule
     [BaseAuthenticationTypes.LOGOUT]() {
         this.initialState.authenticating = false
         this.initialState.error = false
+        this.isSessionAuthenticated = false
     }
 
     @Mutation
@@ -109,6 +117,16 @@ export default class AuthModule
     @Action
     async initialize(): Promise<void> {
         const token = localStorage.getItem(this.TOKEN_STORAGE_KEY)
+
+        await api.get('session/')
+            .then((response: ResponseData) => {
+                this.context.commit(BaseAuthenticationTypes.SET_SESSION_AUTH, response.data.isAuthenticated)
+            })
+            .catch((e: Error) => {
+                console.log(e)
+            })
+
+        // for token auth
         if (this.isProduction && token) {
             this.context.commit(BaseAuthenticationTypes.REMOVE_TOKEN)
         }

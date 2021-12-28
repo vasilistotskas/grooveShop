@@ -70,22 +70,22 @@
       <div class="home-usp-grid-content mb-5">
 
         <div class="grid-usp-item">
-          <font-awesome-icon v-if="isMobile" :icon="['fa', 'phone']" :style="{ color: '#080808' }"></font-awesome-icon>
-          <font-awesome-icon v-else :icon="['fa', 'phone']" size="3x" :style="{ color: '#080808' }"></font-awesome-icon>
+          <font-awesome-icon v-if="isMobile" :icon="phoneIcon" :style="{ color: '#080808' }"></font-awesome-icon>
+          <font-awesome-icon v-else :icon="phoneIcon" size="3x" :style="{ color: '#080808' }"></font-awesome-icon>
           <span>Lorem Ipsum
             <span>Lorem Ipsum</span>
           </span>
         </div>
         <div class="grid-usp-item">
-          <font-awesome-icon v-if="isMobile" :icon="['fa', 'envelope']" :style="{ color: '#080808' }"></font-awesome-icon>
-          <font-awesome-icon v-else :icon="['fa', 'envelope']" size="3x" :style="{ color: '#080808' }"></font-awesome-icon>
+          <font-awesome-icon v-if="isMobile" :icon="envelopeIcon" :style="{ color: '#080808' }"></font-awesome-icon>
+          <font-awesome-icon v-else :icon="envelopeIcon" size="3x" :style="{ color: '#080808' }"></font-awesome-icon>
           <span>Lorem Ipsum
             <span>Lorem Ipsum</span>
           </span>
         </div>
         <div class="grid-usp-item">
-          <font-awesome-icon v-if="isMobile" :icon="['fa', 'comment']" :style="{ color: '#080808' }"></font-awesome-icon>
-          <font-awesome-icon v-else :icon="['fa', 'comment']" size="3x" :style="{ color: '#080808' }"></font-awesome-icon>
+          <font-awesome-icon v-if="isMobile" :icon="commentIcon" :style="{ color: '#080808' }"></font-awesome-icon>
+          <font-awesome-icon v-else :icon="commentIcon" size="3x" :style="{ color: '#080808' }"></font-awesome-icon>
           <span>Lorem Ipsum
             <span>Lorem Ipsum</span>
           </span>
@@ -121,8 +121,13 @@ import { Options, Vue } from "vue-class-component"
 import SliderModel from '@/state/slider/SliderModel'
 import ProductModel from "@/state/product/ProductModel"
 import ProductCard from "@/components/Product/ProductCard.vue"
-SwiperCore.use([Navigation,Pagination,Mousewheel,Keyboard])
 import SwiperCore, { Navigation,Pagination,Mousewheel,Keyboard } from 'swiper'
+import { faPhone } from '@fortawesome/free-solid-svg-icons/faPhone'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
+import { faComment } from '@fortawesome/free-solid-svg-icons/faComment'
+
+
+SwiperCore.use([Navigation,Pagination,Mousewheel,Keyboard])
 
 @Options({
   name: "Home",
@@ -143,6 +148,16 @@ export default class Home extends Vue {
     '--swiper-pagination-color': '#fff'
   }
 
+  get phoneIcon(): typeof faPhone {
+    return faPhone
+  }
+  get envelopeIcon(): typeof faEnvelope {
+    return faEnvelope
+  }
+  get commentIcon(): typeof faComment {
+    return faComment
+  }
+
   get isMobile(): boolean {
     return store.getters['app/isMobile']
   }
@@ -160,8 +175,9 @@ export default class Home extends Vue {
   }
 
   private mainSliderVideoInit(): void {
-    if (this.homepageSlider && Object.keys(this.homepageSlider).length > 0) {
+    if (this.homepageSlider && Object.keys(this.homepageSlider).length > 0 && this.$refs.mainSliderVideoRef) {
       this.$refs.mainSliderVideoRef.src = this.axiosBaseUrl + this.homepageSlider[0].video
+      this.$refs.mainSliderVideoRef.crossOrigin = "anonymous"
       this.$refs.mainSliderVideoRef.loop = false
       this.$refs.mainSliderVideoRef.autoplay = true
       this.$refs.mainSliderVideoRef.playsInline = true

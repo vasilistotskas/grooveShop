@@ -15,7 +15,7 @@
     <div class="grid-container-cart-item-four">${{ itemTotal.toFixed(2) }}</div>
     <div class="grid-container-cart-item-five">
       <button type="button" class="btn" @click="removeFromCart(item)">
-        <font-awesome-icon icon="trash" :style="{ color: '#3b3b3b' }"></font-awesome-icon>
+        <font-awesome-icon :icon="trashIcon" :style="{ color: '#3b3b3b' }"></font-awesome-icon>
       </button>
     </div>
   </div>
@@ -25,6 +25,7 @@
 import store from '@/store'
 import { Options, Vue } from "vue-class-component"
 import CartItemModel from "@/state/cart/CartItemModel"
+import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash"
 
 @Options({
   name: "CartItem",
@@ -38,6 +39,10 @@ import CartItemModel from "@/state/cart/CartItemModel"
 export default class CartItemVue extends Vue {
 
     item = new CartItemModel()
+
+  get trashIcon(): typeof faTrash {
+    return faTrash
+  }
 
     get isMobile(): boolean {
       return store.getters['app/isMobile']

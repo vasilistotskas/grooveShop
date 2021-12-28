@@ -1,8 +1,8 @@
 <template>
   <button type="button"  data-mdb-ripple-color="dark" class="btn btn-outline-primary col-12 col-md-4" @click="favouriteHandle()">
     <i :class=favouriteIconClass()></i>
-    <font-awesome-icon v-if="!this.isFavourite" size="2x" icon="heart" :style="{ color: 'white' }"></font-awesome-icon>
-    <font-awesome-icon v-else size="2x" icon="heart" :style="{ color: '#f80000e0' }"></font-awesome-icon>
+    <font-awesome-icon v-if="!this.isFavourite" size="2x" :icon="heartIcon" :style="{ color: 'white' }"></font-awesome-icon>
+    <font-awesome-icon v-else size="2x" :icon="heartIcon" :style="{ color: '#f80000e0' }"></font-awesome-icon>
   </button>
 </template>
 
@@ -11,6 +11,7 @@
 import store from '@/store'
 import { Options, Vue } from "vue-class-component"
 import ProductModel from "@/state/product/ProductModel"
+import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 
 @Options({
   name: "FavouriteButton",
@@ -21,6 +22,10 @@ import ProductModel from "@/state/product/ProductModel"
 export default class FavouriteButton extends Vue {
 
   product = new ProductModel()
+
+  get heartIcon(): typeof faHeart {
+    return faHeart
+  }
 
   get isFavourite(): ProductModel {
     // const productId = this.product.id

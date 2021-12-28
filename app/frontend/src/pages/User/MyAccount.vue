@@ -9,15 +9,15 @@
         <div class="my-account-grid-navbar-paths" id="navbarNavAccount">
           <router-link class="nav-link" :to="{ name: 'Settings' }" aria-label="Settings">
             Settings
-            <font-awesome-icon icon="cogs" size="1x" :style="{ color: 'white' }"></font-awesome-icon>
+            <font-awesome-icon :icon="cogsIcon" size="1x" :style="{ color: 'white' }"></font-awesome-icon>
           </router-link>
           <router-link class="nav-link" :to="{ name: 'Orders' }" aria-label="Orders">
             Orders
-            <font-awesome-icon icon="truck" size="1x" :style="{ color: 'white' }"></font-awesome-icon>
+            <font-awesome-icon :icon="truckIcon" size="1x" :style="{ color: 'white' }"></font-awesome-icon>
           </router-link>
           <router-link class="nav-link" :to="{ name: 'Favourites' }" aria-label="Favourites">
             Favourites
-            <font-awesome-icon icon="heart" size="1x" :style="{ color: 'white' }"></font-awesome-icon>
+            <font-awesome-icon :icon="heartIcon" size="1x" :style="{ color: 'white' }"></font-awesome-icon>
           </router-link>
         </div>
         <button @click="logout()" class="btn">Log out</button>
@@ -36,7 +36,9 @@ import router from "@/routes"
 import {Options, Vue} from "vue-class-component"
 import ProfileImage from "@/components/User/ProfileImage.vue"
 import UserDetailsModel from "@/state/user/data/UserDetailsModel"
-import CountryModel from "@/state/country/CountryModel";
+import { faCogs } from "@fortawesome/free-solid-svg-icons/faCogs"
+import { faHeart } from "@fortawesome/free-solid-svg-icons/faHeart"
+import { faTruck } from "@fortawesome/free-solid-svg-icons/faTruck"
 
 @Options({
   name: "MyAccount",
@@ -47,6 +49,16 @@ import CountryModel from "@/state/country/CountryModel";
 
 export default class MyAccount extends Vue {
   profileImageUrl: string = ''
+
+  get cogsIcon(): typeof faCogs {
+    return faCogs
+  }
+  get truckIcon(): typeof faTruck {
+    return faTruck
+  }
+  get heartIcon(): typeof faHeart {
+    return faHeart
+  }
 
   created() {
     this.$watch(

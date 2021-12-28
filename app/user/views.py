@@ -14,7 +14,6 @@ from rest_framework import authentication, permissions, generics
 from .serializers import UserProfileSerializer, CountrySerializer, RegionSerializer
 
 
-
 class ActivateUser(UserViewSet):
     def get_serializer(self, *args, **kwargs):
         serializer_class = self.get_serializer_class()
