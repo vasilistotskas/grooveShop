@@ -1,7 +1,7 @@
 import router from "@/routes"
 import gql from 'graphql-tag'
 import PostModel from "@/state/blog/PostModel"
-import { client } from '../../../apollo.provider'
+import { clientApollo } from '../../../apollo.provider'
 import AuthorModel from "@/state/blog/AuthorModel"
 import AppBaseModule from "@/state/common/AppBaseModule"
 import { Action, Module, Mutation } from 'vuex-module-decorators'
@@ -57,7 +57,7 @@ export default class BlogModule
 
     @Action
     async allPostsFromRemote(): Promise<void> {
-        const posts = await client.query({
+        const posts = await clientApollo.query({
             query: gql`query {
                 allPosts {
                   title
@@ -88,7 +88,7 @@ export default class BlogModule
 
     @Action
     async postsByTagFromRemote(): Promise<void> {
-        const posts = await client.query({
+        const posts = await clientApollo.query({
             query: gql`query ($tag: String!) {
                 postsByTag(tag: $tag) {
                   title
@@ -119,7 +119,7 @@ export default class BlogModule
 
     @Action
     async postBySlugFromRemote(): Promise<void> {
-        const post = await client.query({
+        const post = await clientApollo.query({
             query: gql`query ($slug: String!) {
               postBySlug(slug: $slug) {
                 title
@@ -150,7 +150,7 @@ export default class BlogModule
 
     @Action
     async authorByEmailFromRemote(): Promise<void> {
-        const author = await client.query({
+        const author = await clientApollo.query({
             query: gql`query ($email: String!) {
                 authorByEmail(email: $email) {
                   website
