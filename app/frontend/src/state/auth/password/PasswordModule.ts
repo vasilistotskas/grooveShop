@@ -40,50 +40,50 @@ export default class PasswordModule
     }
 
     @Mutation
-    [BaseAuthenticationTypes.PASSWORD_RESET_BEGIN]() {
+    [BaseAuthenticationTypes.PASSWORD_RESET_BEGIN](): void {
         this.resetLoading = true
     }
 
     @Mutation
-    [BaseAuthenticationTypes.PASSWORD_RESET_CLEAR]() {
+    [BaseAuthenticationTypes.PASSWORD_RESET_CLEAR](): void {
         this.resetCompleted = false
         this.resetError = false
         this.resetLoading = false
     }
 
     @Mutation
-    [BaseAuthenticationTypes.PASSWORD_RESET_FAILURE]() {
+    [BaseAuthenticationTypes.PASSWORD_RESET_FAILURE](): void {
         this.resetError = true
         this.resetLoading = false
     }
 
     @Mutation
-    [BaseAuthenticationTypes.PASSWORD_RESET_SUCCESS]() {
+    [BaseAuthenticationTypes.PASSWORD_RESET_SUCCESS](): void {
         this.resetCompleted = true
         this.resetError = false
         this.resetLoading = false
     }
 
     @Mutation
-    [BaseAuthenticationTypes.PASSWORD_EMAIL_BEGIN]() {
+    [BaseAuthenticationTypes.PASSWORD_EMAIL_BEGIN](): void {
         this.emailLoading = true
     }
 
     @Mutation
-    [BaseAuthenticationTypes.PASSWORD_EMAIL_CLEAR]() {
+    [BaseAuthenticationTypes.PASSWORD_EMAIL_CLEAR](): void {
         this.emailCompleted = false
         this.emailError = false
         this.emailLoading = false
     }
 
     @Mutation
-    [BaseAuthenticationTypes.PASSWORD_EMAIL_FAILURE]() {
+    [BaseAuthenticationTypes.PASSWORD_EMAIL_FAILURE](): void {
         this.emailError = true
         this.emailLoading = false
     }
 
     @Mutation
-    [BaseAuthenticationTypes.PASSWORD_EMAIL_SUCCESS]() {
+    [BaseAuthenticationTypes.PASSWORD_EMAIL_SUCCESS](): void {
         this.emailCompleted = true
         this.emailError = false
         this.emailLoading = false

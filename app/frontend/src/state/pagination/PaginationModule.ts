@@ -124,7 +124,7 @@ export default class PaginationModule
     }
 
     @Action
-    async getPaginatedResults(params:any): Promise<void> {
+    async getPaginatedResults(params: any): Promise<void> {
         const baseUrl = '/api/v1'
         await store.commit('app/setLoading', true)
         session({

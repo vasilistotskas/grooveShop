@@ -78,7 +78,7 @@ export default class CountryModule
     }
 
     @Action
-    async findRegionsBasedOnAlphaFromInput(countryAlpha2Key: string): Promise<void> {
+    async findRegionsBasedOnAlphaFromInput(countryAlpha2Key: CountryModel['alpha_2']): Promise<void> {
         const country = <CountryModel>find(this.countries, ['alpha_2', countryAlpha2Key])
         await this.context.commit('setSelectedCountry', country)
         await this.context.commit('setRegionsBasedOnAlpha', country.regions)

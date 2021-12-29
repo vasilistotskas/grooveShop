@@ -40,44 +40,44 @@ export default class AuthModule
     }
 
     @Mutation
-    [BaseAuthenticationTypes.SET_SESSION_AUTH](payload: any) {
+    [BaseAuthenticationTypes.SET_SESSION_AUTH](payload: any): void {
         this.isSessionAuthenticated = payload
     }
 
     @Mutation
-    [BaseAuthenticationTypes.LOGIN_BEGIN]() {
+    [BaseAuthenticationTypes.LOGIN_BEGIN](): void {
         this.initialState.authenticating = true
         this.initialState.error = false
     }
 
     @Mutation
-    [BaseAuthenticationTypes.LOGIN_FAILURE]() {
+    [BaseAuthenticationTypes.LOGIN_FAILURE](): void {
         this.initialState.authenticating = false
         this.initialState.error = true
     }
 
     @Mutation
-    [BaseAuthenticationTypes.LOGIN_SUCCESS]() {
+    [BaseAuthenticationTypes.LOGIN_SUCCESS](): void {
         this.initialState.authenticating = true
         this.initialState.error = false
     }
 
     @Mutation
-    [BaseAuthenticationTypes.LOGOUT]() {
+    [BaseAuthenticationTypes.LOGOUT](): void {
         this.initialState.authenticating = false
         this.initialState.error = false
         this.isSessionAuthenticated = false
     }
 
     @Mutation
-    [BaseAuthenticationTypes.SET_TOKEN](token: any) {
+    [BaseAuthenticationTypes.SET_TOKEN](token: any): void {
         if (!this.isProduction) localStorage.setItem(this.TOKEN_STORAGE_KEY, token)
         session.defaults.headers.common["Authorization"] = "Token " + token
         this.initialState.token = token
     }
 
     @Mutation
-    [BaseAuthenticationTypes.REMOVE_TOKEN]() {
+    [BaseAuthenticationTypes.REMOVE_TOKEN](): void {
         localStorage.removeItem(this.TOKEN_STORAGE_KEY)
         localStorage.removeItem("userid")
         session.defaults.headers.common["Authorization"] = ""

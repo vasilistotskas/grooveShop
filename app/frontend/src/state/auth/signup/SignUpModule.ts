@@ -43,50 +43,50 @@ export default class SignUpModule
     }
 
     @Mutation
-    [BaseAuthenticationTypes.ACTIVATION_BEGIN]() {
+    [BaseAuthenticationTypes.ACTIVATION_BEGIN](): void {
         this.activationLoading = true
     }
 
     @Mutation
-    [BaseAuthenticationTypes.ACTIVATION_CLEAR]() {
+    [BaseAuthenticationTypes.ACTIVATION_CLEAR](): void {
         this.activationCompleted = false
         this.activationError = false
         this.activationLoading = false
     }
 
     @Mutation
-    [BaseAuthenticationTypes.ACTIVATION_FAILURE]() {
+    [BaseAuthenticationTypes.ACTIVATION_FAILURE](): void {
         this.activationError = true
         this.activationLoading = false
     }
 
     @Mutation
-    [BaseAuthenticationTypes.ACTIVATION_SUCCESS]() {
+    [BaseAuthenticationTypes.ACTIVATION_SUCCESS](): void {
         this.activationCompleted = true
         this.activationError = false
         this.activationLoading = false
     }
 
     @Mutation
-    [BaseAuthenticationTypes.REGISTRATION_BEGIN]() {
+    [BaseAuthenticationTypes.REGISTRATION_BEGIN](): void {
         this.registrationLoading = true
     }
 
     @Mutation
-    [BaseAuthenticationTypes.REGISTRATION_CLEAR]() {
+    [BaseAuthenticationTypes.REGISTRATION_CLEAR](): void {
         this.registrationCompleted = false
         this.registrationError = false
         this.registrationLoading = false
     }
 
     @Mutation
-    [BaseAuthenticationTypes.REGISTRATION_FAILURE]() {
+    [BaseAuthenticationTypes.REGISTRATION_FAILURE](): void {
         this.registrationError = true
         this.registrationLoading = false
     }
 
     @Mutation
-    [BaseAuthenticationTypes.REGISTRATION_SUCCESS]() {
+    [BaseAuthenticationTypes.REGISTRATION_SUCCESS](): void {
         this.registrationCompleted = true
         this.registrationError = false
         this.registrationLoading = false
@@ -124,11 +124,13 @@ export default class SignUpModule
             })
     }
 
-    clearRegistrationStatus() {
+    @Action
+    async clearRegistrationStatus(): Promise<void> {
         this.context.commit(BaseAuthenticationTypes.REGISTRATION_CLEAR)
     }
 
-    clearActivationStatus() {
+    @Action
+    async clearActivationStatus(): Promise<void> {
         this.context.commit(BaseAuthenticationTypes.ACTIVATION_CLEAR)
     }
 
