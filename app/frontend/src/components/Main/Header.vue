@@ -23,6 +23,7 @@ import Navbar from '@/components/Navbar/Navbar.vue'
   }
 })
 export default class Header extends Vue {
+
   public showMobileMenu = false
 
   get cartTotalLength(): number {
@@ -41,7 +42,7 @@ export default class Header extends Vue {
     z-index: 12;
 
     .preheadcust {
-      background-color: #191919;
+      background-color: $primary-color-5;
       text-align: center;
       font-size: 14px;
       color: $primary-color-4!important;

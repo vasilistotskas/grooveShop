@@ -21,7 +21,9 @@ import { Options, Vue } from "vue-class-component"
 })
 
 export default class Breadcrumbs extends Vue {
+
   routeParams!: {}
+
 }
 
 </script>
@@ -36,8 +38,8 @@ ul.breadcrumb {
 
 .breadcrumb__item {
   height: 100%;
-  background-color: white;
-  color: #252525;
+  background-color: $primary-color-4;
+  color: $primary-color-3;
   font-family: 'Oswald', sans-serif;
   border-radius: 7px;
   letter-spacing: 1px;
@@ -55,8 +57,8 @@ ul.breadcrumb {
 }
 
 .breadcrumb__item:hover {
-  background: #490099;
-  color: #FFF;
+  background: $primary-color-3;
+  color: $primary-color-4;
 }
 
 .breadcrumb__inner {

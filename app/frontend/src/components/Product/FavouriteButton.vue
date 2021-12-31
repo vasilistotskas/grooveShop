@@ -28,7 +28,6 @@ export default class FavouriteButton extends Vue {
   }
 
   get isFavourite(): ProductModel {
-    // const productId = this.product.id
     return store.getters['product/favourite/getStateIsCurrentProductInFavourites']
   }
 
@@ -50,7 +49,7 @@ export default class FavouriteButton extends Vue {
   background: #e4e4e4;
   .fa-heart{ font-size: 20px;
     &.fas{
-      color: red;
+      color: $primary-color-1;
     }
   }
 }

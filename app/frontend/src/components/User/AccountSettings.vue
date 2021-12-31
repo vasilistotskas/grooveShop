@@ -185,6 +185,16 @@ let {
 
 export default class AccountSettings extends Vue {
 
+  userDetails = new UserDetailsModel()
+  userData = new UserDetailsModel()
+  submitButtonText: string = 'Update'
+
+  async mounted(): Promise<void> {
+    document.title = 'My Settings | grooveShop'
+
+    this.userDetailsInitialize()
+  }
+
   formManager = {
     form,
     submitting,
@@ -240,10 +250,6 @@ export default class AccountSettings extends Vue {
     }
   })
 
-  userDetails = new UserDetailsModel()
-  userData = new UserDetailsModel()
-  submitButtonText: string = 'Update'
-
   get isAuthenticated(): boolean {
     return store.getters['auth/isAuthenticated']
   }
@@ -254,12 +260,6 @@ export default class AccountSettings extends Vue {
 
   get regionsBasedOnAlpha(): RegionsModel {
     return store.getters['country/getRegionsBasedOnAlpha']
-  }
-
-  async mounted(): Promise<void> {
-    document.title = 'My Settings | grooveShop'
-
-    this.userDetailsInitialize()
   }
 
   async restRegions(e: any): Promise<void> {
@@ -293,13 +293,6 @@ export default class AccountSettings extends Vue {
         this.formManager.form.address.$value = cloneDeep(this.userData.address)
       }
     }
-  }
-
-  private submitForm(): void {
-    if (this.userDetails.region === 'choose') {
-      toast.error("The region field is missing!")
-    }
-    this.handleSubmit()
   }
 
   handleSubmit = async () => {

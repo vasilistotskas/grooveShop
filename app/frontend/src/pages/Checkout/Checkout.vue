@@ -221,6 +221,28 @@ let {
 })
 export default class Checkout extends Vue {
 
+  $refs!: {
+    stripleElement: HTMLFormElement
+  }
+  customerDetails: any = {}
+  card = {}
+
+  async created(): Promise<void> {
+    await Promise.all([
+      await store.dispatch('country/getCountriesFromRemote'),
+      store.dispatch('stripeIban/initIBANComponent'),
+      store.dispatch('stripeCard/initStripeComponent')
+    ])
+  }
+
+  async mounted(): Promise<void> {
+    document.title = 'Checkout'
+    if(this.isAuthenticated){
+      await store.dispatch('user/data/userDataFromRemote')
+    }
+    this.customerDetailsInitialize()
+  }
+
   formManager = {
     form,
     submitting,
@@ -283,12 +305,6 @@ export default class Checkout extends Vue {
     }
   })
 
-  $refs!: {
-    stripleElement: HTMLFormElement
-  }
-  customerDetails: any = {}
-  card = {}
-
   get isAuthenticated(): boolean {
     return store.getters['auth/isAuthenticated']
   }
@@ -326,22 +342,6 @@ export default class Checkout extends Vue {
 
   itemTotal(item: CartItemModel): number {
     return item.quantity * item.product.price
-  }
-
-  async created(): Promise<void> {
-    await Promise.all([
-      await store.dispatch('country/getCountriesFromRemote'),
-      store.dispatch('stripeIban/initIBANComponent'),
-      store.dispatch('stripeCard/initStripeComponent')
-    ])
-  }
-
-  async mounted(): Promise<void> {
-    document.title = 'Checkout'
-    if(this.isAuthenticated){
-      await store.dispatch('user/data/userDataFromRemote')
-    }
-    this.customerDetailsInitialize()
   }
 
   async restRegions(e: any): Promise<void> {
@@ -461,7 +461,7 @@ export default class Checkout extends Vue {
   .checkout-grid-container {
     display: grid;
     grid-template-rows: minmax(47px, 1fr);
-    background-color: white;
+    background-color: $primary-color-4;
     border-radius: 10px;
     padding: 15px 30px 30px;
     gap: 25px;
@@ -473,7 +473,7 @@ export default class Checkout extends Vue {
       gap: 10px;
       &-part {
         &-two, &-three {
-          background-color: #f8f8ff;
+          background-color: $primary-color-4;
           border-radius: 5px;
           align-items: center;
           justify-items: center;

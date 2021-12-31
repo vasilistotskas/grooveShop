@@ -24,8 +24,6 @@
         <div class="profile-fullname-part">
           <h5 class="fw-bold">{{this.fullname}}</h5>
         </div>
-
-
       </div>
     </form>
   </div>
@@ -52,11 +50,11 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons/faCamera"
 
 export default class ProfileImage extends Vue {
 
+  profileImageHovering: boolean = false
+
   get cameraIcon(): typeof faCamera {
     return faCamera
   }
-
-  profileImageHovering: boolean = false
 
   async updateUserImage(): Promise<void> {
     const formEl = document.getElementById('uploadImageForm') as HTMLFormElement;
@@ -73,13 +71,13 @@ export default class ProfileImage extends Vue {
 
     &-container {
       display: grid;
-      border-bottom: 1px solid #e8e8e8;
+      border-bottom: 1px solid $primary-color-4;
       padding-bottom: 20px;
     }
     &-form {
       display: grid;
       grid-template-rows: minmax(90px, 1fr);
-      background-color: white;
+      background-color: $primary-color-4;
       border-radius: 10px;
       gap: 25px;
       justify-content: center;

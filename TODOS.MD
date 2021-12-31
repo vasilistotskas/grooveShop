@@ -1,7 +1,5 @@
 # !!!! TODOS !!!!
 
-# COMPONENTS STO FRONT
-
 # USER PROFILE :
 ```
  REVIEWS
@@ -53,4 +51,5 @@ ETC
 ```
  mostly after api calls
 ```
+# LANGS AT I18
 # MOVE MEDIASTREAM TO ANOTHER PROJECT REPO ETC

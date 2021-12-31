@@ -20,16 +20,16 @@ import PostList from '@/components/Blog/PostList.vue'
 
 export default class PostsByTag extends Vue {
 
-  get postsByTag(): PostModel[] {
-    return store.getters['blog/getPostsByTag']
-  }
-
   async created(): Promise<void> {
     await store.dispatch('blog/postsByTagFromRemote')
   }
 
   async updated(): Promise<void> {
     await store.dispatch('blog/postsByTagFromRemote')
+  }
+
+  get postsByTag(): PostModel[] {
+    return store.getters['blog/getPostsByTag']
   }
 
 }

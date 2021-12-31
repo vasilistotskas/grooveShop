@@ -40,14 +40,14 @@ export default class CartItemVue extends Vue {
 
     item = new CartItemModel()
 
-  get trashIcon(): typeof faTrash {
-    return faTrash
-  }
+    get trashIcon(): typeof faTrash {
+      return faTrash
+    }
 
     get isMobile(): boolean {
       return store.getters['app/isMobile']
     }
-    // prepei na paw sto store kapos
+
     get itemTotal(): number {
       return this.item.quantity * this.item.product.price
     }
@@ -56,8 +56,8 @@ export default class CartItemVue extends Vue {
       return '/product/' + this.item.product.slug + '/' + this.item.product.id
     }
 
-  public decrementQuantity(item: object): void {
-     store.commit('cart/decrementQuantity', item)
+    public decrementQuantity(item: object): void {
+      store.commit('cart/decrementQuantity', item)
     }
 
     public incrementQuantity(item: object): void {
@@ -79,7 +79,7 @@ export default class CartItemVue extends Vue {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     position: relative;
-    background-color: #f8f8ff;
+    background-color: $primary-color-4;
     border-radius: 5px;
     align-items: center;
     justify-items: center;

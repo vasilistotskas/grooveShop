@@ -95,14 +95,14 @@ export default class PostList extends Vue {
     padding: 0;
   }
   .post {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid $primary-color-4;
     padding-bottom: 1rem;
   }
   .post__title {
     font-size: 1.25rem;
   }
   .post__description {
-    color: #777;
+    color: $primary-color-3;
     font-style: italic;
   }
   .post__tags {

@@ -1,8 +1,6 @@
 <template>
-
   <div class="navbar-main-collapse-menu">
     <div class="container navbar-menu-grid-container" v-bind:class="{'wrapper': Object.keys(this.categories).length === 0 }">
-
       <div class="navbar-menu-grid-head"
            ref="target">
         <router-link v-for="(category, key) in this.categories" class="navbar-menu-grid-head-item"
@@ -15,33 +13,20 @@
              role="button"
              aria-expanded="false"
              aria-current="page"
-             :to="({ name: 'Category', params: { category_slug: category.slug } })"
-        >
+             :to="({ name: 'Category', params: { category_slug: category.slug } })">
           <img alt="category.name"
                :src="categoryBoxHovered === key ? category.menu_image_two : category.menu_image_one"
                >
           <span>{{ category.name }}</span>
-
         </router-link>
       </div>
 
-
       <div class="navbar-menu-grid-body" style="display: none">
-        <div class="navbar-menu-grid-body-item">
-
-        </div>
+        <div class="navbar-menu-grid-body-item"></div>
       </div>
 
     </div>
-
-
   </div>
-
-
-
-
-
-
 </template>
 
 <script lang="ts">
@@ -101,7 +86,7 @@ export default class NavbarCategories extends Vue {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
         max-height: 160px;
-        background-color: #e3e3e3;
+        background-color: $primary-color-4;
         border-radius: 5px;
         &-item {
           display: grid;
@@ -113,7 +98,7 @@ export default class NavbarCategories extends Vue {
           justify-items: center;
           height: 100%;
           &:hover {
-            background-color: #bfbfbf;
+            background-color: $primary-color-4;
           }
           img {
             max-width: 100px;

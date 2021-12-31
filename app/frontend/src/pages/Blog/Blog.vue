@@ -18,12 +18,14 @@ import PostList from '@/components/Blog/PostList.vue'
 })
 
 export default class Blog extends Vue {
-  get allPosts(): PostModel[] {
-    return store.getters['blog/getAllPosts']
-  }
+
   async mounted(): Promise<void> {
     document.title = 'Blog'
     await store.dispatch('blog/allPostsFromRemote')
+  }
+
+  get allPosts(): PostModel[] {
+    return store.getters['blog/getAllPosts']
   }
 }
 </script>

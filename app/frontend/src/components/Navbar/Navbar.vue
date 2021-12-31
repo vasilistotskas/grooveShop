@@ -80,7 +80,6 @@
       />
 <!--    </transition>-->
   </nav>
-
 </template>
 
 <script lang="ts">
@@ -212,7 +211,7 @@ export default class Navbar extends Vue {
     display: block;
     position: absolute;
     width: 1px;
-    background-color: red;
+    background-color: $primary-color-1;
     left: 0;
     bottom: 0;
   }
@@ -221,7 +220,7 @@ export default class Navbar extends Vue {
     display: block;
     position: absolute;
     height: 1px;
-    background-color: red;
+    background-color: $primary-color-1;
     left: 0;
     top: 0;
   }
@@ -230,7 +229,7 @@ export default class Navbar extends Vue {
     display: block;
     position: absolute;
     width: 1px;
-    background-color: red;
+    background-color: $primary-color-1;
     right: 0;
     top: 0;
   }
@@ -239,7 +238,7 @@ export default class Navbar extends Vue {
     display: block;
     position: absolute;
     height: 1px;
-    background-color: red;
+    background-color: $primary-color-1;
     right: 0;
     bottom: 0;
   }
@@ -372,7 +371,7 @@ export default class Navbar extends Vue {
   }
   .search-header {
     position: relative;
-    color: white;
+    color: $primary-color-4;
     display: grid;
     .search-buttons-container {
       display: grid;
@@ -401,8 +400,8 @@ export default class Navbar extends Vue {
         margin-bottom: 6px;
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
-        background-color: white;
-        border-left: 2px solid #e8e8e8;
+        background-color: $primary-color-4;
+        border-left: 2px solid $primary-color-4;
       }
     }
 
@@ -431,7 +430,7 @@ export default class Navbar extends Vue {
       background: $primary-color-4;
       border-radius: 100%;
       text-align: center;
-      color: #000;
+      color: $primary-color-2;
       line-height: 20px;
       @media screen and (max-width: 990px) {
         width: 14px;

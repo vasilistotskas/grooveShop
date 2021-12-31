@@ -50,16 +50,6 @@ import { faTruck } from "@fortawesome/free-solid-svg-icons/faTruck"
 export default class MyAccount extends Vue {
   profileImageUrl: string = ''
 
-  get cogsIcon(): typeof faCogs {
-    return faCogs
-  }
-  get truckIcon(): typeof faTruck {
-    return faTruck
-  }
-  get heartIcon(): typeof faHeart {
-    return faHeart
-  }
-
   created() {
     this.$watch(
         () => this.userData,
@@ -72,6 +62,17 @@ export default class MyAccount extends Vue {
   mounted() {
     this.profileImageUrl = this.userData.image_url
     document.title = 'My Account'
+  }
+
+  get cogsIcon(): typeof faCogs {
+    return faCogs
+  }
+  get truckIcon(): typeof faTruck {
+    return faTruck
+  }
+
+  get heartIcon(): typeof faHeart {
+    return faHeart
   }
 
   get isAuthenticated(): boolean {
@@ -99,6 +100,7 @@ export default class MyAccount extends Vue {
 
     return first_name + ' ' + last_name
   }
+
   public logout(): void {
     store.commit('user/data/unsetUserData')
     router.push('/')
@@ -119,7 +121,7 @@ export default class MyAccount extends Vue {
     max-height: 426px;
     display: grid;
     grid-template-rows: 1fr 1fr;
-    background-color: white;
+    background-color: $primary-color-4;
     border-radius: 25px;
     padding: 20px;
     gap: 20px;
@@ -129,7 +131,7 @@ export default class MyAccount extends Vue {
   .my-account-page-main-content {
     display: grid;
     grid-template-rows: 1fr;
-    background-color: white;
+    background-color: $primary-color-4;
     border-radius: 25px;
     padding: 20px;
     gap: 20px;
@@ -138,7 +140,7 @@ export default class MyAccount extends Vue {
 
   .my-account-grid-navbar {
     display: grid;
-    background-color: white;
+    background-color: $primary-color-4;
     border-radius: 10px;
     gap: 15px;
     button.btn {
@@ -147,8 +149,8 @@ export default class MyAccount extends Vue {
       width: 40%;
       margin: 0 auto;
       border-radius: 35px;
-      background-color: #f80000e0;
-      color: white;
+      background-color: $primary-color-1;
+      color: $primary-color-4;
     }
   }
 
@@ -156,12 +158,12 @@ export default class MyAccount extends Vue {
     display: grid;
     grid-template-rows: repeat(3, 1fr);
     gap: 10px;
-    border-bottom: 1px solid #e8e8e8;
+    border-bottom: 1px solid $primary-color-4;
     padding-bottom: 20px;
     a {
       font-size: 20px;
-      background-color: #3b3b3b;
-      color: #f8f8ff !important;
+      background-color: $primary-color-3;
+      color: $primary-color-4 !important;
       padding: 10px;
       text-align: center;
       width: 85%;
@@ -180,14 +182,14 @@ export default class MyAccount extends Vue {
   .my-account-header{
     font-weight: 700;
     &:hover{
-      color: #616161;
+      color: $primary-color-3;
     }
   }
 
   .log-out-button{
     right: 20px;
     &:hover{
-      background-color: #e34363 !important;
+      background-color: $primary-color-1 !important;
       transform: scale(1.02);
     }
   }

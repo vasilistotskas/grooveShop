@@ -105,6 +105,34 @@ export default class ProductReviewModal extends Vue {
   newSelectionRatio: number = 0
   selectedRatio: number = 0
 
+  created() {
+    this.$watch(
+        () => this.liveReviewCount,
+        (to:any) => {
+          this.rate = to
+        }
+    )
+    this.$watch(
+        () => this.userToProductReview,
+        (to:any) => {
+          if(Object.keys(to).length <= 0) {
+            this.clearModule()
+          }
+        }
+    )
+    this.$watch(
+        () => this.$route,
+        () => {
+          store.commit('product/review/unsetUserToProductReview')
+          store.commit('product/review/unsetProductReviews')
+        }
+    )
+  }
+
+  async mounted(): Promise<void> {
+    await this.reviewModuleInitialize()
+  }
+
   get reviewButtonText(): string {
     return this.userHasAlreadyReviewedProduct ? 'Update' : 'Post'
   }
@@ -273,34 +301,6 @@ export default class ProductReviewModal extends Vue {
     this.comment = ''
   }
 
-  created() {
-    this.$watch(
-        () => this.liveReviewCount,
-        (to:any) => {
-          this.rate = to
-        }
-    )
-    this.$watch(
-        () => this.userToProductReview,
-        (to:any) => {
-          if(Object.keys(to).length <= 0) {
-            this.clearModule()
-          }
-        }
-    )
-    this.$watch(
-        () => this.$route,
-        () => {
-          store.commit('product/review/unsetUserToProductReview')
-          store.commit('product/review/unsetProductReviews')
-        }
-    )
-  }
-
-  async mounted(): Promise<void> {
-    await this.reviewModuleInitialize()
-  }
-
 }
 
 </script>
@@ -337,16 +337,15 @@ export default class ProductReviewModal extends Vue {
 
     .star {
       cursor: pointer;
-
       width: 26px;
       height: 26px;
 
       &-foreground {
-        color: #bf8000;
+        color: $rating-starts;
       }
 
       &-background {
-        color: #ccc;
+        color: $primary-color-4;
       }
     }
   }

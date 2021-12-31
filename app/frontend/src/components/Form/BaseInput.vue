@@ -74,8 +74,8 @@ export default defineComponent({
   border-radius: 0.25rem;
 
   &:focus {
-    border-color: #000000 !important;
-    box-shadow: 0 0 3px #000000 !important;
+    border-color: $primary-color-2 !important;
+    box-shadow: 0 0 3px $primary-color-2 !important;
   }
 }
 

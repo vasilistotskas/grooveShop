@@ -1,27 +1,22 @@
 <template>
   <div class="col-12 mb-3 mt-3 product-listing-grid-header">
     <div class="pagination-buttons">
-
         <button
             type="button"
             class="btn-outline-primary-one"
             @click="onClickFirstPage"
             :disabled="isInFirstPage"
-            aria-label="Go to first page"
-        >
+            aria-label="Go to first page">
           First
         </button>
-
 
         <button
             class="btn-outline-primary-one"
             type="button"
             @click="onClickPreviousPage"
             :disabled="isInFirstPage"
-            aria-label="Go to previous page"
-        >
+            aria-label="Go to previous page">
           Previous
-
         </button>
 
         <button v-for="page in pages"
@@ -30,9 +25,7 @@
             @click="onClickPage(page.name)"
             :disabled="page.isDisabled"
             :class="{ active: this.isPageActive(page.name) }"
-            :aria-label="`Go to page number ${page.name}`"
-
-        >
+            :aria-label="`Go to page number ${page.name}`">
           {{ page.name }}
         </button>
 
@@ -41,8 +34,7 @@
             type="button"
             @click="onClickNextPage"
             :disabled="isInLastPage"
-            aria-label="Go to next page"
-        >
+            aria-label="Go to next page">
           Next
         </button>
 
@@ -51,11 +43,9 @@
             type="button"
             @click="onClickLastPage"
             :disabled="isInLastPage"
-            aria-label="Go to last page"
-        >
+            aria-label="Go to last page">
           Last
         </button>
-
     </div>
   </div>
 </template>
@@ -187,7 +177,7 @@ export default class Pagination extends Vue {
   }
 
   .active {
-    background-color: #4AAE9B;
-    color: #ffffff;
+    background-color: $primary-color-1;
+    color: $primary-color-4;
   }
 </style>

@@ -25,16 +25,16 @@ import PostList from '@/components/Blog/PostList.vue'
 
 export default class Author extends Vue {
 
+  async created(): Promise<void> {
+    await store.dispatch('blog/authorByEmailFromRemote')
+  }
+
   get authorByEmail(): AuthorModel {
     return store.getters['blog/getAuthorByEmail']
   }
 
   get authorPostSet(): PostModel[] {
     return this.authorByEmail.postSet
-  }
-
-  async created(): Promise<void> {
-    await store.dispatch('blog/authorByEmailFromRemote')
   }
 
   get displayName (): string {

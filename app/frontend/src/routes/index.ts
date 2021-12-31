@@ -5,7 +5,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const toast = useToast()
 
-// @TODO should i make routes for every app ?
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,

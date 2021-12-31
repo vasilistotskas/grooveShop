@@ -16,10 +16,8 @@
           </div>
         </div>
       </div>
-
     </router-link>
   </div>
-
 </template>
 
 <script lang="ts">
@@ -88,7 +86,7 @@ export default class ProductCard extends Vue {
   }
   .addToCartButton{
     &.disabled{
-      background-color: #363636;
+      background-color: $primary-color-3;
       border-color: transparent;
       box-shadow: none;
       opacity: 0.5;

@@ -127,19 +127,6 @@ export default class Register extends Vue {
     add,
     remove
   } = useValidation({
-    // name: {
-    //   $value: "",
-    //   $rules: [
-    //     required("Name is required"),
-    //     min(3)("Name has to be longer than 2 characters"),
-    //     (name: any) =>
-    //         new Promise<void>((resolve, reject) => {
-    //           setTimeout(() => {
-    //             resolve();
-    //           }, 2000);
-    //         })
-    //   ]
-    // },
     email: {
       $value: "",
       $rules: [email("Please enter a valid email address")]

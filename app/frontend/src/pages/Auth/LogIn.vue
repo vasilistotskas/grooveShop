@@ -77,7 +77,6 @@
               <a class="btn btn-outline-primary btn-floating mx-1" href="#!" role="button">
                 <font-awesome-icon :icon="googleIcon" size="lg" :style="{ color: '#DB4437' }"></font-awesome-icon>
               </a>
-
             </div>
 
           </div>
@@ -124,9 +123,14 @@ let {
 
 export default class LogIn extends Vue {
 
+  mounted() {
+    document.title = 'Log In'
+  }
+
   get facebookIcon(): typeof faFacebook {
     return faFacebook
   }
+
   get googleIcon(): typeof faGoogle {
     return faGoogle
   }
@@ -155,10 +159,6 @@ export default class LogIn extends Vue {
       ]
     }
   })
-
-  mounted() {
-    document.title = 'Log In'
-  }
 
   handleSubmit = async () => {
     session.defaults.headers.common["Authorization"] = ""

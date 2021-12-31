@@ -6,9 +6,7 @@
              :loader="'dots'"
              :color="'#f80000e0'"
              :background-color="'#000000'"
-             id="mainLoader"
-
-    />
+             id="mainLoader"/>
 
     <Header/>
 
@@ -16,187 +14,9 @@
       <router-view/>
     </section>
 
-    <!-- @TODO COMPONENT -->
-    <!-- Footer -->
-    <footer class="main-footer text-center text-white">
-      <!-- Grid container -->
-      <div class="container p-4">
+    <Footer/>
 
-        <!-- Section: Social media -->
-
-        <!-- Section: Form -->
-        <section class="footer-section-newsletter mb-4 pt-4">
-          <form action="">
-            <!--Grid row-->
-            <div class="footer-grid-newsletter">
-              <!--Grid column-->
-              <div class="grid-item-one mb-2">
-                <p>
-                  <strong>Sign up for our newsletter</strong>
-                </p>
-              </div>
-              <!--Grid column-->
-
-              <!--Grid column-->
-              <div class="grid-item-two">
-                <!-- Email input -->
-                  <input type="email" id="form5Example21" class="form-control" />
-                  <label class="form-label mt-2" for="form5Example21">Email address</label>
-              </div>
-              <!--Grid column-->
-
-              <!--Grid column-->
-              <div class="grid-item-three">
-                <!-- Submit button -->
-                <button type="submit" class="btn-outline-primary-one mb-4">
-                  Subscribe
-                </button>
-              </div>
-              <!--Grid column-->
-            </div>
-            <!--Grid row-->
-          </form>
-        </section>
-        <!-- Section: Form -->
-
-        <!-- Section: Links -->
-        <section class="footer-section-links mb-4 mt-4">
-          <!--Grid column-->
-          <div class="grid-item-one">
-            <span class="text-uppercase">Links</span>
-
-            <ul>
-              <li>
-                <a href="#!">Link 1</a>
-              </li>
-              <li>
-                <a href="#!">Link 2</a>
-              </li>
-              <li>
-                <a href="#!">Link 3</a>
-              </li>
-              <li>
-                <a href="#!">Link 4</a>
-              </li>
-            </ul>
-          </div>
-          <!--Grid column-->
-
-          <!--Grid column-->
-          <div class="grid-item-two">
-            <span class="text-uppercase">Links</span>
-
-            <ul>
-              <li>
-                <a href="#!">Link 1</a>
-              </li>
-              <li>
-                <a href="#!">Link 2</a>
-              </li>
-              <li>
-                <a href="#!">Link 3</a>
-              </li>
-              <li>
-                <a href="#!">Link 4</a>
-              </li>
-            </ul>
-          </div>
-          <!--Grid column-->
-
-          <!--Grid column-->
-          <div class="grid-item-three">
-            <span class="text-uppercase">Links</span>
-
-            <ul>
-              <li>
-                <a href="#!">Link 1</a>
-              </li>
-              <li>
-                <a href="#!">Link 2</a>
-              </li>
-              <li>
-                <a href="#!">Link 3</a>
-              </li>
-              <li>
-                <a href="#!">Link 4</a>
-              </li>
-            </ul>
-          </div>
-          <!--Grid column-->
-
-          <!--Grid column-->
-          <div class="grid-item-four">
-            <span class="text-uppercase">Links</span>
-
-            <ul>
-              <li>
-                <a href="#!">Link 1</a>
-              </li>
-              <li>
-                <a href="#!">Link 2</a>
-              </li>
-              <li>
-                <a href="#!">Link 3</a>
-              </li>
-              <li>
-                <a href="#!">Link 4</a>
-              </li>
-            </ul>
-          </div>
-          <!--Grid column-->
-        </section>
-        <!-- Section: Links -->
-      </div>
-      <!-- Grid container -->
-
-      <!-- Copyright -->
-      <div class="main-copyright text-center p-3">
-        <span>© 2020 Copyright:</span>
-        <a href="#">GrooveBtch</a>
-      </div>
-      <!-- Copyright -->
-    </footer>
-    <!-- Footer -->
-
-    <ul id="social-sidebar">
-      <li>
-        <a class="entypo entypo-facebook" href="https://www.facebook.com/" aria-label="Facebook" target="_blank" rel="noopener">
-          <font-awesome-icon :icon="facebookIcon" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
-          <span>Facebook</span>
-        </a>
-      </li>
-      <li>
-        <a class="entypo entypo-gplus" href="https://www.google.com/" aria-label="Google" target="_blank" rel="noopener">
-          <font-awesome-icon :icon="googleIcon" size="lg" :style="{ color: '#DB4437' }"></font-awesome-icon>
-          <span>Google+</span>
-        </a>
-      </li>
-      <li>
-        <a class="entypo entypo-twitter" href="https://www.twitter.com/" aria-label="Twitter" target="_blank" rel="noopener">
-          <font-awesome-icon :icon="twitterIcon" size="lg" :style="{ color: '#1DA1F2' }"></font-awesome-icon>
-          <span>Tweeter</span>
-        </a>
-      </li>
-      <li>
-        <a class="entypo entypo-instagram" href="https://www.instagram.com/" aria-label="Instagram" target="_blank" rel="noopener">
-          <font-awesome-icon :icon="instagramIcon" size="lg" :style="{ color: '#E1306C' }"></font-awesome-icon>
-          <span>Instagram</span>
-        </a>
-      </li>
-      <li>
-        <a class="entypo entypo-linkedin" href="https://www.linkedin.com/" aria-label="Linkedin" target="_blank" rel="noopener">
-          <font-awesome-icon :icon="linkedinIcon" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
-          <span>Linkedin</span>
-        </a>
-      </li>
-      <li>
-        <a class="entypo entypo-github" href="https://www.github.com/" aria-label="Github" target="_blank" rel="noopener">
-          <font-awesome-icon :icon="githubIcon" size="lg" :style="{ color: 'white' }"></font-awesome-icon>
-          <span>Github</span>
-        </a>
-      </li>
-
-    </ul>
+    <SocialSidebar/>
 
   </div>
 </template>
@@ -204,52 +24,31 @@
 
 <script lang="ts">
 import store from '@/store'
-import _, {LoDashStatic} from "lodash"
+import _, { LoDashStatic } from "lodash"
 import Loading from 'vue-loading-overlay'
 import packageMeta from '@/../package.json'
+import Footer from '@/components/Main/Footer.vue'
 import 'vue-loading-overlay/dist/vue-loading.css'
-import {Options, Vue} from "vue-class-component"
-import Header from '@/components/Navbar/Header.vue'
+import { Options, Vue } from "vue-class-component"
+import Header from '@/components/Main/Header.vue'
 import CountryModel from "@/state/country/CountryModel"
 import RegionsModel from "@/state/country/RegionsModel"
+import SocialSidebar from '@/components/Main/SocialSidebar.vue'
 import UserDetailsModel from "@/state/user/data/UserDetailsModel"
-import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
-import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub'
-import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter'
 import ProductReviewModel from "@/state/product/review/ProductReviewModel"
-import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
-import { faLinkedin } from '@fortawesome/free-brands-svg-icons/faLinkedin'
-import { faInstagram } from '@fortawesome/free-brands-svg-icons/faInstagram'
 
 @Options({
   name: "App",
   components: {
     Loading,
-    Header
+    Header,
+    Footer,
+    SocialSidebar
   }
 })
 export default class App extends Vue {
 
   public showMobileMenu = false
-
-  get facebookIcon(): typeof faFacebook {
-    return faFacebook
-  }
-  get googleIcon(): typeof faGoogle {
-    return faGoogle
-  }
-  get twitterIcon(): typeof faTwitter {
-    return faTwitter
-  }
-  get instagramIcon(): typeof faInstagram {
-    return faInstagram
-  }
-  get linkedinIcon(): typeof faLinkedin {
-    return faLinkedin
-  }
-  get githubIcon(): typeof faGithub {
-    return faGithub
-  }
 
   get lodash(): LoDashStatic {
     return _
@@ -336,9 +135,9 @@ export default class App extends Vue {
     pointer-events: none;
   }
   .btn-product-card {
-    color: black!important;
+    color: $primary-color-2!important;
     background-color: $primary-color-4!important;
-    border-color: #191919!important;
+    border-color: $primary-color-5!important;
   }
    .form-check-input-main {
      &:checked {
@@ -374,7 +173,7 @@ export default class App extends Vue {
       justify-content: center;
       align-items: center;
       img {
-        background: #191919;
+        background: $primary-color-5;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         display: block;
@@ -407,7 +206,7 @@ export default class App extends Vue {
       display: block;
       position: absolute;
       width: 1px;
-      background-color: red;
+      background-color: $primary-color-1;
       left: 0;
       bottom: 0;
     }
@@ -416,7 +215,7 @@ export default class App extends Vue {
       display: block;
       position: absolute;
       height: 1px;
-      background-color: red;
+      background-color: $primary-color-1;
       left: 0;
       top: 0;
     }
@@ -425,7 +224,7 @@ export default class App extends Vue {
       display: block;
       position: absolute;
       width: 1px;
-      background-color: red;
+      background-color: $primary-color-1;
       right: 0;
       top: 0;
     }
@@ -434,7 +233,7 @@ export default class App extends Vue {
       display: block;
       position: absolute;
       height: 1px;
-      background-color: red;
+      background-color: $primary-color-1;
       right: 0;
       bottom: 0;
     }
@@ -445,52 +244,10 @@ export default class App extends Vue {
       display: grid;
     }
   }
-  .main-footer{
-    background-color: #191919;
-  }
-  .main-copyright{
-    background-color: $primary-color-2;
-    text-align: center;
-    padding: 5px;
-    span {
-      font-size: 12px;
-    }
-  }
 
   .form-check-input:checked {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-  }
-
-  .footer-grid-newsletter {
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 80% 20%;
-    max-width: 500px;
-    margin: 0 auto;
-
-    .grid-item {
-      &-one {
-        grid-column-start: 1;
-        grid-column-end: span col4-start;
-        grid-row-start: 1;
-      }
-      &-two {
-        label {
-          display: block;
-        }
-      }
-    }
-  }
-
-  .footer-section-links {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    .grid-item {
-      &-one, &-two, &-three, &-four {
-        text-align: center;
-      }
-    }
+    background-color: $form-input;
+    border-color: $form-input;
   }
 
 </style>

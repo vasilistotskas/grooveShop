@@ -68,7 +68,6 @@
 
     <div class="home-usp-grid-container">
       <div class="home-usp-grid-content mb-5">
-
         <div class="grid-usp-item">
           <font-awesome-icon v-if="isMobile" :icon="phoneIcon" :style="{ color: '#080808' }"></font-awesome-icon>
           <font-awesome-icon v-else :icon="phoneIcon" size="3x" :style="{ color: '#080808' }"></font-awesome-icon>
@@ -89,11 +88,9 @@
           <span>Lorem Ipsum
             <span>Lorem Ipsum</span>
           </span>
-
         </div>
       </div>
     </div>
-
 
     <div class="product-listing-container">
       <div class="container mb-5">
@@ -121,10 +118,10 @@ import { Options, Vue } from "vue-class-component"
 import SliderModel from '@/state/slider/SliderModel'
 import ProductModel from "@/state/product/ProductModel"
 import ProductCard from "@/components/Product/ProductCard.vue"
-import SwiperCore, { Navigation,Pagination,Mousewheel,Keyboard } from 'swiper'
 import { faPhone } from '@fortawesome/free-solid-svg-icons/faPhone'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import { faComment } from '@fortawesome/free-solid-svg-icons/faComment'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
+import SwiperCore, { Navigation,Pagination,Mousewheel,Keyboard } from 'swiper'
 
 
 SwiperCore.use([Navigation,Pagination,Mousewheel,Keyboard])
@@ -139,6 +136,7 @@ SwiperCore.use([Navigation,Pagination,Mousewheel,Keyboard])
 })
 
 export default class Home extends Vue {
+
   $refs!: {
     mainSliderVideoRef: HTMLVideoElement
   }
@@ -148,12 +146,31 @@ export default class Home extends Vue {
     '--swiper-pagination-color': '#fff'
   }
 
+  async beforeCreate(): Promise<void> {
+    await Promise.all([
+      await store.dispatch('product/latestProductsFromRemote'),
+      await store.dispatch('slider/slidersFromRemote'),
+      await this.mainSliderVideoInit()
+    ])
+  }
+
+  async mounted(): Promise<void> {
+    document.title = 'DeepWeb'
+
+    await store.dispatch('app/updateMetaTagElement', {
+      'metaName': 'description',
+      'metaAttribute': 'content',
+      'newValue': 'test'
+    })
+  }
+
   get phoneIcon(): typeof faPhone {
     return faPhone
   }
   get envelopeIcon(): typeof faEnvelope {
     return faEnvelope
   }
+
   get commentIcon(): typeof faComment {
     return faComment
   }
@@ -186,24 +203,6 @@ export default class Home extends Vue {
     }
   }
 
-  async beforeCreate(): Promise<void> {
-    await Promise.all([
-      await store.dispatch('product/latestProductsFromRemote'),
-      await store.dispatch('slider/slidersFromRemote'),
-      await this.mainSliderVideoInit()
-    ])
-  }
-
-  async mounted(): Promise<void> {
-    document.title = 'DeepWeb'
-
-    await store.dispatch('app/updateMetaTagElement', {
-      'metaName': 'description',
-      'metaAttribute': 'content',
-      'newValue': 'test'
-    })
-  }
-
 }
 </script>
 
@@ -226,7 +225,7 @@ export default class Home extends Vue {
       gap: 20px;
       svg {
         width: 100%;
-        border-right: 2px solid #e7e7e7;
+        border-right: 2px solid $primary-color-4;
       }
       span {
         display: grid;
@@ -367,7 +366,7 @@ export default class Home extends Vue {
     object-fit: cover;
   }
   .swiper-pagination-bullet {
-    background-color: black;
+    background-color: $primary-color-2;
     opacity: 0.35;
     width: 16px;
     height: 16px;
@@ -377,7 +376,7 @@ export default class Home extends Vue {
   }
 
   .swiper-container {
-    .swiper-slide {background-color: #191919}
+    .swiper-slide {background-color: $primary-color-5}
     &.swiper-container-initialized{overflow-y: auto; max-height: none;}
   }
 

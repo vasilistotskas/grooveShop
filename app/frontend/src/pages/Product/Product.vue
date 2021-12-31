@@ -107,6 +107,21 @@ export default class ProductVue extends Vue {
 
   quantity = 1
 
+  async mounted(): Promise<void> {
+    document.title = <string>this.$route.params.product_slug
+
+    await Promise.all([
+
+      await store.dispatch('product/productFromRemote'),
+      store.dispatch('product/updateProductHits'),
+      store.dispatch('product/review/currentProductReviewsFromRemote'),
+
+      store.commit('product/review/setProductReviewsAverage', this.product.review_average),
+      store.commit('product/review/setProductReviewsCounter', this.product.review_counter),
+      await store.dispatch('app/updateMetaTagElement', {'metaName' : 'description', 'metaAttribute': 'content', 'newValue' : this.product.description})
+    ])
+  }
+
   get axiosBaseUrl(): boolean {
     return store.getters['app/axiosBaseUrl']
   }
@@ -148,21 +163,6 @@ export default class ProductVue extends Vue {
 
     store.commit('cart/addToCart', item)
   }
-
-  async mounted(): Promise<void> {
-    document.title = <string>this.$route.params.product_slug
-
-    await Promise.all([
-
-      await store.dispatch('product/productFromRemote'),
-      store.dispatch('product/updateProductHits'),
-      store.dispatch('product/review/currentProductReviewsFromRemote'),
-
-      store.commit('product/review/setProductReviewsAverage', this.product.review_average),
-      store.commit('product/review/setProductReviewsCounter', this.product.review_counter),
-      await store.dispatch('app/updateMetaTagElement', {'metaName' : 'description', 'metaAttribute': 'content', 'newValue' : this.product.description})
-    ])
-  }
 }
 
 </script>
@@ -178,7 +178,7 @@ export default class ProductVue extends Vue {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: minmax(90px, 1fr);
     gap: 20px;
-    background-color: white;
+    background-color: $primary-color-4;
     padding: 30px;
     border-radius: 5px;
     .image-main {
@@ -202,7 +202,7 @@ export default class ProductVue extends Vue {
     .product-page-grid-info-part {
       &-one, &-two {
         border-radius: 5px;
-        background-color: white;
+        background-color: $primary-color-4;
       }
       &-one {
         padding: 30px 30px 15px;
@@ -224,13 +224,13 @@ export default class ProductVue extends Vue {
     grid-template-columns: 20% 62% 18%;
     gap: 15px;
     input {
-      color: black;
-      background-color: white;
+      color: $primary-color-2;
+      background-color: $primary-color-4;
       margin-left: 0;
       text-align: center;
       align-self: center;
       justify-self: center;
-      border: 1px solid #e8e8e8;
+      border: 1px solid $primary-color-4;
       border-radius: 5px;
       height: 100%;
       width: 100%;
@@ -238,7 +238,7 @@ export default class ProductVue extends Vue {
   }
   .addToCartButton{
     &.disabled{
-      background-color: #363636;
+      background-color: $primary-color-3;
       border-color: transparent;
       box-shadow: none;
       opacity: 0.5;
@@ -250,7 +250,7 @@ export default class ProductVue extends Vue {
     padding-bottom: 15px;
   }
   .product-reviews-container {
-    background-color: white;
+    background-color: $primary-color-4;
   }
 
 </style>

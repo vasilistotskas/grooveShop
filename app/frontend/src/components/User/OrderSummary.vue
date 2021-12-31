@@ -51,6 +51,7 @@ import UserOrderModel from "@/state/user/order/UserOrderModel"
 })
 
 export default class orderSummary extends Vue{
+
   beforeCreate() {
     store.dispatch('user/order/userOrdersFromRemote')
   }
@@ -63,6 +64,7 @@ export default class orderSummary extends Vue{
   itemTotal(item: CartItemModel): number {
     return item.quantity * item.product.price
   }
+
 }
 </script>
 
@@ -82,7 +84,7 @@ export default class orderSummary extends Vue{
       padding: 10px;
       box-shadow: 0 0 2px 1px rgb(0 0 0 / 25%);
       border-radius: 5px;
-      background-color: white;
+      background-color: $primary-color-4;
       &:hover {
         box-shadow: 0 0 2px 1px #f800007d;
       }

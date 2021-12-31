@@ -26,6 +26,10 @@ import router from "@/routes";
 
 export default class VerifyEmail extends Vue {
 
+  created(): void {
+    this.activateAccount()
+  }
+
   get isAuthenticated(): any {
     return store.getters['auth/isAuthenticated']
   }
@@ -48,10 +52,6 @@ export default class VerifyEmail extends Vue {
 
   async clearActivationStatus(): Promise<void> {
     await store.dispatch('signup/clearActivationStatus')
-  }
-
-  created(): void {
-    this.activateAccount()
   }
 
   beforeRouteLeave(to: any, from: any, next: any) {

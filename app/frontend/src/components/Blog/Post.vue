@@ -33,16 +33,16 @@ import AuthorLink from '@/components/Blog/AuthorLink.vue'
 
 export default class Post extends Vue {
 
+  async created(): Promise<void> {
+    await store.dispatch('blog/postBySlugFromRemote')
+  }
+
   get postBySlug(): PostModel {
     return store.getters['blog/getPostBySlug']
   }
 
   get axiosBaseUrl(): string {
     return store.getters['app/axiosBaseUrl']
-  }
-
-  async created(): Promise<void> {
-    await store.dispatch('blog/postBySlugFromRemote')
   }
 
   public displayableDate(date: string): string {

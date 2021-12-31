@@ -23,7 +23,6 @@
                 v-bind:product="product"/>
         </div>
 
-
       </div>
     </div>
   </div>
@@ -52,10 +51,6 @@ export default class SearchVue extends Vue {
   uri = window.location.search.substring(1)
   params = new URLSearchParams(this.uri)
 
-  onPageChange(page: any) {
-    this.currentPage = page;
-  }
-
   async mounted(): Promise<void> {
     document.title = 'Search'
 
@@ -72,6 +67,10 @@ export default class SearchVue extends Vue {
 
   async unmounted(): Promise<void>{
     store.commit('pagination/unsetResults')
+  }
+
+  onPageChange(page: any) {
+    this.currentPage = page;
   }
 
   get searchResults(): ProductModel {
@@ -105,8 +104,6 @@ export default class SearchVue extends Vue {
   async performSearch(): Promise<void> {
     await store.dispatch('pagination/getPaginatedResults', { 'pageNumber': this.currentPageNumber, 'endpointUrl': `search`, 'query': this.currentPageQuery })
   }
-
-
 
 }
 </script>

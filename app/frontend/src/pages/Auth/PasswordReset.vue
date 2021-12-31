@@ -36,6 +36,7 @@ import { Options, Vue } from "vue-class-component"
 })
 
 export default class PasswordReset extends Vue {
+
   inputs = {
     email: '',
   }
@@ -63,12 +64,12 @@ export default class PasswordReset extends Vue {
 }
 </script>
 
-<style>
+<style lang="scss">
 form input {
   display: block
 }
 .error {
-  color: crimson;
+  color: $primary-color-1;
   font-size: 12px;
 }
 </style>

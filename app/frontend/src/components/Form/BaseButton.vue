@@ -62,15 +62,15 @@ export default defineComponent({
 }
 
 .default {
-  background-color: #212529!important;
+  background-color: $primary-color-5!important;
 }
 .default:hover {
-  border-color: #212529!important;
+  border-color: $primary-color-5!important;
 }
 
 .default:focus {
-  border-color: #212529!important;
-  box-shadow: 0 0 3px #212529!important;
+  border-color: $primary-color-5!important;
+  box-shadow: 0 0 3px $primary-color-5!important;
 }
 
 .primary {

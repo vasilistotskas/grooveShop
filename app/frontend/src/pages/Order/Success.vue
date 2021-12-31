@@ -18,6 +18,7 @@ import { Options, Vue } from "vue-class-component"
 })
 
 export default class Success extends Vue {
+
   mounted() {
     document.title = 'Order Success'
   }

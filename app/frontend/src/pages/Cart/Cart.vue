@@ -50,21 +50,21 @@ import CartItemModel from "@/state/cart/CartItemModel"
 
 export default class CartVue extends Vue {
 
-    mounted() {
-        document.title = 'Cart'
-    }
+  mounted() {
+    document.title = 'Cart'
+  }
 
-    get cart(): Array<CartItemModel> {
-        return store.getters['cart/getCart']
-    }
+  get cart(): Array<CartItemModel> {
+    return store.getters['cart/getCart']
+  }
 
-    get cartTotalLength(): number {
-        return store.getters['cart/getCartTotalLength']
-    }
+  get cartTotalLength(): number {
+    return store.getters['cart/getCartTotalLength']
+  }
 
-    get cartTotalPrice(): number {
-        return store.getters['cart/getCartTotalPrice']
-    }
+  get cartTotalPrice(): number {
+    return store.getters['cart/getCartTotalPrice']
+  }
 
   public removeFromCart(item: CartItemModel) {
     store.commit('cart/removeFromCart', item)
@@ -76,7 +76,7 @@ export default class CartVue extends Vue {
   .cart-grid-container {
     display: grid;
     grid-template-rows: minmax(90px, 1fr);
-    background-color: white;
+    background-color: $primary-color-4;
     border-radius: 10px;
     padding: 15px 30px 30px;
     gap: 25px;

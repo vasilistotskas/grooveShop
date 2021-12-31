@@ -1,5 +1,4 @@
 <template>
-
   <div class="container" v-if="favourites && Object.keys(favourites).length > 0">
     <div class="product-listing-grid">
       <ProductCard
@@ -12,7 +11,6 @@
   <div v-else>
     <h1>NO FAVOURITES</h1>
   </div>
-
 </template>
 
 <script lang="ts">
@@ -30,11 +28,13 @@ import ProductCard from "@/components/Product/ProductCard.vue"
 })
 
 export default class Favourites extends Vue{
+
   mounted(): void {
     document.title = 'My Orders | grooveShop'
   }
   get favourites(): ProductModel[] {
     return store.getters['product/favourite/getUserFavouriteData']
   }
+
 }
 </script>
