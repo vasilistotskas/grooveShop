@@ -1,6 +1,6 @@
 <template>
+  <Loader v-show="isLoading" id="mainLoader"/>
   <div id="wrapper">
-    <Loader v-show="isLoading" id="mainLoader"/>
 
     <Header/>
 
@@ -124,6 +124,9 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
+  #wrapper {
+    position: relative;
+  }
   .vld-overlay {
     pointer-events: none;
   }

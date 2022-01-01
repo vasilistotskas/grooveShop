@@ -80,7 +80,7 @@ export default class Reviews extends Vue{
     document.title = 'My Reviews | grooveShop'
   }
 
-  public isOddNumber(num) {
+  public isOddNumber(num: any) {
     return num % 2;
   }
 

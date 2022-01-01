@@ -81,7 +81,7 @@ export default class Loader extends Vue {
     background: #000000a8;
     backdrop-filter: blur(2px);
     opacity: 1;
-    pointer-events: none;
+    pointer-events: unset;
     bottom: 0;
     left: 0;
     right: 0;
