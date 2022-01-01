@@ -105,6 +105,7 @@ class FavouriteProductSerializer(serializers.ModelSerializer):
 
 class ReviewSerializer(serializers.ModelSerializer):
     userprofile = serializers.SerializerMethodField('get_userprofile')
+    product = ProductSerializer(required=False)
 
     def get_userprofile(self, review):
         qs = UserProfile.objects.get(user=review.user)
@@ -115,6 +116,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = (
             "id",
+            "product",
             "product_id",
             "user_id",
             "comment",

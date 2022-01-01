@@ -51,6 +51,7 @@ front_urls = [
     path('my-account/orders', index_view, name='index'),
     path('my-account/settings', index_view, name='index'),
     path('my-account/favourites', index_view, name='index'),
+    path('my-account/reviews', index_view, name='index'),
     path('search', index_view, name='index'),
     path('cart', index_view, name='index'),
     path('cart/success', index_view, name='index'),

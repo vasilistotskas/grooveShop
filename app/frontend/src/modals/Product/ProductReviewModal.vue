@@ -345,7 +345,7 @@ export default class ProductReviewModal extends Vue {
       }
 
       &-background {
-        color: $primary-color-4;
+        color: $primary-color-3;
       }
     }
   }

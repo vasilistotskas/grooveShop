@@ -1,5 +1,5 @@
 <template>
-  <div class="card text-start col-sm-12 mt-2 mb-2" v-bind:class="{'user-review-card': this.review.user_id == userId }">
+  <div class="card text-start col-sm-12 mt-2 mb-2" v-bind:class="{'current-user-review-card': this.review.user_id == userId }">
     <div class="card-body card-body-review">
       <p class="card-text"> USER NAME : {{ review.userprofile.first_name }}</p>
       <p class="card-text"> COMMENT : {{ review.comment }}</p>

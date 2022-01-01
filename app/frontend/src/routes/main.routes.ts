@@ -50,6 +50,11 @@ const routes: Array<RouteRecordRaw> = [
                 path: 'favourites',
                 name: 'Favourites',
                 component: () => import("@/components/User/Favourites.vue"),
+            },
+            {
+                path: 'reviews',
+                name: 'Reviews',
+                component: () => import("@/components/User/Reviews.vue"),
             }
         ],
         meta: {

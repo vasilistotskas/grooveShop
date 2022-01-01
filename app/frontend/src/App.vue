@@ -1,12 +1,6 @@
 <template>
   <div id="wrapper">
-    <loading v-model:active="isLoading"
-             :can-cancel="false"
-             :is-full-page="true"
-             :loader="'dots'"
-             :color="'#f80000e0'"
-             :background-color="'#000000'"
-             id="mainLoader"/>
+    <Loader v-show="isLoading" id="mainLoader"/>
 
     <Header/>
 
@@ -25,12 +19,11 @@
 <script lang="ts">
 import store from '@/store'
 import _, { LoDashStatic } from "lodash"
-import Loading from 'vue-loading-overlay'
 import packageMeta from '@/../package.json'
 import Footer from '@/components/Main/Footer.vue'
-import 'vue-loading-overlay/dist/vue-loading.css'
 import { Options, Vue } from "vue-class-component"
 import Header from '@/components/Main/Header.vue'
+import Loader from '@/components/Main/Loader.vue'
 import CountryModel from "@/state/country/CountryModel"
 import RegionsModel from "@/state/country/RegionsModel"
 import SocialSidebar from '@/components/Main/SocialSidebar.vue'
@@ -40,15 +33,37 @@ import ProductReviewModel from "@/state/product/review/ProductReviewModel"
 @Options({
   name: "App",
   components: {
-    Loading,
     Header,
     Footer,
-    SocialSidebar
+    SocialSidebar,
+    Loader
   }
 })
 export default class App extends Vue {
 
   public showMobileMenu = false
+
+  async created(): Promise<void> {
+    await Promise.all([
+      this.initializeAuth(),
+      this.initializeCart(),
+      store.dispatch('category/categoriesTreeFromRemote')
+    ])
+
+    if (this.isAuthenticated) {
+      await Promise.all([
+        store.dispatch('user/data/userDataFromRemote'),
+        store.dispatch('user/order/userOrdersFromRemote'),
+        store.dispatch('country/getCountriesFromRemote'),
+      ])
+    }
+  }
+
+  mounted(): void {
+    window.addEventListener('resize', () => {
+      store.commit('app/setWindowWidth', window.innerWidth)
+    })
+  }
 
   get lodash(): LoDashStatic {
     return _
@@ -60,12 +75,6 @@ export default class App extends Vue {
 
   get isLoading(): boolean {
     return store.getters['app/getLoading']
-  }
-
-  mounted(): void {
-    window.addEventListener('resize', () => {
-      store.commit('app/setWindowWidth', window.innerWidth)
-    })
   }
 
   get isAuthenticated(): boolean {
@@ -109,22 +118,6 @@ export default class App extends Vue {
 
   public initializeCart(): void {
     store.commit('cart/initializeCart')
-  }
-
-  async created(): Promise<void> {
-    await Promise.all([
-      this.initializeAuth(),
-      this.initializeCart(),
-      store.dispatch('category/categoriesTreeFromRemote')
-    ])
-
-    if (this.isAuthenticated) {
-      await Promise.all([
-        store.dispatch('user/data/userDataFromRemote'),
-        store.dispatch('user/order/userOrdersFromRemote'),
-        store.dispatch('country/getCountriesFromRemote'),
-      ])
-    }
   }
 
 }

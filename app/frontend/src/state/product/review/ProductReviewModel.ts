@@ -1,9 +1,11 @@
 import EntityBase from "@/state/common/EntityBase"
+import ProductModel from "@/state/product/ProductModel"
 import UserDetailsModel from "@/state/user/data/UserDetailsModel"
 
 export default class ProductReviewModel extends EntityBase
 {
     id!: number
+    product!: ProductModel
     product_id!: number
     user_id!: number
     comment!: string

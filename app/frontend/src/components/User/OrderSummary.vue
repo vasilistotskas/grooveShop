@@ -82,9 +82,9 @@ export default class orderSummary extends Vue{
     }
     &-body {
       padding: 10px;
-      box-shadow: 0 0 2px 1px rgb(0 0 0 / 25%);
-      border-radius: 5px;
-      background-color: $primary-color-4;
+      border: 1px solid $primary-color-6;
+      background-color: white;
+      border-radius: 8px;
       &:hover {
         box-shadow: 0 0 2px 1px #f800007d;
       }

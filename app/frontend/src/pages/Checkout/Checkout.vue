@@ -1,47 +1,19 @@
 <template>
   <div class="page-checkout container mt-8 mb-5 ">
     <div class="checkout-grid-container content-min-height">
-      <div class="checkout-grid-title">
-        <h1 class="title">Checkout</h1>
-      </div>
 
-      <div class="checkout-grid-head">
-
-          <div class="checkout-grid-head-part-one">
-            <span>Product</span>
-            <span>Price</span>
-            <span>Quantity</span>
-            <span>Total</span>
-          </div>
-
-          <div class="checkout-grid-head-part-two"
-              v-for="item in cart"
-              v-bind:key="item.product.id">
-            <span>{{ item.product.name }}</span>
-            <span>${{ item.product.price }}</span>
-            <span>{{ item.quantity }}</span>
-            <span>${{ itemTotal(item).toFixed(2) }}</span>
-          </div>
-
-          <div class="checkout-grid-head-part-three">
-              <span>Total</span>
-              <span>{{ cartTotalLength }}</span>
-              <span>${{ cartTotalPrice.toFixed(2) }}</span>
-          </div>
-
-      </div>
-
-      <div class="checkout-grid-content">
-        <h2 class="subtitle">Shipping details</h2>
-        <p class="has-text-grey mb-4">* All fields are required</p>
-        <FormProvider
-            id="userDetailsForm"
-            name="userDetailsForm"
-            title=""
-            :formClass="'form-class checkout-grid-form'"
-            :form="formManager.form"
-            :errors="formManager.errors"
-            @submit="handleSubmit()">
+      <div class="checkout-grid-order-user-details">
+        <div class="checkout-grid-content">
+          <h2 class="subtitle">Shipping details</h2>
+          <p class="has-text-grey mb-4">* All fields are required</p>
+          <FormProvider
+              id="userDetailsForm"
+              name="userDetailsForm"
+              title=""
+              :formClass="'form-class checkout-grid-form'"
+              :form="formManager.form"
+              :errors="formManager.errors"
+              @submit="handleSubmit()">
 
             <div class="checkout-grid-form-part-left">
               <div class="first_name col-12 mb-3">
@@ -168,14 +140,45 @@
 
             </div>
 
-        </FormProvider>
+          </FormProvider>
 
-        <div ref="stripleElement" id="stripe-card" class="mb-5 mt-3"></div>
-        <template v-if="cartTotalLength">
-          <button type="button" class="btn btn-outline-primary" @click="submitForm">Pay with Stripe</button>
-        </template>
+          <div ref="stripleElement" id="stripe-card" class="mb-5 mt-3"></div>
+          <template v-if="cartTotalLength">
+            <button type="button" class="btn btn-outline-primary" @click="submitForm">Pay with Stripe</button>
+          </template>
 
+        </div>
       </div>
+
+      <div class="checkout-grid-order-info">
+        <div class="checkout-grid-title">
+          <h1 class="title">Checkout</h1>
+        </div>
+        <div class="checkout-grid-head">
+          <div class="checkout-grid-head-part-one">
+            <span>Product</span>
+            <span>Price</span>
+            <span>Quantity</span>
+            <span>Total</span>
+          </div>
+
+          <div class="checkout-grid-head-part-two"
+               v-for="item in cart"
+               v-bind:key="item.product.id">
+            <span>{{ item.product.name }}</span>
+            <span>${{ item.product.price }}</span>
+            <span>{{ item.quantity }}</span>
+            <span>${{ itemTotal(item).toFixed(2) }}</span>
+          </div>
+
+          <div class="checkout-grid-head-part-three">
+            <span>Total</span>
+            <span>{{ cartTotalLength }}</span>
+            <span>${{ cartTotalPrice.toFixed(2) }}</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -460,8 +463,8 @@ export default class Checkout extends Vue {
 <style lang="scss" scoped>
   .checkout-grid-container {
     display: grid;
-    grid-template-rows: minmax(47px, 1fr);
-    background-color: $primary-color-4;
+    grid-template-columns: 60% 40%;
+    background-color: white;
     border-radius: 10px;
     padding: 15px 30px 30px;
     gap: 25px;

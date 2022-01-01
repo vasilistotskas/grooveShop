@@ -15,13 +15,20 @@
 
 <script lang="ts">
 import store from '@/store'
-import {Options, Vue} from "vue-class-component"
+import { Options, Vue } from "vue-class-component"
 import ProductModel from "../../state/product/ProductModel"
 import ProductCard from "@/components/Product/ProductCard.vue"
+import UserDetailsModel from "@/state/user/data/UserDetailsModel"
 
 
 @Options({
   name: "Favourites",
+  props: {
+    userData: {
+      type: Object,
+      required: true,
+    }
+  },
   components: {
     ProductCard
   }
@@ -29,9 +36,16 @@ import ProductCard from "@/components/Product/ProductCard.vue"
 
 export default class Favourites extends Vue{
 
-  mounted(): void {
-    document.title = 'My Orders | grooveShop'
+  userData = new UserDetailsModel()
+
+  async created(): Promise<void> {
+    await store.dispatch('product/favourite/userFavouriteProductsFromRemote', this.userData.id)
   }
+
+  mounted(): void {
+    document.title = 'My Favourites | grooveShop'
+  }
+
   get favourites(): ProductModel[] {
     return store.getters['product/favourite/getUserFavouriteData']
   }

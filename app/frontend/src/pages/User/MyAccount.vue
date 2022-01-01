@@ -19,6 +19,10 @@
             Favourites
             <font-awesome-icon :icon="heartIcon" size="1x" :style="{ color: 'white' }"></font-awesome-icon>
           </router-link>
+          <router-link class="nav-link" :to="{ name: 'Reviews' }" aria-label="Reviews">
+            Reviews
+            <font-awesome-icon :icon="starIcon" size="1x" :style="{ color: 'white' }"></font-awesome-icon>
+          </router-link>
         </div>
         <button @click="logout()" class="btn btn-outline-primary-two">Log out</button>
       </nav>
@@ -36,6 +40,7 @@ import router from "@/routes"
 import {Options, Vue} from "vue-class-component"
 import ProfileImage from "@/components/User/ProfileImage.vue"
 import UserDetailsModel from "@/state/user/data/UserDetailsModel"
+import { faStar } from "@fortawesome/free-solid-svg-icons/faStar"
 import { faCogs } from "@fortawesome/free-solid-svg-icons/faCogs"
 import { faHeart } from "@fortawesome/free-solid-svg-icons/faHeart"
 import { faTruck } from "@fortawesome/free-solid-svg-icons/faTruck"
@@ -67,10 +72,12 @@ export default class MyAccount extends Vue {
   get cogsIcon(): typeof faCogs {
     return faCogs
   }
+  get starIcon(): typeof faStar {
+    return faStar
+  }
   get truckIcon(): typeof faTruck {
     return faTruck
   }
-
   get heartIcon(): typeof faHeart {
     return faHeart
   }
@@ -116,9 +123,12 @@ export default class MyAccount extends Vue {
     grid-template-columns: 25% auto;
     gap: 50px;
     min-height: 500px;
+    @media screen and (max-width: 767px) {
+      grid-template-columns: 1fr;
+    }
   }
   .my-account-page-main-part {
-    max-height: 426px;
+    max-height: 480px;
     display: grid;
     grid-template-rows: 1fr 1fr;
     background-color: $primary-color-4;
