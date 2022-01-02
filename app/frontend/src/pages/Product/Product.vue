@@ -7,8 +7,7 @@
                   v-for="image in product.images"
                   :key="image.id"
                   class="image"
-                  v-bind:class="{'image-main': image.is_main }"
-          >
+                  v-bind:class="{'image-main': image.is_main }">
             <img class="img-fluid" v-bind:src="axiosBaseUrl + image.image">
           </figure>
         </div>
@@ -32,20 +31,17 @@
 
               <p><strong>Final Price: </strong>${{ product.final_price }}</p>
             </div>
-
             <div class="product-page-grid-buttons">
                 <input type="number" class="input" min="1" v-model="quantity">
                 <button type="button" class="btn-outline-primary-one addToCartButton" v-bind:class="{'disabled': disabled }" @click="addToCart()">{{ addToCartButtonText }}</button>
                 <FavouriteButton :product="product"></FavouriteButton>
             </div>
           </div>
-
           <div class="product-page-grid-info-part-two">
             <div class="product-page-grid-modal">
               <ProductReviewModal></ProductReviewModal>
             </div>
           </div>
-
         </div>
     </div>
   </div>
@@ -57,23 +53,22 @@
         <div class="grid-item-two">
           <h5>REVIEW AVERAGE : {{ productReviewsAverage }}</h5>
           <h5>REVIEW COUNTER : {{ productReviewsCounter }}</h5>
-        </div>
-        <div class="grid-item-two">
           <h2 class="title section-title">
             <span class="content">Reviews</span>
           </h2>
-
-          <ProductReviews
+        </div>
+        <div class="product-reviews-grid">
+          <ProductReviewCard
               v-for="review in productReviews"
               v-bind:key="review.id"
-              v-bind:review="review"/>
+              v-bind:review="review"
+              v-bind:userId="userId"
+              v-bind:class="{'current-user-review-card': review.user_id == userId }"
+              class="product-review-main-card"/>
         </div>
       </div>
     </div>
   </div>
-
-
-
 </template>
 
 <script lang="ts">
@@ -81,17 +76,17 @@ import store from '@/store'
 import { Options, Vue } from "vue-class-component"
 import ProductModel from "@/state/product/ProductModel"
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import ProductReviews from "@/components/Product/ProductReviews.vue"
 import FavouriteButton from '@/components/Product/FavouriteButton.vue'
 import ProductReviewModal from '@/modals/Product/ProductReviewModal.vue'
+import ProductReviewCard from '@/components/Reviews/ProductReviewCard.vue'
 
 @Options({
   name: "ProductVue",
   components: {
     FavouriteButton,
     ProductReviewModal,
-    ProductReviews,
-    Breadcrumbs
+    Breadcrumbs,
+    ProductReviewCard
   },
   props: {
     category_slug: {
@@ -120,6 +115,10 @@ export default class ProductVue extends Vue {
       store.commit('product/review/setProductReviewsCounter', this.product.review_counter),
       await store.dispatch('app/updateMetaTagElement', {'metaName' : 'description', 'metaAttribute': 'content', 'newValue' : this.product.description})
     ])
+  }
+
+  get userId(): number {
+    return store.getters['user/data/getUserId']
   }
 
   get axiosBaseUrl(): boolean {
@@ -252,5 +251,9 @@ export default class ProductVue extends Vue {
   .product-reviews-container {
     background-color: $primary-color-4;
   }
-
+  .product-reviews-grid {
+    display: grid;
+    gap: 15px;
+    grid-template-rows: repeat(1, 1fr);
+  }
 </style>

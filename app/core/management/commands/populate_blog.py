@@ -10,7 +10,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         faker = Faker()
 
-        user_id = 1
+        user_id = randrange(1, 10)
         website = faker.text(20)
         bio = faker.text(50)
 

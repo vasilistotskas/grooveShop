@@ -579,3 +579,17 @@ table {
     padding: 5px 10px;
   }
 }
+.product-review-main-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 100px auto;
+  gap: 20px 15px;
+  align-items: center;
+  border-radius: 8px;
+  background: white;
+  padding: 30px;
+  border: 1px solid $primary-color-6;
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: 100px auto;
+  }
+}

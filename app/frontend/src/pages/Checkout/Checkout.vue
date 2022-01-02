@@ -446,7 +446,6 @@ export default class Checkout extends Vue {
         toast.error("The region field is missing!")
       }
       else {
-        console.log(apiData)
         await store.dispatch('cart/createOrder', apiData)
       }
 

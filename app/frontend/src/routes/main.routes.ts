@@ -39,22 +39,22 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: 'orders',
                 name: 'Orders',
-                component: () => import("@/components/User/OrderSummary.vue"),
+                component: () => import("@/pages/User/OrderSummary.vue"),
             },
             {
                 path: 'settings',
                 name: 'Settings',
-                component: () => import("@/components/User/AccountSettings.vue"),
+                component: () => import("@/pages/User/AccountSettings.vue"),
             },
             {
                 path: 'favourites',
                 name: 'Favourites',
-                component: () => import("@/components/User/Favourites.vue"),
+                component: () => import("@/pages/User/Favourites.vue"),
             },
             {
                 path: 'reviews',
                 name: 'Reviews',
-                component: () => import("@/components/User/Reviews.vue"),
+                component: () => import("@/pages/User/Reviews.vue"),
             }
         ],
         meta: {

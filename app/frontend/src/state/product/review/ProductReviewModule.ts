@@ -76,13 +76,19 @@ export default class ProductReviewModule
     @Mutation
     createUserToProductReview(userToProductReview: ProductReviewModel): void {
         this.productReviews.unshift(userToProductReview)
+        this.userReviews.unshift(userToProductReview)
         this.userToProductReview = userToProductReview
     }
 
     @Mutation
     removeUserToProductReview(data: any): void {
-        const reviewId = this.productReviews.findIndex(u => [u.user_id === data.user_id, u.product_id === data.product_id])
-        this.productReviews.splice(reviewId, 1)
+        if (this.productReviews && Object.keys(this.productReviews).length > 0) {
+            const ProductReviewId = this.productReviews.findIndex(u => [u.user_id === data.user_id, u.product_id === data.product_id])
+            this.productReviews.splice(ProductReviewId, 1)
+        }
+
+        const UserReviewId = this.userReviews.findIndex(u => [u.user_id === data.user_id, u.product_id === data.product_id])
+        this.userReviews.splice(UserReviewId, 1)
     }
 
     @Mutation
@@ -209,10 +215,7 @@ export default class ProductReviewModule
 
     @Action
     async deleteCurrentProductReview(data: any): Promise<void> {
-        let user_id: number = store.getters['user/data/getUserId']
-        let product_id: number = store.getters['product/getProductId']
-
-        await api.delete(`reviews/review/${user_id}/${product_id}/`)
+        await api.delete(`reviews/review/${data.user_id}/${data.product_id}/`)
             .then((response: ResponseData) => {
                 this.context.commit('removeUserToProductReview', data)
                 this.context.commit('unsetUserToProductReview')
