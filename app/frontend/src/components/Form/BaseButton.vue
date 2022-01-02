@@ -52,50 +52,16 @@ export default defineComponent({
   min-width: 6rem;
   transition: all 100ms;
 }
-.buttonEffect {
-  transition: all .3s ease-in-out;
-    &:hover {
-      transition: all .3s ease-in-out;
-      transform: scale(1.02);
-      box-shadow: 0 0 10px 3px #1f1f1f;
-    }
-}
-
 .default {
   background-color: $primary-color-5!important;
 }
-.default:hover {
-  border-color: $primary-color-5!important;
-}
-
-.default:focus {
-  border-color: $primary-color-5!important;
-  box-shadow: 0 0 3px $primary-color-5!important;
-}
-
 .primary {
   background-color: $primary-color-1!important;
   border-color: $primary-color-1!important;
 }
-
-.primary:hover {
-  background-color: $primary-color-1!important;
-}
-
-.primary:focus {
-  box-shadow: 0 0 3px $primary-color-1!important;
-}
-
 .danger {
   background-color: $red-50;
   border-color: $red-50;
 }
 
-.danger:hover {
-  background-color: $red-50;
-}
-
-.danger:focus {
-  box-shadow: 0 0 3px $red-50;
-}
 </style>

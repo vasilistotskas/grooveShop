@@ -7,21 +7,25 @@
           v-model="profileImageUrl"/>
       <nav class="my-account-grid-navbar">
         <div class="my-account-grid-navbar-paths" id="navbarNavAccount">
-          <router-link class="nav-link" :to="{ name: 'Settings' }" aria-label="Settings">
-            Settings
-            <font-awesome-icon :icon="cogsIcon" size="1x" :style="{ color: 'white' }"></font-awesome-icon>
-          </router-link>
           <router-link class="nav-link" :to="{ name: 'Orders' }" aria-label="Orders">
-            Orders
-            <font-awesome-icon :icon="truckIcon" size="1x" :style="{ color: 'white' }"></font-awesome-icon>
+            <font-awesome-icon :icon="truckIcon" size="1x" :style="{ color: '#5A5A5A' }"></font-awesome-icon>
+            <span>Orders</span>
           </router-link>
           <router-link class="nav-link" :to="{ name: 'Favourites' }" aria-label="Favourites">
-            Favourites
-            <font-awesome-icon :icon="heartIcon" size="1x" :style="{ color: 'white' }"></font-awesome-icon>
+            <font-awesome-icon :icon="heartIcon" size="1x" :style="{ color: '#5A5A5A' }"></font-awesome-icon>
+            <span>Favourites</span>
           </router-link>
           <router-link class="nav-link" :to="{ name: 'Reviews' }" aria-label="Reviews">
-            Reviews
-            <font-awesome-icon :icon="starIcon" size="1x" :style="{ color: 'white' }"></font-awesome-icon>
+            <font-awesome-icon :icon="starIcon" size="1x" :style="{ color: '#5A5A5A' }"></font-awesome-icon>
+            <span>Reviews</span>
+          </router-link>
+          <router-link class="nav-link" :to="{ name: 'Settings' }" aria-label="Settings">
+            <font-awesome-icon :icon="cogsIcon" size="1x" :style="{ color: '#5A5A5A' }"></font-awesome-icon>
+            <span>Settings</span>
+          </router-link>
+          <router-link class="nav-link" :to="{ name: 'Password' }" aria-label="Password">
+            <font-awesome-icon :icon="lockIcon" size="1x" :style="{ color: '#5A5A5A' }"></font-awesome-icon>
+            <span>Password</span>
           </router-link>
         </div>
         <button @click="logout()" class="btn btn-outline-primary-two">Log out</button>
@@ -42,6 +46,7 @@ import ProfileImage from "@/components/User/ProfileImage.vue"
 import UserDetailsModel from "@/state/user/data/UserDetailsModel"
 import { faStar } from "@fortawesome/free-solid-svg-icons/faStar"
 import { faCogs } from "@fortawesome/free-solid-svg-icons/faCogs"
+import { faLock } from "@fortawesome/free-solid-svg-icons/faLock"
 import { faHeart } from "@fortawesome/free-solid-svg-icons/faHeart"
 import { faTruck } from "@fortawesome/free-solid-svg-icons/faTruck"
 
@@ -80,6 +85,9 @@ export default class MyAccount extends Vue {
   }
   get heartIcon(): typeof faHeart {
     return faHeart
+  }
+  get lockIcon(): typeof faLock {
+    return faLock
   }
 
   get isAuthenticated(): boolean {
@@ -128,10 +136,10 @@ export default class MyAccount extends Vue {
     }
   }
   .my-account-page-main-part {
-    max-height: 480px;
+    max-height: 520px;
     display: grid;
     grid-template-rows: 1fr 1fr;
-    background-color: $primary-color-4;
+    background-color: $primary-color-7;
     border-radius: 25px;
     padding: 20px;
     gap: 20px;
@@ -141,7 +149,7 @@ export default class MyAccount extends Vue {
   .my-account-page-main-content {
     display: grid;
     grid-template-rows: 1fr;
-    background-color: $primary-color-4;
+    background-color: $primary-color-7;
     border-radius: 25px;
     padding: 20px;
     gap: 20px;
@@ -150,7 +158,7 @@ export default class MyAccount extends Vue {
 
   .my-account-grid-navbar {
     display: grid;
-    background-color: $primary-color-4;
+    background-color: $primary-color-7;
     border-radius: 10px;
     gap: 15px;
     button.btn {
@@ -171,20 +179,28 @@ export default class MyAccount extends Vue {
     border-bottom: 1px solid $primary-color-4;
     padding-bottom: 20px;
     a {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 15px;
       font-size: 20px;
-      background-color: $primary-color-3;
-      color: $primary-color-4 !important;
+      background-color: transparent;
+      color: $primary-color-3!important;
       padding: 10px;
-      text-align: center;
-      width: 85%;
+      text-align: start;
+      width: 50%;
       margin: 0 auto;
       border-radius: 35px;
+      &:hover {
+        color: $primary-color-5!important;
+      }
       &.router-link-active {
-        background-color: $primary-color-3;
-        color: $primary-color-4!important;
+        color: $primary-color-5!important;
         svg {
-          color: $primary-color-1!important;
+          color: $primary-color-5!important;
         }
+      }
+      span {
+        font-weight: 300;
       }
     }
 

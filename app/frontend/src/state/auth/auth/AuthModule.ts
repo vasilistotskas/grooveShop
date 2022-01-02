@@ -94,7 +94,10 @@ export default class AuthModule
                 this.context.commit(BaseAuthenticationTypes.SET_TOKEN, token)
                 router.push('/')
             })
-            .then(() => this.context.commit(BaseAuthenticationTypes.LOGIN_SUCCESS))
+            .then(() => {
+                this.context.commit(BaseAuthenticationTypes.LOGIN_SUCCESS)
+                toast.success('Success')
+            })
             .catch((e: Error) => {
                 this.context.commit(BaseAuthenticationTypes.LOGIN_FAILURE)
                 toast.error('Please enter a valid username and password. Note that both fields may be case-sensitive.')
@@ -108,7 +111,10 @@ export default class AuthModule
             .then((response: ResponseData) => {
                 this.context.commit(BaseAuthenticationTypes.LOGOUT)
             })
-            .then(() =>this.context.commit(BaseAuthenticationTypes.REMOVE_TOKEN))
+            .then(() => {
+                this.context.commit(BaseAuthenticationTypes.REMOVE_TOKEN)
+                toast.success('Logged Out')
+            })
             .catch((e: Error) => {
                 console.log(e)
             })

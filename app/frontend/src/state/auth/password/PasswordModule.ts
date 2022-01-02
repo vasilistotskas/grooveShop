@@ -1,12 +1,11 @@
+import api from "@/api/api.service"
 import { useToast } from 'vue-toastification'
+import ResponseData from "@/state/types/ResponseData"
 import AppBaseModule from "@/state/common/AppBaseModule"
-import { Module, Mutation } from 'vuex-module-decorators'
+import { BaseAuthenticationTypes } from '@/api/auth_types'
+import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 const toast = useToast()
-
-import {
-    BaseAuthenticationTypes
-} from '@/api/auth_types'
 
 @Module({ namespaced: true })
 export default class PasswordModule
@@ -18,6 +17,9 @@ export default class PasswordModule
     resetCompleted = false
     resetError = false
     resetLoading = false
+    changeCompleted = false
+    changeError = false
+    changeLoading = false
 
     get getEmailCompleted (): boolean {
         return this.emailCompleted
@@ -37,6 +39,15 @@ export default class PasswordModule
     }
     get getResetLoading (): boolean {
         return this.resetLoading
+    }
+    get getChangeCompleted (): boolean {
+        return this.changeCompleted
+    }
+    get getChangeError (): boolean {
+        return this.changeError
+    }
+    get getChangeLoading (): boolean {
+        return this.changeLoading
     }
 
     @Mutation
@@ -65,6 +76,19 @@ export default class PasswordModule
     }
 
     @Mutation
+    [BaseAuthenticationTypes.PASSWORD_CHANGE_FAILURE](): void {
+        this.changeError = true
+        this.changeLoading = false
+    }
+
+    @Mutation
+    [BaseAuthenticationTypes.PASSWORD_CHANGE_SUCCESS](): void {
+        this.changeCompleted = true
+        this.changeError = false
+        this.changeLoading = false
+    }
+
+    @Mutation
     [BaseAuthenticationTypes.PASSWORD_EMAIL_BEGIN](): void {
         this.emailLoading = true
     }
@@ -87,6 +111,18 @@ export default class PasswordModule
         this.emailCompleted = true
         this.emailError = false
         this.emailLoading = false
+    }
+
+    @Action
+    async updateUserPassword(data: any): Promise<void> {
+        await api.post('djoser/users/set_password/', data)
+            .then((response: ResponseData) => this.context.commit(BaseAuthenticationTypes.PASSWORD_CHANGE_SUCCESS))
+            .then(() => toast.success("Password Updated, login to continue"))
+            .catch((e: Error) => {
+                this.context.commit(BaseAuthenticationTypes.PASSWORD_CHANGE_FAILURE)
+                toast.error("Current Password is not correct")
+                console.log(e)
+            })
     }
 
     // @Action

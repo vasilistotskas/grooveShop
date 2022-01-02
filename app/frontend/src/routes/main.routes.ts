@@ -55,6 +55,11 @@ const routes: Array<RouteRecordRaw> = [
                 path: 'reviews',
                 name: 'Reviews',
                 component: () => import("@/pages/User/Reviews.vue"),
+            },
+            {
+                path: 'password',
+                name: 'Password',
+                component: () => import("@/pages/User/Password.vue"),
             }
         ],
         meta: {

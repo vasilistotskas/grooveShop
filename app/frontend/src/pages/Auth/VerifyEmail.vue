@@ -1,5 +1,5 @@
 <template>
-  <div id="activate-account-view">
+  <div id="activate-account-view" class="mt-8">
     <h1>Verify Email</h1>
     <template v-if="activationLoading">loading...</template>
     <template v-else-if="activationError">An error occured.</template>
@@ -19,9 +19,6 @@ import router from "@/routes";
 
 @Options({
   name: "VerifyEmail",
-  props: {
-    product: Object
-  }
 })
 
 export default class VerifyEmail extends Vue {

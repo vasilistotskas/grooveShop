@@ -4,6 +4,7 @@ $primary-color-3: #5A5A5A;
 $primary-color-4: #f8f8ff;
 $primary-color-5: #191919;
 $primary-color-6: #e8e8e8;
+$primary-color-7: #ffffff;
 $form-input: #0d6efd;
 $rating-starts: #f68b24;
 
@@ -37,7 +38,7 @@ a:hover {
 }
 
 a, p, span, label, h1, h2, h3, h4, h5, h6 {
-  font-weight: 500;
+  font-weight: 300;
   color: $primary-color-2;
 }
 footer {
@@ -586,7 +587,7 @@ table {
   gap: 20px 15px;
   align-items: center;
   border-radius: 8px;
-  background: white;
+  background-color: $primary-color-4;
   padding: 30px;
   border: 1px solid $primary-color-6;
   @media screen and (max-width: 1200px) {

@@ -139,8 +139,8 @@
 
 <script lang="ts">
 import store from '@/store'
-import { nextTick } from 'vue'
-import {cloneDeep} from "lodash"
+import { cloneDeep } from "lodash"
+import { min } from "@/components/Form/Utils"
 import { useToast } from "vue-toastification"
 import { Options , Vue} from "vue-class-component"
 import RegionsModel from "@/state/country/RegionsModel"
@@ -151,7 +151,6 @@ import SubmitButtons from "@/components/Form/SubmitButtons.vue"
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 import {useValidation, ValidationError} from "vue3-form-validation"
 import ValidationErrors from "@/components/Form/ValidationErrors.vue"
-import {equal, min, exactly, required} from "@/components/Form/Utils"
 
 const toast = useToast()
 
@@ -331,6 +330,10 @@ export default class AccountSettings extends Vue {
     .first_name, .last_name, .phone, .city, .zipcode, .address, .place, .country, .region {
       display: grid;
       gap: 12px;
+    }
+    .button {
+      display: grid;
+      align-items: end;
     }
   }
 </style>

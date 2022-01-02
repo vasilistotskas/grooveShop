@@ -120,7 +120,10 @@ export default class SignUpModule
             })
             .catch((error: Error) => {
                 this.context.commit(BaseAuthenticationTypes.ACTIVATION_FAILURE)
-                toast.success('Activation failed , resend activation link Here.')
+                toast.error('' +
+                    'Activation failed,' +
+                    ' your account has been activated or link expired,' +
+                    ' resend activation link Here.')
             })
     }
 

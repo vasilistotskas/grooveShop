@@ -33,23 +33,30 @@
         <span> {{ review.comment }} </span>
       </div>
     </div>
-    <div class="user-review-product-actions">
-      <a href="#" class="user-review-product-settings"></a>
+    <div class="user-review-product-actions" v-if="this.review.user_id == userId">
+      <a class="user-review-product-settings" @click="openReviewActions"></a>
+      <div class="user-review-actions-menu" ref="userReviewsActionTarget" v-if="reviewActionsOpen">
+        <div class="user-review-actions-controls">
+          <div class="user-review-actions-edit">
+            <router-link :to="'/product' + review.product.absolute_url" aria-label="Product">
+              <span>Update</span>
+            </router-link>
+          </div>
+          <div class="user-review-actions-delete">
+            <a rel="nofollow" data-method="delete" @click="deleteReview(this.review.user_id, this.review.product_id)">Delete</a>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div>
-      <button v-if="this.review.user_id == userId" class="btn-outline-primary-one">Update</button>
-      <button v-if="this.review.user_id == userId" class="btn-outline-primary-two" @click="deleteReview(this.review.user_id, this.review.product_id)">Delete</button>
-    </div>
-
 
   </div>
 </template>
 
 <script lang="ts">
 import store from "@/store"
-import { constant, times } from "lodash"
+import { onClickOutside } from "@vueuse/core"
 import { Options, Vue } from "vue-class-component"
+import { constant, times } from "lodash"
 import ProductReviewModel from "@/state/product/review/ProductReviewModel"
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons/faCheckCircle"
 
@@ -66,14 +73,25 @@ const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.
     userId: {
       type: Number,
       required: false,
-    }
+    },
+    userReviewsActionTarget: HTMLElement
   }
 })
 
 export default class ProductReviewCard extends Vue{
 
+  $refs!: {
+    userReviewsActionTarget: HTMLElement
+  }
   review = new ProductReviewModel()
   userId: Number = 0
+  reviewActionsOpen = false
+
+  updated() : void {
+    onClickOutside(this.$refs.userReviewsActionTarget, (e) => {
+      this.reviewActionsOpen = false
+    })
+  }
 
   get checkCircleIcon(): typeof faCheckCircle {
     return faCheckCircle
@@ -83,13 +101,20 @@ export default class ProductReviewCard extends Vue{
     return num % 2;
   }
 
+  public openReviewActions() {
+    this.reviewActionsOpen = true
+  }
+
   protected async deleteReview(user_id: Number, product_id: Number): Promise<void> {
     let data = {
       user_id,
       product_id
     }
 
-    await store.dispatch('product/review/deleteCurrentProductReview', data)
+    if (confirm("Are you sure you want to delete your rating?")) {
+      await store.dispatch('product/review/deleteCurrentProductReview', data)
+    }
+
   }
 
   public backgroundStars(productRate: any): string[] {
@@ -106,6 +131,19 @@ export default class ProductReviewCard extends Vue{
 
 <style lang="scss">
 .user-review-product-settings {
+  color: transparent;
+  font-size: 0;
+  position: absolute;
+  top: 8px;
+  right: 4px;
+  z-index: 10;
+  width: 34px;
+  height: 34px;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+  &:hover {
+    cursor: pointer;
+  }
   &:before {
     content: "\2807";
     -webkit-transition: color .1s ease-in-out;
@@ -172,6 +210,46 @@ export default class ProductReviewCard extends Vue{
       color: $primary-color-3;
     }
   }
+}
+.user-review-actions {
+  &-menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    -webkit-transform-origin: -webkit-calc(100% - 30px) 30px;
+    -ms-transform-origin: calc(100% - 30px) 30px;
+    transform-origin: calc(100% - 30px) 30px;
+    z-index: 9;
+    width: auto;
+    max-width: 196px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 2px 4px rgb(112 112 112 / 33%);
+    box-shadow: 0 2px 4px rgb(112 112 112 / 33%);
+    background: #f8f8f8;
+    padding: 20px 60px 20px 36px;
+    -webkit-animation: scaleFade .15s;
+    animation: scaleFade .15s;
+    text-align: left;
+  }
+  &-controls {
+    display: block;
+  }
+  &-edit, &-delete {
+    a {
+      font-size: 14px;
+      line-height: 18px;
+      display: block;
+      position: relative;
+      padding: 8px 0 7px;
+      color: $primary-color-3;
+      -webkit-tap-highlight-color: transparent;
+      &:hover {
+        color: $primary-color-5;
+        cursor: pointer;
+      }
+    }
+  }
+
 }
 
 </style>

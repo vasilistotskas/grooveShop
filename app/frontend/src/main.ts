@@ -26,7 +26,7 @@ const ToastOptions: PluginOptions = {
     toastDefaults: {
         // ToastOptions object for each type of toast
         [TYPE.ERROR]: {
-            timeout: 2000,
+            timeout: 3000,
             closeButton: false,
         },
         [TYPE.SUCCESS]: {

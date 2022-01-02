@@ -22,7 +22,7 @@
           </label>
         </div>
         <div class="profile-fullname-part">
-          <h5 class="fw-bold">{{this.fullname}}</h5>
+          <h5>{{this.fullname}}</h5>
         </div>
       </div>
     </form>
@@ -66,18 +66,15 @@ export default class ProfileImage extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
   .profile-image-grid {
-
     &-container {
       display: grid;
       border-bottom: 1px solid $primary-color-4;
-      padding-bottom: 20px;
     }
     &-form {
       display: grid;
       grid-template-rows: minmax(90px, 1fr);
-      background-color: $primary-color-4;
+      background-color: $primary-color-7;
       border-radius: 10px;
       gap: 25px;
       justify-content: center;
@@ -119,6 +116,11 @@ export default class ProfileImage extends Vue {
           cursor: pointer;
         }
       }
+    }
+  }
+  .profile-fullname-part {
+    h5 {
+      font-weight: 500;
     }
   }
 </style>

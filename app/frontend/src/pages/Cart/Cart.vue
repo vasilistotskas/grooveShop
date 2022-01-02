@@ -76,7 +76,7 @@ export default class CartVue extends Vue {
   .cart-grid-container {
     display: grid;
     grid-template-rows: minmax(90px, 1fr);
-    background-color: $primary-color-4;
+    background-color: $primary-color-7;
     border-radius: 10px;
     padding: 15px 30px 30px;
     gap: 25px;

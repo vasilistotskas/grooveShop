@@ -177,7 +177,7 @@ export default class ProductVue extends Vue {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: minmax(90px, 1fr);
     gap: 20px;
-    background-color: $primary-color-4;
+    background-color: $primary-color-7;
     padding: 30px;
     border-radius: 5px;
     .image-main {
@@ -201,7 +201,7 @@ export default class ProductVue extends Vue {
     .product-page-grid-info-part {
       &-one, &-two {
         border-radius: 5px;
-        background-color: $primary-color-4;
+        background-color: $primary-color-7;
       }
       &-one {
         padding: 30px 30px 15px;
