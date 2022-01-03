@@ -187,7 +187,7 @@ export default class MyAccount extends Vue {
       color: $primary-color-3!important;
       padding: 10px;
       text-align: start;
-      width: 50%;
+      width: 66%;
       margin: 0 auto;
       border-radius: 35px;
       &:hover {

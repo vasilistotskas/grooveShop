@@ -26,11 +26,11 @@ const ToastOptions: PluginOptions = {
     toastDefaults: {
         // ToastOptions object for each type of toast
         [TYPE.ERROR]: {
-            timeout: 3000,
+            timeout: 5000,
             closeButton: false,
         },
         [TYPE.SUCCESS]: {
-            timeout: 1350,
+            timeout: 5000,
             hideProgressBar: true,
         }
     }

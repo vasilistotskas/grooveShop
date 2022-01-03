@@ -1,8 +1,11 @@
 <template>
-  <div class="_container" :class="attrsClassName">
+  <div class="_container" :class="[attrsClassName, { 'input-group-w-addon': inputWithAddOn}]">
+    <span v-if="inputWithAddOn" class="input-group-addon">
+      <font-awesome-icon size="lg" :icon="inputWithAddOnIcon" :style="{ color: '#080808' }"></font-awesome-icon>
+    </span>
     <input
         v-model="value"
-        :class="['_input', { '_input-error': hasError }]"
+        :class="['_input', { '_input-error': hasError, 'form-control': inputWithAddOn }]"
         :disabled="disabled"
         :placeholder="placeholder"
         v-bind="attrsRest"/>
@@ -27,6 +30,12 @@ export default defineComponent({
     },
     validating: {
       type: Boolean
+    },
+    inputWithAddOn: {
+      type: Boolean
+    },
+    inputWithAddOnIcon: {
+      type: Object
     },
     disabled: {
       type: Boolean

@@ -240,7 +240,7 @@ DJOSER = {
     'SEND_CONFIRMATION_EMAIL': True,
     'SET_USERNAME_RETYPE': True,
     'SET_PASSWORD_RETYPE': True,
-    'PASSWORD_RESET_CONFIRM_URL': 'accounts/password/reset/confirm/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'password_reset/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': 'accounts/email/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL': 'accounts/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,

@@ -5,7 +5,12 @@
       'column-gap': gap,
       'grid-template-columns': `${r1}fr ${r2}fr`
     }">
-    <BaseButton @click="$emit('reset')" class="reset-button">Reset</BaseButton>
+    <BaseButton
+        @click="$emit('reset')"
+        class="reset-button"
+        type="primary-two">
+      Reset
+    </BaseButton>
     <BaseButton
         class="submit-button"
         type="primary"

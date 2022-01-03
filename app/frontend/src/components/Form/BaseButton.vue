@@ -20,7 +20,7 @@ export default defineComponent({
     type: {
       type: String,
       default: "default",
-      validator: type => ["default", "primary", "danger"].includes(type)
+      validator: type => ["default", "primary", "primary-two", "danger"].includes(type)
     },
     disabled: {
       type: Boolean
@@ -58,6 +58,10 @@ export default defineComponent({
 .primary {
   background-color: $primary-color-1!important;
   border-color: $primary-color-1!important;
+}
+.primary-two {
+  background-color: $primary-color-3!important;
+  border-color: $primary-color-3!important;
 }
 .danger {
   background-color: $red-50;

@@ -125,22 +125,28 @@ export default class PasswordModule
             })
     }
 
-    // @Action
-    // async resetPassword(uid:any, token:any, password1:any, password2:any ): Promise<void> {
-    //     this.context.commit(PASSWORD_RESET_BEGIN)
-    //     return auth.resetAccountPassword(uid, token, password1, password2)
-    //         .then(() => this.context.commit(PASSWORD_RESET_SUCCESS))
-    //         .catch(() => this.context.commit(PASSWORD_RESET_FAILURE))
-    // }
+    @Action
+    async sendPasswordResetEmail(data: any): Promise<void> {
+        await api.post('djoser/users/reset_password/', data)
+            .then((response: ResponseData) => this.context.commit(BaseAuthenticationTypes.PASSWORD_EMAIL_SUCCESS))
+            .catch((e: Error) => {
+                this.context.commit(BaseAuthenticationTypes.PASSWORD_EMAIL_FAILURE)
+            })
+    }
 
-
-    // async sendPasswordResetEmail(email: any): Promise<void> {
-    //     this.context.commit(PASSWORD_EMAIL_BEGIN)
-    //     return auth.sendAccountPasswordResetEmail(email)
-    //         .then(() => this.context.commit(PASSWORD_EMAIL_SUCCESS))
-    //         .catch(() => this.context.commit(PASSWORD_EMAIL_FAILURE))
-    // }
-
+    @Action
+    async resetPasswordConfirm(data: any): Promise<void> {
+        const reset_data = {
+            uid: data.uid,
+            token: data.token,
+            new_password: data.password1
+        }
+        await api.post('djoser/users/reset_password_confirm/', reset_data)
+            .then((response: ResponseData) => this.context.commit(BaseAuthenticationTypes.PASSWORD_RESET_SUCCESS))
+            .catch((e: Error) => {
+                this.context.commit(BaseAuthenticationTypes.PASSWORD_RESET_FAILURE)
+            })
+    }
 
     async clearResetStatus(): Promise<void> {
         this.context.commit(BaseAuthenticationTypes.PASSWORD_RESET_CLEAR)

@@ -86,7 +86,7 @@ export default class NavbarCategories extends Vue {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
         max-height: 160px;
-        background-color: $primary-color-4;
+        background-color: $primary-color-6;
         border-radius: 5px;
         &-item {
           display: grid;

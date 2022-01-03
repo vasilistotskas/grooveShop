@@ -1,7 +1,7 @@
 <template>
   <div class="page-log-in mt-8 mb-5">
     <div class="container">
-      <div class="col-12 col-md-4 mx-auto">
+      <div>
         <div class="card login-card">
           <div class="card-body card-body-border-top">
             <FormProvider
@@ -14,6 +14,8 @@
                   <label :for="formManager.form.email.$uid" class="label mb-2">Email</label>
                   <BaseInput
                       v-model="formManager.form.email.$value"
+                      :inputWithAddOn="true"
+                      :inputWithAddOnIcon="envelopeIcon"
                       :has-error="formManager.form.email.$hasError"
                       :validating="formManager.form.email.$validating"
                       @blur="formManager.form.email.onBlur"
@@ -27,6 +29,8 @@
                   <label :for="formManager.form.password.$uid" class="label mb-2">Password</label>
                   <BaseInput
                       v-model="formManager.form.password.$value"
+                      :inputWithAddOn="true"
+                      :inputWithAddOnIcon="keyIcon"
                       :has-error="formManager.form.password.$hasError"
                       @blur="formManager.form.password.onBlur"
                       type="password"
@@ -56,14 +60,19 @@
                 </div>
                 <div class="grid-item-two">
                   <!-- Simple link -->
-                  <a href="#!">Forgot password?</a>
+                    <router-link to="/password_reset">
+                      Forgot password?
+                    </router-link>
                 </div>
               </div>
             </FormProvider>
 
             <!-- Register buttons -->
-            <div class="text-center">
-              <p class="mb-1">Not a member? <router-link to="/sign-up" aria-label="Sign Up">Register</router-link></p>
+            <div class="login-register-field">
+              <p class="mb-1">
+                Not a member?
+                <router-link to="/sign-up" aria-label="Sign Up">Register</router-link>
+              </p>
               <p class="mb-3">or sign up with:</p>
             </div>
 
@@ -95,8 +104,10 @@ import BaseInput from "@/components/Form/BaseInput.vue"
 import FormProvider from "@/components/Form/FormProvider.vue"
 import SubmitButtons from "@/components/Form/SubmitButtons.vue"
 import ValidationErrors from "@/components/Form/ValidationErrors.vue"
-import { faGoogle } from "@fortawesome/free-brands-svg-icons/faGoogle"
 import { useValidation, ValidationError } from 'vue3-form-validation'
+import { faGoogle } from "@fortawesome/free-brands-svg-icons/faGoogle"
+import { faKey } from "@fortawesome/free-solid-svg-icons/faKey"
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons/faEnvelope"
 import { faFacebook } from "@fortawesome/free-brands-svg-icons/faFacebook"
 
 let {
@@ -125,6 +136,14 @@ export default class LogIn extends Vue {
 
   mounted() {
     document.title = 'Log In'
+  }
+
+  get envelopeIcon(): typeof faEnvelope {
+    return faEnvelope
+  }
+
+  get keyIcon(): typeof faKey {
+    return faKey
   }
 
   get facebookIcon(): typeof faFacebook {
@@ -188,27 +207,55 @@ export default class LogIn extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.login-card {
-  max-width: 500px;
-  display: block;
-  margin: 0 auto;
-  .card-body {
-    grid-template-rows: unset!important;
-  }
-}
-.login-grid-part {
-  &-one {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    .form-check {
-      display: grid;
-      grid-template-columns: 20% 80%;
+  .login-card {
+    max-width: 500px;
+    display: block;
+    margin: 0 auto;
+    .card-body {
+      grid-template-rows: unset!important;
     }
   }
-  &-socials {
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 5px;
+  .login-grid-part {
+    &-one {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      .form-check {
+        display: grid;
+        grid-template-columns: 20% 80%;
+        align-items: center;
+      }
+      .grid-item-two {
+        a {
+          color: $primary-color-4;
+          font-weight: 500;
+          font-size: 17px;
+          &:hover {
+            cursor: pointer;
+            color:  $primary-color-1!important;
+          }
+        }
+      }
+    }
+    &-socials {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 5px;
+      a.btn {
+        background: $primary-color-6;
+        padding: 5px;
+        border-radius: 5px;
+      }
+    }
   }
-}
+  .login-register-field {
+    a {
+      color: $primary-color-4;
+      font-weight: 500;
+      font-size: 16px;
+      &:hover {
+        cursor: pointer;
+        color:  $primary-color-1!important;
+      }
+    }
+  }
 </style>

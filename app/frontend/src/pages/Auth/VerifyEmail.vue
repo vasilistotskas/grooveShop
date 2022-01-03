@@ -1,13 +1,21 @@
 <template>
-  <div id="activate-account-view" class="mt-8">
-    <h1>Verify Email</h1>
+  <div id="activate-account-view" class="container mt-8">
+    <h1 class="mb-3">Verify Email</h1>
     <template v-if="activationLoading">loading...</template>
-    <template v-else-if="activationError">An error occured.</template>
+    <template v-else-if="activationError">
+      <span class="activation-error-text">An error occured, your account has been activated or link expired, resend activation link
+        <span class="activation-error-action" @click="activationEmailResend">Here.</span>
+      </span>
+    </template>
     <template v-else-if="activationCompleted">
-      Account activation successful.
+      <span class="activation-complete-text mb-3">Account activation successful.</span>
       <router-link v-if="!isAuthenticated" to="/log-in">
-        Click here to sign in.
+        <span class="activation-complete-action">Click here to log in.</span>
       </router-link>
+    </template>
+    <template v-else-if="reActivationMailSent">
+      <span class="re-activation-text mb-3">A new activation link has been sent to your email.</span>
+      <span class="re-activation-problem">If the activation email still does not appear in the inbox or in the spam mails contact us.</span>
     </template>
   </div>
 </template>
@@ -40,7 +48,11 @@ export default class VerifyEmail extends Vue {
   }
 
   get activationLoading(): any {
-    return store.getters['signup/getActivationError']
+    return store.getters['signup/getActivationLoading']
+  }
+
+  get reActivationMailSent(): any {
+    return store.getters['signup/getReActivationMailSent']
   }
 
   async activateAccount(): Promise<void> {
@@ -51,6 +63,11 @@ export default class VerifyEmail extends Vue {
     await store.dispatch('signup/clearActivationStatus')
   }
 
+  async activationEmailResend(): Promise<void> {
+    const email = localStorage.getItem('registrationEmail')
+    await store.dispatch('signup/activationEmailResend', email)
+  }
+
   beforeRouteLeave(to: any, from: any, next: any) {
     this.clearActivationStatus()
     next()
@@ -58,3 +75,36 @@ export default class VerifyEmail extends Vue {
 
 }
 </script>
+
+<style lang="scss">
+  #activate-account-view {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    height: 200px;
+    text-align: center;
+  }
+  .activation-error {
+    &-text {
+      color: $primary-color-5;
+    }
+    &-action {
+      color: $primary-color-2;
+      font-weight: 500;
+      font-size: 17px;
+      &:hover {
+        cursor: pointer;
+        color:  $primary-color-1!important;
+      }
+    }
+  }
+  .activation-complete-action {
+    color: $primary-color-2;
+    font-weight: 500;
+    font-size: 17px;
+    &:hover {
+      cursor: pointer;
+      color:  $primary-color-1!important;
+    }
+  }
+</style>

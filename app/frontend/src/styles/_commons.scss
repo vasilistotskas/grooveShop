@@ -48,6 +48,10 @@ footer {
   }
 }
 
+input:focus-visible {
+  outline: unset!important;
+}
+
 .form-select {
   display: block;
   width: 100%;
@@ -592,5 +596,41 @@ table {
   border: 1px solid $primary-color-6;
   @media screen and (max-width: 1200px) {
     grid-template-columns: 100px auto;
+  }
+}
+
+.input-group-w-addon {
+  grid-template-columns: 40px auto;
+  display: grid;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  &:hover {
+    border: 1px solid #FD0002e0;
+    border-radius: 5px;
+  }
+  .input-group-addon {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    white-space: nowrap;
+    vertical-align: middle;
+    border: unset;
+    border-radius: unset;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  .form-control {
+    border: unset;
+    border-radius: unset;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
   }
 }

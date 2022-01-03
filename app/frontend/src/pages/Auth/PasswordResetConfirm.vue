@@ -1,32 +1,51 @@
 <template>
-  <div id="password-reset-confirm-view">
-    <h1>Reset Password Confirm</h1>
-    <template v-if="resetLoading">
-      loading...
-    </template>
-    <template v-else-if="!resetCompleted">
-      <form @submit.prevent="submit">
-        <input v-model="inputs.password1" type="password" id="password1" placeholder="password">
-        <input v-model="inputs.password2" type="password" id="password2"
-               placeholder="confirm password">
-      </form>
-      <button @click="resetPassword(inputs)">
-        reset password
-      </button>
-      <span class="error" v-show="resetError">
-        A error occured while processing your request.
-      </span>
-    </template>
-    <template v-else>
-      Your password has been reset.
-      <router-link to="/log-in">return to login page</router-link>
-    </template>
+  <div id="password-reset-confirm-view" class="container mt-9">
+    <div class="card password-reset-card">
+      <div class="card-body card-body-border-top">
+        <div>
+          <font-awesome-icon :icon="lockIcon" size="4x" :style="{ color: '#5A5A5A' }"></font-awesome-icon>
+        </div>
+        <h1>Reset Password Confirm</h1>
+        <template v-if="resetLoading">
+          loading...
+        </template>
+        <template v-else-if="!resetCompleted">
+          <form @submit.prevent="submit">
+            <div class="form-group">
+              <div class="input-group-w-addon mb-1">
+                <span class="input-group-addon">
+                  <font-awesome-icon :icon="lockIcon" :style="{ color: '#080808' }"></font-awesome-icon>
+                </span>
+                <input v-model="inputs.password1" type="password" id="password1" placeholder="password" class="form-control">
+              </div>
+              <div class="input-group-w-addon">
+                <span class="input-group-addon">
+                  <font-awesome-icon :icon="lockIcon" :style="{ color: '#080808' }"></font-awesome-icon>
+                </span>
+                <input v-model="inputs.password2" type="password" id="password2" placeholder="confirm password" class="form-control">
+              </div>
+            </div>
+          </form>
+          <button class="btn btn-outline-primary-two" @click="resetPasswordConfirm(inputs)">
+            reset password
+          </button>
+          <span class="error" v-show="resetError">
+            A error occured while processing your request.
+          </span>
+        </template>
+        <template v-else>
+          <span>Your password has been reset.</span>
+          <router-link to="/log-in">return to login page</router-link>
+        </template>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import store from '@/store'
 import { Options, Vue } from "vue-class-component"
+import { faLock } from "@fortawesome/free-solid-svg-icons/faLock"
 
 @Options({
   name: "PasswordRestConfirm",
@@ -36,8 +55,18 @@ export default class PasswordRestConfirm extends Vue {
   inputs = {
     password1: '',
     password2: '',
-    uid: this.$route.params.uid,
-    token: this.$route.params.token
+    uid: '',
+    token: ''
+  }
+
+  mounted() : void {
+    document.title = 'Password Reset Confirm'
+    this.inputs.uid = <string>this.$route.params.uid
+    this.inputs.token = <string>this.$route.params.token
+  }
+
+  get lockIcon(): typeof faLock {
+    return faLock
   }
 
   get resetCompleted(): any {
@@ -52,8 +81,8 @@ export default class PasswordRestConfirm extends Vue {
     return store.getters['password/getResetLoading']
   }
 
-  async resetPassword(inputs: any): Promise<void> {
-    await store.dispatch('password/resetPassword', inputs)
+  async resetPasswordConfirm(inputs: any): Promise<void> {
+    await store.dispatch('password/resetPasswordConfirm', inputs)
   }
 
   async clearResetStatus(): Promise<void> {
@@ -62,3 +91,12 @@ export default class PasswordRestConfirm extends Vue {
 
 }
 </script>
+
+<style lang="scss">
+#password-reset-confirm-view {
+  max-width: 500px;
+  .card-body {
+    padding: 50px;
+  }
+}
+</style>

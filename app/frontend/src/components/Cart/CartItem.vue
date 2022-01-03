@@ -8,9 +8,13 @@
     </div>
     <div class="grid-container-cart-item-two">${{ item.product.price }}</div>
     <div class="grid-container-cart-item-three">
-      <a type="button" class="btn-outline-primary-main" data-mdb-ripple-color="dark" @click="decrementQuantity(item)">-</a>
+      <a type="button" class="btn-outline-primary-main" data-mdb-ripple-color="dark" @click="decrementQuantity(item)">
+        <font-awesome-icon :icon="minusIcon" size="lg" :style="{ color: '#3b3b3b' }"></font-awesome-icon>
+      </a>
       {{ item.quantity }}
-      <a type="button" class="btn-outline-primary-main" data-mdb-ripple-color="dark" @click="incrementQuantity(item)">+</a>
+      <a type="button" class="btn-outline-primary-main" data-mdb-ripple-color="dark" @click="incrementQuantity(item)">
+        <font-awesome-icon :icon="plusIcon" size="lg" :style="{ color: '#3b3b3b' }"></font-awesome-icon>
+      </a>
     </div>
     <div class="grid-container-cart-item-four">${{ itemTotal.toFixed(2) }}</div>
     <div class="grid-container-cart-item-five">
@@ -26,6 +30,8 @@ import store from '@/store'
 import { Options, Vue } from "vue-class-component"
 import CartItemModel from "@/state/cart/CartItemModel"
 import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash"
+import { faMinusCircle } from "@fortawesome/free-solid-svg-icons/faMinusCircle"
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons/faPlusCircle"
 
 @Options({
   name: "CartItem",
@@ -42,6 +48,14 @@ export default class CartItemVue extends Vue {
 
     get trashIcon(): typeof faTrash {
       return faTrash
+    }
+
+    get minusIcon(): typeof faMinusCircle {
+      return faMinusCircle
+    }
+
+    get plusIcon(): typeof faPlusCircle {
+      return faPlusCircle
     }
 
     get isMobile(): boolean {
@@ -108,7 +122,7 @@ export default class CartItemVue extends Vue {
     }
     &-item-five {
       position: absolute;
-      right: 0;
+      right: 30px;
     }
   }
   .grid-container-table-items {
