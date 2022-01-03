@@ -11,59 +11,63 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="row">
-                <!-- Product Rating -->
-                <p>1. Rate</p>
-                <div class="col-12" id="full-stars-example-two">
-                <div class="rating">
-                  <input type="hidden" :name="name" :value="rate" />
-                  <div class="rating-board rating-background"
-                       ref="ratingBoard"
-                       @mousemove="updateNewSelectionRatio($event)"
-                       @mouseenter="unlockSelection($event)"
-                       @mouseleave="reLockSelection($event)"
-                       @touchmove="updateNewSelectionRatio($event)"
-                       @touchstart="unlockSelection($event)"
-                       @touchend="reLockSelection($event)"
-                       @click="lockSelection($event)">
-                    <svg v-for="(star, i) of backgroundStars"
-                         aria-hidden="true"
-                         focusable="false"
-                         data-prefix="fas"
-                         data-icon="star"
-                         role="img"
-                         xmlns="http://www.w3.org/2000/svg"
-                         viewBox="0 0 576 512"
-                         :key="i"
-                         class="star star-background"
-                         v-html="star"></svg>
-                  </div>
-                  <div class="rating-board rating-foreground">
-                    <svg v-for="(star, i) of foregroundStars"
-                         aria-hidden="true"
-                         focusable="false"
-                         role="img"
-                         xmlns="http://www.w3.org/2000/svg"
-                         viewBox="0 0 576 512"
-                         :key="i"
-                         class="star star-foreground"
-                         v-html="star"></svg>
-                  </div>
-                  <span class="px-2">{{ reviewScoreText }}</span>
+              <!-- Product Rating -->
+              <p>1. Rate</p>
+              <div class="col-12" id="full-stars-example-two">
+              <div class="rating">
+                <input type="hidden" :name="name" :value="rate" />
+                <div class="rating-board rating-background"
+                     ref="ratingBoard"
+                     @mousemove="updateNewSelectionRatio($event)"
+                     @mouseenter="unlockSelection($event)"
+                     @mouseleave="reLockSelection($event)"
+                     @touchmove="updateNewSelectionRatio($event)"
+                     @touchstart="unlockSelection($event)"
+                     @touchend="reLockSelection($event)"
+                     @click="lockSelection($event)">
+                  <svg v-for="(star, i) of backgroundStars"
+                       aria-hidden="true"
+                       focusable="false"
+                       data-prefix="fas"
+                       data-icon="star"
+                       role="img"
+                       xmlns="http://www.w3.org/2000/svg"
+                       viewBox="0 0 576 512"
+                       :key="i"
+                       class="star star-background"
+                       v-html="star"></svg>
                 </div>
+                <div class="rating-board rating-foreground">
+                  <svg v-for="(star, i) of foregroundStars"
+                       aria-hidden="true"
+                       focusable="false"
+                       role="img"
+                       xmlns="http://www.w3.org/2000/svg"
+                       viewBox="0 0 576 512"
+                       :key="i"
+                       class="star star-foreground"
+                       v-html="star"></svg>
                 </div>
-                <p class="mt-3">2. Comment</p>
-                <div class="col-12 review-modal-comment">
-                  <div class="form-group">
-                    <p>
-                      <textarea v-model="comment" placeholder="Share your experience..." class="form-control" id="reviewTextArea" rows="6" maxlength="10000"></textarea>
-                    </p>
-                  </div>
+                <span class="px-2">{{ reviewScoreText }}</span>
+              </div>
+              </div>
+              <p class="mt-3">2. Comment</p>
+              <div class="col-12 review-modal-comment">
+                <div class="form-group">
+                  <p>
+                    <textarea v-model="comment"
+                              placeholder="Share your experience..."
+                              class="form-control"
+                              id="reviewTextArea"
+                              rows="6"
+                              maxlength="10000">
+                    </textarea>
+                  </p>
                 </div>
               </div>
 
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer mt-3">
               <button type="button" class="btn-outline-primary-one" @click="reviewHandle()">{{ reviewButtonText }}</button>
             </div>
           </div>

@@ -1,6 +1,6 @@
 $primary-color-1: #FD0002e0;
 $primary-color-2: #080808;
-$primary-color-3: #5A5A5A;
+$primary-color-3: #5a5a5a;
 $primary-color-4: #f8f8ff;
 $primary-color-5: #191919;
 $primary-color-6: #e8e8e8;
@@ -45,6 +45,22 @@ footer {
   a, p, span, label, h1, h2, h3, h4, h5, h6 {
     font-weight: 300;
     color: $primary-color-4;
+  }
+}
+
+textarea {
+  font-size: Max(16px, 1em);
+  font-family: inherit;
+  padding: 0.25em 0.5em;
+  background-color: #fff;
+  border: 2px solid #8b8a8b;
+  border-radius: 4px;
+  transition: 180ms box-shadow ease-in-out;
+  resize: vertical;
+  &:focus {
+    border-color: rgba(253, 0, 2, 0.33);
+    box-shadow: 0 0 0 2px rgb(253 0 2 / 25%);
+    outline: 3px solid transparent;
   }
 }
 
@@ -530,7 +546,7 @@ table {
 }
 
 .btn-outline-primary {
-  &-one, &-two, &-main {
+  &-one, &-two, &-three, &-main {
     padding: 10px;
     text-align: center;
     width: 100%;
@@ -577,6 +593,14 @@ table {
     background-color: $primary-color-1;
     a {
       color: $primary-color-4;
+    }
+  }
+  &-three {
+    color: $primary-color-5;
+    border: 1px solid rgba(232, 232, 232, 0.7);
+    background-color: $primary-color-6;
+    a {
+      color: $primary-color-5;
     }
   }
   @media screen and (max-width: 767px) {

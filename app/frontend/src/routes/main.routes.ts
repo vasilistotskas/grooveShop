@@ -93,7 +93,27 @@ const routes: Array<RouteRecordRaw> = [
         path: '/product/:category_slug/:product_slug',
         name: 'Product',
         component: () => import("@/pages/Product/Product.vue"),
-        props: true
+        props: true,
+        meta: {
+            breadcrumb: (route: any) => ([
+                {
+                    name: 'Product Category Page',
+                    to: {
+                        type: 'category',
+                        param: route.category_slug,
+                        full_path: 'category' + '/' + route.category_slug
+                    }
+                },
+                {
+                    name: 'Product Page',
+                    to: {
+                        type: 'product',
+                        param: route.product_slug,
+                        full_path: 'product' + '/' + route.category_slug + '/' + route.product_slug
+                    }
+                }
+            ])
+        }
     },
     {
         path: '/category/:category_slug',

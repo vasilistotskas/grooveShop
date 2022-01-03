@@ -1,6 +1,6 @@
 <template>
   <div class="container min-height-container mt-7">
-    <Breadcrumbs :routeParams="this.$route.params"></Breadcrumbs>
+    <Breadcrumbs :breadCrumbPath="breadCrumbPath"></Breadcrumbs>
     <div class="product-page-grid-container mb-5" v-if="product && Object.keys(product).length > 0">
         <div class="product-page-grid-image">
           <figure
@@ -73,6 +73,7 @@
 
 <script lang="ts">
 import store from '@/store'
+import router from "@/routes"
 import { Options, Vue } from "vue-class-component"
 import ProductModel from "@/state/product/ProductModel"
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
@@ -115,6 +116,11 @@ export default class ProductVue extends Vue {
       store.commit('product/review/setProductReviewsCounter', this.product.review_counter),
       await store.dispatch('app/updateMetaTagElement', {'metaName' : 'description', 'metaAttribute': 'content', 'newValue' : this.product.description})
     ])
+  }
+
+  get breadCrumbPath(): [] {
+    // @ts-ignore
+    return router.currentRoute.value.meta.breadcrumb(router.currentRoute.value.params)
   }
 
   get userId(): number {
@@ -249,7 +255,7 @@ export default class ProductVue extends Vue {
     padding-bottom: 15px;
   }
   .product-reviews-container {
-    background-color: $primary-color-4;
+    background-color: $primary-color-7;
   }
   .product-reviews-grid {
     display: grid;

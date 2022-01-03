@@ -1,6 +1,5 @@
 <template>
-  <button type="button"  data-mdb-ripple-color="dark" class="btn-outline-primary-main" @click="favouriteHandle()">
-    <i :class=favouriteIconClass()></i>
+  <button type="button" data-mdb-ripple-color="dark" class="btn-outline-primary-three" @click="favouriteHandle()">
     <font-awesome-icon v-if="!this.isFavourite" size="2x" :icon="heartIcon" :style="{ color: 'white' }"></font-awesome-icon>
     <font-awesome-icon v-else size="2x" :icon="heartIcon" :style="{ color: '#f80000e0' }"></font-awesome-icon>
   </button>
@@ -33,10 +32,6 @@ export default class FavouriteButton extends Vue {
 
   async favouriteHandle(): Promise<void> {
     await store.dispatch('product/favourite/toggleFavourite', this.product)
-  }
-
-  private favouriteIconClass(): string {
-    return !this.isFavourite ? 'far fa-heart' : 'fas fa-heart'
   }
 
 }

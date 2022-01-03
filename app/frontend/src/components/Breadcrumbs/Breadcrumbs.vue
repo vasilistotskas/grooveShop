@@ -1,10 +1,21 @@
 <template>
-  <div class="container mt-2 mb-4">
+  <div class="container mt-4 mb-4">
     <ul class="breadcrumb">
-      <li v-for="param in routeParams" class="breadcrumb__item breadcrumb__item-firstChild">
-        <span class="breadcrumb__inner">
-          <span class="breadcrumb__title">{{ param }}</span>
-        </span>
+      <li class="breadcrumb__item">
+        <router-link :to="{ name: 'Home' }" class="btn-w-effect" aria-label="Home">
+          <span class="breadcrumb__inner">
+            <span class="breadcrumb__title">Home</span>
+          </span>
+        </router-link>
+        <span class="breadcrumb__seperator">/</span>
+      </li>
+      <li v-for="breadcrumb in breadCrumbPath" class="breadcrumb__item">
+        <router-link :to="'/' + breadcrumb.to.full_path" class="btn-w-effect" aria-label="Blog">
+          <span class="breadcrumb__inner">
+            <span class="breadcrumb__title">{{ breadcrumb.to.param }}</span>
+          </span>
+        </router-link>
+        <span class="breadcrumb__seperator">/</span>
       </li>
     </ul>
   </div>
@@ -16,13 +27,13 @@ import { Options, Vue } from "vue-class-component"
 @Options({
   name: "Breadcrumbs",
   props: {
-    routeParams: {}
+    breadCrumbPath: {}
   }
 })
 
 export default class Breadcrumbs extends Vue {
 
-  routeParams!: {}
+  breadCrumbPath!: {}
 
 }
 
@@ -30,50 +41,60 @@ export default class Breadcrumbs extends Vue {
 
 <style lang="scss" scoped>
 
-ul.breadcrumb {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-}
-
-.breadcrumb__item {
-  height: 100%;
-  background-color: $primary-color-4;
-  color: $primary-color-3;
-  font-family: 'Oswald', sans-serif;
-  border-radius: 7px;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-  position: relative;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-  transform: skew(-21deg);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.26);
-  margin: 5px;
-  padding: 0 40px;
-  cursor: pointer;
-}
-
-.breadcrumb__item:hover {
-  background: $primary-color-3;
-  color: $primary-color-4;
-}
-
-.breadcrumb__inner {
+.breadcrumb {
   display: flex;
-  flex-direction: column;
-  margin: auto;
-  z-index: 2;
-  transform: skew(21deg);
-}
+  top: 0;
+  padding-bottom: 0;
+  padding-top: 0;
+  font-size: 13px;
+  border: 0;
+  justify-content: center!important;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+  list-style: none;
+  background-color: transparent;
+  border-radius: 0.25rem;
 
-.breadcrumb__title {
-  font-size: 12px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+  &__item {
+    cursor: pointer;
+    display: inline-flex;
+    &:hover {
+      color: $primary-color-4;
+    }
+    a {
+      color: $primary-color-3!important;
+    }
+    a.router-link-active {
+      span.breadcrumb__title {
+        font-weight: 500;
+      }
+    }
+    &:last-child {
+      span.breadcrumb__seperator {
+        display: none;
+      }
+    }
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    z-index: 2;
+  }
+
+  &__title {
+    font-size: 13px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  &__seperator {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+
 }
 
 @media all and (max-width: 1000px) {
