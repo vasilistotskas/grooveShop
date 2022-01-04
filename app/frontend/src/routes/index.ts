@@ -26,6 +26,12 @@ router.beforeEach((to, from, next) => {
             next()
         }
     })
+    if (to.name === 'NotFound') {
+        next('/errors/error_404')
+    }
+    else {
+        next()
+    }
 })
 
 export default router

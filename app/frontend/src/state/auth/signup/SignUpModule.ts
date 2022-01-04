@@ -5,7 +5,7 @@ import ResponseData from "@/state/types/ResponseData"
 import AppBaseModule from "@/state/common/AppBaseModule"
 import { BaseAuthenticationTypes } from '@/api/auth_types'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import RegisterActivationFail from "@/components/RegisterActivationFail.vue"
+import RegisterActivationFail from "@/components/Toast/RegisterActivationFail.vue"
 
 const toast = useToast()
 

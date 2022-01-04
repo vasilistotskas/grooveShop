@@ -40,6 +40,11 @@ def index_view(
     return render(request, 'dist/index.html')
 
 
+handler400 = index_view
+handler403 = index_view
+handler404 = index_view
+handler500 = index_view
+
 front_urls = [
     path('', index_view, name='index'),
     path('log-in', index_view, name='index'),

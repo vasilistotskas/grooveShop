@@ -144,6 +144,17 @@ const routes: Array<RouteRecordRaw> = [
         name: 'PostsByTag',
         component: () => import("@/components/Blog/PostsByTag.vue"),
         props: true
+    },
+    {
+        path: '/errors/error_404',
+        name: 'PageNotFound',
+        component: () => import("@/components/Main/PageNotFound.vue"),
+        props: true
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'NotFound',
+        component: {}
     }
 ]
 

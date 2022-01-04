@@ -1,8 +1,6 @@
 # !!!! TODOS !!!!
 
-# BREADCRUMBS
-
-# ERROR PAGES !!! (404, 500 , ETC)
+# ERROR PAGES !!! (404, 500 , ETC) ---> ready , need an ui
 
 # PRODUCTS ALL
 # CATEGORY PAGE

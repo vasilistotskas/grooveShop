@@ -68,7 +68,6 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'graphene_django',
     'djoser',
-    'social_django',
     'mptt',
     'tinymce'
 ]
