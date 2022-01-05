@@ -1,5 +1,6 @@
 <template>
-  <div id="password-reset-confirm-view" class="container mt-9">
+  <div id="password-reset-confirm-view" class="container mt-8">
+    <Breadcrumbs :breadCrumbPath="breadCrumbPath"></Breadcrumbs>
     <div class="card password-reset-card">
       <div class="card-body card-body-border-top">
         <div>
@@ -44,11 +45,16 @@
 
 <script lang="ts">
 import store from '@/store'
+import router from "@/routes"
 import { Options, Vue } from "vue-class-component"
 import { faLock } from "@fortawesome/free-solid-svg-icons/faLock"
+import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs.vue"
 
 @Options({
   name: "PasswordRestConfirm",
+  components: {
+    Breadcrumbs
+  }
 })
 export default class PasswordRestConfirm extends Vue {
 
@@ -63,6 +69,11 @@ export default class PasswordRestConfirm extends Vue {
     document.title = 'Password Reset Confirm'
     this.inputs.uid = <string>this.$route.params.uid
     this.inputs.token = <string>this.$route.params.token
+  }
+
+  get breadCrumbPath(): [] {
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
   get lockIcon(): typeof faLock {

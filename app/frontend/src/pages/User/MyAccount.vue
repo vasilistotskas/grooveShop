@@ -1,5 +1,6 @@
 <template>
-  <div class="my-account-main-container container mt-8 mb-5" v-if="userData && Object.keys(userData).length > 0">
+  <div class="my-account-main-container container mt-7 mb-5" v-if="userData && Object.keys(userData).length > 0">
+    <Breadcrumbs :breadCrumbPath="breadCrumbPath"></Breadcrumbs>
     <div class="my-account-page-main-part">
       <ProfileImage
           :src="profileImageUrl"
@@ -41,19 +42,21 @@
 <script lang="ts">
 import store from '@/store'
 import router from "@/routes"
-import {Options, Vue} from "vue-class-component"
+import { Options, Vue } from "vue-class-component"
 import ProfileImage from "@/components/User/ProfileImage.vue"
 import UserDetailsModel from "@/state/user/data/UserDetailsModel"
 import { faStar } from "@fortawesome/free-solid-svg-icons/faStar"
 import { faCogs } from "@fortawesome/free-solid-svg-icons/faCogs"
 import { faLock } from "@fortawesome/free-solid-svg-icons/faLock"
+import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs.vue"
 import { faHeart } from "@fortawesome/free-solid-svg-icons/faHeart"
 import { faTruck } from "@fortawesome/free-solid-svg-icons/faTruck"
 
 @Options({
   name: "MyAccount",
   components: {
-    ProfileImage
+    ProfileImage,
+    Breadcrumbs
   }
 })
 
@@ -72,6 +75,11 @@ export default class MyAccount extends Vue {
   mounted() {
     this.profileImageUrl = this.userData.image_url
     document.title = 'My Account'
+  }
+
+  get breadCrumbPath(): [] {
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
   get cogsIcon(): typeof faCogs {
@@ -129,10 +137,13 @@ export default class MyAccount extends Vue {
   .my-account-main-container {
     display: grid;
     grid-template-columns: 25% auto;
-    gap: 50px;
+    gap: 0 50px;
     min-height: 500px;
     @media screen and (max-width: 767px) {
       grid-template-columns: 1fr;
+    }
+    .breadcrumb-container {
+      grid-column: 1/3;
     }
   }
   .my-account-page-main-part {

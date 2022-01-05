@@ -1,5 +1,6 @@
 <template>
-  <div id="activate-account-view" class="container mt-8">
+  <div id="activate-account-view" class="container mt-7">
+    <Breadcrumbs :breadCrumbPath="breadCrumbPath"></Breadcrumbs>
     <h1 class="mb-3">Verify Email</h1>
     <template v-if="activationLoading">loading...</template>
     <template v-else-if="activationError">
@@ -22,17 +23,26 @@
 
 <script lang="ts">
 import store from '@/store'
+import router from "@/routes"
 import { Options, Vue } from "vue-class-component"
-import router from "@/routes";
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 
 @Options({
   name: "VerifyEmail",
+  components: {
+    Breadcrumbs
+  }
 })
 
 export default class VerifyEmail extends Vue {
 
   created(): void {
     this.activateAccount()
+  }
+
+  get breadCrumbPath(): [] {
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
   get isAuthenticated(): any {

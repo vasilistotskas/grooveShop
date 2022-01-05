@@ -1,6 +1,7 @@
 <template>
-  <div class="page-sign-up mt-8 mb-5">
+  <div class="page-sign-up mt-7 mb-5">
     <div class="container">
+      <Breadcrumbs :breadCrumbPath="breadCrumbPath"></Breadcrumbs>
       <template v-if="registrationLoading">
         loading...
       </template>
@@ -107,16 +108,18 @@
 
 <script lang="ts">
 import store from "@/store"
+import router from "@/routes"
 import { useToast } from "vue-toastification"
 import { Options, Vue } from "vue-class-component"
 import BaseInput from "@/components/Form/BaseInput.vue"
 import { min, email, equal } from "@/components/Form/Utils"
 import FormProvider from "@/components/Form/FormProvider.vue"
 import SubmitButtons from "@/components/Form/SubmitButtons.vue"
+import { faKey } from "@fortawesome/free-solid-svg-icons/faKey"
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import ValidationErrors from "@/components/Form/ValidationErrors.vue"
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons/faEnvelope"
-import {faKey} from "@fortawesome/free-solid-svg-icons/faKey";
 
 const toast = useToast()
 
@@ -138,7 +141,8 @@ let {
     FormProvider,
     BaseInput,
     SubmitButtons,
-    ValidationErrors
+    ValidationErrors,
+    Breadcrumbs
   }
 })
 
@@ -156,6 +160,11 @@ export default class Register extends Vue {
   updated() {
     const emailFromLocalStorage = store.getters['signup/getRegistrationEmail']
     if (emailFromLocalStorage) this.activationEmailAtLocalStorage = true
+  }
+
+  get breadCrumbPath(): [] {
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
   formManager = {

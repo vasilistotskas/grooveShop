@@ -1,8 +1,9 @@
 import router from "@/routes"
 import gql from 'graphql-tag'
+import TagModel from "@/state/blog/TagModel"
 import PostModel from "@/state/blog/PostModel"
-import { clientApollo } from '../../../apollo.provider'
 import AuthorModel from "@/state/blog/AuthorModel"
+import { clientApollo } from '../../../apollo.provider'
 import AppBaseModule from "@/state/common/AppBaseModule"
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 
@@ -11,12 +12,22 @@ export default class BlogModule
     extends AppBaseModule
 {
     allPosts: Array<PostModel> = []
+    allTags: Array<TagModel> = []
+    allAuthors: Array<AuthorModel> = []
     postsByTag: Array<PostModel> = []
     postBySlug = new PostModel()
     author = new AuthorModel()
 
     get getAllPosts (): PostModel[] {
         return this.allPosts
+    }
+
+    get getAllTags (): TagModel[] {
+        return this.allTags
+    }
+
+    get getAllAuthors (): AuthorModel[] {
+        return this.allAuthors
     }
 
     get getPostsByTag (): PostModel[] {
@@ -38,6 +49,16 @@ export default class BlogModule
     @Mutation
     setAllPosts(data: PostModel[]): void {
         this.allPosts = data
+    }
+
+    @Mutation
+    setAllTags(data: TagModel[]): void {
+        this.allTags = data
+    }
+
+    @Mutation
+    setAllAuthors(data: AuthorModel[]): void {
+        this.allAuthors = data
     }
 
     @Mutation
@@ -78,12 +99,39 @@ export default class BlogModule
                     name
                   }
                 }
-              }`,
-            variables: {
-                tag: router.currentRoute.value.params.tag,
-            },
+              }`
         })
         this.context.commit('setAllPosts', posts.data.allPosts)
+    }
+
+    @Action
+    async allTagsFromRemote(): Promise<void> {
+        const tags = await clientApollo.query({
+            query: gql`query {
+                allTags {
+                  name
+                }
+              }`
+        })
+        this.context.commit('setAllTags', tags.data.allTags)
+    }
+
+    @Action
+    async allAuthorsFromRemote(): Promise<void> {
+        const authors = await clientApollo.query({
+            query: gql`query {
+                allAuthors {
+                  website
+                  bio
+                  user {
+                    firstName
+                    lastName
+                    email
+                  }
+                }
+              }`
+        })
+        this.context.commit('setAllAuthors', authors.data.allAuthors)
     }
 
     @Action

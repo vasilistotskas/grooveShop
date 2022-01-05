@@ -1,7 +1,8 @@
 # !!!! TODOS !!!!
 
-# ERROR PAGES !!! (404, 500 , ETC) ---> ready , need an ui
-
+# PAGINATED RESULTS ALMOST EVERYWHERE
+# BREADCRUMBS EVERYWHERE
+# BLOG COMMENTS ?
 # PRODUCTS ALL
 # CATEGORY PAGE
 # PRODUCT LISTS
@@ -39,9 +40,7 @@ ETC
 ```
 
 # COOKIES / POLICIES
-
-```
- mostly after api calls
-```
+# ERROR PAGES !!! (404, 500 , ETC) ---> ready , need an ui
 # LANGS AT I18
+
 # MOVE MEDIASTREAM TO ANOTHER PROJECT REPO ETC

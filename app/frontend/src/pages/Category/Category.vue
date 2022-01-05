@@ -1,5 +1,6 @@
 <template>
-<div class="page-category mt-8 mb-5">
+<div class="page-category mt-7 mb-5">
+  <Breadcrumbs :breadCrumbPath="breadCrumbPath"></Breadcrumbs>
   <div class="container">
     <div class="row content-min-height">
       <div class="col-12">
@@ -20,14 +21,17 @@
 <script lang="ts">
 
 import store from '@/store'
+import router from "@/routes"
 import { Options, Vue } from "vue-class-component"
 import CategoryModel from "@/state/category/CategoryModel"
 import ProductCard from "@/components/Product/ProductCard.vue"
+import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs.vue"
 
 @Options({
   name: "CategoryVue",
   components: {
-    ProductCard
+    ProductCard,
+    Breadcrumbs
   },
   props: {
     category_slug: String
@@ -54,16 +58,22 @@ export default class CategoryVue extends Vue {
   }
 
   async mounted(): Promise<void> {
+    document.title = this.$route.params.category_slug + ' Category'
+
     await this.fetchCategory()
     this.formEl.classList.remove('opened');
     this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)
     store.commit('app/setNavbarMenuHidden', true)
-    document.title = this.$route.params.category_slug + ' Category'
   }
 
   unmounted() {
     this.formEl.classList.remove('opened');
     this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)
+  }
+
+  get breadCrumbPath(): [] {
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
   get category(): CategoryModel {

@@ -119,8 +119,8 @@ export default class ProductVue extends Vue {
   }
 
   get breadCrumbPath(): [] {
-    // @ts-ignore
-    return router.currentRoute.value.meta.breadcrumb(router.currentRoute.value.params)
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
   get userId(): number {

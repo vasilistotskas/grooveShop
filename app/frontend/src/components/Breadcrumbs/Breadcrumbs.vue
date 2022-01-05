@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-4 mb-4">
+  <div class="container mt-4 mb-4 breadcrumb-container">
     <ul class="breadcrumb">
       <li class="breadcrumb__item">
         <router-link :to="{ name: 'Home' }" class="btn-w-effect" aria-label="Home">
@@ -12,7 +12,7 @@
       <li v-for="breadcrumb in breadCrumbPath" class="breadcrumb__item">
         <router-link :to="'/' + breadcrumb.to.full_path" class="btn-w-effect" aria-label="Blog">
           <span class="breadcrumb__inner">
-            <span class="breadcrumb__title">{{ breadcrumb.to.param }}</span>
+            <span class="breadcrumb__title">{{ breadcrumb.name }}</span>
           </span>
         </router-link>
         <span class="breadcrumb__seperator">/</span>
@@ -64,7 +64,7 @@ export default class Breadcrumbs extends Vue {
     a {
       color: $primary-color-3!important;
     }
-    a.router-link-active {
+    a.router-link-exact-active {
       span.breadcrumb__title {
         font-weight: 500;
       }

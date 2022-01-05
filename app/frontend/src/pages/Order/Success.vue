@@ -1,5 +1,6 @@
 <template>
-  <div class="container mt-5">
+  <div class="container mt-4">
+    <Breadcrumbs :breadCrumbPath="breadCrumbPath"></Breadcrumbs>
     <div class="page-success">
       <div class="page-success-grid-content">
         <h1 class="title mb-5">Thank you</h1>
@@ -11,10 +12,15 @@
 </template>
 
 <script lang="ts">
+import router from "@/routes"
 import { Options, Vue } from "vue-class-component"
+import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs.vue"
 
 @Options({
-  name: "Checkout"
+  name: "Checkout",
+  components: {
+    Breadcrumbs
+  }
 })
 
 export default class Success extends Vue {
@@ -22,6 +28,12 @@ export default class Success extends Vue {
   mounted() {
     document.title = 'Order Success'
   }
+
+  get breadCrumbPath(): [] {
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+  }
+
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
-  <div class="page-checkout container mt-8 mb-5 ">
+  <div class="page-checkout container mt-7 mb-5 ">
+    <Breadcrumbs :breadCrumbPath="breadCrumbPath"></Breadcrumbs>
     <div class="checkout-grid-container content-min-height">
-
       <div class="checkout-grid-order-user-details">
         <div class="checkout-grid-content">
           <h2 class="subtitle">Shipping details</h2>
@@ -185,6 +185,7 @@
 
 <script lang="ts">
 import store from "@/store"
+import router from "@/routes"
 import { cloneDeep } from "lodash"
 import { useToast } from "vue-toastification"
 import { Options, Vue } from "vue-class-component"
@@ -195,9 +196,10 @@ import BaseInput from "@/components/Form/BaseInput.vue"
 import FormProvider from "@/components/Form/FormProvider.vue"
 import SubmitButtons from "@/components/Form/SubmitButtons.vue"
 import UserDetailsModel from "@/state/user/data/UserDetailsModel"
+import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs.vue"
 import {useValidation, ValidationError} from "vue3-form-validation"
 import ValidationErrors from "@/components/Form/ValidationErrors.vue"
-import {equal, min, exactly, required, email } from "@/components/Form/Utils"
+import { min, exactly, required, email } from "@/components/Form/Utils"
 
 const toast = useToast()
 
@@ -219,7 +221,8 @@ let {
     FormProvider,
     BaseInput,
     SubmitButtons,
-    ValidationErrors
+    ValidationErrors,
+    Breadcrumbs
   }
 })
 export default class Checkout extends Vue {
@@ -244,6 +247,11 @@ export default class Checkout extends Vue {
       await store.dispatch('user/data/userDataFromRemote')
     }
     this.customerDetailsInitialize()
+  }
+
+  get breadCrumbPath(): [] {
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
   formManager = {

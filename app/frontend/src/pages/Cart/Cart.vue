@@ -1,5 +1,6 @@
 <template>
-    <div class="container mt-8 mb-5 content-min-height">
+    <div class="container mt-7 mb-5 content-min-height">
+      <Breadcrumbs :breadCrumbPath="breadCrumbPath"></Breadcrumbs>
       <div class="cart-grid-container">
         <div class="grid-container-item-two" v-if="cartTotalLength">
           <div class="grid-container-table">
@@ -37,14 +38,17 @@
 
 <script lang="ts">
 import store from '@/store'
+import router from "@/routes"
 import { Options, Vue } from "vue-class-component"
 import CartItem from '@/components/Cart/CartItem.vue'
 import CartItemModel from "@/state/cart/CartItemModel"
+import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs.vue"
 
 @Options({
     name: "CartVue",
     components: {
-        CartItem
+      CartItem,
+      Breadcrumbs
     }
 })
 
@@ -52,6 +56,11 @@ export default class CartVue extends Vue {
 
   mounted() {
     document.title = 'Cart'
+  }
+
+  get breadCrumbPath(): [] {
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
   get cart(): Array<CartItemModel> {

@@ -27,7 +27,7 @@ class Command(BaseCommand):
                 menu_main_banner='uploads/products/mobile1.jpg',
             )
 
-            for _ in range(50):
+            for _ in range(200):
                 product_price = randrange(20, 300)
                 name = 'testproduct' + str(i)
                 product = Product.objects.create(

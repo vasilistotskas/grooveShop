@@ -1,5 +1,6 @@
 <template>
-  <div class="page-search mt-9 mb-5">
+  <div class="page-search mt-8 mb-5">
+    <Breadcrumbs :breadCrumbPath="breadCrumbPath"></Breadcrumbs>
     <div class="container">
       <div class="row content-min-height">
         <div class="col-12 mb-3 mt-3">
@@ -31,16 +32,19 @@
 <script lang="ts">
 
 import store from '@/store'
+import router from "@/routes"
 import { Options, Vue } from "vue-class-component"
 import ProductModel from "@/state/product/ProductModel"
 import ProductCard from "@/components/Product/ProductCard.vue"
 import Pagination from "@/components/Pagination/Pagination.vue"
+import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs.vue"
 
 @Options({
   name: "SearchVue",
   components: {
     ProductCard,
-    Pagination
+    Pagination,
+    Breadcrumbs
   }
 })
 
@@ -67,6 +71,11 @@ export default class SearchVue extends Vue {
 
   async unmounted(): Promise<void>{
     store.commit('pagination/unsetResults')
+  }
+
+  get breadCrumbPath(): [] {
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
   onPageChange(page: any) {

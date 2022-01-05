@@ -1,5 +1,6 @@
 <template>
-  <div class="container mt-8 mb-5" v-if="postBySlug && Object.keys(postBySlug).length > 0">
+  <div class="container mt-7 mb-5" v-if="postBySlug && Object.keys(postBySlug).length > 0">
+    <Breadcrumbs :breadCrumbPath="breadCrumbPath"></Breadcrumbs>
     <div class="card mb-3">
       <img class="img-fluid" v-bind:src="axiosBaseUrl + '/media/' + postBySlug.image" :alt="postBySlug.title">
       <div class="card-body">
@@ -20,14 +21,17 @@
 
 <script lang="ts">
 import store from "@/store"
+import router from "@/routes"
 import PostModel from "@/state/blog/PostModel"
 import {Options, Vue} from "vue-class-component"
 import AuthorLink from '@/components/Blog/AuthorLink.vue'
+import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs.vue"
 
 @Options({
   name: "Post",
   components: {
-    AuthorLink
+    AuthorLink,
+    Breadcrumbs
   }
 })
 
@@ -35,6 +39,11 @@ export default class Post extends Vue {
 
   async created(): Promise<void> {
     await store.dispatch('blog/postBySlugFromRemote')
+  }
+
+  get breadCrumbPath(): [] {
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
   get postBySlug(): PostModel {

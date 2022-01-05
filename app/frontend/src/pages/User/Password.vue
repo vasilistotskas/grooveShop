@@ -59,16 +59,16 @@
 
 <script lang="ts">
 
+import store from "@/store"
+import router from "@/routes"
 import { useToast } from "vue-toastification"
 import { Options, Vue } from "vue-class-component"
-import {useValidation, ValidationError} from "vue3-form-validation"
+import { equal, min } from "@/components/Form/Utils"
 import BaseInput from "@/components/Form/BaseInput.vue"
 import FormProvider from "@/components/Form/FormProvider.vue"
 import SubmitButtons from "@/components/Form/SubmitButtons.vue"
 import ValidationErrors from "@/components/Form/ValidationErrors.vue"
-import {equal, min} from "@/components/Form/Utils";
-import store from "@/store";
-import router from "@/routes";
+import { useValidation, ValidationError } from "vue3-form-validation"
 
 const toast = useToast()
 
