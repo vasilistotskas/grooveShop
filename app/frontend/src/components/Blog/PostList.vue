@@ -26,6 +26,9 @@
         </router-link>
       </div>
     </div>
+    <div v-else>
+      <span>No Posts Found</span>
+    </div>
     <BlogSidebar :tags="allTags" :authors="allAuthors"/>
   </div>
 </template>

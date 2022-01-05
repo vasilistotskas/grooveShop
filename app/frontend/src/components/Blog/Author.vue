@@ -33,6 +33,10 @@ export default class Author extends Vue {
     await store.dispatch('blog/authorByEmailFromRemote')
   }
 
+  async updated(): Promise<void> {
+    await store.dispatch('blog/authorByEmailFromRemote')
+  }
+
   get breadCrumbPath(): [] {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)

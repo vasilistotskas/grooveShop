@@ -1,7 +1,7 @@
 <template>
   <div class="grid-blog-siderbar" v-if="(tags || authors) && (Object.keys(tags).length > 0 || Object.keys(authors).length)">
     <div class="grid-blog-siderbar-tags" v-if="tags && Object.keys(tags).length > 0">
-      <span class="sidebar-blog-title">Tags:</span>
+      <span class="sidebar-blog-title tags">Tags:</span>
       <span v-for="tag in tags">
         <router-link :to="`/tag/${tag.name}`" aria-label="Blog Tag">
           <font-awesome-icon :icon="tagIcon" :style="{ color: '#080808' }"></font-awesome-icon>
@@ -10,7 +10,7 @@
       </span>
     </div>
     <div class="grid-blog-siderbar-authors" v-if="authors && Object.keys(authors).length > 0">
-      <span class="sidebar-blog-title">Authors:</span>
+      <span class="sidebar-blog-title authors">Authors:</span>
       <span v-for="author in authors">
           <router-link :to="`/author/${author.user.email}`" aria-label="Blog Author">
           <font-awesome-icon :icon="authorIcon" :style="{ color: '#080808' }"></font-awesome-icon>
@@ -64,8 +64,6 @@ export default class BlogSidebar extends Vue {
     gap: 20px;
     &-tags, &-authors {
       display: grid;
-      grid-template-rows: 50px;
-      grid-auto-rows: 40px;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
       span {
@@ -100,9 +98,14 @@ export default class BlogSidebar extends Vue {
       grid-template-columns: repeat(1, 1fr);
     }
     .sidebar-blog-title {
-      grid-column-start: span 2;
       font-weight: 500;
       font-size: 26px;
+      &.tags {
+        grid-column-start: span 2;
+      }
+      &.authors {
+        grid-column-start: auto;
+      }
     }
   }
 </style>
