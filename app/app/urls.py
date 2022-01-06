@@ -73,6 +73,7 @@ front_urls = [
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('product.urls')),
+    path('api/v1/', include('inventory.urls')),
     path('api/v1/', include('order.urls')),
     path('api/v1/', include('user.urls')),
     path('api/v1/', include('slider.urls')),

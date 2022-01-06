@@ -60,7 +60,8 @@ PROJECT_APPS = [
     'user',
     'search',
     'slider',
-    'blog'
+    'blog',
+    'inventory'
 ]
 THIRD_PARTY_APPS = [
     'rest_framework',
