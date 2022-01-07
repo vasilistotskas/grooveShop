@@ -79,13 +79,30 @@ import { Options, Vue } from "vue-class-component"
 })
 
 export default class Pagination extends Vue {
-  query: string | null = ''
+
+  query: Record<string | number, string | number | null | undefined> | undefined
   uri = window.location.search.substring(1)
   params = new URLSearchParams(this.uri)
   maxVisibleButtons!: number
   totalPages!: number
   route!: string
   endpointUrl!: string
+
+  async mounted(): Promise<void> {
+    await this.initializeRouterQuery()
+  }
+
+  async updated(): Promise<void> {
+    await this.initializeRouterQuery()
+  }
+
+  private initializeRouterQuery(): void {
+    if (this.params.get('query')) {
+      this.query = { ...this.$route.query, 'query': this.params.get('query'), 'page': this.currentPageNumber }
+    } else {
+      this.query = { ...this.$route.query, 'page': this.currentPageNumber }
+    }
+  }
 
   public isPageActive(page: number): boolean {
     return this.currentPageNumber === page;
@@ -121,6 +138,7 @@ export default class Pagination extends Vue {
   get isInFirstPage(): boolean {
     return this.currentPageNumber === 1;
   }
+
   get isInLastPage(): boolean {
     return this.currentPageNumber === this.totalPages;
   }
@@ -136,31 +154,31 @@ export default class Pagination extends Vue {
   async onClickNextPage(): Promise<void> {
     await store.commit('pagination/setCurrentPageNumber', this.currentPageNumber + 1)
     await store.dispatch(`pagination/getPaginatedResults`, { 'pageNumber': this.currentPageNumber, 'endpointUrl': `${ this.endpointUrl }`, 'query': this.currentPageQuery })
-    await router.replace({ name: `${ this.route }`, query: { ...this.$route.query, 'query': this.params.get('query'), 'page': this.currentPageNumber }})
+    await router.replace({ name: `${ this.route }`, query: this.query })
   }
 
   async onClickPreviousPage(): Promise<void> {
     await store.commit('pagination/setCurrentPageNumber', this.currentPageNumber - 1)
     await store.dispatch(`pagination/getPaginatedResults`, { 'pageNumber': this.currentPageNumber, 'endpointUrl': `${ this.endpointUrl }`, 'query': this.currentPageQuery })
-    await router.replace({ name: `${ this.route }`, query: { ...this.$route.query, 'query': this.params.get('query'), 'page': this.currentPageNumber }})
+    await router.replace({ name: `${ this.route }`, query: this.query })
   }
 
   async onClickPage(n: number) {
     await store.commit('pagination/setCurrentPageNumber', n)
     await store.dispatch(`pagination/getPaginatedResults`, { 'pageNumber': n, 'endpointUrl': `${ this.endpointUrl }`, 'query': this.currentPageQuery })
-    await router.replace({ name: `${ this.route }`, query: { ...this.$route.query, 'query': this.params.get('query'), 'page': n }})
+    await router.replace({ name: `${ this.route }`, query: this.query })
   }
 
   async onClickFirstPage(): Promise<void> {
     await store.commit('pagination/setCurrentPageNumber', 1)
     await store.dispatch(`pagination/getPaginatedResults`, { 'pageNumber': this.currentPageNumber, 'endpointUrl': `${ this.endpointUrl }`, 'query': this.currentPageQuery })
-    await router.replace({name: `${ this.route }`, query: { ...this.$route.query, 'query': this.params.get('query'), 'page': this.currentPageNumber }})
+    await router.replace({ name: `${ this.route }`, query: this.query })
   }
 
   async onClickLastPage(): Promise<void> {
     await store.commit('pagination/setCurrentPageNumber', this.totalPages)
     await store.dispatch(`pagination/getPaginatedResults`, { 'pageNumber': this.totalPages, 'endpointUrl': `${ this.endpointUrl }`, 'query': this.currentPageQuery })
-    await router.replace({ name: `${ this.route }`, query: { ...this.$route.query, 'query': this.params.get('query'), 'page': this.totalPages }})
+    await router.replace({ name: `${ this.route }`, query: this.query })
   }
 
 }

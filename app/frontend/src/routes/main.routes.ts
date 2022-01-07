@@ -112,7 +112,7 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: 'orders',
                 name: 'Orders',
-                component: () => import("@/pages/User/OrderSummary.vue"),
+                component: () => import("@/pages/User/OrderHistory.vue"),
                 meta: {
                     breadcrumb: () => ([
                         {

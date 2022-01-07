@@ -329,6 +329,11 @@ table {
   }
 }
 
+.user-order-history {
+  .pagination-buttons {
+    grid-column: 4;
+  }
+}
 .pagination-buttons {
   display: grid;
   grid-template-columns: repeat(9,1fr);

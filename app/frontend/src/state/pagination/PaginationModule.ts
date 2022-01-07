@@ -125,11 +125,19 @@ export default class PaginationModule
 
     @Action
     async getPaginatedResults(params: any): Promise<void> {
-        const baseUrl = '/api/v1'
         await store.commit('app/setLoading', true)
+        const baseUrl = '/api/v1'
+
+        let ApiUrl = ''
+        if (params.query) {
+            ApiUrl = `${baseUrl}/${params.endpointUrl}/${params.query}?p=${params.pageNumber}`
+        } else {
+            ApiUrl = `${baseUrl}/${params.endpointUrl}/?p=${params.pageNumber}`
+        }
+
         session({
-            url: `${baseUrl}/${params.endpointUrl}/${params.query}?p=${params.pageNumber}`,
-            method: 'post',
+            url: ApiUrl,
+            method: params.method,
             data: params,
             headers: {
                 Authorization: "Token " + this.getUserToken
@@ -153,9 +161,7 @@ export default class PaginationModule
                     this.context.commit('setShowPreviousButton', false)
                 }
 
-                let results_products = new ProductModel(results_data)
-
-                this.context.commit('setResults', results_products)
+                this.context.commit('setResults', results_data)
                 this.context.commit('setCountResults', count_data)
                 this.context.commit('setNextPageUrl', next_url_data)
                 this.context.commit('setPreviousPageUrl', previous_url_data)

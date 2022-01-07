@@ -8,8 +8,8 @@
         </div>
 
         <Pagination
-            v-if="Object.keys(this.searchResults).length !== 0"
-            :total-pages="this.searchResultsTotalPages"
+            v-if="Object.keys(searchResults).length !== 0"
+            :total-pages="searchResultsTotalPages"
             :max-visible-buttons="3"
             :route="'Search'"
             :endpointUrl="'search'"
@@ -111,7 +111,12 @@ export default class SearchVue extends Vue {
   }
 
   async performSearch(): Promise<void> {
-    await store.dispatch('pagination/getPaginatedResults', { 'pageNumber': this.currentPageNumber, 'endpointUrl': `search`, 'query': this.currentPageQuery })
+    await store.dispatch('pagination/getPaginatedResults', {
+      'pageNumber': this.currentPageNumber,
+      'endpointUrl': `search`,
+      'query': this.currentPageQuery,
+      'method': 'POST'
+    })
   }
 
 }

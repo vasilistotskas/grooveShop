@@ -9,7 +9,7 @@ class Command(BaseCommand):
         faker = Faker()
         user_id = randrange(1, 10)
 
-        for _ in range(3):
+        for _ in range(30):
             order = Order.objects.create(
                 user_id=user_id,
                 first_name=faker.first_name(),

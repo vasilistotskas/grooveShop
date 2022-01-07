@@ -5,7 +5,7 @@ from helpers.image_resize import make_thumbnail
 
 class Slider(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=40, unique=True)
     url = models.CharField(max_length=255, blank=True, null=True)
     title = models.CharField(max_length=40, blank=True, null=True)
     description = models.CharField(max_length=255, blank=True, null=True)
