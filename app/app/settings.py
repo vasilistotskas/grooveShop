@@ -69,7 +69,8 @@ THIRD_PARTY_APPS = [
     'graphene_django',
     'djoser',
     'mptt',
-    'tinymce'
+    'tinymce',
+    'django_elasticsearch_dsl'
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
@@ -129,7 +130,7 @@ DATABASES = {
         'HOST': os.environ.get('DB_HOST'),
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASS'),
+        'PASSWORD': os.environ.get('DB_PASS')
     }
 }
 
@@ -147,6 +148,13 @@ CACHES = {
 # Celery
 CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = "redis://redis:6379"
+
+# Elastic Search
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'elastic_search'
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -202,6 +210,7 @@ STATICFILES_DIRS = (
     BASE_DIR.joinpath('frontend', 'dist'),
 )
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # graphql schema
 GRAPHENE = {
     "SCHEMA": "blog.schema.schema",

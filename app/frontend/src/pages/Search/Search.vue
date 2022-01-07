@@ -111,7 +111,7 @@ export default class SearchVue extends Vue {
   }
 
   async performSearch(): Promise<void> {
-    await store.dispatch('pagination/getPaginatedResults', { 'pageNumber': this.currentPageNumber, 'endpointUrl': `search`, 'query': this.currentPageQuery })
+    await store.dispatch('pagination/getPaginatedResults', { 'pageNumber': this.currentPageNumber, 'endpointUrl': `search/product`, 'query': this.currentPageQuery })
   }
 
 }

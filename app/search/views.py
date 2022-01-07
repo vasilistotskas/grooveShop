@@ -1,39 +1,44 @@
-from django.db.models import Q
-from product.models import Product
-from rest_framework import status, generics
-from rest_framework.response import Response
+import abc
+from elasticsearch_dsl import Q
+from django.http import HttpResponse
+from rest_framework.views import APIView
+from product.documents import ProductDocument
 from product.serializers import ProductSerializer
-from helpers.paginator import CountPaginator
+from rest_framework.pagination import LimitOffsetPagination
 
 
-class SearchPagination(CountPaginator):
-    page_size = 16
-    page_size_query_param = 'page_size'
-    max_page_size = 50
-    page_query_param = 'p'
+class PaginatedElasticSearchAPIView(APIView, LimitOffsetPagination):
+    serializer_class = None
+    document_class = None
+
+    @abc.abstractmethod
+    def generate_q_expression(self, query):
+        """This method should be overridden
+        and return a Q() expression."""
+
+    def get(self, request, query):
+        try:
+            q = self.generate_q_expression(query)
+            search = self.document_class.search().query(q)
+            response = search.execute()
+
+            print(f'Found {response.hits.total.value} hit(s) for query: "{query}"')
+
+            results = self.paginate_queryset(response, request, view=self)
+            serializer = self.serializer_class(results, many=True)
+            return self.get_paginated_response(serializer.data)
+        except Exception as e:
+            return HttpResponse(e, status=500)
 
 
-class Search(generics.ListAPIView):
-    queryset = Product.objects.all()
+class SearchProducts(PaginatedElasticSearchAPIView):
     serializer_class = ProductSerializer
-    pagination_class = SearchPagination
+    document_class = ProductDocument
 
-    def post(self, request, *args, **kwargs):
-        query = request.data.get('query', '')
-        if query:
-            products = Product.objects.filter(
-                Q(name__icontains=query) |
-                Q(description__icontains=query) |
-                Q(id__icontains=query)
-            )
-            queryset = self.filter_queryset(products)
-
-            page = self.paginate_queryset(queryset)
-            if page is not None:
-                serializer = self.get_serializer(page, many=True)
-                return self.get_paginated_response(serializer.data)
-
-            serializer = self.get_serializer(queryset, many=True)
-            return Response(serializer.data)
-        else:
-            return Response({"products": []}, status=status.HTTP_404_NOT_FOUND)
+    def generate_q_expression(self, query):
+        return Q(
+            'multi_match', query=query,
+            fields=[
+                'id',
+                'name',
+            ], fuzziness='auto')
