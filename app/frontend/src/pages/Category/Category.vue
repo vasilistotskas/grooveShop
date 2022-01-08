@@ -6,10 +6,20 @@
       <div class="col-12">
         <img v-if="category.menu_main_banner" :src="category.menu_main_banner" :alt="category.name" class="img-fluid">
       </div>
+
+      <Pagination
+          v-if="Object.keys(categoryResults).length !== 0"
+          :total-pages="categoryResultsTotalPages"
+          :max-visible-buttons="3"
+          :route="'Category'"
+          :endpointUrl="buildEndPointUrlForPaginatedResults()"
+          @pagechanged="onPageChange"
+      />
+
       <div class="product-listing-grid mt-3 mb-3">
         <ProductCard
         class="col-sm-3"
-        v-for="product in category.all_tree_products"
+        v-for="product in categoryResults"
         v-bind:key="product.id"
         v-bind:product="product"/>
       </div>
@@ -23,15 +33,18 @@
 import store from '@/store'
 import router from "@/routes"
 import { Options, Vue } from "vue-class-component"
+import ProductModel from "@/state/product/ProductModel"
 import CategoryModel from "@/state/category/CategoryModel"
 import ProductCard from "@/components/Product/ProductCard.vue"
+import Pagination from "@/components/Pagination/Pagination.vue"
 import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs.vue"
 
 @Options({
   name: "CategoryVue",
   components: {
     ProductCard,
-    Breadcrumbs
+    Breadcrumbs,
+    Pagination
   },
   props: {
     category_slug: String
@@ -39,36 +52,66 @@ import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs.vue"
 })
 
 export default class CategoryVue extends Vue {
-  formEl = document.getElementById('burgerButton') as HTMLFormElement
 
-  created() {
+  formEl = document.getElementById('burgerButton') as HTMLFormElement
+  uri = window.location.search.substring(1)
+  currentPage: number = 1
+  params = new URLSearchParams(this.uri)
+
+  async created(): Promise<void> {
+
+    document.title = this.$route.params.category_slug + ' Category'
+
     this.$watch(
         () => this.$route,
         (to:any, from:any) => {
           if (to.name === 'Category') {
             this.fetchCategory()
+            this.fetchCategoryProducts()
           }
           if (to.path !== from.path && to.name === 'Category') {
+            store.commit('pagination/unsetResults')
             this.formEl.classList.toggle('opened');
             this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)
             store.commit('app/setNavbarMenuHidden', true)
           }
         }
     )
-  }
 
-  async mounted(): Promise<void> {
-    document.title = this.$route.params.category_slug + ' Category'
-
-    await this.fetchCategory()
     this.formEl.classList.remove('opened');
     this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)
     store.commit('app/setNavbarMenuHidden', true)
+
+    if (this.params.get('query')) {
+      await store.commit('pagination/setCurrentQuery', this.params.get('query'))
+    }
+
+    if (this.params.get('page')) {
+      await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
+    }
+
+    await this.fetchCategory()
+    await this.fetchCategoryProducts()
   }
 
   unmounted() {
-    this.formEl.classList.remove('opened');
+    store.commit('pagination/unsetResults')
+    this.formEl.classList.remove('opened')
     this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)
+  }
+
+  public fetchCategory(): void {
+    const categoryId = this.$route.params.category_slug
+    store.dispatch('category/fetchCategoryFromRemote', categoryId)
+  }
+
+  public fetchCategoryProducts(): void {
+    store.dispatch('pagination/getPaginatedResults', {
+      'pageNumber': this.currentPageNumber,
+      'endpointUrl': this.buildEndPointUrlForPaginatedResults(),
+      'query': this.currentPageQuery,
+      'method': 'GET'
+    })
   }
 
   get breadCrumbPath(): [] {
@@ -80,9 +123,45 @@ export default class CategoryVue extends Vue {
     return store.getters['category/getCategory']
   }
 
-  public fetchCategory(): void {
+  public buildEndPointUrlForPaginatedResults(): string {
     const categoryId = this.$route.params.category_slug
-    store.dispatch('category/fetchCategoryFromRemote', categoryId)
+    return 'category_products' + `/${categoryId}`
+  }
+
+  get currentPageNumber(): number {
+    let storedPageNumber = store.getters['pagination/getCurrentPageNumber']
+    if (storedPageNumber) {
+      return store.getters['pagination/getCurrentPageNumber']
+    }
+    return 1
+  }
+
+  get currentPageQuery(): string {
+    return store.getters['pagination/getCurrentQuery']
+  }
+
+  get categoryResults(): ProductModel {
+    return store.getters['pagination/getResultData']
+  }
+
+  get categoryResultsCount(): number {
+    return store.getters['pagination/getResultCountData']
+  }
+
+  get categoryResultsNextPageUrl(): string {
+    return store.getters['pagination/getResultNextPageUrl']
+  }
+
+  get categoryResultsPreviousPageUrl(): string {
+    return store.getters['pagination/getResultPreviousPageUrl']
+  }
+
+  get categoryResultsTotalPages(): number {
+    return store.getters['pagination/getResultTotalPages']
+  }
+
+  onPageChange(page: any) {
+    this.currentPage = page
   }
 
 }

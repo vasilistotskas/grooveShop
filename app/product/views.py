@@ -3,6 +3,7 @@ from django.http import Http404
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from helpers.paginator import CountPaginator
 from rest_framework.generics import GenericAPIView
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
@@ -12,6 +13,20 @@ from rest_framework import status, authentication, permissions
 
 class ProductsPagination(PageNumberPagination):
     page_size = 16
+
+
+class CategoryProductsPagination(CountPaginator):
+    page_size = 36
+    page_size_query_param = 'page_size'
+    max_page_size = 36
+    page_query_param = 'p'
+
+
+class FavouriteUserProductsPagination(CountPaginator):
+    page_size = 8
+    page_size_query_param = 'page_size'
+    max_page_size = 8
+    page_query_param = 'p'
 
 
 class LatestProductsList(APIView):
@@ -88,6 +103,28 @@ class CategoryDetail(GenericAPIView):
         return result
 
 
+class CategoryProductsList(generics.ListCreateAPIView):
+    pagination_class = CategoryProductsPagination
+    serializer_class = ProductSerializer
+
+    def get_queryset(self,  *args, **kwargs):
+        category_slug = self.kwargs['category_slug']
+        category = Category.objects.get(slug=category_slug)
+        qs = Product.objects.filter(category__in=category.get_descendants(include_self=True))
+        return qs
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
 class CategoryTreeView(GenericAPIView):
     serializer_class = CategorySerializer
 
@@ -119,7 +156,7 @@ class CategoriesUnorganized(APIView):
         return Response(serializer.data)
 
 
-class FavouriteList(APIView):
+class FavouriteUserListIds(APIView):
     authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
@@ -153,20 +190,25 @@ class FavouriteList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class FavouriteProduct(APIView):
+class FavouriteUserProductList(generics.ListAPIView):
     authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
+    pagination_class = FavouriteUserProductsPagination
+    serializer_class = FavouriteProductSerializer
 
-    @staticmethod
-    def filter_objects(user_id):
-        try:
-            return Favourite.objects.filter(user_id=user_id)
-        except Favourite.DoesNotExist:
-            raise Http404
+    def get_queryset(self):
+        user = self.request.user
+        return Favourite.objects.filter(user=user)
 
-    def get(self, request, user_id, format=None):
-        favourites = self.filter_objects(user_id)
-        serializer = FavouriteProductSerializer(favourites, many=True)
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
 

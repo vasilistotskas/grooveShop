@@ -89,7 +89,7 @@ export default class ProductFavouriteModule
 
         await api.get(`favourites/products/${user_id}`)
             .then((response: ResponseData) => {
-                let data = response.data
+                let data = response.data.results
                 const transformedData: any[] = []
                 forEach(data, function(value, key) {
                     transformedData.push(value.product_object)

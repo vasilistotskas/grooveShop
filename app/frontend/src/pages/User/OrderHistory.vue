@@ -38,8 +38,7 @@
         :max-visible-buttons="3"
         :route="'Orders'"
         :endpointUrl="'orders'"
-        @pagechanged="onPageChange"
-    />
+        @pagechanged="onPageChange"/>
   </div>
   <div v-else>
     <h1>NO ORDERS</h1>
@@ -67,7 +66,7 @@ export default class OrderHistory extends Vue{
   currentPage: number = 1
   params = new URLSearchParams(this.uri)
 
-  async mounted(): Promise<void> {
+  async created(): Promise<void> {
 
     document.title = 'My Orders | grooveShop'
 
@@ -79,16 +78,21 @@ export default class OrderHistory extends Vue{
       await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
     }
 
-    await store.dispatch('pagination/getPaginatedResults', {
+    await this.fetchUserOrders()
+
+  }
+
+  async unmounted(): Promise<void>{
+    store.commit('pagination/unsetResults')
+  }
+
+  public fetchUserOrders(): void {
+    store.dispatch('pagination/getPaginatedResults', {
       'pageNumber': this.currentPageNumber,
       'endpointUrl': `orders`,
       'query': this.currentPageQuery,
       'method': 'GET'
     })
-  }
-
-  async unmounted(): Promise<void>{
-    store.commit('pagination/unsetResults')
   }
 
   get currentPageNumber(): number {
@@ -128,7 +132,7 @@ export default class OrderHistory extends Vue{
   }
 
   onPageChange(page: any) {
-    this.currentPage = page;
+    this.currentPage = page
   }
 
 }

@@ -1,12 +1,19 @@
 <template>
-  <div class="container" v-if="favourites && Object.keys(favourites).length > 0">
+  <div class="container" v-if="userFavouriteResults && Object.keys(userFavouriteResults).length > 0">
     <div class="product-listing-grid">
       <ProductCard
           class="grid-item"
-          v-for="product in favourites"
+          v-for="product in userFavouriteResults"
           v-bind:key="product.id"
-          v-bind:product="product"/>
+          v-bind:product="product.product_object"/>
     </div>
+    <Pagination
+        v-if="Object.keys(userFavouriteResults).length !== 0"
+        :total-pages="userFavouriteResultsTotalPages"
+        :max-visible-buttons="3"
+        :route="'Favourites'"
+        :endpointUrl="buildEndPointUrlForPaginatedResults()"
+        @pagechanged="onPageChange"/>
   </div>
   <div v-else>
     <h1>NO FAVOURITES</h1>
@@ -18,6 +25,7 @@ import store from '@/store'
 import { Options, Vue } from "vue-class-component"
 import ProductModel from "../../state/product/ProductModel"
 import ProductCard from "@/components/Product/ProductCard.vue"
+import Pagination from "@/components/Pagination/Pagination.vue"
 import UserDetailsModel from "@/state/user/data/UserDetailsModel"
 
 
@@ -30,24 +38,84 @@ import UserDetailsModel from "@/state/user/data/UserDetailsModel"
     }
   },
   components: {
-    ProductCard
+    ProductCard,
+    Pagination
   }
 })
 
 export default class Favourites extends Vue{
 
+  uri = window.location.search.substring(1)
+  currentPage: number = 1
+  params = new URLSearchParams(this.uri)
   userData = new UserDetailsModel()
 
   async created(): Promise<void> {
-    await store.dispatch('product/favourite/userFavouriteProductsFromRemote', this.userData.id)
-  }
-
-  mounted(): void {
     document.title = 'My Favourites | grooveShop'
+
+    if (this.params.get('query')) {
+      await store.commit('pagination/setCurrentQuery', this.params.get('query'))
+    }
+
+    if (this.params.get('page')) {
+      await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
+    }
+
+    await this.fetchUserFavourites()
   }
 
-  get favourites(): ProductModel[] {
-    return store.getters['product/favourite/getUserFavouriteData']
+  async unmounted(): Promise<void>{
+    store.commit('pagination/unsetResults')
+  }
+
+  public fetchUserFavourites(): void {
+    store.dispatch('pagination/getPaginatedResults', {
+      'pageNumber': this.currentPageNumber,
+      'endpointUrl': this.buildEndPointUrlForPaginatedResults(),
+      'query': this.currentPageQuery,
+      'method': 'GET'
+    })
+  }
+
+  public buildEndPointUrlForPaginatedResults(): string {
+    const user_id = this.userData.id
+    return 'favourites/products' + `/${user_id}`
+  }
+
+  get currentPageNumber(): number {
+    let storedPageNumber = store.getters['pagination/getCurrentPageNumber']
+    if (storedPageNumber) {
+      return store.getters['pagination/getCurrentPageNumber']
+    }
+    return 1
+  }
+
+  get currentPageQuery(): string {
+    return store.getters['pagination/getCurrentQuery']
+  }
+
+  get userFavouriteResults(): ProductModel {
+    return store.getters['pagination/getResultData']
+  }
+
+  get userFavouriteResultsCount(): number {
+    return store.getters['pagination/getResultCountData']
+  }
+
+  get userFavouriteResultsNextPageUrl(): string {
+    return store.getters['pagination/getResultNextPageUrl']
+  }
+
+  get userFavouriteResultsPreviousPageUrl(): string {
+    return store.getters['pagination/getResultPreviousPageUrl']
+  }
+
+  get userFavouriteResultsTotalPages(): number {
+    return store.getters['pagination/getResultTotalPages']
+  }
+
+  onPageChange(page: any) {
+    this.currentPage = page
   }
 
 }

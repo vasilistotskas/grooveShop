@@ -32,7 +32,7 @@ export default class CategoryModule
 
     @Action
     async categoriesTreeFromRemote(): Promise<void> {
-        await api.get('products/categoriesTree/')
+        await api.get('categories/categoriesTree/')
             .then((response: ResponseData) => {
                 const data = response.data
                 const categories = map(data, rawCategory => new CategoryModel(rawCategory))
@@ -45,7 +45,7 @@ export default class CategoryModule
 
     @Action
     async fetchCategoryFromRemote(categorySlug: CategoryModel['slug']): Promise<void> {
-        await api.get(`products/${categorySlug}/`)
+        await api.get(`categories/${categorySlug}/`)
            .then((response: ResponseData) => {
                const data = response.data[0]
                let category = new CategoryModel(data)
