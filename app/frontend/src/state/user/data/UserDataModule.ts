@@ -50,8 +50,6 @@ export default class UserDataModule
                 this.context.commit('setUserId', data[0].id)
                 store.dispatch('country/findRegionsBasedOnAlphaForLoggedCustomer')
                 store.dispatch('product/favourite/userFavouritesFromRemote', response.data[0].user)
-                store.dispatch('product/favourite/userFavouriteProductsFromRemote', response.data[0].user)
-                store.dispatch('product/review/getCurrentUserReviews', data[0].id)
             })
             .catch((e: Error) => {
                 console.log(e)

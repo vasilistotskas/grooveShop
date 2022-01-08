@@ -2,7 +2,7 @@
   <div class="page-search mt-8 mb-5">
     <Breadcrumbs :breadCrumbPath="breadCrumbPath"></Breadcrumbs>
     <div class="container">
-      <div class="row content-min-height">
+      <div class="content-min-height">
         <div class="col-12 mb-3 mt-3">
           <h2 class="is-size-5 has-text-grey">Search term: "{{ currentPageQuery }}"</h2>
         </div>
@@ -61,6 +61,9 @@ export default class SearchVue extends Vue {
     if (this.params.get('query')) {
       store.commit('pagination/setCurrentQuery', this.params.get('query'))
     }
+
+    await store.commit('pagination/setCurrentPageNumber', 1)
+
     if (this.params.get('page')) {
       store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
     }

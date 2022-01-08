@@ -34,6 +34,33 @@
     </div>
 
     <div class="my-account-page-main-content">
+
+      <div v-if="this.$router.currentRoute.value.name === 'MyAccount'" class="user-account-main-page">
+        <div class="user-account-main-page-head">
+          <span class="head-title">General Account Information</span>
+        </div>
+        <div class="user-account-main-page-body">
+          <div class="body-fullname">
+            <div class="body-name">
+              <span class="body-name-label">First Name</span>
+              <span class="body-name">{{ userData.first_name }}</span>
+            </div>
+            <div class="body-surname">
+              <span class="body-surname-label">Last Name</span>
+              <span class="body-surname">{{ userData.last_name }}</span>
+            </div>
+          </div>
+          <div class="body-email">
+            <span class="body-email-label">Email</span>
+            <span class="body-email">{{ userData.email }}</span>
+          </div>
+          <div class="body-phone">
+            <span class="body-phone-label">Phone</span>
+            <span class="body-phone">{{ userData.phone }}</span>
+          </div>
+        </div>
+      </div>
+
       <router-view :key="$route.path" :userData="userData"></router-view>
     </div>
   </div>
@@ -64,6 +91,7 @@ export default class MyAccount extends Vue {
   profileImageUrl: string = ''
 
   created() {
+    document.title = 'My Account'
     this.$watch(
         () => this.userData,
         (image:UserDetailsModel) => {
@@ -74,7 +102,12 @@ export default class MyAccount extends Vue {
 
   mounted() {
     this.profileImageUrl = this.userData.image_url
-    document.title = 'My Account'
+  }
+
+  updated() {
+    if (router.currentRoute.value.name == 'MyAccount') {
+      document.title = 'My Account'
+    }
   }
 
   get breadCrumbPath(): [] {
@@ -159,10 +192,12 @@ export default class MyAccount extends Vue {
 
   .my-account-page-main-content {
     display: grid;
+    position: relative;
+    height: max-content;
     grid-template-rows: 1fr;
     background-color: $primary-color-7;
     border-radius: 25px;
-    padding: 20px;
+    padding: 20px 20px 60px;
     gap: 20px;
     box-shadow: rgb(0 0 0 / 6%) 0 3px 5px -1px, rgb(0 0 0 / 5%) 0 6px 10px 0, rgb(0 0 0 / 4%) 0 1px 18px 0;
   }

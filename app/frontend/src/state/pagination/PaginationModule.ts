@@ -129,10 +129,14 @@ export default class PaginationModule
         const baseUrl = '/api/v1'
 
         let ApiUrl = ''
-        if (params.query) {
-            ApiUrl = `${baseUrl}/${params.endpointUrl}/${params.query}?p=${params.pageNumber}`
-        } else {
+
+        if (!params.query && !params.pageNumber) {
+            ApiUrl = `${baseUrl}/${params.endpointUrl}`
+        }
+        else if (!params.query) {
             ApiUrl = `${baseUrl}/${params.endpointUrl}/?p=${params.pageNumber}`
+        } else {
+            ApiUrl = `${baseUrl}/${params.endpointUrl}/${params.query}?p=${params.pageNumber}`
         }
 
         session({

@@ -3,8 +3,10 @@ import api from "@/api/api.service"
 import { useToast } from 'vue-toastification'
 import ResponseData from "@/state/types/ResponseData"
 import AppBaseModule from "@/state/common/AppBaseModule"
+import PaginationModel from "@/state/pagination/PaginationModel"
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import ProductReviewModel from "@/state/product/review/ProductReviewModel"
+import router from "@/routes";
 
 const toast = useToast()
 
@@ -16,7 +18,7 @@ export default class ProductReviewModule
     productReviewsAverage: number = 0
     productReviewsCounter: number = 0
 
-    userReviews: Array<ProductReviewModel> = []
+    userReviews: any = new PaginationModel()
     userToProductReview = new ProductReviewModel()
 
     get getProductReviews(): ProductReviewModel[] {
@@ -75,20 +77,28 @@ export default class ProductReviewModule
 
     @Mutation
     createUserToProductReview(userToProductReview: ProductReviewModel): void {
-        this.productReviews.unshift(userToProductReview)
-        this.userReviews.unshift(userToProductReview)
         this.userToProductReview = userToProductReview
     }
 
     @Mutation
     removeUserToProductReview(data: any): void {
-        if (this.productReviews && Object.keys(this.productReviews).length > 0) {
-            const ProductReviewId = this.productReviews.findIndex(u => [u.user_id === data.user_id, u.product_id === data.product_id])
-            this.productReviews.splice(ProductReviewId, 1)
+
+        if (router.currentRoute.value.name == 'Product') {
+            store.dispatch('pagination/getPaginatedResults', {
+                'endpointUrl': `reviews/product/${data.product_id}`,
+                'query': store.getters['pagination/getCurrentQuery'],
+                'method': 'GET'
+            }).then(() => toast.error("Your review has been deleted"))
         }
 
-        const UserReviewId = this.userReviews.findIndex(u => [u.user_id === data.user_id, u.product_id === data.product_id])
-        this.userReviews.splice(UserReviewId, 1)
+        if (router.currentRoute.value.name == 'Reviews') {
+            store.dispatch('pagination/getPaginatedResults', {
+                'endpointUrl': `reviews/user/${data.user_id}`,
+                'query': store.getters['pagination/getCurrentQuery'],
+                'method': 'GET'
+            }).then(() => toast.error("Your review has been deleted"))
+        }
+
     }
 
     @Mutation
@@ -219,7 +229,6 @@ export default class ProductReviewModule
             .then((response: ResponseData) => {
                 this.context.commit('removeUserToProductReview', data)
                 this.context.commit('unsetUserToProductReview')
-                toast.error("Your review has been deleted")
             })
             .catch((e: Error) => {
                 console.log(e)

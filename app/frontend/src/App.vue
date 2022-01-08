@@ -92,14 +92,6 @@ export default class App extends Vue {
     return new UserDetailsModel
   }
 
-  get userReviews(): Array<ProductReviewModel> {
-    return store.getters['product/review/getUserReviews']
-  }
-
-  get userOrders(): Array<any> {
-    return store.getters['user/order/getUserOrders']
-  }
-
   get availableCountries(): CountryModel {
     return store.getters['country/getCountries']
   }
@@ -147,13 +139,6 @@ export default class App extends Vue {
   .navbar-menu-grid-head {
     .router-link-active {
       background-color: $primary-color-1;
-    }
-  }
-  .cardEffect {
-    &:hover {
-      border-radius: 10px;
-      transform: scale(1.01);
-      box-shadow: 0 0 3px 1px #ff7b7b8a;
     }
   }
   .cardSpecialEffect {

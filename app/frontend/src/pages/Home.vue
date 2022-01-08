@@ -208,13 +208,13 @@ export default class Home extends Vue {
 
 <style lang="scss" scoped>
   .home-usp-grid-container {
-    background: white;
+    background: $primary-color-7;
   }
   .home-usp-grid-content {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     padding: 20px;
-    background: white;
+    background: $primary-color-7;
     max-width: 1320px;
     margin: 0 auto;
     .grid-usp-item {

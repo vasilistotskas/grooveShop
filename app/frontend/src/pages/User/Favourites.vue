@@ -1,6 +1,6 @@
 <template>
   <div class="container" v-if="userFavouriteResults && Object.keys(userFavouriteResults).length > 0">
-    <div class="product-listing-grid">
+    <div class="product-listing-grid mb-4">
       <ProductCard
           class="grid-item"
           v-for="product in userFavouriteResults"
@@ -51,11 +51,13 @@ export default class Favourites extends Vue{
   userData = new UserDetailsModel()
 
   async created(): Promise<void> {
-    document.title = 'My Favourites | grooveShop'
+    document.title = 'My Favourites'
 
     if (this.params.get('query')) {
       await store.commit('pagination/setCurrentQuery', this.params.get('query'))
     }
+
+    await store.commit('pagination/setCurrentPageNumber', 1)
 
     if (this.params.get('page')) {
       await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
@@ -84,6 +86,7 @@ export default class Favourites extends Vue{
 
   get currentPageNumber(): number {
     let storedPageNumber = store.getters['pagination/getCurrentPageNumber']
+
     if (storedPageNumber) {
       return store.getters['pagination/getCurrentPageNumber']
     }

@@ -68,11 +68,13 @@ export default class OrderHistory extends Vue{
 
   async created(): Promise<void> {
 
-    document.title = 'My Orders | grooveShop'
+    document.title = 'My Orders'
 
     if (this.params.get('query')) {
       await store.commit('pagination/setCurrentQuery', this.params.get('query'))
     }
+
+    await store.commit('pagination/setCurrentPageNumber', 1)
 
     if (this.params.get('page')) {
       await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))

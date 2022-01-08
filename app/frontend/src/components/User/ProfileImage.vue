@@ -22,7 +22,9 @@
           </label>
         </div>
         <div class="profile-fullname-part">
-          <h5>{{this.fullname}}</h5>
+          <router-link :to="{ name: 'MyAccount' }" class="btn-w-effect" aria-label="MyAccount">
+            <h5>{{this.fullname}}</h5>
+          </router-link>
         </div>
       </div>
     </form>

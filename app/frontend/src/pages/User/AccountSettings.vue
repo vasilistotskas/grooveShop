@@ -189,7 +189,7 @@ export default class AccountSettings extends Vue {
   submitButtonText: string = 'Update'
 
   async mounted(): Promise<void> {
-    document.title = 'My Settings | grooveShop'
+    document.title = 'My Settings'
 
     this.userDetailsInitialize()
   }

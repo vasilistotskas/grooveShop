@@ -1,5 +1,5 @@
 <template>
-  <div class="col-12 mb-3 mt-3 product-listing-grid-header">
+  <div class="col-12 mb-3 mt-3 pagination-grid-content">
     <div class="pagination-buttons">
         <button
             type="button"
@@ -74,19 +74,25 @@ import { Options, Vue } from "vue-class-component"
     endpointUrl: {
       type: String,
       required: true
+    },
+    routerReplace: {
+      type: Boolean,
+      default: true,
+      required: false
     }
   }
 })
 
 export default class Pagination extends Vue {
 
-  query: Record<string | number, string | number | null | undefined> | undefined
+  query: any
   uri = window.location.search.substring(1)
   params = new URLSearchParams(this.uri)
   maxVisibleButtons!: number
   totalPages!: number
   route!: string
   endpointUrl!: string
+  routerReplace!: boolean
 
   async mounted(): Promise<void> {
     await this.initializeRouterQuery()
@@ -113,6 +119,9 @@ export default class Pagination extends Vue {
       return 1
     }
     if (this.currentPageNumber === this.totalPages) {
+      if (this.totalPages - this.maxVisibleButtons + 1 === 0) {
+        return 1
+      }
       return this.totalPages - this.maxVisibleButtons + 1
     }
     return this.currentPageNumber - 1
@@ -125,7 +134,14 @@ export default class Pagination extends Vue {
   get pages(): any {
     const range = []
 
-    for (let i = this.startPage; i <= this.endPage; i+= 1 ) {
+    let endPageNumber: number
+    if (this.totalPages < this.maxVisibleButtons) {
+      endPageNumber = this.totalPages
+    } else {
+      endPageNumber = this.endPage
+    }
+
+    for (let i = this.startPage; i <= endPageNumber; i+= 1 ) {
       range.push({
         name: i,
         isDisabled: this.currentPageNumber === i
@@ -160,7 +176,7 @@ export default class Pagination extends Vue {
       'query': this.currentPageQuery
     })
 
-    await router.replace({ name: `${ this.route }`, query: this.query })
+    if (this.routerReplace) await router.replace({ name: `${ this.route }`, query: this.query })
   }
 
   async onClickPreviousPage(): Promise<void> {
@@ -172,7 +188,7 @@ export default class Pagination extends Vue {
       'query': this.currentPageQuery
     })
 
-    await router.replace({ name: `${ this.route }`, query: this.query })
+    if (this.routerReplace) await router.replace({ name: `${ this.route }`, query: this.query })
   }
 
   async onClickPage(n: number) {
@@ -184,7 +200,7 @@ export default class Pagination extends Vue {
       'query': this.currentPageQuery
     })
 
-    await router.replace({ name: `${ this.route }`, query: this.query })
+    if (this.routerReplace) await router.replace({ name: `${ this.route }`, query: this.query })
   }
 
   async onClickFirstPage(): Promise<void> {
@@ -196,7 +212,7 @@ export default class Pagination extends Vue {
       'query': this.currentPageQuery
     })
 
-    await router.replace({ name: `${ this.route }`, query: this.query })
+    if (this.routerReplace) await router.replace({ name: `${ this.route }`, query: this.query })
   }
 
   async onClickLastPage(): Promise<void> {
@@ -207,8 +223,8 @@ export default class Pagination extends Vue {
       'endpointUrl': `${ this.endpointUrl }`,
       'query': this.currentPageQuery
     })
-    
-    await router.replace({ name: `${ this.route }`, query: this.query })
+
+    if (this.routerReplace) await router.replace({ name: `${ this.route }`, query: this.query })
   }
 
 }
@@ -216,14 +232,15 @@ export default class Pagination extends Vue {
 </script>
 
 <style lang="scss" scoped>
+  .pagination-grid-content {
+    display: grid;
+  }
   .pagination {
     list-style-type: none;
   }
-
   .pagination-item {
     display: inline-block;
   }
-
   .active {
     background-color: $primary-color-1;
     color: $primary-color-4;

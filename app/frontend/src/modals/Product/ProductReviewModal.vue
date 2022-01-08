@@ -181,23 +181,23 @@ export default class ProductReviewModal extends Vue {
       },
       {
         threshold: 0.5,
-        value: 'mehh'
+        value: 'Mehh'
       },
       {
         threshold: 0.6,
-        value: 'it\'s ok'
+        value: 'It\'s ok'
       },
       {
         threshold: 0.7,
-        value: 'good'
+        value: 'Good'
       },
       {
         threshold: 0.9,
-        value: 'Πολύ Καλό'
+        value: 'Very godd'
       },
       {
         threshold: 1.0,
-        value: 'Άριστο!'
+        value: 'Perfect!'
       }
     ]
 

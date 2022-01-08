@@ -376,7 +376,7 @@ export default class Navbar extends Vue {
     .search-buttons-container {
       display: grid;
       grid-template-columns: auto 25%;
-      background: white;
+      background: $primary-color-7;
       border-radius: 10px;
       justify-self: center;
       align-self: center;

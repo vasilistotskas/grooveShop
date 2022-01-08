@@ -1,12 +1,13 @@
 $primary-color-1: #FD0002e0;
 $primary-color-2: #080808;
-$primary-color-3: #5a5a5a;
-$primary-color-4: #f8f8ff;
+$primary-color-3: #707070;
+$primary-color-4: #f1f1f1;
 $primary-color-5: #191919;
 $primary-color-6: #e8e8e8;
 $primary-color-7: #ffffff;
 $form-input: #0d6efd;
 $rating-starts: #f68b24;
+$base-success-color: #53e24a8a;
 
 body {
   background-color: $primary-color-4!important;
@@ -330,13 +331,36 @@ table {
 }
 
 .my-account-page-main-content {
+  .pagination-grid-content {
+    position: absolute;
+    display: grid;
+    bottom: 0;
+    right: 20px;
+    gap: 10px;
+    grid-template-columns: repeat(4,1fr);
+    @media screen and (max-width: 767px) {
+      grid-template-columns: repeat(2,1fr);
+      gap: 5px;
+    }
+  }
   .pagination-buttons {
     grid-column: 4;
   }
+  .product-review-main-card, .product-card-main {
+    background-color: $primary-color-4!important;
+  }
 }
+
+.product-page-grid-review {
+  .pagination-grid-content {
+    justify-items: end;
+  }
+}
+
 .pagination-buttons {
   display: grid;
-  grid-template-columns: repeat(9,1fr);
+  max-width: 347px;
+  grid-template-columns: repeat(7,1fr);
   gap: 5px;
 }
 
@@ -620,7 +644,7 @@ table {
   gap: 20px 15px;
   align-items: center;
   border-radius: 8px;
-  background-color: $primary-color-4;
+  background-color: $primary-color-7;
   padding: 30px;
   border: 1px solid $primary-color-6;
   @media screen and (max-width: 1200px) {

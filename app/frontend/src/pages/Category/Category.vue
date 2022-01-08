@@ -2,7 +2,7 @@
 <div class="page-category mt-7 mb-5">
   <Breadcrumbs :breadCrumbPath="breadCrumbPath"></Breadcrumbs>
   <div class="container">
-    <div class="row content-min-height">
+    <div class="content-min-height">
       <div class="col-12">
         <img v-if="category.menu_main_banner" :src="category.menu_main_banner" :alt="category.name" class="img-fluid">
       </div>
@@ -85,6 +85,8 @@ export default class CategoryVue extends Vue {
     if (this.params.get('query')) {
       await store.commit('pagination/setCurrentQuery', this.params.get('query'))
     }
+
+    await store.commit('pagination/setCurrentPageNumber', 1)
 
     if (this.params.get('page')) {
       await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))

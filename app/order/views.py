@@ -62,7 +62,7 @@ class Checkout(APIView):
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserOrdersList(generics.ListCreateAPIView):
+class UserOrdersList(generics.ListAPIView):
     authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = UserOrderListPagination
