@@ -13,6 +13,10 @@ import { Options, Vue } from "vue-class-component"
 
 export default class PageNotFound extends Vue {
 
+  mounted() : void {
+    document.title = 'Page Not Found'
+  }
+
 }
 
 </script>
