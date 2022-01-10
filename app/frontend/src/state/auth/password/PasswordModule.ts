@@ -4,6 +4,7 @@ import ResponseData from "@/state/types/ResponseData"
 import AppBaseModule from "@/state/common/AppBaseModule"
 import { BaseAuthenticationTypes } from '@/api/auth_types'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
+import router from "@/routes";
 
 const toast = useToast()
 
@@ -117,10 +118,14 @@ export default class PasswordModule
     async updateUserPassword(data: any): Promise<void> {
         await api.post('djoser/users/set_password/', data)
             .then((response: ResponseData) => this.context.commit(BaseAuthenticationTypes.PASSWORD_CHANGE_SUCCESS))
-            .then(() => toast.success("Password Updated, login to continue"))
+            .then(() => {
+                toast.success("Password Updated, login to continue")
+                router.push('/log-in')
+            })
             .catch((e: Error) => {
                 this.context.commit(BaseAuthenticationTypes.PASSWORD_CHANGE_FAILURE)
                 toast.error("Current Password is not correct")
+                router.push('/my-account/password')
                 console.log(e)
             })
     }

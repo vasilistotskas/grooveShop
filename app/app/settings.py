@@ -261,8 +261,8 @@ LOGGING = {
             'style': '{',
         },
         'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
+            'format': '[%(asctime)s] %(levelname)s | %(funcName)s | %(name)s | %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
         },
     },
     'filters': {
@@ -287,6 +287,12 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'stream': sys.stdout,
             'formatter': 'verbose'
+        },
+        'logger': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/django.log'),
+            'formatter': 'simple',
         }
     },
     'loggers': {
@@ -295,5 +301,9 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
+        'signal': {
+            'handlers': ['logger'],
+            'level': 'DEBUG',
+        }
     },
 }

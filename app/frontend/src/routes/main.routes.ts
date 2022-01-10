@@ -58,7 +58,7 @@ const routes: Array<RouteRecordRaw> = [
         }
     },
     {
-        path: '/password-reset',
+        path: '/password_reset',
         name: 'PasswordReset',
         component: () => import("@/pages/Auth/PasswordReset.vue"),
         meta: {

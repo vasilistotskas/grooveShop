@@ -77,6 +77,7 @@
       <div class="product-page-grid-review" id="reviews-container" v-if="productReviewResults && Object.keys(productReviewResults).length > 0">
         <div class="product-reviews-grid">
           <ProductReviewCard
+              v-if="userToProductReview && Object.keys(userToProductReview).length > 0"
               v-bind:key="userToProductReview.id"
               v-bind:review="userToProductReview"
               v-bind:userId="userId"

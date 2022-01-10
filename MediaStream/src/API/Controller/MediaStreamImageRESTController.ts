@@ -44,7 +44,7 @@ export default class MediaStreamImageRESTController {
 		@Res() res: Response
 	): Promise<void> {
 		const request = new CacheImageRequest({
-			resourceTarget: `http://localhost:8000/media/uploads/${imageType}/${imageName}.jpg`,
+			resourceTarget: `http://backend:8000/media/uploads/${imageType}/${imageName}.jpg`,
 			resizeOptions: new ResizeOptions({
 				width,
 				height,

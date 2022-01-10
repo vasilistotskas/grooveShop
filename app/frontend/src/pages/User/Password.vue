@@ -153,8 +153,6 @@ export default class Password extends Vue {
       }
 
       await store.dispatch('password/updateUserPassword', apiData)
-      await router.push('/log-in')
-
     } catch (e) {
       if (e instanceof ValidationError) {
         console.log(e.message)

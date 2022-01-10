@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import logging
 from django.contrib import admin
 from django.conf import settings
 from django.shortcuts import render
@@ -36,7 +37,15 @@ def index_view(
         slug='None',
         tag='None',
 ):
+    logger = logging.getLogger("loggers")
+    message = {
+        'message': "user visits index()"
+    }
+    logger.warning(message)
+    logger.error(message)
+    logger.debug(message)
     get_token(request)
+    print(logger)
     return render(request, 'dist/index.html')
 
 
@@ -51,7 +60,9 @@ front_urls = [
     path('sign-up', index_view, name='index'),
     path('accounts/activate/<uid>/<token>', index_view, name='index'),
     path('password_reset', index_view, name='index'),
+    path('password-reset', index_view, name='index'),
     path('password_reset/<uid>/<token>', index_view, name='index'),
+    path('password-reset/<uid>/<token>', index_view, name='index'),
     path('my-account', index_view, name='index'),
     path('my-account/orders', index_view, name='index'),
     path('my-account/settings', index_view, name='index'),

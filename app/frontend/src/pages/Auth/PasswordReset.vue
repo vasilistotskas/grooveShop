@@ -68,6 +68,10 @@ export default class PasswordReset extends Vue {
     document.title = 'Password Reset'
   }
 
+  async unmounted(): Promise<void>{
+    await store.dispatch('password/clearEmailStatus')
+  }
+
   get breadCrumbPath(): [] {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
