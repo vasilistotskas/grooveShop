@@ -4,7 +4,7 @@
       <div v-for="post in posts" :key="post.title" class="cardSpecialEffect">
         <router-link :to="`/post/${post.slug}`" aria-label="Blog Post">
           <div class="card blog-card">
-            <img class="img-fluid" v-bind:src="axiosBaseUrl + '/media/' + post.image" :alt="post.title">
+            <img class="img-fluid" v-bind:src="mediaStreamImage('slides', post.mainImageFilename, '476', '268')" :alt="post.title">
             <div class="card-body">
               <span class="card-title">{{ post.title }}: {{ post.subtitle }}</span>
               <span v-if="showAuthor">
@@ -68,6 +68,12 @@ export default class PostList extends Vue {
       store.dispatch('blog/allTagsFromRemote'),
       store.dispatch('blog/allAuthorsFromRemote')
     ])
+  }
+
+  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
+    const mediaStreamPath = '/mediastream/media/uploads/'
+    const imageNameFileTypeRemove = imageName.substr(0, imageName.lastIndexOf('.')) || imageName;
+    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/'  + imageNameFileTypeRemove + '/' + width + '/' + height
   }
 
   get publishedPosts(): PostModel[] {

@@ -86,7 +86,8 @@ export default class BlogModule
                   publishDate
                   published
                   metaDescription
-                  image
+                  mainImageAbsoluteUrl
+                  mainImageFilename
                   slug
                   author {
                     user {
@@ -144,7 +145,8 @@ export default class BlogModule
                   publishDate
                   published
                   metaDescription
-                  image
+                  mainImageAbsoluteUrl
+                  mainImageFilename
                   slug
                   author {
                     user {
@@ -174,7 +176,8 @@ export default class BlogModule
                 subtitle
                 publishDate
                 metaDescription
-                image
+                mainImageAbsoluteUrl
+                mainImageFilename
                 slug
                 body
                 author {
@@ -214,7 +217,8 @@ export default class BlogModule
                     publishDate
                     published
                     metaDescription
-                    image
+                    mainImageAbsoluteUrl
+                    mainImageFilename
                     slug
                     tags {
                       name

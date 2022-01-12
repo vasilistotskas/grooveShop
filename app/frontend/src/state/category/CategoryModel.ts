@@ -5,9 +5,12 @@ export default class CategoryModel extends EntityBase
     id!: number
     description!: string
     absolute_url!: string
-    menu_image_one!: string
-    menu_image_two!: string
-    menu_main_banner!: string
+    category_menu_image_one_absolute_url!: string
+    category_menu_image_one_filename!: string
+    category_menu_image_two_absolute_url!: string
+    category_menu_image_two_filename!: string
+    category_menu_main_banner_absolute_url!: string
+    category_menu_main_banner_filename!: string
     name!: string
     parent!: number
     all_tree_products!: Array<any>

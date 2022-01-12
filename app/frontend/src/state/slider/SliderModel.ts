@@ -8,7 +8,8 @@ export default class SliderModel extends EntityBase
 	url!: string
 	title!: string
 	description!: string
-	image!: string
+	main_image_absolute_url!: string
+	main_image_filename!: string
 	thumbnail!: string
 	video!: string
 	slides!: Array<SlideModel>

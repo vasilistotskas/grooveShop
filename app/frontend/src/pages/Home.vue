@@ -19,7 +19,7 @@
           </swiper-slide>
 
           <swiper-slide v-for="slide in homepageSlider[0].slides">
-            <img class="img-fluid" width="839" height="510"  v-bind:src="axiosBaseUrl + slide.image" :alt="slide.title ? slide.title : 'no-alt'">
+            <img class="img-fluid" width="839" height="510"  v-bind:src="mediaStreamImage('slides', slide.main_image_filename, '840', '510')" :alt="slide.title ? slide.title : 'no-alt'">
           </swiper-slide>
         </swiper>
 
@@ -39,7 +39,7 @@
               </swiper-slide>
 
               <swiper-slide v-for="slide in homepageSlider[1].slides">
-                <img class="img-fluid" width="500" height="275" v-bind:src="axiosBaseUrl + slide.image" :alt="slide.title ? slide.title : 'no-alt'">
+                <img class="img-fluid" width="500" height="275" v-bind:src="mediaStreamImage('slides', slide.main_image_filename, '452', '275')" :alt="slide.title ? slide.title : 'no-alt'">
               </swiper-slide>
 
             </swiper>
@@ -58,7 +58,7 @@
               </swiper-slide>
 
               <swiper-slide v-for="slide in homepageSlider[2].slides">
-                <img class="img-fluid" width="500" height="275" v-bind:src="axiosBaseUrl + slide.image" :alt="slide.title ? slide.title : 'no-alt'">
+                <img class="img-fluid" width="500" height="275" v-bind:src="mediaStreamImage('slides', slide.main_image_filename, '452', '275')" :alt="slide.title ? slide.title : 'no-alt'">
               </swiper-slide>
             </swiper>
           </div>
@@ -162,6 +162,12 @@ export default class Home extends Vue {
       'metaAttribute': 'content',
       'newValue': 'test'
     })
+  }
+
+  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
+    const mediaStreamPath = '/mediastream/media/uploads/'
+    const imageNameFileTypeRemove = imageName.substr(0, imageName.lastIndexOf('.')) || imageName;
+    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/'  + imageNameFileTypeRemove + '/' + width + '/' + height
   }
 
   get phoneIcon(): typeof faPhone {

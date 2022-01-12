@@ -36,6 +36,7 @@ DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 if "celery" in sys.argv[0]:
     DEBUG = False
 
+APP_BASE_URL = str(os.environ.get('APP_BASE_URL', 'http://localhost:8000'))
 ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS.extend(
     filter(

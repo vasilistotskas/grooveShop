@@ -37,15 +37,7 @@ def index_view(
         slug='None',
         tag='None',
 ):
-    logger = logging.getLogger("loggers")
-    message = {
-        'message': "user visits index()"
-    }
-    logger.warning(message)
-    logger.error(message)
-    logger.debug(message)
     get_token(request)
-    print(logger)
     return render(request, 'dist/index.html')
 
 

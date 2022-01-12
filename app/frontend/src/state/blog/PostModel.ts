@@ -3,7 +3,8 @@ import TagModel from "@/state/blog/TagModel"
 
 export default class PostModel extends EntityBase {
     id!: number
-    image!: string
+    mainImageAbsoluteUrl!: string
+    mainImageFilename!: string
     metaDescription!: string
     publishDate!: string
     published!: boolean

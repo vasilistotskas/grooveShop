@@ -4,7 +4,7 @@
   <div class="container">
     <div class="content-min-height">
       <div class="col-12">
-        <img v-if="category.menu_main_banner" :src="category.menu_main_banner" :alt="category.name" class="img-fluid">
+        <img v-if="category.category_menu_main_banner_absolute_url" :src="mediaStreamImage('categories', category.category_menu_main_banner_filename, '1920', '370')" :alt="category.name" class="img-fluid" width="1920" height="370">
       </div>
 
       <Pagination
@@ -128,6 +128,12 @@ export default class CategoryVue extends Vue {
   public buildEndPointUrlForPaginatedResults(): string {
     const categoryId = this.$route.params.category_slug
     return 'category_products' + `/${categoryId}`
+  }
+
+  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
+    const mediaStreamPath = '/mediastream/media/uploads/'
+    const imageNameFileTypeRemove = imageName.substr(0, imageName.lastIndexOf('.')) || imageName;
+    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/'  + imageNameFileTypeRemove + '/' + width + '/' + height
   }
 
   get currentPageNumber(): number {

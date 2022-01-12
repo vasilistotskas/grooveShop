@@ -4,14 +4,14 @@ REM createproductfaker.bat
 REM createordersfaker.bat
 REM createblogfaker.bat
 
-docker exec -it 70f7ec9716aa python manage.py populate_users
-docker exec -it 70f7ec9716aa python manage.py populate_products
-docker exec -it b0f12bd84bfa python manage.py populate_orders
-docker exec -it b0f12bd84bfa python manage.py populate_blog
-docker exec -it 70f7ec9716aa python manage.py collectstatic --noinput
-docker exec -it 70f7ec9716aa python manage.py makemigrations --noinput
-docker exec -it 70f7ec9716aa python manage.py createsuperuser
-docker exec -it 70f7ec9716aa pytest -m "not selenium" -rP
+docker exec -it dcce97f6a1c3 python manage.py populate_users
+docker exec -it dcce97f6a1c3 python manage.py populate_products
+docker exec -it dcce97f6a1c3 python manage.py populate_orders
+docker exec -it dcce97f6a1c3 python manage.py populate_blog
+docker exec -it 90e8147d00ca python manage.py collectstatic --noinput
+docker exec -it dcce97f6a1c3 python manage.py makemigrations --noinput
+docker exec -it dcce97f6a1c3 python manage.py createsuperuser
+docker exec -it dcce97f6a1c3 pytest -m "not selenium" -rP
 
 docker exec -it 70f7ec9716aa find . -name \*.pyc -delete
 

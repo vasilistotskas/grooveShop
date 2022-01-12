@@ -56,7 +56,7 @@ class ProductsAllResults(generics.ListAPIView):
     serializer_class = ProductSerializer
     pagination_class = ProductsPagination
 
-    @method_decorator(cache_page(60*30))
+    # @method_decorator(cache_page(60*30))
     def list(self, request, *args, **kwargs):
 
         queryset = self.filter_queryset(self.get_queryset())
@@ -144,7 +144,7 @@ class CategoryTreeView(GenericAPIView):
     def get_queryset(self):
         return Category.objects.all()
 
-    @method_decorator(cache_page(60*30))
+    # @method_decorator(cache_page(60*30))
     def get(self, request, *args, **kwargs):
         root_nodes = self.get_queryset().get_cached_trees()
         data = []

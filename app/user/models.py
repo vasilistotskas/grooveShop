@@ -1,9 +1,10 @@
+import os
 from django.db import models
+from django.conf import settings
 from django.dispatch import receiver
 from django.utils.safestring import mark_safe
 from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-from django.conf import settings
 User = settings.AUTH_USER_MODEL
 
 
@@ -117,8 +118,21 @@ class UserProfile(models.Model):
     def email(self):
         return self.user.email
 
-    def image_url(self):
-        return 'http://localhost:8000' + self.image.url
+    def main_image_absolute_url(self):
+        try:
+            if self.id is not None:
+                image = settings.APP_BASE_URL + self.image.url
+            else:
+                image = ""
+            return image
+        except:
+            return ""
+
+    def main_image_filename(self):
+        try:
+            return os.path.basename(self.image.name)
+        except:
+            return ""
 
     def image_tag(self):
         if self.image:

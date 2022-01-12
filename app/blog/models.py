@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from django.conf import settings
 from tinymce.models import HTMLField
@@ -41,6 +42,24 @@ class Post(models.Model):
 
     class Meta:
         ordering = ["-publish_date"]
+
+    @property
+    def main_image_absolute_url(self):
+        try:
+            if self.id is not None:
+                image = settings.APP_BASE_URL + self.image.url
+            else:
+                image = ""
+            return image
+        except:
+            return ""
+
+    @property
+    def main_image_filename(self):
+        try:
+            return os.path.basename(self.image.name)
+        except:
+            return ""
 
     def get_absolute_url(self):
         return reverse("blog:post", kwargs={"slug": self.slug})

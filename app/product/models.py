@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from django.conf import settings
 from mptt.models import MPTTModel
@@ -25,6 +26,54 @@ class Category(MPTTModel):
     parent = TreeForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
     tags = models.CharField(max_length=100, null=True,
                             blank=True, help_text='SEO keywords')
+
+    def category_menu_image_one_absolute_url(self):
+        try:
+            if self.id is not None:
+                image = settings.APP_BASE_URL + self.menu_image_one.url
+            else:
+                image = ""
+            return image
+        except:
+            return ""
+
+    def category_menu_image_one_filename(self):
+        try:
+            return os.path.basename(self.menu_image_one.name)
+        except:
+            return ""
+
+    def category_menu_image_two_absolute_url(self):
+        try:
+            if self.id is not None:
+                image = settings.APP_BASE_URL + self.menu_image_two.url
+            else:
+                image = ""
+            return image
+        except:
+            return ""
+
+    def category_menu_image_two_filename(self):
+        try:
+            return os.path.basename(self.menu_image_two.name)
+        except:
+            return ""
+
+    def category_menu_main_banner_absolute_url(self):
+        try:
+            if self.id is not None:
+                image = settings.APP_BASE_URL + self.menu_main_banner.url
+            else:
+                image = ""
+            return image
+        except:
+            return ""
+
+    def category_menu_main_banner_filename(self):
+        try:
+            return os.path.basename(self.menu_main_banner.name)
+        except:
+            return ""
 
     class Meta:
         verbose_name_plural = "Categories"
@@ -61,7 +110,6 @@ class Vat(models.Model):
 
 
 class Product(models.Model):
-
     PRODUCT_STATUS = (
         ('True', 'Active'),
         ('False', 'Not Active'),
@@ -122,14 +170,21 @@ class Product(models.Model):
     def final_price(self):
         return self.price - self.discount_value()
 
-    def main_image(self):
+    def main_image_absolute_url(self):
         try:
             img = ProductImages.objects.get(product_id=self.id, is_main=True)
             if img.id is not None:
-                image = 'http://localhost:8000' + img.image.url
+                image = settings.APP_BASE_URL + img.image.url
             else:
                 image = ""
             return image
+        except:
+            return ""
+
+    def main_image_filename(self):
+        try:
+            test = ProductImages.objects.get(product_id=self.id, is_main=True)
+            return os.path.basename(test.image.name)
         except:
             return ""
 
@@ -184,9 +239,25 @@ class ProductImages(models.Model):
 
         super().save(*args, **kwargs)
 
+    def product_image_absolute_url(self):
+        try:
+            if self.id is not None:
+                image = settings.APP_BASE_URL + self.image.url
+            else:
+                image = ""
+            return image
+        except:
+            return ""
+
+    def product_image_filename(self):
+        try:
+            return os.path.basename(self.image.name)
+        except:
+            return ""
+
     @classmethod
     def find_product_images(cls, product_id):
-        return cls.objects.filter(product_id=product_id,  main_picture=False)
+        return cls.objects.filter(product_id=product_id, main_picture=False)
 
     @classmethod
     def find_main_product_image(cls, product_id):

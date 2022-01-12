@@ -3,7 +3,7 @@
     <div class="grid-header container">
       <div class="logo-header">
         <router-link to="/" class="navbar-brand" aria-label="Home">
-          <img src="http://localhost:8000/static/files/images/websiteLogo.png" width="175" height="85" alt="Website Logo" class="main-logo img-fluid">
+          <img src="http://localhost:8000/mediastream/static/files/images/websiteLogo/175/85" width="175" height="85" alt="Website Logo" class="main-logo img-fluid">
         </router-link>
       </div>
 

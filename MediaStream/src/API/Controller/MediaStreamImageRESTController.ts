@@ -35,7 +35,27 @@ export default class MediaStreamImageRESTController {
 
 	// px http://localhost:3003/media_stream-image/media/uploads/products/charger2/500/500
 	@Get('media/uploads/:imageType/:imageName/:width?/:height?')
-	public async image(
+	public async uploadedImage(
+		@Param('imageType') imageType: string,
+		@Param('imageName') imageName: any,
+		@Param('type') type: 'icon'|'image',
+		@Param('width') width: number = null,
+		@Param('height') height: number = null,
+		@Res() res: Response
+	): Promise<void> {
+		const request = new CacheImageRequest({
+			resourceTarget: `http://${process.env.APP_BASE_URL}/media/uploads/${imageType}/${imageName}.jpg`,
+			resizeOptions: new ResizeOptions({
+				width,
+				height,
+				fit: ('icon' === type) ? FitOptions.contain : FitOptions.cover
+			})
+		})
+		await this.streamRequestedResource(request, res)
+	}
+
+	@Get('static/files/images/:imageName/:width?/:height?')
+	public async staticImage(
 		@Param('imageType') imageType: string,
 		@Param('imageName') imageName: string,
 		@Param('type') type: 'icon'|'image',
@@ -44,7 +64,7 @@ export default class MediaStreamImageRESTController {
 		@Res() res: Response
 	): Promise<void> {
 		const request = new CacheImageRequest({
-			resourceTarget: `http://backend:8000/media/uploads/${imageType}/${imageName}.jpg`,
+			resourceTarget: `http://${process.env.APP_BASE_URL}/static/files/images/${imageName}.jpg`,
 			resizeOptions: new ResizeOptions({
 				width,
 				height,

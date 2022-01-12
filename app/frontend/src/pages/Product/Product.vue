@@ -8,7 +8,7 @@
                   :key="image.id"
                   class="image"
                   v-bind:class="{'image-main': image.is_main }">
-            <img class="img-fluid" v-bind:src="axiosBaseUrl + image.image">
+            <img class="img-fluid" v-bind:src="mediaStreamImage('products', image.product_image_filename, '400', '400')" alt="Product Image">
           </figure>
         </div>
         <div class="product-page-grid-right">
@@ -167,6 +167,13 @@ export default class ProductVue extends Vue {
 
   async unmounted(): Promise<void>{
     store.commit('pagination/unsetResults')
+  }
+
+
+  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
+    const mediaStreamPath = '/mediastream/media/uploads/'
+    const imageNameFileTypeRemove = imageName.substr(0, imageName.lastIndexOf('.')) || imageName;
+    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/'  + imageNameFileTypeRemove + '/' + width + '/' + height
   }
 
   public fetchProductReviews(): void {

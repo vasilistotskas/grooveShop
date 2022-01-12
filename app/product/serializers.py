@@ -10,8 +10,9 @@ class ImagesSerializer(serializers.ModelSerializer):
         model = ProductImages
         fields = (
             "id",
-            "image",
-            "is_main"
+            "is_main",
+            "product_image_absolute_url",
+            "product_image_filename"
         )
 
 
@@ -39,7 +40,8 @@ class ProductSerializer(serializers.ModelSerializer):
             "discount_percent",
             "discount_value",
             "date_added",
-            "main_image",
+            "main_image_absolute_url",
+            "main_image_filename",
             "review_average",
             "review_counter",
             "images"
@@ -55,9 +57,12 @@ class CategorySerializer(serializers.ModelSerializer):
             "slug",
             "description",
             "description",
-            "menu_image_one",
-            "menu_image_two",
-            "menu_main_banner",
+            "category_menu_image_one_absolute_url",
+            "category_menu_image_one_filename",
+            "category_menu_image_two_absolute_url",
+            "category_menu_image_two_filename",
+            "category_menu_main_banner_absolute_url",
+            "category_menu_main_banner_filename",
             "parent",
             "tags",
             "level",

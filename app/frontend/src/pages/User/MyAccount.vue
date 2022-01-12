@@ -95,19 +95,25 @@ export default class MyAccount extends Vue {
     this.$watch(
         () => this.userData,
         (image:UserDetailsModel) => {
-          this.profileImageUrl = image.image_url
+          this.profileImageUrl = this.mediaStreamImage('users', image.main_image_filename, '110', '110')
         }
     )
   }
 
   mounted() {
-    this.profileImageUrl = this.userData.image_url
+    this.profileImageUrl = this.mediaStreamImage('users', this.userData.main_image_filename, '110', '110')
   }
 
   updated() {
     if (router.currentRoute.value.name == 'MyAccount') {
       document.title = 'My Account'
     }
+  }
+
+  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
+    const mediaStreamPath = '/mediastream/media/uploads/'
+    const imageNameFileTypeRemove = imageName.substr(0, imageName.lastIndexOf('.')) || imageName;
+    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/'  + imageNameFileTypeRemove + '/' + width + '/' + height
   }
 
   get breadCrumbPath(): [] {

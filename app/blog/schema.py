@@ -15,6 +15,9 @@ class AuthorType(DjangoObjectType):
 
 
 class PostType(DjangoObjectType):
+    main_image_absolute_url = graphene.String(source='main_image_absolute_url')
+    main_image_filename = graphene.String(source='main_image_filename')
+
     class Meta:
         model = models.Post
 

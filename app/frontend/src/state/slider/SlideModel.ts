@@ -13,7 +13,8 @@ export default class SlideModel extends EntityBase
 	date_start!: string
 	date_end!: string
 	order_position!: number
-	image!: string
+	main_image_absolute_url!: string
+	main_image_filename!: string
 	thumbnail!: string
 
 	public constructor(data?: Partial<SlideModel>) {

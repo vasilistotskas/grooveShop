@@ -3,7 +3,7 @@
     <div class="container navbar-menu-grid-container" v-bind:class="{'wrapper': Object.keys(this.categories).length === 0 }">
       <div class="navbar-menu-grid-head"
            ref="target">
-        <router-link v-for="(category, key) in this.categories" class="navbar-menu-grid-head-item"
+        <router-link v-if="this.categories && Object.keys(this.categories).length > 0" v-for="(category, key) in this.categories" class="navbar-menu-grid-head-item"
              @mouseover="categoryBoxHovered = key"
              @mouseleave="categoryBoxHovered = null"
              v-bind:class="{'has-children': category?.children }"
@@ -14,9 +14,12 @@
              aria-expanded="false"
              aria-current="page"
              :to="({ name: 'Category', params: { category_slug: category.slug } })">
-          <img alt="category.name"
-               :src="categoryBoxHovered === key ? category.menu_image_two : category.menu_image_one"
-               >
+          <img :alt="category.name"
+               :src="categoryBoxHovered === key ?
+                mediaStreamImage('categories', category.category_menu_image_two_filename, '80', '83') :
+                mediaStreamImage('categories', category.category_menu_image_one_filename, '80', '83')"
+                width="80"
+                height="83">
           <span>{{ category.name }}</span>
         </router-link>
       </div>
@@ -65,6 +68,12 @@ export default class NavbarCategories extends Vue {
         this.menuOpenHandle()
       }
     })
+  }
+
+  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
+    const mediaStreamPath = '/mediastream/media/uploads/'
+    const imageNameFileTypeRemove = imageName.substr(0, imageName.lastIndexOf('.')) || imageName;
+    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/'  + imageNameFileTypeRemove + '/' + width + '/' + height
   }
 
   public menuOpenHandle(): void {
