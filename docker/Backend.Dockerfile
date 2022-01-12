@@ -31,5 +31,3 @@ ENV PATH="/scripts:/py/bin:$PATH"
 ENV LIBRARY_PATH=/lib:/usr/lib
 
 USER app
-
-#CMD ["run.sh"]

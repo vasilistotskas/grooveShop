@@ -62,6 +62,7 @@ services:
       - groovy-backbone
 
   nginx:
+    container_name: nginx
     image: nginx:mainline
     build:
       context: ./nginx
@@ -125,8 +126,6 @@ services:
     build:
       context: ./mediaStream
       dockerfile: ./Dockerfile
-    environment:
-      - APP_BASE_URL="backend:8001"
     command: npm run start:prod
     ports:
       - 3003:3003
