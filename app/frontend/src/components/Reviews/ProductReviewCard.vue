@@ -113,12 +113,14 @@ export default class ProductReviewCard extends Vue{
 
   public reviewBackgroundImage(review: any): string {
 
+    const imageNameFileTypeRemove = review.product.main_image_filename.substring(0, review.product.main_image_filename.lastIndexOf('.')) || review.product.main_image_filename;
+
     if (router.currentRoute.value.name == 'Product') {
-      return 'url(' + review.userprofile.image_url + ')'
+      return 'url(' + review.userprofile.main_image_absolute_url + ')'
     }
 
     if (router.currentRoute.value.name == 'Reviews') {
-      return 'url(' + review.product.main_image + ')'
+      return 'url(' + process.env.VUE_APP_API_URL + '/mediastream/media/uploads/' + 'products' + '/'  + imageNameFileTypeRemove + '/' + '100' + '/' + '100' + ')'
     }
 
     return ''

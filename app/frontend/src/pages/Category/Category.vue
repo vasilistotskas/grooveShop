@@ -132,7 +132,7 @@ export default class CategoryVue extends Vue {
 
   public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
     const mediaStreamPath = '/mediastream/media/uploads/'
-    const imageNameFileTypeRemove = imageName.substr(0, imageName.lastIndexOf('.')) || imageName;
+    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName;
     return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/'  + imageNameFileTypeRemove + '/' + width + '/' + height
   }
 

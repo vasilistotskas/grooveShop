@@ -20,7 +20,7 @@
                 v-bind:key="item.product.id">
                 <router-link :to="'/product' + item.product.absolute_url" aria-label="Product">
                   <span>
-                    <img :src="mediaStreamImage('products', item.product.main_image_absolute_url, '75', '75')" width="75" height="75" class="border-radius-img img-fluid" :alt="item.product.name">
+                    <img :src="mediaStreamImage('products', item.product.main_image_filename, '75', '75')" width="75" height="75" class="border-radius-img img-fluid" :alt="item.product.name">
                   </span>
                   <span>{{ item.product.name }}</span>
                   <span>${{ item.product.price }}</span>
@@ -99,7 +99,7 @@ export default class OrderHistory extends Vue{
 
   public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
     const mediaStreamPath = '/mediastream/media/uploads/'
-    const imageNameFileTypeRemove = imageName.substr(0, imageName.lastIndexOf('.')) || imageName;
+    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName;
     return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/'  + imageNameFileTypeRemove + '/' + width + '/' + height
   }
 

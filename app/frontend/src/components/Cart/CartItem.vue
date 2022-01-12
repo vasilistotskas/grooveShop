@@ -2,7 +2,7 @@
   <div class="grid-container-cart">
     <div class="grid-container-cart-item-one">
       <router-link :to="productPath" aria-label="Product">
-        <img :src="mediaStreamImage('products', item.product.product_image_filename, '75', '75')" width="75" height="75" class="border-radius-img img-fluid" :alt="item.product.name">
+        <img :src="mediaStreamImage('products', item.product.main_image_filename, '75', '75')" width="75" height="75" class="border-radius-img img-fluid" :alt="item.product.name">
         <span>{{ item.product.name }}</span>
       </router-link>
     </div>
@@ -72,7 +72,7 @@ export default class CartItemVue extends Vue {
 
   public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
     const mediaStreamPath = '/mediastream/media/uploads/'
-    const imageNameFileTypeRemove = imageName.substr(0, imageName.lastIndexOf('.')) || imageName;
+    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName;
     return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/'  + imageNameFileTypeRemove + '/' + width + '/' + height
   }
 

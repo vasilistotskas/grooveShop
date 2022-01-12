@@ -61,6 +61,7 @@ export default class ProfileImage extends Vue {
   async updateUserImage(): Promise<void> {
     const formEl = document.getElementById('uploadImageForm') as HTMLFormElement;
     const data = new FormData(formEl)
+    console.log(data)
     await store.dispatch('user/data/updateUserDetails', data)
   }
 

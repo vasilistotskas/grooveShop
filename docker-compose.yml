@@ -42,6 +42,8 @@ services:
     depends_on:
       - db
       - redis
+    networks:
+      - groovy-backbone
 
   db:
     container_name: postgresql_db
@@ -56,6 +58,8 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - 5432:5432
+    networks:
+      - groovy-backbone
 
   pgadmin:
     container_name: pgadmin4
@@ -69,6 +73,8 @@ services:
       - 5050:5050
     depends_on:
       - db
+    networks:
+      - groovy-backbone
 
   celery:
     container_name: celery
@@ -87,6 +93,8 @@ services:
       - db
       - redis
       - app
+    networks:
+      - groovy-backbone
 
   redis:
     container_name: redis
@@ -94,8 +102,11 @@ services:
     restart: always
     ports:
       - 6379:6379
+    networks:
+      - groovy-backbone
 
   nginx:
+    container_name: nginx
     image: nginx:mainline
     build:
       context: ./nginx
@@ -103,13 +114,13 @@ services:
     volumes:
       - ./app:/app
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./app/static:/static
-      - ./app/media:/media
     ports:
       - 8000:8000
     depends_on:
       - app
     restart: always
+    networks:
+      - groovy-backbone
 
   service-media_stream:
     container_name: service-media_stream
@@ -130,6 +141,8 @@ services:
       - db
       - redis
       - app
+    networks:
+      - groovy-backbone
 
 #  frontend:
 #    container_name: frontend
@@ -155,3 +168,7 @@ volumes:
   postgres_data:
   production_static_data:
   service-media_stream:
+
+networks:
+  groovy-backbone:
+    driver: bridge

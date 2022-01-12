@@ -3,7 +3,7 @@
     <router-link :to="productPath" aria-label="Product">
       <div class="card cardEffect">
         <div class="card-image-content">
-          <img :src="mediaStreamImage('products', product.product_image_filename, '125', '130')" width="125" height="130" class="card-img-top img-fluid" :alt="product.name">
+          <img :src="mediaStreamImage('products', product.main_image_filename, '125', '130')" width="125" height="130" class="card-img-top img-fluid" :alt="product.name">
         </div>
         <div class="card-body">
           <div class="card-title">
@@ -89,7 +89,7 @@ export default class ProductCard extends Vue {
 
   public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
     const mediaStreamPath = '/mediastream/media/uploads/'
-    const imageNameFileTypeRemove = imageName.substr(0, imageName.lastIndexOf('.')) || imageName;
+    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName;
     return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/'  + imageNameFileTypeRemove + '/' + width + '/' + height
   }
 

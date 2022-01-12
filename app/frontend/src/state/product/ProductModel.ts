@@ -20,8 +20,8 @@ export default class ProductModel extends EntityBase
 	discount_percent!: number
 	discount_value!: number
 	date_added!: string
-	product_image_absolute_url!: string
-	product_image_filename!: string
+	main_image_absolute_url!: string
+	main_image_filename!: string
 	review_average!: number
 	review_counter!: number
 	images!: Array<any>
