@@ -52,7 +52,6 @@ services:
     image: postgres:13-alpine
     restart: always
     volumes:
-      - ./data/db:/var/lib/postgresql/data
       - postgres_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_DB=${POSTGRES_DB}

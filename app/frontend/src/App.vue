@@ -28,7 +28,6 @@ import CountryModel from "@/state/country/CountryModel"
 import RegionsModel from "@/state/country/RegionsModel"
 import SocialSidebar from '@/components/Main/SocialSidebar.vue'
 import UserDetailsModel from "@/state/user/data/UserDetailsModel"
-import ProductReviewModel from "@/state/product/review/ProductReviewModel"
 
 @Options({
   name: "App",
