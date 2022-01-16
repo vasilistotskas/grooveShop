@@ -4,27 +4,27 @@ REM createproductfaker.bat
 REM createordersfaker.bat
 REM createblogfaker.bat
 
-docker exec -it dcce97f6a1c3 python manage.py populate_users
-docker exec -it dcce97f6a1c3 python manage.py populate_products
-docker exec -it dcce97f6a1c3 python manage.py populate_orders
-docker exec -it dcce97f6a1c3 python manage.py populate_blog
-docker exec -it 90e8147d00ca python manage.py collectstatic --noinput
-docker exec -it dcce97f6a1c3 python manage.py makemigrations --noinput
-docker exec -it dcce97f6a1c3 python manage.py createsuperuser
-docker exec -it dcce97f6a1c3 pytest -m "not selenium" -rP
+docker exec -it 94eb321a8c5e python manage.py populate_users
+docker exec -it 94eb321a8c5e python manage.py populate_products
+docker exec -it 94eb321a8c5e python manage.py populate_orders
+docker exec -it 94eb321a8c5e python manage.py populate_blog
+docker exec -it 94eb321a8c5e python manage.py collectstatic --noinput
+docker exec -it 94eb321a8c5e python manage.py makemigrations --noinput
+docker exec -it 94eb321a8c5e python manage.py createsuperuser
+docker exec -it 94eb321a8c5e pytest -m "not selenium" -rP
 
 docker exec -it 70f7ec9716aa find . -name \*.pyc -delete
 
 docker-compose -f docker-compose-dev.yml run app sh -c "python manage.py makemigrations --noinput"
 
 REM FOR PYTHON ENV ---- run migrations from here
-docker exec -it -i ae6afba2beaa /bin/sh
+docker exec -it -i 94eb321a8c5e /bin/sh
 
 REM FOR elasticsearch
 python manage.py search_index --rebuild
 
 REM FOR OTHER ENVS
-docker exec -it c0c5 bash
+docker exec -it 94eb321a8c5e bash
 
 REM NAMED DOCKER YML FILES RUN
 docker-compose -f docker-compose-dev.yml up --build

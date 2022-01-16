@@ -9,21 +9,20 @@ services:
     restart: always
     command: >
       sh -c "python manage.py wait_for_db &&
-             python manage.py collectstatic --noinput &&
              python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
              gunicorn app.wsgi:application --bind 0.0.0.0:8001"
     volumes:
       - ./app:/app
-      - ./app/static:/backend/static
-      - ./app/media:/backend/media
-    ports:
-      - 8001:8001
-    expose:
-      - 8001
+      - web-static:/app/static
+      - web-media:/app/media
+      - web-files:/app/files
+      - web-logs:/app/logs
     environment:
       - DEBUG=${DEBUG}
       - SECRET_KEY=${SECRET_KEY}
       - APPEND_SLASH=${APPEND_SLASH}
+      - APP_BASE_URL=${APP_BASE_URL}
       - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
@@ -44,6 +43,8 @@ services:
     depends_on:
       - db
       - redis
+    ports:
+      - 8001:8001
     networks:
       - groovy-backbone
 
@@ -59,50 +60,6 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - 5432:5432
-    networks:
-      - groovy-backbone
-
-  pgadmin:
-    container_name: pgadmin4
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
-      - PGADMIN_LISTEN_PORT=${PGADMIN_LISTEN_PORT}
-    ports:
-      - 5050:5050
-    depends_on:
-      - db
-    networks:
-      - groovy-backbone
-
-  celery:
-    container_name: celery
-    image: celery
-    build:
-      context: .
-      dockerfile: docker/Backend.Dockerfile
-    restart: always
-    command: celery -A app worker -l info
-    volumes:
-      - ./app:/app
-    environment:
-      - SECRET_KEY=${SECRET_KEY}
-      - DEBUG=${DEBUG}
-    depends_on:
-      - db
-      - redis
-      - app
-    networks:
-      - groovy-backbone
-
-  redis:
-    container_name: redis
-    image: redis
-    restart: always
-    ports:
-      - 6379:6379
     networks:
       - groovy-backbone
 
@@ -123,18 +80,41 @@ services:
     networks:
       - groovy-backbone
 
+  pgadmin:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_LISTEN_PORT=${PGADMIN_LISTEN_PORT}
+    ports:
+      - 5050:5050
+    depends_on:
+      - db
+    networks:
+      - groovy-backbone
+
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
+    networks:
+      - groovy-backbone
+
   service-media_stream:
     container_name: service-media_stream
     image: service-manager:${SERVICE_MANAGER_IMAGE_REV}-dev
     build:
-      context: ./MediaStream
-      target: production
+      context: ./mediaStream
       dockerfile: ./Dockerfile
     command: npm run start:prod
     ports:
       - 3003:3003
     volumes:
-      - ./MediaStream:/usr/src/app
+      - ./mediaStream:/usr/src/app
       - /usr/src/app/node_modules
       - service-media_stream:/usr/src/app/storage
     restart: unless-stopped
@@ -144,6 +124,25 @@ services:
       - app
     networks:
       - groovy-backbone
+
+#
+#  celery:
+#    container_name: celery
+#    image: celery
+#    build:
+#      context: .
+#      dockerfile: docker/Backend.Dockerfile
+#    restart: always
+#    command: celery -A app worker -l info
+#    volumes:
+#      - ./app:/app
+#    environment:
+#      - SECRET_KEY=${SECRET_KEY}
+#      - DEBUG=${DEBUG}
+#    depends_on:
+#      - db
+#      - redis
+#      - app
 
 #  frontend:
 #    container_name: frontend
@@ -169,6 +168,10 @@ volumes:
   postgres_data:
   production_static_data:
   service-media_stream:
+  web-static:
+  web-media:
+  web-files:
+  web-logs:
 
 networks:
   groovy-backbone:
