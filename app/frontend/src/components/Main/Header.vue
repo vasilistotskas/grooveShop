@@ -1,33 +1,34 @@
 <template>
   <header id="main-header">
     <div class="preheadcust" style="">
-      <p>Groove <a href="http://localhost:5000/">
-        <span style="text-decoration: underline;">Here</span>!</a>
+      <p>
+        Groove <a href="http://localhost:5000/">
+          <span style="text-decoration: underline;">Here</span>!</a>
       </p>
     </div>
-    <Navbar v-bind:showMobileMenu="showMobileMenu"
-            v-bind:cartTotalLength="cartTotalLength"/>
+    <Navbar :cart-total-length="cartTotalLength"
+            :show-mobile-menu="showMobileMenu"
+    />
   </header>
-
 </template>
 
 <script lang="ts">
-import store from "@/store"
-import { Options, Vue } from "vue-class-component"
-import Navbar from '@/components/Navbar/Navbar.vue'
+import store from '@/store';
+import { Options, Vue } from 'vue-class-component';
+import Navbar from '@/components/Navbar/Navbar.vue';
 
 @Options({
-  name: "Header",
+  name: 'Header',
   components: {
     Navbar
   }
 })
 export default class Header extends Vue {
 
-  public showMobileMenu = false
+  public showMobileMenu = false;
 
   get cartTotalLength(): number {
-    return store.getters['cart/getCartTotalLength']
+    return store.getters['cart/getCartTotalLength'];
   }
 }
 </script>

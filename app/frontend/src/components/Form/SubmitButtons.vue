@@ -1,39 +1,41 @@
 <template>
   <div
-      class="_buttons"
-      :style="{
+    :style="{
       'column-gap': gap,
       'grid-template-columns': `${r1}fr ${r2}fr`
-    }">
+    }"
+    class="_buttons"
+  >
     <BaseButton
-        @click="$emit('reset')"
-        class="reset-button"
-        type="primary-two">
+      class="reset-button"
+      type="primary-two"
+      @click="$emit('reset')"
+    >
       Reset
     </BaseButton>
     <BaseButton
-        class="submit-button"
-        type="primary"
-        html-type="submit"
-        :disabled="submitting">
+      :disabled="submitting"
+      class="submit-button"
+      html-type="submit"
+      type="primary"
+    >
       {{ submitText }}
     </BaseButton>
   </div>
 </template>
 
 <script>
-import { defineComponent } from "vue"
-import BaseButton from "./BaseButton.vue"
+import { defineComponent } from 'vue';
+import BaseButton from './BaseButton.vue';
 
 export default defineComponent({
   components: {
     BaseButton
   },
-  emits: ["reset"],
   props: {
     submitText: {
       type: String,
-      default: "Submit"
+      default: 'Submit'
     },
     gap: {
       type: String,
@@ -41,18 +43,19 @@ export default defineComponent({
     },
     ratio: {
       type: String,
-      default: "1:1"
+      default: '1:1'
     },
     submitting: {
       type: Boolean
     }
   },
+  emits: ['reset'],
   computed: {
     r1() {
-      return this.ratio.split(":")[0];
+      return this.ratio.split(':')[0];
     },
     r2() {
-      return this.ratio.split(":")[1];
+      return this.ratio.split(':')[1];
     }
   }
 });

@@ -10,24 +10,29 @@ $rating-starts: #f68b24;
 $base-success-color: #53e24a8a;
 
 body {
-  background-color: $primary-color-4!important;
-  margin: 0!important;
+  background-color: $primary-color-4 !important;
+  margin: 0 !important;
 }
+
 ul {
   list-style-type: none;
 }
-*{
-  margin:0;
+
+* {
+  margin: 0;
   padding: 0;
 }
+
 *, :after, :before {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+
 html {
   -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: rgba(31,45,61,0);
+  -webkit-tap-highlight-color: rgba(31, 45, 61, 0);
 }
+
 a {
   transition: all 0.3s ease-in-out;
   text-decoration: none !important;
@@ -42,6 +47,7 @@ a, p, span, label, h1, h2, h3, h4, h5, h6 {
   font-weight: 300;
   color: $primary-color-2;
 }
+
 footer {
   a, p, span, label, h1, h2, h3, h4, h5, h6 {
     font-weight: 300;
@@ -58,6 +64,7 @@ textarea {
   border-radius: 4px;
   transition: 180ms box-shadow ease-in-out;
   resize: vertical;
+
   &:focus {
     border-color: rgba(253, 0, 2, 0.33);
     box-shadow: 0 0 0 2px rgb(253 0 2 / 25%);
@@ -66,7 +73,7 @@ textarea {
 }
 
 input:focus-visible {
-  outline: unset!important;
+  outline: unset !important;
 }
 
 .form-select {
@@ -83,13 +90,15 @@ input:focus-visible {
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
   box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
-  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
   background-image: none;
 }
+
 .footer-section {
   &-links {
 
   }
+
   &-newsletter {
 
   }
@@ -100,7 +109,7 @@ input:focus-visible {
 }
 
 table {
-  color: $primary-color-4!important;
+  color: $primary-color-4 !important;
 }
 
 .plr-15 {
@@ -258,44 +267,51 @@ table {
     margin: 0 auto;
     display: grid;
     gap: 20px;
-    grid-template-columns: repeat(6,1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
 }
 
 .card {
-  background-color: transparent!important;
+  background-color: transparent !important;
   display: grid;
+
   .card-img-top {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
   }
+
   .card-body {
     height: auto;
     width: 100%;
     display: grid;
     gap: 10px;
-    grid-template-rows: repeat(1,1fr);
+    grid-template-rows: repeat(1, 1fr);
     text-align: center;
     justify-content: center;
     background: $primary-color-5;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     padding: 10px;
+
     a, p, span, label, h1, h2, h3, h4, h5, h6 {
       color: $primary-color-4;
     }
+
     .card-title {
       color: $primary-color-4;
       display: grid
     }
+
     .card-text {
       color: $primary-color-4;
     }
+
     .btn-product-card {
       color: $primary-color-4;
       display: grid
     }
   }
+
   .card-body-border-top {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -310,21 +326,22 @@ table {
 
 .product-listing-grid {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   @media screen and (max-width: 1200px) {
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
   @media screen and (max-width: 767px) {
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
+
   &-header {
     display: grid;
     gap: 10px;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(4, 1fr);
     @media screen and (max-width: 767px) {
-      grid-template-columns: repeat(2,1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 5px;
     }
   }
@@ -337,17 +354,19 @@ table {
     bottom: 0;
     right: 20px;
     gap: 10px;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(4, 1fr);
     @media screen and (max-width: 767px) {
-      grid-template-columns: repeat(2,1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 5px;
     }
   }
+
   .pagination-buttons {
     grid-column: 4;
   }
+
   .product-review-main-card, .product-card-main {
-    background-color: $primary-color-4!important;
+    background-color: $primary-color-4 !important;
   }
 }
 
@@ -360,13 +379,14 @@ table {
 .pagination-buttons {
   display: grid;
   max-width: 347px;
-  grid-template-columns: repeat(7,1fr);
+  grid-template-columns: repeat(7, 1fr);
   gap: 5px;
 }
 
 .product-listing-container {
   border-radius: 10px;
   padding: 20px 35px 35px;
+
   h2 {
     color: $primary-color-2;
   }
@@ -384,6 +404,7 @@ table {
 .container-fluid {
   &-mlr-0 {
     padding: 0;
+
     .row {
       margin-right: 0;
       margin-left: 0;
@@ -436,9 +457,11 @@ table {
   margin-right: calc(-.5 * var(--bs-gutter-x));
   margin-left: calc(-.5 * var(--bs-gutter-x));
 }
+
 .d-flex {
-  display: flex!important;
+  display: flex !important;
 }
+
 .form-control {
   display: block;
   width: 100%;
@@ -454,7 +477,7 @@ table {
   -moz-appearance: none;
   appearance: none;
   border-radius: 0.25rem;
-  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
   // TO REMEMBER BASIC RESPONSIVE
   @media screen and (max-width: 1420px) {
@@ -491,8 +514,14 @@ table {
   top: 30%;
   z-index: 13;
 }
-#social-sidebar li:first-child a { border-top-right-radius: 5px; }
-#social-sidebar li:last-child a { border-bottom-right-radius: 5px; }
+
+#social-sidebar li:first-child a {
+  border-top-right-radius: 5px;
+}
+
+#social-sidebar li:last-child a {
+  border-bottom-right-radius: 5px;
+}
 
 #social-sidebar a {
   background: $primary-color-5;
@@ -507,10 +536,12 @@ table {
   text-align: center;
   cursor: pointer;
 }
+
 #social-sidebar a:hover span {
   right: 120%;
   opacity: 1;
 }
+
 #social-sidebar a span {
   font: 12px "Open Sans", sans-serif;
   text-transform: uppercase;
@@ -539,28 +570,33 @@ table {
 }
 
 .content-min-height {
-  min-height: 600px!important;
+  min-height: 600px !important;
 }
 
 // Vue Transition
 .fade-enter {
-    &-active {
-      transition: opacity .4s ease;
-    }
-    &-to {
+  &-active {
+    transition: opacity .4s ease;
+  }
 
-    }
-    &-from {
-      opacity: 0;
-    }
+  &-to {
+
+  }
+
+  &-from {
+    opacity: 0;
+  }
 }
+
 .fade-leave {
   &-active {
     transition: opacity .4s ease;
   }
+
   &-to {
     opacity: 0;
   }
+
   &-from {
 
   }
@@ -596,47 +632,58 @@ table {
     background-color: transparent;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     border: unset;
+
     &:focus {
       outline: none;
       box-shadow: none;
     }
+
     &:hover {
       cursor: pointer;
     }
   }
+
   &-main {
     background-color: transparent;
     border: unset;
   }
+
   &-one {
     color: $primary-color-4;
     border: 1px solid $primary-color-3;
     background-color: $primary-color-5;
+
     a {
       color: $primary-color-4;
     }
   }
+
   &-two {
     color: $primary-color-4;
     border: 1px solid rgba(245, 30, 30, 0.7);
     background-color: $primary-color-1;
+
     a {
       color: $primary-color-4;
     }
   }
+
   &-three {
     color: $primary-color-5;
     border: 1px solid rgba(232, 232, 232, 0.7);
     background-color: $primary-color-6;
+
     a {
       color: $primary-color-5;
     }
   }
+
   @media screen and (max-width: 767px) {
     font-size: 10px;
     padding: 5px 10px;
   }
 }
+
 .product-review-main-card {
   position: relative;
   display: grid;
@@ -657,10 +704,12 @@ table {
   display: grid;
   border: 1px solid transparent;
   border-radius: 5px;
+
   &:hover {
     border: 1px solid #FD0002e0;
     border-radius: 5px;
   }
+
   .input-group-addon {
     display: grid;
     justify-content: center;
@@ -680,6 +729,7 @@ table {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
   }
+
   .form-control {
     border: unset;
     border-radius: unset;

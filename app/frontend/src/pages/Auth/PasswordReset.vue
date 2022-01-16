@@ -1,10 +1,10 @@
 <template>
   <div id="password-reset-view" class="container mt-8">
-    <Breadcrumbs :breadCrumbPath="breadCrumbPath"></Breadcrumbs>
+    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="card password-reset-card">
       <div class="card-body card-body-border-top">
         <div>
-          <font-awesome-icon :icon="lockIcon" size="4x" :style="{ color: '#5A5A5A' }"></font-awesome-icon>
+          <font-awesome-icon :icon="lockIcon" :style="{ color: '#5A5A5A' }" size="4x" />
         </div>
         <h1>Forgot Password?</h1>
         <p>You can reset your password here.</p>
@@ -16,27 +16,29 @@
             <div class="form-group">
               <div class="input-group-w-addon">
                 <span class="input-group-addon">
-                  <font-awesome-icon :icon="envelopeIcon" :style="{ color: '#080808' }"></font-awesome-icon>
+                  <font-awesome-icon :icon="envelopeIcon" :style="{ color: '#080808' }" />
                 </span>
-                <input v-model="inputs.email" id="email" name="email" placeholder="email" class="form-control" type="email">
+                <input id="email" v-model="inputs.email" class="form-control" name="email" placeholder="email"
+                       type="email"
+                />
               </div>
             </div>
           </form>
           <button class="btn btn-outline-primary-two" @click="sendResetEmail(inputs)">
             send email
           </button>
-          <span class="error" v-show="emailError">
+          <span v-show="emailError" class="error">
             A error occured while processing your request.
           </span>
         </template>
         <template v-else>
           <div class="password-reset-message">
             <span>Check your inbox for a link to reset your password. If an email doesn't appear within a few
-            minutes, check your spam folder.</span>
+              minutes, check your spam folder.</span>
           </div>
-          <router-link to="/log-in">
+          <RouterLink to="/log-in">
             return to login page
-          </router-link>
+          </RouterLink>
         </template>
       </div>
     </div>
@@ -44,15 +46,15 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
-import router from "@/routes"
-import { Options, Vue } from "vue-class-component"
-import { faLock } from "@fortawesome/free-solid-svg-icons/faLock"
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons/faEnvelope"
+import store from '@/store';
+import router from '@/routes';
+import { Options, Vue } from 'vue-class-component';
+import { faLock } from '@fortawesome/free-solid-svg-icons/faLock';
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope';
 
 @Options({
-  name: "PasswordReset",
+  name: 'PasswordReset',
   components: {
     Breadcrumbs
   }
@@ -61,47 +63,48 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons/faEnvelope"
 export default class PasswordReset extends Vue {
 
   inputs = {
-    email: '',
-  }
-
-  mounted() : void {
-    document.title = 'Password Reset'
-  }
-
-  async unmounted(): Promise<void>{
-    await store.dispatch('password/clearEmailStatus')
-  }
+    email: ''
+  };
 
   get breadCrumbPath(): [] {
-    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
-    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb;
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params);
   }
 
   get lockIcon(): typeof faLock {
-    return faLock
+    return faLock;
   }
+
   get envelopeIcon(): typeof faEnvelope {
-    return faEnvelope
+    return faEnvelope;
   }
 
   get emailCompleted(): any {
-    return store.getters['password/getEmailCompleted']
+    return store.getters['password/getEmailCompleted'];
   }
 
   get emailError(): any {
-    return store.getters['password/getEmailError']
+    return store.getters['password/getEmailError'];
   }
 
   get emailLoading(): any {
-    return store.getters['password/getEmailLoading']
+    return store.getters['password/getEmailLoading'];
+  }
+
+  mounted(): void {
+    document.title = 'Password Reset';
+  }
+
+  async unmounted(): Promise<void> {
+    await store.dispatch('password/clearEmailStatus');
   }
 
   async sendResetEmail(inputs: any): Promise<void> {
-    await store.dispatch('password/sendPasswordResetEmail', inputs)
+    await store.dispatch('password/sendPasswordResetEmail', inputs);
   }
 
   async clearEmailStatus(): Promise<void> {
-    await store.dispatch('password/clearEmailStatus')
+    await store.dispatch('password/clearEmailStatus');
   }
 
 }

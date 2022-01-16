@@ -1,22 +1,17 @@
 <template>
   <div>
     <h1 v-if="title" class="plr-15 mb-3 mt-3">{{ title }}</h1>
-    <form @submit.prevent="$emit('submit')" class="_form" :class="formClass">
+    <form :class="formClass" class="_form" @submit.prevent="$emit('submit')">
       <slot></slot>
     </form>
-<!--    <PreFormData :form="form" :errors="errors" />-->
+    <!--    <PreFormData :form="form" :errors="errors" />-->
   </div>
 </template>
 
 <script>
-import { defineComponent } from "vue"
-import PreFormData from "@/components/Form/PreFormData.vue"
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  components: {
-    PreFormData
-  },
-  emits: ["submit"],
   props: {
     title: {
       type: String,
@@ -27,14 +22,16 @@ export default defineComponent({
       required: true
     },
     formClass: {
-      type: String
+      type: String,
+      default: ''
     },
     errors: {
       type: Object,
       required: true
     }
-  }
-})
+  },
+  emits: ['submit']
+});
 </script>
 
 <style lang="scss" scoped>

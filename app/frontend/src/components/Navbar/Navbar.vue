@@ -2,19 +2,27 @@
   <nav class="main-navbar">
     <div class="grid-header container">
       <div class="logo-header">
-        <router-link to="/" class="navbar-brand" aria-label="Home">
-          <img src="http://localhost:8000/mediastream/static/files/images/websiteLogo/175/85" width="175" height="85" alt="Website Logo" class="main-logo img-fluid">
-        </router-link>
+        <RouterLink aria-label="Home" class="navbar-brand" to="/">
+          <img alt="Website Logo" class="main-logo img-fluid" height="85"
+               src="http://localhost:8000/mediastream/static/files/images/websiteLogo/175/85" width="175"
+          />
+        </RouterLink>
       </div>
 
-      <div class="navbar-categories-loading" v-bind:class="{'wrapper': Object.keys(categoriesTreeData).length === 0 }">
-        <div @click="menuToggle" class="products-header" v-bind:class="{'content wrapper-cell': Object.keys(categoriesTreeData).length === 0 }">
-          <div class="products-a btn" ref="navbarProductsButton">
-            <button id="burgerButton" ref="mainToggleButton" class="menu" aria-label="Main Menu">
-              <svg width="65" height="65" viewBox="0 0 100 100">
-                <path class="line line-one" d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058" />
+      <div :class="{'wrapper': Object.keys(categoriesTreeData).length === 0 }" class="navbar-categories-loading">
+        <div :class="{'content wrapper-cell': Object.keys(categoriesTreeData).length === 0 }" class="products-header"
+             @click="menuToggle"
+        >
+          <div ref="navbarProductsButton" class="products-a btn">
+            <button id="burgerButton" ref="mainToggleButton" aria-label="Main Menu" class="menu">
+              <svg height="65" viewBox="0 0 100 100" width="65">
+                <path class="line line-one"
+                      d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"
+                />
                 <path class="line line-two" d="M 20,50 H 80" />
-                <path class="line line-three" d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942" />
+                <path class="line line-three"
+                      d="M 20,70.999954 H 80.000231 C 80.000231,70.999954 94.498839,71.182648 94.532987,33.288669 94.543142,22.019327 90.966081,18.329754 85.259173,18.331003 79.552261,18.332249 75.000211,25.000058 75.000211,25.000058 L 25.000021,74.999942"
+                />
               </svg>
             </button>
             <span class="title">PRODUCTS</span>
@@ -23,79 +31,81 @@
       </div>
 
       <div class="blog-header">
-        <router-link to="/blog" class="btn-w-effect" aria-label="Blog">
-          <font-awesome-icon v-if="isMobile" :icon="blogIcon"></font-awesome-icon>
-          <font-awesome-icon v-else size="2x" :icon="blogIcon"></font-awesome-icon>
+        <RouterLink aria-label="Blog" class="btn-w-effect" to="/blog">
+          <font-awesome-icon v-if="isMobile" :icon="blogIcon" />
+          <font-awesome-icon v-else :icon="blogIcon" size="2x" />
           <span>BLOG</span>
           <span class="line-1"></span>
           <span class="line-2"></span>
           <span class="line-3"></span>
           <span class="line-4"></span>
-        </router-link>
+        </RouterLink>
       </div>
       <div class="search-header">
         <div class="search-buttons-container">
-          <input v-model="searchQuery" @keyup.enter='searchPerform' class="form-control search-form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
-          <button class="btn-outline-primary-main" type="submit" aria-label="search" @click="searchPerform">
-            <font-awesome-icon :icon="searchIcon" size="lg" :style="{ color: '#3b3b3b' }"></font-awesome-icon>
+          <input v-model="searchQuery" aria-label="Search" class="form-control search-form-control me-2" name="query"
+                 placeholder="Search" type="search" @keyup.enter="searchPerform"
+          />
+          <button aria-label="search" class="btn-outline-primary-main" type="submit" @click="searchPerform">
+            <font-awesome-icon :icon="searchIcon" :style="{ color: '#3b3b3b' }" size="lg" />
           </button>
         </div>
       </div>
       <div class="navigation-header">
         <div class="navigation-header-part">
-          <router-link v-if="this.isAuthenticated" :to="{ name: 'Favourites' }" aria-label="Favourites">
-            <font-awesome-icon v-if="isMobile" :icon="heartIcon" :style="{ color: '#f80000e0' }"></font-awesome-icon>
-            <font-awesome-icon v-else size="2x" :icon="heartIcon" :style="{ color: '#f80000e0' }"></font-awesome-icon>
-          </router-link>
-          <router-link v-else to="/log-in" aria-label="Favourites">
-            <font-awesome-icon v-if="isMobile" :icon="heartIcon" :style="{ color: 'white' }"></font-awesome-icon>
-            <font-awesome-icon v-else size="2x" :icon="heartIcon" :style="{ color: 'white' }"></font-awesome-icon>
-          </router-link>
+          <RouterLink v-if="isAuthenticated" :to="{ name: 'Favourites' }" aria-label="Favourites">
+            <font-awesome-icon v-if="isMobile" :icon="heartIcon" :style="{ color: '#f80000e0' }" />
+            <font-awesome-icon v-else :icon="heartIcon" :style="{ color: '#f80000e0' }" size="2x" />
+          </RouterLink>
+          <RouterLink v-else aria-label="Favourites" to="/log-in">
+            <font-awesome-icon v-if="isMobile" :icon="heartIcon" :style="{ color: 'white' }" />
+            <font-awesome-icon v-else :icon="heartIcon" :style="{ color: 'white' }" size="2x" />
+          </RouterLink>
         </div>
         <div class="navigation-header-part">
-          <router-link v-if="this.isAuthenticated" to="/my-account" aria-label="Account">
-            <font-awesome-icon v-if="isMobile" :icon="userIcon" :style="{ color: '#f80000e0' }"></font-awesome-icon>
-            <font-awesome-icon v-else size="2x" :icon="userIcon" :style="{ color: '#f80000e0' }"></font-awesome-icon>
-          </router-link>
-          <router-link v-else to="/log-in" aria-label="Account">
-            <font-awesome-icon v-if="isMobile" :icon="userIcon" :style="{ color: 'white' }"></font-awesome-icon>
-            <font-awesome-icon v-else size="2x" :icon="userIcon" :style="{ color: 'white' }"></font-awesome-icon>
-          </router-link>
+          <RouterLink v-if="isAuthenticated" aria-label="Account" to="/my-account">
+            <font-awesome-icon v-if="isMobile" :icon="userIcon" :style="{ color: '#f80000e0' }" />
+            <font-awesome-icon v-else :icon="userIcon" :style="{ color: '#f80000e0' }" size="2x" />
+          </RouterLink>
+          <RouterLink v-else aria-label="Account" to="/log-in">
+            <font-awesome-icon v-if="isMobile" :icon="userIcon" :style="{ color: 'white' }" />
+            <font-awesome-icon v-else :icon="userIcon" :style="{ color: 'white' }" size="2x" />
+          </RouterLink>
         </div>
         <div class="navigation-header-part">
-          <router-link to="/cart" aria-label="Cart">
-            <font-awesome-icon v-if="isMobile" :icon="shoppingCartIcon" :style="{ color: 'white' }"></font-awesome-icon>
-            <font-awesome-icon v-else size="2x" :icon="shoppingCartIcon" :style="{ color: 'white' }"></font-awesome-icon>
+          <RouterLink aria-label="Cart" to="/cart">
+            <font-awesome-icon v-if="isMobile" :icon="shoppingCartIcon" :style="{ color: 'white' }" />
+            <font-awesome-icon v-else :icon="shoppingCartIcon" :style="{ color: 'white' }" size="2x" />
             <span class="cart-total-length">{{ cartTotalLength }}</span>
-          </router-link>
+          </RouterLink>
         </div>
       </div>
     </div>
 
-<!--    <transition name="fade">-->
-      <NavbarCategories v-if="categoriesTreeData && Object.keys(categoriesTreeData).length > 0 && !this.navbarMenuHidden"
-                        :categoriesTree="categoriesTreeData"
-                        :mainToggleButton="this.$refs.mainToggleButton"
-                        :navbarProductsButton="this.$refs.navbarProductsButton"
-      />
-<!--    </transition>-->
+    <!--    <transition name="fade">-->
+    <NavbarCategories v-if="categoriesTreeData && Object.keys(categoriesTreeData).length > 0 && !navbarMenuHidden"
+                      :categories-tree="categoriesTreeData"
+                      :main-toggle-button="$refs.mainToggleButton"
+                      :navbar-products-button="$refs.navbarProductsButton"
+    />
+    <!--    </transition>-->
   </nav>
 </template>
 
 <script lang="ts">
-import store from "@/store"
-import router from '@/routes'
-import { Options, Vue } from "vue-class-component"
-import CategoryModel from "@/state/category/CategoryModel"
-import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
-import { faHeart } from "@fortawesome/free-solid-svg-icons/faHeart"
-import { faBlog } from "@fortawesome/free-solid-svg-icons/faBlog"
-import { faSearch } from "@fortawesome/free-solid-svg-icons/faSearch"
-import { faUser } from "@fortawesome/free-solid-svg-icons/faUser"
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons/faShoppingCart"
+import store from '@/store';
+import router from '@/routes';
+import { Options, Vue } from 'vue-class-component';
+import CategoryModel from '@/state/category/CategoryModel';
+import NavbarCategories from '@/components/Navbar/NavbarCategories.vue';
+import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart';
+import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog';
+import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
+import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart';
 
 @Options({
-  name: "Navbar",
+  name: 'Navbar',
   components: {
     NavbarCategories
   },
@@ -108,62 +118,73 @@ import { faShoppingCart } from "@fortawesome/free-solid-svg-icons/faShoppingCart
   }
 })
 export default class Navbar extends Vue {
-  searchQuery: string = ''
-  public modal = false
+  searchQuery: string = '';
+  public modal = false;
 
   $refs!: {
-    mainToggleButton: HTMLElement
-    navbarProductsButton: HTMLElement
-  }
+    mainToggleButton: HTMLElement;
+    navbarProductsButton: HTMLElement;
+  };
 
   get blogIcon(): typeof faBlog {
-    return faBlog
+    return faBlog;
   }
+
   get searchIcon(): typeof faSearch {
-    return faSearch
+    return faSearch;
   }
+
   get userIcon(): typeof faUser {
-    return faUser
+    return faUser;
   }
+
   get shoppingCartIcon(): typeof faShoppingCart {
-    return faShoppingCart
+    return faShoppingCart;
   }
+
   get heartIcon(): typeof faHeart {
-    return faHeart
+    return faHeart;
   }
 
   get navbarMenuHidden(): boolean {
-    return store.getters['app/getNavbarMenuHidden']
+    return store.getters['app/getNavbarMenuHidden'];
   }
 
   get isMobile(): boolean {
-    return store.getters['app/isMobile']
+    return store.getters['app/isMobile'];
   }
 
   get categoriesTreeData(): Array<CategoryModel> {
-    return store.getters['category/getCategoriesTree']
+    return store.getters['category/getCategoriesTree'];
   }
 
   get currentPageNumber(): number {
-    return store.getters['pagination/getCurrentPageNumber']
+    return store.getters['pagination/getCurrentPageNumber'];
   }
 
   get isAuthenticated(): boolean {
-    return store.getters['auth/isAuthenticated']
+    return store.getters['auth/isAuthenticated'];
   }
 
   public menuToggle(): void {
     this.$refs.mainToggleButton.classList.toggle('opened');
-    this.$refs.mainToggleButton.setAttribute('aria-expanded', this.$refs.mainToggleButton.classList.contains('opened') as unknown as string)
+    this.$refs.mainToggleButton.setAttribute('aria-expanded', this.$refs.mainToggleButton.classList.contains('opened') as unknown as string);
 
-    store.commit('app/setNavbarMenuHidden', !this.navbarMenuHidden)
+    store.commit('app/setNavbarMenuHidden', !this.navbarMenuHidden);
   }
 
   async searchPerform(): Promise<void> {
-    await store.commit('pagination/unsetResults')
-    await store.commit('pagination/setCurrentQuery', this.searchQuery)
-    await store.dispatch('pagination/getPaginatedResults', {'pageNumber': this.currentPageNumber, 'endpointUrl': `search`, 'query': this.searchQuery })
-    await router.push({ path: '/search', query: { ...this.$route.query, query: this.searchQuery, page: this.currentPageNumber }})
+    await store.commit('pagination/unsetResults');
+    await store.commit('pagination/setCurrentQuery', this.searchQuery);
+    await store.dispatch('pagination/getPaginatedResults', {
+      'pageNumber': this.currentPageNumber,
+      'endpointUrl': `search`,
+      'query': this.searchQuery
+    });
+    await router.push({
+      path: '/search',
+      query: { ...this.$route.query, query: this.searchQuery, page: this.currentPageNumber }
+    });
   }
 }
 </script>

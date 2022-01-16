@@ -2,19 +2,19 @@
   <div class="container mt-4 mb-4 breadcrumb-container">
     <ul class="breadcrumb">
       <li class="breadcrumb__item">
-        <router-link :to="{ name: 'Home' }" class="btn-w-effect" aria-label="Home">
+        <RouterLink :to="{ name: 'Home' }" aria-label="Home" class="btn-w-effect">
           <span class="breadcrumb__inner">
             <span class="breadcrumb__title">Home</span>
           </span>
-        </router-link>
+        </RouterLink>
         <span class="breadcrumb__seperator">/</span>
       </li>
-      <li v-for="breadcrumb in breadCrumbPath" class="breadcrumb__item">
-        <router-link :to="'/' + breadcrumb.to.full_path" class="btn-w-effect" aria-label="Blog">
+      <li v-for="breadcrumb in breadCrumbPath" :key="breadcrumb.id" class="breadcrumb__item">
+        <RouterLink :to="'/' + breadcrumb.to.full_path" aria-label="Blog" class="btn-w-effect">
           <span class="breadcrumb__inner">
             <span class="breadcrumb__title">{{ breadcrumb.name }}</span>
           </span>
-        </router-link>
+        </RouterLink>
         <span class="breadcrumb__seperator">/</span>
       </li>
     </ul>
@@ -22,10 +22,10 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component"
+import { Options, Vue } from 'vue-class-component';
 
 @Options({
-  name: "Breadcrumbs",
+  name: 'Breadcrumbs',
   props: {
     breadCrumbPath: {}
   }
@@ -33,7 +33,7 @@ import { Options, Vue } from "vue-class-component"
 
 export default class Breadcrumbs extends Vue {
 
-  breadCrumbPath!: {}
+  breadCrumbPath!: Record<string, unknown>;
 
 }
 
@@ -64,7 +64,7 @@ export default class Breadcrumbs extends Vue {
     a {
       color: $primary-color-3!important;
     }
-    a.router-link-exact-active {
+    a.RouterLink-exact-active {
       span.breadcrumb__title {
         font-weight: 500;
       }

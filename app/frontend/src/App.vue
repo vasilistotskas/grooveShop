@@ -5,7 +5,7 @@
     <Header/>
 
     <section class="main-section">
-      <router-view/>
+      <RouterView/>
     </section>
 
     <Footer/>
@@ -132,11 +132,11 @@ export default class App extends Vue {
        border-color: $primary-color-1!important;
      }
    }
-  .router-link-active {
+  .RouterLink-active {
     color: $primary-color-1!important;
   }
   .navbar-menu-grid-head {
-    .router-link-active {
+    .RouterLink-active {
       background-color: $primary-color-1;
     }
   }

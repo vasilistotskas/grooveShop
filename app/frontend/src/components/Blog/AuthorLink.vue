@@ -1,26 +1,26 @@
 <template>
-  <router-link :to="`/author/${author.user.email}`" aria-label="Blog Author">{{ displayName }}</router-link>
+  <RouterLink :to="`/author/${author.user.email}`" aria-label="Blog Author">{{ displayName }}</RouterLink>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component"
-import AuthorModel from "@/state/blog/AuthorModel"
+import { Options, Vue } from 'vue-class-component';
+import AuthorModel from '@/state/blog/AuthorModel';
 
 @Options({
-  name: "AuthorLink",
+  name: 'AuthorLink',
   props: {
     author: {
       type: Object,
-      required: true,
+      required: true
     }
   }
 })
 export default class AuthorLink extends Vue {
 
-  author = new AuthorModel()
+  author = new AuthorModel();
 
-  get displayName (): string {
-    return (this.author.user?.firstName && this.author.user?.lastName && `${this.author.user?.firstName} ${this.author.user?.lastName}`) || `${this.author.user?.email}`
+  get displayName(): string {
+    return (this.author.user?.firstName && this.author.user?.lastName && `${this.author.user?.firstName} ${this.author.user?.lastName}`) || `${this.author.user?.email}`;
   }
 }
 </script>

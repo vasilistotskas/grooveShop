@@ -1,18 +1,18 @@
 <template>
-    <span class="register-activation-failed-text">
-      Activation failed.
-    </span>
+  <span class="register-activation-failed-text">
+    Activation failed.
+  </span>
 </template>
 
-
 <script lang="ts">
-import { Options, Vue} from "vue-class-component"
+import { Options, Vue } from 'vue-class-component';
 
 @Options({
-  name: "RegisterActivationFail"
+  name: 'RegisterActivationFail'
 })
 
-export default class RegisterActivationFail extends Vue {}
+export default class RegisterActivationFail extends Vue {
+}
 </script>
 
 <style lang="scss" scoped>

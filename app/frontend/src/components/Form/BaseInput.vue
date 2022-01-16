@@ -1,28 +1,30 @@
 <template>
-  <div class="_container" :class="[attrsClassName, { 'input-group-w-addon': inputWithAddOn}]">
+  <div :class="[attrsClassName, { 'input-group-w-addon': inputWithAddOn}]" class="_container">
     <span v-if="inputWithAddOn" class="input-group-addon">
-      <font-awesome-icon size="lg" :icon="inputWithAddOnIcon" :style="{ color: '#080808' }"></font-awesome-icon>
+      <font-awesome-icon :icon="inputWithAddOnIcon" :style="{ color: '#080808' }" size="lg" />
     </span>
     <input
-        v-model="value"
-        :class="['_input', { '_input-error': hasError, 'form-control': inputWithAddOn }]"
-        :disabled="disabled"
-        :placeholder="placeholder"
-        v-bind="attrsRest"/>
+      v-model="value"
+      v-bind="attrsRest"
+      :class="['_input', { '_input-error': hasError, 'form-control': inputWithAddOn }]"
+      :disabled="disabled"
+      :placeholder="placeholder"
+    />
     <LoadingIcon
-        class="_loading-icon"
-        :class="{ '_loading-icon-error': hasError }"
-        v-if="validating"/>
+      v-if="validating"
+      :class="{ '_loading-icon-error': hasError }"
+      class="_loading-icon"
+    />
   </div>
 </template>
 
 <script>
-import { defineComponent } from "vue"
-import LoadingIcon from "../../assets/LoadingIcon.vue"
+import { defineComponent } from 'vue';
+import LoadingIcon from '../../assets/LoadingIcon.vue';
 
 export default defineComponent({
-  inheritAttrs: false,
   components: { LoadingIcon },
+  inheritAttrs: false,
   props: {
     modelValue: {
       type: [String, Number, Boolean],
@@ -35,19 +37,21 @@ export default defineComponent({
       type: Boolean
     },
     inputWithAddOnIcon: {
-      type: Object
+      type: Object,
+      required: false
     },
     disabled: {
       type: Boolean
     },
     placeholder: {
-      type: [String, Number]
+      type: [String, Number],
+      required: false
     },
     hasError: {
       type: Boolean
     }
   },
-  emits: ["update:modelValue"],
+  emits: ['update:modelValue'],
   setup(props, { attrs }) {
     const { class: attrsClassName, ...attrsRest } = attrs;
 
@@ -62,7 +66,7 @@ export default defineComponent({
         return this.modelValue;
       },
       set(value) {
-        this.$emit("update:modelValue", value);
+        this.$emit('update:modelValue', value);
       }
     }
   }

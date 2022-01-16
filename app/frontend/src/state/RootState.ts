@@ -1,3 +1,5 @@
-import State from '@/state/State'
+import State from '@/state/State';
 
-export default interface RootState extends State {}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export default interface RootState extends State {
+}

@@ -1,13 +1,14 @@
-import EntityBase from '@/state/common/EntityBase'
+import EntityBase from '@/state/common/EntityBase';
 
 export default class AuthorUserModel extends EntityBase {
-    id!: number
-    email!: string
-    firstName!: string
-    lastName!: string
 
-    public constructor(data?: Partial<AuthorUserModel>) {
-        super(data)
-    }
+  public constructor(data?: Partial<AuthorUserModel>) {
+    super(data);
+  }
+
+  id!: number;
+  email!: string;
+  firstName!: string;
+  lastName!: string;
 
 }

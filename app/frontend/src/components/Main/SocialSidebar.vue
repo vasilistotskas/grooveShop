@@ -1,38 +1,46 @@
 <template>
   <ul id="social-sidebar">
     <li>
-      <a class="entypo entypo-facebook" href="https://www.facebook.com/" aria-label="Facebook" target="_blank" rel="noopener">
-        <font-awesome-icon :icon="facebookIcon" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
+      <a aria-label="Facebook" class="entypo entypo-facebook" href="https://www.facebook.com/" rel="noopener"
+         target="_blank"
+      >
+        <font-awesome-icon :icon="facebookIcon" :style="{ color: '#4267B2' }" size="lg" />
         <span>Facebook</span>
       </a>
     </li>
     <li>
-      <a class="entypo entypo-gplus" href="https://www.google.com/" aria-label="Google" target="_blank" rel="noopener">
-        <font-awesome-icon :icon="googleIcon" size="lg" :style="{ color: '#DB4437' }"></font-awesome-icon>
+      <a aria-label="Google" class="entypo entypo-gplus" href="https://www.google.com/" rel="noopener" target="_blank">
+        <font-awesome-icon :icon="googleIcon" :style="{ color: '#DB4437' }" size="lg" />
         <span>Google+</span>
       </a>
     </li>
     <li>
-      <a class="entypo entypo-twitter" href="https://www.twitter.com/" aria-label="Twitter" target="_blank" rel="noopener">
-        <font-awesome-icon :icon="twitterIcon" size="lg" :style="{ color: '#1DA1F2' }"></font-awesome-icon>
+      <a aria-label="Twitter" class="entypo entypo-twitter" href="https://www.twitter.com/" rel="noopener"
+         target="_blank"
+      >
+        <font-awesome-icon :icon="twitterIcon" :style="{ color: '#1DA1F2' }" size="lg" />
         <span>Tweeter</span>
       </a>
     </li>
     <li>
-      <a class="entypo entypo-instagram" href="https://www.instagram.com/" aria-label="Instagram" target="_blank" rel="noopener">
-        <font-awesome-icon :icon="instagramIcon" size="lg" :style="{ color: '#E1306C' }"></font-awesome-icon>
+      <a aria-label="Instagram" class="entypo entypo-instagram" href="https://www.instagram.com/" rel="noopener"
+         target="_blank"
+      >
+        <font-awesome-icon :icon="instagramIcon" :style="{ color: '#E1306C' }" size="lg" />
         <span>Instagram</span>
       </a>
     </li>
     <li>
-      <a class="entypo entypo-linkedin" href="https://www.linkedin.com/" aria-label="Linkedin" target="_blank" rel="noopener">
-        <font-awesome-icon :icon="linkedinIcon" size="lg" :style="{ color: '#4267B2' }"></font-awesome-icon>
+      <a aria-label="Linkedin" class="entypo entypo-linkedin" href="https://www.linkedin.com/" rel="noopener"
+         target="_blank"
+      >
+        <font-awesome-icon :icon="linkedinIcon" :style="{ color: '#4267B2' }" size="lg" />
         <span>Linkedin</span>
       </a>
     </li>
     <li>
-      <a class="entypo entypo-github" href="https://www.github.com/" aria-label="Github" target="_blank" rel="noopener">
-        <font-awesome-icon :icon="githubIcon" size="lg" :style="{ color: 'white' }"></font-awesome-icon>
+      <a aria-label="Github" class="entypo entypo-github" href="https://www.github.com/" rel="noopener" target="_blank">
+        <font-awesome-icon :icon="githubIcon" :style="{ color: 'white' }" size="lg" />
         <span>Github</span>
       </a>
     </li>
@@ -40,36 +48,41 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component"
-import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
-import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub'
-import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter'
-import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
-import { faLinkedin } from '@fortawesome/free-brands-svg-icons/faLinkedin'
-import { faInstagram } from '@fortawesome/free-brands-svg-icons/faInstagram'
+import { Options, Vue } from 'vue-class-component';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle';
+import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub';
+import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter';
+import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook';
+import { faLinkedin } from '@fortawesome/free-brands-svg-icons/faLinkedin';
+import { faInstagram } from '@fortawesome/free-brands-svg-icons/faInstagram';
 
 @Options({
-  name: "SocialSidebar"
+  name: 'SocialSidebar'
 })
 export default class SocialSidebar extends Vue {
 
   get facebookIcon(): typeof faFacebook {
-    return faFacebook
+    return faFacebook;
   }
+
   get googleIcon(): typeof faGoogle {
-    return faGoogle
+    return faGoogle;
   }
+
   get twitterIcon(): typeof faTwitter {
-    return faTwitter
+    return faTwitter;
   }
+
   get instagramIcon(): typeof faInstagram {
-    return faInstagram
+    return faInstagram;
   }
+
   get linkedinIcon(): typeof faLinkedin {
-    return faLinkedin
+    return faLinkedin;
   }
+
   get githubIcon(): typeof faGithub {
-    return faGithub
+    return faGithub;
   }
 
 }

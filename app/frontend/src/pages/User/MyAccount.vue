@@ -1,41 +1,41 @@
 <template>
-  <div class="my-account-main-container container mt-7 mb-5" v-if="userData && Object.keys(userData).length > 0">
-    <Breadcrumbs :breadCrumbPath="breadCrumbPath"></Breadcrumbs>
+  <div v-if="userData && Object.keys(userData).length > 0" class="my-account-main-container container mt-7 mb-5">
+    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="my-account-page-main-part">
       <ProfileImage
-          :src="profileImageUrl"
-          :fullname="fullname"
-          v-model="profileImageUrl"/>
+        v-model="profileImageUrl"
+        :fullname="fullname"
+        :src="profileImageUrl"
+      />
       <nav class="my-account-grid-navbar">
-        <div class="my-account-grid-navbar-paths" id="navbarNavAccount">
-          <router-link class="nav-link" :to="{ name: 'Orders' }" aria-label="Orders">
-            <font-awesome-icon :icon="truckIcon" size="1x" :style="{ color: '#5A5A5A' }"></font-awesome-icon>
+        <div id="navbarNavAccount" class="my-account-grid-navbar-paths">
+          <RouterLink :to="{ name: 'Orders' }" aria-label="Orders" class="nav-link">
+            <font-awesome-icon :icon="truckIcon" :style="{ color: '#5A5A5A' }" size="1x" />
             <span>Orders</span>
-          </router-link>
-          <router-link class="nav-link" :to="{ name: 'Favourites' }" aria-label="Favourites">
-            <font-awesome-icon :icon="heartIcon" size="1x" :style="{ color: '#5A5A5A' }"></font-awesome-icon>
+          </RouterLink>
+          <RouterLink :to="{ name: 'Favourites' }" aria-label="Favourites" class="nav-link">
+            <font-awesome-icon :icon="heartIcon" :style="{ color: '#5A5A5A' }" size="1x" />
             <span>Favourites</span>
-          </router-link>
-          <router-link class="nav-link" :to="{ name: 'Reviews' }" aria-label="Reviews">
-            <font-awesome-icon :icon="starIcon" size="1x" :style="{ color: '#5A5A5A' }"></font-awesome-icon>
+          </RouterLink>
+          <RouterLink :to="{ name: 'Reviews' }" aria-label="Reviews" class="nav-link">
+            <font-awesome-icon :icon="starIcon" :style="{ color: '#5A5A5A' }" size="1x" />
             <span>Reviews</span>
-          </router-link>
-          <router-link class="nav-link" :to="{ name: 'Settings' }" aria-label="Settings">
-            <font-awesome-icon :icon="cogsIcon" size="1x" :style="{ color: '#5A5A5A' }"></font-awesome-icon>
+          </RouterLink>
+          <RouterLink :to="{ name: 'Settings' }" aria-label="Settings" class="nav-link">
+            <font-awesome-icon :icon="cogsIcon" :style="{ color: '#5A5A5A' }" size="1x" />
             <span>Settings</span>
-          </router-link>
-          <router-link class="nav-link" :to="{ name: 'Password' }" aria-label="Password">
-            <font-awesome-icon :icon="lockIcon" size="1x" :style="{ color: '#5A5A5A' }"></font-awesome-icon>
+          </RouterLink>
+          <RouterLink :to="{ name: 'Password' }" aria-label="Password" class="nav-link">
+            <font-awesome-icon :icon="lockIcon" :style="{ color: '#5A5A5A' }" size="1x" />
             <span>Password</span>
-          </router-link>
+          </RouterLink>
         </div>
-        <button @click="logout()" class="btn btn-outline-primary-two">Log out</button>
+        <button class="btn btn-outline-primary-two" @click="logout()">Log out</button>
       </nav>
     </div>
 
     <div class="my-account-page-main-content">
-
-      <div v-if="this.$router.currentRoute.value.name === 'MyAccount'" class="user-account-main-page">
+      <div v-if="$router.currentRoute.value.name === 'MyAccount'" class="user-account-main-page">
         <div class="user-account-main-page-head">
           <span class="head-title">General Account Information</span>
         </div>
@@ -61,26 +61,26 @@
         </div>
       </div>
 
-      <router-view :key="$route.path" :userData="userData"></router-view>
+      <router-view :key="$route.path" :user-data="userData" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import store from '@/store'
-import router from "@/routes"
-import { Options, Vue } from "vue-class-component"
-import ProfileImage from "@/components/User/ProfileImage.vue"
-import UserDetailsModel from "@/state/user/data/UserDetailsModel"
-import { faStar } from "@fortawesome/free-solid-svg-icons/faStar"
-import { faCogs } from "@fortawesome/free-solid-svg-icons/faCogs"
-import { faLock } from "@fortawesome/free-solid-svg-icons/faLock"
-import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs.vue"
-import { faHeart } from "@fortawesome/free-solid-svg-icons/faHeart"
-import { faTruck } from "@fortawesome/free-solid-svg-icons/faTruck"
+import store from '@/store';
+import router from '@/routes';
+import { Options, Vue } from 'vue-class-component';
+import ProfileImage from '@/components/User/ProfileImage.vue';
+import UserDetailsModel from '@/state/user/data/UserDetailsModel';
+import { faStar } from '@fortawesome/free-solid-svg-icons/faStar';
+import { faCogs } from '@fortawesome/free-solid-svg-icons/faCogs';
+import { faLock } from '@fortawesome/free-solid-svg-icons/faLock';
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue';
+import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart';
+import { faTruck } from '@fortawesome/free-solid-svg-icons/faTruck';
 
 @Options({
-  name: "MyAccount",
+  name: 'MyAccount',
   components: {
     ProfileImage,
     Breadcrumbs
@@ -88,78 +88,82 @@ import { faTruck } from "@fortawesome/free-solid-svg-icons/faTruck"
 })
 
 export default class MyAccount extends Vue {
-  profileImageUrl: string = ''
-
-  created() {
-    document.title = 'My Account'
-    this.$watch(
-        () => this.userData,
-        (image:UserDetailsModel) => {
-          this.profileImageUrl = image.main_image_absolute_url
-        }
-    )
-  }
-
-  mounted() {
-    this.profileImageUrl = this.userData.main_image_absolute_url
-  }
-
-  updated() {
-    if (router.currentRoute.value.name == 'MyAccount') {
-      document.title = 'My Account'
-    }
-  }
+  profileImageUrl: string = '';
 
   get breadCrumbPath(): [] {
-    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
-    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb;
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params);
   }
 
   get cogsIcon(): typeof faCogs {
-    return faCogs
+    return faCogs;
   }
+
   get starIcon(): typeof faStar {
-    return faStar
+    return faStar;
   }
+
   get truckIcon(): typeof faTruck {
-    return faTruck
+    return faTruck;
   }
+
   get heartIcon(): typeof faHeart {
-    return faHeart
+    return faHeart;
   }
+
   get lockIcon(): typeof faLock {
-    return faLock
+    return faLock;
   }
 
   get isAuthenticated(): boolean {
-    return store.getters['auth/isAuthenticated']
+    return store.getters['auth/isAuthenticated'];
   }
 
   get userData(): UserDetailsModel {
-    if(this.isAuthenticated) {
-      return store.getters['user/data/getUserData']
+    if (this.isAuthenticated) {
+      return store.getters['user/data/getUserData'];
     }
-    return new UserDetailsModel
+    return new UserDetailsModel;
   }
 
   get fullname(): string {
-    let first_name = this.userData.first_name
-    let last_name = this.userData.last_name
+    let first_name = this.userData.first_name;
+    let last_name = this.userData.last_name;
 
-    if (first_name == null) {
-      first_name = ''
+    if (first_name === null) {
+      first_name = '';
     }
 
-    if (last_name == null) {
-      last_name = ''
+    if (last_name === null) {
+      last_name = '';
     }
 
-    return first_name + ' ' + last_name
+    return first_name + ' ' + last_name;
+  }
+
+  created() {
+    document.title = 'My Account';
+    this.$watch(
+      () => this.userData,
+      (image: UserDetailsModel) => {
+        this.profileImageUrl = image.main_image_absolute_url;
+      }
+    );
+  }
+
+  mounted() {
+    this.profileImageUrl = this.userData.main_image_absolute_url;
+  }
+
+  updated() {
+    if (router.currentRoute.value.name === 'MyAccount') {
+      document.title = 'My Account';
+    }
   }
 
   public logout(): void {
-    store.commit('user/data/unsetUserData')
-    router.push('/')
+    store.commit('user/data/unsetUserData');
+    router.push('/');
   }
 
 }
@@ -238,7 +242,7 @@ export default class MyAccount extends Vue {
       &:hover {
         color: $primary-color-5!important;
       }
-      &.router-link-active {
+      &.RouterLink-active {
         color: $primary-color-5!important;
         svg {
           color: $primary-color-5!important;
