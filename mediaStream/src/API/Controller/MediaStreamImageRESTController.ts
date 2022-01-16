@@ -48,7 +48,7 @@ export default class MediaStreamImageRESTController {
 			resizeOptions: new ResizeOptions({
 				width,
 				height,
-				fit: ('icon' === type) ? FitOptions.contain : FitOptions.cover
+				fit: FitOptions.cover
 			})
 		})
 		await this.streamRequestedResource(request, res)
@@ -68,7 +68,7 @@ export default class MediaStreamImageRESTController {
 			resizeOptions: new ResizeOptions({
 				width,
 				height,
-				fit: ('icon' === type) ? FitOptions.contain : FitOptions.cover
+				fit: FitOptions.cover
 			})
 		})
 		await this.streamRequestedResource(request, res)

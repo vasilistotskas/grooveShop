@@ -10,7 +10,7 @@
           :class="{'image-main': image.is_main }"
         >
           <img alt="Product Image" class="img-fluid"
-               :src="mediaStreamImage('products', image.product_image_filename, '400', '400')"
+               :src="mediaStreamImage('products', image.product_image_filename, '330', '420')"
           />
         </figure>
       </div>
