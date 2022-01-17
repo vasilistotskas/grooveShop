@@ -1,7 +1,7 @@
 from django.core.management import BaseCommand
 from faker import Faker
 from random import randrange
-from product.models import Category, Vat, Product, ProductImages, Favourite, Review
+from product.models import Category, Vat, Product, ProductImages, Favourite
 
 
 class Command(BaseCommand):
@@ -57,15 +57,4 @@ class Command(BaseCommand):
                         product_id=product.id
                     )
 
-                for _ in range(4):
-                    rate = randrange(0, 10)
-                    review = Review.objects.create(
-                        user_id=user_id,
-                        product_id=product.id,
-                        comment=faker.text(5),
-                        rate=rate,
-                        status='True',
-                        created_at=faker.date_time(),
-                        updated_at=faker.date_time()
-                    )
         self.stdout.write(self.style.SUCCESS('Success'))

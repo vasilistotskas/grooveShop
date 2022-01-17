@@ -64,7 +64,7 @@ export default class Breadcrumbs extends Vue {
     a {
       color: $primary-color-3!important;
     }
-    a.RouterLink-exact-active {
+    a.router-link-exact-active {
       span.breadcrumb__title {
         font-weight: 500;
       }

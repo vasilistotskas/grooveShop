@@ -39,6 +39,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "active",
             "discount_percent",
             "discount_value",
+            "price_save_percent",
             "date_added",
             "main_image_absolute_url",
             "main_image_filename",

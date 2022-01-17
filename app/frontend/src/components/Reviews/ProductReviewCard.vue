@@ -29,7 +29,7 @@
       <div class="user-review-product-date">
         <span>At : {{ review.updated_at }} </span>
         <span>
-          <font-awesome-icon :icon="checkCircleIcon" :style="{ color: '#5cb85c' }" size="sm" />
+          <font-awesome-icon :icon="checkCircleIcon" :style="{ color: '#53e24aeb' }" size="sm" />
           Verified Review
         </span>
       </div>

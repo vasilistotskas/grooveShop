@@ -1,13 +1,13 @@
-$primary-color-1: #FD0002e0;
+$primary-color-1: #ff1719e0;
 $primary-color-2: #080808;
 $primary-color-3: #707070;
 $primary-color-4: #f1f1f1;
 $primary-color-5: #191919;
 $primary-color-6: #e8e8e8;
 $primary-color-7: #ffffff;
-$form-input: #0d6efd;
+$primary-color-8: #1f8dfd;
 $rating-starts: #f68b24;
-$base-success-color: #53e24a8a;
+$base-success-color: #53e24aeb;
 
 body {
   background-color: $primary-color-4 !important;
@@ -44,13 +44,13 @@ a:hover {
 }
 
 a, p, span, label, h1, h2, h3, h4, h5, h6 {
-  font-weight: 300;
+  font-weight: 400;
   color: $primary-color-2;
 }
 
 footer {
   a, p, span, label, h1, h2, h3, h4, h5, h6 {
-    font-weight: 300;
+    font-weight: 400;
     color: $primary-color-4;
   }
 }
@@ -516,11 +516,11 @@ table {
 }
 
 #social-sidebar li:first-child a {
-  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }
 
 #social-sidebar li:last-child a {
-  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 #social-sidebar a {
@@ -735,5 +735,12 @@ table {
     border-radius: unset;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
+  }
+}
+.description {
+  p {
+    letter-spacing: .5px;
+    color: $primary-color-3;
+    line-height: 22px;
   }
 }

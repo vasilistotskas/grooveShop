@@ -6,9 +6,9 @@
       <div id="exampleModal" aria-hidden="true" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
-              <h5 id="exampleModalLabel" class="modal-title">Review product <strong>Adidas Shoes</strong></h5>
-              <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            <div class="modal-header mb-3">
+              <h5 id="exampleModalLabel" class="modal-title">Write a review for product <strong>Adidas Shoes</strong></h5>
+              <font-awesome-icon :icon="writeReviewIcon" :style="{ color: '#191919' }" size="lg" />
             </div>
             <div class="modal-body">
               <!-- Product Rating -->
@@ -89,6 +89,7 @@ import store from '@/store';
 import { Options, Vue } from 'vue-class-component';
 import { first, last, filter, times, constant, cloneDeep } from 'lodash';
 import ProductReviewModel from '@/state/product/review/ProductReviewModel';
+import { faPenSquare } from "@fortawesome/free-solid-svg-icons/faPenSquare";
 
 const starSvg = '<path data-v-558dc688="" fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" class=""></path>';
 const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z" class=""></path>';
@@ -114,6 +115,10 @@ export default class ProductReviewModal extends Vue {
   isEditable: boolean = false;
   newSelectionRatio: number = 0;
   selectedRatio: number = 0;
+
+  get writeReviewIcon(): typeof faPenSquare {
+    return faPenSquare;
+  }
 
   get reviewButtonText(): string {
     return this.userHasAlreadyReviewedProduct ? 'Update' : 'Post';
@@ -368,5 +373,9 @@ export default class ProductReviewModal extends Vue {
       max-width: 130px;
       min-width: 130px;
     }
+  }
+  .modal-header {
+    display: flex;
+    gap: 10px;
   }
 </style>

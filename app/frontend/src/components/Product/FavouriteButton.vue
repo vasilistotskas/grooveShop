@@ -3,7 +3,7 @@
     <font-awesome-icon v-if="!isFavourite" :icon="heartIcon" :style="{ color: 'white' }"
                        size="2x"
     />
-    <font-awesome-icon v-else :icon="heartIcon" :style="{ color: '#f80000e0' }" size="2x" />
+    <font-awesome-icon v-else :icon="heartIcon" :style="{ color: '#ff1719e0' }" size="2x" />
   </button>
 </template>
 

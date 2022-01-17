@@ -167,6 +167,12 @@ class Product(models.Model):
     def discount_value(self):
         return (self.price * self.discount_percent) / 100
 
+    def price_save_percent(self):
+        final_price = self.price - self.discount_value()
+        product_save_value = self.price - final_price
+        product_save_percent = (final_price * product_save_value) / self.price
+        return product_save_percent
+
     def final_price(self):
         return self.price - self.discount_value()
 

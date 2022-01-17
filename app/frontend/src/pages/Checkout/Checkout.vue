@@ -161,38 +161,45 @@
 
           <div id="stripe-card" ref="stripleElement" class="mb-5 mt-3"></div>
           <template v-if="cartTotalLength">
-            <button class="btn btn-outline-primary" type="button" @click="submitForm">Pay with Stripe</button>
+            <div class="checkout-grid-pay-button">
+              <button class="btn btn-outline-primary-one" type="button" @click="submitForm">Pay with Stripe</button>
+            </div>
           </template>
         </div>
       </div>
 
       <div class="checkout-grid-order-info">
-        <div class="checkout-grid-title">
-          <h1 class="title">Checkout</h1>
+        <div class="checkout-grid-title mb-4">
+          <h2 class="title">Your Items</h2>
         </div>
         <div class="checkout-grid-head">
-          <div class="checkout-grid-head-part-one">
-            <span>Product</span>
-            <span>Price</span>
-            <span>Quantity</span>
-            <span>Total</span>
-          </div>
-
           <div v-for="item in cart"
                :key="item.product.id"
                class="checkout-grid-head-part-two"
           >
-            <span>{{ item.product.name }}</span>
-            <span>${{ item.product.price }}</span>
-            <span>{{ item.quantity }}</span>
-            <span>${{ itemTotal(item).toFixed(2) }}</span>
+            <div class="checkout-grid-head-part-two-product-image">
+              <RouterLink :to="'/product' + item.product.absolute_url" aria-label="Product">
+                <span>
+                  <img :src="mediaStreamImage('products', item.product.main_image_filename, '100', '100')"
+                       height="100" width="100" :alt="item.product.name">
+                </span>
+              </RouterLink>
+            </div>
+            <div class="checkout-grid-head-part-two-product-info">
+              <RouterLink :to="'/product' + item.product.absolute_url" aria-label="Product">
+                <span class="checkout-grid-head-part-two-product-info-name">{{ item.product.name }}</span>
+              </RouterLink>
+              <span class="checkout-grid-head-part-two-product-info-price">Item Price: ${{ item.product.price }}</span>
+              <span class="checkout-grid-head-part-two-product-info-quantity">Qty: {{ item.quantity }}</span>
+            </div>
+            <div class="checkout-grid-head-part-two-product-total">
+              <span>${{ itemTotal(item).toFixed(2) }}</span>
+            </div>
           </div>
-
-          <div class="checkout-grid-head-part-three">
-            <span>Total</span>
-            <span>{{ cartTotalLength }}</span>
-            <span>${{ cartTotalPrice.toFixed(2) }}</span>
-          </div>
+        </div>
+        <div class="checkout-grid-head-part-three">
+          <span>Total:</span>
+          <span>${{ cartTotalPrice.toFixed(2) }}</span>
         </div>
       </div>
     </div>
@@ -354,6 +361,12 @@ export default class Checkout extends Vue {
     return item.quantity * item.product.price;
   }
 
+  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
+    const mediaStreamPath = '/mediastream/media/uploads/';
+    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName;
+    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height;
+  }
+
   async restRegions(e: any): Promise<void> {
     const countryAlpha2Key = e.target.value;
     await store.dispatch('country/findRegionsBasedOnAlphaFromInput', countryAlpha2Key);
@@ -466,23 +479,41 @@ export default class Checkout extends Vue {
 <style lang="scss" scoped>
 .checkout-grid-container {
   display: grid;
-  grid-template-columns: 60% 40%;
-  background-color: white;
-  border-radius: 10px;
-  padding: 15px 30px 30px;
+  grid-template-columns: 60% 38%;
   gap: 25px;
 
   a, h2 {
     color: $primary-color-2;
   }
 
+  .checkout-grid-order-user-details, .checkout-grid-order-info {
+    background-color: $primary-color-7;
+    padding: 15px 30px 30px;
+    border-radius: 10px;
+  }
+
+  .checkout-grid-order-user-details {
+    max-height: 555px;
+  }
+
+  .checkout-grid-order-info {
+    height: fit-content;
+  }
+
+  .checkout-grid-title {
+    border-bottom: 2px solid $primary-color-4;
+    h2.title {
+      padding-bottom: 10px;
+    }
+  }
   .checkout-grid-head {
     display: grid;
     gap: 10px;
+    max-height: 378px;
+    overflow: auto;
 
     &-part {
       &-two, &-three {
-        background-color: $primary-color-4;
         border-radius: 5px;
         align-items: center;
         justify-items: center;
@@ -500,13 +531,64 @@ export default class Checkout extends Vue {
       }
 
       &-two {
+        position: relative;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: 30% 50% 20%;
+        border-bottom: 2px solid $primary-color-4;
+        &-product {
+          &-image {
+
+          }
+          &-info {
+            display: grid;
+            grid-template-rows: auto;
+            width: 100%;
+            gap: 5px;
+            align-items: center;
+            padding: 15px;
+              &-name {
+                font-weight: 500;
+              }
+              &-price {
+                color: $primary-color-5;
+                font-size: 14px;
+              }
+              &-quantity {
+                color: $primary-color-5;
+                font-size: 15px;
+              }
+          }
+          &-total {
+            position: absolute;
+            display: grid;
+            bottom: 10px;
+            right: 10px;
+            justify-self: end;
+            align-self: end;
+            span {
+              font-weight: 500;
+              color: #191919;
+            }
+          }
+        }
+
       }
 
       &-three {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+        margin-top: 15px;
+        span {
+          color: #191919;
+          font-weight: 500;
+          font-size: 22px;
+          &:first-child {
+            justify-self: start;
+          }
+          &:nth-child(2) {
+            justify-self: end;
+          }
+        }
       }
     }
   }
@@ -523,8 +605,17 @@ export default class Checkout extends Vue {
   .checkout-grid-country-region {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 20px;
     align-items: center;
     justify-items: center;
+    .form-outline {
+      width: 100%;
+    }
+  }
+
+  .checkout-grid-pay-button {
+    display: grid;
+    justify-self: end;
   }
 }
 

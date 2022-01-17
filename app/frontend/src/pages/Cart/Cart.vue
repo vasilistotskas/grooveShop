@@ -104,9 +104,12 @@ export default class CartVue extends Vue {
         gap: 10px;
         .grid-container-table {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: 44% 19% 18% 19%;
           align-items: center;
           justify-items: center;
+          div {
+            font-weight: 500;
+          }
         }
       }
       &-three {

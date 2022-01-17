@@ -23,6 +23,7 @@ export default class ProductModel extends EntityBase {
   active!: string;
   discount_percent!: number;
   discount_value!: number;
+  price_save_percent!: number;
   date_added!: string;
   main_image_absolute_url!: string;
   main_image_filename!: string;

@@ -18,28 +18,51 @@
         <div class="product-page-grid-info-part-one">
           <div class="product-page-grid-info">
             <h1 class="title mb-2">{{ product.name }}</h1>
-            <h5 class="mb-2"><strong>Product ID: </strong>{{ product.id }}</h5>
+            <h5 class="mb-4">
+              <strong>Product ID: </strong>
+              <span>{{ product.id }}</span>
+            </h5>
             <!-- Product Review -->
-            <p class="description mb-2" v-html="product.description"></p>
+            <p class="description mb-4" v-html="product.description"></p>
           </div>
 
-          <div class="product-page-grid-price">
-            <p class="mb-2"><strong>Price: </strong>${{ product.price }}</p>
-
-            <p class="mb-2"><strong>Discount Percent: </strong>{{ product.discount_percent }}%</p>
-            <p class="mb-2"><strong>Discount Value: </strong>${{ product.discount_value }}</p>
-
-            <p class="mb-2"><strong>Vat Percent: </strong>{{ product.vat_percent }}%</p>
-            <p class="mb-4"><strong>Vat Value: </strong>${{ product.vat_value }}</p>
-
-            <p><strong>Final Price: </strong>${{ product.final_price }}</p>
+          <div class="product-page-grid-price mb-4">
+            <p class="mb-2 product-page-grid-price-save">
+              <strong>Product Save Percent: </strong>
+              <span>{{ product.price_save_percent }}%</span>
+            </p>
+            <p class="mb-2 product-page-grid-price-starting">
+              <strong>Starting Price: </strong>
+              <span>${{ product.price }}</span>
+            </p>
+            <p class="product-page-grid-price-final">
+              <strong>Final Price: </strong>
+              <span>${{ product.final_price }}</span>
+            </p>
           </div>
+
+          <div class="product-page-information mb-4">
+            <div class="product-page-information-availability" v-if="product.stock > 0">
+              <font-awesome-icon :icon="cubesIcon" :style="{ color: '#53e24aeb' }" size="lg"/>
+              <span>Immediately available</span>
+            </div>
+            <div class="product-page-information-availability unavailable" v-else>
+              <font-awesome-icon :icon="warningTriangleIcon" :style="{ color: '#FD0002e0' }" size="lg"/>
+              <span>Out of stock</span>
+            </div>
+            <div class="product-page-information-delivery">
+              <font-awesome-icon :icon="truckPickupIcon" :style="{ color: '#1f8dfd' }" size="lg"/>
+              <span>Instant delivery</span>
+            </div>
+          </div>
+
           <div class="product-page-grid-buttons">
             <input v-model="quantity" class="input" min="1" type="number" />
             <button class="btn-outline-primary-one addToCartButton" type="button" :class="{'disabled': disabled }"
                     @click="addToCart()"
             >
-              {{ addToCartButtonText }}
+              <font-awesome-icon :icon="shopingBagIcon" :style="{ color: '#53e24aeb' }" size="lg"/>
+              <span>{{ addToCartButtonText }}</span>
             </button>
             <FavouriteButton :product="product" />
           </div>
@@ -121,15 +144,19 @@
 <script lang="ts">
 import store from '@/store';
 import router from '@/routes';
+import { constant, times } from 'lodash';
 import { Options, Vue } from 'vue-class-component';
 import ProductModel from '@/state/product/ProductModel';
 import Pagination from '@/components/Pagination/Pagination.vue';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue';
+import { faCubes } from "@fortawesome/free-solid-svg-icons/faCubes";
 import FavouriteButton from '@/components/Product/FavouriteButton.vue';
 import ProductReviewModal from '@/modals/Product/ProductReviewModal.vue';
 import ProductReviewCard from '@/components/Reviews/ProductReviewCard.vue';
 import ProductReviewModel from '@/state/product/review/ProductReviewModel';
-import { constant, times } from 'lodash';
+import { faShoppingBag } from "@fortawesome/free-solid-svg-icons/faShoppingBag";
+import { faShippingFast } from "@fortawesome/free-solid-svg-icons/faShippingFast";
+import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons/faExclamationTriangle";
 
 const starSvg = '<path data-v-558dc688="" fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" class=""></path>';
 const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z" class=""></path>';
@@ -179,6 +206,22 @@ export default class ProductVue extends Vue {
       })
     ])
 
+  }
+
+  get truckPickupIcon(): typeof faShippingFast {
+    return faShippingFast;
+  }
+
+  get cubesIcon(): typeof faCubes {
+    return faCubes;
+  }
+
+  get warningTriangleIcon(): typeof faExclamationTriangle {
+    return faExclamationTriangle;
+  }
+
+  get shopingBagIcon(): typeof faShoppingBag {
+    return faShoppingBag;
   }
 
   get breadCrumbPath(): [] {
@@ -356,7 +399,7 @@ export default class ProductVue extends Vue {
   .product-page-grid-image{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: minmax(90px, 1fr);
+    grid-template-rows: 1fr 1fr;
     gap: 20px;
     background-color: $primary-color-7;
     padding: 30px;
@@ -369,14 +412,37 @@ export default class ProductVue extends Vue {
         margin: 0 auto;
       }
     }
+    .image {
+      &:not(&.image-main) {
+        display: grid;
+        align-self: center;
+        justify-items: center;
+        &:hover {
+          cursor: pointer;
+          img {
+            border: 1px solid #b6b6b6;
+          }
+        }
+        img {
+          border: 1px solid $primary-color-6;
+          border-radius: 4px;
+          padding: 2px;
+        }
+      }
+    }
     @media screen and (max-width: 767px){
       margin-bottom: 20px;
+    }
+  }
+  .product-page-grid-info {
+    h5 {
+      color: $primary-color-5;
     }
   }
   .product-page-grid-right {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(1, 1fr);
     gap: 30px;
     border-radius: 5px;
     .product-page-grid-info-part {
@@ -385,7 +451,7 @@ export default class ProductVue extends Vue {
         background-color: $primary-color-7;
       }
       &-one {
-        padding: 30px 30px 15px;
+        padding: 30px 60px 30px;
       }
       &-two {
         padding: 15px 30px 30px;
@@ -395,7 +461,18 @@ export default class ProductVue extends Vue {
 
   .product-page-grid-price {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+    &-starting {
+      span {
+        text-decoration: line-through;
+      }
+    }
+    &-save {
+      font-size: 16px;
+    }
+    &-final {
+      font-size: 22px;
+    }
   }
 
   .product-page-grid-buttons {
@@ -436,5 +513,44 @@ export default class ProductVue extends Vue {
     display: grid;
     gap: 15px;
     grid-template-rows: repeat(1, 1fr);
+  }
+  .product-page-information {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    &-availability {
+      display: flex;
+      gap: 12px;
+      &.unavailable {
+        span {
+          letter-spacing: 0.5px;
+          color: $primary-color-2;
+          font-weight: 500;
+          line-height: 22px;
+        }
+      }
+      span {
+        letter-spacing: 0.5px;
+        color: $primary-color-2;
+        font-weight: 500;
+        line-height: 22px;
+      }
+    }
+    &-delivery {
+      display: flex;
+      gap: 12px;
+      span {
+        letter-spacing: 0.5px;
+        color: $primary-color-2;
+        font-weight: 500;
+        line-height: 22px;
+      }
+    }
+  }
+  .btn-outline-primary-one {
+    span {
+      color: #f1f1f1;
+      padding-left: 15px;
+    }
   }
 </style>

@@ -132,11 +132,11 @@ export default class App extends Vue {
        border-color: $primary-color-1!important;
      }
    }
-  .RouterLink-active {
+  .router-link-active {
     color: $primary-color-1!important;
   }
   .navbar-menu-grid-head {
-    .RouterLink-active {
+    .router-link-active {
       background-color: $primary-color-1;
     }
   }
@@ -226,8 +226,8 @@ export default class App extends Vue {
   }
 
   .form-check-input:checked {
-    background-color: $form-input;
-    border-color: $form-input;
+    background-color: $primary-color-8;
+    border-color: $primary-color-8;
   }
 
 </style>

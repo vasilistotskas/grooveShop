@@ -69,7 +69,7 @@ export default class CartItemVue extends Vue {
   }
 
   get productPath() {
-    return '/product/' + this.item.product.slug + '/' + this.item.product.id;
+    return '/product' + this.item.product.absolute_url;
   }
 
   public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
@@ -99,7 +99,7 @@ export default class CartItemVue extends Vue {
 <style lang="scss" scoped>
   .grid-container-cart {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 45% 18% 18% 19%;
     position: relative;
     background-color: $primary-color-4;
     border-radius: 5px;
@@ -110,12 +110,15 @@ export default class CartItemVue extends Vue {
       color: $primary-color-2;
     }
     &-item-one {
+      width: 100%;
       a {
         display: grid;
         grid-template-columns: 1fr 1fr;
         align-items: center;
         justify-items: center;
-        width: 250px;
+        span {
+          justify-self: start;
+        }
       }
     }
     &-item-three {

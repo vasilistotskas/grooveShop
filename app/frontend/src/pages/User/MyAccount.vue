@@ -242,7 +242,7 @@ export default class MyAccount extends Vue {
       &:hover {
         color: $primary-color-5!important;
       }
-      &.RouterLink-active {
+      &.router-link-active {
         color: $primary-color-5!important;
         svg {
           color: $primary-color-5!important;

@@ -4,7 +4,7 @@
       <div class="logo-header">
         <RouterLink aria-label="Home" class="navbar-brand" to="/">
           <img alt="Website Logo" class="main-logo img-fluid" height="85"
-               src="http://localhost:8000/mediastream/static/files/images/websiteLogo/175/85" width="175"
+               src="http://localhost:8000/static/files/images/websiteLogo.png" width="175"
           />
         </RouterLink>
       </div>
@@ -54,8 +54,8 @@
       <div class="navigation-header">
         <div class="navigation-header-part">
           <RouterLink v-if="isAuthenticated" :to="{ name: 'Favourites' }" aria-label="Favourites">
-            <font-awesome-icon v-if="isMobile" :icon="heartIcon" :style="{ color: '#f80000e0' }" />
-            <font-awesome-icon v-else :icon="heartIcon" :style="{ color: '#f80000e0' }" size="2x" />
+            <font-awesome-icon v-if="isMobile" :icon="heartIcon" :style="{ color: '#ff1719e0' }" />
+            <font-awesome-icon v-else :icon="heartIcon" :style="{ color: '#ff1719e0' }" size="2x" />
           </RouterLink>
           <RouterLink v-else aria-label="Favourites" to="/log-in">
             <font-awesome-icon v-if="isMobile" :icon="heartIcon" :style="{ color: 'white' }" />
@@ -64,8 +64,8 @@
         </div>
         <div class="navigation-header-part">
           <RouterLink v-if="isAuthenticated" aria-label="Account" to="/my-account">
-            <font-awesome-icon v-if="isMobile" :icon="userIcon" :style="{ color: '#f80000e0' }" />
-            <font-awesome-icon v-else :icon="userIcon" :style="{ color: '#f80000e0' }" size="2x" />
+            <font-awesome-icon v-if="isMobile" :icon="userIcon" :style="{ color: '#ff1719e0' }" />
+            <font-awesome-icon v-else :icon="userIcon" :style="{ color: '#ff1719e0' }" size="2x" />
           </RouterLink>
           <RouterLink v-else aria-label="Account" to="/log-in">
             <font-awesome-icon v-if="isMobile" :icon="userIcon" :style="{ color: 'white' }" />
@@ -179,7 +179,8 @@ export default class Navbar extends Vue {
     await store.dispatch('pagination/getPaginatedResults', {
       'pageNumber': this.currentPageNumber,
       'endpointUrl': `search`,
-      'query': this.searchQuery
+      'query': this.searchQuery,
+      'method': 'POST'
     });
     await router.push({
       path: '/search',
