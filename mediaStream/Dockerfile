@@ -8,7 +8,8 @@ COPY tsconfig*.json ./
 COPY package*.json ./
 COPY src/ ./src/
 
-RUN npm ci && \
+RUN npm install && \
+    npm ci && \
     npm run build
 
 # debug: ENTRYPOINT ["tail", "-f", "/dev/null"]
