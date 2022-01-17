@@ -10,9 +10,7 @@ app/__pycache__/
 app/*/__pycache__/
 app/*/*/__pycache__/
 app/*/*/*/__pycache__/
-.env/
-.venv/
-venv/
+
 **/__pycache__
 **/*.pyc
 
