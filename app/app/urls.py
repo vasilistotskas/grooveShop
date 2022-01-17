@@ -13,12 +13,65 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf import settings
-from django.conf.urls.static import static
+import logging
 from django.contrib import admin
+from django.conf import settings
+from django.shortcuts import render
 from django.urls import path, include
+from django.conf.urls.static import static
+from django.middleware.csrf import get_token
 from graphene_django.views import GraphQLView
+from django.views.decorators.gzip import gzip_page
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
+
+@gzip_page
+def index_view(
+        request,
+        category_slug='None',
+        product_slug='None',
+        uid='None',
+        token='None',
+        username='None',
+        slug='None',
+        tag='None',
+):
+    get_token(request)
+    return render(request, 'dist/index.html')
+
+
+handler400 = index_view
+handler403 = index_view
+handler404 = index_view
+handler500 = index_view
+
+front_urls = [
+    path('', index_view, name='index'),
+    path('log-in', index_view, name='index'),
+    path('sign-up', index_view, name='index'),
+    path('accounts/activate/<uid>/<token>', index_view, name='index'),
+    path('password_reset', index_view, name='index'),
+    path('password-reset', index_view, name='index'),
+    path('password_reset/<uid>/<token>', index_view, name='index'),
+    path('password-reset/<uid>/<token>', index_view, name='index'),
+    path('my-account', index_view, name='index'),
+    path('my-account/orders', index_view, name='index'),
+    path('my-account/settings', index_view, name='index'),
+    path('my-account/favourites', index_view, name='index'),
+    path('my-account/reviews', index_view, name='index'),
+    path('my-account/password', index_view, name='index'),
+    path('search', index_view, name='index'),
+    path('cart', index_view, name='index'),
+    path('cart/success', index_view, name='index'),
+    path('cart/checkout', index_view, name='index'),
+    path('product/<category_slug>/<product_slug>', index_view, name='index'),
+    path('category/<category_slug>', index_view, name='index'),
+    path('blog', index_view, name='index'),
+    path('author/<username>', index_view, name='index'),
+    path('post/<slug>', index_view, name='index'),
+    path('tag/<tag>', index_view, name='index'),
+]
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,11 +79,16 @@ urlpatterns = [
     path('api/v1/', include('order.urls')),
     path('api/v1/', include('user.urls')),
     path('api/v1/', include('slider.urls')),
+    path('api/v1/', include('search.urls')),
     # djoser api views
     path('api/v1/djoser/', include('djoser.urls')),
     path('api/v1/djoser/', include('djoser.urls.authtoken')),
     # graphql
     path('graphql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    # admin html editor
+    path('tinymce/', include('tinymce.urls')),
+    # vue urls
+    path('', include(front_urls)),
 ]
 
 if settings.DEBUG:
@@ -38,3 +96,4 @@ if settings.DEBUG:
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT,
     )
+    urlpatterns += staticfiles_urlpatterns()

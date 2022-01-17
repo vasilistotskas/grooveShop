@@ -1,28 +1,19 @@
 # !!!! TODOS !!!!
-~~# VUE: NA PAEI TO FAVOURITE KAI TO REVIEW STO PRODUCT (OPOS STO BACK)~~
-~~# FORM ERRORS !~~
-# BLOG
+
+# PAGINATED RESULTS ALMOST EVERYWHERE
+# PRODUCTS ALL
+# CATEGORY PAGE
 # PRODUCT LISTS
-# VERSIONING
-# USER PROFILE :
+
+# SEARCH :
 ```
- LOGIN/SIGNUP WITH EMAIL
- FAVOURITE PRODUCTS
- REVIEWS
- PASSWORD CHANGE
- PASSWORD RESET
+TAGS
+CATEGORY?
 ```
-# PAGINATION
-# BREADCRUMBS
+
 # ORDER:
 ```
 SEND EMAIL AT ORDER CREATE/UPDATE
-
-```
-# SEARCH :
-```
- TAGS
- CATEGORY?
 ```
 # PAYWAYS:
 ```
@@ -30,6 +21,7 @@ CARD
 ANTIKATAVOLI
 ETC
 ```
+
 # CATEGORY :
 ```
  SORTING (DEFAULT, PRICE + - )
@@ -44,15 +36,11 @@ ETC
  SLIDERS --- DONE
  MOBILE VIEW / RESPONSIVE
 ```
-# NA SPASEI KAI BACK KALITERA
 
-~~# Document title~~
-~~## ACTION SUCCESS / ERRORS KLP :~~
-```
- mostly after api calls
-```
-~~# PRODUCT :~~
-```
- REVIEWS ---->ok
- Need to update live review average and counter? ----> if need to make endpoint for product average and counter
-```
+# COOKIES / POLICIES
+# ERROR PAGES !!! (404, 500 , ETC) ---> ready , need an ui
+# LANGS AT I18
+
+# MOVE MEDIASTREAM TO ANOTHER PROJECT REPO ETC
+
+# BLOG COMMENTS ?

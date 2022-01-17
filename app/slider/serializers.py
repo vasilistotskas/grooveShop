@@ -18,7 +18,8 @@ class SlideSerializer(serializers.ModelSerializer):
             "date_start",
             "date_end",
             "order_position",
-            "image",
+            "main_image_absolute_url",
+            "main_image_filename",
             "thumbnail"
         )
 
@@ -34,7 +35,8 @@ class SliderSerializer(serializers.ModelSerializer):
             "url",
             "title",
             "description",
-            "image",
+            "main_image_absolute_url",
+            "main_image_filename",
             "thumbnail",
             "video",
             "slides",

@@ -10,8 +10,9 @@ class ImagesSerializer(serializers.ModelSerializer):
         model = ProductImages
         fields = (
             "id",
-            "image",
-            "is_main"
+            "is_main",
+            "product_image_absolute_url",
+            "product_image_filename"
         )
 
 
@@ -39,7 +40,8 @@ class ProductSerializer(serializers.ModelSerializer):
             "discount_percent",
             "discount_value",
             "date_added",
-            "main_image",
+            "main_image_absolute_url",
+            "main_image_filename",
             "review_average",
             "review_counter",
             "images"
@@ -47,15 +49,6 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    # products = ProductSerializer(many=True)
-    all_tree_products = serializers.SerializerMethodField('get_all_products_of_tree')
-
-    def get_all_products_of_tree(self, category):
-        # if category.get_children():
-        qs = Product.objects.filter(category__in=category.get_descendants(include_self=True))
-        serializer = ProductSerializer(instance=qs, many=True)
-        return serializer.data
-
     class Meta:
         model = Category
         fields = (
@@ -64,15 +57,18 @@ class CategorySerializer(serializers.ModelSerializer):
             "slug",
             "description",
             "description",
-            "image_url",
+            "category_menu_image_one_absolute_url",
+            "category_menu_image_one_filename",
+            "category_menu_image_two_absolute_url",
+            "category_menu_image_two_filename",
+            "category_menu_main_banner_absolute_url",
+            "category_menu_main_banner_filename",
             "parent",
             "tags",
             "level",
             "tree_id",
             "absolute_url",
-            # "products",
-            "recursive_product_count",
-            "all_tree_products"
+            "recursive_product_count"
         )
 
 
@@ -87,8 +83,23 @@ class FavouriteSerializer(serializers.ModelSerializer):
         )
 
 
+class FavouriteProductSerializer(serializers.ModelSerializer):
+
+    product_object = serializers.SerializerMethodField('get_product_object')
+
+    def get_product_object(self, favourite):
+        qs = Product.objects.get(id=favourite.product_id)
+        serializer = ProductSerializer(instance=qs)
+        return serializer.data
+
+    class Meta:
+        model = Product
+        fields = ("product_object",)
+
+
 class ReviewSerializer(serializers.ModelSerializer):
     userprofile = serializers.SerializerMethodField('get_userprofile')
+    product = ProductSerializer(required=False)
 
     def get_userprofile(self, review):
         qs = UserProfile.objects.get(user=review.user)
@@ -99,6 +110,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = (
             "id",
+            "product",
             "product_id",
             "user_id",
             "comment",

@@ -1,6 +1,10 @@
+import os
 from django.db import models
+from django.conf import settings
+from tinymce.models import HTMLField
 from django.shortcuts import reverse
-from django.contrib.auth.models import User
+
+User = settings.AUTH_USER_MODEL
 
 
 class Profile(models.Model):
@@ -10,7 +14,7 @@ class Profile(models.Model):
     bio = models.CharField(max_length=240, blank=True, null=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user.email
 
 
 class Tag(models.Model):
@@ -26,7 +30,7 @@ class Post(models.Model):
     title = models.CharField(max_length=255, unique=True)
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(max_length=255, unique=True)
-    body = models.TextField()
+    body = HTMLField()
     meta_description = models.CharField(max_length=150, blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
@@ -38,6 +42,24 @@ class Post(models.Model):
 
     class Meta:
         ordering = ["-publish_date"]
+
+    @property
+    def main_image_absolute_url(self):
+        try:
+            if self.id is not None:
+                image = settings.APP_BASE_URL + self.image.url
+            else:
+                image = ""
+            return image
+        except:
+            return ""
+
+    @property
+    def main_image_filename(self):
+        try:
+            return os.path.basename(self.image.name)
+        except:
+            return ""
 
     def get_absolute_url(self):
         return reverse("blog:post", kwargs={"slug": self.slug})

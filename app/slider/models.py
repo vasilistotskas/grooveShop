@@ -1,11 +1,13 @@
+import os
 from django.db import models
+from django.conf import settings
 from django.utils.safestring import mark_safe
 from helpers.image_resize import make_thumbnail
 
 
 class Slider(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=40, unique=True)
     url = models.CharField(max_length=255, blank=True, null=True)
     title = models.CharField(max_length=40, blank=True, null=True)
     description = models.CharField(max_length=255, blank=True, null=True)
@@ -24,6 +26,22 @@ class Slider(models.Model):
             self.thumbnail = make_thumbnail(self.image, (200, 200))
 
         super().save(*args, **kwargs)
+
+    def main_image_absolute_url(self):
+        try:
+            if self.id is not None:
+                image = settings.APP_BASE_URL + self.image.url
+            else:
+                image = ""
+            return image
+        except:
+            return ""
+
+    def main_image_filename(self):
+        try:
+            return os.path.basename(self.image.name)
+        except:
+            return ""
 
     def image_tag(self):
         try:
@@ -63,6 +81,22 @@ class Slide(models.Model):
             self.thumbnail = make_thumbnail(self.image, (200, 200))
 
         super().save(*args, **kwargs)
+
+    def main_image_absolute_url(self):
+        try:
+            if self.id is not None:
+                image = settings.APP_BASE_URL + self.image.url
+            else:
+                image = ""
+            return image
+        except:
+            return ""
+
+    def main_image_filename(self):
+        try:
+            return os.path.basename(self.image.name)
+        except:
+            return ""
 
     def image_tag(self):
         try:

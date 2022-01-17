@@ -9,7 +9,6 @@ COPY ./app /app
 COPY ./scripts /scripts
 
 WORKDIR /app
-EXPOSE 8000
 
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
@@ -21,10 +20,12 @@ RUN python -m venv /py && \
     /py/bin/pip install -r /requirements.txt && \
     apk del .tmp-deps && \
     adduser --disabled-password --no-create-home app && \
-    mkdir -p /vol/web/static && \
-    mkdir -p /vol/web/media && \
-    chown -R app:app /vol && \
-    chmod -R 755 /vol && \
+    mkdir -p /app/static && \
+    mkdir -p /app/media && \
+    mkdir -p /app/files && \
+    mkdir -p /app/logs && \
+    chown -R app:app /app && \
+    chmod -R 755 /app && \
     chmod -R +x /scripts
 
 ENV PATH="/scripts:/py/bin:$PATH"
@@ -32,4 +33,4 @@ ENV LIBRARY_PATH=/lib:/usr/lib
 
 USER app
 
-CMD ["run.sh"]
+#CMD ["run.sh"]

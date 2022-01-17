@@ -1,11 +1,22 @@
 import stripe
 from .models import Order
 from django.conf import settings
+from rest_framework import generics
 from rest_framework.views import APIView
-from django.contrib.auth.models import User
+from helpers.paginator import CountPaginator
 from rest_framework.response import Response
+from django.contrib.auth import get_user_model
 from .serializers import OrderSerializer, MyOrderSerializer
 from rest_framework import status, authentication, permissions
+
+User = get_user_model()
+
+
+class UserOrderListPagination(CountPaginator):
+    page_size = 3
+    page_size_query_param = 'page_size'
+    max_page_size = 3
+    page_query_param = 'p'
 
 
 def decreaseProductStock(product):
@@ -45,19 +56,29 @@ class Checkout(APIView):
                     serializer.save(user=None, paid_amount=paid_amount)
 
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-
             except Exception:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class OrdersList(APIView):
-    authentication_classes = [authentication.TokenAuthentication]
+class UserOrdersList(generics.ListAPIView):
+    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
+    pagination_class = UserOrderListPagination
+    serializer_class = MyOrderSerializer
 
-    @staticmethod
-    def get(request, format=None):
-        orders = Order.objects.filter(user=request.user)
-        serializer = MyOrderSerializer(orders, many=True)
+    def get_queryset(self):
+        user = self.request.user
+        return Order.objects.filter(user=user)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
