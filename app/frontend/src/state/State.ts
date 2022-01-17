@@ -1,1 +1,3 @@
-export default interface State {}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export default interface State {
+}

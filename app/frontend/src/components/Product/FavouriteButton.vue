@@ -1,37 +1,38 @@
 <template>
-  <button type="button" data-mdb-ripple-color="dark" class="btn-outline-primary-three" @click="favouriteHandle()">
-    <font-awesome-icon v-if="!this.isFavourite" size="2x" :icon="heartIcon" :style="{ color: 'white' }"></font-awesome-icon>
-    <font-awesome-icon v-else size="2x" :icon="heartIcon" :style="{ color: '#f80000e0' }"></font-awesome-icon>
+  <button class="btn-outline-primary-three" data-mdb-ripple-color="dark" type="button" @click="favouriteHandle()">
+    <font-awesome-icon v-if="!isFavourite" :icon="heartIcon" :style="{ color: 'white' }"
+                       size="2x"
+    />
+    <font-awesome-icon v-else :icon="heartIcon" :style="{ color: '#f80000e0' }" size="2x" />
   </button>
 </template>
 
-
 <script lang="ts">
-import store from '@/store'
-import { Options, Vue } from "vue-class-component"
-import ProductModel from "@/state/product/ProductModel"
-import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
+import store from '@/store';
+import { Options, Vue } from 'vue-class-component';
+import ProductModel from '@/state/product/ProductModel';
+import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart';
 
 @Options({
-  name: "FavouriteButton",
+  name: 'FavouriteButton',
   props: {
     product: Object
   }
 })
 export default class FavouriteButton extends Vue {
 
-  product = new ProductModel()
+  product = new ProductModel();
 
   get heartIcon(): typeof faHeart {
-    return faHeart
+    return faHeart;
   }
 
   get isFavourite(): ProductModel {
-    return store.getters['product/favourite/getStateIsCurrentProductInFavourites']
+    return store.getters['product/favourite/getStateIsCurrentProductInFavourites'];
   }
 
   async favouriteHandle(): Promise<void> {
-    await store.dispatch('product/favourite/toggleFavourite', this.product)
+    await store.dispatch('product/favourite/toggleFavourite', this.product);
   }
 
 }

@@ -1,19 +1,20 @@
 <template>
   <div class="blog-main-content">
-    <div class="grid-post-list" v-if="posts && Object.keys(posts).length > 0">
+    <div v-if="posts && Object.keys(posts).length > 0" class="grid-post-list">
       <div v-for="post in posts" :key="post.title" class="cardSpecialEffect">
-        <router-link :to="`/post/${post.slug}`" aria-label="Blog Post">
+        <RouterLink :to="`/post/${post.slug}`" aria-label="Blog Post">
           <div class="card blog-card">
-            <img class="img-fluid" v-bind:src="mediaStreamImage('slides', post.mainImageFilename, '476', '268')" :alt="post.title">
+            <img :alt="post.title" class="img-fluid"
+                 v-bind:src="mediaStreamImage('slides', post.mainImageFilename, '476', '268')">
             <div class="card-body">
               <span class="card-title">{{ post.title }}: {{ post.subtitle }}</span>
               <span v-if="showAuthor">
-                by <AuthorLink :author="post.author" />
+                by <AuthorLink :author="post.author"/>
               </span>
               <p class="card-text">{{ post.metaDescription }}</p>
               <ul class="grid-post-list-tags">
-                <li class="post__tags" v-for="tag in post.tags" :key="tag.name">
-                  <router-link :to="`/tag/${tag.name}`" aria-label="Blog Tag">#{{ tag.name }}</router-link>
+                <li v-for="tag in post.tags" :key="tag.name" class="post__tags">
+                  <RouterLink :to="`/tag/${tag.name}`" aria-label="Blog Tag">#{{ tag.name }}</RouterLink>
                 </li>
               </ul>
               <small class="text-muted">{{ displayableDate(post.publishDate) }}</small>
@@ -23,25 +24,25 @@
             <span class="line-3"></span>
             <span class="line-4"></span>
           </div>
-        </router-link>
+        </RouterLink>
       </div>
     </div>
     <div v-else>
       <span>No Posts Found</span>
     </div>
-    <BlogSidebar :tags="allTags" :authors="allAuthors"/>
+    <BlogSidebar :authors="allAuthors" :tags="allTags"/>
   </div>
 </template>
 
 <script lang="ts">
-import store from "@/store"
-import PostModel from "@/state/blog/PostModel"
-import { Options, Vue } from "vue-class-component"
-import AuthorLink from '@/components/Blog/AuthorLink.vue'
-import BlogSidebar from '@/components/Blog/BlogSidebar.vue'
+import store from '@/store';
+import PostModel from '@/state/blog/PostModel';
+import { Options, Vue } from 'vue-class-component';
+import AuthorLink from '@/components/Blog/AuthorLink.vue';
+import BlogSidebar from '@/components/Blog/BlogSidebar.vue';
 
 @Options({
-  name: "PostList",
+  name: 'PostList',
   components: {
     AuthorLink,
     BlogSidebar
@@ -49,56 +50,56 @@ import BlogSidebar from '@/components/Blog/BlogSidebar.vue'
   props: {
     posts: {
       type: Array,
-      required: true,
+      required: true
     },
     showAuthor: {
       type: Boolean,
       required: false,
-      default: true,
+      default: true
     }
   }
 })
 
 export default class PostList extends Vue {
-  showAuthor: boolean = false
-  posts: PostModel[] = []
+  showAuthor: boolean = false;
+  posts: PostModel[] = [];
+
+  get publishedPosts(): PostModel[] {
+    return store.getters['blog/getPublishedPosts'];
+  }
+
+  get allTags(): PostModel[] {
+    return store.getters['blog/getAllTags'];
+  }
+
+  get allAuthors(): PostModel[] {
+    return store.getters['blog/getAllAuthors'];
+  }
+
+  get postsByTag(): PostModel[] {
+    return store.getters['blog/getPostsByTag'];
+  }
+
+  get axiosBaseUrl(): string {
+    return store.getters['app/axiosBaseUrl'];
+  }
 
   async mounted(): Promise<void> {
     await Promise.all([
       store.dispatch('blog/allTagsFromRemote'),
       store.dispatch('blog/allAuthorsFromRemote')
-    ])
+    ]);
   }
 
   public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
-    const mediaStreamPath = '/mediastream/media/uploads/'
+    const mediaStreamPath = '/mediastream/media/uploads/';
     const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName;
-    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/'  + imageNameFileTypeRemove + '/' + width + '/' + height
-  }
-
-  get publishedPosts(): PostModel[] {
-    return store.getters['blog/getPublishedPosts']
-  }
-
-  get allTags(): PostModel[] {
-    return store.getters['blog/getAllTags']
-  }
-
-  get allAuthors(): PostModel[] {
-    return store.getters['blog/getAllAuthors']
-  }
-
-  get postsByTag(): PostModel[] {
-    return store.getters['blog/getPostsByTag']
-  }
-
-  get axiosBaseUrl(): string {
-    return store.getters['app/axiosBaseUrl']
+    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height;
   }
 
   public displayableDate(date: string): string {
-    const options: any = { dateStyle: "full", timeStyle: "medium" }
-    return new Intl.DateTimeFormat('en-US', options).format(new Date(date))
+    const options: any = { dateStyle: 'full', timeStyle: 'medium' };
+    return new Intl.DateTimeFormat('en-US', options).format(new Date(date));
   }
 
 }

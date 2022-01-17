@@ -1,30 +1,33 @@
 <template>
-  <div class="profile-image-grid-container" v-if="this.src">
-    <form class="profile-image-grid-form" id="uploadImageForm" name="uploadImageForm" enctype="multipart/form-data">
+  <div v-if="src" class="profile-image-grid-container">
+    <form id="uploadImageForm" class="profile-image-grid-form" enctype="multipart/form-data" name="uploadImageForm">
       <div class="profile-image-grid-content">
-        <div class="profile-image-part"
-             @mouseover="profileImageHovering = true"
+        <div :class="{ 'hovering': profileImageHovering }"
+             class="profile-image-part"
              @mouseout="profileImageHovering = false"
-             :class="{ 'hovering': profileImageHovering }">
-          <img :src="this.src"
-               class="rounded-circle img-fluid"
+             @mouseover="profileImageHovering = true"
+        >
+          <img :src="src"
                alt="User Image"
+               class="rounded-circle img-fluid"
+               height="110"
                width="110"
-               height="110">
-          <label for="image" class="profile-image-label">
+          />
+          <label class="profile-image-label" for="image">
             <input
-                class="d-none"
-                type="file"
-                id="image"
-                name="image"
-                @change="updateUserImage">
-            <font-awesome-icon :icon="cameraIcon" size="3x" :style="{ color: 'white' }"></font-awesome-icon>
+              id="image"
+              class="d-none"
+              name="image"
+              type="file"
+              @change="updateUserImage"
+            />
+            <font-awesome-icon :icon="cameraIcon" :style="{ color: 'white' }" size="3x" />
           </label>
         </div>
         <div class="profile-fullname-part">
-          <router-link :to="{ name: 'MyAccount' }" class="btn-w-effect" aria-label="MyAccount">
-            <h5>{{this.fullname}}</h5>
-          </router-link>
+          <RouterLink :to="{ name: 'MyAccount' }" aria-label="MyAccount" class="btn-w-effect">
+            <h5>{{ fullname }}</h5>
+          </RouterLink>
         </div>
       </div>
     </form>
@@ -32,12 +35,12 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
-import { Options, Vue} from "vue-class-component"
-import { faCamera } from "@fortawesome/free-solid-svg-icons/faCamera"
+import store from '@/store';
+import { Options, Vue } from 'vue-class-component';
+import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera';
 
 @Options({
-  name: "ProfileImage",
+  name: 'ProfileImage',
   props: {
     fullname: {
       type: String,
@@ -52,17 +55,16 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons/faCamera"
 
 export default class ProfileImage extends Vue {
 
-  profileImageHovering: boolean = false
+  profileImageHovering: boolean = false;
 
   get cameraIcon(): typeof faCamera {
-    return faCamera
+    return faCamera;
   }
 
   async updateUserImage(): Promise<void> {
     const formEl = document.getElementById('uploadImageForm') as HTMLFormElement;
-    const data = new FormData(formEl)
-    console.log(data)
-    await store.dispatch('user/data/updateUserDetails', data)
+    const data = new FormData(formEl);
+    await store.dispatch('user/data/updateUserDetails', data);
   }
 
 }

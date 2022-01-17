@@ -1,82 +1,84 @@
 <template>
-    <div class="container mt-7 mb-5 content-min-height">
-      <Breadcrumbs :breadCrumbPath="breadCrumbPath"></Breadcrumbs>
-      <div class="cart-grid-container">
-        <div class="grid-container-item-two" v-if="cartTotalLength">
-          <div class="grid-container-table">
-              <div>Product</div>
-              <div>Price</div>
-              <div>Quantity</div>
-              <div>Total</div>
-          </div>
-          <div class="grid-container-table-items">
-            <CartItem
-                v-for="item in cart"
-                v-bind:key="item.id"
-                v-bind:item="item"
-                v-on:removeFromCart="removeFromCart(item)"/>
-          </div>
+  <div class="container mt-7 mb-5 content-min-height">
+    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
+    <div class="cart-grid-container">
+      <div v-if="cartTotalLength" class="grid-container-item-two">
+        <div class="grid-container-table">
+          <div>Product</div>
+          <div>Price</div>
+          <div>Quantity</div>
+          <div>Total</div>
         </div>
-        <div v-else>
-          <p>You don't have any products in your cart...</p>
+        <div class="grid-container-table-items">
+          <CartItem
+            v-for="item in cart"
+            :key="item.id"
+            :item="item"
+            @removeFromCart="removeFromCart(item)"
+          />
         </div>
+      </div>
+      <div v-else>
+        <p>You don't have any products in your cart...</p>
+      </div>
 
-
-        <div class="grid-container-item-three">
-          <div class="grid-container-child-one">
-            <h2 class="subtitle">Summary</h2>
-            <strong>${{ cartTotalPrice.toFixed(2) }}</strong>, {{ cartTotalLength }} items
-          </div>
-          <div class="grid-container-child-two">
-            <router-link to="/cart/checkout" type="button" class="btn-outline-primary-one" aria-label="Checkout">Proceed to checkout</router-link>
-          </div>
-
+      <div class="grid-container-item-three">
+        <div class="grid-container-child-one">
+          <h2 class="subtitle">Summary</h2>
+          <strong>${{ cartTotalPrice.toFixed(2) }}</strong>, {{ cartTotalLength }} items
+        </div>
+        <div class="grid-container-child-two">
+          <RouterLink aria-label="Checkout" class="btn-outline-primary-one" to="/cart/checkout" type="button">
+            Proceed
+            to checkout
+          </RouterLink>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
-import store from '@/store'
-import router from "@/routes"
-import { Options, Vue } from "vue-class-component"
-import CartItem from '@/components/Cart/CartItem.vue'
-import CartItemModel from "@/state/cart/CartItemModel"
-import Breadcrumbs from "@/components/Breadcrumbs/Breadcrumbs.vue"
+import store from '@/store';
+import router from '@/routes';
+import { Options, Vue } from 'vue-class-component';
+import CartItem from '@/components/Cart/CartItem.vue';
+import CartItemModel from '@/state/cart/CartItemModel';
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue';
 
 @Options({
-    name: "CartVue",
-    components: {
-      CartItem,
-      Breadcrumbs
-    }
+  name: 'CartVue',
+  components: {
+    CartItem,
+    Breadcrumbs
+  }
 })
 
 export default class CartVue extends Vue {
 
-  mounted() {
-    document.title = 'Cart'
-  }
-
   get breadCrumbPath(): [] {
-    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
-    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb;
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params);
   }
 
   get cart(): Array<CartItemModel> {
-    return store.getters['cart/getCart']
+    return store.getters['cart/getCart'];
   }
 
   get cartTotalLength(): number {
-    return store.getters['cart/getCartTotalLength']
+    return store.getters['cart/getCartTotalLength'];
   }
 
   get cartTotalPrice(): number {
-    return store.getters['cart/getCartTotalPrice']
+    return store.getters['cart/getCartTotalPrice'];
+  }
+
+  mounted() {
+    document.title = 'Cart';
   }
 
   public removeFromCart(item: CartItemModel) {
-    store.commit('cart/removeFromCart', item)
+    store.commit('cart/removeFromCart', item);
   }
 }
 </script>

@@ -18,3 +18,11 @@ venv/
 
 # Local PostgreSQL data
 data/
+
+app/env/
+app/logs/
+app/media/
+
+node_modules
+build
+dist

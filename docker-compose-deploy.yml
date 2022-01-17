@@ -1,8 +1,19 @@
 version: '3.9'
 
 services:
+  gcloud:
+    image: google/cloud-sdk:338.0.0
+    volumes:
+      - gcp-creds:/creds
+      - .:/app
+    working_dir: /app
+    environment:
+      - CLOUDSDK_CONFIG=/creds
+
+
   app:
     container_name: backend
+    image: service-manager-backend:${SERVICE_MANAGER_IMAGE_REV}
     build:
       context: .
       dockerfile: docker/Backend.Dockerfile
@@ -165,6 +176,7 @@ services:
 #      - app
 
 volumes:
+  gcp-creds:
   postgres_data:
   production_static_data:
   service-media_stream:

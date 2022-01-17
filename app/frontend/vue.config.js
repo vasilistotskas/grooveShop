@@ -1,12 +1,4 @@
-const CompressionWebpackPlugin = require('compression-webpack-plugin')
 let zlib = require('zlib');
-
-const compress = new CompressionWebpackPlugin({
-  filename: '[file].gz[query]',
-  algorithm: 'gzip',
-  include: /\.(js|css|html|svg|json)(\?.*)?$/i,
-  minRatio: 0.8,
-})
 
 module.exports = {
 
@@ -31,11 +23,6 @@ module.exports = {
       .loader('image-webpack-loader')
       .options({ bypassOnDebug: true })
       .end()
-  },
-
-  configureWebpack: {
-    //Gzip the js file through the compression-webpack-plugin plugin
-    plugins: [compress]
   },
 
   devServer: {

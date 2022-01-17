@@ -1,35 +1,37 @@
 <template>
-  <div class="grid-blog-siderbar" v-if="(tags || authors) && (Object.keys(tags).length > 0 || Object.keys(authors).length)">
-    <div class="grid-blog-siderbar-tags" v-if="tags && Object.keys(tags).length > 0">
+  <div v-if="(tags || authors) && (Object.keys(tags).length > 0 || Object.keys(authors).length)"
+       class="grid-blog-siderbar"
+  >
+    <div v-if="tags && Object.keys(tags).length > 0" class="grid-blog-siderbar-tags">
       <span class="sidebar-blog-title tags">Tags:</span>
-      <span v-for="tag in tags">
-        <router-link :to="`/tag/${tag.name}`" aria-label="Blog Tag">
-          <font-awesome-icon :icon="tagIcon" :style="{ color: '#080808' }"></font-awesome-icon>
+      <span v-for="tag in tags" :key="tag.id">
+        <RouterLink :to="`/tag/${tag.name}`" aria-label="Blog Tag">
+          <font-awesome-icon :icon="tagIcon" :style="{ color: '#080808' }" />
           {{ tag.name }}
-        </router-link>
+        </RouterLink>
       </span>
     </div>
-    <div class="grid-blog-siderbar-authors" v-if="authors && Object.keys(authors).length > 0">
+    <div v-if="authors && Object.keys(authors).length > 0" class="grid-blog-siderbar-authors">
       <span class="sidebar-blog-title authors">Authors:</span>
-      <span v-for="author in authors">
-          <router-link :to="`/author/${author.user.email}`" aria-label="Blog Author">
-          <font-awesome-icon :icon="authorIcon" :style="{ color: '#080808' }"></font-awesome-icon>
-            {{ displayName(author) }}
-          </router-link>
+      <span v-for="author in authors" :key="author.id">
+        <RouterLink :to="`/author/${author.user.email}`" aria-label="Blog Author">
+          <font-awesome-icon :icon="authorIcon" :style="{ color: '#080808' }" />
+          {{ displayName(author) }}
+        </RouterLink>
       </span>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import TagModel from "@/state/blog/TagModel"
-import { Options, Vue} from "vue-class-component"
-import AuthorModel from "@/state/blog/AuthorModel"
-import { faTag } from "@fortawesome/free-solid-svg-icons/faTag"
-import { faUserTag } from "@fortawesome/free-solid-svg-icons/faUserTag"
+import TagModel from '@/state/blog/TagModel';
+import { Options, Vue } from 'vue-class-component';
+import AuthorModel from '@/state/blog/AuthorModel';
+import { faTag } from '@fortawesome/free-solid-svg-icons/faTag';
+import { faUserTag } from '@fortawesome/free-solid-svg-icons/faUserTag';
 
 @Options({
-  name: "BlogSidebar",
+  name: 'BlogSidebar',
   props: {
     tags: Array,
     authors: Array
@@ -38,19 +40,19 @@ import { faUserTag } from "@fortawesome/free-solid-svg-icons/faUserTag"
 
 export default class BlogSidebar extends Vue {
 
-  tags: TagModel[] = []
-  authors: AuthorModel[] = []
+  tags: TagModel[] = [];
+  authors: AuthorModel[] = [];
 
   get tagIcon(): typeof faTag {
-    return faTag
+    return faTag;
   }
 
   get authorIcon(): typeof faUserTag {
-    return faUserTag
+    return faUserTag;
   }
 
-  public displayName (author: AuthorModel): string {
-    return (author.user?.firstName && author.user?.lastName && `${author.user?.firstName} ${author.user?.lastName}`) || `${author.user?.email}`
+  public displayName(author: AuthorModel): string {
+    return (author.user?.firstName && author.user?.lastName && `${author.user?.firstName} ${author.user?.lastName}`) || `${author.user?.email}`;
   }
 
 }

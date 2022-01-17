@@ -1,40 +1,42 @@
 <template>
   <div class="grid-container-cart">
     <div class="grid-container-cart-item-one">
-      <router-link :to="productPath" aria-label="Product">
-        <img :src="mediaStreamImage('products', item.product.main_image_filename, '75', '75')" width="75" height="75" class="border-radius-img img-fluid" :alt="item.product.name">
+      <RouterLink :to="productPath" aria-label="Product">
+        <img :alt="item.product.name" :src="mediaStreamImage('products', item.product.main_image_filename, '75', '75')" class="border-radius-img img-fluid"
+             height="75" width="75"
+        />
         <span>{{ item.product.name }}</span>
-      </router-link>
+      </RouterLink>
     </div>
     <div class="grid-container-cart-item-two">${{ item.product.price }}</div>
     <div class="grid-container-cart-item-three">
-      <a type="button" class="btn-outline-primary-main" data-mdb-ripple-color="dark" @click="decrementQuantity(item)">
-        <font-awesome-icon :icon="minusIcon" size="lg" :style="{ color: '#3b3b3b' }"></font-awesome-icon>
+      <a class="btn-outline-primary-main" data-mdb-ripple-color="dark" type="button" @click="decrementQuantity(item)">
+        <font-awesome-icon :icon="minusIcon" :style="{ color: '#3b3b3b' }" size="lg" />
       </a>
       {{ item.quantity }}
-      <a type="button" class="btn-outline-primary-main" data-mdb-ripple-color="dark" @click="incrementQuantity(item)">
-        <font-awesome-icon :icon="plusIcon" size="lg" :style="{ color: '#3b3b3b' }"></font-awesome-icon>
+      <a class="btn-outline-primary-main" data-mdb-ripple-color="dark" type="button" @click="incrementQuantity(item)">
+        <font-awesome-icon :icon="plusIcon" :style="{ color: '#3b3b3b' }" size="lg" />
       </a>
     </div>
     <div class="grid-container-cart-item-four">${{ itemTotal.toFixed(2) }}</div>
     <div class="grid-container-cart-item-five">
-      <button type="button" class="btn-outline-primary-main" @click="removeFromCart(item)">
-        <font-awesome-icon :icon="trashIcon" :style="{ color: '#3b3b3b' }"></font-awesome-icon>
+      <button class="btn-outline-primary-main" type="button" @click="removeFromCart(item)">
+        <font-awesome-icon :icon="trashIcon" :style="{ color: '#3b3b3b' }" />
       </button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import store from '@/store'
-import { Options, Vue } from "vue-class-component"
-import CartItemModel from "@/state/cart/CartItemModel"
-import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash"
-import { faMinusCircle } from "@fortawesome/free-solid-svg-icons/faMinusCircle"
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons/faPlusCircle"
+import store from '@/store';
+import { Options, Vue } from 'vue-class-component';
+import CartItemModel from '@/state/cart/CartItemModel';
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
+import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle';
 
 @Options({
-  name: "CartItem",
+  name: 'CartItem',
   props: {
     item: {
       type: Object
@@ -44,53 +46,53 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons/faPlusCircle"
 
 export default class CartItemVue extends Vue {
 
-    item = new CartItemModel()
+  item = new CartItemModel();
 
-    get trashIcon(): typeof faTrash {
-      return faTrash
-    }
-
-    get minusIcon(): typeof faMinusCircle {
-      return faMinusCircle
-    }
-
-    get plusIcon(): typeof faPlusCircle {
-      return faPlusCircle
-    }
-
-    get isMobile(): boolean {
-      return store.getters['app/isMobile']
-    }
-
-    get itemTotal(): number {
-      return this.item.quantity * this.item.product.price
-    }
-
-    get productPath() {
-      return '/product/' + this.item.product.slug + '/' + this.item.product.id
-    }
-
-  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
-    const mediaStreamPath = '/mediastream/media/uploads/'
-    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName;
-    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/'  + imageNameFileTypeRemove + '/' + width + '/' + height
+  get trashIcon(): typeof faTrash {
+    return faTrash;
   }
 
-    public decrementQuantity(item: object): void {
-      store.commit('cart/decrementQuantity', item)
-    }
+  get minusIcon(): typeof faMinusCircle {
+    return faMinusCircle;
+  }
 
-    public incrementQuantity(item: object): void {
-      store.commit('cart/incrementQuantity', item)
-    }
+  get plusIcon(): typeof faPlusCircle {
+    return faPlusCircle;
+  }
 
-    public updateCart(): void {
-      store.commit('cart/updateCart')
-    }
+  get isMobile(): boolean {
+    return store.getters['app/isMobile'];
+  }
 
-    public removeFromCart(item: object): void {
-      store.commit('cart/removeFromCart', item)
-    }
+  get itemTotal(): number {
+    return this.item.quantity * this.item.product.price;
+  }
+
+  get productPath() {
+    return '/product/' + this.item.product.slug + '/' + this.item.product.id;
+  }
+
+  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
+    const mediaStreamPath = '/mediastream/media/uploads/';
+    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName;
+    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height;
+  }
+
+  public decrementQuantity(item: Record<string, unknown>): void {
+    store.commit('cart/decrementQuantity', item);
+  }
+
+  public incrementQuantity(item: Record<string, unknown>): void {
+    store.commit('cart/incrementQuantity', item);
+  }
+
+  public updateCart(): void {
+    store.commit('cart/updateCart');
+  }
+
+  public removeFromCart(item: Record<string, unknown>): void {
+    store.commit('cart/removeFromCart', item);
+  }
 }
 </script>
 

@@ -11,11 +11,11 @@
             </div>
             <div class="grid-item-two">
               <!-- Email input -->
-              <input type="email" id="form5Example21" class="form-control" />
+              <input id="form5Example21" class="form-control" type="email" />
               <label class="form-label mt-2" for="form5Example21">Email address</label>
             </div>
             <div class="grid-item-three">
-              <button type="submit" class="btn-outline-primary-one mb-4">
+              <button class="btn-outline-primary-one mb-4" type="submit">
                 Subscribe
               </button>
             </div>
@@ -99,19 +99,17 @@
       <span>© 2020 Copyright:</span>
       <a href="#">GrooveBtch</a>
     </div>
-
   </footer>
-
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component"
-
+import { Options, Vue } from 'vue-class-component';
 
 @Options({
-  name: "Footer"
+  name: 'Footer'
 })
-export default class Footer extends Vue {}
+export default class Footer extends Vue {
+}
 
 </script>
 

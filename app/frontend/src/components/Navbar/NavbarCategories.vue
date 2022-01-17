@@ -1,85 +1,89 @@
 <template>
   <div class="navbar-main-collapse-menu">
-    <div class="container navbar-menu-grid-container" v-bind:class="{'wrapper': Object.keys(this.categories).length === 0 }">
-      <div class="navbar-menu-grid-head"
-           ref="target">
-        <router-link v-if="this.categories && Object.keys(this.categories).length > 0" v-for="(category, key) in this.categories" class="navbar-menu-grid-head-item"
-             @mouseover="categoryBoxHovered = key"
-             @mouseleave="categoryBoxHovered = null"
-             v-bind:class="{'has-children': category?.children }"
-             v-bind:id="category.children ? `id-${category.id}` : '' "
-             v-bind:key="category.id"
-             v-bind:toggle="category.children ? 'toggle' : '' "
-             role="button"
-             aria-expanded="false"
-             aria-current="page"
-             :to="({ name: 'Category', params: { category_slug: category.slug } })">
+    <div :class="{'wrapper': Object.keys(categories).length === 0 }" class="container navbar-menu-grid-container">
+      <div v-if="categories && Object.keys(categories).length > 0"
+           ref="target"
+           class="navbar-menu-grid-head"
+      >
+        <RouterLink v-for="(category, key) in categories"
+                     :id="category.children ? `id-${category.id}` : '' "
+                     :key="category.id"
+                     :class="{'has-children': category?.children }"
+                     :to="({ name: 'Category', params: { category_slug: category.slug } })"
+                     :toggle="category.children ? 'toggle' : '' "
+                     aria-current="page"
+                     aria-expanded="false"
+                     class="navbar-menu-grid-head-item"
+                     role="button"
+                     @mouseleave="categoryBoxHovered = null"
+                     @mouseover="categoryBoxHovered = key"
+        >
           <img :alt="category.name"
                :src="categoryBoxHovered === key ?
-                mediaStreamImage('categories', category.category_menu_image_two_filename, '80', '83') :
-                mediaStreamImage('categories', category.category_menu_image_one_filename, '80', '83')"
-                width="80"
-                height="83">
+                 mediaStreamImage('categories', category.category_menu_image_two_filename, '80', '83') :
+                 mediaStreamImage('categories', category.category_menu_image_one_filename, '80', '83')"
+               height="83"
+               width="80"
+          />
           <span>{{ category.name }}</span>
-        </router-link>
+        </RouterLink>
       </div>
 
       <div class="navbar-menu-grid-body" style="display: none">
         <div class="navbar-menu-grid-body-item"></div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import store from "@/store"
-import { cloneDeep } from 'lodash'
-import { onClickOutside } from '@vueuse/core'
-import { Options, Vue } from "vue-class-component"
+import store from '@/store';
+import { cloneDeep } from 'lodash';
+import { onClickOutside } from '@vueuse/core';
+import { Options, Vue } from 'vue-class-component';
 
 @Options({
-  name: "NavbarCategories",
+  name: 'NavbarCategories',
   props: {
     categoriesTree: Array,
     mainToggleButton: HTMLElement,
     navbarProductsButton: HTMLElement
-  },
+  }
 })
 export default class NavbarCategories extends Vue {
   $refs!: {
-    target: HTMLElement
-  }
-  categoryBoxHovered = null
-  categoriesTree = []
-  categories = []
-  mainToggleButton!: HTMLElement
-  navbarProductsButton!: HTMLElement
+    target: HTMLElement;
+  };
+  categoryBoxHovered = null;
+  categoriesTree = [];
+  categories = [];
+  mainToggleButton!: HTMLElement;
+  navbarProductsButton!: HTMLElement;
 
   get isLoading(): boolean {
-    return store.getters['app/getLoading']
+    return store.getters['app/getLoading'];
   }
 
-  mounted() : void {
-    this.categories = cloneDeep(this.categoriesTree)
+  mounted(): void {
+    this.categories = cloneDeep(this.categoriesTree);
 
     onClickOutside(this.$refs.target, (e) => {
-      if(!e.composedPath().includes(this.navbarProductsButton)) {
-        this.menuOpenHandle()
+      if (!e.composedPath().includes(this.navbarProductsButton)) {
+        this.menuOpenHandle();
       }
-    })
+    });
   }
 
   public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
-    const mediaStreamPath = '/mediastream/media/uploads/'
+    const mediaStreamPath = '/mediastream/media/uploads/';
     const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName;
-    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/'  + imageNameFileTypeRemove + '/' + width + '/' + height
+    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height;
   }
 
   public menuOpenHandle(): void {
     this.mainToggleButton.classList.toggle('opened');
-    this.mainToggleButton.setAttribute('aria-expanded', this.mainToggleButton.classList.contains('opened') as unknown as string)
-    store.commit('app/setNavbarMenuHidden', true)
+    this.mainToggleButton.setAttribute('aria-expanded', this.mainToggleButton.classList.contains('opened') as unknown as string);
+    store.commit('app/setNavbarMenuHidden', true);
   }
 }
 </script>

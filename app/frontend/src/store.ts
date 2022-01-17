@@ -15,9 +15,9 @@ const statePersistencePlugin = createPersistedState({
 	]
 })
 
-each(stateDirectory, (item, path) => {
+each(stateDirectory, (item: any, path: any) => {
 	const elements = split(path, '.')
-	each(elements, (element, idx) => {
+	each(elements, (element: any, idx: any) => {
 		const elementIterator = slice(elements, idx)
 		const elementIteratorJoined = join(elementIterator, '.modules.')
 		if (has(appStateModules, elementIteratorJoined)) {

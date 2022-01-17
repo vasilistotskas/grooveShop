@@ -16,17 +16,18 @@
               <span>Quantity</span>
               <span>Total</span>
             </div>
-            <div class="order-history-grid-body" v-for="item in order.items"
-                v-bind:key="item.product.id">
-                <router-link :to="'/product' + item.product.absolute_url" aria-label="Product">
+            <div v-for="item in order.items" v-bind:key="item.product.id"
+                 class="order-history-grid-body">
+              <RouterLink :to="'/product' + item.product.absolute_url" aria-label="Product">
                   <span>
-                    <img :src="mediaStreamImage('products', item.product.main_image_filename, '75', '75')" width="75" height="75" class="border-radius-img img-fluid" :alt="item.product.name">
+                    <img :alt="item.product.name" :src="mediaStreamImage('products', item.product.main_image_filename, '75', '75')"
+                         class="border-radius-img img-fluid" height="75" width="75">
                   </span>
-                  <span>{{ item.product.name }}</span>
-                  <span>${{ item.product.price }}</span>
-                  <span>{{ item.quantity }}</span>
-                  <span>${{ itemTotal(item).toFixed(2) }}</span>
-                </router-link>
+                <span>{{ item.product.name }}</span>
+                <span>${{ item.product.price }}</span>
+                <span>{{ item.quantity }}</span>
+                <span>${{ itemTotal(item).toFixed(2) }}</span>
+              </RouterLink>
             </div>
           </div>
         </div>
@@ -34,10 +35,10 @@
     </div>
     <Pagination
         v-if="Object.keys(orderHistoryResults).length !== 0"
-        :total-pages="orderHistoryResultsTotalPages"
+        :endpointUrl="'orders'"
         :max-visible-buttons="3"
         :route="'Orders'"
-        :endpointUrl="'orders'"
+        :total-pages="orderHistoryResultsTotalPages"
         @pagechanged="onPageChange"/>
   </div>
   <div v-else>
@@ -48,7 +49,7 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options, Vue } from "vue-class-component"
+import {Options, Vue} from "vue-class-component"
 import CartItemModel from "@/state/cart/CartItemModel"
 import ProductModel from "@/state/product/ProductModel"
 import Pagination from "@/components/Pagination/Pagination.vue"
@@ -60,48 +61,11 @@ import Pagination from "@/components/Pagination/Pagination.vue"
   }
 })
 
-export default class OrderHistory extends Vue{
+export default class OrderHistory extends Vue {
 
   uri = window.location.search.substring(1)
   currentPage: number = 1
   params = new URLSearchParams(this.uri)
-
-  async created(): Promise<void> {
-
-    document.title = 'My Orders'
-
-    if (this.params.get('query')) {
-      await store.commit('pagination/setCurrentQuery', this.params.get('query'))
-    }
-
-    await store.commit('pagination/setCurrentPageNumber', 1)
-
-    if (this.params.get('page')) {
-      await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
-    }
-
-    await this.fetchUserOrders()
-
-  }
-
-  async unmounted(): Promise<void>{
-    store.commit('pagination/unsetResults')
-  }
-
-  public fetchUserOrders(): void {
-    store.dispatch('pagination/getPaginatedResults', {
-      'pageNumber': this.currentPageNumber,
-      'endpointUrl': `orders`,
-      'query': this.currentPageQuery,
-      'method': 'GET'
-    })
-  }
-
-  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
-    const mediaStreamPath = '/mediastream/media/uploads/'
-    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName;
-    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/'  + imageNameFileTypeRemove + '/' + width + '/' + height
-  }
 
   get currentPageNumber(): number {
     let storedPageNumber = store.getters['pagination/getCurrentPageNumber']
@@ -133,6 +97,43 @@ export default class OrderHistory extends Vue{
 
   get orderHistoryResultsTotalPages(): number {
     return store.getters['pagination/getResultTotalPages']
+  }
+
+  async created(): Promise<void> {
+
+    document.title = 'My Orders'
+
+    if (this.params.get('query')) {
+      await store.commit('pagination/setCurrentQuery', this.params.get('query'))
+    }
+
+    await store.commit('pagination/setCurrentPageNumber', 1)
+
+    if (this.params.get('page')) {
+      await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
+    }
+
+    await this.fetchUserOrders()
+
+  }
+
+  async unmounted(): Promise<void> {
+    store.commit('pagination/unsetResults')
+  }
+
+  public fetchUserOrders(): void {
+    store.dispatch('pagination/getPaginatedResults', {
+      'pageNumber': this.currentPageNumber,
+      'endpointUrl': `orders`,
+      'query': this.currentPageQuery,
+      'method': 'GET'
+    })
+  }
+
+  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
+    const mediaStreamPath = '/mediastream/media/uploads/'
+    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName;
+    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height
   }
 
   itemTotal(item: CartItemModel): number {
