@@ -18,9 +18,9 @@
           </swiper-slide>
 
           <swiper-slide v-for="slide in homepageSlider[0].slides" :key="slide.id">
-            <img :alt="slide.title ? slide.title : 'no-alt'" :src="mediaStreamImage('slides', slide.main_image_filename, '840', '510')" class="img-fluid"
+            <img :alt="slide.title ? slide.title : 'no-alt'" :src="mediaStreamImage('slides', slide.main_image_filename, '905', '510')" class="img-fluid"
                  height="510"
-                 width="839"
+                 width="905"
             />
           </swiper-slide>
         </swiper>
@@ -41,9 +41,9 @@
               </swiper-slide>
 
               <swiper-slide v-for="slide in homepageSlider[1].slides" :key="slide.id">
-                <img :alt="slide.title ? slide.title : 'no-alt'" :src="mediaStreamImage('slides', slide.main_image_filename, '452', '275')" class="img-fluid"
+                <img :alt="slide.title ? slide.title : 'no-alt'" :src="mediaStreamImage('slides', slide.main_image_filename, '492', '275')" class="img-fluid"
                      height="275"
-                     width="500"
+                     width="492"
                 />
               </swiper-slide>
             </swiper>
@@ -62,9 +62,9 @@
               </swiper-slide>
 
               <swiper-slide v-for="slide in homepageSlider[2].slides" :key="slide.id">
-                <img :alt="slide.title ? slide.title : 'no-alt'" :src="mediaStreamImage('slides', slide.main_image_filename, '452', '275')" class="img-fluid"
+                <img :alt="slide.title ? slide.title : 'no-alt'" :src="mediaStreamImage('slides', slide.main_image_filename, '492', '275')" class="img-fluid"
                      height="275"
-                     width="500"
+                     width="492"
                 />
               </swiper-slide>
             </swiper>
@@ -418,7 +418,6 @@ export default class Home extends Vue {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
 }
 
 .swiper-pagination-bullet {
