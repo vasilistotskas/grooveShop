@@ -18,9 +18,9 @@
           </swiper-slide>
 
           <swiper-slide v-for="slide in homepageSlider[0].slides" :key="slide.id">
-            <img :alt="slide.title ? slide.title : 'no-alt'" :src="mediaStreamImage('slides', slide.main_image_filename, '905', '510')" class="img-fluid"
-                 height="510"
-                 width="905"
+            <img :alt="slide.title ? slide.title : 'no-alt'" :src="mediaStreamImage('slides', slide.main_image_filename, '915', '515')" class="img-fluid"
+                 height="515"
+                 width="915"
             />
           </swiper-slide>
         </swiper>
@@ -41,9 +41,9 @@
               </swiper-slide>
 
               <swiper-slide v-for="slide in homepageSlider[1].slides" :key="slide.id">
-                <img :alt="slide.title ? slide.title : 'no-alt'" :src="mediaStreamImage('slides', slide.main_image_filename, '492', '275')" class="img-fluid"
-                     height="275"
-                     width="492"
+                <img :alt="slide.title ? slide.title : 'no-alt'" :src="mediaStreamImage('slides', slide.main_image_filename, '501', '282')" class="img-fluid"
+                     height="282"
+                     width="501"
                 />
               </swiper-slide>
             </swiper>
@@ -62,9 +62,9 @@
               </swiper-slide>
 
               <swiper-slide v-for="slide in homepageSlider[2].slides" :key="slide.id">
-                <img :alt="slide.title ? slide.title : 'no-alt'" :src="mediaStreamImage('slides', slide.main_image_filename, '492', '275')" class="img-fluid"
-                     height="275"
-                     width="492"
+                <img :alt="slide.title ? slide.title : 'no-alt'" :src="mediaStreamImage('slides', slide.main_image_filename, '501', '282')" class="img-fluid"
+                     height="282"
+                     width="501"
                 />
               </swiper-slide>
             </swiper>
@@ -76,22 +76,22 @@
     <div class="home-usp-grid-container">
       <div class="home-usp-grid-content mb-5">
         <div class="grid-usp-item">
-          <font-awesome-icon v-if="isMobile" :icon="phoneIcon" :style="{ color: '#080808' }"/>
-          <font-awesome-icon v-else :icon="phoneIcon" :style="{ color: '#080808' }" size="3x"/>
+          <font-awesome-icon v-if="isMobile" :icon="phoneIcon" :style="{ color: '#c9d1d9' }"/>
+          <font-awesome-icon v-else :icon="phoneIcon" :style="{ color: '#c9d1d9' }" size="3x"/>
           <span>Lorem Ipsum
             <span>Lorem Ipsum</span>
           </span>
         </div>
         <div class="grid-usp-item">
-          <font-awesome-icon v-if="isMobile" :icon="envelopeIcon" :style="{ color: '#080808' }"/>
-          <font-awesome-icon v-else :icon="envelopeIcon" :style="{ color: '#080808' }" size="3x"/>
+          <font-awesome-icon v-if="isMobile" :icon="envelopeIcon" :style="{ color: '#c9d1d9' }"/>
+          <font-awesome-icon v-else :icon="envelopeIcon" :style="{ color: '#c9d1d9' }" size="3x"/>
           <span>Lorem Ipsum
             <span>Lorem Ipsum</span>
           </span>
         </div>
         <div class="grid-usp-item">
-          <font-awesome-icon v-if="isMobile" :icon="commentIcon" :style="{ color: '#080808' }"/>
-          <font-awesome-icon v-else :icon="commentIcon" :style="{ color: '#080808' }" size="3x"/>
+          <font-awesome-icon v-if="isMobile" :icon="commentIcon" :style="{ color: '#c9d1d9' }"/>
+          <font-awesome-icon v-else :icon="commentIcon" :style="{ color: '#c9d1d9' }" size="3x"/>
           <span>Lorem Ipsum
             <span>Lorem Ipsum</span>
           </span>
@@ -221,14 +221,16 @@ export default class Home extends Vue {
 
 <style lang="scss" scoped>
 .home-usp-grid-container {
-  background: $primary-color-7;
+  background: $color-palette-main-fourth;
 }
 
 .home-usp-grid-content {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding: 20px;
-  background: $primary-color-7;
+  background: $color-palette-main-fourth;
+  border-bottom: 1px solid $color-palette-main-third;
+  border-top: 1px solid $color-palette-main-third;
   max-width: 1320px;
   margin: 0 auto;
 
@@ -241,7 +243,7 @@ export default class Home extends Vue {
 
     svg {
       width: 100%;
-      border-right: 2px solid $primary-color-4;
+      border-right: 2px solid $color-palette-main-fourth;
     }
 
     span {
@@ -371,7 +373,7 @@ export default class Home extends Vue {
   width: 100% !important;
   text-align: center;
   font-size: 18px;
-  background: $primary-color-4;
+  background: $color-palette-main-fourth;
 
   /* Center slide text vertically */
   display: -webkit-box;
@@ -421,7 +423,7 @@ export default class Home extends Vue {
 }
 
 .swiper-pagination-bullet {
-  background-color: #f00012;
+  background-color: $color-palette-main-primary;
   opacity: 0.35;
   width: 16px;
   height: 16px;
@@ -433,7 +435,7 @@ export default class Home extends Vue {
 
 .swiper-container {
   .swiper-slide {
-    background-color: #f00015
+    background-color: $color-palette-main-primary;
   }
 
   &.swiper-container-initialized {

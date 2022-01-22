@@ -21,7 +21,7 @@ export default class WebpImageManipulationJob {
 			manipulation.resize({
 				...resizeScales,
 				fit: options.fit,
-				background: { r: 255, g: 255, b: 255, alpha: 1 }
+				background: { r: 13, g: 17, b: 23, alpha: 1 }
 			})
 		}
 

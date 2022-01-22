@@ -9,6 +9,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import status, authentication, permissions
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 
 class ProductsPagination(PageNumberPagination):
@@ -119,6 +121,9 @@ class CategoryDetail(GenericAPIView):
 class CategoryProductsList(generics.ListAPIView):
     pagination_class = CategoryProductsPagination
     serializer_class = ProductSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['id', 'hits', 'name', 'discount_percent', 'price']
+    ordering = ['id']
 
     def get_queryset(self,  *args, **kwargs):
         category_slug = self.kwargs['category_slug']

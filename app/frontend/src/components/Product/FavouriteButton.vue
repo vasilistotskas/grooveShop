@@ -3,7 +3,7 @@
     <font-awesome-icon v-if="!isFavourite" :icon="heartIcon" :style="{ color: 'white' }"
                        size="2x"
     />
-    <font-awesome-icon v-else :icon="heartIcon" :style="{ color: '#ff1719e0' }" size="2x" />
+    <font-awesome-icon v-else :icon="heartIcon" :style="{ color: '#981d1dc9' }" size="2x" />
   </button>
 </template>
 
@@ -45,7 +45,7 @@ export default class FavouriteButton extends Vue {
   background: #e4e4e4;
   .fa-heart{ font-size: 20px;
     &.fas{
-      color: $primary-color-1;
+      color: $color-palette-main-primary;
     }
   }
 }

@@ -363,21 +363,21 @@ export default class ProductVue extends Vue {
       }
       &-count {
         font-size: 18px;
-        color: $primary-color-5;
+        color: $color-palette-main-fifth;
         font-weight: 500;
         padding-left: 10px;
       }
       &-total {
         span {
           font-size: 18px;
-          color: $primary-color-5;
+          color: $color-palette-main-fifth;
           font-weight: 500;
         }
       }
     }
   }
   .product-reviews-stats {
-    background-color: $primary-color-7;
+    background-color: $color-palette-main-secondary;
     .product-reviews-average {
       .star {
         width: 18px;
@@ -401,7 +401,8 @@ export default class ProductVue extends Vue {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 20px;
-    background-color: $primary-color-7;
+    box-shadow: 0 0 7px 0 rgb(153 153 153 / 40%);
+    border: 1px solid $color-palette-main-third;
     padding: 30px;
     border-radius: 5px;
     .image-main {
@@ -424,7 +425,7 @@ export default class ProductVue extends Vue {
           }
         }
         img {
-          border: 1px solid $primary-color-6;
+          border: 1px solid $color-palette-main-fifth;
           border-radius: 4px;
           padding: 2px;
         }
@@ -436,7 +437,7 @@ export default class ProductVue extends Vue {
   }
   .product-page-grid-info {
     h5 {
-      color: $primary-color-5;
+      color: $color-palette-main-fifth;
     }
   }
   .product-page-grid-right {
@@ -448,12 +449,15 @@ export default class ProductVue extends Vue {
     .product-page-grid-info-part {
       &-one, &-two {
         border-radius: 5px;
-        background-color: $primary-color-7;
+        background-color: $color-palette-main-fourth;
+        box-shadow: 0 0 7px 0 rgb(153 153 153 / 40%);
       }
       &-one {
+        border: 1px solid $color-palette-main-third;
         padding: 30px 60px 30px;
       }
       &-two {
+        border: 1px solid $color-palette-main-third;
         padding: 15px 30px 30px;
       }
     }
@@ -481,13 +485,13 @@ export default class ProductVue extends Vue {
     grid-template-columns: 20% 62% 18%;
     gap: 15px;
     input {
-      color: $primary-color-2;
-      background-color: $primary-color-4;
+      color: $color-palette-main-fifth;
+      background-color: $color-palette-main-fourth;
       margin-left: 0;
       text-align: center;
       align-self: center;
       justify-self: center;
-      border: 1px solid $primary-color-4;
+      border: 1px solid $color-palette-main-third;
       border-radius: 5px;
       height: 100%;
       width: 100%;
@@ -495,7 +499,7 @@ export default class ProductVue extends Vue {
   }
   .addToCartButton{
     &.disabled{
-      background-color: $primary-color-3;
+      background-color: $color-palette-main-third;
       border-color: transparent;
       box-shadow: none;
       opacity: 0.5;
@@ -507,7 +511,7 @@ export default class ProductVue extends Vue {
     padding-bottom: 15px;
   }
   .product-reviews-container {
-    background-color: $primary-color-4;
+    background-color: $color-palette-main-fourth;
   }
   .product-reviews-grid {
     display: grid;
@@ -524,14 +528,14 @@ export default class ProductVue extends Vue {
       &.unavailable {
         span {
           letter-spacing: 0.5px;
-          color: $primary-color-2;
+          color: $color-palette-main-fifth;
           font-weight: 500;
           line-height: 22px;
         }
       }
       span {
         letter-spacing: 0.5px;
-        color: $primary-color-2;
+        color: $color-palette-main-fifth;
         font-weight: 500;
         line-height: 22px;
       }
@@ -541,7 +545,7 @@ export default class ProductVue extends Vue {
       gap: 12px;
       span {
         letter-spacing: 0.5px;
-        color: $primary-color-2;
+        color: $color-palette-main-fifth;
         font-weight: 500;
         line-height: 22px;
       }
@@ -549,7 +553,7 @@ export default class ProductVue extends Vue {
   }
   .btn-outline-primary-one {
     span {
-      color: #f1f1f1;
+      color: $color-palette-main-fifth;
       padding-left: 15px;
     }
   }

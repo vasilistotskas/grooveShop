@@ -1,7 +1,7 @@
 <template>
   <div :class="[attrsClassName, { 'input-group-w-addon': inputWithAddOn}]" class="_container">
     <span v-if="inputWithAddOn" class="input-group-addon">
-      <font-awesome-icon :icon="inputWithAddOnIcon" :style="{ color: '#080808' }" size="lg" />
+      <font-awesome-icon :icon="inputWithAddOnIcon" :style="{ color: '#dbdfe3' }" size="lg" />
     </span>
     <input
       v-model="value"
@@ -81,10 +81,15 @@ export default defineComponent({
 
 ._input {
   width: 100%;
-  border: 1px solid $gray-200;
+  border: 1px solid $color-palette-main-third;
+  background-color: $color-palette-main-fourth;
+  color: $color-palette-main-fifth;
   outline: none;
   padding: 0.75rem;
   border-radius: 0.25rem;
+  &:-webkit-autofill, &:-webkit-autofill:focus {
+    transition: background-color 600000s 0s, color 600000s 0s;
+  }
 
   &:focus {
     border-color: #fd000252!important;

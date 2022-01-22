@@ -97,7 +97,7 @@
               <div class="form-group">
                 <div class="input-group-w-addon">
                   <span class="input-group-addon">
-                    <font-awesome-icon :icon="envelopeIcon" :style="{ color: '#080808' }" />
+                    <font-awesome-icon :icon="envelopeIcon" :style="{ color: '#dbdfe3' }" />
                   </span>
                   <input id="email" v-model="resendMailInputs.email" class="form-control" name="email"
                          placeholder="email" type="email"
@@ -293,7 +293,7 @@ export default class Register extends Vue {
   }
   .registration-complete-message {
     span {
-      color: $primary-color-4;
+      color: $color-palette-main-fourth;
     }
   }
   #registration-complete-view {
@@ -303,16 +303,16 @@ export default class Register extends Vue {
     height: 200px;
     text-align: center;
     span, p {
-      color: $primary-color-5;
+      color: $color-palette-main-fourth;
     }
   }
   .registration-resend-action, .register-login-field a {
-    color: $primary-color-2;
+    color: $color-palette-main-secondary;
     font-weight: 500;
     font-size: 17px;
     &:hover {
       cursor: pointer;
-      color:  $primary-color-1!important;
+      color:  $color-palette-main-primary!important;
     }
   }
 </style>

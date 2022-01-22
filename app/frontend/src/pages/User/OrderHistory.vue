@@ -161,7 +161,7 @@ export default class OrderHistory extends Vue {
     }
     &-body {
       padding: 10px;
-      border: 1px solid $primary-color-6;
+      border: 1px solid $color-palette-main-fifth;
       background-color: white;
       border-radius: 8px;
       &:hover {
@@ -170,12 +170,12 @@ export default class OrderHistory extends Vue {
     }
   }
   .card-body-order-history {
-    background-color: $primary-color-4!important;
+    background-color: $color-palette-main-fourth!important;
     border-radius: 10px;
     padding-top: 30px!important;
     padding-bottom: 30px!important;
     span, a {
-      color: $primary-color-2!important;
+      color: $color-palette-main-secondary!important;
     }
   }
 </style>

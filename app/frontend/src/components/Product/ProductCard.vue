@@ -125,8 +125,11 @@ export default class ProductCard extends Vue {
 <style lang="scss" scoped>
   .product-card-main {
     padding: 16px;
-    background-color: $primary-color-7!important;
+    background-color: $color-palette-main-fourth!important;
     border-radius: 10px;
+    border-color: $color-palette-main-third;
+    border-width: 1px;
+    border-style: solid;
     &:hover {
       box-shadow: 0 0 7px 0 rgb(153 153 153 / 40%);
     }
@@ -146,7 +149,7 @@ export default class ProductCard extends Vue {
         span {
           font-size: 15px;
           font-weight: 500;
-          color: $primary-color-2;
+          color: $color-palette-main-fifth;
         }
       }
       .card-review-content {
@@ -167,19 +170,19 @@ export default class ProductCard extends Vue {
           span {
             font-size: 13px;
             padding-left: 4px;
-            color: $primary-color-3;
+            color: $color-palette-main-fifth;
           }
         }
       }
       .card-text {
         span.card-text-price-from {
-          color: $primary-color-3;
+          color: $color-palette-main-fifth;
           font-size: 13px;
           line-height: 17px;
           position: relative;
         }
         span.card-text-price-num {
-          color: $primary-color-2;
+          color: $color-palette-main-fifth;
           font-size: 16px;
           line-height: 21px;
           font-weight: 500;
@@ -189,7 +192,6 @@ export default class ProductCard extends Vue {
         margin-top: 10px;
         a.btn-product-card {
           border: unset;
-          background-color: $base-success-color!important;
         }
       }
     }
@@ -232,7 +234,7 @@ export default class ProductCard extends Vue {
   }
   .addToCartButton{
     &.disabled{
-      background-color: $primary-color-3;
+      background-color: $color-palette-main-third;
       border-color: transparent;
       box-shadow: none;
       opacity: 0.5;

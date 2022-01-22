@@ -93,14 +93,14 @@ export default class NavbarCategories extends Vue {
     position: absolute;
     width: 100%;
     z-index: 10;
-    background-color: $primary-color-4;
+    background-color: $color-palette-main-fourth;
     .navbar-menu-grid {
       &-head {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
         max-height: 162px;
         box-shadow: 0 2px 4px rgb(153 153 153 / 33%);
-        background-color: $primary-color-7;
+        background-color: $color-palette-main-secondary;
         border-radius: 5px;
         &-item {
           display: grid;
@@ -111,9 +111,10 @@ export default class NavbarCategories extends Vue {
           align-items: center;
           justify-items: center;
           height: 100%;
-          border: 1px solid $primary-color-6;
+          border-left: 1px solid $color-palette-main-third;
+          border-right: 1px solid $color-palette-main-third;
           &:hover {
-            background-color: $primary-color-4;
+            background-color: $color-palette-main-fourth;
           }
           img {
             max-width: 100px;

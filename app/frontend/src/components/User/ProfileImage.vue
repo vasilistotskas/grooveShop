@@ -74,12 +74,12 @@ export default class ProfileImage extends Vue {
   .profile-image-grid {
     &-container {
       display: grid;
-      border-bottom: 1px solid $primary-color-4;
+      border-bottom: 1px solid $color-palette-main-fourth;
     }
     &-form {
       display: grid;
       grid-template-rows: minmax(90px, 1fr);
-      background-color: $primary-color-7;
+      background-color: $color-palette-main-secondary;
       border-radius: 10px;
       gap: 25px;
       justify-content: center;

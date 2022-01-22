@@ -54,8 +54,8 @@
       <div class="navigation-header">
         <div class="navigation-header-part">
           <RouterLink v-if="isAuthenticated" :to="{ name: 'Favourites' }" aria-label="Favourites">
-            <font-awesome-icon v-if="isMobile" :icon="heartIcon" :style="{ color: '#ff1719e0' }" />
-            <font-awesome-icon v-else :icon="heartIcon" :style="{ color: '#ff1719e0' }" size="2x" />
+            <font-awesome-icon v-if="isMobile" :icon="heartIcon" :style="{ color: '#981d1dc9' }" />
+            <font-awesome-icon v-else :icon="heartIcon" :style="{ color: '#981d1dc9' }" size="2x" />
           </RouterLink>
           <RouterLink v-else aria-label="Favourites" to="/log-in">
             <font-awesome-icon v-if="isMobile" :icon="heartIcon" :style="{ color: 'white' }" />
@@ -64,8 +64,8 @@
         </div>
         <div class="navigation-header-part">
           <RouterLink v-if="isAuthenticated" aria-label="Account" to="/my-account">
-            <font-awesome-icon v-if="isMobile" :icon="userIcon" :style="{ color: '#ff1719e0' }" />
-            <font-awesome-icon v-else :icon="userIcon" :style="{ color: '#ff1719e0' }" size="2x" />
+            <font-awesome-icon v-if="isMobile" :icon="userIcon" :style="{ color: '#981d1dc9' }" />
+            <font-awesome-icon v-else :icon="userIcon" :style="{ color: '#981d1dc9' }" size="2x" />
           </RouterLink>
           <RouterLink v-else aria-label="Account" to="/log-in">
             <font-awesome-icon v-if="isMobile" :icon="userIcon" :style="{ color: 'white' }" />
@@ -110,16 +110,13 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart
     NavbarCategories
   },
   props: {
-    modal: {
-      type: Boolean,
-      default: false
-    },
-    cartTotalLength: Number
+    cartTotalLength: Number,
+    preHeadHidden: Boolean
   }
 })
 export default class Navbar extends Vue {
   searchQuery: string = '';
-  public modal = false;
+  preHeadHidden: boolean = true
 
   $refs!: {
     mainToggleButton: HTMLElement;
@@ -193,11 +190,13 @@ export default class Navbar extends Vue {
 <style lang="scss" scoped>
   .main-navbar{
     padding: 0!important;
-    background-color: $primary-color-2;
+    background-color: $color-palette-main-secondary;
+    transition: all 0.3s ease-in-out;
+    border-bottom: 1px solid $color-palette-main-third;
   }
   .btn-w-effect {
     position: relative;
-    color: $primary-color-4;
+    color: $color-palette-main-fifth;
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -206,7 +205,7 @@ export default class Navbar extends Vue {
     justify-content: center;
     align-items: center;
     span {
-      color: $primary-color-4;
+      color: $color-palette-main-fifth;
     }
     &:hover {
       border: none;
@@ -233,7 +232,7 @@ export default class Navbar extends Vue {
     display: block;
     position: absolute;
     width: 1px;
-    background-color: $primary-color-1;
+    background-color: $color-palette-main-primary;
     left: 0;
     bottom: 0;
   }
@@ -242,7 +241,7 @@ export default class Navbar extends Vue {
     display: block;
     position: absolute;
     height: 1px;
-    background-color: $primary-color-1;
+    background-color: $color-palette-main-primary;
     left: 0;
     top: 0;
   }
@@ -251,7 +250,7 @@ export default class Navbar extends Vue {
     display: block;
     position: absolute;
     width: 1px;
-    background-color: $primary-color-1;
+    background-color: $color-palette-main-primary;
     right: 0;
     top: 0;
   }
@@ -260,7 +259,7 @@ export default class Navbar extends Vue {
     display: block;
     position: absolute;
     height: 1px;
-    background-color: $primary-color-1;
+    background-color: $color-palette-main-primary;
     right: 0;
     bottom: 0;
   }
@@ -281,7 +280,7 @@ export default class Navbar extends Vue {
   }
   .products-header {
     position: relative;
-    color: $primary-color-4;
+    color: $color-palette-main-fourth;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -300,7 +299,7 @@ export default class Navbar extends Vue {
         justify-content: center;
         align-items: center;
         span.title {
-          color: $primary-color-4;
+          color: $color-palette-main-fifth;
         }
       }
     }
@@ -364,7 +363,7 @@ export default class Navbar extends Vue {
   }
   .blog-header {
     position: relative;
-    color: $primary-color-4;
+    color: $color-palette-main-fourth;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -378,7 +377,7 @@ export default class Navbar extends Vue {
       width: 100%;
       height: 100%;
       &:hover{
-        color: $primary-color-4;
+        color: $color-palette-main-fourth;
       }
       span{
         font-weight: 500;
@@ -393,17 +392,18 @@ export default class Navbar extends Vue {
   }
   .search-header {
     position: relative;
-    color: $primary-color-4;
+    color: $color-palette-main-fourth;
     display: grid;
     .search-buttons-container {
       display: grid;
       grid-template-columns: auto 25%;
-      background: $primary-color-7;
+      background: $color-palette-main-fourth;
       border-radius: 10px;
       justify-self: center;
       align-self: center;
+      border: 1px solid $color-palette-main-third;
       &:hover {
-        border: 1px solid $primary-color-1;
+        border: 1px solid $color-palette-main-primary;
         border-radius: 10px;
       }
       input:focus-visible {
@@ -422,8 +422,8 @@ export default class Navbar extends Vue {
         margin-bottom: 6px;
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
-        background-color: $primary-color-4;
-        border-left: 2px solid $primary-color-4;
+        background-color: $color-palette-main-fourth;
+        border-left: 2px solid $color-palette-main-fourth;
       }
     }
 
@@ -432,7 +432,7 @@ export default class Navbar extends Vue {
   .navigation-header {
     position: relative;
     text-align: center;
-    color: $primary-color-4;
+    color: $color-palette-main-fourth;
     display: grid;
     grid-template-columns: repeat(3,1fr);
     justify-content: center;
@@ -449,10 +449,10 @@ export default class Navbar extends Vue {
       font-weight: 500;
       width: 20px;
       height: 20px;
-      background: $primary-color-4;
+      background: $color-palette-main-fifth;
       border-radius: 100%;
       text-align: center;
-      color: $primary-color-2;
+      color: $color-palette-main-secondary;
       line-height: 20px;
       @media screen and (max-width: 990px) {
         width: 14px;
@@ -576,7 +576,9 @@ export default class Navbar extends Vue {
     @extend .animated-background;
   }
 
-
+  .predeader--hidden-nav {
+    transform: translate3d(0, -34%, 0);
+  }
 
 </style>
 

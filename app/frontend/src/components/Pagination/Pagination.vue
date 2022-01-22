@@ -247,7 +247,7 @@ export default class Pagination extends Vue {
     display: inline-block;
   }
   .active {
-    background-color: $primary-color-1;
-    color: $primary-color-4;
+    background-color: $color-palette-main-primary;
+    color: $color-palette-main-fifth;
   }
 </style>

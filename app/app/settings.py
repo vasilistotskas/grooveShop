@@ -70,7 +70,8 @@ THIRD_PARTY_APPS = [
     'graphene_django',
     'djoser',
     'mptt',
-    'tinymce'
+    'tinymce',
+    'django_filters'
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
@@ -229,6 +230,7 @@ TINYMCE_DEFAULT_CONFIG = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'COERCE_DECIMAL_TO_STRING': os.environ.get('COERCE_DECIMAL_TO_STRING'),
 }
 

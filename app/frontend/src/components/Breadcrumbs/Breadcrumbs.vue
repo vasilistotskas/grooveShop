@@ -59,10 +59,10 @@ export default class Breadcrumbs extends Vue {
     cursor: pointer;
     display: inline-flex;
     &:hover {
-      color: $primary-color-4;
+      color: $color-palette-main-fourth;
     }
     a {
-      color: $primary-color-3!important;
+      color: $color-palette-main-third!important;
     }
     a.router-link-exact-active {
       span.breadcrumb__title {

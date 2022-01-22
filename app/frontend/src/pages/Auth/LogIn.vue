@@ -222,12 +222,12 @@ export default class LogIn extends Vue {
       }
       .grid-item-two {
         a {
-          color: $primary-color-4;
+          color: $color-palette-main-fifth;
           font-weight: 500;
           font-size: 17px;
           &:hover {
             cursor: pointer;
-            color:  $primary-color-1!important;
+            color:  $color-palette-main-primary!important;
           }
         }
       }
@@ -237,7 +237,7 @@ export default class LogIn extends Vue {
       grid-template-columns: repeat(2,1fr);
       gap: 5px;
       a.btn {
-        background: $primary-color-6;
+        background: $color-palette-main-fourth;
         padding: 5px;
         border-radius: 5px;
       }
@@ -245,12 +245,12 @@ export default class LogIn extends Vue {
   }
   .login-register-field {
     a {
-      color: $primary-color-4;
+      color: $color-palette-main-fourth;
       font-weight: 500;
       font-size: 16px;
       &:hover {
         cursor: pointer;
-        color:  $primary-color-1!important;
+        color:  $color-palette-main-primary!important;
       }
     }
   }

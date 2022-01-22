@@ -101,13 +101,13 @@ export default class CartItemVue extends Vue {
     display: grid;
     grid-template-columns: 45% 18% 18% 19%;
     position: relative;
-    background-color: $primary-color-4;
+    background-color: $color-palette-main-fourth;
     border-radius: 5px;
     align-items: center;
     justify-items: center;
     padding: 5px;
     a {
-      color: $primary-color-2;
+      color: $color-palette-main-secondary;
     }
     &-item-one {
       width: 100%;
@@ -121,18 +121,26 @@ export default class CartItemVue extends Vue {
         }
       }
     }
+    &-item-two {
+      color: $color-palette-main-fifth;
+    }
     &-item-three {
       grid-template-columns: repeat(3, 1fr);
       display: grid;
       align-items: center;
       justify-items: center;
+      color: $color-palette-main-fifth;
       a {
         font-size: 14px;
         padding: 4px 10px;
       }
     }
+    &-item-four {
+      color: $color-palette-main-fifth;
+    }
     &-item-five {
       position: absolute;
+      color: $color-palette-main-fifth;
       right: 30px;
     }
   }

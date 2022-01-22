@@ -4,7 +4,7 @@
     <div class="card password-reset-card">
       <div class="card-body card-body-border-top">
         <div>
-          <font-awesome-icon :icon="lockIcon" :style="{ color: '#5A5A5A' }" size="4x" />
+          <font-awesome-icon :icon="lockIcon" :style="{ color: '#0d1117' }" size="4x" />
         </div>
         <h1>Forgot Password?</h1>
         <p>You can reset your password here.</p>
@@ -16,7 +16,7 @@
             <div class="form-group">
               <div class="input-group-w-addon">
                 <span class="input-group-addon">
-                  <font-awesome-icon :icon="envelopeIcon" :style="{ color: '#080808' }" />
+                  <font-awesome-icon :icon="envelopeIcon" :style="{ color: '#dbdfe3' }" />
                 </span>
                 <input id="email" v-model="inputs.email" class="form-control" name="email" placeholder="email"
                        type="email"
@@ -115,7 +115,7 @@ form input {
   display: block
 }
 .error {
-  color: $primary-color-1;
+  color: $color-palette-main-primary;
   font-size: 12px;
 }
 #password-reset-view {
@@ -126,7 +126,7 @@ form input {
 }
 .password-reset-message {
   span {
-    color: $primary-color-6;
+    color: $color-palette-main-fifth;
   }
 }
 </style>

@@ -159,7 +159,7 @@ export default class ProductReviewCard extends Vue {
     .user-review-product-count {
       span {
         font-size: 14px;
-        color: $primary-color-3;
+        color: $color-palette-main-third;
       }
     }
   }
@@ -184,7 +184,7 @@ export default class ProductReviewCard extends Vue {
       margin-right: 0;
       height: 34px;
       line-height: 34px;
-      color: #bbb;
+      color: $color-palette-main-fifth;
       font-size: 20px;
       display: inline-block;
       width: 1em;
@@ -240,7 +240,7 @@ export default class ProductReviewCard extends Vue {
       }
       span {
         font-size: 13px;
-        color: $primary-color-3;
+        color: $color-palette-main-fifth;
       }
     }
   }
@@ -258,7 +258,7 @@ export default class ProductReviewCard extends Vue {
       border-radius: 8px;
       -webkit-box-shadow: 0 2px 4px rgb(112 112 112 / 33%);
       box-shadow: 0 2px 4px rgb(112 112 112 / 33%);
-      background: #f8f8f8;
+      background: $color-palette-main-secondary;
       padding: 20px 60px 20px 36px;
       -webkit-animation: scaleFade .15s;
       animation: scaleFade .15s;
@@ -274,10 +274,10 @@ export default class ProductReviewCard extends Vue {
         display: block;
         position: relative;
         padding: 8px 0 7px;
-        color: $primary-color-3;
+        color: $color-palette-main-third;
         -webkit-tap-highlight-color: transparent;
         &:hover {
-          color: $primary-color-5;
+          color: $color-palette-main-fourth;
           cursor: pointer;
         }
       }

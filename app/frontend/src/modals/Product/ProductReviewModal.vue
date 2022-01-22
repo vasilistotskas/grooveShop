@@ -8,7 +8,7 @@
           <div class="modal-content">
             <div class="modal-header mb-3">
               <h5 id="exampleModalLabel" class="modal-title">Write a review for product <strong>Adidas Shoes</strong></h5>
-              <font-awesome-icon :icon="writeReviewIcon" :style="{ color: '#191919' }" size="lg" />
+              <font-awesome-icon :icon="writeReviewIcon" :style="{ color: '#dbdfe3' }" size="lg" />
             </div>
             <div class="modal-body">
               <!-- Product Rating -->
@@ -359,7 +359,7 @@ export default class ProductReviewModal extends Vue {
       }
 
       &-background {
-        color: $primary-color-3;
+        color: $color-palette-main-third;
       }
     }
   }
