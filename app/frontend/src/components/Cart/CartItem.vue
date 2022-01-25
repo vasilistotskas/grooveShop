@@ -11,17 +11,17 @@
     <div class="grid-container-cart-item-two">${{ item.product.price }}</div>
     <div class="grid-container-cart-item-three">
       <a class="btn-outline-primary-main" data-mdb-ripple-color="dark" type="button" @click="decrementQuantity(item)">
-        <font-awesome-icon :icon="minusIcon" :style="{ color: '#3b3b3b' }" size="lg" />
+        <font-awesome-icon :icon="minusIcon" size="lg" />
       </a>
       {{ item.quantity }}
       <a class="btn-outline-primary-main" data-mdb-ripple-color="dark" type="button" @click="incrementQuantity(item)">
-        <font-awesome-icon :icon="plusIcon" :style="{ color: '#3b3b3b' }" size="lg" />
+        <font-awesome-icon :icon="plusIcon" size="lg" />
       </a>
     </div>
     <div class="grid-container-cart-item-four">${{ itemTotal.toFixed(2) }}</div>
     <div class="grid-container-cart-item-five">
       <button class="btn-outline-primary-main" type="button" @click="removeFromCart(item)">
-        <font-awesome-icon :icon="trashIcon" :style="{ color: '#3b3b3b' }" />
+        <font-awesome-icon :icon="trashIcon"/>
       </button>
     </div>
   </div>
@@ -101,13 +101,13 @@ export default class CartItemVue extends Vue {
     display: grid;
     grid-template-columns: 45% 18% 18% 19%;
     position: relative;
-    background-color: $color-palette-main-fourth;
+    background-color: var(--cp-palette-main-fourth);
     border-radius: 5px;
     align-items: center;
     justify-items: center;
     padding: 5px;
     a {
-      color: $color-palette-main-secondary;
+      color: var(--cp-palette-main-secondary);
     }
     &-item-one {
       width: 100%;
@@ -122,25 +122,25 @@ export default class CartItemVue extends Vue {
       }
     }
     &-item-two {
-      color: $color-palette-main-fifth;
+      color: var(--cp-palette-main-fifth);
     }
     &-item-three {
       grid-template-columns: repeat(3, 1fr);
       display: grid;
       align-items: center;
       justify-items: center;
-      color: $color-palette-main-fifth;
+      color: var(--cp-palette-main-fifth);
       a {
         font-size: 14px;
         padding: 4px 10px;
       }
     }
     &-item-four {
-      color: $color-palette-main-fifth;
+      color: var(--cp-palette-main-fifth);
     }
     &-item-five {
       position: absolute;
-      color: $color-palette-main-fifth;
+      color: var(--cp-palette-main-fifth);
       right: 30px;
     }
   }

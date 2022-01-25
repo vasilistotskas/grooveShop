@@ -6,7 +6,7 @@
       <span class="sidebar-blog-title tags">Tags:</span>
       <span v-for="tag in tags" :key="tag.id">
         <RouterLink :to="`/tag/${tag.name}`" aria-label="Blog Tag">
-          <font-awesome-icon :icon="tagIcon" :style="{ color: '#dbdfe3' }" />
+          <font-awesome-icon :icon="tagIcon"/>
           {{ tag.name }}
         </RouterLink>
       </span>
@@ -15,7 +15,7 @@
       <span class="sidebar-blog-title authors">Authors:</span>
       <span v-for="author in authors" :key="author.id">
         <RouterLink :to="`/author/${author.user.email}`" aria-label="Blog Author">
-          <font-awesome-icon :icon="authorIcon" :style="{ color: '#dbdfe3' }" />
+          <font-awesome-icon :icon="authorIcon"/>
           {{ displayName(author) }}
         </RouterLink>
       </span>
@@ -75,16 +75,16 @@ export default class BlogSidebar extends Vue {
         align-self: center;
         transition: all 0.3s ease-in-out;
         &:not(.sidebar-blog-title) {
-          border: 1px solid $color-palette-main-third;
+          border: 1px solid var(--cp-palette-main-third);
           padding: 7px 12px;
           border-radius: 5px;
           &:hover {
-            background: $color-palette-main-secondary;
+            background: var(--cp-palette-main-secondary);
             transition: all 0.3s ease-in-out;
             a {
               transition: all 0.3s ease-in-out;
               svg {
-                color: $color-palette-main-primary!important;
+                color: var(--cp-palette-main-primary)!important;
                 transition: all 0.3s ease-in-out;
               }
             }

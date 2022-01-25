@@ -58,8 +58,8 @@
             <font-awesome-icon v-else :icon="heartIcon" :style="{ color: '#981d1dc9' }" size="2x" />
           </RouterLink>
           <RouterLink v-else aria-label="Favourites" to="/log-in">
-            <font-awesome-icon v-if="isMobile" :icon="heartIcon" :style="{ color: 'white' }" />
-            <font-awesome-icon v-else :icon="heartIcon" :style="{ color: 'white' }" size="2x" />
+            <font-awesome-icon v-if="isMobile" :icon="heartIcon"/>
+            <font-awesome-icon v-else :icon="heartIcon" size="2x" />
           </RouterLink>
         </div>
         <div class="navigation-header-part">
@@ -68,33 +68,29 @@
             <font-awesome-icon v-else :icon="userIcon" :style="{ color: '#981d1dc9' }" size="2x" />
           </RouterLink>
           <RouterLink v-else aria-label="Account" to="/log-in">
-            <font-awesome-icon v-if="isMobile" :icon="userIcon" :style="{ color: 'white' }" />
-            <font-awesome-icon v-else :icon="userIcon" :style="{ color: 'white' }" size="2x" />
+            <font-awesome-icon v-if="isMobile" :icon="userIcon" />
+            <font-awesome-icon v-else :icon="userIcon" size="2x" />
           </RouterLink>
         </div>
         <div class="navigation-header-part">
           <RouterLink aria-label="Cart" to="/cart">
-            <font-awesome-icon v-if="isMobile" :icon="shoppingCartIcon" :style="{ color: 'white' }" />
-            <font-awesome-icon v-else :icon="shoppingCartIcon" :style="{ color: 'white' }" size="2x" />
+            <font-awesome-icon v-if="isMobile" :icon="shoppingCartIcon"/>
+            <font-awesome-icon v-else :icon="shoppingCartIcon" size="2x" />
             <span class="cart-total-length">{{ cartTotalLength }}</span>
           </RouterLink>
         </div>
+        <div class="navigation-header-part toggle-dark-mode-part">
+          <a class="toggle-dark-mode-button"
+             href="javascript:void(0);"
+             :title="'Toggle Dark Mode'"
+             :aria-label="'Toggle Dark Mode'"
+             @click="toggleThemeMode()"
+          >
+            <font-awesome-icon :icon="themeIconClass" size="lg"/>
+          </a>
+        </div>
       </div>
-
-      <div>
-
-
-      </div>
-        <a class="toggle-dark-mode button"
-           href="javascript:void(0);"
-           :title="'Toggle Dark Mode'"
-           :aria-label="'Toggle Dark Mode'"
-           @click="toggleThemeMode()"
-        >
-          <font-awesome-icon :icon="themeIconClass" :style="{ color: '#3b3b3b' }" />
-        </a>
     </div>
-
     <!--    <transition name="fade">-->
     <NavbarCategories v-if="categoriesTreeData && Object.keys(categoriesTreeData).length > 0 && !navbarMenuHidden"
                       :categories-tree="categoriesTreeData"
@@ -195,6 +191,8 @@ export default class Navbar extends Vue {
     this.$watch(
         () => this.getThemeMode,
         (newThemeMode: AppSettingsThemeModeOption, oldThemeMode: AppSettingsThemeModeOption) => {
+          console.log(newThemeMode)
+          console.log(oldThemeMode)
           this.switchThemeModeFromTo(oldThemeMode, newThemeMode);
         }
     );
@@ -232,7 +230,8 @@ export default class Navbar extends Vue {
     )
   }
 
-  public updateThemeMode(themeMode:AppSettingsThemeModeOption = AppSettingsThemeModeOption.Dark): void {
+  // @ts-ignore
+  public updateThemeMode(themeMode:AppSettingsThemeModeOption = null): void {
     if (null === themeMode) {
       themeMode = this.getThemeMode
     }
@@ -267,7 +266,6 @@ export default class Navbar extends Vue {
 
   public updateMetaTagElement(metaName: string, metaAttribute: string, newValue: string): void {
     const metaTagElement = <Element> document.querySelector(`meta[name=${metaName}]`);
-    console.log(metaTagElement)
     metaTagElement.setAttribute(metaAttribute, newValue);
   }
 
@@ -277,13 +275,13 @@ export default class Navbar extends Vue {
 <style lang="scss" scoped>
   .main-navbar{
     padding: 0!important;
-    background-color: $color-palette-main-secondary;
+    background-color: var(--cp-palette-main-secondary);
     transition: all 0.3s ease-in-out;
-    border-bottom: 1px solid $color-palette-main-third;
+    border-bottom: 1px solid var(--cp-palette-main-third);
   }
   .btn-w-effect {
     position: relative;
-    color: $color-palette-main-fifth;
+    color: var(--cp-palette-main-fifth);
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -292,7 +290,7 @@ export default class Navbar extends Vue {
     justify-content: center;
     align-items: center;
     span {
-      color: $color-palette-main-fifth;
+      color: var(--cp-palette-main-fifth);
     }
     &:hover {
       border: none;
@@ -319,7 +317,7 @@ export default class Navbar extends Vue {
     display: block;
     position: absolute;
     width: 1px;
-    background-color: $color-palette-main-primary;
+    background-color: var(--cp-palette-main-primary);
     left: 0;
     bottom: 0;
   }
@@ -328,7 +326,7 @@ export default class Navbar extends Vue {
     display: block;
     position: absolute;
     height: 1px;
-    background-color: $color-palette-main-primary;
+    background-color: var(--cp-palette-main-primary);
     left: 0;
     top: 0;
   }
@@ -337,7 +335,7 @@ export default class Navbar extends Vue {
     display: block;
     position: absolute;
     width: 1px;
-    background-color: $color-palette-main-primary;
+    background-color: var(--cp-palette-main-primary);
     right: 0;
     top: 0;
   }
@@ -346,7 +344,7 @@ export default class Navbar extends Vue {
     display: block;
     position: absolute;
     height: 1px;
-    background-color: $color-palette-main-primary;
+    background-color: var(--cp-palette-main-primary);
     right: 0;
     bottom: 0;
   }
@@ -367,7 +365,7 @@ export default class Navbar extends Vue {
   }
   .products-header {
     position: relative;
-    color: $color-palette-main-fourth;
+    color: var(--cp-palette-main-fifth);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -386,7 +384,7 @@ export default class Navbar extends Vue {
         justify-content: center;
         align-items: center;
         span.title {
-          color: $color-palette-main-fifth;
+          color: var(--cp-palette-main-fifth);
         }
       }
     }
@@ -412,7 +410,7 @@ export default class Navbar extends Vue {
     }
     .line {
       fill: none;
-      stroke: white;
+      stroke: var(--cp-palette-main-fifth);
       stroke-width: 6;
       transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
       stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -450,7 +448,7 @@ export default class Navbar extends Vue {
   }
   .blog-header {
     position: relative;
-    color: $color-palette-main-fourth;
+    color: var(--cp-palette-main-fifth);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -464,7 +462,7 @@ export default class Navbar extends Vue {
       width: 100%;
       height: 100%;
       &:hover{
-        color: $color-palette-main-fourth;
+        color: var(--cp-palette-main-fifth);
       }
       span{
         font-weight: 500;
@@ -479,18 +477,19 @@ export default class Navbar extends Vue {
   }
   .search-header {
     position: relative;
-    color: $color-palette-main-fourth;
+    color: var(--cp-palette-main-fifth);
     display: grid;
     .search-buttons-container {
       display: grid;
       grid-template-columns: auto 25%;
-      background: $color-palette-main-fourth;
+      background: var(--cp-palette-main-fourth);
       border-radius: 10px;
       justify-self: center;
       align-self: center;
-      border: 1px solid $color-palette-main-third;
+      border: 1px solid var(--cp-palette-main-third);
+      transition: all 0.3s ease-in-out;
       &:hover {
-        border: 1px solid $color-palette-main-primary;
+        border: 1px solid var(--cp-palette-main-primary);
         border-radius: 10px;
       }
       input:focus-visible {
@@ -501,6 +500,10 @@ export default class Navbar extends Vue {
         border-radius: unset;
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
+        transition: all 0.3s ease-in-out;
+      }
+      button {
+        transition: all 0.3s ease-in-out;
       }
       .btn {
         border-radius: unset;
@@ -509,8 +512,8 @@ export default class Navbar extends Vue {
         margin-bottom: 6px;
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
-        background-color: $color-palette-main-fourth;
-        border-left: 2px solid $color-palette-main-fourth;
+        background-color: var(--cp-palette-main-fifth);
+        border-left: 2px solid var(--cp-palette-main-fifth);
       }
     }
 
@@ -519,7 +522,7 @@ export default class Navbar extends Vue {
   .navigation-header {
     position: relative;
     text-align: center;
-    color: $color-palette-main-fourth;
+    color: var(--cp-palette-main-fifth);
     display: grid;
     grid-template-columns: repeat(3,1fr);
     justify-content: center;
@@ -527,7 +530,13 @@ export default class Navbar extends Vue {
     width: 100%;
     height: 100%;
     .navigation-header-part {
-      position: relative;
+      &:not(&.toggle-dark-mode-part) {
+        position: relative;
+      }
+    }
+    .toggle-dark-mode-part {
+      position: absolute;
+      right: -75px;
     }
     .cart-total-length {
       position: absolute;
@@ -536,10 +545,10 @@ export default class Navbar extends Vue {
       font-weight: 500;
       width: 20px;
       height: 20px;
-      background: $color-palette-main-fifth;
+      background: var(--cp-palette-main-fifth);
       border-radius: 100%;
       text-align: center;
-      color: $color-palette-main-secondary;
+      color: var(--cp-palette-main-secondary);
       line-height: 20px;
       @media screen and (max-width: 990px) {
         width: 14px;

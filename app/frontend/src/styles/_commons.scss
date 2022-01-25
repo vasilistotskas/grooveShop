@@ -6,11 +6,11 @@
   --cp-palette-main-dark-fourth: #{$color-palette-main-fourth};
   --cp-palette-main-dark-fifth: #{$color-palette-main-fifth};
   // WHITE
-  --cp-palette-main-white-primary: #{$color-palette-main-primary-white};
-  --cp-palette-main-white-secondary: #{$color-palette-main-secondary-white};
-  --cp-palette-main-white-third: #{$color-palette-main-third-white};
-  --cp-palette-main-white-fourth: #{$color-palette-main-fourth-white};
-  --cp-palette-main-white-fifth: #{$color-palette-main-fifth-white};
+  --cp-palette-main-light-primary: #{$color-palette-main-primary-light};
+  --cp-palette-main-light-secondary: #{$color-palette-main-secondary-light};
+  --cp-palette-main-light-third: #{$color-palette-main-third-light};
+  --cp-palette-main-light-fourth: #{$color-palette-main-fourth-light};
+  --cp-palette-main-light-fifth: #{$color-palette-main-fifth-light};
 }
 
 
@@ -21,13 +21,13 @@ body {
   --cp-palette-main-third: var(--cp-palette-main-dark-third);
   --cp-palette-main-fourth: var(--cp-palette-main-dark-fourth);
   --cp-palette-main-fifth: var(--cp-palette-main-dark-fifth);
-  &.white {
-    // WHITE
-    --cp-palette-main-primary: var(--cp-palette-main-white-primary);
-    --cp-palette-main-secondary: var(--cp-palette-main-white-secondary);
-    --cp-palette-main-third: var(--cp-palette-main-white-third);
-    --cp-palette-main-fourth: var(--cp-palette-main-white-fourth);
-    --cp-palette-main-fifth: var(--cp-palette-main-white-fifth);
+  &.light {
+    // LIGHT
+    --cp-palette-main-primary: var(--cp-palette-main-light-primary);
+    --cp-palette-main-secondary: var(--cp-palette-main-light-secondary);
+    --cp-palette-main-third: var(--cp-palette-main-light-third);
+    --cp-palette-main-fourth: var(--cp-palette-main-light-fourth);
+    --cp-palette-main-fifth: var(--cp-palette-main-light-fifth);
   }
   background-color: var(--cp-palette-main-fourth);
   margin: 0 !important;
@@ -58,19 +58,19 @@ a {
   text-decoration: none !important;
   &:hover {
     transition: all 0.3s ease-in-out;
-    color: $color-palette-main-fifth;
+    color: var(--cp-palette-main-fifth);
   }
 }
 
 a, p, span, label, h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
-  color: $color-palette-main-fifth;
+  color: var(--cp-palette-main-fifth);
 }
 
 footer {
   a, p, span, label, h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
-    color: $color-palette-main-fifth;
+    color: var(--cp-palette-main-fifth);
   }
 }
 
@@ -78,8 +78,8 @@ textarea {
   font-size: Max(16px, 1em);
   font-family: inherit;
   padding: 0.25em 0.5em;
-  background-color: $color-palette-main-fifth;
-  border: 2px solid $color-palette-main-third;
+  background-color: var(--cp-palette-main-fifth);
+  border: 2px solid var(--cp-palette-main-third);
   border-radius: 4px;
   transition: 180ms box-shadow ease-in-out;
   resize: vertical;
@@ -102,14 +102,14 @@ input:focus-visible {
   padding: 11px 12px;
   font-size: 14px;
   line-height: 1.428571429;
-  color: $color-palette-main-third;
+  color: var(--cp-palette-main-fifth);
   vertical-align: middle;
-  background-color: $color-palette-main-fourth;
-  border: 1px solid $color-palette-main-third;
+  background-color: var(--cp-palette-main-fourth);
+  border: 1px solid var(--cp-palette-main-third);
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
   box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
-  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;
+  transition: all 0.3s ease-in-out;
   background-image: none;
 }
 
@@ -128,7 +128,7 @@ input:focus-visible {
 }
 
 table {
-  color: $color-palette-main-fourth !important;
+  color: var(--cp-palette-main-fourth)!important;
 }
 
 .plr-15 {
@@ -307,27 +307,27 @@ table {
     grid-template-rows: repeat(1, 1fr);
     text-align: center;
     justify-content: center;
-    background: $color-palette-main-fourth;
+    background: var(--cp-palette-main-secondary);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     padding: 10px;
 
     a, p, span, label, h1, h2, h3, h4, h5, h6 {
-      color: $color-palette-main-fifth;
+      color: var(--cp-palette-main-fifth);
     }
 
     .card-title {
-      color: $color-palette-main-fifth;
+      color: var(--cp-palette-main-fifth);
       display: grid
     }
 
     .card-text {
-      color: $color-palette-main-fifth;
+      color: var(--cp-palette-main-fifth);
     }
 
     .btn-product-card {
-      color: $color-palette-main-fifth;
-      background-color: $color-palette-main-third;
+      color: var(--cp-palette-main-fifth);
+      background-color: var(--cp-palette-main-third);
       border-color: rgba(240, 246, 252, 0.1);
       box-shadow: 0 0 transparent,0 0 transparent;
       transition: .2s cubic-bezier(0.3, 0, 0.5, 1);
@@ -390,7 +390,7 @@ table {
   }
 
   .product-review-main-card, .product-card-main {
-    background-color: $color-palette-main-fourth !important;
+    background-color: var(--cp-palette-main-fourth)!important;
   }
 }
 
@@ -412,7 +412,7 @@ table {
   padding: 20px 35px 35px;
 
   h2 {
-    color: $color-palette-main-fifth;
+    color: var(--cp-palette-main-fifth);
   }
 }
 
@@ -493,10 +493,10 @@ table {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: $color-palette-main-fifth;
-  background-color: $color-palette-main-fourth;
+  color: var(--cp-palette-main-fifth);
+  background-color: var(--cp-palette-main-fourth);
   background-clip: padding-box;
-  border: 1px solid $color-palette-main-third;
+  border: 1px solid var(--cp-palette-main-third);
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -537,7 +537,7 @@ table {
   position: fixed;
   top: 30%;
   z-index: 13;
-  border: 1px solid $color-palette-main-third;
+  border: 1px solid var(--cp-palette-main-third);
   li {
     &:first-child {
       a {
@@ -551,8 +551,8 @@ table {
     }
   }
   a {
-    background: $color-palette-main-fourth;
-    color: $color-palette-main-fourth;
+    background: var(--cp-palette-main-fourth);
+    color: var(--cp-palette-main-fourth);
     text-decoration: none;
     display: block;
     height: 40px;
@@ -676,32 +676,31 @@ table {
   }
 
   &-one {
-    color: $color-palette-main-fifth;
-    border: 1px solid $color-palette-main-third;
-    background-color: $color-palette-main-third;
+    color: var(--cp-palette-main-fifth);
+    border: 1px solid var(--cp-palette-main-third);
+    background-color: var(--cp-palette-main-third);
 
     a {
-      color: $color-palette-main-fifth;
+      color: var(--cp-palette-main-fifth);
     }
   }
 
   &-two {
-    color: $color-palette-main-fifth;
-    border: $color-palette-main-primary;
-    background-color: $color-palette-main-primary;
+    color: var(--cp-palette-main-fifth);
+    border: var(--cp-palette-main-primary);
+    background-color: var(--cp-palette-main-primary);
 
     a {
-      color: $color-palette-main-fifth;
+      color: var(--cp-palette-main-fifth);
     }
   }
 
   &-three {
-    color: $color-palette-main-fourth;
-    border: 1px solid rgba(232, 232, 232, 0.7);
-    background-color: $color-palette-main-fifth;
-
+    color: var(--cp-palette-main-fifth);
+    border: 1px solid var(--cp-palette-main-third);
+    background-color: var(--cp-palette-main-third);
     a {
-      color: $color-palette-main-fifth;
+      color: var(--cp-palette-main-fifth);
     }
   }
 
@@ -718,9 +717,9 @@ table {
   gap: 20px 15px;
   align-items: center;
   border-radius: 8px;
-  background-color: $color-palette-main-fourth;
+  background-color: var(--cp-palette-main-fourth);
   padding: 30px;
-  border: 1px solid $color-palette-main-third;
+  border: 1px solid var(--cp-palette-main-third);
   @media screen and (max-width: 1200px) {
     grid-template-columns: 100px auto;
   }
@@ -731,7 +730,7 @@ table {
   display: grid;
   border: 1px solid transparent;
   border-radius: 5px;
-  border: 1px solid $color-palette-main-third;
+  border: 1px solid var(--cp-palette-main-third);
   &:hover {
     border: 1px solid #FD0002e0;
     border-radius: 5px;
@@ -745,10 +744,10 @@ table {
     font-size: 14px;
     font-weight: 400;
     line-height: 1;
-    color: $color-palette-main-fifth;
+    color: var(--cp-palette-main-fifth);
     text-align: center;
-    background-color: $color-palette-main-fourth;
-    border: 1px solid $color-palette-main-third;
+    background-color: var(--cp-palette-main-fifth);
+    border: 1px solid var(--cp-palette-main-third);
     white-space: nowrap;
     vertical-align: middle;
     border: unset;
@@ -767,7 +766,7 @@ table {
 .description {
   p {
     letter-spacing: .5px;
-    color: $color-palette-main-fifth;
+    color: var(--cp-palette-main-fifth);
     line-height: 22px;
   }
 }

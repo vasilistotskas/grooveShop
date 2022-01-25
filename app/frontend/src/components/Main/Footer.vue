@@ -116,13 +116,13 @@ export default class Footer extends Vue {
 <style lang="scss" scoped>
 
   .main-footer{
-    border-top: 1px solid $color-palette-main-third;
-    background-color: $color-palette-main-secondary;
+    border-top: 1px solid var(--cp-palette-main-third);
+    background-color: var(--cp-palette-main-secondary);
   }
   .main-copyright{
     text-align: center;
     padding: 5px;
-    border-top: 1px solid $color-palette-main-third;
+    border-top: 1px solid var(--cp-palette-main-third);
     span {
       font-size: 12px;
     }

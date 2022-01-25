@@ -483,11 +483,11 @@ export default class Checkout extends Vue {
   gap: 25px;
 
   a, h2 {
-    color: $color-palette-main-fifth;
+    color: var(--cp-palette-main-fifth);
   }
 
   .checkout-grid-order-user-details, .checkout-grid-order-info {
-    background-color: $color-palette-main-secondary;
+    background-color: var(--cp-palette-main-secondary);
     padding: 15px 30px 30px;
     border-radius: 10px;
   }
@@ -501,7 +501,7 @@ export default class Checkout extends Vue {
   }
 
   .checkout-grid-title {
-    border-bottom: 2px solid $color-palette-main-third;
+    border-bottom: 2px solid var(--cp-palette-main-third);
     h2.title {
       padding-bottom: 10px;
     }
@@ -534,7 +534,7 @@ export default class Checkout extends Vue {
         position: relative;
         display: grid;
         grid-template-columns: 30% 50% 20%;
-        background-color: $color-palette-main-fourth;
+        background-color: var(--cp-palette-main-fourth);
         &-product {
           &-image {
 
@@ -550,11 +550,11 @@ export default class Checkout extends Vue {
                 font-weight: 500;
               }
               &-price {
-                color: $color-palette-main-fifth;
+                color: var(--cp-palette-main-fifth);
                 font-size: 14px;
               }
               &-quantity {
-                color: $color-palette-main-fifth;
+                color: var(--cp-palette-main-fifth);
                 font-size: 15px;
               }
           }
@@ -567,7 +567,7 @@ export default class Checkout extends Vue {
             align-self: end;
             span {
               font-weight: 500;
-              color: $color-palette-main-fifth;
+              color: var(--cp-palette-main-fifth);
             }
           }
         }
@@ -579,7 +579,7 @@ export default class Checkout extends Vue {
         grid-template-columns: repeat(2, 1fr);
         margin-top: 15px;
         span {
-          color: $color-palette-main-fifth;
+          color: var(--cp-palette-main-fifth);
           font-weight: 500;
           font-size: 22px;
           &:first-child {
@@ -595,7 +595,7 @@ export default class Checkout extends Vue {
 
   .checkout-grid-content {
     display: grid;
-
+    background-color: transparent;
     button {
       justify-self: end;
       align-self: end;

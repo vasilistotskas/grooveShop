@@ -87,12 +87,12 @@ export default class CartVue extends Vue {
   .cart-grid-container {
     display: grid;
     grid-template-rows: minmax(90px, 1fr);
-    background-color: $color-palette-main-secondary;
+    background-color: var(--cp-palette-main-secondary);
     border-radius: 10px;
     padding: 15px 30px 30px;
     gap: 25px;
     h2 {
-      color: $color-palette-main-fifth;
+      color: var(--cp-palette-main-fifth);
     }
     .grid-container-item {
       &-one {
@@ -108,7 +108,7 @@ export default class CartVue extends Vue {
           align-items: center;
           justify-items: center;
           div {
-            color: $color-palette-main-fifth;
+            color: var(--cp-palette-main-fifth);
             font-weight: 500;
           }
         }
@@ -130,6 +130,6 @@ export default class CartVue extends Vue {
     }
   }
   .grid-container-child-one {
-    color: $color-palette-main-fifth;
+    color: var(--cp-palette-main-fifth);
   }
 </style>

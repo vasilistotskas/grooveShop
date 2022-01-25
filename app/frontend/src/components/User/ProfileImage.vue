@@ -21,7 +21,7 @@
               type="file"
               @change="updateUserImage"
             />
-            <font-awesome-icon :icon="cameraIcon" :style="{ color: 'white' }" size="3x" />
+            <font-awesome-icon :icon="cameraIcon" size="3x" />
           </label>
         </div>
         <div class="profile-fullname-part">
@@ -74,12 +74,12 @@ export default class ProfileImage extends Vue {
   .profile-image-grid {
     &-container {
       display: grid;
-      border-bottom: 1px solid $color-palette-main-fourth;
+      border-bottom: 1px solid var(--cp-palette-main-fourth);
     }
     &-form {
       display: grid;
       grid-template-rows: minmax(90px, 1fr);
-      background-color: $color-palette-main-secondary;
+      background-color: var(--cp-palette-main-secondary);
       border-radius: 10px;
       gap: 25px;
       justify-content: center;

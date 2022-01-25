@@ -41,7 +41,7 @@ export default defineComponent({
 
 .button {
   display: block;
-  color: $color-palette-main-fifth;
+  color: var(--cp-palette-main-fifth);
   outline: none;
   cursor: pointer;
   background: transparent;
@@ -54,15 +54,15 @@ export default defineComponent({
   transition: all 100ms;
 }
 .default {
-  background-color: $color-palette-main-fourth!important;
+  background-color: var(--cp-palette-main-fourth)!important;
 }
 .primary {
-  background-color: $color-palette-main-primary!important;
-  border-color: $color-palette-main-primary!important;
+  background-color: var(--cp-palette-main-primary)!important;
+  border-color: var(--cp-palette-main-primary)!important;
 }
 .primary-two {
-  background-color: $color-palette-main-third!important;
-  border-color: $color-palette-main-third!important;
+  background-color: var(--cp-palette-main-third)!important;
+  border-color: var(--cp-palette-main-third)!important;
 }
 .danger {
   background-color: $red-50;

@@ -125,8 +125,8 @@ export default class App extends Vue {
 }
 
 .btn-product-card {
-  color: $color-palette-main-fifth;
-  background-color: $color-palette-main-third;
+  color: var(--cp-palette-main-fifth);
+  background-color: var(--cp-palette-main-third);
   border-color: rgba(240, 246, 252, 0.1);
   box-shadow: 0 0 transparent, 0 0 transparent;
   transition: .2s cubic-bezier(0.3, 0, 0.5, 1);
@@ -135,24 +135,24 @@ export default class App extends Vue {
 
 .form-check-input-main {
   &:checked {
-    background-color: $color-palette-main-primary !important;
-    border-color: $color-palette-main-primary !important;
+    background-color: var(--cp-palette-main-primary) !important;
+    border-color: var(--cp-palette-main-primary) !important;
   }
 }
 
 .router-link-active {
-  color: $color-palette-main-primary !important;
+  color: var(--cp-palette-main-primary) !important;
 }
 
 .navbar-menu-grid-head {
   .router-link-active {
-    background-color: $color-palette-main-secondary;
+    background-color: var(--cp-palette-main-secondary);
   }
 }
 
 .cardSpecialEffect {
   position: relative;
-  color: $color-palette-main-fourth;
+  color: var(--cp-palette-main-fourth);
   padding: 5px;
   border-radius: 10px;
   font-size: 20px;
@@ -164,7 +164,7 @@ export default class App extends Vue {
   align-items: center;
 
   img {
-    background: $color-palette-main-fourth;
+    background: var(--cp-palette-main-fifth);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     display: block;
@@ -198,7 +198,7 @@ export default class App extends Vue {
     display: block;
     position: absolute;
     width: 1px;
-    background-color: $color-palette-main-primary;
+    background-color: var(--cp-palette-main-primary);
     left: 0;
     bottom: 0;
   }
@@ -208,7 +208,7 @@ export default class App extends Vue {
     display: block;
     position: absolute;
     height: 1px;
-    background-color: $color-palette-main-primary;
+    background-color: var(--cp-palette-main-primary);
     left: 0;
     top: 0;
   }
@@ -218,7 +218,7 @@ export default class App extends Vue {
     display: block;
     position: absolute;
     width: 1px;
-    background-color: $color-palette-main-primary;
+    background-color: var(--cp-palette-main-primary);
     right: 0;
     top: 0;
   }
@@ -228,7 +228,7 @@ export default class App extends Vue {
     display: block;
     position: absolute;
     height: 1px;
-    background-color: $color-palette-main-primary;
+    background-color: var(--cp-palette-main-primary);
     right: 0;
     bottom: 0;
   }

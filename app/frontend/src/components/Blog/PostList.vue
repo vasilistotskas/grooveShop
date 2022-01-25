@@ -108,7 +108,7 @@ export default class PostList extends Vue {
 <style lang="scss" scoped>
   .blog-card {
     small {
-      color: $color-palette-main-fourth;
+      color: var(--cp-palette-main-fifth);
     }
   }
   .blog-main-content {
@@ -133,14 +133,14 @@ export default class PostList extends Vue {
     padding: 0;
   }
   .post {
-    border-bottom: 1px solid $color-palette-main-fourth;
+    border-bottom: 1px solid var(--cp-palette-main-fifth);
     padding-bottom: 1rem;
   }
   .post__title {
     font-size: 1.25rem;
   }
   .post__description {
-    color: $color-palette-main-third;
+    color: var(--cp-palette-main-third);
     font-style: italic;
   }
   .post__tags {

@@ -101,7 +101,7 @@ export default class SocialSidebar extends Vue {
       transition: all 0.3s ease-in-out;
       svg {
         transition: all 0.3s ease-in-out;
-        background-color: $color-palette-main-fourth;
+        background-color: var(--cp-palette-main-fourth);
         transform: scale(1.01);
         box-shadow: 0 0 8px 1px #ffa1a1;
       }

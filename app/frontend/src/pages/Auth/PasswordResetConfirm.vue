@@ -4,7 +4,7 @@
     <div class="card password-reset-card">
       <div class="card-body card-body-border-top">
         <div>
-          <font-awesome-icon :icon="lockIcon" :style="{ color: '#0d1117' }" size="4x" />
+          <font-awesome-icon :icon="lockIcon" size="4x" />
         </div>
         <h1>Reset Password Confirm</h1>
         <template v-if="resetLoading">
@@ -15,7 +15,7 @@
             <div class="form-group">
               <div class="input-group-w-addon mb-1">
                 <span class="input-group-addon">
-                  <font-awesome-icon :icon="lockIcon" :style="{ color: '#dbdfe3' }" />
+                  <font-awesome-icon :icon="lockIcon" />
                 </span>
                 <input id="password1" v-model="inputs.password1" class="form-control" placeholder="password"
                        type="password"
@@ -23,7 +23,7 @@
               </div>
               <div class="input-group-w-addon">
                 <span class="input-group-addon">
-                  <font-awesome-icon :icon="lockIcon" :style="{ color: '#dbdfe3' }" />
+                  <font-awesome-icon :icon="lockIcon" />
                 </span>
                 <input id="password2" v-model="inputs.password2" class="form-control" placeholder="confirm password"
                        type="password"

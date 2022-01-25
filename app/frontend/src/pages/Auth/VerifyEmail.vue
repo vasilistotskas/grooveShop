@@ -96,25 +96,25 @@ export default class VerifyEmail extends Vue {
   }
   .activation-error {
     &-text {
-      color: $color-palette-main-fourth;
+      color: var(--cp-palette-main-fifth);
     }
     &-action {
-      color: $color-palette-main-secondary;
+      color: var(--cp-palette-main-secondary);
       font-weight: 500;
       font-size: 17px;
       &:hover {
         cursor: pointer;
-        color:  $color-palette-main-primary!important;
+        color:  var(--cp-palette-main-primary)!important;
       }
     }
   }
   .activation-complete-action {
-    color: $color-palette-main-secondary;
+    color: var(--cp-palette-main-secondary);
     font-weight: 500;
     font-size: 17px;
     &:hover {
       cursor: pointer;
-      color:  $color-palette-main-primary!important;
+      color:  var(--cp-palette-main-primary)!important;
     }
   }
 </style>

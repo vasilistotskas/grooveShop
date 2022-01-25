@@ -10,23 +10,23 @@
       <nav class="my-account-grid-navbar">
         <div id="navbarNavAccount" class="my-account-grid-navbar-paths">
           <RouterLink :to="{ name: 'Orders' }" aria-label="Orders" class="nav-link">
-            <font-awesome-icon :icon="truckIcon" :style="{ color: '#dbdfe3' }" size="1x" />
+            <font-awesome-icon :icon="truckIcon" size="1x" />
             <span>Orders</span>
           </RouterLink>
           <RouterLink :to="{ name: 'Favourites' }" aria-label="Favourites" class="nav-link">
-            <font-awesome-icon :icon="heartIcon" :style="{ color: '#dbdfe3' }" size="1x" />
+            <font-awesome-icon :icon="heartIcon" size="1x" />
             <span>Favourites</span>
           </RouterLink>
           <RouterLink :to="{ name: 'Reviews' }" aria-label="Reviews" class="nav-link">
-            <font-awesome-icon :icon="starIcon" :style="{ color: '#dbdfe3' }" size="1x" />
+            <font-awesome-icon :icon="starIcon" size="1x" />
             <span>Reviews</span>
           </RouterLink>
           <RouterLink :to="{ name: 'Settings' }" aria-label="Settings" class="nav-link">
-            <font-awesome-icon :icon="cogsIcon" :style="{ color: '#dbdfe3' }" size="1x" />
+            <font-awesome-icon :icon="cogsIcon" size="1x" />
             <span>Settings</span>
           </RouterLink>
           <RouterLink :to="{ name: 'Password' }" aria-label="Password" class="nav-link">
-            <font-awesome-icon :icon="lockIcon" :style="{ color: '#dbdfe3' }" size="1x" />
+            <font-awesome-icon :icon="lockIcon" size="1x" />
             <span>Password</span>
           </RouterLink>
         </div>
@@ -186,8 +186,8 @@ export default class MyAccount extends Vue {
     max-height: 520px;
     display: grid;
     grid-template-rows: 1fr 1fr;
-    background-color: $color-palette-main-secondary;
-    border: 1px solid $color-palette-main-third;
+    background-color: var(--cp-palette-main-secondary);
+    border: 1px solid var(--cp-palette-main-third);
     border-radius: 25px;
     padding: 20px;
     gap: 20px;
@@ -199,8 +199,8 @@ export default class MyAccount extends Vue {
     position: relative;
     height: max-content;
     grid-template-rows: 1fr;
-    background-color: $color-palette-main-secondary;
-    border: 1px solid $color-palette-main-third;
+    background-color: var(--cp-palette-main-secondary);
+    border: 1px solid var(--cp-palette-main-third);
     border-radius: 25px;
     padding: 20px 20px 60px;
     gap: 20px;
@@ -209,7 +209,7 @@ export default class MyAccount extends Vue {
 
   .my-account-grid-navbar {
     display: grid;
-    background-color: $color-palette-main-secondary;
+    background-color: var(--cp-palette-main-secondary);
     border-radius: 10px;
     gap: 15px;
     button.btn {
@@ -218,8 +218,8 @@ export default class MyAccount extends Vue {
       width: 40%;
       margin: 0 auto;
       border-radius: 35px;
-      background-color: $color-palette-main-primary;
-      color: $color-palette-main-fifth;
+      background-color: var(--cp-palette-main-primary);
+      color: var(--cp-palette-main-fifth);
     }
   }
 
@@ -227,7 +227,7 @@ export default class MyAccount extends Vue {
     display: grid;
     grid-template-rows: repeat(3, 1fr);
     gap: 10px;
-    background-color: $color-palette-main-secondary;
+    background-color: var(--cp-palette-main-secondary);
     padding-bottom: 20px;
     a {
       display: grid;
@@ -235,19 +235,19 @@ export default class MyAccount extends Vue {
       gap: 15px;
       font-size: 20px;
       background-color: transparent;
-      color: $color-palette-main-third!important;
+      color: var(--cp-palette-main-fifth)!important;
       padding: 10px;
       text-align: start;
       width: 66%;
       margin: 0 auto;
       border-radius: 35px;
       &:hover {
-        color: $color-palette-main-fourth!important;
+        color: var(--cp-palette-main-fourth)!important;
       }
       &.router-link-active {
-        color: $color-palette-main-fourth!important;
+        color: var(--cp-palette-main-primary)!important;
         svg {
-          color: $color-palette-main-fourth!important;
+          color: var(--cp-palette-main-primary)!important;
         }
       }
       span {
@@ -259,14 +259,14 @@ export default class MyAccount extends Vue {
   .my-account-header{
     font-weight: 700;
     &:hover{
-      color: $color-palette-main-third;
+      color: var(--cp-palette-main-third);
     }
   }
 
   .log-out-button{
     right: 20px;
     &:hover{
-      background-color: $color-palette-main-primary !important;
+      background-color: var(--cp-palette-main-primary) !important;
       transform: scale(1.02);
     }
   }

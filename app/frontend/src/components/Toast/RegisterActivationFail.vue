@@ -17,6 +17,6 @@ export default class RegisterActivationFail extends Vue {
 
 <style lang="scss" scoped>
   .register-activation-failed-text {
-    color: $color-palette-main-fourth;
+    color: var(--cp-palette-main-fifth);
   }
 </style>

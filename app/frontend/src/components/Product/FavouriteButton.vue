@@ -1,8 +1,6 @@
 <template>
   <button class="btn-outline-primary-three" data-mdb-ripple-color="dark" type="button" @click="favouriteHandle()">
-    <font-awesome-icon v-if="!isFavourite" :icon="heartIcon" :style="{ color: 'white' }"
-                       size="2x"
-    />
+    <font-awesome-icon v-if="!isFavourite" :icon="heartIcon" size="2x" />
     <font-awesome-icon v-else :icon="heartIcon" :style="{ color: '#981d1dc9' }" size="2x" />
   </button>
 </template>
@@ -45,7 +43,7 @@ export default class FavouriteButton extends Vue {
   background: #e4e4e4;
   .fa-heart{ font-size: 20px;
     &.fas{
-      color: $color-palette-main-primary;
+      color: var(--cp-palette-main-primary);
     }
   }
 }

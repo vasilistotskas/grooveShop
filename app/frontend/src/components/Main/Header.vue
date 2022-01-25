@@ -68,10 +68,10 @@ export default class Header extends Vue {
     z-index: 12;
 
     .predeader {
-      background-color: $color-palette-main-fourth;
+      background-color: var(--cp-palette-main-fifth);
       text-align: center;
       font-size: 14px;
-      color: $color-palette-main-fourth!important;
+      color: var(--cp-palette-main-fourth)!important;
       transform: translate3d(0, 0, 0);
       transition: all 0.3s ease-in-out;
       &.predeader--hidden {
@@ -79,16 +79,16 @@ export default class Header extends Vue {
         transform: translate3d(0, -100%, 0);
       }
       p {
-        color: $color-palette-main-fourth;
+        color: var(--cp-palette-main-fifth);
         padding-top: 5px;
         padding-bottom: 5px;
         margin: 0;
       }
       a {
-        color: $color-palette-main-fourth;
+        color: var(--cp-palette-main-fifth);
         font-weight: 700;
         span {
-          color: $color-palette-main-fourth;
+          color: var(--cp-palette-main-fifth);
         }
       }
     }
