@@ -65,7 +65,7 @@ services:
 
   nginx:
     container_name: nginx
-    image: nginx:mainline
+    image: nginx:groovyshop
     build:
       context: ./nginx
       dockerfile: Nginx.Dockerfile
