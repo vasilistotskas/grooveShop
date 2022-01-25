@@ -6,11 +6,11 @@
   --cp-palette-main-dark-fourth: #{$color-palette-main-fourth};
   --cp-palette-main-dark-fifth: #{$color-palette-main-fifth};
   // WHITE
-  --cp-palette-main-white-primary: #{$color-palette-main-primary};
-  --cp-palette-main-white-secondary: #{$color-palette-main-secondary};
-  --cp-palette-main-white-third: #{$color-palette-main-third};
-  --cp-palette-main-white-fourth: #{$color-palette-main-fourth};
-  --cp-palette-main-white-fifth: #{$color-palette-main-fifth};
+  --cp-palette-main-white-primary: #{$color-palette-main-primary-white};
+  --cp-palette-main-white-secondary: #{$color-palette-main-secondary-white};
+  --cp-palette-main-white-third: #{$color-palette-main-third-white};
+  --cp-palette-main-white-fourth: #{$color-palette-main-fourth-white};
+  --cp-palette-main-white-fifth: #{$color-palette-main-fifth-white};
 }
 
 
@@ -308,9 +308,6 @@ table {
     text-align: center;
     justify-content: center;
     background: $color-palette-main-fourth;
-    border-left: 1px solid $color-palette-main-third;
-    border-right: 1px solid $color-palette-main-third;
-    border-bottom: 1px solid $color-palette-main-third;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     padding: 10px;

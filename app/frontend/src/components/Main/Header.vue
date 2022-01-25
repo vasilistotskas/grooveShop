@@ -48,7 +48,6 @@ export default class Header extends Vue {
     }
     // Stop executing this function if the difference between
     // current scroll position and last scroll position is less than some offset
-    console.log(Math.abs(currentScrollPosition - this.lastScrollPosition) < 60)
     if (Math.abs(currentScrollPosition - this.lastScrollPosition) < 60) {
       return
     }

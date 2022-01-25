@@ -80,6 +80,19 @@
           </RouterLink>
         </div>
       </div>
+
+      <div>
+
+
+      </div>
+        <a class="toggle-dark-mode button"
+           href="javascript:void(0);"
+           :title="'Toggle Dark Mode'"
+           :aria-label="'Toggle Dark Mode'"
+           @click="toggleThemeMode()"
+        >
+          <font-awesome-icon :icon="themeIconClass" :style="{ color: '#3b3b3b' }" />
+        </a>
     </div>
 
     <!--    <transition name="fade">-->
@@ -97,11 +110,14 @@ import store from '@/store';
 import router from '@/routes';
 import { Options, Vue } from 'vue-class-component';
 import CategoryModel from '@/state/category/CategoryModel';
-import NavbarCategories from '@/components/Navbar/NavbarCategories.vue';
-import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart';
+import { faSun } from '@fortawesome/free-solid-svg-icons/faSun';
 import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog';
-import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
+import { faMoon } from '@fortawesome/free-solid-svg-icons/faMoon';
+import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart';
+import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
+import NavbarCategories from '@/components/Navbar/NavbarCategories.vue';
+import AppSettingsThemeModeOption from "@/state/app/AppSettingsThemeModeOption";
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart';
 
 @Options({
@@ -125,6 +141,14 @@ export default class Navbar extends Vue {
 
   get blogIcon(): typeof faBlog {
     return faBlog;
+  }
+
+  get moonIcon(): typeof faMoon {
+    return faMoon;
+  }
+
+  get sunIcon(): typeof faSun {
+    return faSun;
   }
 
   get searchIcon(): typeof faSearch {
@@ -163,6 +187,23 @@ export default class Navbar extends Vue {
     return store.getters['auth/isAuthenticated'];
   }
 
+  get getThemeMode(): AppSettingsThemeModeOption {
+    return store.getters['settings/getSettings'].themeMode;
+  }
+
+  async created(): Promise<void> {
+    this.$watch(
+        () => this.getThemeMode,
+        (newThemeMode: AppSettingsThemeModeOption, oldThemeMode: AppSettingsThemeModeOption) => {
+          this.switchThemeModeFromTo(oldThemeMode, newThemeMode);
+        }
+    );
+  }
+
+  mounted(): void {
+    this.updateThemeMode()
+  }
+
   public menuToggle(): void {
     this.$refs.mainToggleButton.classList.toggle('opened');
     this.$refs.mainToggleButton.setAttribute('aria-expanded', this.$refs.mainToggleButton.classList.contains('opened') as unknown as string);
@@ -184,6 +225,52 @@ export default class Navbar extends Vue {
       query: { ...this.$route.query, query: this.searchQuery, page: this.currentPageNumber }
     });
   }
+
+  public toggleThemeMode (): void {
+    store.dispatch('settings/toggleThemeMode').then(
+        (themeMode) => this.updateThemeMode(themeMode)
+    )
+  }
+
+  public updateThemeMode(themeMode:AppSettingsThemeModeOption = AppSettingsThemeModeOption.Dark): void {
+    if (null === themeMode) {
+      themeMode = this.getThemeMode
+    }
+
+    switch (themeMode) {
+      case AppSettingsThemeModeOption.Dark:
+        this.switchThemeModeFromTo(AppSettingsThemeModeOption.Light, AppSettingsThemeModeOption.Dark)
+        break;
+      case AppSettingsThemeModeOption.Light:
+      default:
+        this.switchThemeModeFromTo(AppSettingsThemeModeOption.Dark, AppSettingsThemeModeOption.Light)
+        break;
+    }
+  }
+
+  public switchThemeModeFromTo(from: AppSettingsThemeModeOption, to: AppSettingsThemeModeOption): void {
+    const bodyElement = document.body;
+    bodyElement.classList.remove(from);
+    bodyElement.classList.add(to);
+    this.updateMetaTagElement('color-scheme', 'content', to)
+  }
+
+  get themeIconClass(): typeof faMoon | typeof faSun {
+    switch (this.getThemeMode) {
+      case AppSettingsThemeModeOption.Dark:
+        return this.moonIcon
+      case AppSettingsThemeModeOption.Light:
+      default:
+        return this.sunIcon
+    }
+  }
+
+  public updateMetaTagElement(metaName: string, metaAttribute: string, newValue: string): void {
+    const metaTagElement = <Element> document.querySelector(`meta[name=${metaName}]`);
+    console.log(metaTagElement)
+    metaTagElement.setAttribute(metaAttribute, newValue);
+  }
+
 }
 </script>
 

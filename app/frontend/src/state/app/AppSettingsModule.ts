@@ -3,6 +3,7 @@ import { cloneDeep } from 'lodash';
 import AppSettings from '@/state/app/AppSettings';
 import AppBaseModule from '@/state/common/AppBaseModule';
 import { Action, Module, Mutation } from 'vuex-module-decorators';
+import AppSettingsThemeModeOption from '@/state/app/AppSettingsThemeModeOption';
 import AppSettingsLocalizationOption from '@/state/app/AppSettingsLocalizationOption';
 
 @Module({ namespaced: true })
@@ -22,6 +23,16 @@ export default class AppSettingsModule
       : AppSettingsLocalizationOption.English;
     await this.context.dispatch('updateSetting', { key: 'localization', value: nextLocalization });
     return nextLocalization;
+  }
+
+  @Action
+  async toggleThemeMode(): Promise<AppSettingsThemeModeOption> {
+    const currentThemeMode = this.context.getters['getSettings'].themeMode
+    const nextThemeMode = (currentThemeMode === AppSettingsThemeModeOption.Light)
+        ? AppSettingsThemeModeOption.Dark
+        : AppSettingsThemeModeOption.Light
+    await this.context.dispatch('updateSetting', { key: 'themeMode', value: nextThemeMode })
+    return nextThemeMode
   }
 
   @Action

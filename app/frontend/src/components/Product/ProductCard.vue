@@ -3,8 +3,8 @@
     <RouterLink :to="productPath" aria-label="Product">
       <div class="card cardEffect">
         <div class="card-image-content">
-          <img v-if="product.main_image_filename" :alt="product.name" :src="mediaStreamImage('products', product.main_image_filename, '115', '130')" class="card-img-top img-fluid"
-               height="130" width="125"
+          <img v-if="product.main_image_filename" :alt="product.name" :src="mediaStreamImage('products', product.main_image_filename, '150', '150')" class="card-img-top img-fluid"
+               height="150" width="150"
           />
         </div>
         <div class="card-body">
