@@ -162,7 +162,7 @@
           <div id="stripe-card" ref="stripleElement" class="mb-5 mt-3"></div>
           <template v-if="cartTotalLength">
             <div class="checkout-grid-pay-button">
-              <button class="btn btn-outline-primary-one" type="button" @click="submitForm">Pay with Stripe</button>
+              <button title="Pay With Stripe" class="btn btn-outline-primary-one" type="button" @click="submitForm">Pay with Stripe</button>
             </div>
           </template>
         </div>
@@ -178,7 +178,7 @@
                class="checkout-grid-head-part-two"
           >
             <div class="checkout-grid-head-part-two-product-image">
-              <RouterLink :to="'/product' + item.product.absolute_url" aria-label="Product">
+              <RouterLink  :to="'/product' + item.product.absolute_url" aria-label="Product" :title="item.product.name">
                 <span>
                   <img :src="mediaStreamImage('products', item.product.main_image_filename, '100', '100')"
                        height="100" width="100" :alt="item.product.name">
@@ -186,7 +186,7 @@
               </RouterLink>
             </div>
             <div class="checkout-grid-head-part-two-product-info">
-              <RouterLink :to="'/product' + item.product.absolute_url" aria-label="Product">
+              <RouterLink :to="'/product' + item.product.absolute_url" aria-label="Product" :title="item.product.name">
                 <span class="checkout-grid-head-part-two-product-info-name">{{ item.product.name }}</span>
               </RouterLink>
               <span class="checkout-grid-head-part-two-product-info-price">Item Price: ${{ item.product.price }}</span>

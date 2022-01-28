@@ -2,7 +2,7 @@
   <nav class="main-navbar">
     <div class="grid-header container">
       <div class="logo-header">
-        <RouterLink aria-label="Home" class="navbar-brand" to="/">
+        <RouterLink aria-label="Home" title="Home" class="navbar-brand" to="/">
           <img alt="Website Logo" class="main-logo img-fluid" height="85"
                src="http://localhost:8000/static/files/images/websiteLogo.png" width="175"
           />
@@ -14,7 +14,7 @@
              @click="menuToggle"
         >
           <div ref="navbarProductsButton" class="products-a btn">
-            <button id="burgerButton" ref="mainToggleButton" aria-label="Main Menu" class="menu">
+            <button title="Toggle Menu" id="burgerButton" ref="mainToggleButton" aria-label="Main Menu" class="menu">
               <svg height="65" viewBox="0 0 100 100" width="65">
                 <path class="line line-one"
                       d="M 20,29.000046 H 80.000231 C 80.000231,29.000046 94.498839,28.817352 94.532987,66.711331 94.543142,77.980673 90.966081,81.670246 85.259173,81.668997 79.552261,81.667751 75.000211,74.999942 75.000211,74.999942 L 25.000021,25.000058"
@@ -31,7 +31,7 @@
       </div>
 
       <div class="blog-header">
-        <RouterLink aria-label="Blog" class="btn-w-effect" to="/blog">
+        <RouterLink aria-label="Blog" title="Blog" class="btn-w-effect" to="/blog">
           <font-awesome-icon v-if="isMobile" :icon="blogIcon" />
           <font-awesome-icon v-else :icon="blogIcon" size="2x" />
           <span>BLOG</span>
@@ -46,34 +46,34 @@
           <input v-model="searchQuery" aria-label="Search" class="form-control search-form-control me-2" name="query"
                  placeholder="Search" type="search" @keyup.enter="searchPerform"
           />
-          <button aria-label="search" class="btn-outline-primary-main" type="submit" @click="searchPerform">
+          <button title="Search" aria-label="search" class="btn-outline-primary-main" type="submit" @click="searchPerform">
             <font-awesome-icon :icon="searchIcon" :style="{ color: '#3b3b3b' }" size="lg" />
           </button>
         </div>
       </div>
       <div class="navigation-header">
         <div class="navigation-header-part">
-          <RouterLink v-if="isAuthenticated" :to="{ name: 'Favourites' }" aria-label="Favourites">
+          <RouterLink v-if="isAuthenticated" :to="{ name: 'Favourites' }" title="Favourites" aria-label="Favourites">
             <font-awesome-icon v-if="isMobile" :icon="heartIcon" :style="{ color: '#981d1dc9' }" />
             <font-awesome-icon v-else :icon="heartIcon" :style="{ color: '#981d1dc9' }" size="2x" />
           </RouterLink>
-          <RouterLink v-else aria-label="Favourites" to="/log-in">
+          <RouterLink v-else aria-label="Log In" title="Log In" to="/log-in">
             <font-awesome-icon v-if="isMobile" :icon="heartIcon"/>
             <font-awesome-icon v-else :icon="heartIcon" size="2x" />
           </RouterLink>
         </div>
         <div class="navigation-header-part">
-          <RouterLink v-if="isAuthenticated" aria-label="Account" to="/my-account">
+          <RouterLink v-if="isAuthenticated" title="My Account" aria-label="My Account" to="/my-account">
             <font-awesome-icon v-if="isMobile" :icon="userIcon" :style="{ color: '#981d1dc9' }" />
             <font-awesome-icon v-else :icon="userIcon" :style="{ color: '#981d1dc9' }" size="2x" />
           </RouterLink>
-          <RouterLink v-else aria-label="Account" to="/log-in">
+          <RouterLink v-else aria-label="Log In" title="Log In" to="/log-in">
             <font-awesome-icon v-if="isMobile" :icon="userIcon" />
             <font-awesome-icon v-else :icon="userIcon" size="2x" />
           </RouterLink>
         </div>
         <div class="navigation-header-part">
-          <RouterLink aria-label="Cart" to="/cart">
+          <RouterLink aria-label="Cart" title="Cart" to="/cart">
             <font-awesome-icon v-if="isMobile" :icon="shoppingCartIcon"/>
             <font-awesome-icon v-else :icon="shoppingCartIcon" size="2x" />
             <span class="cart-total-length">{{ cartTotalLength }}</span>
@@ -110,6 +110,7 @@ import { faSun } from '@fortawesome/free-solid-svg-icons/faSun';
 import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog';
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
 import { faMoon } from '@fortawesome/free-solid-svg-icons/faMoon';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import NavbarCategories from '@/components/Navbar/NavbarCategories.vue';
@@ -130,38 +131,18 @@ export default class Navbar extends Vue {
   searchQuery: string = '';
   preHeadHidden: boolean = true
 
+  sunIcon: IconDefinition = faSun
+  blogIcon: IconDefinition = faBlog
+  moonIcon: IconDefinition = faMoon
+  userIcon: IconDefinition = faUser
+  heartIcon: IconDefinition = faHeart
+  searchIcon: IconDefinition = faSearch
+  shoppingCartIcon: IconDefinition = faShoppingCart
+
   $refs!: {
     mainToggleButton: HTMLElement;
     navbarProductsButton: HTMLElement;
   };
-
-  get blogIcon(): typeof faBlog {
-    return faBlog;
-  }
-
-  get moonIcon(): typeof faMoon {
-    return faMoon;
-  }
-
-  get sunIcon(): typeof faSun {
-    return faSun;
-  }
-
-  get searchIcon(): typeof faSearch {
-    return faSearch;
-  }
-
-  get userIcon(): typeof faUser {
-    return faUser;
-  }
-
-  get shoppingCartIcon(): typeof faShoppingCart {
-    return faShoppingCart;
-  }
-
-  get heartIcon(): typeof faHeart {
-    return faHeart;
-  }
 
   get navbarMenuHidden(): boolean {
     return store.getters['app/getNavbarMenuHidden'];
@@ -191,8 +172,6 @@ export default class Navbar extends Vue {
     this.$watch(
         () => this.getThemeMode,
         (newThemeMode: AppSettingsThemeModeOption, oldThemeMode: AppSettingsThemeModeOption) => {
-          console.log(newThemeMode)
-          console.log(oldThemeMode)
           this.switchThemeModeFromTo(oldThemeMode, newThemeMode);
         }
     );
@@ -401,50 +380,50 @@ export default class Navbar extends Vue {
         font-size: 8px;
       }
     }
-
     button.menu {
       background-color: transparent;
       border: none;
       cursor: pointer;
       padding: 0;
+      .line {
+        fill: none;
+        stroke: var(--cp-palette-main-fifth);
+        stroke-width: 6;
+        transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+        stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+        &-one {
+          stroke-dasharray: 60 207;
+          stroke-width: 6;
+        }
+        &-two {
+          stroke-dasharray: 60 60;
+          stroke-width: 6;
+        }
+        &-three {
+          stroke-dasharray: 60 207;
+          stroke-width: 6;
+        }
+      }
+      &.opened {
+        .line {
+          &-one {
+            stroke-dasharray: 90 207;
+            stroke-dashoffset: -134;
+            stroke-width: 6;
+          }
+          &-two {
+            stroke-dasharray: 1 60;
+            stroke-dashoffset: -30;
+            stroke-width: 6;
+          }
+          &-three {
+            stroke-dasharray: 90 207;
+            stroke-dashoffset: -134;
+            stroke-width: 6;
+          }
+        }
+      }
     }
-    .line {
-      fill: none;
-      stroke: var(--cp-palette-main-fifth);
-      stroke-width: 6;
-      transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
-      stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
-
-    }
-    .line-one {
-      stroke-dasharray: 60 207;
-      stroke-width: 6;
-    }
-    .line-two {
-      stroke-dasharray: 60 60;
-      stroke-width: 6;
-    }
-    .line-three {
-      stroke-dasharray: 60 207;
-      stroke-width: 6;
-    }
-    .opened .line-one {
-      stroke-dasharray: 90 207;
-      stroke-dashoffset: -134;
-      stroke-width: 6;
-    }
-    .opened .line-two {
-      stroke-dasharray: 1 60;
-      stroke-dashoffset: -30;
-      stroke-width: 6;
-    }
-    .opened .line-three {
-      stroke-dasharray: 90 207;
-      stroke-dashoffset: -134;
-      stroke-width: 6;
-    }
-
-
   }
   .blog-header {
     position: relative;

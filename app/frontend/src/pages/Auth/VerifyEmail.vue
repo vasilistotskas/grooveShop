@@ -10,7 +10,7 @@
     </template>
     <template v-else-if="activationCompleted">
       <span class="activation-complete-text mb-3">Account activation successful.</span>
-      <RouterLink v-if="!isAuthenticated" to="/log-in">
+      <RouterLink aria-label="Log In" title="Log In" v-if="!isAuthenticated" to="/log-in">
         <span class="activation-complete-action">Click here to log in.</span>
       </RouterLink>
     </template>

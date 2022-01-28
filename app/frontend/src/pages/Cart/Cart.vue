@@ -28,7 +28,7 @@
           <strong>${{ cartTotalPrice.toFixed(2) }}</strong>, {{ cartTotalLength }} items
         </div>
         <div class="grid-container-child-two">
-          <RouterLink aria-label="Checkout" class="btn-outline-primary-one" to="/cart/checkout" type="button">
+          <RouterLink aria-label="Checkout" title="Checkout" class="btn-outline-primary-one" to="/cart/checkout" type="button">
             Proceed
             to checkout
           </RouterLink>

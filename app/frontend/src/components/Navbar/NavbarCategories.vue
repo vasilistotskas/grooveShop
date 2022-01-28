@@ -11,6 +11,7 @@
                      :class="{'has-children': category?.children }"
                      :to="({ name: 'Category', params: { category_slug: category.slug } })"
                      :toggle="category.children ? 'toggle' : '' "
+                     :title="category.name"
                      aria-current="page"
                      aria-expanded="false"
                      class="navbar-menu-grid-head-item"

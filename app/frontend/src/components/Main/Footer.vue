@@ -15,7 +15,7 @@
               <label class="form-label mt-2" for="form5Example21">Email address</label>
             </div>
             <div class="grid-item-three">
-              <button class="btn-outline-primary-one mb-4" type="submit">
+              <button title="Subscribe to Newsletter" class="btn-outline-primary-one mb-4" type="submit">
                 Subscribe
               </button>
             </div>
@@ -28,16 +28,16 @@
           <span class="text-uppercase">Links</span>
           <ul>
             <li>
-              <a href="#!">Link 1</a>
+              <a href="#!" title="Footer Link 1">Link 1</a>
             </li>
             <li>
-              <a href="#!">Link 2</a>
+              <a href="#!" title="Footer Link 2">Link 2</a>
             </li>
             <li>
-              <a href="#!">Link 3</a>
+              <a href="#!" title="Footer Link 3">Link 3</a>
             </li>
             <li>
-              <a href="#!">Link 4</a>
+              <a href="#!" title="Footer Link 1">Link 4</a>
             </li>
           </ul>
         </div>
@@ -45,16 +45,16 @@
           <span class="text-uppercase">Links</span>
           <ul>
             <li>
-              <a href="#!">Link 1</a>
+              <a href="#!" title="Footer Link 1">Link 1</a>
             </li>
             <li>
-              <a href="#!">Link 2</a>
+              <a href="#!" title="Footer Link 2">Link 2</a>
             </li>
             <li>
-              <a href="#!">Link 3</a>
+              <a href="#!" title="Footer Link 3">Link 3</a>
             </li>
             <li>
-              <a href="#!">Link 4</a>
+              <a href="#!" title="Footer Link 1">Link 4</a>
             </li>
           </ul>
         </div>
@@ -62,16 +62,16 @@
           <span class="text-uppercase">Links</span>
           <ul>
             <li>
-              <a href="#!">Link 1</a>
+              <a href="#!" title="Footer Link 1">Link 1</a>
             </li>
             <li>
-              <a href="#!">Link 2</a>
+              <a href="#!" title="Footer Link 2">Link 2</a>
             </li>
             <li>
-              <a href="#!">Link 3</a>
+              <a href="#!" title="Footer Link 3">Link 3</a>
             </li>
             <li>
-              <a href="#!">Link 4</a>
+              <a href="#!" title="Footer Link 1">Link 4</a>
             </li>
           </ul>
         </div>
@@ -79,16 +79,16 @@
           <span class="text-uppercase">Links</span>
           <ul>
             <li>
-              <a href="#!">Link 1</a>
+              <a href="#!" title="Footer Link 1">Link 1</a>
             </li>
             <li>
-              <a href="#!">Link 2</a>
+              <a href="#!" title="Footer Link 2">Link 2</a>
             </li>
             <li>
-              <a href="#!">Link 3</a>
+              <a href="#!" title="Footer Link 3">Link 3</a>
             </li>
             <li>
-              <a href="#!">Link 4</a>
+              <a href="#!" title="Footer Link 1">Link 4</a>
             </li>
           </ul>
         </div>
@@ -97,7 +97,7 @@
 
     <div class="main-copyright text-center p-3">
       <span>© 2020 Copyright:</span>
-      <a href="#">GrooveBtch</a>
+      <a title="Made By Groove" href="#">GrooveBtch</a>
     </div>
   </footer>
 </template>

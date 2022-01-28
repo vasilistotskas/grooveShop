@@ -2,7 +2,7 @@
   <div class="container mt-4 mb-4 breadcrumb-container">
     <ul class="breadcrumb">
       <li class="breadcrumb__item">
-        <RouterLink :to="{ name: 'Home' }" aria-label="Home" class="btn-w-effect">
+        <RouterLink :to="{ name: 'Home' }" title="Home" aria-label="Home" class="btn-w-effect">
           <span class="breadcrumb__inner">
             <span class="breadcrumb__title">Home</span>
           </span>
@@ -10,7 +10,7 @@
         <span class="breadcrumb__seperator">/</span>
       </li>
       <li v-for="breadcrumb in breadCrumbPath" :key="breadcrumb.id" class="breadcrumb__item">
-        <RouterLink :to="'/' + breadcrumb.to.full_path" aria-label="Blog" class="btn-w-effect">
+        <RouterLink :to="'/' + breadcrumb.to.full_path" :title="breadcrumb.name" aria-label="Blog" class="btn-w-effect">
           <span class="breadcrumb__inner">
             <span class="breadcrumb__title">{{ breadcrumb.name }}</span>
           </span>

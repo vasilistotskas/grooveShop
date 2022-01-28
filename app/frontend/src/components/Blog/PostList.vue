@@ -2,7 +2,7 @@
   <div class="blog-main-content">
     <div v-if="posts && Object.keys(posts).length > 0" class="grid-post-list">
       <div v-for="post in posts" :key="post.title" class="cardSpecialEffect">
-        <RouterLink :to="`/post/${post.slug}`" aria-label="Blog Post">
+        <RouterLink :to="`/post/${post.slug}`" :title="post.slug" aria-label="Blog Post">
           <div class="card blog-card">
             <img :alt="post.title" class="img-fluid"
                  v-bind:src="mediaStreamImage('slides', post.mainImageFilename, '476', '268')">
@@ -14,7 +14,7 @@
               <p class="card-text">{{ post.metaDescription }}</p>
               <ul class="grid-post-list-tags">
                 <li v-for="tag in post.tags" :key="tag.name" class="post__tags">
-                  <RouterLink :to="`/tag/${tag.name}`" aria-label="Blog Tag">#{{ tag.name }}</RouterLink>
+                  <RouterLink :to="`/tag/${tag.name}`" :title="tag.name" aria-label="Blog Tag">#{{ tag.name }}</RouterLink>
                 </li>
               </ul>
               <small class="text-muted">{{ displayableDate(post.publishDate) }}</small>

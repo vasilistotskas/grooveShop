@@ -2,7 +2,7 @@
   <div v-if="authorByEmail" class="container mt-7 mb-5">
     <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <h2>{{ displayName }}</h2>
-    <a :href="authorByEmail.website" rel="noopener noreferrer" target="_blank">Website</a>
+    <a :href="authorByEmail.website" :title="`Visit Website of ${displayName}`" rel="noopener noreferrer" target="_blank">Website</a>
     <p>{{ authorByEmail.bio }}</p>
 
     <h3>Posts by {{ displayName }}</h3>

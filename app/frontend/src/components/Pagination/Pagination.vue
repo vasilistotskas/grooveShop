@@ -2,6 +2,7 @@
   <div class="col-12 mb-3 mt-3 pagination-grid-content">
     <div class="pagination-buttons">
       <button
+        title="Go to first page"
         :disabled="isInFirstPage"
         aria-label="Go to first page"
         class="btn-outline-primary-one"
@@ -12,6 +13,7 @@
       </button>
 
       <button
+        title="Go to previous page"
         :disabled="isInFirstPage"
         aria-label="Go to previous page"
         class="btn-outline-primary-one"
@@ -22,6 +24,7 @@
       </button>
 
       <button v-for="page in pages" :key="page.id"
+              :title="`Go to page number ${page.name}`"
               :aria-label="`Go to page number ${page.name}`"
               :class="{ active: isPageActive(page.name) }"
               :disabled="page.isDisabled"
@@ -33,6 +36,7 @@
       </button>
 
       <button
+        title="Go to next page"
         :disabled="isInLastPage"
         aria-label="Go to next page"
         class="btn-outline-primary-one"
@@ -43,6 +47,7 @@
       </button>
 
       <button
+        title="Go to Last page"
         :disabled="isInLastPage"
         aria-label="Go to last page"
         class="btn-outline-primary-one"

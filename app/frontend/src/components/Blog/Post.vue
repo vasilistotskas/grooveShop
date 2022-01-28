@@ -14,7 +14,7 @@
         <p class="card-text"><small class="text-muted">{{ displayableDate(postBySlug.publishDate) }}</small></p>
         <ul>
           <li v-for="tag in postBySlug.tags" :key="tag.name" class="post__tags">
-            <RouterLink :to="`/tag/${tag.name}`" aria-label="Blog Tag">#{{ tag.name }}</RouterLink>
+            <RouterLink :to="`/tag/${tag.name}`" :title="tag.name" aria-label="Blog Tag">#{{ tag.name }}</RouterLink>
           </li>
         </ul>
       </div>

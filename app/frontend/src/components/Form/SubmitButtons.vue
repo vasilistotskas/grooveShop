@@ -7,6 +7,7 @@
     class="_buttons"
   >
     <BaseButton
+      title="Reset"
       class="reset-button"
       type="primary-two"
       @click="$emit('reset')"
@@ -14,6 +15,7 @@
       Reset
     </BaseButton>
     <BaseButton
+      title="Submit"
       :disabled="submitting"
       class="submit-button"
       html-type="submit"

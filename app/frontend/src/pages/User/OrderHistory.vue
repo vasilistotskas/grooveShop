@@ -18,7 +18,7 @@
             </div>
             <div v-for="item in order.items" v-bind:key="item.product.id"
                  class="order-history-grid-body">
-              <RouterLink :to="'/product' + item.product.absolute_url" aria-label="Product">
+              <RouterLink :to="'/product' + item.product.absolute_url" :title="item.product.name" aria-label="Product">
                   <span>
                     <img :alt="item.product.name" :src="mediaStreamImage('products', item.product.main_image_filename, '75', '75')"
                          class="border-radius-img img-fluid" height="75" width="75">

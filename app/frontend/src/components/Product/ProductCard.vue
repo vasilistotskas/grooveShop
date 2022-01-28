@@ -1,6 +1,6 @@
 <template>
   <div v-if="product && Object.keys(product).length > 0" class="product-card-main">
-    <RouterLink :to="productPath" aria-label="Product">
+    <RouterLink :to="productPath" :title="product.name" aria-label="Product">
       <div class="card cardEffect">
         <div class="card-image-content">
           <img v-if="product.main_image_filename" :alt="product.name" :src="mediaStreamImage('products', product.main_image_filename, '150', '150')" class="card-img-top img-fluid"
@@ -36,7 +36,7 @@
             </span>
           </div>
           <div class="card-footer">
-            <a class="btn-outline-primary-one btn-product-card" href="#" type="button"
+            <a :title="`Add to cart - ${product.name}`" class="btn-outline-primary-one btn-product-card" href="#" type="button"
                :class="{'disabled': disabled }" @click.prevent="addToCart()"
             >{{ addToCartButtonText }}</a>
           </div>
