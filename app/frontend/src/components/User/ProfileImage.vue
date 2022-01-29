@@ -13,6 +13,7 @@
                class="rounded-circle img-fluid"
                height="110"
                width="110"
+               loading="lazy"
           />
           <label class="profile-image-label" for="image">
             <input

@@ -1,21 +1,21 @@
 <template>
   <header id="main-header">
-<!--    <div class="predeader" :class="{ 'predeader&#45;&#45;hidden': !showPreHeader }">-->
-<!--      <p>-->
-<!--        Groove <a href="http://localhost:5000/">-->
-<!--          <span style="text-decoration: underline;">Here</span>!</a>-->
-<!--      </p>-->
-<!--    </div>-->
-    <Navbar :preHeadHidden="!showPreHeader" :cart-total-length="cartTotalLength"
+    <!--    <div class="predeader" :class="{ 'predeader&#45;&#45;hidden': !showPreHeader }">-->
+    <!--      <p>-->
+    <!--        Groove <a href="http://localhost:5000/">-->
+    <!--          <span style="text-decoration: underline;">Here</span>!</a>-->
+    <!--      </p>-->
+    <!--    </div>-->
+    <Navbar :cart-total-length="cartTotalLength" :preHeadHidden="!showPreHeader"
             :show-mobile-menu="showMobileMenu"
     />
   </header>
 </template>
 
 <script lang="ts">
-import store from '@/store';
-import { Options, Vue } from 'vue-class-component';
-import Navbar from '@/components/Navbar/Navbar.vue';
+import store from '@/store'
+import { Options, Vue } from 'vue-class-component'
+import Navbar from '@/components/Navbar/Navbar.vue'
 
 @Options({
   name: 'Header',
@@ -25,23 +25,23 @@ import Navbar from '@/components/Navbar/Navbar.vue';
 })
 export default class Header extends Vue {
 
-  showPreHeader:boolean = true;
-  lastScrollPosition:number = 0;
-  showMobileMenu = false;
+  showPreHeader: boolean = true
+  lastScrollPosition: number = 0
+  showMobileMenu = false
 
   get cartTotalLength(): number {
-    return store.getters['cart/getCartTotalLength'];
+    return store.getters['cart/getCartTotalLength']
   }
 
-  mounted () {
+  mounted() {
     window.addEventListener('scroll', this.onScroll)
   }
 
-  beforeDestroy () {
+  beforeDestroy() {
     window.removeEventListener('scroll', this.onScroll)
   }
 
-  onScroll () {
+  onScroll() {
     const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
     if (currentScrollPosition < 0) {
       return
@@ -59,40 +59,44 @@ export default class Header extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  header {
-    @media screen and (min-width: 1200px) {
-      position: fixed;
+header {
+  @media screen and (min-width: 1200px) {
+    position: fixed;
+  }
+
+  width: 100%;
+  z-index: 12;
+
+  .predeader {
+    background-color: var(--cp-palette-main-fifth);
+    text-align: center;
+    font-size: 14px;
+    color: var(--cp-palette-main-fourth) !important;
+    transform: translate3d(0, 0, 0);
+    transition: all 0.3s ease-in-out;
+
+    &.predeader--hidden {
+      box-shadow: none;
+      transform: translate3d(0, -100%, 0);
     }
 
-    width: 100%;
-    z-index: 12;
+    p {
+      color: var(--cp-palette-main-fifth);
+      padding-top: 5px;
+      padding-bottom: 5px;
+      margin: 0;
+    }
 
-    .predeader {
-      background-color: var(--cp-palette-main-fifth);
-      text-align: center;
-      font-size: 14px;
-      color: var(--cp-palette-main-fourth)!important;
-      transform: translate3d(0, 0, 0);
-      transition: all 0.3s ease-in-out;
-      &.predeader--hidden {
-        box-shadow: none;
-        transform: translate3d(0, -100%, 0);
-      }
-      p {
+    a {
+      color: var(--cp-palette-main-fifth);
+      font-weight: 700;
+
+      span {
         color: var(--cp-palette-main-fifth);
-        padding-top: 5px;
-        padding-bottom: 5px;
-        margin: 0;
-      }
-      a {
-        color: var(--cp-palette-main-fifth);
-        font-weight: 700;
-        span {
-          color: var(--cp-palette-main-fifth);
-        }
       }
     }
   }
+}
 
 </style>
 

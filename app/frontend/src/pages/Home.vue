@@ -19,9 +19,11 @@
 
           <swiper-slide v-for="slide in homepageSlider[0].slides" :key="slide.id">
             <img :alt="slide.title ? slide.title : 'no-alt'"
-                 :src="mediaStreamImage('slides', slide.main_image_filename, '880', '510')" class="img-fluid"
+                 :src="mediaStreamImage('slides', slide.main_image_filename, '880', '510')"
+                 class="img-fluid"
                  height="510"
                  width="880"
+                 loading="lazy"
             />
           </swiper-slide>
         </swiper>
@@ -43,9 +45,11 @@
 
               <swiper-slide v-for="slide in homepageSlider[1].slides" :key="slide.id">
                 <img :alt="slide.title ? slide.title : 'no-alt'"
-                     :src="mediaStreamImage('slides', slide.main_image_filename, '487', '282')" class="img-fluid"
+                     :src="mediaStreamImage('slides', slide.main_image_filename, '487', '282')"
+                     class="img-fluid"
                      height="282"
                      width="487"
+                     loading="lazy"
                 />
               </swiper-slide>
             </swiper>
@@ -68,6 +72,7 @@
                      :src="mediaStreamImage('slides', slide.main_image_filename, '487', '282')" class="img-fluid"
                      height="282"
                      width="487"
+                     loading="lazy"
                 />
               </swiper-slide>
             </swiper>

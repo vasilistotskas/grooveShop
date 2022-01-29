@@ -1,8 +1,7 @@
-import EntityBase from '@/state/common/EntityBase';
+import EntityBase from '@/state/common/EntityBase'
 
 export default class Coordinates
-	extends EntityBase
-{
+	extends EntityBase {
 
 	latitude!: number
 	longitude!: number

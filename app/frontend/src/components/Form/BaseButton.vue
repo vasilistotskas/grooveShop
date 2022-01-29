@@ -1,15 +1,15 @@
 <template>
   <button
-    :class="['button buttonEffect', type, { disabled }]"
-    :disabled="disabled"
-    :type="htmlType"
+      :class="['button buttonEffect', type, { disabled }]"
+      :disabled="disabled"
+      :type="htmlType"
   >
     <slot></slot>
   </button>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
@@ -27,7 +27,7 @@ export default defineComponent({
       type: Boolean
     }
   }
-});
+})
 </script>
 
 <style lang="scss" scoped>
@@ -53,17 +53,21 @@ export default defineComponent({
   min-width: 6rem;
   transition: all 100ms;
 }
+
 .default {
-  background-color: var(--cp-palette-main-fourth)!important;
+  background-color: var(--cp-palette-main-fourth) !important;
 }
+
 .primary {
-  background-color: var(--cp-palette-main-primary)!important;
-  border-color: var(--cp-palette-main-primary)!important;
+  background-color: var(--cp-palette-main-primary) !important;
+  border-color: var(--cp-palette-main-primary) !important;
 }
+
 .primary-two {
-  background-color: var(--cp-palette-main-third)!important;
-  border-color: var(--cp-palette-main-third)!important;
+  background-color: var(--cp-palette-main-third) !important;
+  border-color: var(--cp-palette-main-third) !important;
 }
+
 .danger {
   background-color: $red-50;
   border-color: $red-50;

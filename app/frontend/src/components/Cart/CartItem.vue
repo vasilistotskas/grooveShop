@@ -2,9 +2,13 @@
   <div class="grid-container-cart">
     <div class="grid-container-cart-item-one">
       <RouterLink :title="item.product.name" :to="productPath" aria-label="Product">
-        <img :alt="item.product.name" :src="mediaStreamImage('products', item.product.main_image_filename, '75', '75')"
-             class="border-radius-img img-fluid"
-             height="75" width="75"
+        <img
+            :alt="item.product.name"
+            :src="mediaStreamImage('products', item.product.main_image_filename, '75', '75')"
+            class="border-radius-img img-fluid"
+            height="75"
+            width="75"
+            loading="lazy"
         />
         <span>{{ item.product.name }}</span>
       </RouterLink>

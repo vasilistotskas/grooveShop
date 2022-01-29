@@ -1,26 +1,26 @@
 <template>
   <div :class="[attrsClassName, { 'input-group-w-addon': inputWithAddOn}]" class="_container">
     <span v-if="inputWithAddOn" class="input-group-addon">
-      <font-awesome-icon :icon="inputWithAddOnIcon" size="lg" />
+      <font-awesome-icon :icon="inputWithAddOnIcon" size="lg"/>
     </span>
     <input
-      v-model="value"
-      v-bind="attrsRest"
-      :class="['_input', { '_input-error': hasError, 'form-control': inputWithAddOn }]"
-      :disabled="disabled"
-      :placeholder="placeholder"
+        v-model="value"
+        v-bind="attrsRest"
+        :class="['_input', { '_input-error': hasError, 'form-control': inputWithAddOn }]"
+        :disabled="disabled"
+        :placeholder="placeholder"
     />
     <LoadingIcon
-      v-if="validating"
-      :class="{ '_loading-icon-error': hasError }"
-      class="_loading-icon"
+        v-if="validating"
+        :class="{ '_loading-icon-error': hasError }"
+        class="_loading-icon"
     />
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-import LoadingIcon from '../../assets/LoadingIcon.vue';
+import { defineComponent } from 'vue'
+import LoadingIcon from './LoadingIcon.vue'
 
 export default defineComponent({
   components: { LoadingIcon },
@@ -53,24 +53,24 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { attrs }) {
-    const { class: attrsClassName, ...attrsRest } = attrs;
+    const { class: attrsClassName, ...attrsRest } = attrs
 
     return {
       attrsClassName,
       attrsRest
-    };
+    }
   },
   computed: {
     value: {
       get() {
-        return this.modelValue;
+        return this.modelValue
       },
       set(value) {
-        this.$emit('update:modelValue', value);
+        this.$emit('update:modelValue', value)
       }
     }
   }
-});
+})
 </script>
 
 <style lang="scss" scoped>
@@ -87,13 +87,14 @@ export default defineComponent({
   outline: none;
   padding: 0.75rem;
   border-radius: 0.25rem;
+
   &:-webkit-autofill, &:-webkit-autofill:focus {
     transition: background-color 600000s 0s, color 600000s 0s;
   }
 
   &:focus {
-    border-color: #fd000252!important;
-    box-shadow: 0 0 3px #fd000230!important;
+    border-color: #fd000252 !important;
+    box-shadow: 0 0 3px #fd000230 !important;
   }
 }
 
@@ -114,6 +115,7 @@ export default defineComponent({
   margin-top: -7px;
   color: $green-500;
 }
+
 ._loading-icon-error {
   color: $red-400;
 }

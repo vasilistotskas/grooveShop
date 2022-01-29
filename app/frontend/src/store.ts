@@ -11,7 +11,7 @@ config.rawError = true
 const statePersistencePlugin = createPersistedState({
 	key: 'frontend',
 	paths: [
-		'cart.cart',
+		'cart.cart'
 	]
 })
 
@@ -30,9 +30,9 @@ each(stateDirectory, (item: any, path: any) => {
 })
 
 const store = createStore<RootState>({
-	strict:true,
+	strict: true,
 	modules: appStateModules,
-	plugins: [ statePersistencePlugin ]
+	plugins: [statePersistencePlugin]
 })
 
 export default store

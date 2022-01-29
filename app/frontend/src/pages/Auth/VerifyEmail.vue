@@ -1,6 +1,6 @@
 <template>
   <div id="activate-account-view" class="container mt-7">
-    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
+    <Breadcrumbs :bread-crumb-path="breadCrumbPath"/>
     <h1 class="mb-3">Verify Email</h1>
     <template v-if="activationLoading">loading...</template>
     <template v-else-if="activationError">
@@ -10,7 +10,7 @@
     </template>
     <template v-else-if="activationCompleted">
       <span class="activation-complete-text mb-3">Account activation successful.</span>
-      <RouterLink aria-label="Log In" title="Log In" v-if="!isAuthenticated" to="/log-in">
+      <RouterLink v-if="!isAuthenticated" aria-label="Log In" title="Log In" to="/log-in">
         <span class="activation-complete-action">Click here to log in.</span>
       </RouterLink>
     </template>
@@ -22,10 +22,10 @@
 </template>
 
 <script lang="ts">
-import store from '@/store';
-import router from '@/routes';
-import { Options, Vue } from 'vue-class-component';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue';
+import store from '@/store'
+import router from '@/routes'
+import { Options, Vue } from 'vue-class-component'
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 
 @Options({
   name: 'VerifyEmail',
@@ -37,84 +37,89 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue';
 export default class VerifyEmail extends Vue {
 
   get breadCrumbPath(): [] {
-    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb;
-    return currentRouteMetaBreadcrumb(router.currentRoute.value.params);
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
   get isAuthenticated(): any {
-    return store.getters['auth/isAuthenticated'];
+    return store.getters['auth/isAuthenticated']
   }
 
   get activationCompleted(): any {
-    return store.getters['signup/getActivationCompleted'];
+    return store.getters['signup/getActivationCompleted']
   }
 
   get activationError(): any {
-    return store.getters['signup/getActivationError'];
+    return store.getters['signup/getActivationError']
   }
 
   get activationLoading(): any {
-    return store.getters['signup/getActivationLoading'];
+    return store.getters['signup/getActivationLoading']
   }
 
   get reActivationMailSent(): any {
-    return store.getters['signup/getReActivationMailSent'];
+    return store.getters['signup/getReActivationMailSent']
   }
 
   created(): void {
-    this.activateAccount();
+    this.activateAccount()
   }
 
   async activateAccount(): Promise<void> {
-    await store.dispatch('signup/activateAccount');
+    await store.dispatch('signup/activateAccount')
   }
 
   async clearActivationStatus(): Promise<void> {
-    await store.dispatch('signup/clearActivationStatus');
+    await store.dispatch('signup/clearActivationStatus')
   }
 
   async activationEmailResend(): Promise<void> {
-    const email = localStorage.getItem('registrationEmail');
-    await store.dispatch('signup/activationEmailResend', email);
+    const email = localStorage.getItem('registrationEmail')
+    await store.dispatch('signup/activationEmailResend', email)
   }
 
   beforeRouteLeave(to: any, from: any, next: any) {
-    this.clearActivationStatus();
-    next();
+    this.clearActivationStatus()
+    next()
   }
 
 }
 </script>
 
 <style lang="scss">
-  #activate-account-view {
-    display: grid;
-    justify-content: center;
-    align-content: center;
-    height: 200px;
-    text-align: center;
+#activate-account-view {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  height: 200px;
+  text-align: center;
+}
+
+.activation-error {
+  &-text {
+    color: var(--cp-palette-main-fifth);
   }
-  .activation-error {
-    &-text {
-      color: var(--cp-palette-main-fifth);
-    }
-    &-action {
-      color: var(--cp-palette-main-secondary);
-      font-weight: 500;
-      font-size: 17px;
-      &:hover {
-        cursor: pointer;
-        color:  var(--cp-palette-main-primary)!important;
-      }
-    }
-  }
-  .activation-complete-action {
+
+  &-action {
     color: var(--cp-palette-main-secondary);
     font-weight: 500;
     font-size: 17px;
+
     &:hover {
       cursor: pointer;
-      color:  var(--cp-palette-main-primary)!important;
+      color: var(--cp-palette-main-primary) !important;
     }
   }
+}
+
+.activation-complete-action {
+  color: var(--cp-palette-main-secondary);
+  font-weight: 500;
+  font-size: 17px;
+
+  &:hover {
+    cursor: pointer;
+    color: var(--cp-palette-main-primary) !important;
+  }
+}
 </style>

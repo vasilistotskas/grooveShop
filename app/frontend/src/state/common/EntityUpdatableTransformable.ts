@@ -1,13 +1,12 @@
-import EntityBase from '@/state/common/EntityBase';
-import EntityUpdatableTypes from '@/state/common/EntityUpdatableTypes';
-import EntityBaseTransformable from '@/state/common/EntityBaseTransformable';
-import EntityUpdatableItemFieldType from '@/state/common/EntityUpdatableItemFieldType';
-import EntityUpdatableInputTextOption from '@/state/common/EntityUpdatableInputTextOption';
-import {first, get, includes, isBoolean, isEmpty, isString, isUndefined, set} from 'lodash';
+import EntityBase from '@/state/common/EntityBase'
+import EntityUpdatableTypes from '@/state/common/EntityUpdatableTypes'
+import EntityBaseTransformable from '@/state/common/EntityBaseTransformable'
+import EntityUpdatableItemFieldType from '@/state/common/EntityUpdatableItemFieldType'
+import EntityUpdatableInputTextOption from '@/state/common/EntityUpdatableInputTextOption'
+import { first, get, includes, isBoolean, isEmpty, isString, isUndefined, set } from 'lodash'
 
 export default abstract class EntityUpdatableTransformable<DEST, SOURCE extends EntityBase>
-	extends EntityBaseTransformable<DEST, SOURCE>
-{
+	extends EntityBaseTransformable<DEST, SOURCE> {
 	setupInputFieldText(
 		destField: keyof DEST,
 		sourceField: keyof SOURCE,
@@ -136,7 +135,7 @@ export default abstract class EntityUpdatableTransformable<DEST, SOURCE extends 
 			new EntityUpdatableItemFieldType<string, EntityUpdatableTypes>({
 				value: finalValue as string,
 				type: EntityUpdatableTypes.simpleDropdown,
-				options: <Record<string, never>> {
+				options: <Record<string, never>>{
 					data: finalOptions as never,
 					prefix: prefix as never
 				}
@@ -149,16 +148,16 @@ export default abstract class EntityUpdatableTransformable<DEST, SOURCE extends 
 		sourceField: keyof SOURCE,
 		from: Partial<SOURCE>,
 		options: Record<string, never>,
-		prefix: string|null = 'update.dynamic',
+		prefix: string | null = 'update.dynamic',
 		firstEntryDisplayMessage?: string,
 		additionalOptions?: Record<string, never>
 	): void {
-		let finalValue:string = ''
+		let finalValue: string = ''
 		const fieldValue = get(from, sourceField) as unknown as string
 		if (!isUndefined(fieldValue) && !isEmpty(fieldValue)) {
 			finalValue = fieldValue
 		}
-		
+
 		let finalOptions: Record<string, never> = {}
 		if (!isUndefined(firstEntryDisplayMessage) && isString(firstEntryDisplayMessage)) {
 			finalOptions[''] = firstEntryDisplayMessage as unknown as never
@@ -180,7 +179,7 @@ export default abstract class EntityUpdatableTransformable<DEST, SOURCE extends 
 			new EntityUpdatableItemFieldType<string, EntityUpdatableTypes>({
 				value: finalValue,
 				type: EntityUpdatableTypes.simpleDropdown,
-				options: <Record<string, never>> {
+				options: <Record<string, never>>{
 					data: finalOptions as never,
 					prefix: prefix as never,
 					...additionalOptions

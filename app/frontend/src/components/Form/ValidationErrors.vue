@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
@@ -23,6 +23,7 @@ export default defineComponent({
   margin-top: 0.25rem;
   font-size: 0.875rem;
   color: $red-400;
+
   p {
     word-wrap: break-word;
     font-size: 13px;

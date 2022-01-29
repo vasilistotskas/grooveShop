@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
+import { Options, Vue } from 'vue-class-component'
 
 @Options({
   name: 'PageNotFound'
@@ -14,7 +14,7 @@ import { Options, Vue } from 'vue-class-component';
 export default class PageNotFound extends Vue {
 
   mounted(): void {
-    document.title = 'Page Not Found';
+    document.title = 'Page Not Found'
   }
 
 }

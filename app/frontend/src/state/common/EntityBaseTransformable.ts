@@ -1,13 +1,18 @@
-import EntityBase from '@/state/common/EntityBase';
-import Coordinates from '@/state/common/Coordinates';
-import { get, set, isUndefined, first, join, keys, pickBy} from 'lodash';
+import EntityBase from '@/state/common/EntityBase'
+import Coordinates from '@/state/common/Coordinates'
+import { get, set, isUndefined, first, join, keys, pickBy } from 'lodash'
 
-export default abstract class EntityBaseTransformable<DEST, SOURCE extends EntityBase>
-{
+export default abstract class EntityBaseTransformable<DEST, SOURCE extends EntityBase> {
 	public abstract makeEntityBase(): SOURCE
+
 	public abstract transformFromEntityBase(entity: Partial<SOURCE>): Promise<void>
 
-	protected setFieldIfExists (
+	public findFieldTruth<T>(dummyInstance: T): keyof T {
+		// @ts-ignore
+		return first(keys(pickBy(dummyInstance, (field) => field === true))) as keyof T
+	}
+
+	protected setFieldIfExists(
 		destField: keyof DEST,
 		sourceField: keyof SOURCE,
 		from: Partial<SOURCE>,
@@ -18,7 +23,7 @@ export default abstract class EntityBaseTransformable<DEST, SOURCE extends Entit
 			set(this, destField, preProcessor(fieldValue))
 	}
 
-	protected setFieldIfExistsBooleanFromEnumYN (
+	protected setFieldIfExistsBooleanFromEnumYN(
 		destField: keyof DEST,
 		sourceField: keyof SOURCE,
 		from: Partial<SOURCE>
@@ -28,7 +33,7 @@ export default abstract class EntityBaseTransformable<DEST, SOURCE extends Entit
 			set(this, destField, fieldValue ? 'Y' : 'N')
 	}
 
-	protected setFieldIfExistsBooleanFromEnumYND (
+	protected setFieldIfExistsBooleanFromEnumYND(
 		destField: keyof DEST,
 		sourceField: keyof SOURCE,
 		from: Partial<SOURCE>
@@ -43,7 +48,7 @@ export default abstract class EntityBaseTransformable<DEST, SOURCE extends Entit
 		set(this, destField, fieldValue === true ? 'Y' : 'N')
 	}
 
-	protected setFieldIfExistsBooleanFromTinyInt (
+	protected setFieldIfExistsBooleanFromTinyInt(
 		destField: keyof DEST,
 		sourceField: keyof SOURCE,
 		from: Partial<SOURCE>
@@ -53,7 +58,7 @@ export default abstract class EntityBaseTransformable<DEST, SOURCE extends Entit
 			set(this, destField, fieldValue ? 1 : 0)
 	}
 
-	protected setFieldIfExistsConcat (
+	protected setFieldIfExistsConcat(
 		destField: keyof DEST,
 		sourceField: keyof SOURCE,
 		from: Partial<SOURCE>,
@@ -64,7 +69,7 @@ export default abstract class EntityBaseTransformable<DEST, SOURCE extends Entit
 			set(this, destField, join(fieldValue, delimeter))
 	}
 
-	protected setFieldCoordinatesIfExists (
+	protected setFieldCoordinatesIfExists(
 		destFieldLatitude: keyof DEST,
 		destFieldLongitude: keyof DEST,
 		sourceField: keyof SOURCE,
@@ -75,10 +80,5 @@ export default abstract class EntityBaseTransformable<DEST, SOURCE extends Entit
 			set(this, destFieldLatitude, fieldValue.latitude)
 			set(this, destFieldLongitude, fieldValue.longitude)
 		}
-	}
-
-	public findFieldTruth<T>(dummyInstance: T): keyof T {
-		// @ts-ignore
-		return first(keys(pickBy(dummyInstance, (field) => field === true))) as keyof T
 	}
 }

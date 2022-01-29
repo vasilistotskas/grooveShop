@@ -3,21 +3,21 @@
     <div v-if="userReviewResults && Object.keys(userReviewResults).length > 0" class="container">
       <div class="user-reviews-grid mb-4">
         <ProductReviewCard
-          v-for="review in userReviewResults"
-          :key="review.id"
-          class="product-review-main-card"
-          :class="{'current-user-review-card': review.user_id == userId }"
-          :review="review"
-          :user-id="userId"
+            v-for="review in userReviewResults"
+            :key="review.id"
+            :class="{'current-user-review-card': review.user_id == userId }"
+            :review="review"
+            :user-id="userId"
+            class="product-review-main-card"
         />
       </div>
       <Pagination
-        v-if="Object.keys(userReviewResults).length !== 0"
-        :endpoint-url="buildEndPointUrlForPaginatedResults()"
-        :max-visible-buttons="3"
-        :route="'Reviews'"
-        :total-pages="userReviewResultsTotalPages"
-        @pagechanged="onPageChange"
+          v-if="Object.keys(userReviewResults).length !== 0"
+          :endpoint-url="buildEndPointUrlForPaginatedResults()"
+          :max-visible-buttons="3"
+          :route="'Reviews'"
+          :total-pages="userReviewResultsTotalPages"
+          @pagechanged="onPageChange"
       />
     </div>
     <div v-else>
@@ -27,12 +27,12 @@
 </template>
 
 <script lang="ts">
-import store from '@/store';
-import { Options, Vue } from 'vue-class-component';
-import ProductModel from '@/state/product/ProductModel';
-import Pagination from '@/components/Pagination/Pagination.vue';
-import UserDetailsModel from '@/state/user/data/UserDetailsModel';
-import ProductReviewCard from '@/components/Reviews/ProductReviewCard.vue';
+import store from '@/store'
+import { Options, Vue } from 'vue-class-component'
+import ProductModel from '@/state/product/ProductModel'
+import Pagination from '@/components/Pagination/Pagination.vue'
+import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import ProductReviewCard from '@/components/Reviews/ProductReviewCard.vue'
 
 @Options({
   name: 'Reviews',
@@ -50,68 +50,68 @@ import ProductReviewCard from '@/components/Reviews/ProductReviewCard.vue';
 
 export default class Reviews extends Vue {
 
-  uri = window.location.search.substring(1);
-  currentPage: number = 1;
-  params = new URLSearchParams(this.uri);
-  userData = new UserDetailsModel();
+  uri = window.location.search.substring(1)
+  currentPage: number = 1
+  params = new URLSearchParams(this.uri)
+  userData = new UserDetailsModel()
 
   get userId(): number {
-    return store.getters['user/data/getUserId'];
+    return store.getters['user/data/getUserId']
   }
 
   get currentPageNumber(): number {
-    let storedPageNumber = store.getters['pagination/getCurrentPageNumber'];
+    let storedPageNumber = store.getters['pagination/getCurrentPageNumber']
     if (storedPageNumber) {
-      return store.getters['pagination/getCurrentPageNumber'];
+      return store.getters['pagination/getCurrentPageNumber']
     }
 
-    return 1;
+    return 1
   }
 
   get currentPageQuery(): string {
-    return store.getters['pagination/getCurrentQuery'];
+    return store.getters['pagination/getCurrentQuery']
   }
 
   get userReviewResults(): ProductModel {
-    return store.getters['pagination/getResultData'];
+    return store.getters['pagination/getResultData']
   }
 
   get userReviewResultsCount(): number {
-    return store.getters['pagination/getResultCountData'];
+    return store.getters['pagination/getResultCountData']
   }
 
   get userReviewResultsNextPageUrl(): string {
-    return store.getters['pagination/getResultNextPageUrl'];
+    return store.getters['pagination/getResultNextPageUrl']
   }
 
   get userReviewResultsPreviousPageUrl(): string {
-    return store.getters['pagination/getResultPreviousPageUrl'];
+    return store.getters['pagination/getResultPreviousPageUrl']
   }
 
   get userReviewResultsTotalPages(): number {
-    return store.getters['pagination/getResultTotalPages'];
+    return store.getters['pagination/getResultTotalPages']
   }
 
   async created(): Promise<void> {
 
-    document.title = 'My Reviews ';
+    document.title = 'My Reviews '
 
     if (this.params.get('query')) {
-      await store.commit('pagination/setCurrentQuery', this.params.get('query'));
+      await store.commit('pagination/setCurrentQuery', this.params.get('query'))
     }
 
-    await store.commit('pagination/setCurrentPageNumber', 1);
+    await store.commit('pagination/setCurrentPageNumber', 1)
 
     if (this.params.get('page')) {
-      await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')));
+      await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
     }
 
-    await this.fetchUserReviews();
+    await this.fetchUserReviews()
 
   }
 
   async unmounted(): Promise<void> {
-    store.commit('pagination/unsetResults');
+    store.commit('pagination/unsetResults')
   }
 
   public fetchUserReviews(): void {
@@ -120,25 +120,25 @@ export default class Reviews extends Vue {
       'endpointUrl': this.buildEndPointUrlForPaginatedResults(),
       'query': this.currentPageQuery,
       'method': 'GET'
-    });
+    })
   }
 
   public buildEndPointUrlForPaginatedResults(): string {
-    const user_id = this.userData.id;
-    return `reviews/user/${user_id}`;
+    const user_id = this.userData.id
+    return `reviews/user/${ user_id }`
   }
 
   onPageChange(page: any) {
-    this.currentPage = page;
+    this.currentPage = page
   }
 
 }
 </script>
 
 <style lang="scss">
- .user-reviews-grid {
-   display: grid;
-   gap: 15px;
-   grid-template-rows: repeat(1, 1fr);
- }
+.user-reviews-grid {
+  display: grid;
+  gap: 15px;
+  grid-template-rows: repeat(1, 1fr);
+}
 </style>

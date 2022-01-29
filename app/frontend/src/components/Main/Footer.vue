@@ -11,11 +11,11 @@
             </div>
             <div class="grid-item-two">
               <!-- Email input -->
-              <input id="form5Example21" class="form-control" type="email" />
+              <input id="form5Example21" class="form-control" type="email"/>
               <label class="form-label mt-2" for="form5Example21">Email address</label>
             </div>
             <div class="grid-item-three">
-              <button title="Subscribe to Newsletter" class="btn-outline-primary-one mb-4" type="submit">
+              <button class="btn-outline-primary-one mb-4" title="Subscribe to Newsletter" type="submit">
                 Subscribe
               </button>
             </div>
@@ -97,13 +97,13 @@
 
     <div class="main-copyright text-center p-3">
       <span>© 2020 Copyright:</span>
-      <a title="Made By Groove" href="#">GrooveBtch</a>
+      <a href="#" title="Made By Groove">GrooveBtch</a>
     </div>
   </footer>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
+import { Options, Vue } from 'vue-class-component'
 
 @Options({
   name: 'Footer'
@@ -115,44 +115,51 @@ export default class Footer extends Vue {
 
 <style lang="scss" scoped>
 
-  .main-footer{
-    border-top: 1px solid var(--cp-palette-main-third);
-    background-color: var(--cp-palette-main-secondary);
+.main-footer {
+  border-top: 1px solid var(--cp-palette-main-third);
+  background-color: var(--cp-palette-main-secondary);
+}
+
+.main-copyright {
+  text-align: center;
+  padding: 5px;
+  border-top: 1px solid var(--cp-palette-main-third);
+
+  span {
+    font-size: 12px;
   }
-  .main-copyright{
-    text-align: center;
-    padding: 5px;
-    border-top: 1px solid var(--cp-palette-main-third);
-    span {
-      font-size: 12px;
+}
+
+.footer-grid-newsletter {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 80% 20%;
+  max-width: 500px;
+  margin: 0 auto;
+
+  .grid-item {
+    &-one {
+      grid-column-start: 1;
+      grid-column-end: span col4-start;
+      grid-row-start: 1;
     }
-  }
-  .footer-grid-newsletter {
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 80% 20%;
-    max-width: 500px;
-    margin: 0 auto;
-    .grid-item {
-      &-one {
-        grid-column-start: 1;
-        grid-column-end: span col4-start;
-        grid-row-start: 1;
-      }
-      &-two {
-        label {
-          display: block;
-        }
-      }
-    }
-  }
-  .footer-section-links {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    .grid-item {
-      &-one, &-two, &-three, &-four {
-        text-align: center;
+
+    &-two {
+      label {
+        display: block;
       }
     }
   }
+}
+
+.footer-section-links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  .grid-item {
+    &-one, &-two, &-three, &-four {
+      text-align: center;
+    }
+  }
+}
 </style>

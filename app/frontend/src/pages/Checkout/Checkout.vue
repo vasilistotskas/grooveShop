@@ -162,7 +162,9 @@
           <div id="stripe-card" ref="stripleElement" class="mb-5 mt-3"></div>
           <template v-if="cartTotalLength">
             <div class="checkout-grid-pay-button">
-              <button title="Pay With Stripe" class="btn btn-outline-primary-one" type="button" @click="submitForm">Pay with Stripe</button>
+              <button class="btn btn-outline-primary-one" title="Pay With Stripe" type="button" @click="submitForm">Pay
+                with Stripe
+              </button>
             </div>
           </template>
         </div>
@@ -178,15 +180,19 @@
                class="checkout-grid-head-part-two"
           >
             <div class="checkout-grid-head-part-two-product-image">
-              <RouterLink  :to="'/product' + item.product.absolute_url" aria-label="Product" :title="item.product.name">
+              <RouterLink :title="item.product.name" :to="'/product' + item.product.absolute_url" aria-label="Product">
                 <span>
-                  <img :src="mediaStreamImage('products', item.product.main_image_filename, '100', '100')"
-                       height="100" width="100" :alt="item.product.name">
+                  <img :alt="item.product.name"
+                       :src="mediaStreamImage('products', item.product.main_image_filename, '100', '100')"
+                       height="100"
+                       width="100"
+                       loading="lazy"
+                  >
                 </span>
               </RouterLink>
             </div>
             <div class="checkout-grid-head-part-two-product-info">
-              <RouterLink :to="'/product' + item.product.absolute_url" aria-label="Product" :title="item.product.name">
+              <RouterLink :title="item.product.name" :to="'/product' + item.product.absolute_url" aria-label="Product">
                 <span class="checkout-grid-head-part-two-product-info-name">{{ item.product.name }}</span>
               </RouterLink>
               <span class="checkout-grid-head-part-two-product-info-price">Item Price: ${{ item.product.price }}</span>
@@ -207,28 +213,28 @@
 </template>
 
 <script lang="ts">
-import store from '@/store';
-import router from '@/routes';
-import {cloneDeep} from 'lodash';
-import {useToast} from 'vue-toastification';
-import {Options, Vue} from 'vue-class-component';
-import CartItemModel from '@/state/cart/CartItemModel';
-import CountryModel from '@/state/country/CountryModel';
-import RegionsModel from '@/state/country/RegionsModel';
-import BaseInput from '@/components/Form/BaseInput.vue';
-import FormProvider from '@/components/Form/FormProvider.vue';
-import SubmitButtons from '@/components/Form/SubmitButtons.vue';
-import UserDetailsModel from '@/state/user/data/UserDetailsModel';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue';
-import {useValidation, ValidationError} from 'vue3-form-validation';
-import ValidationErrors from '@/components/Form/ValidationErrors.vue';
-import {min, exactly, required, email} from '@/components/Form/Utils';
+import store from '@/store'
+import router from '@/routes'
+import { cloneDeep } from 'lodash'
+import { useToast } from 'vue-toastification'
+import { Options, Vue } from 'vue-class-component'
+import CartItemModel from '@/state/cart/CartItemModel'
+import CountryModel from '@/state/country/CountryModel'
+import RegionsModel from '@/state/country/RegionsModel'
+import BaseInput from '@/components/Form/BaseInput.vue'
+import FormProvider from '@/components/Form/FormProvider.vue'
+import SubmitButtons from '@/components/Form/SubmitButtons.vue'
+import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
+import { useValidation, ValidationError } from 'vue3-form-validation'
+import ValidationErrors from '@/components/Form/ValidationErrors.vue'
+import { min, exactly, required, email } from '@/components/Form/Utils'
 
-const toast = useToast();
+const toast = useToast()
 
 let {
   validateFields
-} = useValidation({});
+} = useValidation({})
 
 @Options({
   name: 'Checkout',
@@ -244,9 +250,9 @@ export default class Checkout extends Vue {
 
   $refs!: {
     stripleElement: HTMLFormElement;
-  };
+  }
   customerDetails = new UserDetailsModel()
-  card = {};
+  card = {}
   formManager = {
     validateFields
   } = useValidation({
@@ -299,46 +305,46 @@ export default class Checkout extends Vue {
         min(2)('Place has to be longer than 1 characters')
       ]
     }
-  });
+  })
 
   get breadCrumbPath(): [] {
-    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb;
-    return currentRouteMetaBreadcrumb(router.currentRoute.value.params);
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
   get isAuthenticated(): boolean {
-    return store.getters['auth/isAuthenticated'];
+    return store.getters['auth/isAuthenticated']
   }
 
   get availableCountries(): CountryModel {
-    return store.getters['country/getCountries'];
+    return store.getters['country/getCountries']
   }
 
   get regionsBasedOnAlpha(): RegionsModel {
-    return store.getters['country/getRegionsBasedOnAlpha'];
+    return store.getters['country/getRegionsBasedOnAlpha']
   }
 
   get cart(): Array<CartItemModel> {
-    return store.getters['cart/getCart'];
+    return store.getters['cart/getCart']
   }
 
   get userData(): UserDetailsModel {
     if (this.isAuthenticated) {
-      return store.getters['user/data/getUserData'];
+      return store.getters['user/data/getUserData']
     }
-    return new UserDetailsModel;
+    return new UserDetailsModel
   }
 
   get cartTotalLength(): number {
-    return store.getters['cart/getCartTotalLength'];
+    return store.getters['cart/getCartTotalLength']
   }
 
   get cartTotalPrice(): number {
-    return store.getters['cart/getCartTotalPrice'];
+    return store.getters['cart/getCartTotalPrice']
   }
 
   get stripeResultToken(): string {
-    return store.getters['stripeCard/getResultToken'];
+    return store.getters['stripeCard/getResultToken']
   }
 
   async created(): Promise<void> {
@@ -346,58 +352,58 @@ export default class Checkout extends Vue {
       await store.dispatch('country/getCountriesFromRemote'),
       store.dispatch('stripeIban/initIBANComponent'),
       store.dispatch('stripeCard/initStripeComponent')
-    ]);
+    ])
   }
 
   async mounted(): Promise<void> {
-    document.title = 'Checkout';
+    document.title = 'Checkout'
     if (this.isAuthenticated) {
-      await store.dispatch('user/data/userDataFromRemote');
+      await store.dispatch('user/data/userDataFromRemote')
     }
-    this.customerDetailsInitialize();
+    this.customerDetailsInitialize()
   }
 
   itemTotal(item: CartItemModel): number {
-    return item.quantity * item.product.price;
+    return item.quantity * item.product.price
   }
 
   public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
-    const mediaStreamPath = '/mediastream/media/uploads/';
-    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName;
-    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height;
+    const mediaStreamPath = '/mediastream/media/uploads/'
+    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName
+    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height
   }
 
   async restRegions(e: any): Promise<void> {
-    const countryAlpha2Key = e.target.value;
-    await store.dispatch('country/findRegionsBasedOnAlphaFromInput', countryAlpha2Key);
-    this.customerDetails.region = 'choose';
+    const countryAlpha2Key = e.target.value
+    await store.dispatch('country/findRegionsBasedOnAlphaFromInput', countryAlpha2Key)
+    this.customerDetails.region = 'choose'
   }
 
   async submitForm(): Promise<void> {
     try {
-      await store.dispatch('stripeCard/createStripeToken');
+      await store.dispatch('stripeCard/createStripeToken')
       if (this.stripeResultToken) {
-        await this.handleSubmit(this.stripeResultToken);
+        await this.handleSubmit(this.stripeResultToken)
       }
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
   }
 
   handleSubmit = async (token: any) => {
-    const items = [];
+    const items = []
     try {
       for (let i = 0; i < this.cart.length; i++) {
-        const item = this.cart[i];
+        const item = this.cart[i]
         const obj = {
           product: item.product.id,
           quantity: item.quantity,
           price: item.product.price * item.quantity
-        };
-        items.push(obj);
+        }
+        items.push(obj)
       }
 
-      const formData: any = await validateFields();
+      const formData: any = await validateFields()
       const apiData = {
         user_id: this.customerDetails.id ? this.customerDetails.id : this.userData.id,
         first_name: formData.first_name,
@@ -411,65 +417,65 @@ export default class Checkout extends Vue {
         region: this.customerDetails.region,
         items,
         stripe_token: token.id
-      };
+      }
       if (this.customerDetails.country === 'choose') {
-        toast.error('The country field is missing!');
+        toast.error('The country field is missing!')
       } else if (this.customerDetails.region === 'choose') {
-        toast.error('The region field is missing!');
+        toast.error('The region field is missing!')
       } else {
-        await store.dispatch('cart/createOrder', apiData);
+        await store.dispatch('cart/createOrder', apiData)
       }
 
     } catch (e) {
       if (e instanceof ValidationError) {
-        console.log(e.message);
+        console.log(e.message)
       }
     }
-  };
+  }
 
   public customerDetailsInitialize(): void {
-    this.customerDetails = cloneDeep(this.userData);
+    this.customerDetails = cloneDeep(this.userData)
 
     if (this.isAuthenticated) {
       if (this.customerDetails.first_name !== null) {
-        this.formManager.form.first_name.$value = cloneDeep(this.userData.first_name);
+        this.formManager.form.first_name.$value = cloneDeep(this.userData.first_name)
       }
       if (this.customerDetails.last_name !== null) {
-        this.formManager.form.last_name.$value = cloneDeep(this.userData.last_name);
+        this.formManager.form.last_name.$value = cloneDeep(this.userData.last_name)
       }
       if (this.customerDetails.phone !== null) {
-        this.formManager.form.phone.$value = String(cloneDeep(this.userData.phone) as unknown as string);
+        this.formManager.form.phone.$value = String(cloneDeep(this.userData.phone) as unknown as string)
       }
       if (this.customerDetails.place !== null) {
-        this.formManager.form.place.$value = cloneDeep(this.userData.place);
+        this.formManager.form.place.$value = cloneDeep(this.userData.place)
       }
       if (this.customerDetails.email !== null) {
-        this.formManager.form.email.$value = cloneDeep(this.userData.email);
+        this.formManager.form.email.$value = cloneDeep(this.userData.email)
       }
       if (this.customerDetails.zipcode !== null) {
-        this.formManager.form.zipcode.$value = String(cloneDeep(this.userData.zipcode) as unknown as string);
+        this.formManager.form.zipcode.$value = String(cloneDeep(this.userData.zipcode) as unknown as string)
       }
       if (this.customerDetails.address !== null) {
-        this.formManager.form.address.$value = cloneDeep(this.userData.address);
+        this.formManager.form.address.$value = cloneDeep(this.userData.address)
       }
 
       if (!this.customerDetails.country) {
-        this.customerDetails.country = 'choose';
-        this.customerDetails.region = 'choose';
+        this.customerDetails.country = 'choose'
+        this.customerDetails.region = 'choose'
       }
     } else {
-      this.customerDetails.address = '';
-      this.customerDetails.city = '';
-      this.customerDetails.country = '';
-      this.customerDetails.email = '';
-      this.customerDetails.first_name = '';
-      this.customerDetails.last_name = '';
-      this.customerDetails.phone = 0;
-      this.customerDetails.place = '';
-      this.customerDetails.region = '';
-      this.customerDetails.zipcode = 0;
-      this.customerDetails.country = 'choose';
-      this.customerDetails.region = 'choose';
+      this.customerDetails.address = ''
+      this.customerDetails.city = ''
+      this.customerDetails.country = ''
+      this.customerDetails.email = ''
+      this.customerDetails.first_name = ''
+      this.customerDetails.last_name = ''
+      this.customerDetails.phone = 0
+      this.customerDetails.place = ''
+      this.customerDetails.region = ''
+      this.customerDetails.zipcode = 0
+      this.customerDetails.country = 'choose'
+      this.customerDetails.region = 'choose'
     }
   }
 
@@ -502,10 +508,12 @@ export default class Checkout extends Vue {
 
   .checkout-grid-title {
     border-bottom: 2px solid var(--cp-palette-main-third);
+
     h2.title {
       padding-bottom: 10px;
     }
   }
+
   .checkout-grid-head {
     display: grid;
     gap: 10px;
@@ -535,10 +543,12 @@ export default class Checkout extends Vue {
         display: grid;
         grid-template-columns: 30% 50% 20%;
         background-color: var(--cp-palette-main-fourth);
+
         &-product {
           &-image {
 
           }
+
           &-info {
             display: grid;
             grid-template-rows: auto;
@@ -546,18 +556,22 @@ export default class Checkout extends Vue {
             gap: 5px;
             align-items: center;
             padding: 15px;
-              &-name {
-                font-weight: 500;
-              }
-              &-price {
-                color: var(--cp-palette-main-fifth);
-                font-size: 14px;
-              }
-              &-quantity {
-                color: var(--cp-palette-main-fifth);
-                font-size: 15px;
-              }
+
+            &-name {
+              font-weight: 500;
+            }
+
+            &-price {
+              color: var(--cp-palette-main-fifth);
+              font-size: 14px;
+            }
+
+            &-quantity {
+              color: var(--cp-palette-main-fifth);
+              font-size: 15px;
+            }
           }
+
           &-total {
             position: absolute;
             display: grid;
@@ -565,6 +579,7 @@ export default class Checkout extends Vue {
             right: 10px;
             justify-self: end;
             align-self: end;
+
             span {
               font-weight: 500;
               color: var(--cp-palette-main-fifth);
@@ -578,13 +593,16 @@ export default class Checkout extends Vue {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         margin-top: 15px;
+
         span {
           color: var(--cp-palette-main-fifth);
           font-weight: 500;
           font-size: 22px;
+
           &:first-child {
             justify-self: start;
           }
+
           &:nth-child(2) {
             justify-self: end;
           }
@@ -596,6 +614,7 @@ export default class Checkout extends Vue {
   .checkout-grid-content {
     display: grid;
     background-color: transparent;
+
     button {
       justify-self: end;
       align-self: end;
@@ -608,6 +627,7 @@ export default class Checkout extends Vue {
     gap: 20px;
     align-items: center;
     justify-items: center;
+
     .form-outline {
       width: 100%;
     }

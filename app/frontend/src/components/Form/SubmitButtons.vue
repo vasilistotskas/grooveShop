@@ -1,25 +1,25 @@
 <template>
   <div
-    :style="{
+      :style="{
       'column-gap': gap,
       'grid-template-columns': `${r1}fr ${r2}fr`
     }"
-    class="_buttons"
+      class="_buttons"
   >
     <BaseButton
-      title="Reset"
-      class="reset-button"
-      type="primary-two"
-      @click="$emit('reset')"
+        class="reset-button"
+        title="Reset"
+        type="primary-two"
+        @click="$emit('reset')"
     >
       Reset
     </BaseButton>
     <BaseButton
-      title="Submit"
-      :disabled="submitting"
-      class="submit-button"
-      html-type="submit"
-      type="primary"
+        :disabled="submitting"
+        class="submit-button"
+        html-type="submit"
+        title="Submit"
+        type="primary"
     >
       {{ submitText }}
     </BaseButton>
@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-import BaseButton from './BaseButton.vue';
+import { defineComponent } from 'vue'
+import BaseButton from './BaseButton.vue'
 
 export default defineComponent({
   components: {
@@ -54,13 +54,13 @@ export default defineComponent({
   emits: ['reset'],
   computed: {
     r1() {
-      return this.ratio.split(':')[0];
+      return this.ratio.split(':')[0]
     },
     r2() {
-      return this.ratio.split(':')[1];
+      return this.ratio.split(':')[1]
     }
   }
-});
+})
 </script>
 
 <style scoped>

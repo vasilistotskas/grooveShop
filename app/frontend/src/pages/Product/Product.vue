@@ -9,8 +9,10 @@
             :class="{'image-main': image.is_main }"
             class="image"
         >
-          <img :src="mediaStreamImage('products', image.product_image_filename, '330', '420')" alt="Product Image"
+          <img :src="mediaStreamImage('products', image.product_image_filename, '330', '420')"
+               alt="Product Image"
                class="img-fluid"
+               loading="lazy"
           />
         </figure>
       </div>
@@ -58,7 +60,8 @@
 
           <div class="product-page-grid-buttons">
             <input v-model="quantity" class="input" min="1" type="number"/>
-            <button :class="{'disabled': disabled }" :title="`Add to cart ${product.name}`" class="btn-outline-primary-one addToCartButton"
+            <button :class="{'disabled': disabled }" :title="`Add to cart ${product.name}`"
+                    class="btn-outline-primary-one addToCartButton"
                     type="button"
                     @click="addToCart()"
             >

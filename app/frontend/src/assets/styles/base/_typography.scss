@@ -1,0 +1,105 @@
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(31, 45, 61, 0);
+}
+
+* {
+  font-family: 'Roboto', sans-serif;
+  transition: all .12s ease-in-out;
+  margin: 0;
+  padding: 0;
+}
+
+*, :after, :before {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a, p, span, label, h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+  color: var(--cp-palette-main-fifth);
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.3;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+h2 {
+  font-size: 34px;
+}
+
+h3 {
+  font-size: 28px;
+}
+
+h4 {
+  font-size: 22px;
+}
+
+h5 {
+  font-size: 18px;
+}
+
+h6 {
+  font-size: 16px;
+}
+
+
+a {
+  transition: all 0.3s ease-in-out;
+  text-decoration: none !important;
+
+  &:hover {
+    transition: all 0.3s ease-in-out;
+    color: var(--cp-palette-main-fifth);
+  }
+}
+
+p, a {
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+ul {
+  list-style-type: none;
+}
+
+td {
+  font-size: 18px;
+}
+
+th {
+  font-size: 14px;
+}
+
+textarea {
+  font-size: Max(16px, 1em);
+  font-family: inherit;
+  padding: 0.25em 0.5em;
+  background-color: var(--cp-palette-main-fifth);
+  border: 2px solid var(--cp-palette-main-third);
+  border-radius: 4px;
+  transition: 180ms box-shadow ease-in-out;
+  resize: vertical;
+
+  &:focus {
+    border-color: rgba(253, 0, 2, 0.33);
+    box-shadow: 0 0 0 2px rgb(253 0 2 / 25%);
+    outline: 3px solid transparent;
+  }
+}
+
+input:focus-visible {
+  outline: unset !important;
+}
+
+// Router
+
+.router-link-active {
+  color: var(--cp-palette-main-primary) !important;
+}
