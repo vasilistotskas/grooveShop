@@ -302,7 +302,7 @@ table {
   }
 }
 
-.my-account-page-main-content {
+.user-account-page-main-content {
   .pagination-grid-content {
     position: absolute;
     display: grid;
@@ -685,8 +685,8 @@ table {
     line-height: 1;
     color: var(--cp-palette-main-fifth);
     text-align: center;
-    background-color: var(--cp-palette-main-fifth);
-    border: 1px solid var(--cp-palette-main-third);
+    background-color: var(--cp-palette-main-fourth);
+    border-right: 1px solid var(--cp-palette-main-third);
     white-space: nowrap;
     vertical-align: middle;
     border: unset;
@@ -823,5 +823,16 @@ table {
     background-color: var(--cp-palette-main-primary);
     right: 0;
     bottom: 0;
+  }
+}
+
+#wrapper {
+  position: relative;
+}
+
+.main-section {
+  @media screen and (min-width: 1200px) {
+    min-height: 750px;
+    display: grid;
   }
 }

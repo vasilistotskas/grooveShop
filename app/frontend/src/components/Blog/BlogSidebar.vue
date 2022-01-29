@@ -55,65 +55,6 @@ export default class BlogSidebar extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.grid-blog-siderbar {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+@import "@/assets/styles/components/Blog/BlogSidebar"
 
-  &-tags, &-authors {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-
-    span {
-      width: 100%;
-      display: grid;
-      justify-self: start;
-      align-self: center;
-      transition: all 0.3s ease-in-out;
-
-      &:not(.sidebar-blog-title) {
-        border: 1px solid var(--cp-palette-main-third);
-        padding: 7px 12px;
-        border-radius: 5px;
-
-        &:hover {
-          background: var(--cp-palette-main-secondary);
-          transition: all 0.3s ease-in-out;
-
-          a {
-            transition: all 0.3s ease-in-out;
-
-            svg {
-              color: var(--cp-palette-main-primary) !important;
-              transition: all 0.3s ease-in-out;
-            }
-          }
-        }
-      }
-    }
-
-    a {
-      font-size: 18px;
-    }
-  }
-
-  &-authors {
-    grid-template-columns: repeat(1, 1fr);
-  }
-
-  .sidebar-blog-title {
-    font-weight: 500;
-    font-size: 26px;
-
-    &.tags {
-      grid-column-start: span 2;
-    }
-
-    &.authors {
-      grid-column-start: auto;
-    }
-  }
-}
 </style>

@@ -137,8 +137,6 @@ export default class PaginationModule
 			ApiUrl = `${ baseUrl }/${ params.endpointUrl }/${ params.query }?p=${ params.pageNumber }`
 		}
 
-		console.log(ApiUrl)
-
 		session({
 			url: ApiUrl,
 			method: params.method,

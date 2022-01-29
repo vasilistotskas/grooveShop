@@ -10,7 +10,7 @@ import store from '@/store'
 import router from '@/routes'
 import PostModel from '@/state/blog/PostModel'
 import { Options, Vue } from 'vue-class-component'
-import PostList from '@/components/Blog/PostList.vue'
+import PostList from '@/components/Blog/BlogPostList.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 
 @Options({
@@ -41,4 +41,7 @@ export default class Blog extends Vue {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "@/assets/styles/pages/Blog/Blog"
+
+</style>

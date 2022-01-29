@@ -38,7 +38,6 @@ export default class AppSettingsModule
 		const nextThemeMode = (currentThemeMode === AppSettingsThemeModeOption.Light)
 			? AppSettingsThemeModeOption.Dark
 			: AppSettingsThemeModeOption.Light
-		console.log(nextThemeMode)
 		await this.context.dispatch('updateSetting', { key: 'themeMode', value: nextThemeMode })
 		return nextThemeMode
 	}

@@ -98,66 +98,6 @@ export default class CartItemVue extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.grid-container-cart {
-  display: grid;
-  grid-template-columns: 45% 18% 18% 19%;
-  position: relative;
-  background-color: var(--cp-palette-main-fourth);
-  border-radius: 5px;
-  align-items: center;
-  justify-items: center;
-  padding: 5px;
-
-  a {
-    color: var(--cp-palette-main-secondary);
-  }
-
-  &-item-one {
-    width: 100%;
-
-    a {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      justify-items: center;
-
-      span {
-        justify-self: start;
-      }
-    }
-  }
-
-  &-item-two {
-    color: var(--cp-palette-main-fifth);
-  }
-
-  &-item-three {
-    grid-template-columns: repeat(3, 1fr);
-    display: grid;
-    align-items: center;
-    justify-items: center;
-    color: var(--cp-palette-main-fifth);
-
-    a {
-      font-size: 14px;
-      padding: 4px 10px;
-    }
-  }
-
-  &-item-four {
-    color: var(--cp-palette-main-fifth);
-  }
-
-  &-item-five {
-    position: absolute;
-    color: var(--cp-palette-main-fifth);
-    right: 30px;
-  }
-}
-
-.grid-container-table-items {
-  display: grid;
-  gap: 10px;
-}
+@import "@/assets/styles/components/Cart/CartItem"
 
 </style>

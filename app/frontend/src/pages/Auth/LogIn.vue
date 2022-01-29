@@ -13,7 +13,7 @@
             <div class="container">
               <div class="email mb-3">
                 <label :for="formManager.form.email.$uid" class="label mb-2">Email</label>
-                <BaseInput
+                <FormBaseInput
                     :id="formManager.form.email.$uid"
                     v-model="formManager.form.email.$value"
                     :has-error="formManager.form.email.$hasError"
@@ -23,14 +23,14 @@
                     placeholder="Alice, Bob, Oscar"
                     @blur="formManager.form.email.onBlur"
                 />
-                <ValidationErrors
+                <FormValidationErrors
                     :errors="formManager.form.email.$errors"
                     class="validation-errros"
                 />
               </div>
               <div class="password mb-4">
                 <label :for="formManager.form.password.$uid" class="label mb-2">Password</label>
-                <BaseInput
+                <FormBaseInput
                     :id="formManager.form.password.$uid"
                     v-model="formManager.form.password.$value"
                     :has-error="formManager.form.password.$hasError"
@@ -39,9 +39,9 @@
                     type="password"
                     @blur="formManager.form.password.onBlur"
                 />
-                <ValidationErrors :errors="formManager.form.password.$errors"/>
+                <FormValidationErrors :errors="formManager.form.password.$errors"/>
               </div>
-              <SubmitButtons
+              <FormSubmitButtons
                   :submitting="formManager.submitting"
                   class="buttons mt-3 mb-3"
                   gap="2rem"
@@ -105,17 +105,17 @@ import router from '@/routes'
 import session from '@/api/session'
 import { Options, Vue } from 'vue-class-component'
 import { required } from '@/components/Form/Utils'
-import BaseInput from '@/components/Form/BaseInput.vue'
 import FormProvider from '@/components/Form/FormProvider.vue'
-import SubmitButtons from '@/components/Form/SubmitButtons.vue'
+import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import { faKey } from '@fortawesome/free-solid-svg-icons/faKey'
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import ValidationErrors from '@/components/Form/ValidationErrors.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
+import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
+import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 
 let {
   validateFields
@@ -125,9 +125,9 @@ let {
   name: 'LogIn',
   components: {
     FormProvider,
-    BaseInput,
-    SubmitButtons,
-    ValidationErrors,
+    FormBaseInput,
+    FormSubmitButtons,
+    FormValidationErrors,
     Breadcrumbs
   }
 })
@@ -193,64 +193,6 @@ export default class LogIn extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.login-card {
-  max-width: 500px;
-  display: block;
-  margin: 0 auto;
+@import "@/assets/styles/pages/Auth/LogIn"
 
-  .card-body {
-    grid-template-rows: unset !important;
-  }
-}
-
-.login-grid-part {
-  &-one {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-
-    .form-check {
-      display: grid;
-      grid-template-columns: 20% 80%;
-      align-items: center;
-    }
-
-    .grid-item-two {
-      a {
-        color: var(--cp-palette-main-fifth);
-        font-weight: 500;
-        font-size: 17px;
-
-        &:hover {
-          cursor: pointer;
-          color: var(--cp-palette-main-primary) !important;
-        }
-      }
-    }
-  }
-
-  &-socials {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 5px;
-
-    a.btn {
-      background: var(--cp-palette-main-fifth);
-      padding: 5px;
-      border-radius: 5px;
-    }
-  }
-}
-
-.login-register-field {
-  a {
-    color: var(--cp-palette-main-fifth);
-    font-weight: 500;
-    font-size: 16px;
-
-    &:hover {
-      cursor: pointer;
-      color: var(--cp-palette-main-primary) !important;
-    }
-  }
-}
 </style>

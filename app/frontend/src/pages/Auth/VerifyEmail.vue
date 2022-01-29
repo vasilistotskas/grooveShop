@@ -87,39 +87,6 @@ export default class VerifyEmail extends Vue {
 </script>
 
 <style lang="scss">
-#activate-account-view {
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  height: 200px;
-  text-align: center;
-}
+@import "@/assets/styles/pages/Auth/VerifyEmail"
 
-.activation-error {
-  &-text {
-    color: var(--cp-palette-main-fifth);
-  }
-
-  &-action {
-    color: var(--cp-palette-main-secondary);
-    font-weight: 500;
-    font-size: 17px;
-
-    &:hover {
-      cursor: pointer;
-      color: var(--cp-palette-main-primary) !important;
-    }
-  }
-}
-
-.activation-complete-action {
-  color: var(--cp-palette-main-secondary);
-  font-weight: 500;
-  font-size: 17px;
-
-  &:hover {
-    cursor: pointer;
-    color: var(--cp-palette-main-primary) !important;
-  }
-}
 </style>

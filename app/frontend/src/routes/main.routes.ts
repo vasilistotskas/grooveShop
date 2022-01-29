@@ -92,18 +92,18 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/my-account',
-		name: 'MyAccount',
-		component: () => import('@/pages/User/MyAccount.vue'),
+		path: '/user-account',
+		name: 'UserAccount',
+		component: () => import('@/pages/User/UserAccount.vue'),
 		meta: {
 			requireLogin: true,
 			breadcrumb: () => ([
 				{
-					name: 'My Account',
+					name: 'User Account',
 					to: {
-						type: 'my_account',
-						param: 'my-account',
-						full_path: 'my-account'
+						type: 'user_account',
+						param: 'user-account',
+						full_path: 'user-account'
 					}
 				}
 			])
@@ -112,23 +112,23 @@ const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'orders',
 				name: 'Orders',
-				component: () => import('@/pages/User/OrderHistory.vue'),
+				component: () => import('@/pages/User/UserOrderHistory.vue'),
 				meta: {
 					breadcrumb: () => ([
 						{
-							name: 'My Account',
+							name: 'User Account',
 							to: {
-								type: 'my_account',
-								param: 'my-account',
-								full_path: 'my-account'
+								type: 'user_account',
+								param: 'user-account',
+								full_path: 'user-account'
 							}
 						},
 						{
-							name: 'My Orders',
+							name: 'User Orders',
 							to: {
-								type: 'my_account_orders',
+								type: 'user_account_orders',
 								param: 'orders',
-								full_path: 'my-account/orders'
+								full_path: 'user-account/orders'
 							}
 						}
 					])
@@ -137,23 +137,23 @@ const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'settings',
 				name: 'Settings',
-				component: () => import('@/pages/User/AccountSettings.vue'),
+				component: () => import('@/pages/User/UserSettings.vue'),
 				meta: {
 					breadcrumb: () => ([
 						{
-							name: 'My Account',
+							name: 'User Account',
 							to: {
-								type: 'my_account',
-								param: 'my-account',
-								full_path: 'my-account'
+								type: 'user_account',
+								param: 'user-account',
+								full_path: 'user-account'
 							}
 						},
 						{
-							name: 'My Settings',
+							name: 'User Settings',
 							to: {
-								type: 'my_account_settings',
+								type: 'user_account_settings',
 								param: 'settings',
-								full_path: 'my-account/settings'
+								full_path: 'user-account/settings'
 							}
 						}
 					])
@@ -162,23 +162,23 @@ const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'favourites',
 				name: 'Favourites',
-				component: () => import('@/pages/User/Favourites.vue'),
+				component: () => import('@/pages/User/UserFavourites.vue'),
 				meta: {
 					breadcrumb: () => ([
 						{
-							name: 'My Account',
+							name: 'User Account',
 							to: {
-								type: 'my_account',
-								param: 'my-account',
-								full_path: 'my-account'
+								type: 'user_account',
+								param: 'user-account',
+								full_path: 'user-account'
 							}
 						},
 						{
-							name: 'My Favourites',
+							name: 'User Favourites',
 							to: {
-								type: 'my_account_favourites',
+								type: 'user_account_favourites',
 								param: 'favourites',
-								full_path: 'my-account/favourites'
+								full_path: 'user-account/favourites'
 							}
 						}
 					])
@@ -187,23 +187,23 @@ const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'reviews',
 				name: 'Reviews',
-				component: () => import('@/pages/User/Reviews.vue'),
+				component: () => import('@/pages/User/UserReviews.vue'),
 				meta: {
 					breadcrumb: () => ([
 						{
-							name: 'My Account',
+							name: 'User Account',
 							to: {
-								type: 'my_account',
-								param: 'my-account',
-								full_path: 'my-account'
+								type: 'user_account',
+								param: 'user-account',
+								full_path: 'user-account'
 							}
 						},
 						{
-							name: 'My Reviews',
+							name: 'User Reviews',
 							to: {
-								type: 'my_account_reviews',
+								type: 'user_account_reviews',
 								param: 'reviews',
-								full_path: 'my-account/reviews'
+								full_path: 'user-account/reviews'
 							}
 						}
 					])
@@ -212,23 +212,23 @@ const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'password',
 				name: 'Password',
-				component: () => import('@/pages/User/Password.vue'),
+				component: () => import('@/pages/User/UserPassword.vue'),
 				meta: {
 					breadcrumb: () => ([
 						{
-							name: 'My Account',
+							name: 'User Account',
 							to: {
-								type: 'my_account',
-								param: 'my-account',
-								full_path: 'my-account'
+								type: 'user_account',
+								param: 'user-account',
+								full_path: 'user-account'
 							}
 						},
 						{
 							name: 'My Password',
 							to: {
-								type: 'my_account_password',
+								type: 'user_account_password',
 								param: 'password',
-								full_path: 'my-account/password'
+								full_path: 'user-account/password'
 							}
 						}
 					])
@@ -273,7 +273,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/cart/success',
 		name: 'Success',
-		component: () => import('@/pages/Order/Success.vue'),
+		component: () => import('@/pages/Order/OrderSuccess.vue'),
 		meta: {
 			breadcrumb: () => ([
 				{
@@ -386,7 +386,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/author/:email',
 		name: 'Author',
-		component: () => import('@/components/Blog/Author.vue'),
+		component: () => import('@/components/Blog/BlogAuthor.vue'),
 		props: true,
 		meta: {
 			breadcrumb: (route: any) => ([
@@ -412,7 +412,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/post/:slug',
 		name: 'Post',
-		component: () => import('@/components/Blog/Post.vue'),
+		component: () => import('@/components/Blog/BlogPost.vue'),
 		props: true,
 		meta: {
 			breadcrumb: (route: any) => ([
@@ -438,7 +438,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/tag/:tag',
 		name: 'PostsByTag',
-		component: () => import('@/components/Blog/PostsByTag.vue'),
+		component: () => import('@/components/Blog/BlogPostsByTag.vue'),
 		props: true,
 		meta: {
 			breadcrumb: (route: any) => ([

@@ -29,8 +29,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-#pre-form {
-  margin-top: 10px;
-}
+<style lang="scss" scoped>
+@import "@/assets/styles/components/Form/PreFormData"
+
 </style>

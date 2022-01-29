@@ -1,0 +1,60 @@
+.login-card {
+  max-width: 500px;
+  display: block;
+  margin: 0 auto;
+
+  .card-body {
+    grid-template-rows: unset !important;
+  }
+}
+
+.login-grid-part {
+  &-one {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    .form-check {
+      display: grid;
+      grid-template-columns: 20% 80%;
+      align-items: center;
+    }
+
+    .grid-item-two {
+      a {
+        color: var(--cp-palette-main-fifth);
+        font-weight: 500;
+        font-size: 17px;
+
+        &:hover {
+          cursor: pointer;
+          color: var(--cp-palette-main-primary) !important;
+        }
+      }
+    }
+  }
+
+  &-socials {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+
+    a.btn {
+      background: var(--cp-palette-main-fourth);
+      padding: 5px;
+      border-radius: 5px;
+    }
+  }
+}
+
+.login-register-field {
+  a {
+    color: var(--cp-palette-main-fifth);
+    font-weight: 500;
+    font-size: 16px;
+
+    &:hover {
+      cursor: pointer;
+      color: var(--cp-palette-main-primary) !important;
+    }
+  }
+}

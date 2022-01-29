@@ -17,7 +17,7 @@
               <div class="container">
                 <div class="email mb-3">
                   <label :for="formManager.form.email.$uid" class="label mb-2">Email</label>
-                  <BaseInput
+                  <FormBaseInput
                       :id="formManager.form.email.$uid"
                       v-model="formManager.form.email.$value"
                       :has-error="formManager.form.email.$hasError"
@@ -27,14 +27,14 @@
                       placeholder="Alice, Bob, Oscar"
                       @blur="formManager.form.email.onBlur"
                   />
-                  <ValidationErrors
+                  <FormValidationErrors
                       :errors="formManager.form.email.$errors"
                       class="validation-errros"
                   />
                 </div>
                 <div class="password mb-3">
                   <label :for="formManager.form.password.$uid" class="label mb-2">Password</label>
-                  <BaseInput
+                  <FormBaseInput
                       :id="formManager.form.password.$uid"
                       v-model="formManager.form.password.$value"
                       :has-error="formManager.form.password.$hasError"
@@ -43,14 +43,14 @@
                       type="password"
                       @blur="formManager.form.password.onBlur"
                   />
-                  <ValidationErrors :errors="formManager.form.password.$errors"/>
+                  <FormValidationErrors :errors="formManager.form.password.$errors"/>
                 </div>
 
                 <div class="confirm-password mb-4">
                   <label :for="formManager.form.confirmPassword.$uid" class="label mb-2">
                     Confirm Password
                   </label>
-                  <BaseInput
+                  <FormBaseInput
                       :id="formManager.form.confirmPassword.$uid"
                       v-model="formManager.form.confirmPassword.$value"
                       :has-error="formManager.form.confirmPassword.$hasError"
@@ -59,12 +59,12 @@
                       type="password"
                       @blur="formManager.form.confirmPassword.onBlur"
                   />
-                  <ValidationErrors :errors="formManager.form.confirmPassword.$errors"/>
+                  <FormValidationErrors :errors="formManager.form.confirmPassword.$errors"/>
                 </div>
                 <span v-show="registrationError" class="error">
                   An error occured while processing your request.
                 </span>
-                <SubmitButtons
+                <FormSubmitButtons
                     :submitting="formManager.submitting"
                     class="buttons"
                     gap="2rem"
@@ -120,16 +120,16 @@
 import store from '@/store'
 import router from '@/routes'
 import { Options, Vue } from 'vue-class-component'
-import BaseInput from '@/components/Form/BaseInput.vue'
 import { min, email, equal } from '@/components/Form/Utils'
 import FormProvider from '@/components/Form/FormProvider.vue'
-import SubmitButtons from '@/components/Form/SubmitButtons.vue'
 import { faKey } from '@fortawesome/free-solid-svg-icons/faKey'
+import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import ValidationErrors from '@/components/Form/ValidationErrors.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
+import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
+import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 
 let {
   validateFields
@@ -139,9 +139,9 @@ let {
   name: 'Register',
   components: {
     FormProvider,
-    BaseInput,
-    SubmitButtons,
-    ValidationErrors,
+    FormBaseInput,
+    FormSubmitButtons,
+    FormValidationErrors,
     Breadcrumbs
   }
 })
@@ -256,67 +256,6 @@ export default class Register extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.page-sign-up {
-  min-height: 500px;
-}
+@import "@/assets/styles/pages/Auth/SignUp"
 
-.buttons {
-  margin-top: 1.25rem;
-  grid-area: buttons;
-}
-
-.name {
-  grid-area: name;
-}
-
-.email {
-  grid-area: email;
-}
-
-.password {
-  grid-area: password;
-}
-
-.confirm-password {
-  grid-area: confirm-password;
-}
-
-.sign-up-card {
-  max-width: 500px;
-  display: block;
-  margin: 0 auto;
-
-  .card-body {
-    grid-template-rows: unset;
-  }
-}
-
-.registration-complete-message {
-  span {
-    color: var(--cp-palette-main-fifth);
-  }
-}
-
-#registration-complete-view {
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  height: 200px;
-  text-align: center;
-
-  span, p {
-    color: var(--cp-palette-main-fifth);
-  }
-}
-
-.registration-resend-action, .register-login-field a {
-  color: var(--cp-palette-main-secondary);
-  font-weight: 500;
-  font-size: 17px;
-
-  &:hover {
-    cursor: pointer;
-    color: var(--cp-palette-main-primary) !important;
-  }
-}
 </style>

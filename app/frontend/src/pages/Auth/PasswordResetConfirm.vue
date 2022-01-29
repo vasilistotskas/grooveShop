@@ -107,11 +107,6 @@ export default class PasswordRestConfirm extends Vue {
 </script>
 
 <style lang="scss">
-#password-reset-confirm-view {
-  max-width: 500px;
+@import "@/assets/styles/pages/Auth/PasswordResetConfirm"
 
-  .card-body {
-    padding: 50px;
-  }
-}
 </style>

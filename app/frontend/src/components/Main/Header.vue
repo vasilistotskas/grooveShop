@@ -59,44 +59,7 @@ export default class Header extends Vue {
 </script>
 
 <style lang="scss" scoped>
-header {
-  @media screen and (min-width: 1200px) {
-    position: fixed;
-  }
-
-  width: 100%;
-  z-index: 12;
-
-  .predeader {
-    background-color: var(--cp-palette-main-fifth);
-    text-align: center;
-    font-size: 14px;
-    color: var(--cp-palette-main-fourth) !important;
-    transform: translate3d(0, 0, 0);
-    transition: all 0.3s ease-in-out;
-
-    &.predeader--hidden {
-      box-shadow: none;
-      transform: translate3d(0, -100%, 0);
-    }
-
-    p {
-      color: var(--cp-palette-main-fifth);
-      padding-top: 5px;
-      padding-bottom: 5px;
-      margin: 0;
-    }
-
-    a {
-      color: var(--cp-palette-main-fifth);
-      font-weight: 700;
-
-      span {
-        color: var(--cp-palette-main-fifth);
-      }
-    }
-  }
-}
+@import "@/assets/styles/components/Main/Footer"
 
 </style>
 

@@ -120,7 +120,7 @@ export default class ProductReviewModal extends Vue {
 
 
   get reviewButtonText(): string {
-    return this.userHasAlreadyReviewedProduct ? 'Update' : 'Post'
+    return this.userHasAlreadyReviewedProduct ? 'Update' : 'BlogPost.vue'
   }
 
   get reviewCount(): number | null {

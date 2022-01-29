@@ -18,14 +18,14 @@
             <div class="checkout-grid-form-part-left">
               <div class="first_name col-12 mb-3">
                 <label :for="formManager.form.first_name.$uid" class="label">First Name</label>
-                <BaseInput
+                <FormBaseInput
                     :id="formManager.form.first_name.$uid"
                     v-model="formManager.form.first_name.$value"
                     :has-error="formManager.form.first_name.$hasError"
                     :placeholder="customerDetails.first_name"
                     :validating="formManager.form.first_name.$validating"
                 />
-                <ValidationErrors
+                <FormValidationErrors
                     :errors="formManager.form.first_name.$errors"
                     class="validation-errros"
                 />
@@ -33,14 +33,14 @@
 
               <div class="last_name col-12 mb-3">
                 <label :for="formManager.form.last_name.$uid" class="label">Last Name</label>
-                <BaseInput
+                <FormBaseInput
                     :id="formManager.form.last_name.$uid"
                     v-model="formManager.form.last_name.$value"
                     :has-error="formManager.form.last_name.$hasError"
                     :placeholder="customerDetails.last_name"
                     :validating="formManager.form.last_name.$validating"
                 />
-                <ValidationErrors
+                <FormValidationErrors
                     :errors="formManager.form.last_name.$errors"
                     class="validation-errros"
                 />
@@ -48,14 +48,14 @@
 
               <div class="last_name col-12 mb-3">
                 <label :for="formManager.form.email.$uid" class="label">Email</label>
-                <BaseInput
+                <FormBaseInput
                     :id="formManager.form.email.$uid"
                     v-model="formManager.form.email.$value"
                     :has-error="formManager.form.email.$hasError"
                     :placeholder="customerDetails.email"
                     :validating="formManager.form.email.$validating"
                 />
-                <ValidationErrors
+                <FormValidationErrors
                     :errors="formManager.form.email.$errors"
                     class="validation-errros"
                 />
@@ -63,14 +63,14 @@
 
               <div class="last_name col-12 mb-3">
                 <label :for="formManager.form.phone.$uid" class="label">Phone</label>
-                <BaseInput
+                <FormBaseInput
                     :id="formManager.form.phone.$uid"
                     v-model="formManager.form.phone.$value"
                     :has-error="formManager.form.phone.$hasError"
                     :placeholder="customerDetails.phone"
                     :validating="formManager.form.phone.$validating"
                 />
-                <ValidationErrors
+                <FormValidationErrors
                     :errors="formManager.form.phone.$errors"
                     class="validation-errros"
                 />
@@ -80,14 +80,14 @@
             <div class="checkout-grid-form-part-right">
               <div class="last_name col-12 mb-3">
                 <label :for="formManager.form.address.$uid" class="label">Address</label>
-                <BaseInput
+                <FormBaseInput
                     :id="formManager.form.address.$uid"
                     v-model="formManager.form.address.$value"
                     :has-error="formManager.form.address.$hasError"
                     :placeholder="customerDetails.address"
                     :validating="formManager.form.address.$validating"
                 />
-                <ValidationErrors
+                <FormValidationErrors
                     :errors="formManager.form.address.$errors"
                     class="validation-errros"
                 />
@@ -95,14 +95,14 @@
 
               <div class="last_name col-12 mb-3">
                 <label :for="formManager.form.zipcode.$uid" class="label">Zipcode</label>
-                <BaseInput
+                <FormBaseInput
                     :id="formManager.form.zipcode.$uid"
                     v-model="formManager.form.zipcode.$value"
                     :has-error="formManager.form.zipcode.$hasError"
                     :placeholder="customerDetails.zipcode"
                     :validating="formManager.form.zipcode.$validating"
                 />
-                <ValidationErrors
+                <FormValidationErrors
                     :errors="formManager.form.zipcode.$errors"
                     class="validation-errros"
                 />
@@ -110,14 +110,14 @@
 
               <div class="last_name col-12 mb-3">
                 <label :for="formManager.form.place.$uid" class="label">Place</label>
-                <BaseInput
+                <FormBaseInput
                     :id="formManager.form.place.$uid"
                     v-model="formManager.form.place.$value"
                     :has-error="formManager.form.place.$hasError"
                     :placeholder="customerDetails.place"
                     :validating="formManager.form.place.$validating"
                 />
-                <ValidationErrors
+                <FormValidationErrors
                     :errors="formManager.form.place.$errors"
                     class="validation-errros"
                 />
@@ -221,14 +221,14 @@ import { Options, Vue } from 'vue-class-component'
 import CartItemModel from '@/state/cart/CartItemModel'
 import CountryModel from '@/state/country/CountryModel'
 import RegionsModel from '@/state/country/RegionsModel'
-import BaseInput from '@/components/Form/BaseInput.vue'
 import FormProvider from '@/components/Form/FormProvider.vue'
-import SubmitButtons from '@/components/Form/SubmitButtons.vue'
+import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
-import ValidationErrors from '@/components/Form/ValidationErrors.vue'
 import { min, exactly, required, email } from '@/components/Form/Utils'
+import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
+import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 
 const toast = useToast()
 
@@ -240,9 +240,9 @@ let {
   name: 'Checkout',
   components: {
     FormProvider,
-    BaseInput,
-    SubmitButtons,
-    ValidationErrors,
+    FormBaseInput,
+    FormSubmitButtons,
+    FormValidationErrors,
     Breadcrumbs
   }
 })
@@ -483,161 +483,6 @@ export default class Checkout extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.checkout-grid-container {
-  display: grid;
-  grid-template-columns: 60% 38%;
-  gap: 25px;
-
-  a, h2 {
-    color: var(--cp-palette-main-fifth);
-  }
-
-  .checkout-grid-order-user-details, .checkout-grid-order-info {
-    background-color: var(--cp-palette-main-secondary);
-    padding: 15px 30px 30px;
-    border-radius: 10px;
-  }
-
-  .checkout-grid-order-user-details {
-    max-height: 555px;
-  }
-
-  .checkout-grid-order-info {
-    height: fit-content;
-  }
-
-  .checkout-grid-title {
-    border-bottom: 2px solid var(--cp-palette-main-third);
-
-    h2.title {
-      padding-bottom: 10px;
-    }
-  }
-
-  .checkout-grid-head {
-    display: grid;
-    gap: 10px;
-    max-height: 378px;
-    overflow: auto;
-
-    &-part {
-      &-two, &-three {
-        border-radius: 5px;
-        align-items: center;
-        justify-items: center;
-        padding: 5px;
-      }
-
-      &-one {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        border-radius: 5px;
-        align-items: center;
-        justify-items: center;
-        padding: 5px;
-        font-size: 20px;
-      }
-
-      &-two {
-        position: relative;
-        display: grid;
-        grid-template-columns: 30% 50% 20%;
-        background-color: var(--cp-palette-main-fourth);
-
-        &-product {
-          &-image {
-
-          }
-
-          &-info {
-            display: grid;
-            grid-template-rows: auto;
-            width: 100%;
-            gap: 5px;
-            align-items: center;
-            padding: 15px;
-
-            &-name {
-              font-weight: 500;
-            }
-
-            &-price {
-              color: var(--cp-palette-main-fifth);
-              font-size: 14px;
-            }
-
-            &-quantity {
-              color: var(--cp-palette-main-fifth);
-              font-size: 15px;
-            }
-          }
-
-          &-total {
-            position: absolute;
-            display: grid;
-            bottom: 10px;
-            right: 10px;
-            justify-self: end;
-            align-self: end;
-
-            span {
-              font-weight: 500;
-              color: var(--cp-palette-main-fifth);
-            }
-          }
-        }
-
-      }
-
-      &-three {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        margin-top: 15px;
-
-        span {
-          color: var(--cp-palette-main-fifth);
-          font-weight: 500;
-          font-size: 22px;
-
-          &:first-child {
-            justify-self: start;
-          }
-
-          &:nth-child(2) {
-            justify-self: end;
-          }
-        }
-      }
-    }
-  }
-
-  .checkout-grid-content {
-    display: grid;
-    background-color: transparent;
-
-    button {
-      justify-self: end;
-      align-self: end;
-    }
-  }
-
-  .checkout-grid-country-region {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    align-items: center;
-    justify-items: center;
-
-    .form-outline {
-      width: 100%;
-    }
-  }
-
-  .checkout-grid-pay-button {
-    display: grid;
-    justify-self: end;
-  }
-}
-
+@import "@/assets/styles/pages/Checkout/Checkout"
 
 </style>

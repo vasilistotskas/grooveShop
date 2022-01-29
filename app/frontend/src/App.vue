@@ -116,15 +116,5 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
-#wrapper {
-  position: relative;
-}
-
-.main-section {
-  @media screen and (min-width: 1200px) {
-    min-height: 750px;
-    display: grid;
-  }
-}
 
 </style>

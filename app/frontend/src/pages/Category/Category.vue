@@ -182,3 +182,8 @@ export default class CategoryVue extends Vue {
 
 }
 </script>
+
+<style lang="scss" scoped>
+@import "@/assets/styles/pages/Category/Category"
+
+</style>

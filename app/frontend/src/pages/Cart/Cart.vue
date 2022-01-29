@@ -85,61 +85,6 @@ export default class CartVue extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.cart-grid-container {
-  display: grid;
-  grid-template-rows: minmax(90px, 1fr);
-  background-color: var(--cp-palette-main-secondary);
-  border-radius: 10px;
-  padding: 15px 30px 30px;
-  gap: 25px;
+@import "@/assets/styles/pages/Cart/Cart"
 
-  h2 {
-    color: var(--cp-palette-main-fifth);
-  }
-
-  .grid-container-item {
-    &-one {
-
-    }
-
-    &-two {
-      display: grid;
-      grid-template-rows: minmax(50px, 1fr);
-      gap: 10px;
-
-      .grid-container-table {
-        display: grid;
-        grid-template-columns: 44% 19% 18% 19%;
-        align-items: center;
-        justify-items: center;
-
-        div {
-          color: var(--cp-palette-main-fifth);
-          font-weight: 500;
-        }
-      }
-    }
-
-    &-three {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      justify-content: center;
-      align-items: center;
-
-      .grid-container-child-two {
-        justify-self: end;
-        align-self: end;
-      }
-    }
-  }
-
-  .grid-container-table-items {
-    display: grid;
-    gap: 10px;
-  }
-}
-
-.grid-container-child-one {
-  color: var(--cp-palette-main-fifth);
-}
 </style>

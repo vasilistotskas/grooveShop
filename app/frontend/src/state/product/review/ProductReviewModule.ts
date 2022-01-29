@@ -90,7 +90,7 @@ export default class ProductReviewModule
 			}).then(() => toast.error('Your review has been deleted'))
 		}
 
-		if (router.currentRoute.value.name === 'Reviews') {
+		if (router.currentRoute.value.name === 'UserReviews.vue') {
 			store.dispatch('pagination/getPaginatedResults', {
 				'endpointUrl': `reviews/user/${ data.user_id }`,
 				'query': store.getters['pagination/getCurrentQuery'],

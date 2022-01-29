@@ -126,5 +126,6 @@ export default class SearchVue extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/pages/Search/Search"
 
 </style>

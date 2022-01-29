@@ -114,52 +114,6 @@ export default class Footer extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/components/Main/Footer"
 
-.main-footer {
-  border-top: 1px solid var(--cp-palette-main-third);
-  background-color: var(--cp-palette-main-secondary);
-}
-
-.main-copyright {
-  text-align: center;
-  padding: 5px;
-  border-top: 1px solid var(--cp-palette-main-third);
-
-  span {
-    font-size: 12px;
-  }
-}
-
-.footer-grid-newsletter {
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 80% 20%;
-  max-width: 500px;
-  margin: 0 auto;
-
-  .grid-item {
-    &-one {
-      grid-column-start: 1;
-      grid-column-end: span col4-start;
-      grid-row-start: 1;
-    }
-
-    &-two {
-      label {
-        display: block;
-      }
-    }
-  }
-}
-
-.footer-section-links {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-
-  .grid-item {
-    &-one, &-two, &-three, &-four {
-      text-align: center;
-    }
-  }
-}
 </style>

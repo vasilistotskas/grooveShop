@@ -107,26 +107,6 @@ export default class PasswordReset extends Vue {
 </script>
 
 <style lang="scss">
-form input {
-  display: block
-}
+@import "@/assets/styles/pages/Auth/PasswordReset"
 
-.error {
-  color: var(--cp-palette-main-primary);
-  font-size: 12px;
-}
-
-#password-reset-view {
-  max-width: 500px;
-
-  .card-body {
-    padding: 50px;
-  }
-}
-
-.password-reset-message {
-  span {
-    color: var(--cp-palette-main-fifth);
-  }
-}
 </style>

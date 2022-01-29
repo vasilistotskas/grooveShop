@@ -242,20 +242,6 @@ export default class Pagination extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.pagination-grid-content {
-  display: grid;
-}
+@import "@/assets/styles/components/Pagination/Pagination"
 
-.pagination {
-  list-style-type: none;
-}
-
-.pagination-item {
-  display: inline-block;
-}
-
-.active {
-  background-color: var(--cp-palette-main-primary);
-  color: var(--cp-palette-main-fifth);
-}
 </style>

@@ -35,19 +35,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.checkout-grid {
-  &-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
+@import "@/assets/styles/components/Form/FormProvider"
 
-    &-part-left {
-
-    }
-
-    &-part-right {
-
-    }
-  }
-}
 </style>

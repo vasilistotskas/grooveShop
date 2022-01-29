@@ -5,7 +5,7 @@ import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { BaseAuthenticationTypes } from '@/api/auth_types'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import RegisterActivationFail from '@/components/Toast/RegisterActivationFail.vue'
+import ToastRegisterActivationFail from '@/components/Toast/ToastRegisterActivationFail.vue'
 
 const toast = useToast()
 
@@ -151,7 +151,7 @@ export default class SignUpModule
 			})
 			.catch(() => {
 				this.context.commit(BaseAuthenticationTypes.ACTIVATION_FAILURE)
-				toast.error(RegisterActivationFail)
+				toast.error(ToastRegisterActivationFail)
 			})
 	}
 
@@ -168,7 +168,7 @@ export default class SignUpModule
 			})
 			.catch(() => {
 				this.context.commit(BaseAuthenticationTypes.ACTIVATION_FAILURE)
-				toast.error(RegisterActivationFail)
+				toast.error(ToastRegisterActivationFail)
 			})
 	}
 
