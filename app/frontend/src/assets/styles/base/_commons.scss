@@ -302,9 +302,14 @@ table {
   }
 }
 
+.user_profile-no-data {
+  display: grid;
+  justify-content: center;
+}
+
 .user-account-page-main-content {
   .pagination-grid-content {
-    position: absolute;
+    position: relative;
     display: grid;
     bottom: 0;
     right: 20px;

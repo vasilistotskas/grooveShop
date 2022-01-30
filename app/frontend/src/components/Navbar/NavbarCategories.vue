@@ -1,35 +1,39 @@
 <template>
   <div class="navbar-main-collapse-menu">
     <div :class="{'wrapper': Object.keys(categories).length === 0 }" class="container navbar-menu-grid-container">
-      <div v-if="categories && Object.keys(categories).length > 0"
+      <ul v-if="categories && Object.keys(categories).length > 0"
            ref="target"
            class="navbar-menu-grid-head"
       >
-        <RouterLink v-for="(category, key) in categories"
-                    :id="category.children ? `id-${category.id}` : '' "
-                    :key="category.id"
-                    :class="{'has-children': category?.children }"
-                    :title="category.name"
-                    :to="({ name: 'Category', params: { category_slug: category.slug } })"
-                    :toggle="category.children ? 'toggle' : '' "
-                    aria-current="page"
-                    aria-expanded="false"
-                    class="navbar-menu-grid-head-item"
-                    role="button"
-                    @mouseleave="categoryBoxHovered = null"
-                    @mouseover="categoryBoxHovered = key"
-        >
-          <img :alt="category.name"
-               :src="categoryBoxHovered === key ?
+        <li v-for="(category, key) in categories" :key="category.id">
+          <h3>
+            <RouterLink
+                :id="category.children ? `id-${category.id}` : '' "
+                :key="category.id"
+                :class="{'has-children': category?.children }"
+                :title="category.name"
+                :to="({ name: 'Category', params: { category_slug: category.slug } })"
+                :toggle="category.children ? 'toggle' : '' "
+                aria-current="page"
+                aria-expanded="false"
+                class="navbar-menu-grid-head-item"
+                role="button"
+                @mouseleave="categoryBoxHovered = null"
+                @mouseover="categoryBoxHovered = key"
+            >
+              <img :alt="category.name"
+                   :src="categoryBoxHovered === key ?
                  mediaStreamImage('categories', category.category_menu_image_two_filename, '80', '83') :
                  mediaStreamImage('categories', category.category_menu_image_one_filename, '80', '83')"
-               height="83"
-               width="80"
-               loading="lazy"
-          />
-          <span>{{ category.name }}</span>
-        </RouterLink>
-      </div>
+                   height="83"
+                   width="80"
+                   loading="lazy"
+              />
+              <span>{{ category.name }}</span>
+            </RouterLink>
+          </h3>
+        </li>
+      </ul>
 
       <div class="navbar-menu-grid-body" style="display: none">
         <div class="navbar-menu-grid-body-item"></div>
@@ -91,52 +95,6 @@ export default class NavbarCategories extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.navbar-main-collapse-menu {
-  position: absolute;
-  width: 100%;
-  z-index: 10;
-  background-color: var(--cp-palette-main-fourth);
-
-  .navbar-menu-grid {
-    &-head {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      max-height: 162px;
-      box-shadow: 0 2px 4px rgb(153 153 153 / 33%);
-      background-color: var(--cp-palette-main-secondary);
-      border-radius: 5px;
-
-      &-item {
-        display: grid;
-        grid-template-rows: repeat(2, 1fr);
-        grid-gap: 15px 0;
-        max-height: 160px;
-        width: 100%;
-        align-items: center;
-        justify-items: center;
-        height: 100%;
-        border-left: 1px solid var(--cp-palette-main-third);
-        border-right: 1px solid var(--cp-palette-main-third);
-
-        &:hover {
-          background-color: var(--cp-palette-main-fifth);
-        }
-
-        img {
-          max-width: 100px;
-          width: 100%;
-          height: auto;
-          padding: 10px;
-        }
-
-        span {
-          text-align: center;
-          font-weight: 500;
-        }
-      }
-    }
-  }
-
-}
+@import "@/assets/styles/components/Navbar/NavbarCategories"
 
 </style>

@@ -46,7 +46,7 @@
         :total-pages="orderHistoryResultsTotalPages"
         @pagechanged="onPageChange"/>
   </div>
-  <div v-else>
+  <div class="user_profile-no-data" v-else>
     <h1>NO ORDERS</h1>
   </div>
 

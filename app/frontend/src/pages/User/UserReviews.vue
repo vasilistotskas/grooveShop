@@ -20,7 +20,7 @@
           @pagechanged="onPageChange"
       />
     </div>
-    <div v-else>
+    <div class="user_profile-no-data" v-else>
       <h1>NO REVIEWS</h1>
     </div>
   </div>

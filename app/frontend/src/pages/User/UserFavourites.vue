@@ -17,7 +17,7 @@
         @pagechanged="onPageChange"
     />
   </div>
-  <div v-else>
+  <div class="user_profile-no-data" v-else>
     <h1>NO FAVOURITES</h1>
   </div>
 </template>
