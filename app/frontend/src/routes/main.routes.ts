@@ -58,6 +58,23 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
+		path: '/accounts/activate/verify_mail_resend',
+		name: 'VerifyEmailResendInput',
+		component: () => import('@/pages/Auth/VerifyEmailResendInput.vue'),
+		meta: {
+			breadcrumb: () => ([
+				{
+					name: 'Verify Email Resend Input',
+					to: {
+						type: 'verify_email',
+						param: 'accounts/activate/verify_mail_resend',
+						full_path: 'accounts/activate/verify_mail_resend'
+					}
+				}
+			])
+		}
+	},
+	{
 		path: '/password_reset',
 		name: 'PasswordReset',
 		component: () => import('@/pages/Auth/PasswordReset.vue'),

@@ -160,13 +160,14 @@ export default class SignUpModule
 		const data = {
 			email
 		}
+		console.log(data)
 		this.context.commit(BaseAuthenticationTypes.ACTIVATION_BEGIN)
 		await api.post('accounts/resend_activation_mail/', data)
 			.then(() => {
 				this.context.commit(BaseAuthenticationTypes.RE_ACTIVATION_MAIL_SENT)
 				toast.success('A new activation link has been sent to your email.')
 			})
-			.catch(() => {
+			.catch((e: Error) => {
 				this.context.commit(BaseAuthenticationTypes.ACTIVATION_FAILURE)
 				toast.error(ToastRegisterActivationFail)
 			})

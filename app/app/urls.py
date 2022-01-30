@@ -51,6 +51,7 @@ front_urls = [
     path('log-in', index_view, name='index'),
     path('sign-up', index_view, name='index'),
     path('accounts/activate/<uid>/<token>', index_view, name='index'),
+    path('accounts/activate/verify_mail_resend', index_view, name='index'),
     path('password_reset', index_view, name='index'),
     path('password-reset', index_view, name='index'),
     path('password_reset/<uid>/<token>', index_view, name='index'),

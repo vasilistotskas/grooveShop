@@ -29,6 +29,8 @@ class ResendActivationView(ActionViewMixin, generics.GenericAPIView):
     _users = None
 
     def _action(self, serializer):
+        if self.user_is_active(serializer.data['email']):
+            return Response('User is already active', status=status.HTTP_400_BAD_REQUEST)
         for user in self.get_users(serializer.data['email']):
             self.send_activation_email(user)
         return response.Response(status=status.HTTP_204_NO_CONTENT)
@@ -43,6 +45,19 @@ class ResendActivationView(ActionViewMixin, generics.GenericAPIView):
                 u for u in users if not u.is_active and u.has_usable_password()
             ]
         return self._users
+
+    def user_is_active(self, email):
+        email_field_name = get_user_email_field_name(User)
+        users = User._default_manager.filter(**{
+            email_field_name + '__iexact': email
+        })
+
+        for u in users:
+            if u.is_active:
+                return True
+
+        return False
+
 
     def send_activation_email(self, user):
         context = {'user': user}

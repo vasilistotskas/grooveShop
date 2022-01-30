@@ -81,34 +81,17 @@
         </div>
       </template>
       <template v-else>
-        <div id="registration-complete-view" class="registration-complete-message">
-          <span>
-            Registration complete. You should receive an email shortly with instructions on how to
-            activate your account.
-          </span>
-          <p v-if="activationEmailAtLocalStorage" class="mt-3">
-            If you cant find email check your spam folder , if its not there click
-            <span class="registration-resend-action" @click="activationEmailResend">Here</span> to receive new
-            activation email.
-          </p>
-          <div v-else class="mt-3">
-            <span>If you cant find email check your spam folder , if its not there fill in the form below with the email you just registered</span>
-            <form class="mb-3 mt-3" @submit.prevent="submit">
-              <div class="form-group">
-                <div class="input-group-w-addon">
-                  <span class="input-group-addon">
-                    <font-awesome-icon :icon="envelopeIcon"/>
-                  </span>
-                  <input id="email" v-model="resendMailInputs.email" class="form-control" name="email"
-                         placeholder="email" type="email"
-                  />
-                </div>
-              </div>
-            </form>
-            <button class="btn btn-outline-primary-two" title="Activation Email Resend"
-                    @click="activationEmailResend(resendMailInputs)">
-              send email
-            </button>
+        <div class="registration-complete-message container mt-5">
+          <div class="registration-complete-message-content">
+            <span>
+              Registration complete. You should receive an email shortly with instructions on how to
+              activate your account.
+            </span>
+            <p class="mt-3">
+              If you cant find email check your spam folder , if its not there click
+              <span class="registration-resend-action" @click="activationEmailResend">Here</span> to receive new
+              activation email.
+            </p>
           </div>
         </div>
       </template>
@@ -129,6 +112,7 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
+import VerifyEmailResendInput from '@/pages/Auth/VerifyEmailResendInput.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 
 let {
@@ -142,16 +126,15 @@ let {
     FormBaseInput,
     FormSubmitButtons,
     FormValidationErrors,
-    Breadcrumbs
+    Breadcrumbs,
+    VerifyEmailResendInput
   }
 })
 
 export default class Register extends Vue {
 
   activationEmailAtLocalStorage = false
-  resendMailInputs = {
-    email: ''
-  }
+
   formManager = {
     validateFields
   } = useValidation({
@@ -214,19 +197,16 @@ export default class Register extends Vue {
     await store.dispatch('signup/clearRegistrationStatus')
   }
 
-  async activationEmailResend(resendMailInputs: any): Promise<void> {
-    let email = ''
-    const emailFromLocalStorage = store.getters['signup/getRegistrationEmail']
-    const emailFromFormInput = resendMailInputs.email
 
-    if (emailFromLocalStorage) {
-      email = emailFromLocalStorage
-      this.activationEmailAtLocalStorage = true
+  async activationEmailResend(): Promise<void> {
+    const email = localStorage.getItem('registrationEmail')
+
+    if (email) {
+      await store.dispatch('signup/activationEmailResend', email)
     } else {
-      email = emailFromFormInput
+      await router.push('/accounts/activate/verify_mail_resend')
     }
 
-    await store.dispatch('signup/activationEmailResend', email)
   }
 
   handleSubmit = async () => {

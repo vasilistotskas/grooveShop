@@ -59,7 +59,7 @@ export default class Header extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Main/Footer"
+@import "@/assets/styles/components/Main/Header"
 
 </style>
 

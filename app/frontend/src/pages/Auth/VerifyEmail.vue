@@ -75,7 +75,13 @@ export default class VerifyEmail extends Vue {
 
   async activationEmailResend(): Promise<void> {
     const email = localStorage.getItem('registrationEmail')
-    await store.dispatch('signup/activationEmailResend', email)
+
+    if (email) {
+      await store.dispatch('signup/activationEmailResend', email)
+    } else {
+      await router.push('/accounts/activate/verify_mail_resend')
+    }
+
   }
 
   beforeRouteLeave(to: any, from: any, next: any) {

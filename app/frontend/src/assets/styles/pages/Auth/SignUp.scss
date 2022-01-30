@@ -61,3 +61,18 @@
     color: var(--cp-palette-main-primary) !important;
   }
 }
+
+.registration-complete-message {
+  max-width: 40vw;
+  &-content {
+    position: relative;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 7px 0 rgb(153 153 153 / 40%);
+    background: var(--cp-palette-main-secondary);
+    span {
+      color: var(--cp-palette-main-fifth);
+    }
+  }
+}
