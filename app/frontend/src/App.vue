@@ -40,8 +40,6 @@ import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 })
 export default class App extends Vue {
 
-  public showMobileMenu = false
-
   get lodash(): LoDashStatic {
     return _
   }

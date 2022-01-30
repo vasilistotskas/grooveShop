@@ -6,9 +6,7 @@
     <!--          <span style="text-decoration: underline;">Here</span>!</a>-->
     <!--      </p>-->
     <!--    </div>-->
-    <Navbar :cart-total-length="cartTotalLength" :preHeadHidden="!showPreHeader"
-            :show-mobile-menu="showMobileMenu"
-    />
+    <Navbar :cart-total-length="cartTotalLength" :preHeadHidden="!showPreHeader"/>
   </header>
 </template>
 
@@ -27,7 +25,6 @@ export default class Header extends Vue {
 
   showPreHeader: boolean = true
   lastScrollPosition: number = 0
-  showMobileMenu = false
 
   get cartTotalLength(): number {
     return store.getters['cart/getCartTotalLength']
