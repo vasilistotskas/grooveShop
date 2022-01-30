@@ -43,6 +43,14 @@ export default class AppSettingsModule
 	}
 
 	@Action
+	async toggleThemeModeFromPreference(themeModePreference : AppSettingsThemeModeOption): Promise<AppSettingsThemeModeOption> {
+		const themeModeFromPreference = themeModePreference
+
+		await this.context.dispatch('updateSetting', { key: 'themeMode', value: themeModeFromPreference })
+		return themeModeFromPreference
+	}
+
+	@Action
 	async updateI18n(): Promise<void> {
 		const i18n = useI18n()
 		i18n.locale.value = this.context.getters['getSettings'].localization

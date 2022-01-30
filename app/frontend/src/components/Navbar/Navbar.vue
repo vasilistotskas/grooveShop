@@ -146,9 +146,11 @@ export default class Navbar extends Vue {
   shoppingCartIcon: IconDefinition = faShoppingCart
 
   $refs!: {
-    mainToggleButton: HTMLElement;
-    navbarProductsButton: HTMLElement;
+    mainToggleButton: HTMLElement
+    navbarProductsButton: HTMLElement
   }
+
+  themeModeFromPreference: AppSettingsThemeModeOption = AppSettingsThemeModeOption.Light
 
   get navbarMenuHidden(): boolean {
     return store.getters['app/getNavbarMenuHidden']
@@ -191,10 +193,25 @@ export default class Navbar extends Vue {
           this.switchThemeModeFromTo(oldThemeMode, newThemeMode)
         }
     )
+
+    this.$watch(
+        () => this.themeModeFromPreference,
+        () => {
+          this.updateThemeModeFromPreference()
+        }
+    )
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      this.themeModeFromPreference = e.matches ? AppSettingsThemeModeOption.Dark : AppSettingsThemeModeOption.Light
+    })
+
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      this.themeModeFromPreference = AppSettingsThemeModeOption.Dark
+    }
   }
 
   mounted(): void {
-    this.updateThemeMode()
+    this.updateThemeModeFromPreference()
   }
 
   public menuToggle(): void {
@@ -217,6 +234,13 @@ export default class Navbar extends Vue {
       path: '/search',
       query: { ...this.$route.query, query: this.searchQuery, page: this.currentPageNumber }
     })
+  }
+
+  public updateThemeModeFromPreference(): void {
+
+    store.dispatch('settings/toggleThemeModeFromPreference', this.themeModeFromPreference).then(
+        (themeMode) => this.updateThemeMode(themeMode)
+    )
   }
 
   public toggleThemeMode(): void {
