@@ -7,15 +7,16 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header mb-3">
-              <h5 id="exampleModalLabel" class="modal-title">Write a review for product <strong>Adidas Shoes</strong></h5>
-              <font-awesome-icon :icon="writeReviewIcon" :style="{ color: '#dbdfe3' }" size="lg" />
+              <h5 id="exampleModalLabel" class="modal-title">Write a review for product <strong>Adidas Shoes</strong>
+              </h5>
+              <font-awesome-icon :icon="writeReviewIcon" size="lg"/>
             </div>
             <div class="modal-body">
               <!-- Product Rating -->
               <p>1. Rate</p>
               <div id="full-stars-example-two" class="col-12">
                 <div class="rating">
-                  <input :name="name" :value="rate" type="hidden" />
+                  <input :name="name" :value="rate" type="hidden"/>
                   <div ref="ratingBoard"
                        class="rating-board rating-background"
                        @click="lockSelection($event)"
@@ -72,9 +73,7 @@
             </div>
             <div class="modal-footer mt-3">
               <button class="btn-outline-primary-one" type="button" @click="reviewHandle()">
-                {{
-                  reviewButtonText
-                }}
+                {{ reviewButtonText }}
               </button>
             </div>
           </div>
@@ -85,14 +84,15 @@
 </template>
 
 <script lang="ts">
-import store from '@/store';
-import { Options, Vue } from 'vue-class-component';
-import { first, last, filter, times, constant, cloneDeep } from 'lodash';
-import ProductReviewModel from '@/state/product/review/ProductReviewModel';
-import { faPenSquare } from "@fortawesome/free-solid-svg-icons/faPenSquare";
+import store from '@/store'
+import { Options, Vue } from 'vue-class-component'
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import { first, last, filter, times, constant, cloneDeep } from 'lodash'
+import ProductReviewModel from '@/state/product/review/ProductReviewModel'
+import { faPenSquare } from '@fortawesome/free-solid-svg-icons/faPenSquare'
 
-const starSvg = '<path data-v-558dc688="" fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" class=""></path>';
-const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z" class=""></path>';
+const starSvg = '<path data-v-558dc688="" fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" class=""></path>'
+const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z" class=""></path>'
 
 @Options({
   name: 'ProductReviewModal'
@@ -101,54 +101,53 @@ export default class ProductReviewModal extends Vue {
 
   $refs!: {
     ratingBoard: HTMLElement;
-  };
-
-  name: string = '';
-  editingLocked: boolean = false;
-  size: number = 16;
-  review: string = '';
-  comment: string = '';
-  userComment: any = ProductReviewModel;
-  rate: number = 0;
-  reviewCountMax: number = 10;
-  starCountMax: number = 5;
-  isEditable: boolean = false;
-  newSelectionRatio: number = 0;
-  selectedRatio: number = 0;
-
-  get writeReviewIcon(): typeof faPenSquare {
-    return faPenSquare;
   }
 
+  name: string = ''
+  editingLocked: boolean = false
+  size: number = 16
+  review: string = ''
+  comment: string = ''
+  userComment: any = ProductReviewModel
+  rate: number = 0
+  reviewCountMax: number = 10
+  starCountMax: number = 5
+  isEditable: boolean = false
+  newSelectionRatio: number = 0
+  selectedRatio: number = 0
+
+  writeReviewIcon: IconDefinition = faPenSquare
+
+
   get reviewButtonText(): string {
-    return this.userHasAlreadyReviewedProduct ? 'Update' : 'Post';
+    return this.userHasAlreadyReviewedProduct ? 'Update' : 'BlogPost.vue'
   }
 
   get reviewCount(): number | null {
     if (null !== this.review && !isNaN(this.review as unknown as number)) {
-      return Number(this.review);
+      return Number(this.review)
     }
 
-    return null;
+    return null
   }
 
   get liveReviewCountRatio(): number {
-    let reviewCount = 0;
+    let reviewCount = 0
     if (null !== this.newSelectionRatio) {
-      reviewCount = this.newSelectionRatio * this.reviewCountMax;
+      reviewCount = this.newSelectionRatio * this.reviewCountMax
     } else if (null !== this.reviewCount) {
-      reviewCount = this.reviewCount - 0.01;
+      reviewCount = this.reviewCount - 0.01
     }
     if (reviewCount > this.reviewCountMax)
-      reviewCount = this.reviewCountMax;
+      reviewCount = this.reviewCountMax
     if (reviewCount < 0)
-      reviewCount = 0;
-    const liveReviewCountRatio = reviewCount / this.reviewCountMax;
-    return Number(liveReviewCountRatio.toFixed(1)) - 0.04;
+      reviewCount = 0
+    const liveReviewCountRatio = reviewCount / this.reviewCountMax
+    return Number(liveReviewCountRatio.toFixed(1)) - 0.04
   }
 
   get liveReviewCount(): number | any {
-    return Math.round(Number(this.liveReviewCountRatio.toFixed(2)) * this.reviewCountMax);
+    return Math.round(Number(this.liveReviewCountRatio.toFixed(2)) * this.reviewCountMax)
   }
 
   get reviewScoreText(): any {
@@ -181,138 +180,138 @@ export default class ProductReviewModal extends Vue {
         threshold: 1.0,
         value: 'Perfect!'
       }
-    ];
+    ]
 
     if (this.liveReviewCountRatio < 0.01 || (null === this.newSelectionRatio && (null === this.reviewCount || '0' === this.review))) {
-      return '';
+      return ''
     }
 
     const matches = filter(
-      breakpoints,
-      (breakpoint) => breakpoint.threshold - 0.1 <= this.liveReviewCountRatio
-    );
+        breakpoints,
+        (breakpoint) => breakpoint.threshold - 0.1 <= this.liveReviewCountRatio
+    )
 
     if (undefined !== last(matches)) {
-      return last(matches)?.value;
+      return last(matches)?.value
     }
-    return first(breakpoints)?.value;
+    return first(breakpoints)?.value
   }
 
   get foregroundStars(): string[] {
-    const reviewStarRatio = this.rate * 0.099 * this.starCountMax;
+    const reviewStarRatio = this.rate * 0.099 * this.starCountMax
     if (reviewStarRatio < 0.1) {
-      return [];
+      return []
     }
-    const stars: string[] = times(Math.round(reviewStarRatio), constant(starSvg));
+    const stars: string[] = times(Math.round(reviewStarRatio), constant(starSvg))
     if ((reviewStarRatio % 1) < 0.5) {
-      stars.push(starHalfSvg);
+      stars.push(starHalfSvg)
     }
-    return stars;
+    return stars
   }
 
   get backgroundStars(): string[] {
-    return times(this.starCountMax, constant(starSvg)) as string[];
+    return times(this.starCountMax, constant(starSvg)) as string[]
   }
 
   get userHasAlreadyReviewedProduct(): boolean {
-    return store.getters['product/review/getUserHasAlreadyReviewedProduct'];
+    return store.getters['product/review/getUserHasAlreadyReviewedProduct']
   }
 
   get userToProductReview(): ProductReviewModel {
-    return store.getters['product/review/getUserToProductReview'];
+    return store.getters['product/review/getUserToProductReview']
   }
 
   created() {
     this.$watch(
-      () => this.liveReviewCount,
-      (to: any) => {
-        this.rate = to;
-      }
-    );
-    this.$watch(
-      () => this.userToProductReview,
-      (to: any) => {
-        if (Object.keys(to).length <= 0) {
-          this.clearModule();
+        () => this.liveReviewCount,
+        (to: any) => {
+          this.rate = to
         }
-      }
-    );
+    )
     this.$watch(
-      () => this.$route,
-      () => {
-        store.commit('product/review/unsetUserToProductReview');
-        store.commit('product/review/unsetProductReviews');
-      }
-    );
+        () => this.userToProductReview,
+        (to: any) => {
+          if (Object.keys(to).length <= 0) {
+            this.clearModule()
+          }
+        }
+    )
+    this.$watch(
+        () => this.$route,
+        () => {
+          store.commit('product/review/unsetUserToProductReview')
+          store.commit('product/review/unsetProductReviews')
+        }
+    )
   }
 
   async mounted(): Promise<void> {
-    await this.reviewModuleInitialize();
+    await this.reviewModuleInitialize()
   }
 
   public lockSelection(event: MouseEvent) {
-    this.updateIsEditable(true);
-    this.updateNewSelectionRatio(event);
-    this.selectedRatio = this.newSelectionRatio;
-    this.updateIsEditable(false);
+    this.updateIsEditable(true)
+    this.updateNewSelectionRatio(event)
+    this.selectedRatio = this.newSelectionRatio
+    this.updateIsEditable(false)
   }
 
   public reLockSelection() {
-    this.updateIsEditable(false);
-    this.newSelectionRatio = this.selectedRatio;
+    this.updateIsEditable(false)
+    this.newSelectionRatio = this.selectedRatio
   }
 
   public unlockSelection() {
-    this.updateIsEditable(true);
+    this.updateIsEditable(true)
   }
 
   public updateIsEditable(newState: boolean): void {
     if (!this.editingLocked) {
-      this.isEditable = newState;
+      this.isEditable = newState
     }
   }
 
   public updateNewSelectionRatio(event: MouseEvent) {
     if (!this.isEditable) {
-      return;
+      return
     }
-    const target = this.$refs.ratingBoard;
-    const leftBound = event.clientX - target.getBoundingClientRect().left;
-    const rightBound = target.getBoundingClientRect().right - target.getBoundingClientRect().left;
-    this.newSelectionRatio = leftBound / rightBound;
+    const target = this.$refs.ratingBoard
+    const leftBound = event.clientX - target.getBoundingClientRect().left
+    const rightBound = target.getBoundingClientRect().right - target.getBoundingClientRect().left
+    this.newSelectionRatio = leftBound / rightBound
   }
 
   public async reviewHandle(): Promise<void> {
-    const formEl = document.getElementById('productReviewForm') as HTMLFormElement;
-    const data = new FormData(formEl);
+    const formEl = document.getElementById('productReviewForm') as HTMLFormElement
+    const data = new FormData(formEl)
 
     if (this.comment !== null) {
-      data.append('comment', this.comment);
+      data.append('comment', this.comment)
     }
 
     if (this.rate > 0 && this.rate <= 10) {
-      data.append('rate', this.rate as unknown as string);
+      data.append('rate', this.rate as unknown as string)
     }
 
-    await store.dispatch('product/review/toggleReview', data);
+    await store.dispatch('product/review/toggleReview', data)
   }
 
   public async reviewModuleInitialize(): Promise<void> {
-    await store.dispatch('product/productFromRemote');
-    let IsAuthenticated: boolean = store.getters['auth/isAuthenticated'];
+    await store.dispatch('product/productFromRemote')
+    let IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
 
     if (IsAuthenticated) {
-      await store.dispatch('product/review/userToProductReviewFromRemote');
+      await store.dispatch('product/review/userToProductReviewFromRemote')
 
-      this.comment = cloneDeep(this.userToProductReview.comment);
-      this.rate = cloneDeep(this.userToProductReview.rate);
+      this.comment = cloneDeep(this.userToProductReview.comment)
+      this.rate = cloneDeep(this.userToProductReview.rate)
     }
 
   }
 
   public clearModule(): void {
-    this.rate = 0;
-    this.comment = '';
+    this.rate = 0
+    this.comment = ''
   }
 
 }
@@ -320,62 +319,65 @@ export default class ProductReviewModal extends Vue {
 </script>
 
 <style lang="scss" scoped>
-  .rating {
-    position: relative;
-    height: 26px;
-    display: flex;
-    align-items: center;
+.rating {
+  position: relative;
+  height: 26px;
+  display: flex;
+  align-items: center;
 
-    &-background {
-      position: relative;
-      z-index: 1;
-    }
+  &-background {
+    position: relative;
+    z-index: 1;
+  }
+
+  &-foreground {
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  &-board {
+    top: 0;
+    left: 0;
+    height: 26px;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .star {
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
 
     &-foreground {
-      position: absolute;
-      pointer-events: none;
-      z-index: 2;
+      color: $rating-starts;
     }
 
-    &-board {
-      top: 0;
-      left: 0;
-      height: 26px;
-      display: inline-flex;
-      flex-wrap: nowrap;
-      flex-direction: row;
-      align-content: center;
-      justify-content: flex-start;
-      align-items: center;
-    }
-
-    .star {
-      cursor: pointer;
-      width: 26px;
-      height: 26px;
-
-      &-foreground {
-        color: $rating-starts;
-      }
-
-      &-background {
-        color: $color-palette-main-third;
-      }
+    &-background {
+      color: var(--cp-palette-main-third);
     }
   }
-  #productReviewForm {
-    .modal-footer {
-      display: grid;
-      justify-content: end;
-      align-content: end;
-    }
-    .btn-outline-primary-one {
-      max-width: 130px;
-      min-width: 130px;
-    }
+}
+
+#productReviewForm {
+  .modal-footer {
+    display: grid;
+    justify-content: end;
+    align-content: end;
   }
-  .modal-header {
-    display: flex;
-    gap: 10px;
+
+  .btn-outline-primary-one {
+    max-width: 130px;
+    min-width: 130px;
   }
+}
+
+.modal-header {
+  display: flex;
+  gap: 10px;
+}
 </style>

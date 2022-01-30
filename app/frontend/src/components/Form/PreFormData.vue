@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
@@ -20,17 +20,16 @@ export default defineComponent({
   computed: {
     formJSON() {
       return JSON.stringify(
-        this.form,
-        (k, v) => (typeof v === 'function' ? 'function' : v),
-        2
-      );
+          this.form,
+          (k, v) => (typeof v === 'function' ? 'function' : v),
+          2
+      )
     }
   }
-});
+})
 </script>
 
-<style scoped>
-#pre-form {
-  margin-top: 10px;
-}
+<style lang="scss" scoped>
+@import "@/assets/styles/components/Form/PreFormData"
+
 </style>

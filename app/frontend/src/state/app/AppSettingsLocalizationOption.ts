@@ -1,6 +1,6 @@
 enum AppSettingsLocalizationOption {
-  English = 'en',
-  Greek = 'gr'
+	English = 'en',
+	Greek = 'gr'
 }
 
-export default AppSettingsLocalizationOption;
+export default AppSettingsLocalizationOption

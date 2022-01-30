@@ -1,6 +1,6 @@
-import { VuexModule } from 'vuex-module-decorators';
+import { VuexModule } from 'vuex-module-decorators'
 
 export default class AppBaseModule
-  extends VuexModule {
+	extends VuexModule {
 
 }

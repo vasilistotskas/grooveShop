@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
@@ -31,21 +31,10 @@ export default defineComponent({
     }
   },
   emits: ['submit']
-});
+})
 </script>
 
 <style lang="scss" scoped>
-.checkout-grid {
-  &-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    &-part-left {
+@import "@/assets/styles/components/Form/FormProvider"
 
-    }
-    &-part-right {
-
-    }
-  }
-}
 </style>

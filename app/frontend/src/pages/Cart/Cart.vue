@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-7 mb-5 content-min-height">
-    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
+    <Breadcrumbs :bread-crumb-path="breadCrumbPath"/>
     <div class="cart-grid-container">
       <div v-if="cartTotalLength" class="grid-container-item-two">
         <div class="grid-container-table">
@@ -11,10 +11,10 @@
         </div>
         <div class="grid-container-table-items">
           <CartItem
-            v-for="item in cart"
-            :key="item.id"
-            :item="item"
-            @removeFromCart="removeFromCart(item)"
+              v-for="item in cart"
+              :key="item.id"
+              :item="item"
+              @removeFromCart="removeFromCart(item)"
           />
         </div>
       </div>
@@ -28,7 +28,8 @@
           <strong>${{ cartTotalPrice.toFixed(2) }}</strong>, {{ cartTotalLength }} items
         </div>
         <div class="grid-container-child-two">
-          <RouterLink aria-label="Checkout" class="btn-outline-primary-one" to="/cart/checkout" type="button">
+          <RouterLink aria-label="Checkout" class="btn-outline-primary-one" title="Checkout" to="/cart/checkout"
+                      type="button">
             Proceed
             to checkout
           </RouterLink>
@@ -39,12 +40,12 @@
 </template>
 
 <script lang="ts">
-import store from '@/store';
-import router from '@/routes';
-import { Options, Vue } from 'vue-class-component';
-import CartItem from '@/components/Cart/CartItem.vue';
-import CartItemModel from '@/state/cart/CartItemModel';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue';
+import store from '@/store'
+import router from '@/routes'
+import { Options, Vue } from 'vue-class-component'
+import CartItem from '@/components/Cart/CartItem.vue'
+import CartItemModel from '@/state/cart/CartItemModel'
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 
 @Options({
   name: 'CartVue',
@@ -57,79 +58,33 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue';
 export default class CartVue extends Vue {
 
   get breadCrumbPath(): [] {
-    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb;
-    return currentRouteMetaBreadcrumb(router.currentRoute.value.params);
+    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
   get cart(): Array<CartItemModel> {
-    return store.getters['cart/getCart'];
+    return store.getters['cart/getCart']
   }
 
   get cartTotalLength(): number {
-    return store.getters['cart/getCartTotalLength'];
+    return store.getters['cart/getCartTotalLength']
   }
 
   get cartTotalPrice(): number {
-    return store.getters['cart/getCartTotalPrice'];
+    return store.getters['cart/getCartTotalPrice']
   }
 
   mounted() {
-    document.title = 'Cart';
+    document.title = 'Cart'
   }
 
   public removeFromCart(item: CartItemModel) {
-    store.commit('cart/removeFromCart', item);
+    store.commit('cart/removeFromCart', item)
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .cart-grid-container {
-    display: grid;
-    grid-template-rows: minmax(90px, 1fr);
-    background-color: $color-palette-main-secondary;
-    border-radius: 10px;
-    padding: 15px 30px 30px;
-    gap: 25px;
-    h2 {
-      color: $color-palette-main-fifth;
-    }
-    .grid-container-item {
-      &-one {
+@import "@/assets/styles/pages/Cart/Cart"
 
-      }
-      &-two {
-        display: grid;
-        grid-template-rows: minmax(50px, 1fr);
-        gap: 10px;
-        .grid-container-table {
-          display: grid;
-          grid-template-columns: 44% 19% 18% 19%;
-          align-items: center;
-          justify-items: center;
-          div {
-            color: $color-palette-main-fifth;
-            font-weight: 500;
-          }
-        }
-      }
-      &-three {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        justify-content: center;
-        align-items: center;
-        .grid-container-child-two {
-          justify-self: end;
-          align-self: end;
-        }
-      }
-    }
-    .grid-container-table-items {
-      display: grid;
-      gap: 10px;
-    }
-  }
-  .grid-container-child-one {
-    color: $color-palette-main-fifth;
-  }
 </style>

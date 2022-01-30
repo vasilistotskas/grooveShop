@@ -18,10 +18,14 @@ export default class WebpImageManipulationJob {
 		})
 
 		if (Object.keys(resizeScales).length > 0) {
+			if (null !== options.trimThreshold && !isNaN(options.trimThreshold))
+				manipulation.trim(options.trimThreshold)
+
 			manipulation.resize({
 				...resizeScales,
 				fit: options.fit,
-				background: { r: 13, g: 17, b: 23, alpha: 1 }
+				position: options.position,
+				background: options.background
 			})
 		}
 
