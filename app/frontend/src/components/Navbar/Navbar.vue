@@ -192,6 +192,7 @@ export default class Navbar extends Vue {
   }
 
   async created(): Promise<void> {
+
     this.$watch(
         () => this.getThemeMode,
         (newThemeMode: AppSettingsThemeModeOption, oldThemeMode: AppSettingsThemeModeOption) => {

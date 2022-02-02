@@ -1,10 +1,7 @@
 <template>
   <div class="navbar-main-collapse-menu">
-    <div :class="{'wrapper': Object.keys(categories).length === 0 }" class="container navbar-menu-grid-container">
-      <ul v-if="categories && Object.keys(categories).length > 0"
-           ref="target"
-           class="navbar-menu-grid-head"
-      >
+    <div ref="headerNavbarMenu" :class="{'wrapper': Object.keys(categories).length === 0 }" class="container navbar-menu-grid-container">
+      <ul v-if="categories && Object.keys(categories).length > 0" class="navbar-menu-grid-head">
         <li v-for="(category, key) in categories" :key="category.id">
           <h3>
             <RouterLink
@@ -58,7 +55,7 @@ import { Options, Vue } from 'vue-class-component'
 })
 export default class NavbarCategories extends Vue {
   $refs!: {
-    target: HTMLElement;
+    headerNavbarMenu: HTMLElement
   }
   categoryBoxHovered = null
   categoriesTree = []
@@ -72,8 +69,7 @@ export default class NavbarCategories extends Vue {
 
   mounted(): void {
     this.categories = cloneDeep(this.categoriesTree)
-
-    onClickOutside(this.$refs.target, (e) => {
+    onClickOutside(this.$refs.headerNavbarMenu, (e) => {
       if (!e.composedPath().includes(this.navbarProductsButton)) {
         this.menuOpenHandle()
       }

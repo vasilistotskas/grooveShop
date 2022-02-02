@@ -1,4 +1,7 @@
 import os
+import string
+import random
+
 from django.db import models
 from django.conf import settings
 from mptt.models import MPTTModel
@@ -10,6 +13,17 @@ from django.utils.safestring import mark_safe
 from helpers.image_resize import make_thumbnail
 
 User = settings.AUTH_USER_MODEL
+
+
+def generate_unique_code():
+    length = 11
+
+    while True:
+        code = ''.join(random.choices(string.ascii_uppercase, k=length))
+        if Product.objects.filter(product_code=code).count() == 0:
+            break
+
+    return code
 
 
 class Category(MPTTModel):
@@ -115,6 +129,7 @@ class Product(models.Model):
         ('False', 'Not Active'),
     )
     id = models.AutoField(primary_key=True)
+    product_code = models.CharField(unique=True, max_length=100, default=generate_unique_code)
     category = TreeForeignKey('Category', on_delete=models.SET_NULL, related_name='products', null=True, blank=True)
     name = models.CharField(unique=True, max_length=255)
     slug = models.SlugField(unique=True)

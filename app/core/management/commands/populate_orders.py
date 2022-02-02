@@ -24,12 +24,14 @@ class Command(BaseCommand):
                 stripe_token=faker.text(5)
             )
 
+            product_id = randrange(1, 399)
+
             for _ in range(randrange(1, 5)):
                 price = randrange(10, 100)
                 quantity = randrange(1, 5)
                 OrderItem.objects.create(
                     order_id=order.id,
-                    product_id=1,
+                    product_id=product_id,
                     price=price,
                     quantity=quantity,
                 )

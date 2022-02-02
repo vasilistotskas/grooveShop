@@ -61,7 +61,7 @@ class CategoryAdmin(DraggableMPTTAdmin):
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'category', 'price', 'colored_stock', 'boolean_status', 'image_tag', 'likes_counter']
-    search_fields = ['id', 'category__name', 'name']
+    search_fields = ['id', 'category__name', 'name', 'product_code']
     list_filter = ['category']
     inlines = [ProductImageInline]
     prepopulated_fields = {'slug': ('name',)}
