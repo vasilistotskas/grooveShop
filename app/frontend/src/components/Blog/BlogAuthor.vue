@@ -14,8 +14,8 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import PostModel from '@/state/blog/PostModel'
-import AuthorModel from '@/state/blog/AuthorModel'
+import PostModel from '@/store/blog/PostModel'
+import AuthorModel from '@/store/blog/AuthorModel'
 import { Options, Vue } from 'vue-class-component'
 import PostList from '@/components/Blog/BlogPostList.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'

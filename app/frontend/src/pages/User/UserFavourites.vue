@@ -23,12 +23,11 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
-import ProductModel from '../../state/product/ProductModel'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
-import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import UserDetailsModel from '@/store/user/data/UserDetailsModel'
+import PaginationModule from '@/store/pagination/PaginationModule'
 
 @Options({
   name: 'UserFavourites',
@@ -46,66 +45,68 @@ import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 
 export default class UserFavourites extends Vue {
 
+  paginationMD!: PaginationModule
+
   uri = window.location.search.substring(1)
   currentPage: number = 1
   params = new URLSearchParams(this.uri)
   userData = new UserDetailsModel()
 
   get currentPageNumber(): number {
-    let storedPageNumber = store.getters['pagination/getCurrentPageNumber']
+    let storedPageNumber = this.paginationMD.getCurrentPageNumber
 
     if (storedPageNumber) {
-      return store.getters['pagination/getCurrentPageNumber']
+      return this.paginationMD.getCurrentPageNumber
     }
     return 1
   }
 
   get currentPageQuery(): string {
-    return store.getters['pagination/getCurrentQuery']
+    return this.paginationMD.getCurrentQuery
   }
 
-  get userFavouriteResults(): ProductModel {
-    return store.getters['pagination/getResultData']
+  get userFavouriteResults(): any {
+    return this.paginationMD.getResultData
   }
 
   get userFavouriteResultsCount(): number {
-    return store.getters['pagination/getResultCountData']
+    return this.paginationMD.getResultCountData
   }
 
   get userFavouriteResultsNextPageUrl(): string {
-    return store.getters['pagination/getResultNextPageUrl']
+    return this.paginationMD.getResultNextPageUrl
   }
 
   get userFavouriteResultsPreviousPageUrl(): string {
-    return store.getters['pagination/getResultPreviousPageUrl']
+    return this.paginationMD.getResultPreviousPageUrl
   }
 
   get userFavouriteResultsTotalPages(): number {
-    return store.getters['pagination/getResultTotalPages']
+    return this.paginationMD.getResultTotalPages
   }
 
   async created(): Promise<void> {
     document.title = 'My Favourites'
 
     if (this.params.get('query')) {
-      await store.commit('pagination/setCurrentQuery', this.params.get('query'))
+      await this.paginationMD.setCurrentQuery(this.params.get('query'))
     }
 
-    await store.commit('pagination/setCurrentPageNumber', 1)
+    await this.paginationMD.setCurrentPageNumber(1)
 
     if (this.params.get('page')) {
-      await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
+      await this.paginationMD.setCurrentPageNumber(Number(this.params.get('page')))
     }
 
     await this.fetchUserFavourites()
   }
 
   async unmounted(): Promise<void> {
-    store.commit('pagination/unsetResults')
+    this.paginationMD.unsetResults()
   }
 
   public fetchUserFavourites(): void {
-    store.dispatch('pagination/getPaginatedResults', {
+    this.paginationMD.getPaginatedResults({
       'pageNumber': this.currentPageNumber,
       'endpointUrl': this.buildEndPointUrlForPaginatedResults(),
       'query': this.currentPageQuery,

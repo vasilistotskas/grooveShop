@@ -37,8 +37,8 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
+import c from '@/store/user/data/UserDataModule'
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
 
@@ -59,13 +59,15 @@ import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
 
 export default class UserProfileImage extends Vue {
 
+  userDataModuleMD!: UserDataModule
+
   profileImageHovering: boolean = false
   cameraIcon: IconDefinition = faCamera
 
   async updateUserImage(): Promise<void> {
     const formEl = document.getElementById('uploadImageForm') as HTMLFormElement
     const data = new FormData(formEl)
-    await store.dispatch('user/data/updateUserDetails', data)
+    await this.userDataModuleMD.updateUserDetails(data)
   }
 
 }

@@ -2,32 +2,39 @@
   <Loader v-show="isLoading" id="mainLoader"/>
   <div id="wrapper">
 
-    <Header/>
+<!--    <Header/>-->
 
     <section class="main-section">
       <RouterView/>
     </section>
 
-    <Footer/>
+<!--    <Footer/>-->
 
-    <SocialSidebar/>
+<!--    <SocialSidebar/>-->
 
   </div>
 </template>
 
 
 <script lang="ts">
-import store from '@/store'
 import _, { LoDashStatic } from 'lodash'
 import packageMeta from '@/../package.json'
 import Footer from '@/components/Main/Footer.vue'
 import { Options, Vue } from 'vue-class-component'
 import Header from '@/components/Main/Header.vue'
 import Loader from '@/components/Main/Loader.vue'
-import CountryModel from '@/state/country/CountryModel'
-import RegionsModel from '@/state/country/RegionsModel'
+import CountryModel from '@/store/country/CountryModel'
+import RegionsModel from '@/store/country/RegionsModel'
 import SocialSidebar from '@/components/Main/SocialSidebar.vue'
-import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import UserDetailsModel from '@/store/user/data/UserDetailsModel'
+import AppModule from '@/store/app/AppModule'
+import AuthModule from '@/store/auth/auth/AuthModule'
+import CartModule from '@/store/cart/CartModule'
+import UserDataModule from '@/store/user/data/UserDataModule'
+import UserOrderModule from '@/store/user/order/UserOrderModule'
+import CountryModule from '@/store/country/CountryModule'
+import CategoryModule from '@/store/category/CategoryModule'
+import { getModule } from 'vuex-module-decorators'
 
 @Options({
   name: 'App',
@@ -40,6 +47,14 @@ import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 })
 export default class App extends Vue {
 
+  appMD: AppModule
+  authMD: AuthModule
+  cartMD: CartModule
+  userDataMD: UserDataModule
+  userOrderMD: UserOrderModule
+  countryMD: CountryModule
+  categoryMD: CategoryModule
+
   get lodash(): LoDashStatic {
     return _
   }
@@ -49,64 +64,72 @@ export default class App extends Vue {
   }
 
   get isLoading(): boolean {
-    return store.getters['app/getLoading']
+    return this.appMD.getLoading
   }
 
   get isAuthenticated(): boolean {
-    return store.getters['auth/isAuthenticated']
+    return this.authMD.isAuthenticated
   }
 
   get cartTotalLength(): number {
-    return store.getters['cart/getCartTotalLength']
+    return this.cartMD.getCartTotalLength
   }
 
   get userData(): UserDetailsModel {
     if (this.isAuthenticated) {
-      return store.getters['user/data/getUserData']
+      return this.userDataMD.getUserData
     }
     return new UserDetailsModel
   }
 
   get availableCountries(): CountryModel {
-    return store.getters['country/getCountries']
+    return this.countryMD.getCountries
   }
 
   get regionsBasedOnAlpha(): RegionsModel {
-    return store.getters['country/getRegionsBasedOnAlpha']
+    return this.countryMD.getRegionsBasedOnAlpha
   }
 
   get cartData(): {} {
-    return store.getters['cart/getCart']
+    return this.cartMD.getCart
   }
 
-  async created(): Promise<void> {
-    await Promise.all([
-      this.initializeAuth(),
-      this.initializeCart(),
-      store.dispatch('category/categoriesTreeFromRemote')
-    ])
+  created(): void {
+    console.log(this)
+    this.appMD = getModule(AppModule, this.$store)
+    this.authMD = getModule(AuthModule, this.$store)
+    this.cartMD = getModule(CartModule, this.$store)
+    this.userDataMD = getModule(UserDataModule, this.$store)
+    this.userOrderMD = getModule(UserOrderModule, this.$store)
+    this.countryMD = getModule(CountryModule, this.$store)
+    this.categoryMD = getModule(CategoryModule, this.$store)
+
+
+    this.initializeAuth()
+    this.initializeCart()
+    this.categoryMD.categoriesTreeFromRemote()
+
 
     if (this.isAuthenticated) {
-      await Promise.all([
-        store.dispatch('user/data/userDataFromRemote'),
-        store.dispatch('user/order/userOrdersFromRemote'),
-        store.dispatch('country/getCountriesFromRemote')
-      ])
+      this.userDataMD.userDataFromRemote()
+      this.userOrderMD.userOrdersFromRemote()
+      this.countryMD.getCountriesFromRemote()
     }
   }
 
   mounted(): void {
     window.addEventListener('resize', () => {
-      store.commit('app/setWindowWidth', window.innerWidth)
+      this.appMD.setWindowWidth(window.innerWidth)
     })
   }
 
   public initializeAuth(): void {
-    store.dispatch('auth/initialize')
+    console.log(this.authMD.initialize())
+    this.authMD.initialize()
   }
 
   public initializeCart(): void {
-    store.commit('cart/initializeCart')
+    this.cartMD.initializeCart()
   }
 
 

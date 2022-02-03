@@ -1,9 +1,13 @@
-import AppBaseModule from '@/state/common/AppBaseModule'
+import AppBaseModule from '@/store/common/AppBaseModule'
 import initStripeComponent from '@/libraries/Stripe/Stripe'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import { StripeElement } from '@/libraries/Stripe/StripeElement'
 
-@Module({ namespaced: true })
+@Module({
+	name: 'Module/Cart',
+	namespaced: true,
+	stateFactory: true
+})
 export default class StripeCardComponents
 	extends AppBaseModule {
 

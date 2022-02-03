@@ -1,4 +1,3 @@
-import store from '@/store'
 import routes from './main.routes'
 import { useToast } from 'vue-toastification'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -18,14 +17,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-	store.dispatch('auth/initialize').then(() => {
-		if (to.matched.some(record => record.meta.requireLogin) && !store.getters['auth/isAuthenticated']) {
-			toast.error('You are not logged in')
-			next({ name: 'LogIn', query: { to: to.path } })
-		} else {
-			next()
-		}
-	})
 	if (to.name === 'NotFound') {
 		next('/errors/error_404')
 	}

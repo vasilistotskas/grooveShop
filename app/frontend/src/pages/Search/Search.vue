@@ -34,7 +34,7 @@
 import store from '@/store'
 import router from '@/routes'
 import { Options, Vue } from 'vue-class-component'
-import ProductModel from '@/state/product/ProductModel'
+import ProductModel from '@/store/product/ProductModel'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'

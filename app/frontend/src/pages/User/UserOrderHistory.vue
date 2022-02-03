@@ -55,8 +55,8 @@
 <script lang="ts">
 import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
-import CartItemModel from '@/state/cart/CartItemModel'
-import ProductModel from '@/state/product/ProductModel'
+import CartItemModel from '@/store/cart/CartItemModel'
+import ProductModel from '@/store/product/ProductModel'
 import Pagination from '@/components/Pagination/Pagination.vue'
 
 @Options({

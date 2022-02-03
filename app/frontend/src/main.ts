@@ -1,6 +1,5 @@
 import axios from 'axios'
 import App from '@/App.vue'
-import store from './store'
 import router from '@/routes'
 import { i18n } from '@/locales'
 import { createApp } from 'vue'
@@ -9,6 +8,7 @@ import * as apolloProvider from '../apollo.provider'
 import { createValidation } from 'vue3-form-validation'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast, { PluginOptions, TYPE } from 'vue-toastification'
+import * as test from '@/store'
 
 // for mass import
 // library.add(faFontAwesome, faCoffee, fas, fab)
@@ -37,8 +37,8 @@ const ToastOptions: PluginOptions = {
 }
 
 createApp(App)
-	.use(store)
 	.use(router, axios)
+	.use(test)
 	.use(i18n)
 	.use(validation)
 	.use(apolloProvider.provider)

@@ -38,7 +38,7 @@
 <script lang="ts">
 import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
-import CartItemModel from '@/state/cart/CartItemModel'
+import CartItemModel from '@/store/cart/CartItemModel'
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle'

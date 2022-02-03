@@ -24,9 +24,9 @@
 </template>
 
 <script lang="ts">
-import TagModel from '@/state/blog/TagModel'
+import TagModel from '@/store/blog/TagModel'
 import { Options, Vue } from 'vue-class-component'
-import AuthorModel from '@/state/blog/AuthorModel'
+import AuthorModel from '@/store/blog/AuthorModel'
 import { faTag } from '@fortawesome/free-solid-svg-icons/faTag'
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faUserTag } from '@fortawesome/free-solid-svg-icons/faUserTag'

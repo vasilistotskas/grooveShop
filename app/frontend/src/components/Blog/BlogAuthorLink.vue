@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import AuthorModel from '@/state/blog/AuthorModel'
+import AuthorModel from '@/store/blog/AuthorModel'
 
 @Options({
   name: 'BlogAuthorLink',

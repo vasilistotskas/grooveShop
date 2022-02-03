@@ -116,7 +116,7 @@
 import store from '@/store'
 import router from '@/routes'
 import { Options, Vue } from 'vue-class-component'
-import CategoryModel from '@/state/category/CategoryModel'
+import CategoryModel from '@/store/category/CategoryModel'
 import { faSun } from '@fortawesome/free-solid-svg-icons/faSun'
 import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
@@ -125,7 +125,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
 import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
-import AppSettingsThemeModeOption from '@/state/app/AppSettingsThemeModeOption'
+import AppSettingsThemeModeOption from '@/store/app/AppSettingsThemeModeOption'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart'
 
 @Options({
@@ -243,15 +243,14 @@ export default class Navbar extends Vue {
   }
 
   public updateThemeModeFromPreference(): void {
-
     store.dispatch('settings/toggleThemeModeFromPreference', this.themeModeFromPreference).then(
-        (themeMode) => this.updateThemeMode(themeMode)
+        (themeMode: AppSettingsThemeModeOption ) => this.updateThemeMode(themeMode)
     )
   }
 
   public toggleThemeMode(): void {
     store.dispatch('settings/toggleThemeMode').then(
-        (themeMode) => this.updateThemeMode(themeMode)
+        (themeMode: AppSettingsThemeModeOption) => this.updateThemeMode(themeMode)
     )
   }
 

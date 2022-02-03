@@ -44,7 +44,7 @@ import store from '@/store'
 import router from '@/routes'
 import { Options, Vue } from 'vue-class-component'
 import CartItem from '@/components/Cart/CartItem.vue'
-import CartItemModel from '@/state/cart/CartItemModel'
+import CartItemModel from '@/store/cart/CartItemModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 
 @Options({

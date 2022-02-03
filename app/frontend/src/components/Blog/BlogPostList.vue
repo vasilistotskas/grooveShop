@@ -43,7 +43,7 @@
 
 <script lang="ts">
 import store from '@/store'
-import PostModel from '@/state/blog/PostModel'
+import PostModel from '@/store/blog/PostModel'
 import { Options, Vue } from 'vue-class-component'
 import AuthorLink from '@/components/Blog/BlogAuthorLink.vue'
 import BlogSidebar from '@/components/Blog/BlogSidebar.vue'

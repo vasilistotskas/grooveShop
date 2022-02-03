@@ -70,7 +70,7 @@
 import store from '@/store'
 import router from '@/routes'
 import { Options, Vue } from 'vue-class-component'
-import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import UserDetailsModel from '@/store/user/data/UserDetailsModel'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
 import { faCogs } from '@fortawesome/free-solid-svg-icons/faCogs'
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'

@@ -29,9 +29,9 @@
 <script lang="ts">
 import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
-import ProductModel from '@/state/product/ProductModel'
+import ProductModel from '@/store/product/ProductModel'
 import Pagination from '@/components/Pagination/Pagination.vue'
-import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import UserDetailsModel from '@/store/user/data/UserDetailsModel'
 import ReviewProductCard from '@/components/Reviews/ReviewProductCard.vue'
 
 @Options({
