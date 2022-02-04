@@ -66,6 +66,7 @@ front_urls = [
     path('cart', index_view, name='index'),
     path('cart/success', index_view, name='index'),
     path('cart/checkout', index_view, name='index'),
+    path('products/all', index_view, name='index'),
     path('product/<category_slug>/<product_slug>', index_view, name='index'),
     path('category/<category_slug>', index_view, name='index'),
     path('blog', index_view, name='index'),

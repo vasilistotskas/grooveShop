@@ -45,6 +45,13 @@ ALLOWED_HOSTS.extend(
     )
 )
 
+##################### till new graphene-django version release
+
+import django
+from django.utils.encoding import force_str
+django.utils.encoding.force_text = force_str
+##############################################
+
 # Application definition
 DJANGO_APPS = [
     'django.contrib.admin',

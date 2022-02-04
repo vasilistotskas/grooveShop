@@ -339,6 +339,24 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
+		path: '/products/all',
+		name: 'AllProducts',
+		component: () => import('@/pages/Product/AllProducts.vue'),
+		props: true,
+		meta: {
+			breadcrumb: () => ([
+				{
+					name: 'AllProducts',
+					to: {
+						type: 'all_products',
+						param: 'all_products',
+						full_path: 'all_products'
+					}
+				}
+			])
+		}
+	},
+	{
 		path: '/product/:category_slug/:product_slug',
 		name: 'Product',
 		component: () => import('@/pages/Product/Product.vue'),

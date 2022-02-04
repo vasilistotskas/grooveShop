@@ -13,7 +13,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 
 
-class ProductsPagination(PageNumberPagination):
+class ProductsPagination(CountPaginator):
     page_size = 16
 
 
