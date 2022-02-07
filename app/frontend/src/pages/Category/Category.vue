@@ -15,17 +15,16 @@
         </div>
 
         <Pagination
-            v-if="Object.keys(categoryResults).length !== 0"
+            v-if="Object.keys(allPaginatedResults).length !== 0"
             :endpoint-url="buildEndPointUrlForPaginatedResults()"
             :max-visible-buttons="3"
             :route="'Category'"
-            :total-pages="categoryResultsTotalPages"
-            @pagechanged="onPageChange"
+            :total-pages="allPaginatedResultsTotalPages"
         />
 
         <div class="product-listing-grid mt-3 mb-3">
           <ProductCard
-              v-for="product in categoryResults"
+              v-for="product in allPaginatedResults"
               :key="product.id"
               :product="product"
               class="col-sm-3"
@@ -41,11 +40,14 @@
 import store from '@/store'
 import router from '@/routes'
 import { Options, Vue } from 'vue-class-component'
-import ProductModel from '@/state/product/ProductModel'
 import CategoryModel from '@/state/category/CategoryModel'
+import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
+import { PaginationCount } from '@/state/pagination/Type/PaginationTypes'
+import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
+import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Options({
   name: 'CategoryVue',
@@ -59,11 +61,10 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
   }
 })
 
-export default class CategoryVue extends Vue {
+export default class CategoryVue extends Vue implements PaginatedInterface<CategoryModel> {
 
   formEl = document.getElementById('burgerButton') as HTMLFormElement
   uri = window.location.search.substring(1)
-  currentPage: number = 1
   params = new URLSearchParams(this.uri)
 
   get breadCrumbPath(): [] {
@@ -75,36 +76,32 @@ export default class CategoryVue extends Vue {
     return store.getters['category/getCategory']
   }
 
+  get allPaginatedResults(): Array<CategoryModel> {
+    return store.getters['pagination/getResultData']
+  }
+
+  get allPaginatedResultsCount(): PaginationCount {
+    return store.getters['pagination/getResultCountData']
+  }
+
+  get allPaginatedResultsNextPageUrl(): URL {
+    return store.getters['pagination/getResultNextPageUrl']
+  }
+
+  get allPaginatedResultsPreviousPageUrl(): URL {
+    return store.getters['pagination/getResultPreviousPageUrl']
+  }
+
+  get allPaginatedResultsTotalPages(): PaginationCount {
+    return store.getters['pagination/getResultTotalPages']
+  }
+
   get currentPageNumber(): number {
     let storedPageNumber = store.getters['pagination/getCurrentPageNumber']
     if (storedPageNumber) {
       return store.getters['pagination/getCurrentPageNumber']
     }
     return 1
-  }
-
-  get currentPageQuery(): string {
-    return store.getters['pagination/getCurrentQuery']
-  }
-
-  get categoryResults(): ProductModel {
-    return store.getters['pagination/getResultData']
-  }
-
-  get categoryResultsCount(): number {
-    return store.getters['pagination/getResultCountData']
-  }
-
-  get categoryResultsNextPageUrl(): string {
-    return store.getters['pagination/getResultNextPageUrl']
-  }
-
-  get categoryResultsPreviousPageUrl(): string {
-    return store.getters['pagination/getResultPreviousPageUrl']
-  }
-
-  get categoryResultsTotalPages(): number {
-    return store.getters['pagination/getResultTotalPages']
   }
 
   async created(): Promise<void> {
@@ -156,13 +153,16 @@ export default class CategoryVue extends Vue {
     store.dispatch('category/fetchCategoryFromRemote', categoryId)
   }
 
-  public fetchCategoryProducts(): void {
-    store.dispatch('pagination/getPaginatedResults', {
-      'pageNumber': this.currentPageNumber,
-      'endpointUrl': this.buildEndPointUrlForPaginatedResults(),
-      'query': this.currentPageQuery,
-      'method': 'GET'
-    })
+  async fetchCategoryProducts(): Promise<void> {
+
+    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+      .createPaginationQuery({
+        'pageNumber': this.currentPageNumber,
+        'endpointUrl': this.buildEndPointUrlForPaginatedResults(),
+        'method': ApiBaseMethods.GET
+      } )
+
+    await store.dispatch('pagination/getPaginatedResults', paginationQuery)
   }
 
   public buildEndPointUrlForPaginatedResults(): string {
@@ -174,10 +174,6 @@ export default class CategoryVue extends Vue {
     const mediaStreamPath = '/mediastream/media/uploads/'
     const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName
     return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height
-  }
-
-  onPageChange(page: any) {
-    this.currentPage = page
   }
 
 }

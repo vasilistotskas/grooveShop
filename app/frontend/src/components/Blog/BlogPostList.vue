@@ -7,7 +7,7 @@
             <img
                 :alt="post.title"
                 class="img-fluid"
-                v-bind:src="mediaStreamImage('slides', post.mainImageFilename, '476', '268')"
+                v-bind:src="mediaStreamImage('slides', post.mainImageFilename, '462', '268')"
                 loading="lazy"
             >
             <div class="card-body">

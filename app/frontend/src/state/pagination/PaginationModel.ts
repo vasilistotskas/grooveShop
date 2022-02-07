@@ -1,16 +1,17 @@
 import EntityBase from '@/state/common/EntityBase'
+import { RM, PaginationTotalPages } from '@/state/pagination/Type/PaginationTypes'
 
-export default class ProductReviewModel extends EntityBase {
+export default class PaginationModel extends EntityBase {
 
 	count!: number
 	link: Record<string, unknown> = {
-		next: '',
-		previous: ''
+		next: URL,
+		previous: URL
 	}
-	results!: []
-	total_pages!: number
+	results!: Array<RM>
+	total_pages!: PaginationTotalPages
 
-	public constructor(data?: Partial<ProductReviewModel>) {
+	public constructor(data?: Partial<PaginationModel>) {
 		super(data)
 	}
 

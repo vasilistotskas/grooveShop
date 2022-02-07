@@ -43,8 +43,7 @@
         :endpointUrl="'orders'"
         :max-visible-buttons="3"
         :route="'Orders'"
-        :total-pages="orderHistoryResultsTotalPages"
-        @pagechanged="onPageChange"/>
+        :total-pages="orderHistoryResultsTotalPages"/>
   </div>
   <div class="user_profile-no-data" v-else>
     <h1>NO ORDERS</h1>
@@ -69,7 +68,6 @@ import Pagination from '@/components/Pagination/Pagination.vue'
 export default class UserOrderHistory extends Vue {
 
   uri = window.location.search.substring(1)
-  currentPage: number = 1
   params = new URLSearchParams(this.uri)
 
   get currentPageNumber(): number {
@@ -145,9 +143,6 @@ export default class UserOrderHistory extends Vue {
     return item.quantity * item.product.price
   }
 
-  onPageChange(page: any) {
-    this.currentPage = page
-  }
 
 }
 </script>

@@ -138,7 +138,6 @@
             :route="'Product'"
             :router-replace="false"
             :total-pages="productReviewResultsTotalPages"
-            @pagechanged="onPageChange"
         />
       </div>
     </div>
@@ -189,7 +188,6 @@ export default class ProductVue extends Vue {
 
   quantity = 1
   uri = window.location.search.substring(1)
-  currentPage: number = 1
   params = new URLSearchParams(this.uri)
 
   cubesIcon: IconDefinition = faCubes
@@ -300,10 +298,6 @@ export default class ProductVue extends Vue {
   public buildEndPointUrlForPaginatedResults(): string {
     const product_id: number = store.getters['product/getProductId']
     return `reviews/product/${ product_id }`
-  }
-
-  onPageChange(page: any) {
-    this.currentPage = page
   }
 
   public addToCart(): void {

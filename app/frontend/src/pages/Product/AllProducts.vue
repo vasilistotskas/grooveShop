@@ -8,17 +8,16 @@
         </div>
 
         <Pagination
-            v-if="Object.keys(allProductsResults).length !== 0"
+            v-if="Object.keys(allPaginatedResults).length !== 0"
             :endpoint-url="'products/all'"
             :max-visible-buttons="3"
             :route="'AllProducts'"
-            :total-pages="allProductsResultsTotalPages"
-            @pagechanged="onPageChange"
+            :total-pages="allPaginatedResultsTotalPages"
         />
 
         <div class="product-listing-grid mt-3 mb-3">
           <ProductCard
-              v-for="product in allProductsResults"
+              v-for="product in allPaginatedResults"
               :key="product.id"
               :product="product"
               class="grid-item"
@@ -35,9 +34,13 @@ import store from '@/store'
 import router from '@/routes'
 import { Options, Vue } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
+import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
+import { PaginationCount } from '@/state/pagination/Type/PaginationTypes'
+import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
+import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Options({
   name: 'AllProducts',
@@ -48,10 +51,9 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
   }
 })
 
-export default class AllProducts extends Vue {
+export default class AllProducts extends Vue implements PaginatedInterface<ProductModel> {
 
   uri = window.location.search.substring(1)
-  currentPage: number = 1
   params = new URLSearchParams(this.uri)
 
   get breadCrumbPath(): [] {
@@ -59,32 +61,32 @@ export default class AllProducts extends Vue {
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
-  get allProductsResults(): ProductModel[] {
+  get allPaginatedResults(): Array<ProductModel> {
     return store.getters['pagination/getResultData']
   }
 
-  get allProductsResultsCount(): number {
+  get allPaginatedResultsCount(): PaginationCount {
     return store.getters['pagination/getResultCountData']
   }
 
-  get allProductsResultsNextPageUrl(): string {
+  get allPaginatedResultsNextPageUrl(): URL {
     return store.getters['pagination/getResultNextPageUrl']
   }
 
-  get allProductsResultsPreviousPageUrl(): string {
+  get allPaginatedResultsPreviousPageUrl(): URL {
     return store.getters['pagination/getResultPreviousPageUrl']
   }
 
-  get allProductsResultsTotalPages(): number {
+  get allPaginatedResultsTotalPages(): PaginationCount {
     return store.getters['pagination/getResultTotalPages']
   }
 
   get currentPageNumber(): number {
-    return store.getters['pagination/getCurrentPageNumber']
-  }
-
-  get currentPageQuery(): string {
-    return store.getters['pagination/getCurrentQuery']
+    let storedPageNumber = store.getters['pagination/getCurrentPageNumber']
+    if (storedPageNumber) {
+      return store.getters['pagination/getCurrentPageNumber']
+    }
+    return 1
   }
 
   async created(): Promise<void> {
@@ -108,17 +110,15 @@ export default class AllProducts extends Vue {
     store.commit('pagination/unsetResults')
   }
 
-  onPageChange(page: any) {
-    this.currentPage = page
-  }
-
   async fetchAllProducts(): Promise<void> {
-    await store.dispatch('pagination/getPaginatedResults', {
-      'pageNumber': this.currentPageNumber,
-      'endpointUrl': `products/all`,
-      'query': this.currentPageQuery,
-      'method': 'GET'
-    })
+    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+      .createPaginationQuery({
+        'pageNumber': this.currentPageNumber,
+        'endpointUrl': 'products/all',
+        'method': ApiBaseMethods.GET
+      } )
+
+    await store.dispatch('pagination/getPaginatedResults', paginationQuery)
   }
 
 }

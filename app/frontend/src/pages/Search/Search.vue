@@ -13,7 +13,6 @@
             :max-visible-buttons="3"
             :route="'Search'"
             :total-pages="searchResultsTotalPages"
-            @pagechanged="onPageChange"
         />
 
         <div class="product-listing-grid mt-3 mb-3">
@@ -50,7 +49,6 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 
 export default class SearchVue extends Vue {
 
-  currentPage: number = 1
   query: string | null = ''
   uri = window.location.search.substring(1)
   params = new URLSearchParams(this.uri)
@@ -107,10 +105,6 @@ export default class SearchVue extends Vue {
 
   async unmounted(): Promise<void> {
     store.commit('pagination/unsetResults')
-  }
-
-  onPageChange(page: any) {
-    this.currentPage = page
   }
 
   async performSearch(): Promise<void> {

@@ -1,14 +1,13 @@
 import store from '@/store'
 import session from '@/api/session'
-
-import ProductModel from '@/state/product/ProductModel'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Module, Action, Mutation } from 'vuex-module-decorators'
+import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Module({ namespaced: true })
 export default class PaginationModule
 	extends AppBaseModule {
-	results = [new ProductModel()]
+	results = []
 	results_count: number = 0
 	results_next_page: string = ''
 	results_previous_page: string = ''
@@ -25,7 +24,7 @@ export default class PaginationModule
 		return this.alternativeToken || localStorage.getItem('TOKEN_STORAGE_KEY')
 	}
 
-	get getResultData(): ProductModel[] {
+	get getResultData(): Array<any> {
 		return this.results
 	}
 
@@ -62,7 +61,7 @@ export default class PaginationModule
 	}
 
 	@Mutation
-	setResults(data: ProductModel[]): void {
+	setResults(data: []): void {
 		this.results = data
 	}
 
@@ -123,18 +122,18 @@ export default class PaginationModule
 	}
 
 	@Action
-	async getPaginatedResults(params: any): Promise<void> {
+	async getPaginatedResults(params: PaginationQueryParametersModel): Promise<void> {
 		await store.commit('app/setLoading', true)
 		const baseUrl = '/api/v1'
 
 		let ApiUrl = ''
 
-		if (!params.query && !params.pageNumber) {
+		if (!params.queryParams && !params.pageNumber) {
 			ApiUrl = `${ baseUrl }/${ params.endpointUrl }`
-		} else if (!params.query) {
+		} else if (!params.queryParams) {
 			ApiUrl = `${ baseUrl }/${ params.endpointUrl }/?p=${ params.pageNumber }`
 		} else {
-			ApiUrl = `${ baseUrl }/${ params.endpointUrl }/${ params.query }?p=${ params.pageNumber }`
+			ApiUrl = `${ baseUrl }/${ params.endpointUrl }/${ params.queryParams }?p=${ params.pageNumber }`
 		}
 
 		session({

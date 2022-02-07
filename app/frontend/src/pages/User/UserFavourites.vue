@@ -1,20 +1,19 @@
 <template>
-  <div v-if="userFavouriteResults && Object.keys(userFavouriteResults).length > 0" class="container">
+  <div v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0" class="container">
     <div class="product-listing-grid mb-4">
       <ProductCard
-          v-for="product in userFavouriteResults"
+          v-for="product in allPaginatedResults"
           :key="product.id"
           :product="product.product_object"
           class="grid-item"
       />
     </div>
     <Pagination
-        v-if="Object.keys(userFavouriteResults).length !== 0"
+        v-if="Object.keys(allPaginatedResults).length !== 0"
         :endpoint-url="buildEndPointUrlForPaginatedResults()"
         :max-visible-buttons="3"
-        :route="'UserFavourites.vue'"
-        :total-pages="userFavouriteResultsTotalPages"
-        @pagechanged="onPageChange"
+        :route="'Favourites'"
+        :total-pages="allPaginatedResultsTotalPages"
     />
   </div>
   <div class="user_profile-no-data" v-else>
@@ -25,10 +24,11 @@
 <script lang="ts">
 import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
-import ProductModel from '../../state/product/ProductModel'
+import ProductModel from '@/state/product/ProductModel'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 
 @Options({
   name: 'UserFavourites',
@@ -44,44 +44,38 @@ import UserDetailsModel from '@/state/user/data/UserDetailsModel'
   }
 })
 
-export default class UserFavourites extends Vue {
+export default class UserFavourites extends Vue implements PaginatedInterface<ProductModel> {
 
   uri = window.location.search.substring(1)
-  currentPage: number = 1
   params = new URLSearchParams(this.uri)
   userData = new UserDetailsModel()
 
+  get allPaginatedResults(): Array<ProductModel> {
+    return store.getters['pagination/getResultData']
+  }
+
+  get allPaginatedResultsCount(): number {
+    return store.getters['pagination/getResultCountData']
+  }
+
+  get allPaginatedResultsNextPageUrl(): URL {
+    return store.getters['pagination/getResultNextPageUrl']
+  }
+
+  get allPaginatedResultsPreviousPageUrl(): URL {
+    return store.getters['pagination/getResultPreviousPageUrl']
+  }
+
+  get allPaginatedResultsTotalPages(): number {
+    return store.getters['pagination/getResultTotalPages']
+  }
+
   get currentPageNumber(): number {
     let storedPageNumber = store.getters['pagination/getCurrentPageNumber']
-
     if (storedPageNumber) {
       return store.getters['pagination/getCurrentPageNumber']
     }
     return 1
-  }
-
-  get currentPageQuery(): string {
-    return store.getters['pagination/getCurrentQuery']
-  }
-
-  get userFavouriteResults(): ProductModel {
-    return store.getters['pagination/getResultData']
-  }
-
-  get userFavouriteResultsCount(): number {
-    return store.getters['pagination/getResultCountData']
-  }
-
-  get userFavouriteResultsNextPageUrl(): string {
-    return store.getters['pagination/getResultNextPageUrl']
-  }
-
-  get userFavouriteResultsPreviousPageUrl(): string {
-    return store.getters['pagination/getResultPreviousPageUrl']
-  }
-
-  get userFavouriteResultsTotalPages(): number {
-    return store.getters['pagination/getResultTotalPages']
   }
 
   async created(): Promise<void> {
@@ -108,7 +102,6 @@ export default class UserFavourites extends Vue {
     store.dispatch('pagination/getPaginatedResults', {
       'pageNumber': this.currentPageNumber,
       'endpointUrl': this.buildEndPointUrlForPaginatedResults(),
-      'query': this.currentPageQuery,
       'method': 'GET'
     })
   }
@@ -116,10 +109,6 @@ export default class UserFavourites extends Vue {
   public buildEndPointUrlForPaginatedResults(): string {
     const user_id = this.userData.id
     return 'favourites/products' + `/${ user_id }`
-  }
-
-  onPageChange(page: any) {
-    this.currentPage = page
   }
 
 }
