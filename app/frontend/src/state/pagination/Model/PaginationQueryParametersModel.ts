@@ -1,5 +1,5 @@
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
-import PaginationQueryModel from '@/state/pagination/Model/PaginationQueryModel'
+import PaginationQueryInterface from '@/state/pagination/Interface/PaginationQueryInterface'
 import EntityBase from '@/state/common/EntityBase'
 
 export class PaginationQueryParametersModel extends EntityBase{
@@ -8,11 +8,11 @@ export class PaginationQueryParametersModel extends EntityBase{
 	method!: ApiBaseMethods
 	queryParams?: string
 
-	private constructor(data?: Partial<PaginationQueryModel>) {
+	private constructor(data?: Partial<PaginationQueryInterface>) {
 		super(data)
 	}
 
-	static createPaginationQuery(query: PaginationQueryModel): PaginationQueryParametersModel {
+	static createPaginationQuery(query: PaginationQueryInterface): PaginationQueryParametersModel {
 		return new PaginationQueryParametersModel(query)
 	}
 

@@ -1,22 +1,23 @@
 import { RouteRecordRaw } from 'vue-router'
+import { MainRouteNames } from '@/routes/Enum/MainRouteNames'
+import { MainRoutePaths } from '@/routes/Enum/MainRoutePaths'
+import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
 const routes: Array<RouteRecordRaw> = [
 	{
-		path: '/',
-		name: 'Home',
+		path: MainRoutePaths.HOME,
+		name: MainRouteNames.HOME,
 		component: () => import('@/pages/Home.vue')
 	},
 	{
-		path: '/log-in',
-		name: 'LogIn',
+		path: MainRoutePaths.LOGIN,
+		name: MainRouteNames.LOGIN,
 		component: () => import('@/pages/Auth/LogIn.vue'),
 		meta: {
-			breadcrumb: () => ([
+			breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'Log In',
 					to: {
-						type: 'log_in',
-						param: 'log-in',
 						full_path: 'log-in'
 					}
 				}
@@ -24,16 +25,14 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/sign-up',
-		name: 'SignUp',
+		path: MainRoutePaths.SIGNUP,
+		name: MainRouteNames.SIGNUP,
 		component: () => import('@/pages/Auth/SignUp.vue'),
 		meta: {
-			breadcrumb: () => ([
+			breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'Sign Up',
 					to: {
-						type: 'sign_up',
-						param: 'sign-up',
 						full_path: 'sign-up'
 					}
 				}
@@ -41,16 +40,14 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/accounts/activate/:uid/:token',
-		name: 'VerifyEmail',
+		path: MainRoutePaths.VERIFY_EMAIL,
+		name: MainRouteNames.VERIFY_EMAIL,
 		component: () => import('@/pages/Auth/VerifyEmail.vue'),
 		meta: {
-			breadcrumb: () => ([
+			breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'Verify Email',
 					to: {
-						type: 'verify_email',
-						param: 'accounts/activate',
 						full_path: 'accounts/activate'
 					}
 				}
@@ -58,16 +55,14 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/accounts/activate/verify_mail_resend',
-		name: 'VerifyEmailResendInput',
+		path: MainRoutePaths.VERIFY_EMAIL_RESEND_INPUT,
+		name: MainRouteNames.VERIFY_EMAIL_RESEND_INPUT,
 		component: () => import('@/pages/Auth/VerifyEmailResendInput.vue'),
 		meta: {
-			breadcrumb: () => ([
+			breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'Verify Email Resend Input',
 					to: {
-						type: 'verify_email',
-						param: 'accounts/activate/verify_mail_resend',
 						full_path: 'accounts/activate/verify_mail_resend'
 					}
 				}
@@ -75,16 +70,14 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/password_reset',
-		name: 'PasswordReset',
+		path: MainRoutePaths.PASSWORD_RESET,
+		name: MainRouteNames.PASSWORD_RESET,
 		component: () => import('@/pages/Auth/PasswordReset.vue'),
 		meta: {
-			breadcrumb: () => ([
+			breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'Password Reset',
 					to: {
-						type: 'password_reset',
-						param: 'password-reset',
 						full_path: 'password-reset'
 					}
 				}
@@ -92,16 +85,14 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/password_reset/:uid/:token',
-		name: 'PasswordResetConfirm',
+		path: MainRoutePaths.PASSWORD_RESET_CONFIRM,
+		name: MainRouteNames.PASSWORD_RESET_CONFIRM,
 		component: () => import('@/pages/Auth/PasswordResetConfirm.vue'),
 		meta: {
-			breadcrumb: () => ([
+			breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'Password Reset Confirm',
 					to: {
-						type: 'password_reset_confirm',
-						param: 'password-reset',
 						full_path: 'password-reset'
 					}
 				}
@@ -109,17 +100,15 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/user-account',
-		name: 'UserAccount',
+		path: MainRoutePaths.USER_ACCOUNT,
+		name: MainRouteNames.USER_ACCOUNT,
 		component: () => import('@/pages/User/UserAccount.vue'),
 		meta: {
 			requireLogin: true,
-			breadcrumb: () => ([
+			breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'User Account',
 					to: {
-						type: 'user_account',
-						param: 'user-account',
 						full_path: 'user-account'
 					}
 				}
@@ -127,24 +116,20 @@ const routes: Array<RouteRecordRaw> = [
 		},
 		children: [
 			{
-				path: 'orders',
-				name: 'Orders',
+				path: MainRoutePaths.ORDERS,
+				name: MainRouteNames.ORDERS,
 				component: () => import('@/pages/User/UserOrderHistory.vue'),
 				meta: {
-					breadcrumb: () => ([
+					breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 						{
 							name: 'User Account',
 							to: {
-								type: 'user_account',
-								param: 'user-account',
 								full_path: 'user-account'
 							}
 						},
 						{
 							name: 'User Orders',
 							to: {
-								type: 'user_account_orders',
-								param: 'orders',
 								full_path: 'user-account/orders'
 							}
 						}
@@ -152,24 +137,20 @@ const routes: Array<RouteRecordRaw> = [
 				}
 			},
 			{
-				path: 'settings',
-				name: 'Settings',
+				path: MainRoutePaths.SETTINGS,
+				name: MainRouteNames.SETTINGS,
 				component: () => import('@/pages/User/UserSettings.vue'),
 				meta: {
-					breadcrumb: () => ([
+					breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 						{
 							name: 'User Account',
 							to: {
-								type: 'user_account',
-								param: 'user-account',
 								full_path: 'user-account'
 							}
 						},
 						{
 							name: 'User Settings',
 							to: {
-								type: 'user_account_settings',
-								param: 'settings',
 								full_path: 'user-account/settings'
 							}
 						}
@@ -177,24 +158,20 @@ const routes: Array<RouteRecordRaw> = [
 				}
 			},
 			{
-				path: 'favourites',
-				name: 'Favourites',
+				path: MainRoutePaths.FAVOURITES,
+				name: MainRouteNames.FAVOURITES,
 				component: () => import('@/pages/User/UserFavourites.vue'),
 				meta: {
 					breadcrumb: () => ([
 						{
 							name: 'User Account',
 							to: {
-								type: 'user_account',
-								param: 'user-account',
 								full_path: 'user-account'
 							}
 						},
 						{
 							name: 'User Favourites',
 							to: {
-								type: 'user_account_favourites',
-								param: 'favourites',
 								full_path: 'user-account/favourites'
 							}
 						}
@@ -202,24 +179,20 @@ const routes: Array<RouteRecordRaw> = [
 				}
 			},
 			{
-				path: 'reviews',
-				name: 'Reviews',
+				path: MainRoutePaths.REVIEWS,
+				name: MainRouteNames.REVIEWS,
 				component: () => import('@/pages/User/UserReviews.vue'),
 				meta: {
-					breadcrumb: () => ([
+					breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 						{
 							name: 'User Account',
 							to: {
-								type: 'user_account',
-								param: 'user-account',
 								full_path: 'user-account'
 							}
 						},
 						{
 							name: 'User Reviews',
 							to: {
-								type: 'user_account_reviews',
-								param: 'reviews',
 								full_path: 'user-account/reviews'
 							}
 						}
@@ -227,24 +200,20 @@ const routes: Array<RouteRecordRaw> = [
 				}
 			},
 			{
-				path: 'password',
-				name: 'Password',
+				path: MainRoutePaths.PASSWORD,
+				name: MainRouteNames.PASSWORD,
 				component: () => import('@/pages/User/UserPassword.vue'),
 				meta: {
-					breadcrumb: () => ([
+					breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 						{
 							name: 'User Account',
 							to: {
-								type: 'user_account',
-								param: 'user-account',
 								full_path: 'user-account'
 							}
 						},
 						{
 							name: 'My Password',
 							to: {
-								type: 'user_account_password',
-								param: 'password',
 								full_path: 'user-account/password'
 							}
 						}
@@ -254,16 +223,14 @@ const routes: Array<RouteRecordRaw> = [
 		]
 	},
 	{
-		path: '/search',
-		name: 'Search',
+		path: MainRoutePaths.SEARCH,
+		name: MainRouteNames.SEARCH,
 		component: () => import('@/pages/Search/Search.vue'),
 		meta: {
-			breadcrumb: () => ([
+			breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'Search',
 					to: {
-						type: 'search',
-						param: 'search',
 						full_path: 'search'
 					}
 				}
@@ -271,16 +238,14 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/cart',
-		name: 'Cart',
+		path: MainRoutePaths.CART,
+		name: MainRouteNames.CART,
 		component: () => import('@/pages/Cart/Cart.vue'),
 		meta: {
-			breadcrumb: () => ([
+			breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'Cart',
 					to: {
-						type: 'cart',
-						param: 'cart',
 						full_path: 'cart'
 					}
 				}
@@ -288,24 +253,20 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/cart/success',
-		name: 'Success',
+		path: MainRoutePaths.SUCCESS,
+		name: MainRouteNames.SUCCESS,
 		component: () => import('@/pages/Order/OrderSuccess.vue'),
 		meta: {
-			breadcrumb: () => ([
+			breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'Cart',
 					to: {
-						type: 'cart',
-						param: 'cart',
 						full_path: 'cart'
 					}
 				},
 				{
 					name: 'Cart Success',
 					to: {
-						type: 'cart_success',
-						param: 'success',
 						full_path: 'cart/success'
 					}
 				}
@@ -313,25 +274,21 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/cart/checkout',
-		name: 'Checkout',
+		path: MainRoutePaths.CHECKOUT,
+		name: MainRouteNames.CHECKOUT,
 		component: () => import('@/pages/Checkout/Checkout.vue'),
 		meta: {
 			requireLogin: false,
-			breadcrumb: () => ([
+			breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'Cart',
 					to: {
-						type: 'cart',
-						param: 'cart',
 						full_path: 'cart'
 					}
 				},
 				{
 					name: 'Checkout',
 					to: {
-						type: 'cart_checkout',
-						param: 'checkout',
 						full_path: 'cart/checkout'
 					}
 				}
@@ -339,17 +296,15 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/products/all',
-		name: 'AllProducts',
+		path: MainRoutePaths.ALL_PRODUCTS,
+		name: MainRouteNames.ALL_PRODUCTS,
 		component: () => import('@/pages/Product/AllProducts.vue'),
 		props: true,
 		meta: {
-			breadcrumb: () => ([
+			breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'AllProducts',
 					to: {
-						type: 'all_products',
-						param: 'all_products',
 						full_path: 'all_products'
 					}
 				}
@@ -357,25 +312,21 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/product/:category_slug/:product_slug',
-		name: 'Product',
+		path: MainRoutePaths.PRODUCT,
+		name: MainRouteNames.PRODUCT,
 		component: () => import('@/pages/Product/Product.vue'),
 		props: true,
 		meta: {
-			breadcrumb: (route: any) => ([
+			breadcrumb: (route: any): Array<BreadcrumbItemInterface> => ([
 				{
 					name: route.category_slug,
 					to: {
-						type: 'category',
-						param: route.category_slug,
 						full_path: 'category' + '/' + route.category_slug
 					}
 				},
 				{
 					name: route.product_slug,
 					to: {
-						type: 'product',
-						param: route.product_slug,
 						full_path: 'product' + '/' + route.category_slug + '/' + route.product_slug
 					}
 				}
@@ -383,17 +334,15 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/category/:category_slug',
-		name: 'Category',
+		path: MainRoutePaths.CATEGORY,
+		name: MainRouteNames.CATEGORY,
 		component: () => import('@/pages/Category/Category.vue'),
 		props: true,
 		meta: {
-			breadcrumb: (route: any) => ([
+			breadcrumb: (route: any): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'Category - ' + route.category_slug,
 					to: {
-						type: 'category',
-						param: route.category_slug,
 						full_path: 'category' + '/' + route.category_slug
 					}
 				}
@@ -401,17 +350,15 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/blog',
-		name: 'Blog',
+		path: MainRoutePaths.BLOG,
+		name: MainRouteNames.BLOG,
 		component: () => import('@/pages/Blog/Blog.vue'),
 		props: true,
 		meta: {
-			breadcrumb: () => ([
+			breadcrumb: (): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'Blog',
 					to: {
-						type: 'blog',
-						param: 'blog',
 						full_path: 'blog'
 					}
 				}
@@ -419,25 +366,21 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/author/:email',
-		name: 'Author',
+		path: MainRoutePaths.AUTHOR,
+		name: MainRouteNames.AUTHOR,
 		component: () => import('@/components/Blog/BlogAuthor.vue'),
 		props: true,
 		meta: {
-			breadcrumb: (route: any) => ([
+			breadcrumb: (route: any): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'Blog',
 					to: {
-						type: 'blog',
-						param: 'blog',
 						full_path: 'blog'
 					}
 				},
 				{
 					name: 'Author - ' + route.email,
 					to: {
-						type: 'author',
-						param: route.email,
 						full_path: 'author' + '/' + route.email
 					}
 				}
@@ -445,25 +388,21 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/post/:slug',
-		name: 'Post',
+		path: MainRoutePaths.POST,
+		name: MainRouteNames.POST,
 		component: () => import('@/components/Blog/BlogPost.vue'),
 		props: true,
 		meta: {
-			breadcrumb: (route: any) => ([
+			breadcrumb: (route: any): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'Blog',
 					to: {
-						type: 'blog',
-						param: 'blog',
 						full_path: 'blog'
 					}
 				},
 				{
 					name: 'Post - ' + route.slug,
 					to: {
-						type: 'post',
-						param: route.slug,
 						full_path: 'post' + '/' + route.slug
 					}
 				}
@@ -471,25 +410,21 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/tag/:tag',
-		name: 'PostsByTag',
+		path: MainRoutePaths.POSTS_BY_TAG,
+		name: MainRouteNames.POSTS_BY_TAG,
 		component: () => import('@/components/Blog/BlogPostsByTag.vue'),
 		props: true,
 		meta: {
-			breadcrumb: (route: any) => ([
+			breadcrumb: (route: any): Array<BreadcrumbItemInterface> => ([
 				{
 					name: 'Blog',
 					to: {
-						type: 'blog',
-						param: 'blog',
 						full_path: 'blog'
 					}
 				},
 				{
 					name: 'Tag - ' + route.tag,
 					to: {
-						type: 'tag',
-						param: route.tag,
 						full_path: 'tag' + '/' + route.tag
 					}
 				}
@@ -497,14 +432,14 @@ const routes: Array<RouteRecordRaw> = [
 		}
 	},
 	{
-		path: '/errors/error_404',
-		name: 'PageNotFound',
+		path: MainRoutePaths.PAGE_NOT_FOUND,
+		name: MainRouteNames.PAGE_NOT_FOUND,
 		component: () => import('@/components/Main/PageNotFound.vue'),
 		props: true
 	},
 	{
-		path: '/:pathMatch(.*)*',
-		name: 'NotFound',
+		path: MainRoutePaths.NOT_FOUND,
+		name: MainRouteNames.NOT_FOUND,
 		component: {}
 	}
 ]

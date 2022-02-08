@@ -10,9 +10,6 @@ import { createValidation } from 'vue3-form-validation'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast, { PluginOptions, TYPE } from 'vue-toastification'
 
-// for mass import
-// library.add(faFontAwesome, faCoffee, fas, fab)
-
 const validation = createValidation({
 	defaultValidationBehavior: <never>'lazy',
 	validationBehavior: {

@@ -23,6 +23,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
 @Options({
   name: 'Breadcrumbs',
@@ -33,7 +34,7 @@ import { Options, Vue } from 'vue-class-component'
 
 export default class Breadcrumbs extends Vue {
 
-  breadCrumbPath!: Record<string, unknown>
+  breadCrumbPath!: Array<BreadcrumbItemInterface>
 
 }
 

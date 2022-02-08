@@ -95,7 +95,7 @@ export default class AuthModule
 			})
 			.then(() => {
 				this.context.commit(BaseAuthenticationTypes.LOGIN_SUCCESS)
-				toast.success('OrderSuccess.vue')
+				toast.success('Success')
 			})
 			.catch(() => {
 				this.context.commit(BaseAuthenticationTypes.LOGIN_FAILURE)

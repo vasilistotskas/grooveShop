@@ -1,6 +1,7 @@
 import store from '@/store'
 import routes from './main.routes'
 import { useToast } from 'vue-toastification'
+import { RouteModel } from '@/routes/Model/RouteModel'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const toast = useToast()
@@ -30,6 +31,9 @@ router.beforeEach((to, from, next) => {
 		next('/errors/error_404')
 	}
 })
+
+// @TODO expirimental
+const routeNames = RouteModel.createRouteModel(router.getRoutes()).routeNames
 
 export default router
 
