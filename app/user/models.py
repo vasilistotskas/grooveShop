@@ -1,9 +1,11 @@
 import os
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 from django.dispatch import receiver
 from django.utils.safestring import mark_safe
 from django.db.models.signals import post_save
+from django.contrib.sessions.models import Session
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 User = settings.AUTH_USER_MODEL
 
@@ -57,6 +59,13 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
+
+    def remove_all_sessions(self):
+        user_sessions = []
+        for session in Session.objects.all():
+            if str(self.pk) == session.get_decoded().get('_auth_user_id'):
+                user_sessions.append(session.pk)
+        return Session.objects.filter(pk__in=user_sessions).delete()
 
     def get_full_name(self):
         return self.first_name

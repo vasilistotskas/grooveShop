@@ -1,4 +1,5 @@
 import json
+from .models import UserAccount
 from django.http import Http404
 from django.http import JsonResponse
 from djoser.views import UserViewSet
@@ -12,12 +13,11 @@ from user.models import UserProfile, Country, Region
 from django.views.decorators.http import require_POST
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import ensure_csrf_cookie
-from rest_framework import authentication, generics, permissions, response, status
 from djoser.compat import get_user_email, get_user_email_field_name
+from rest_framework import authentication, generics, permissions, response, status
 from .serializers import UserProfileSerializer, CountrySerializer, RegionSerializer
 
 User = get_user_model()
-
 
 class ResendActivationView(ActionViewMixin, generics.GenericAPIView):
     """
@@ -159,3 +159,16 @@ class CountryDetail(generics.ListAPIView):
         alpha_2 = self.kwargs['alpha_2']
         return Region.objects.filter(alpha_2=alpha_2)
 
+
+class ClearAllUserSessions(APIView):
+    def post(self, request, format=None):
+        if not request.user.is_authenticated:
+            return Response('Forbidden', status=status.HTTP_403_FORBIDDEN)
+
+        try:
+            user = UserAccount.objects.get(email=request.user)
+            UserAccount.remove_all_sessions(user)
+        except Exception:
+            raise Http404
+
+        return Response('Success', status=status.HTTP_200_OK)
