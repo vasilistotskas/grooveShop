@@ -27,6 +27,9 @@
 
         &:hover {
           background-color: var(--cp-palette-main-fifth);
+          span {
+            color: var(--cp-palette-main-secondary);
+          }
         }
 
         img {

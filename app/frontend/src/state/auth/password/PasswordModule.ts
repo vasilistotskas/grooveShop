@@ -159,10 +159,12 @@ export default class PasswordModule
 			})
 	}
 
+	@Action
 	async clearResetStatus(): Promise<void> {
 		this.context.commit(BaseAuthenticationTypes.PASSWORD_RESET_CLEAR)
 	}
 
+	@Action
 	async clearEmailStatus(): Promise<void> {
 		this.context.commit(BaseAuthenticationTypes.PASSWORD_EMAIL_CLEAR)
 	}

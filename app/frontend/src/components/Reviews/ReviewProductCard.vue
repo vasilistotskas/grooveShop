@@ -121,7 +121,7 @@ export default class ReviewProductCard extends Vue {
       return 'url(' + review.userprofile.main_image_absolute_url + ')'
     }
 
-    if (router.currentRoute.value.name === 'UserReviews.vue') {
+    if (router.currentRoute.value.name === 'Reviews') {
       return 'url(' + process.env.VUE_APP_API_URL + '/mediastream/media/uploads/' + 'products' + '/' + imageNameFileTypeRemove + '/' + '100' + '/' + '100' + ')'
     }
 

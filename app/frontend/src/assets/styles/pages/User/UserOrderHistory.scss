@@ -9,12 +9,15 @@
 
   &-head {
     padding-bottom: 10px;
+    span {
+      font-weight: 500;
+    }
   }
 
   &-body {
     padding: 10px;
-    border: 1px solid var(--cp-palette-main-fifth);
-    background-color: white;
+    border: 1px solid var(--cp-palette-main-third);
+    background-color: var(--cp-palette-main-fourth);
     border-radius: 8px;
 
     &:hover {
@@ -24,12 +27,8 @@
 }
 
 .card-body-order-history {
-  background-color: var(--cp-palette-main-fourth) !important;
+  background-color: var(--cp-palette-main-secondary) !important;
   border-radius: 10px;
   padding-top: 30px !important;
   padding-bottom: 30px !important;
-
-  span, a {
-    color: var(--cp-palette-main-secondary) !important;
-  }
 }

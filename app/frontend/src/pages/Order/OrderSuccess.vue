@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-4">
+  <div class="container mt-7">
     <Breadcrumbs :bread-crumb-path="breadCrumbPath"/>
     <div class="page-success">
       <div class="page-success-grid-content">

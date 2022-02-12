@@ -1,5 +1,5 @@
 <template>
-  <div id="password-reset-confirm-view" class="container mt-8">
+  <div id="password-reset-confirm-view" class="container mt-7 mb-5">
     <Breadcrumbs :bread-crumb-path="breadCrumbPath"/>
     <div class="card password-reset-card">
       <div class="card-body card-body-border-top">
