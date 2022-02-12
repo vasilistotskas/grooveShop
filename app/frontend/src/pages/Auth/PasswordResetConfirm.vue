@@ -91,6 +91,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
+import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
 let {
   validateFields
@@ -144,7 +145,7 @@ export default class PasswordRestConfirm extends Vue {
     }
   })
 
-  get breadCrumbPath(): [] {
+  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }

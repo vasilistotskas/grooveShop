@@ -47,6 +47,7 @@ import Pagination from '@/components/Pagination/Pagination.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { PaginationCount } from '@/state/pagination/Type/PaginationTypes'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
+import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Options({
@@ -67,7 +68,7 @@ export default class CategoryVue extends Vue implements PaginatedInterface<Categ
   uri = window.location.search.substring(1)
   params = new URLSearchParams(this.uri)
 
-  get breadCrumbPath(): [] {
+  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }

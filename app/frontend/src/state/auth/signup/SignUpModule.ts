@@ -3,7 +3,7 @@ import api from '@/api/api.service'
 import { useToast } from 'vue-toastification'
 
 import AppBaseModule from '@/state/common/AppBaseModule'
-import { BaseAuthenticationTypes } from '@/api/auth_types'
+import { BaseAuthenticationTypes } from '@/state/auth/Enum/BaseAuthenticationTypes'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import ToastRegisterActivationFail from '@/components/Toast/ToastRegisterActivationFail.vue'
 

@@ -79,6 +79,7 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import { faTruck } from '@fortawesome/free-solid-svg-icons/faTruck'
 import UserProfileImage from '@/components/User/UserProfileImage.vue'
+import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
 @Options({
   name: 'UserAccount',
@@ -96,7 +97,7 @@ export default class UserAccount extends Vue {
   heartIcon: IconDefinition = faHeart
   lockIcon: IconDefinition = faLock
 
-  get breadCrumbPath(): [] {
+  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }

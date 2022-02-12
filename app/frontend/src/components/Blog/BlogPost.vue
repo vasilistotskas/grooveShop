@@ -34,6 +34,7 @@ import PostModel from '@/state/blog/PostModel'
 import { Options, Vue } from 'vue-class-component'
 import AuthorLink from '@/components/Blog/BlogAuthorLink.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
+import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
 @Options({
   name: 'BlogPost',
@@ -45,17 +46,13 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 
 export default class BlogPost extends Vue {
 
-  get breadCrumbPath(): [] {
+  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
   get postBySlug(): PostModel {
     return store.getters['blog/getPostBySlug']
-  }
-
-  get axiosBaseUrl(): string {
-    return store.getters['app/axiosBaseUrl']
   }
 
   async created(): Promise<void> {

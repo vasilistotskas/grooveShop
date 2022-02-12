@@ -8,7 +8,7 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 import {
 	BaseAuthenticationTypes
-} from '@/api/auth_types'
+} from '@/state/auth/Enum/BaseAuthenticationTypes'
 
 const toast = useToast()
 

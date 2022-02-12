@@ -114,6 +114,7 @@ import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import VerifyEmailResendInput from '@/pages/Auth/VerifyEmailResendInput.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
+import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
 let {
   validateFields
@@ -167,7 +168,7 @@ export default class Register extends Vue {
   envelopeIcon: IconDefinition = faEnvelope
   keyIcon: IconDefinition = faKey
 
-  get breadCrumbPath(): [] {
+  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }

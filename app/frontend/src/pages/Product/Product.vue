@@ -158,6 +158,7 @@ import ProductReviewModal from '@/modals/Product/ProductReviewModal.vue'
 import ReviewProductCard from '@/components/Reviews/ReviewProductCard.vue'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag'
+import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import { faShippingFast } from '@fortawesome/free-solid-svg-icons/faShippingFast'
 import ProductFavouriteButton from '@/components/Product/ProductFavouriteButton.vue'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
@@ -195,7 +196,7 @@ export default class ProductVue extends Vue {
   truckPickupIcon: IconDefinition = faShippingFast
   warningTriangleIcon: IconDefinition = faExclamationTriangle
 
-  get breadCrumbPath(): [] {
+  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }

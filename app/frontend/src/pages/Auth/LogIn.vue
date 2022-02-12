@@ -116,6 +116,7 @@ import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
+import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
 let {
   validateFields
@@ -156,7 +157,7 @@ export default class LogIn extends Vue {
   envelopeIcon: IconDefinition = faEnvelope
   facebookIcon: IconDefinition = faFacebook
 
-  get breadCrumbPath(): [] {
+  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
