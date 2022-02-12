@@ -87,10 +87,6 @@ export default class BlogPostList extends Vue {
     return store.getters['blog/getPostsByTag']
   }
 
-  get axiosBaseUrl(): string {
-    return store.getters['app/axiosBaseUrl']
-  }
-
   async mounted(): Promise<void> {
     await Promise.all([
       store.dispatch('blog/allTagsFromRemote'),

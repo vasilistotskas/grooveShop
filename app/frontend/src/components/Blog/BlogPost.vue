@@ -65,7 +65,7 @@ export default class BlogPost extends Vue {
     return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height
   }
 
-  public displayableDate(date: string): string {
+  public displayableDate(date: Date): string {
     const options: any = { dateStyle: 'full', timeStyle: 'medium' }
     return new Intl.DateTimeFormat('en-US', options).format(new Date(date))
   }

@@ -205,10 +205,6 @@ export default class ProductVue extends Vue {
     return store.getters['user/data/getUserId']
   }
 
-  get axiosBaseUrl(): boolean {
-    return store.getters['app/axiosBaseUrl']
-  }
-
   get product(): ProductModel {
     return store.getters['product/getProductData']
   }
