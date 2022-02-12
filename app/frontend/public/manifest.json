@@ -3,7 +3,7 @@
  "background_color": "#0D1117",
  "theme_color": "#0D1117",
  "display": "standalone",
- "start_url": "http://localhost:8000",
+ "start_url": "http://localhost:8010",
  "icons": [
   {
    "src": "\/static/files/favicon/android-icon-36x36.png",
