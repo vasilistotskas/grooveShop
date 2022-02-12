@@ -63,6 +63,14 @@
       </div>
     </div>
   </FormProvider>
+
+  <button
+      class="btn btn-outline-primary-two"
+      title="Log Out from all devices"
+      @click="clearAllAccountSessions"
+  >
+    Log Out from all devices
+  </button>
 </template>
 
 <script lang="ts">
@@ -147,6 +155,11 @@ export default class UserPassword extends Vue {
       }
     }
   }
+
+  clearAllAccountSessions() {
+    store.dispatch('auth/clearAllAccountSessions')
+  }
+
 }
 
 </script>

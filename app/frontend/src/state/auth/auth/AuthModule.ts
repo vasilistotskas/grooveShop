@@ -1,14 +1,11 @@
-import session from '@/api/session'
+import store from '@/store'
 import router from '@/routes'
 import api from '@/api/api.service'
+import session from '@/api/session'
 import { useToast } from 'vue-toastification'
-
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-
-import {
-	BaseAuthenticationTypes
-} from '@/state/auth/Enum/BaseAuthenticationTypes'
+import { BaseAuthenticationTypes } from '@/state/auth/Enum/BaseAuthenticationTypes'
 
 const toast = useToast()
 
@@ -141,4 +138,23 @@ export default class AuthModule
 		}
 	}
 
+	@Action
+	async clearAllAccountSessions(): Promise<void> {
+		await api.post('session/clear_all/', {})
+			.then(() => {
+				this.context.commit(BaseAuthenticationTypes.LOGOUT)
+				this.context.commit(BaseAuthenticationTypes.REMOVE_TOKEN)
+				store.commit('product/favourite/unsetFavourites')
+				store.commit('product/favourite/unsetUserFavourites')
+				store.commit('product/review/unsetUserToProductReview')
+				store.commit('product/review/unsetUserReviews')
+				store.commit('user/order/unsetUserOrders')
+				store.commit('country/unsetUserCountryData')
+				toast.success('Logged Out')
+			})
+			.catch((e: Error) => {
+				console.log(e)
+			})
+			.finally(() => router.push('/'))
+	}
 }
