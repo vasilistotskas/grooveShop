@@ -34,10 +34,12 @@ import store from '@/store'
 import router from '@/routes'
 import { Options, Vue } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
+import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Options({
   name: 'SearchVue',
@@ -109,12 +111,16 @@ export default class SearchVue extends Vue {
   }
 
   async performSearch(): Promise<void> {
-    await store.dispatch('pagination/getPaginatedResults', {
-      'pageNumber': this.currentPageNumber,
-      'endpointUrl': `search`,
-      'query': this.currentPageQuery,
-      'method': 'POST'
-    })
+
+    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+        .createPaginationQuery({
+          'pageNumber': this.currentPageNumber,
+          'endpointUrl': `search`,
+          'queryParams': this.currentPageQuery,
+          'method': ApiBaseMethods.GET
+        } )
+
+    await store.dispatch('pagination/getPaginatedResults', paginationQuery)
   }
 
 }

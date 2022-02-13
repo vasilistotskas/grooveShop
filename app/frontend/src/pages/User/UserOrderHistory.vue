@@ -1,7 +1,7 @@
 <template>
-  <div v-if="orderHistoryResults && Object.keys(orderHistoryResults).length > 0" class="user-order-history">
+  <div v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0" class="user-order-history">
     <div
-        v-for="order in orderHistoryResults"
+        v-for="order in allPaginatedResults"
         v-bind:key="order.id"
         class="mb-4"
         v-bind:order="order">
@@ -39,11 +39,11 @@
       </div>
     </div>
     <Pagination
-        v-if="Object.keys(orderHistoryResults).length !== 0"
+        v-if="Object.keys(allPaginatedResults).length !== 0"
         :endpointUrl="'orders'"
         :max-visible-buttons="3"
         :route="'Orders'"
-        :total-pages="orderHistoryResultsTotalPages"/>
+        :total-pages="allPaginatedResultsTotalPages"/>
   </div>
   <div class="user_profile-no-data" v-else>
     <h1>NO ORDERS</h1>
@@ -56,9 +56,11 @@ import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
 import CartItemModel from '@/state/cart/CartItemModel'
 import ProductModel from '@/state/product/ProductModel'
+import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
+import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Options({
@@ -77,36 +79,36 @@ export default class UserOrderHistory extends Vue {
   ImageFitOptions: any = ImageFitOptions
   ImagePositionOptions: any = ImagePositionOptions
 
+  get currentPageQuery(): string {
+    return store.getters['pagination/getCurrentQuery']
+  }
+
+  get allPaginatedResults(): Array<ProductModel> {
+    return store.getters['pagination/getResultData']
+  }
+
+  get allPaginatedResultsCount(): number {
+    return store.getters['pagination/getResultCountData']
+  }
+
+  get allPaginatedResultsNextPageUrl(): URL {
+    return store.getters['pagination/getResultNextPageUrl']
+  }
+
+  get allPaginatedResultsPreviousPageUrl(): URL {
+    return store.getters['pagination/getResultPreviousPageUrl']
+  }
+
+  get allPaginatedResultsTotalPages(): number {
+    return store.getters['pagination/getResultTotalPages']
+  }
+
   get currentPageNumber(): number {
     let storedPageNumber = store.getters['pagination/getCurrentPageNumber']
     if (storedPageNumber) {
       return store.getters['pagination/getCurrentPageNumber']
     }
     return 1
-  }
-
-  get currentPageQuery(): string {
-    return store.getters['pagination/getCurrentQuery']
-  }
-
-  get orderHistoryResults(): ProductModel {
-    return store.getters['pagination/getResultData']
-  }
-
-  get orderHistoryResultsCount(): number {
-    return store.getters['pagination/getResultCountData']
-  }
-
-  get orderHistoryResultsNextPageUrl(): string {
-    return store.getters['pagination/getResultNextPageUrl']
-  }
-
-  get orderHistoryResultsPreviousPageUrl(): string {
-    return store.getters['pagination/getResultPreviousPageUrl']
-  }
-
-  get orderHistoryResultsTotalPages(): number {
-    return store.getters['pagination/getResultTotalPages']
   }
 
   async created(): Promise<void> {
@@ -131,13 +133,17 @@ export default class UserOrderHistory extends Vue {
     store.commit('pagination/unsetResults')
   }
 
-  public fetchUserOrders(): void {
-    store.dispatch('pagination/getPaginatedResults', {
-      'pageNumber': this.currentPageNumber,
-      'endpointUrl': `orders`,
-      'query': this.currentPageQuery,
-      'method': 'GET'
-    })
+  async fetchUserOrders(): Promise<void> {
+
+    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+        .createPaginationQuery({
+          'pageNumber': this.currentPageNumber,
+          'endpointUrl': `orders`,
+          'queryParams': this.currentPageQuery,
+          'method': ApiBaseMethods.GET
+        } )
+
+    await store.dispatch('pagination/getPaginatedResults', paginationQuery)
   }
 
   public mediaStreamImage(

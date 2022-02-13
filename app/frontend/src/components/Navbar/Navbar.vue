@@ -117,6 +117,7 @@ import store from '@/store'
 import router from '@/routes'
 import { Options, Vue } from 'vue-class-component'
 import CategoryModel from '@/state/category/CategoryModel'
+import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import { faSun } from '@fortawesome/free-solid-svg-icons/faSun'
 import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
@@ -127,6 +128,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
 import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
 import AppSettingsThemeModeOption from '@/state/app/AppSettingsThemeModeOption'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart'
+import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Options({
   name: 'Navbar',
@@ -230,12 +232,17 @@ export default class Navbar extends Vue {
   async searchPerform(): Promise<void> {
     await store.commit('pagination/unsetResults')
     await store.commit('pagination/setCurrentQuery', this.searchQuery)
-    await store.dispatch('pagination/getPaginatedResults', {
-      'pageNumber': this.currentPageNumber,
-      'endpointUrl': `search`,
-      'query': this.searchQuery,
-      'method': 'POST'
-    })
+
+    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+        .createPaginationQuery({
+          'pageNumber': this.currentPageNumber,
+          'endpointUrl': `search`,
+          'queryParams': this.searchQuery,
+          'method': ApiBaseMethods.GET
+        } )
+
+    await store.dispatch('pagination/getPaginatedResults', paginationQuery)
+
     await router.push({
       path: '/search',
       query: { ...this.$route.query, query: this.searchQuery, page: this.currentPageNumber }

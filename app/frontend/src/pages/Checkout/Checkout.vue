@@ -183,7 +183,7 @@
               <RouterLink :title="item.product.name" :to="'/product' + item.product.absolute_url" aria-label="Product">
                 <span>
                   <img :alt="item.product.name"
-                       :src="mediaStreamImage(ImageTypeOptions.CATEGORIES, item.product.main_image_filename, '100', '100')"
+                       :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, item.product.main_image_filename, '100', '100')"
                        height="100"
                        width="100"
                        loading="lazy"

@@ -25,10 +25,12 @@
 import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
+import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
+import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Options({
   name: 'UserFavourites',
@@ -98,12 +100,16 @@ export default class UserFavourites extends Vue implements PaginatedInterface<Pr
     store.commit('pagination/unsetResults')
   }
 
-  public fetchUserFavourites(): void {
-    store.dispatch('pagination/getPaginatedResults', {
-      'pageNumber': this.currentPageNumber,
-      'endpointUrl': this.buildEndPointUrlForPaginatedResults(),
-      'method': 'GET'
-    })
+  async fetchUserFavourites(): Promise<void> {
+
+    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+        .createPaginationQuery({
+          'pageNumber': this.currentPageNumber,
+          'endpointUrl': this.buildEndPointUrlForPaginatedResults(),
+          'method': ApiBaseMethods.GET
+        } )
+
+    await store.dispatch('pagination/getPaginatedResults', paginationQuery)
   }
 
   public buildEndPointUrlForPaginatedResults(): string {

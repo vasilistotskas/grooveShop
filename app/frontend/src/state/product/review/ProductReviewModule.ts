@@ -7,6 +7,8 @@ import PaginationModel from '@/state/pagination/PaginationModel'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
 import router from '@/routes'
+import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
+import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 
 const toast = useToast()
 
@@ -83,19 +85,27 @@ export default class ProductReviewModule
 	removeUserToProductReview(data: any): void {
 
 		if (router.currentRoute.value.name === 'Product') {
-			store.dispatch('pagination/getPaginatedResults', {
-				'endpointUrl': `reviews/product/${ data.product_id }`,
-				'query': store.getters['pagination/getCurrentQuery'],
-				'method': 'GET'
-			}).then(() => toast.error('Your review has been deleted'))
+			const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+				.createPaginationQuery({
+					'endpointUrl': `reviews/product/${ data.product_id }`,
+					'queryParams': store.getters['pagination/getCurrentQuery'],
+					'method': ApiBaseMethods.GET
+				} )
+
+			store.dispatch('pagination/getPaginatedResults', paginationQuery)
+				.then(() => toast.error('Your review has been deleted'))
 		}
 
 		if (router.currentRoute.value.name === 'Reviews') {
-			store.dispatch('pagination/getPaginatedResults', {
-				'endpointUrl': `reviews/user/${ data.user_id }`,
-				'query': store.getters['pagination/getCurrentQuery'],
-				'method': 'GET'
-			}).then(() => toast.error('Your review has been deleted'))
+			const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+				.createPaginationQuery({
+					'endpointUrl': `reviews/user/${ data.user_id }`,
+					'queryParams': store.getters['pagination/getCurrentQuery'],
+					'method': ApiBaseMethods.GET
+				} )
+
+			store.dispatch('pagination/getPaginatedResults', paginationQuery)
+				.then(() => toast.error('Your review has been deleted'))
 		}
 
 	}
