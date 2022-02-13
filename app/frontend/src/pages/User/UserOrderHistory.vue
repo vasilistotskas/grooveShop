@@ -21,7 +21,7 @@
               <RouterLink :title="item.product.name" :to="'/product' + item.product.absolute_url" aria-label="Product">
                   <span>
                     <img :alt="item.product.name"
-                         :src="mediaStreamImage('products', item.product.main_image_filename, '75', '75')"
+                         :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, item.product.main_image_filename, '75', '75')"
                          class="border-radius-img img-fluid"
                          height="75"
                          width="75"
@@ -57,6 +57,9 @@ import { Options, Vue } from 'vue-class-component'
 import CartItemModel from '@/state/cart/CartItemModel'
 import ProductModel from '@/state/product/ProductModel'
 import Pagination from '@/components/Pagination/Pagination.vue'
+import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
+import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
+import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Options({
   name: 'UserOrderHistory',
@@ -69,6 +72,10 @@ export default class UserOrderHistory extends Vue {
 
   uri = window.location.search.substring(1)
   params = new URLSearchParams(this.uri)
+
+  ImageTypeOptions: any = ImageTypeOptions
+  ImageFitOptions: any = ImageFitOptions
+  ImagePositionOptions: any = ImagePositionOptions
 
   get currentPageNumber(): number {
     let storedPageNumber = store.getters['pagination/getCurrentPageNumber']
@@ -133,10 +140,25 @@ export default class UserOrderHistory extends Vue {
     })
   }
 
-  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
-    const mediaStreamPath = '/mediastream/media/uploads/'
-    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName
-    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height
+  public mediaStreamImage(
+      imageType: string,
+      imageName: string,
+      width?: string,
+      height?: string,
+      fit?: ImageFitOptions,
+      position?: ImagePositionOptions,
+      trimThreshold?: number
+  ): string {
+    const mediaStreamImageData: ImageUrlInterface = {
+      'imageType': imageType,
+      'imageName': imageName,
+      'width': width,
+      'height': height,
+      'fit': fit,
+      'position': position,
+      'trimThreshold': trimThreshold
+    }
+    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
   }
 
   itemTotal(item: CartItemModel): number {

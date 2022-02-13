@@ -4,7 +4,7 @@
       <RouterLink :title="item.product.name" :to="productPath" aria-label="Product">
         <img
             :alt="item.product.name"
-            :src="mediaStreamImage('products', item.product.main_image_filename, '75', '75')"
+            :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, item.product.main_image_filename, '75', '75')"
             class="border-radius-img img-fluid"
             height="75"
             width="75"
@@ -39,10 +39,13 @@
 import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
 import CartItemModel from '@/state/cart/CartItemModel'
+import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
-import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle'
+import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle'
+import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle'
+import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Options({
   name: 'CartItem',
@@ -61,6 +64,10 @@ export default class CartItemVue extends Vue {
   minusIcon: IconDefinition = faMinusCircle
   plusIcon: IconDefinition = faPlusCircle
 
+  ImageTypeOptions: any = ImageTypeOptions
+  ImageFitOptions: any = ImageFitOptions
+  ImagePositionOptions: any = ImagePositionOptions
+
   get isMobile(): boolean {
     return store.getters['app/isMobile']
   }
@@ -73,10 +80,25 @@ export default class CartItemVue extends Vue {
     return '/product' + this.item.product.absolute_url
   }
 
-  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
-    const mediaStreamPath = '/mediastream/media/uploads/'
-    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName
-    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height
+  public mediaStreamImage(
+      imageType: string,
+      imageName: string,
+      width?: string,
+      height?: string,
+      fit?: ImageFitOptions,
+      position?: ImagePositionOptions,
+      trimThreshold?: number
+  ): string {
+    const mediaStreamImageData: ImageUrlInterface = {
+      'imageType': imageType,
+      'imageName': imageName,
+      'width': width,
+      'height': height,
+      'fit': fit,
+      'position': position,
+      'trimThreshold': trimThreshold
+    }
+    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
   }
 
   public decrementQuantity(item: Record<string, unknown>): void {

@@ -6,7 +6,7 @@
         <div class="col-12">
           <img v-if="category.category_menu_main_banner_absolute_url"
                :alt="category.name"
-               :src="mediaStreamImage('categories', category.category_menu_main_banner_filename, '1920', '370')"
+               :src="mediaStreamImage(ImageTypeOptions.CATEGORIES, category.category_menu_main_banner_filename, '1920', '370', ImageFitOptions.cover, ImagePositionOptions.entropy)"
                class="img-fluid"
                height="370"
                width="1920"
@@ -44,11 +44,14 @@ import CategoryModel from '@/state/category/CategoryModel'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
+import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
+import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 import { PaginationCount } from '@/state/pagination/Type/PaginationTypes'
-import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
+import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Options({
   name: 'CategoryVue',
@@ -67,6 +70,9 @@ export default class CategoryVue extends Vue implements PaginatedInterface<Categ
   formEl = document.getElementById('burgerButton') as HTMLFormElement
   uri = window.location.search.substring(1)
   params = new URLSearchParams(this.uri)
+  ImageTypeOptions: any = ImageTypeOptions
+  ImageFitOptions: any = ImageFitOptions
+  ImagePositionOptions: any = ImagePositionOptions
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
@@ -171,10 +177,25 @@ export default class CategoryVue extends Vue implements PaginatedInterface<Categ
     return 'category_products' + `/${ categoryId }`
   }
 
-  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
-    const mediaStreamPath = '/mediastream/media/uploads/'
-    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName
-    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height
+  public mediaStreamImage(
+      imageType: string,
+      imageName: string,
+      width?: string,
+      height?: string,
+      fit?: ImageFitOptions,
+      position?: ImagePositionOptions,
+      trimThreshold?: number
+  ): string {
+    const mediaStreamImageData: ImageUrlInterface = {
+      'imageType': imageType,
+      'imageName': imageName,
+      'width': width,
+      'height': height,
+      'fit': fit,
+      'position': position,
+      'trimThreshold': trimThreshold
+    }
+    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
   }
 
 }

@@ -4,7 +4,7 @@
     <div class="card mb-3">
       <img
           :alt="postBySlug.title"
-          :src="mediaStreamImage('slides', postBySlug.mainImageFilename, '1920', '550')"
+          :src="mediaStreamImage(ImageTypeOptions.SLIDES, postBySlug.mainImageFilename, '1920', '550')"
           class="img-fluid"
           height="550"
           width="1920"
@@ -33,8 +33,11 @@ import router from '@/routes'
 import PostModel from '@/state/blog/PostModel'
 import { Options, Vue } from 'vue-class-component'
 import AuthorLink from '@/components/Blog/BlogAuthorLink.vue'
+import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
+import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Options({
   name: 'BlogPost',
@@ -45,6 +48,10 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 })
 
 export default class BlogPost extends Vue {
+
+  ImageTypeOptions: any = ImageTypeOptions
+  ImageFitOptions: any = ImageFitOptions
+  ImagePositionOptions: any = ImagePositionOptions
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
@@ -59,10 +66,25 @@ export default class BlogPost extends Vue {
     await store.dispatch('blog/postBySlugFromRemote')
   }
 
-  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
-    const mediaStreamPath = '/mediastream/media/uploads/'
-    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName
-    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height
+  public mediaStreamImage(
+      imageType: string,
+      imageName: string,
+      width?: string,
+      height?: string,
+      fit?: ImageFitOptions,
+      position?: ImagePositionOptions,
+      trimThreshold?: number
+  ): string {
+    const mediaStreamImageData: ImageUrlInterface = {
+      'imageType': imageType,
+      'imageName': imageName,
+      'width': width,
+      'height': height,
+      'fit': fit,
+      'position': position,
+      'trimThreshold': trimThreshold
+    }
+    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
   }
 
   public displayableDate(date: Date): string {

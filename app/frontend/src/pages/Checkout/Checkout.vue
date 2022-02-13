@@ -183,7 +183,7 @@
               <RouterLink :title="item.product.name" :to="'/product' + item.product.absolute_url" aria-label="Product">
                 <span>
                   <img :alt="item.product.name"
-                       :src="mediaStreamImage('products', item.product.main_image_filename, '100', '100')"
+                       :src="mediaStreamImage(ImageTypeOptions.CATEGORIES, item.product.main_image_filename, '100', '100')"
                        height="100"
                        width="100"
                        loading="lazy"
@@ -223,13 +223,16 @@ import CountryModel from '@/state/country/CountryModel'
 import RegionsModel from '@/state/country/RegionsModel'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
+import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
+import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 import { min, exactly, required, email } from '@/components/Form/Utils'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 const toast = useToast()
 
@@ -252,8 +255,14 @@ export default class Checkout extends Vue {
   $refs!: {
     stripleElement: HTMLFormElement;
   }
+
   customerDetails = new UserDetailsModel()
   card = {}
+
+  ImageTypeOptions: any = ImageTypeOptions
+  ImageFitOptions: any = ImageFitOptions
+  ImagePositionOptions: any = ImagePositionOptions
+
   formManager = {
     validateFields
   } = useValidation({
@@ -368,10 +377,25 @@ export default class Checkout extends Vue {
     return item.quantity * item.product.price
   }
 
-  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
-    const mediaStreamPath = '/mediastream/media/uploads/'
-    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName
-    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height
+  public mediaStreamImage(
+      imageType: string,
+      imageName: string,
+      width?: string,
+      height?: string,
+      fit?: ImageFitOptions,
+      position?: ImagePositionOptions,
+      trimThreshold?: number
+  ): string {
+    const mediaStreamImageData: ImageUrlInterface = {
+      'imageType': imageType,
+      'imageName': imageName,
+      'width': width,
+      'height': height,
+      'fit': fit,
+      'position': position,
+      'trimThreshold': trimThreshold
+    }
+    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
   }
 
   async restRegions(e: any): Promise<void> {

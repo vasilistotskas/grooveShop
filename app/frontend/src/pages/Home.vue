@@ -19,7 +19,7 @@
 
           <swiper-slide v-for="slide in homepageSlider[0].slides" :key="slide.id">
             <img :alt="slide.title ? slide.title : 'no-alt'"
-                 :src="mediaStreamImage('slides', slide.main_image_filename, '880', '510')"
+                 :src="mediaStreamImage(ImageTypeOptions.SLIDES, slide.main_image_filename, '880', '510')"
                  class="img-fluid"
                  height="510"
                  width="880"
@@ -45,7 +45,7 @@
 
               <swiper-slide v-for="slide in homepageSlider[1].slides" :key="slide.id">
                 <img :alt="slide.title ? slide.title : 'no-alt'"
-                     :src="mediaStreamImage('slides', slide.main_image_filename, '487', '282')"
+                     :src="mediaStreamImage(ImageTypeOptions.SLIDES, slide.main_image_filename, '487', '282')"
                      class="img-fluid"
                      height="282"
                      width="487"
@@ -69,7 +69,7 @@
 
               <swiper-slide v-for="slide in homepageSlider[2].slides" :key="slide.id">
                 <img :alt="slide.title ? slide.title : 'no-alt'"
-                     :src="mediaStreamImage('slides', slide.main_image_filename, '487', '282')" class="img-fluid"
+                     :src="mediaStreamImage(ImageTypeOptions.SLIDES, slide.main_image_filename, '487', '282')" class="img-fluid"
                      height="282"
                      width="487"
                      loading="lazy"
@@ -133,11 +133,14 @@ import { Options, Vue } from 'vue-class-component'
 import SliderModel from '@/state/slider/SliderModel'
 import ProductModel from '@/state/product/ProductModel'
 import ProductCard from '@/components/Product/ProductCard.vue'
+import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faPhone } from '@fortawesome/free-solid-svg-icons/faPhone'
 import { faComment } from '@fortawesome/free-solid-svg-icons/faComment'
+import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import SwiperCore, { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper'
+import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard])
 
@@ -164,6 +167,10 @@ export default class Home extends Vue {
   phoneIcon: IconDefinition = faPhone
   envelopeIcon: IconDefinition = faEnvelope
   commentIcon: IconDefinition = faComment
+
+  ImageTypeOptions: any = ImageTypeOptions
+  ImageFitOptions: any = ImageFitOptions
+  ImagePositionOptions: any = ImagePositionOptions
 
   get isMobile(): boolean {
     return store.getters['app/isMobile']
@@ -199,10 +206,25 @@ export default class Home extends Vue {
     })
   }
 
-  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
-    const mediaStreamPath = '/mediastream/media/uploads/'
-    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName
-    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height
+  public mediaStreamImage(
+      imageType: string,
+      imageName: string,
+      width?: string,
+      height?: string,
+      fit?: ImageFitOptions,
+      position?: ImagePositionOptions,
+      trimThreshold?: number
+  ): string {
+    const mediaStreamImageData: ImageUrlInterface = {
+      'imageType': imageType,
+      'imageName': imageName,
+      'width': width,
+      'height': height,
+      'fit': fit,
+      'position': position,
+      'trimThreshold': trimThreshold
+    }
+    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
   }
 
   public mainSliderVideoInit(): void {

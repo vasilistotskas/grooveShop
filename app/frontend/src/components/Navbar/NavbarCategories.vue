@@ -20,8 +20,8 @@
             >
               <img :alt="category.name"
                    :src="categoryBoxHovered === key ?
-                 mediaStreamImage('categories', category.category_menu_image_two_filename, '80', '83') :
-                 mediaStreamImage('categories', category.category_menu_image_one_filename, '80', '83')"
+                 mediaStreamImage(ImageTypeOptions.CATEGORIES, category.category_menu_image_two_filename, '80', '83') :
+                 mediaStreamImage(ImageTypeOptions.CATEGORIES, category.category_menu_image_one_filename, '80', '83')"
                    height="83"
                    width="80"
                    loading="lazy"
@@ -44,6 +44,9 @@ import store from '@/store'
 import { cloneDeep } from 'lodash'
 import { onClickOutside } from '@vueuse/core'
 import { Options, Vue } from 'vue-class-component'
+import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
+import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
+import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Options({
   name: 'NavbarCategories',
@@ -63,6 +66,10 @@ export default class NavbarCategories extends Vue {
   mainToggleButton!: HTMLElement
   navbarProductsButton!: HTMLElement
 
+  ImageTypeOptions: any = ImageTypeOptions
+  ImageFitOptions: any = ImageFitOptions
+  ImagePositionOptions: any = ImagePositionOptions
+
   get isLoading(): boolean {
     return store.getters['app/getLoading']
   }
@@ -76,10 +83,25 @@ export default class NavbarCategories extends Vue {
     })
   }
 
-  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
-    const mediaStreamPath = '/mediastream/media/uploads/'
-    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName
-    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height
+  public mediaStreamImage(
+      imageType: string,
+      imageName: string,
+      width?: string,
+      height?: string,
+      fit?: ImageFitOptions,
+      position?: ImagePositionOptions,
+      trimThreshold?: number
+  ): string {
+    const mediaStreamImageData: ImageUrlInterface = {
+      'imageType': imageType,
+      'imageName': imageName,
+      'width': width,
+      'height': height,
+      'fit': fit,
+      'position': position,
+      'trimThreshold': trimThreshold
+    }
+    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
   }
 
   public menuOpenHandle(): void {

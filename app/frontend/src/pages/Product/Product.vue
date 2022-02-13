@@ -9,7 +9,7 @@
             :class="{'image-main': image.is_main }"
             class="image"
         >
-          <img :src="mediaStreamImage('products', image.product_image_filename, '330', '420')"
+          <img :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, image.product_image_filename, '330', '420')"
                alt="Product Image"
                class="img-fluid"
                loading="lazy"
@@ -151,9 +151,11 @@ import { constant, times } from 'lodash'
 import { Options, Vue } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
 import Pagination from '@/components/Pagination/Pagination.vue'
+import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faCubes } from '@fortawesome/free-solid-svg-icons/faCubes'
+import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 import ProductReviewModal from '@/modals/Product/ProductReviewModal.vue'
 import ReviewProductCard from '@/components/Reviews/ReviewProductCard.vue'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
@@ -162,6 +164,7 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import { faShippingFast } from '@fortawesome/free-solid-svg-icons/faShippingFast'
 import ProductFavouriteButton from '@/components/Product/ProductFavouriteButton.vue'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
+import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 const starSvg = '<path data-v-558dc688="" fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" class=""></path>'
 const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z" class=""></path>'
@@ -195,6 +198,10 @@ export default class ProductVue extends Vue {
   shopingBagIcon: IconDefinition = faShoppingBag
   truckPickupIcon: IconDefinition = faShippingFast
   warningTriangleIcon: IconDefinition = faExclamationTriangle
+
+  ImageTypeOptions: any = ImageTypeOptions
+  ImageFitOptions: any = ImageFitOptions
+  ImagePositionOptions: any = ImagePositionOptions
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
@@ -278,10 +285,25 @@ export default class ProductVue extends Vue {
     store.commit('pagination/unsetResults')
   }
 
-  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
-    const mediaStreamPath = '/mediastream/media/uploads/'
-    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName
-    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height
+  public mediaStreamImage(
+      imageType: string,
+      imageName: string,
+      width?: string,
+      height?: string,
+      fit?: ImageFitOptions,
+      position?: ImagePositionOptions,
+      trimThreshold?: number
+  ): string {
+    const mediaStreamImageData: ImageUrlInterface = {
+      'imageType': imageType,
+      'imageName': imageName,
+      'width': width,
+      'height': height,
+      'fit': fit,
+      'position': position,
+      'trimThreshold': trimThreshold
+    }
+    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
   }
 
   public fetchProductReviews(): void {

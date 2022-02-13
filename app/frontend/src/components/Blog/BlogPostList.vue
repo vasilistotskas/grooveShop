@@ -7,7 +7,7 @@
             <img
                 :alt="post.title"
                 class="img-fluid"
-                v-bind:src="mediaStreamImage('slides', post.mainImageFilename, '462', '268')"
+                v-bind:src="mediaStreamImage(ImageTypeOptions.SLIDES, post.mainImageFilename, '462', '268', ImageFitOptions.cover, ImagePositionOptions.entropy)"
                 loading="lazy"
             >
             <div class="card-body">
@@ -45,8 +45,11 @@
 import store from '@/store'
 import PostModel from '@/state/blog/PostModel'
 import { Options, Vue } from 'vue-class-component'
-import AuthorLink from '@/components/Blog/BlogAuthorLink.vue'
 import BlogSidebar from '@/components/Blog/BlogSidebar.vue'
+import AuthorLink from '@/components/Blog/BlogAuthorLink.vue'
+import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
+import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
+import { ImageTypeOptions, ImageFitOptions, ImagePositionOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Options({
   name: 'BlogPostList',
@@ -70,6 +73,9 @@ import BlogSidebar from '@/components/Blog/BlogSidebar.vue'
 export default class BlogPostList extends Vue {
   showAuthor: boolean = false
   posts: PostModel[] = []
+  ImageTypeOptions: any = ImageTypeOptions
+  ImageFitOptions: any = ImageFitOptions
+  ImagePositionOptions: any = ImagePositionOptions
 
   get publishedPosts(): PostModel[] {
     return store.getters['blog/getPublishedPosts']
@@ -94,10 +100,25 @@ export default class BlogPostList extends Vue {
     ])
   }
 
-  public mediaStreamImage(imageType: string, imageName: string, width?: string, height?: string): string {
-    const mediaStreamPath = '/mediastream/media/uploads/'
-    const imageNameFileTypeRemove = imageName.substring(0, imageName.lastIndexOf('.')) || imageName
-    return process.env.VUE_APP_API_URL + mediaStreamPath + imageType + '/' + imageNameFileTypeRemove + '/' + width + '/' + height
+  public mediaStreamImage(
+      imageType: string,
+      imageName: string,
+      width?: string,
+      height?: string,
+      fit?: ImageFitOptions,
+      position?: ImagePositionOptions,
+      trimThreshold?: number
+  ): string {
+    const mediaStreamImageData: ImageUrlInterface = {
+      'imageType': imageType,
+      'imageName': imageName,
+      'width': width,
+      'height': height,
+      'fit': fit,
+      'position': position,
+      'trimThreshold': trimThreshold
+    }
+    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
   }
 
   public displayableDate(date: string): string {

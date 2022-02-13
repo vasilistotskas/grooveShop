@@ -35,12 +35,12 @@ export default class MediaStreamImageRESTController {
 	public async uploadedImage(
 		@Param('imageType') imageType: string,
 		@Param('imageName') imageName: any,
-		@Param('format') format: 'jpg'|'jpeg'|'png'|'webp' = 'jpg',
 		@Param('width') width: number = null,
 		@Param('height') height: number = null,
 		@Param('fit') fit: FitOptions = FitOptions.contain,
 		@Param('position') position = PositionOptions.entropy,
 		@Param('trimThreshold') trimThreshold = 5,
+		@Param('format') format: 'jpg'|'jpeg'|'png'|'webp' = 'jpg',
 		@Res() res: Response
 	): Promise<void> {
 		const request = new CacheImageRequest({
