@@ -1,16 +1,17 @@
 import os
 import string
 import random
-
 from django.db import models
+from seo.models import SeoModel
 from django.conf import settings
 from mptt.models import MPTTModel
 from tinymce.models import HTMLField
+from core.models import SortableModel
 from mptt.fields import TreeForeignKey
-from django.db.models import Avg, Count
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from helpers.image_resize import make_thumbnail
+from django.db.models import Avg, Count, CharField
 
 User = settings.AUTH_USER_MODEL
 
@@ -41,7 +42,7 @@ class Category(MPTTModel):
     tags = models.CharField(max_length=100, null=True,
                             blank=True, help_text='SEO keywords')
 
-    def category_menu_image_one_absolute_url(self):
+    def category_menu_image_one_absolute_url(self) -> str:
         try:
             if self.id is not None:
                 image = settings.APP_BASE_URL + self.menu_image_one.url
@@ -51,13 +52,13 @@ class Category(MPTTModel):
         except:
             return ""
 
-    def category_menu_image_one_filename(self):
+    def category_menu_image_one_filename(self) -> str:
         try:
             return os.path.basename(self.menu_image_one.name)
         except:
             return ""
 
-    def category_menu_image_two_absolute_url(self):
+    def category_menu_image_two_absolute_url(self) -> str:
         try:
             if self.id is not None:
                 image = settings.APP_BASE_URL + self.menu_image_two.url
@@ -67,13 +68,13 @@ class Category(MPTTModel):
         except:
             return ""
 
-    def category_menu_image_two_filename(self):
+    def category_menu_image_two_filename(self) -> str:
         try:
             return os.path.basename(self.menu_image_two.name)
         except:
             return ""
 
-    def category_menu_main_banner_absolute_url(self):
+    def category_menu_main_banner_absolute_url(self) -> str:
         try:
             if self.id is not None:
                 image = settings.APP_BASE_URL + self.menu_main_banner.url
@@ -83,7 +84,7 @@ class Category(MPTTModel):
         except:
             return ""
 
-    def category_menu_main_banner_filename(self):
+    def category_menu_main_banner_filename(self) -> str:
         try:
             return os.path.basename(self.menu_main_banner.name)
         except:
@@ -108,10 +109,10 @@ class Category(MPTTModel):
             k = k.parent
         return ' / '.join(full_path[::-1])
 
-    def recursive_product_count(self):
+    def recursive_product_count(self) -> dict:
         return Product.objects.filter(category__in=self.get_descendants(include_self=True)).count()
 
-    def absolute_url(self):
+    def absolute_url(self) -> str:
         return '/'.join([x['slug'] for x in self.get_ancestors(include_self=True).values()])
 
 
@@ -123,7 +124,7 @@ class Vat(models.Model):
         return '%s' % self.value
 
 
-class Product(models.Model):
+class Product(SeoModel):
     PRODUCT_STATUS = (
         ('True', 'Active'),
         ('False', 'Not Active'),
@@ -145,53 +146,53 @@ class Product(models.Model):
     class Meta:
         ordering = ('-date_added',)
 
-    def __str__(self):
+    def __str__(self) -> CharField:
         return self.name
 
-    def likes_counter(self):
+    def likes_counter(self) -> int:
         favourites = Favourite.objects.filter(product=self).aggregate(count=Count('id'))
         cnt = 0
         if favourites["count"] is not None:
             cnt = int(favourites["count"])
         return cnt
 
-    def review_average(self):
+    def review_average(self) -> int:
         reviews = Review.objects.filter(product=self, status='True').aggregate(average=Avg('rate'))
         avg = 0
         if reviews["average"] is not None:
             avg = float(reviews["average"])
         return avg
 
-    def review_counter(self):
+    def review_counter(self) -> int:
         reviews = Review.objects.filter(product=self, status='True').aggregate(count=Count('id'))
         cnt = 0
         if reviews["count"] is not None:
             cnt = int(reviews["count"])
         return cnt
 
-    def vat_percent(self):
+    def vat_percent(self) -> int:
         if self.vat:
             return self.vat.value
         return 0
 
-    def vat_value(self):
+    def vat_value(self) -> int:
         if self.vat:
             return (self.price * self.vat.value) / 100
         return 0
 
-    def discount_value(self):
+    def discount_value(self) -> int:
         return (self.price * self.discount_percent) / 100
 
-    def price_save_percent(self):
+    def price_save_percent(self) -> float:
         final_price = self.price - self.discount_value()
         product_save_value = self.price - final_price
         product_save_percent = (final_price * product_save_value) / self.price
         return product_save_percent
 
-    def final_price(self):
+    def final_price(self) -> float:
         return self.price - self.discount_value()
 
-    def main_image_absolute_url(self):
+    def main_image_absolute_url(self) -> str:
         try:
             img = ProductImages.objects.get(product_id=self.id, is_main=True)
             if img.id is not None:
@@ -202,14 +203,14 @@ class Product(models.Model):
         except:
             return ""
 
-    def main_image_filename(self):
+    def main_image_filename(self) -> str:
         try:
             test = ProductImages.objects.get(product_id=self.id, is_main=True)
             return os.path.basename(test.image.name)
         except:
             return ""
 
-    def image_tag(self):
+    def image_tag(self) -> str:
         try:
             img = ProductImages.objects.get(product_id=self.id, is_main=True)
             if img.thumbnail:
@@ -224,7 +225,7 @@ class Product(models.Model):
         except:
             return ""
 
-    def colored_stock(self):
+    def colored_stock(self) -> format_html:
         if self.stock > 0:
             return format_html(
                 '<span style="color: #1bff00;">{}</span>',
@@ -236,14 +237,14 @@ class Product(models.Model):
                 self.stock,
             )
 
-    def absolute_url(self):
+    def absolute_url(self) -> str:
         return f'/{self.category.slug}/{self.slug}'
 
 
-class ProductImages(models.Model):
+class ProductImages(SortableModel):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50, blank=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name="imageproduct", on_delete=models.CASCADE)
     image = models.ImageField(upload_to='uploads/products/', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='uploads/products/thumbnails/', blank=True, null=True)
     is_main = models.BooleanField(blank=False, null=False, default=False)
@@ -254,13 +255,16 @@ class ProductImages(models.Model):
     def __str__(self):
         return self.title
 
+    def get_ordering_queryset(self):
+        return self.product.imageproduct.all()
+
     def save(self, *args, **kwargs):
         if self.image:
             self.thumbnail = make_thumbnail(self.image, (100, 100))
 
         super().save(*args, **kwargs)
 
-    def product_image_absolute_url(self):
+    def product_image_absolute_url(self) -> str:
         try:
             if self.id is not None:
                 image = settings.APP_BASE_URL + self.image.url
@@ -270,7 +274,7 @@ class ProductImages(models.Model):
         except:
             return ""
 
-    def product_image_filename(self):
+    def product_image_filename(self) -> str:
         try:
             return os.path.basename(self.image.name)
         except:

@@ -1,6 +1,7 @@
 from django.db import models
 from product.models import Product
 from django.conf import settings
+
 User = settings.AUTH_USER_MODEL
 
 
@@ -34,3 +35,43 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return '%s' % self.id
+
+
+class PayWay(models.Model):
+
+    PAY_WAYS = (
+        ('Credit Card', 'Credit Card'),
+        ('Pay On Delivery', 'Pay On Delivery'),
+        ('Pay On Store', 'Pay On Store')
+    )
+
+    PAY_WAY_STATUS = (
+        ('True', 'Active'),
+        ('False', 'Not Active'),
+    )
+
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50, choices=PAY_WAYS, unique=True)
+    active = models.CharField(max_length=15, choices=PAY_WAY_STATUS, default=True)
+
+    class Meta:
+        verbose_name_plural = "Pay ways"
+
+    def __str__(self):
+        return self.name
+
+    # an tha einai h Product h ProductType --- Union["Product", "ProductType"]
+    # type Optional["Product"]
+    # type Iterable["Product"]
+    # type List["Product"]
+
+    # from enum import Enum
+    #
+    # class MenuErrorCode(Enum):
+    #     CANNOT_ASSIGN_NODE = "cannot_assign_node"
+    #     GRAPHQL_ERROR = "graphql_error"
+    #     INVALID = "invalid"
+
+    @classmethod
+    def active_pay_ways_by_status(cls, status: bool) -> dict["PayWay"]:
+        return cls.objects.filter(active=status).values()

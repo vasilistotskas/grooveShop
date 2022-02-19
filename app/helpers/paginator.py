@@ -4,7 +4,7 @@ from rest_framework.response import Response
 
 class CountPaginator(pagination.PageNumberPagination):
 
-    def get_paginated_response(self, data):
+    def get_paginated_response(self, data) -> Response:
         return Response({
             'links': {
                 'next': self.get_next_link(),

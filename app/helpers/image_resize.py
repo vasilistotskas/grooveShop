@@ -3,7 +3,7 @@ from io import BytesIO
 from django.core.files import File
 
 
-def make_thumbnail(image, size):
+def make_thumbnail(image, size) -> File:
     if image:
         img = Image.open(image)
         img.convert('RGB')
@@ -22,4 +22,5 @@ def make_thumbnail(image, size):
             img.save(thumb_io, 'JPEG', quality=95)
 
         thumbnail = File(thumb_io, name=image.name)
+
         return thumbnail

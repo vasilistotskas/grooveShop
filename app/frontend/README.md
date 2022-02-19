@@ -1,5 +1,9 @@
 # frontend
 
+# Node Version 17.5.0
+
+##
+
 ## Project setup
 ```
 npm install

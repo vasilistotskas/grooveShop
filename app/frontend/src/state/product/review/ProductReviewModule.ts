@@ -1,14 +1,13 @@
 import store from '@/store'
+import router from '@/routes'
 import api from '@/api/api.service'
 import { useToast } from 'vue-toastification'
-
 import AppBaseModule from '@/state/common/AppBaseModule'
+import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import PaginationModel from '@/state/pagination/PaginationModel'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
-import router from '@/routes'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
-import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 
 const toast = useToast()
 

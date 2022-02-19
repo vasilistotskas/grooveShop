@@ -44,7 +44,7 @@ class Post(models.Model):
         ordering = ["-publish_date"]
 
     @property
-    def main_image_absolute_url(self):
+    def main_image_absolute_url(self) -> str:
         try:
             if self.id is not None:
                 image = settings.APP_BASE_URL + self.image.url
@@ -55,11 +55,11 @@ class Post(models.Model):
             return ""
 
     @property
-    def main_image_filename(self):
+    def main_image_filename(self) -> str:
         try:
             return os.path.basename(self.image.name)
         except:
             return ""
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse("blog:post", kwargs={"slug": self.slug})
