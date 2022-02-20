@@ -87,7 +87,6 @@ import FormProvider from '@/components/Form/FormProvider.vue'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
@@ -118,7 +117,7 @@ export default class PasswordRestConfirm extends Vue {
     token: ''
   }
 
-  lockIcon: IconDefinition = faLock
+  lockIcon = faLock
 
   formManager = {
     validateFields

@@ -66,7 +66,6 @@ import router from '@/routes'
 import { constant, times } from 'lodash'
 import { onClickOutside } from '@vueuse/core'
 import { Options, Vue } from 'vue-class-component'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
 
@@ -97,7 +96,7 @@ export default class ReviewProductCard extends Vue {
   userId: number = 0
   reviewActionsOpen = false
 
-  checkCircleIcon: IconDefinition = faCheckCircle
+  checkCircleIcon = faCheckCircle
 
   updated(): void {
     onClickOutside(this.$refs.userReviewsActionTarget, () => {

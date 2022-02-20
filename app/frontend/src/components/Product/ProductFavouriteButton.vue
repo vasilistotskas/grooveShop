@@ -10,7 +10,6 @@
 import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 
 @Options({
@@ -23,7 +22,7 @@ export default class ProductFavouriteButton extends Vue {
 
   product = new ProductModel()
 
-  heartIcon: IconDefinition = faHeart
+  heartIcon = faHeart
 
   get isFavourite(): ProductModel {
     return store.getters['product/favourite/getStateIsCurrentProductInFavourites']

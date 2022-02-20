@@ -154,7 +154,6 @@ import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faCubes } from '@fortawesome/free-solid-svg-icons/faCubes'
 import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 import ProductReviewModal from '@/modals/Product/ProductReviewModal.vue'
@@ -196,10 +195,10 @@ export default class ProductVue extends Vue {
   uri = window.location.search.substring(1)
   params = new URLSearchParams(this.uri)
 
-  cubesIcon: IconDefinition = faCubes
-  shopingBagIcon: IconDefinition = faShoppingBag
-  truckPickupIcon: IconDefinition = faShippingFast
-  warningTriangleIcon: IconDefinition = faExclamationTriangle
+  cubesIcon = faCubes
+  shopingBagIcon = faShoppingBag
+  truckPickupIcon = faShippingFast
+  warningTriangleIcon = faExclamationTriangle
 
   ImageTypeOptions: any = ImageTypeOptions
   ImageFitOptions: any = ImageFitOptions

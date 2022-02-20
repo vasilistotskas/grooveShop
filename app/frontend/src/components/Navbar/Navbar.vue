@@ -122,7 +122,6 @@ import { faSun } from '@fortawesome/free-solid-svg-icons/faSun'
 import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import { faMoon } from '@fortawesome/free-solid-svg-icons/faMoon'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
 import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
@@ -144,13 +143,13 @@ export default class Navbar extends Vue {
   searchQuery: string = ''
   preHeadHidden: boolean = true
 
-  sunIcon: IconDefinition = faSun
-  blogIcon: IconDefinition = faBlog
-  moonIcon: IconDefinition = faMoon
-  userIcon: IconDefinition = faUser
-  heartIcon: IconDefinition = faHeart
-  searchIcon: IconDefinition = faSearch
-  shoppingCartIcon: IconDefinition = faShoppingCart
+  sunIcon = faSun
+  blogIcon = faBlog
+  moonIcon = faMoon
+  userIcon = faUser
+  heartIcon = faHeart
+  searchIcon = faSearch
+  shoppingCartIcon = faShoppingCart
 
   $refs!: {
     mainToggleButton: HTMLElement

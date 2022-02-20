@@ -74,7 +74,6 @@ import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
 import { faCogs } from '@fortawesome/free-solid-svg-icons/faCogs'
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import { faTruck } from '@fortawesome/free-solid-svg-icons/faTruck'
@@ -91,11 +90,11 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
 export default class UserAccount extends Vue {
   profileImageUrl: string = ''
-  cogsIcon: IconDefinition = faCogs
-  starIcon: IconDefinition = faStar
-  truckIcon: IconDefinition = faTruck
-  heartIcon: IconDefinition = faHeart
-  lockIcon: IconDefinition = faLock
+  cogsIcon = faCogs
+  starIcon = faStar
+  truckIcon = faTruck
+  heartIcon = faHeart
+  lockIcon = faLock
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb

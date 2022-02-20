@@ -108,7 +108,6 @@ import { required } from '@/components/Form/Utils'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import { faKey } from '@fortawesome/free-solid-svg-icons/faKey'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
@@ -152,10 +151,10 @@ export default class LogIn extends Vue {
     }
   })
 
-  keyIcon: IconDefinition = faKey
-  googleIcon: IconDefinition = faGoogle
-  envelopeIcon: IconDefinition = faEnvelope
-  facebookIcon: IconDefinition = faFacebook
+  keyIcon = faKey
+  googleIcon = faGoogle
+  envelopeIcon = faEnvelope
+  facebookIcon = faFacebook
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb

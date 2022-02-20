@@ -134,7 +134,6 @@ import SliderModel from '@/state/slider/SliderModel'
 import ProductModel from '@/state/product/ProductModel'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faPhone } from '@fortawesome/free-solid-svg-icons/faPhone'
 import { faComment } from '@fortawesome/free-solid-svg-icons/faComment'
 import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
@@ -164,9 +163,9 @@ export default class Home extends Vue {
     '--swiper-pagination-color': '#fff'
   }
 
-  phoneIcon: IconDefinition = faPhone
-  envelopeIcon: IconDefinition = faEnvelope
-  commentIcon: IconDefinition = faComment
+  phoneIcon = faPhone
+  envelopeIcon = faEnvelope
+  commentIcon = faComment
 
   ImageTypeOptions: any = ImageTypeOptions
   ImageFitOptions: any = ImageFitOptions

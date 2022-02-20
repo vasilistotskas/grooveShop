@@ -40,7 +40,6 @@ import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
 import CartItemModel from '@/state/cart/CartItemModel'
 import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle'
@@ -60,9 +59,9 @@ export default class CartItemVue extends Vue {
 
   item = new CartItemModel()
 
-  trashIcon: IconDefinition = faTrash
-  minusIcon: IconDefinition = faMinusCircle
-  plusIcon: IconDefinition = faPlusCircle
+  trashIcon = faTrash
+  minusIcon = faMinusCircle
+  plusIcon = faPlusCircle
 
   ImageTypeOptions: any = ImageTypeOptions
   ImageFitOptions: any = ImageFitOptions

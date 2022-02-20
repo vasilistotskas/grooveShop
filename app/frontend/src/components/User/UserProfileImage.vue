@@ -39,7 +39,6 @@
 <script lang="ts">
 import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
 
 
@@ -60,7 +59,7 @@ import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
 export default class UserProfileImage extends Vue {
 
   profileImageHovering: boolean = false
-  cameraIcon: IconDefinition = faCamera
+  cameraIcon = faCamera
 
   async updateUserImage(): Promise<void> {
     const formEl = document.getElementById('uploadImageForm') as HTMLFormElement

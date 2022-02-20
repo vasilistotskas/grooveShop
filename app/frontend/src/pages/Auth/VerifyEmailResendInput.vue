@@ -25,7 +25,6 @@
 <script lang="ts">
 import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 
 @Options({
@@ -44,7 +43,7 @@ export default class VerifyEmailResendInput extends Vue {
   resendMailInputs = {
     email: ''
   }
-  envelopeIcon: IconDefinition = faEnvelope
+  envelopeIcon = faEnvelope
 
   async activationEmailResend(resendMailInputs: any): Promise<void> {
     let email = ''

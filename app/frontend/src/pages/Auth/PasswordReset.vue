@@ -50,7 +50,6 @@ import store from '@/store'
 import router from '@/routes'
 import { Options, Vue } from 'vue-class-component'
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
@@ -68,8 +67,8 @@ export default class PasswordReset extends Vue {
     email: ''
   }
 
-  lockIcon: IconDefinition = faLock
-  envelopeIcon: IconDefinition = faEnvelope
+  lockIcon = faLock
+  envelopeIcon = faEnvelope
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb

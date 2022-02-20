@@ -107,7 +107,6 @@ import { min, email, equal } from '@/components/Form/Utils'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import { faKey } from '@fortawesome/free-solid-svg-icons/faKey'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
@@ -165,8 +164,8 @@ export default class Register extends Vue {
     }
   })
 
-  envelopeIcon: IconDefinition = faEnvelope
-  keyIcon: IconDefinition = faKey
+  envelopeIcon = faEnvelope
+  keyIcon = faKey
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb

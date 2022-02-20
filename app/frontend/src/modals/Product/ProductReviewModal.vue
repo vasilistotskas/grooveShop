@@ -86,7 +86,6 @@
 <script lang="ts">
 import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { first, last, filter, times, constant, cloneDeep } from 'lodash'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
 import { faPenSquare } from '@fortawesome/free-solid-svg-icons/faPenSquare'
@@ -116,7 +115,7 @@ export default class ProductReviewModal extends Vue {
   newSelectionRatio: number = 0
   selectedRatio: number = 0
 
-  writeReviewIcon: IconDefinition = faPenSquare
+  writeReviewIcon = faPenSquare
 
 
   get reviewButtonText(): string {

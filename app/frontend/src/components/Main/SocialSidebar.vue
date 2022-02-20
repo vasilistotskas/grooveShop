@@ -57,7 +57,6 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
 import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub'
 import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter'
@@ -70,12 +69,12 @@ import { faInstagram } from '@fortawesome/free-brands-svg-icons/faInstagram'
 })
 export default class SocialSidebar extends Vue {
 
-  facebookIcon: IconDefinition = faFacebook
-  googleIcon: IconDefinition = faGoogle
-  twitterIcon: IconDefinition = faTwitter
-  instagramIcon: IconDefinition = faInstagram
-  linkedinIcon: IconDefinition = faLinkedin
-  githubIcon: IconDefinition = faGithub
+  facebookIcon = faFacebook
+  googleIcon = faGoogle
+  twitterIcon = faTwitter
+  instagramIcon = faInstagram
+  linkedinIcon = faLinkedin
+  githubIcon = faGithub
 
 }
 </script>
