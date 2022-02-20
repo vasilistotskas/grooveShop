@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Order, OrderItem
+from .models import Order, OrderItem, PayWay
 
 
 class OrderItemline(admin.TabularInline):
@@ -24,5 +24,10 @@ class OrderItemAdmin(admin.ModelAdmin):
     list_filter = ['order']
 
 
+class PayWayAdmin(admin.ModelAdmin):
+    list_display = ['name', 'active', 'cost', 'free_for_order_amount']
+
+
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderItem, OrderItemAdmin)
+admin.site.register(PayWay, PayWayAdmin)

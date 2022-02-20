@@ -1,13 +1,13 @@
 import stripe
-from .models import Order
 from django.conf import settings
+from .models import Order, PayWay
 from rest_framework import generics
 from rest_framework.views import APIView
 from helpers.paginator import CountPaginator
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-from .serializers import OrderSerializer, MyOrderSerializer
 from rest_framework import status, authentication, permissions
+from .serializers import OrderSerializer, UserOrderSerializer, PayWaySerializer
 
 User = get_user_model()
 
@@ -66,7 +66,7 @@ class UserOrdersList(generics.ListAPIView):
     authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = UserOrderListPagination
-    serializer_class = MyOrderSerializer
+    serializer_class = UserOrderSerializer
 
     def get_queryset(self):
         user = self.request.user
@@ -79,6 +79,19 @@ class UserOrdersList(generics.ListAPIView):
         if page is not None:
             serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class PayWayList(generics.ListAPIView):
+    serializer_class = PayWaySerializer
+
+    def get_queryset(self):
+        return PayWay.active_pay_ways_by_status(True)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)

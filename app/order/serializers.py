@@ -1,9 +1,9 @@
-from .models import Order, OrderItem
+from .models import Order, OrderItem, PayWay
 from rest_framework import serializers
 from product.serializers import ProductSerializer
 
 
-class MyOrderItemSerializer(serializers.ModelSerializer):    
+class UserOrderItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
 
     class Meta:
@@ -15,8 +15,8 @@ class MyOrderItemSerializer(serializers.ModelSerializer):
         )
 
 
-class MyOrderSerializer(serializers.ModelSerializer):
-    items = MyOrderItemSerializer(many=True)
+class UserOrderSerializer(serializers.ModelSerializer):
+    items = UserOrderItemSerializer(many=True)
 
     class Meta:
         model = Order
@@ -72,3 +72,15 @@ class OrderSerializer(serializers.ModelSerializer):
             OrderItem.objects.create(order=order, **item_data)
             
         return order
+
+
+class PayWaySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PayWay
+        fields = (
+            "id",
+            "name",
+            "active",
+            "cost",
+            "free_for_order_amount"
+        )
