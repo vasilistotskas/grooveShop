@@ -3,17 +3,9 @@ import appStateModules from '@/state'
 import RootState from '@/state/RootState'
 import { config } from 'vuex-module-decorators'
 import stateDirectory from '@/state/stateDirectory'
-import createPersistedState from 'vuex-persistedstate'
 import { each, split, slice, join, has, set } from 'lodash'
 
 config.rawError = true
-
-const statePersistencePlugin = createPersistedState({
-	key: 'frontend',
-	paths: [
-		'cart.cart'
-	]
-})
 
 each(stateDirectory, (item: any, path: any) => {
 	const elements = split(path, '.')
@@ -32,7 +24,7 @@ each(stateDirectory, (item: any, path: any) => {
 const store = createStore<RootState>({
 	strict: true,
 	modules: appStateModules,
-	plugins: [statePersistencePlugin]
+	plugins: []
 })
 
 export default store
