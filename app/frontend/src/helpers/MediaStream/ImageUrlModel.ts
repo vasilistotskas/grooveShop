@@ -11,8 +11,7 @@ export default class ImageUrlModel {
 		const fit: string = mediaStreamImageData.fit ? mediaStreamImageData.fit + '/' : ''
 		const position: string = mediaStreamImageData.position ? mediaStreamImageData.position + '/' : ''
 		const trimThreshold: number|string = mediaStreamImageData.trimThreshold ? mediaStreamImageData.trimThreshold : ''
-
-		return process.env.VUE_APP_API_URL +
+		const image = 'http://localhost:8010' +
 			mediaStreamPath +
 			mediaStreamImageData.imageType + '/' +
 			imageNameFileTypeRemove + '/' +
@@ -21,5 +20,7 @@ export default class ImageUrlModel {
 			fit +
 			position +
 			trimThreshold
+
+		return image
 	}
 }

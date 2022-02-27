@@ -18,8 +18,8 @@
           />
         </div>
       </div>
-      <div v-else>
-        <p>You don't have any products in your cart...</p>
+      <div class="cart-empty" v-else>
+        <p>Your Cart is Empty...</p>
       </div>
 
       <div class="grid-container-item-three">

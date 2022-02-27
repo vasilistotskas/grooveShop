@@ -431,6 +431,7 @@ export default class Checkout extends Vue {
       const formData: any = await validateFields()
       const apiData = {
         user_id: this.customerDetails.id ? this.customerDetails.id : this.userData.id,
+        pay_way: 'Credit Card',
         first_name: formData.first_name,
         last_name: formData.last_name,
         email: formData.email,

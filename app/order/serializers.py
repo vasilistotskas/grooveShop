@@ -53,6 +53,7 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "user",
+            "pay_way",
             "first_name",
             "last_name",
             "email",
