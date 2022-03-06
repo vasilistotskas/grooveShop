@@ -17,7 +17,12 @@ class ImagesSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    images = ImagesSerializer(source='productimages_set', many=True, read_only=True)
+    images = serializers.SerializerMethodField('get_product_images')
+
+    def get_product_images(self, product):
+        qs = ProductImages.objects.filter(product=product)
+        serializer = ImagesSerializer(qs, many=True)
+        return serializer.data
 
     class Meta:
         model = Product

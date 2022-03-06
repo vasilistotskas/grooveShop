@@ -55,10 +55,10 @@ DJANGO_APPS = [
     'django.contrib.staticfiles'
 ]
 PROJECT_APPS = [
+    'backend.user',
     'backend.core',
     'backend.product',
     'backend.order',
-    'backend.user',
     'backend.search',
     'backend.slider',
     'backend.blog',
@@ -200,7 +200,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'backend/media')
 FRONTEND_DIR = os.path.join(BASE_DIR, 'frontend')
 
 STATICFILES_DIRS = (
-    os.path.join(FRONTEND_DIR, 'dist/static'),
+    os.path.join(FRONTEND_DIR, 'dist/backend/static'),
     BASE_DIR.joinpath('frontend', 'dist'),
     BASE_DIR.joinpath('files'),
 )
@@ -248,9 +248,9 @@ DJOSER = {
     'ACTIVATION_URL': 'accounts/activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {
-        'user_create': 'user.serializers.UserCreateSerializer',
-        'user': 'user.serializers.UserCreateSerializer',
-        'current_user': 'user.serializers.UserCreateSerializer',
+        'user_create': 'backend.user.serializers.UserCreateSerializer',
+        'user': 'backend.user.serializers.UserCreateSerializer',
+        'current_user': 'backend.user.serializers.UserCreateSerializer',
         'user_delete': 'djoser.serializers.UserDeleteSerializer',
     }
 }

@@ -4,7 +4,7 @@ module.exports = {
 
   publicPath: process.env.NODE_ENV ==='production' ? '/' : '/',
   // assetsDir must match Django's STATIC_URL
-  assetsDir: 'static/',
+  assetsDir: 'backend/static/',
   // outputDir must be added to Django's TEMPLATE_DIRS
   outputDir: './dist/',
   productionSourceMap: false,

@@ -8,7 +8,7 @@
               <img
                   alt="Website Logo"
                   class="main-logo img-fluid"
-                  src="http://localhost:8010/static/files/images/websiteLogo.png"
+                  src="http://localhost:8010/backend/static/images/websiteLogo.png"
                   height="85"
                   width="175"
                   loading="lazy"

@@ -79,12 +79,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include('backend.product.urls')),
     path('api/v1/', include('backend.order.urls')),
-    # path('api/v1/', include('backend.user.urls')),
+    path('api/v1/', include('backend.user.urls')),
     path('api/v1/', include('backend.slider.urls')),
     path('api/v1/', include('backend.search.urls')),
     # djoser api views
-    # path('api/v1/djoser/', include('djoser.urls')),
-    # path('api/v1/djoser/', include('djoser.urls.authtoken')),
+    path('api/v1/djoser/', include('djoser.urls')),
+    path('api/v1/djoser/', include('djoser.urls.authtoken')),
     # graphql
     path('graphql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
     # admin html editor
