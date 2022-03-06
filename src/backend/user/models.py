@@ -116,7 +116,7 @@ class UserProfile(models.Model):
     place = models.CharField(max_length=50, blank=True, null=True)
     country = models.ForeignKey(Country, null=True, blank=True, default=None, on_delete=models.SET_NULL)
     region = models.ForeignKey(Region, null=True, blank=True, default=None, on_delete=models.SET_NULL)
-    image = models.ImageField(blank=True, null=True, upload_to='uploads/users/', default='uploads/users/default.png')
+    image = models.ImageField(blank=True, null=True, upload_to='uploads/users/')
 
     class Meta:
         verbose_name_plural = "User's Profile"
@@ -124,28 +124,32 @@ class UserProfile(models.Model):
     def __str__(self):
         return '%s' % self.user.id
 
+    def get_user_profile_image_url(self):
+        if self.image and hasattr(self.image, 'url'):
+            return self.image.url
+        else:
+            return '/backend/static/images/default.png'
+
     def email(self):
         return self.user.email
 
     def main_image_absolute_url(self):
-        try:
-            if self.id is not None:
-                image = settings.APP_BASE_URL + self.image.url
-            else:
-                image = ""
-            return image
-        except:
-            return ""
+        if self.image and hasattr(self.image, 'url'):
+            return settings.APP_BASE_URL + self.image.url
+        else:
+            return '/backend/static/images/default.png'
 
     def main_image_filename(self):
-        try:
+        if self.image and hasattr(self.image, 'url'):
             return os.path.basename(self.image.name)
-        except:
-            return ""
+        else:
+            return os.path.basename('/backend/static/images/default.png')
 
     def image_tag(self):
-        if self.image:
+        if self.image and hasattr(self.image, 'url'):
             return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
+        else:
+            return mark_safe('<img src="{}" height="50"/>'.format('/backend/static/images/default.png'))
 
     # use Django signals to create user profile on user creation
     @receiver(post_save, sender=User)

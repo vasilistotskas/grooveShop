@@ -132,13 +132,13 @@ export default class UserAccount extends Vue {
     this.$watch(
         () => this.userData,
         (image: UserDetailsModel) => {
-          this.profileImageUrl = image.main_image_absolute_url
+          this.profileImageUrl = image.get_user_profile_image_url
         }
     )
   }
 
   mounted() {
-    this.profileImageUrl = this.userData.main_image_absolute_url
+    this.profileImageUrl = this.userData.get_user_profile_image_url
   }
 
   updated() {

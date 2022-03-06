@@ -11,6 +11,7 @@ export default class UserDetailsModel extends EntityBase {
 	last_name!: string
 	main_image_absolute_url!: string
 	main_image_filename!: string
+	get_user_profile_image_url!: string
 	phone!: number
 	place!: string
 	region!: string

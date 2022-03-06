@@ -32,7 +32,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ['id', 'user', 'email', 'country', 'first_name', 'last_name', 'phone', 'email', 'city', 'zipcode', 'address',
-                  'place', 'region', 'image', 'main_image_absolute_url', 'main_image_filename']
+                  'place', 'region', 'main_image_absolute_url', 'main_image_filename', 'get_user_profile_image_url']
 
     def update(self, instance, validated_data):
         # * User Profile Info
