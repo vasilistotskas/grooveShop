@@ -45,6 +45,17 @@ class OrderItemSerializer(serializers.ModelSerializer):
         )
 
 
+class PayWaySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PayWay
+        fields = (
+            "name",
+            "active",
+            "cost",
+            "free_for_order_amount"
+        )
+
+
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
 
@@ -62,7 +73,7 @@ class OrderSerializer(serializers.ModelSerializer):
             "place",
             "phone",
             "stripe_token",
-            "items",
+            "items"
         )
     
     def create(self, validated_data):
@@ -74,14 +85,3 @@ class OrderSerializer(serializers.ModelSerializer):
             
         return order
 
-
-class PayWaySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PayWay
-        fields = (
-            "id",
-            "name",
-            "active",
-            "cost",
-            "free_for_order_amount"
-        )
