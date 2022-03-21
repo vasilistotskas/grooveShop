@@ -1,16 +1,9 @@
 from django.db.models import Q
+from backend.search.paginators import *
 from backend.product.models import Product
 from rest_framework import status, generics
 from rest_framework.response import Response
-from backend.helpers.paginator import CountPaginator
 from backend.product.serializers import ProductSerializer
-
-
-class SearchPagination(CountPaginator):
-    page_size = 16
-    page_size_query_param = 'page_size'
-    max_page_size = 50
-    page_query_param = 'p'
 
 
 class Search(generics.ListAPIView):

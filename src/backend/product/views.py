@@ -1,3 +1,4 @@
+from .paginators import *
 from .serializers import *
 from django.http import Http404
 from rest_framework import filters
@@ -5,42 +6,9 @@ from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
-from backend.helpers.paginator import CountPaginator
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from rest_framework import status, authentication, permissions
-
-
-class ProductsPagination(CountPaginator):
-    page_size = 16
-
-
-class CategoryProductsPagination(CountPaginator):
-    page_size = 36
-    page_size_query_param = 'page_size'
-    max_page_size = 36
-    page_query_param = 'p'
-
-
-class UserFavouriteProductsPagination(CountPaginator):
-    page_size = 8
-    page_size_query_param = 'page_size'
-    max_page_size = 8
-    page_query_param = 'p'
-
-
-class UserReviewPagination(CountPaginator):
-    page_size = 3
-    page_size_query_param = 'page_size'
-    max_page_size = 3
-    page_query_param = 'p'
-
-
-class ProductReviewPagination(CountPaginator):
-    page_size = 2
-    page_size_query_param = 'page_size'
-    max_page_size = 2
-    page_query_param = 'p'
 
 
 class LatestProductsList(APIView):

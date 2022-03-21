@@ -1,24 +1,16 @@
 import stripe
+from .paginators import *
 from django.conf import settings
-
-from .enum.pay_way_enum import PayWayEnum
 from .models import Order, PayWay
 from rest_framework import generics
 from rest_framework.views import APIView
+from .enum.pay_way_enum import PayWayEnum
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-from backend.helpers.paginator import CountPaginator
 from rest_framework import status, authentication, permissions
 from .serializers import OrderSerializer, UserOrderSerializer, PayWaySerializer
 
 User = get_user_model()
-
-
-class UserOrderListPagination(CountPaginator):
-    page_size = 3
-    page_size_query_param = 'page_size'
-    max_page_size = 3
-    page_query_param = 'p'
 
 
 class Checkout(APIView):
@@ -62,7 +54,6 @@ class Checkout(APIView):
         else:
             serializer.save(user=None, paid_amount=paid_amount)
 
-
     def post(self, request, format=None):
         serializer = OrderSerializer(data=request.data, context={'request': request})
         if serializer.is_valid(raise_exception=True):
@@ -80,7 +71,6 @@ class Checkout(APIView):
                 items=items,
                 pay_way_name=pay_way_name
             )
-        print(serializer.errors)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
