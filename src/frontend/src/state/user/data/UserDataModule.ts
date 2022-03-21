@@ -8,8 +8,7 @@ import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 const toast = useToast()
 
 @Module({ namespaced: true })
-export default class UserDataModule
-	extends AppBaseModule {
+export default class UserDataModule extends AppBaseModule {
 	user_id!: number | undefined
 	data = new UserDetailsModel()
 
@@ -47,15 +46,14 @@ export default class UserDataModule
 	}
 
 	@Action
-	async userDataFromRemote(): Promise<void> {
-
-		await api.get('userprofile/data')
+	fetchUserDataFromRemote(): Promise<void> {
+		return api.get('userprofile/data')
 			.then((response: any) => {
 				const data = response.data
 				this.context.commit('setUserData', data[0])
 				this.context.commit('setUserId', data[0].id)
 				store.dispatch('country/findRegionsBasedOnAlphaForLoggedCustomer')
-				store.dispatch('product/favourite/userFavouritesFromRemote', response.data[0].user)
+				store.dispatch('product/favourite/fetchUserFavouritesFromRemote', response.data[0].user)
 			})
 			.catch((e: Error) => {
 				console.log(e)
@@ -67,12 +65,13 @@ export default class UserDataModule
 		const user_id = await this.context.getters['getUserId']
 
 		try {
-			await api.patch(`userprofile/${ user_id }/`, data)
+			const response = await api.patch(`userprofile/${ user_id }/`, data)
 				.then((response: any) => this.context.commit('setUserData', response.data))
 				.catch((e: Error) => {
 					console.log(e)
 				})
 			toast.success('Profile Updated')
+			return response
 		} catch (error) {
 			throw error
 		}

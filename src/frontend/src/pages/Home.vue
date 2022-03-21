@@ -189,10 +189,14 @@ export default class Home extends Vue {
 
   async beforeCreate(): Promise<void> {
     await Promise.all([
-      await store.dispatch('product/latestProductsFromRemote'),
-      await store.dispatch('slider/slidersFromRemote'),
-      await this.mainSliderVideoInit()
+      store.dispatch('product/fetchLatestProductsFromRemote'),
+      store.dispatch('slider/fetchSlidersFromRemote')
     ])
+    try {
+      this.mainSliderVideoInit()
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   async mounted(): Promise<void> {

@@ -12,8 +12,7 @@ import { PaginationQueryParametersModel } from '@/state/pagination/Model/Paginat
 const toast = useToast()
 
 @Module({ namespaced: true })
-export default class ProductReviewModule
-	extends AppBaseModule {
+export default class ProductReviewModule extends AppBaseModule {
 	productReviews: Array<ProductReviewModel> = []
 	productReviewsAverage: number = 0
 	productReviewsCounter: number = 0
@@ -91,7 +90,7 @@ export default class ProductReviewModule
 					'method': ApiBaseMethods.GET
 				} )
 
-			store.dispatch('pagination/getPaginatedResults', paginationQuery)
+			store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
 				.then(() => toast.error('Your review has been deleted'))
 		}
 
@@ -103,7 +102,7 @@ export default class ProductReviewModule
 					'method': ApiBaseMethods.GET
 				} )
 
-			store.dispatch('pagination/getPaginatedResults', paginationQuery)
+			store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
 				.then(() => toast.error('Your review has been deleted'))
 		}
 
@@ -155,13 +154,13 @@ export default class ProductReviewModule
 				console.log(error)
 			}
 		} else {
-			toast.error('You are not logged in')
+			return toast.error('You are not logged in')
 		}
 	}
 
 	@Action
-	async getCurrentUserReviews(userId: number): Promise<void> {
-		await api.get(`reviews/user/${ userId }/`)
+	fetchCurrentUserReviews(userId: number): Promise<void> {
+		return api.get(`reviews/user/${ userId }/`)
 			.then((response: any) => {
 				const data = response.data
 				this.context.commit('setUserReviews', data)
@@ -172,9 +171,9 @@ export default class ProductReviewModule
 	}
 
 	@Action
-	async currentProductReviewsFromRemote(): Promise<void> {
+	fetchCurrentProductReviewsFromRemote(): Promise<void> {
 		let product_id: number = store.getters['product/getProductId']
-		await api.get(`reviews/product/${ product_id }/`)
+		return api.get(`reviews/product/${ product_id }/`)
 			.then((response: any) => {
 				const data = response.data
 				this.context.commit('setProductReviews', data)
@@ -185,9 +184,9 @@ export default class ProductReviewModule
 	}
 
 	@Action
-	async createCurrentProductReview(data: any): Promise<void> {
+	createCurrentProductReview(data: any): Promise<void> {
 		let product_id: number = store.getters['product/getProductId']
-		await api.post(`reviews/product/${ product_id }/`, data)
+		return api.post(`reviews/product/${ product_id }/`, data)
 			.then((response: any) => {
 				const data = response.data
 				this.context.commit('createUserToProductReview', data)
@@ -199,11 +198,11 @@ export default class ProductReviewModule
 	}
 
 	@Action
-	async userToProductReviewFromRemote(): Promise<void> {
+	fetchUserToProductReviewFromRemote(): Promise<void> {
 		let user_id: number = store.getters['user/data/getUserId']
 		let product_id: number = store.getters['product/getProductId']
 
-		await api.get(`reviews/review/${ user_id }/${ product_id }/`)
+		return api.get(`reviews/review/${ user_id }/${ product_id }/`)
 			.then((response: any) => {
 				const data = response.data
 				this.context.commit('setUserToProductReview', data)
@@ -214,11 +213,11 @@ export default class ProductReviewModule
 	}
 
 	@Action
-	async updateCurrentProductReview(data: any): Promise<void> {
+	updateCurrentProductReview(data: any): Promise<void> {
 		let user_id: number = store.getters['user/data/getUserId']
 		let product_id: number = store.getters['product/getProductId']
 
-		await api.patch(`reviews/review/${ user_id }/${ product_id }/`, data)
+		return api.patch(`reviews/review/${ user_id }/${ product_id }/`, data)
 			.then((response: any) => {
 				const data = response.data
 				this.context.commit('setUserToProductReview', data)
@@ -231,8 +230,8 @@ export default class ProductReviewModule
 	}
 
 	@Action
-	async deleteCurrentProductReview(data: any): Promise<void> {
-		await api.delete(`reviews/review/${ data.user_id }/${ data.product_id }/`)
+	deleteCurrentProductReview(data: any): Promise<void> {
+		return api.delete(`reviews/review/${ data.user_id }/${ data.product_id }/`)
 			.then(() => {
 				this.context.commit('removeUserToProductReview', data)
 				this.context.commit('unsetUserToProductReview')

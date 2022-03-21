@@ -5,8 +5,7 @@ import { Module, Action, Mutation } from 'vuex-module-decorators'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Module({ namespaced: true })
-export default class PaginationModule
-	extends AppBaseModule {
+export default class PaginationModule extends AppBaseModule {
 	results = []
 	results_count: number = 0
 	results_next_page: string = ''
@@ -122,7 +121,7 @@ export default class PaginationModule
 	}
 
 	@Action
-	async getPaginatedResults(params: PaginationQueryParametersModel): Promise<void> {
+	async fetchPaginatedResults(params: PaginationQueryParametersModel): Promise<void> {
 		await store.commit('app/setLoading', true)
 		const baseUrl = '/api/v1'
 
@@ -143,7 +142,8 @@ export default class PaginationModule
 			headers: {
 				Authorization: 'Token ' + this.getUserToken
 			}
-		}).then((response: any) => {
+		})
+		.then((response: any) => {
 			const results_data = response.data.results
 			const count_data = response.data.count
 			const next_url_data = response.data.links.next
@@ -168,11 +168,13 @@ export default class PaginationModule
 			this.context.commit('setPreviousPageUrl', previous_url_data)
 			this.context.commit('setTotalPages', total_pages_data)
 		})
-			.catch((e: Error) => {
-				this.context.commit('unsetResults')
-				console.log(e)
-			})
-			.finally(() => store.commit('app/setLoading', false))
+		.catch((e: Error) => {
+			this.context.commit('unsetResults')
+			console.log(e)
+		})
+		.finally(() =>
+			store.commit('app/setLoading', false)
+		)
 
 	}
 

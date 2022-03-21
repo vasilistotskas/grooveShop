@@ -119,7 +119,7 @@ export default class AllProducts extends Vue implements PaginatedInterface<Produ
         'method': ApiBaseMethods.GET
       } )
 
-    await store.dispatch('pagination/getPaginatedResults', paginationQuery)
+    await store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
   }
 
 }

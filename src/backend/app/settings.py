@@ -207,7 +207,7 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # graphql schema
 GRAPHENE = {
-    "SCHEMA": "blog.schema.schema",
+    "SCHEMA": "backend.blog.schema.schema",
 }
 
 # Tinymce admin panel editor config

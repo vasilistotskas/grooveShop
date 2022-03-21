@@ -36,7 +36,7 @@ export default class Blog extends Vue {
   async mounted(): Promise<void> {
     document.title = 'Blog'
 
-    await store.dispatch('blog/allPostsFromRemote')
+    await store.dispatch('blog/fetchAllPostsFromRemote')
   }
 
 }

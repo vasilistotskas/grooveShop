@@ -3,8 +3,7 @@ import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 @Module({ namespaced: true })
-export default class AppModule
-	extends AppBaseModule {
+export default class AppModule extends AppBaseModule {
 	loading: boolean = false
 	windowWidth: number = window.innerWidth
 	navbarMenuHidden: boolean = true

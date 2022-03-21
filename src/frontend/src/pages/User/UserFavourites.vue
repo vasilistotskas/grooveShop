@@ -109,7 +109,7 @@ export default class UserFavourites extends Vue implements PaginatedInterface<Pr
           'method': ApiBaseMethods.GET
         } )
 
-    await store.dispatch('pagination/getPaginatedResults', paginationQuery)
+    await store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
   }
 
   public buildEndPointUrlForPaginatedResults(): string {

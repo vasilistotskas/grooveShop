@@ -8,8 +8,7 @@ import AppSettingsThemeModeOption from '@/state/app/AppSettingsThemeModeOption'
 import AppSettingsLocalizationOption from '@/state/app/AppSettingsLocalizationOption'
 
 @Module({ namespaced: true })
-export default class AppSettingsModule
-	extends AppBaseModule {
+export default class AppSettingsModule extends AppBaseModule {
 
 	settings = new AppSettings()
 	settingsUpdatable!: AppSettingsUpdatable

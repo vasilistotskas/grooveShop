@@ -9,8 +9,7 @@ import router from '@/routes'
 const toast = useToast()
 
 @Module({ namespaced: true })
-export default class PasswordModule
-	extends AppBaseModule {
+export default class PasswordModule extends AppBaseModule {
 	emailCompleted = false
 	emailError = false
 	emailLoading = false
@@ -121,24 +120,22 @@ export default class PasswordModule
 	}
 
 	@Action
-	async updateUserPassword(data: any): Promise<void> {
-		await api.post('djoser/users/set_password/', data)
+	updateUserPassword(data: any): Promise<void> {
+		return api.post('djoser/users/set_password/', data)
 			.then(() => this.context.commit(BaseAuthenticationTypes.PASSWORD_CHANGE_SUCCESS))
 			.then(() => {
-				toast.success('Password Updated, login to continue')
-				router.push('/log-in')
+				router.push('/log-in').then(r => toast.success('Password Updated, login to continue'))
 			})
 			.catch((e: Error) => {
 				this.context.commit(BaseAuthenticationTypes.PASSWORD_CHANGE_FAILURE)
-				toast.error('Current Password is not correct')
-				router.push('/user-account/password')
+				router.push('/user-account/password').then(r => toast.error('Current Password is not correct'))
 				console.log(e)
 			})
 	}
 
 	@Action
-	async sendPasswordResetEmail(data: any): Promise<void> {
-		await api.post('djoser/users/reset_password/', data)
+	sendPasswordResetEmail(data: any): Promise<void> {
+		return api.post('djoser/users/reset_password/', data)
 			.then(() => this.context.commit(BaseAuthenticationTypes.PASSWORD_EMAIL_SUCCESS))
 			.catch(() => {
 				this.context.commit(BaseAuthenticationTypes.PASSWORD_EMAIL_FAILURE)
@@ -146,13 +143,13 @@ export default class PasswordModule
 	}
 
 	@Action
-	async resetPasswordConfirm(data: any): Promise<void> {
+	resetPasswordConfirm(data: any): Promise<void> {
 		const reset_data = {
 			uid: data.uid,
 			token: data.token,
 			new_password: data.password1
 		}
-		await api.post('djoser/users/reset_password_confirm/', reset_data)
+		return api.post('djoser/users/reset_password_confirm/', reset_data)
 			.then(() => this.context.commit(BaseAuthenticationTypes.PASSWORD_RESET_SUCCESS))
 			.catch(() => {
 				this.context.commit(BaseAuthenticationTypes.PASSWORD_RESET_FAILURE)
@@ -161,12 +158,12 @@ export default class PasswordModule
 
 	@Action
 	async clearResetStatus(): Promise<void> {
-		this.context.commit(BaseAuthenticationTypes.PASSWORD_RESET_CLEAR)
+		return this.context.commit(BaseAuthenticationTypes.PASSWORD_RESET_CLEAR)
 	}
 
 	@Action
 	async clearEmailStatus(): Promise<void> {
-		this.context.commit(BaseAuthenticationTypes.PASSWORD_EMAIL_CLEAR)
+		return this.context.commit(BaseAuthenticationTypes.PASSWORD_EMAIL_CLEAR)
 	}
 
 }

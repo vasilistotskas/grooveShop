@@ -10,8 +10,7 @@ import ToastRegisterActivationFail from '@/components/Toast/ToastRegisterActivat
 const toast = useToast()
 
 @Module({ namespaced: true })
-export default class SignUpModule
-	extends AppBaseModule {
+export default class SignUpModule extends AppBaseModule {
 	registrationEmail = ''
 	activationCompleted = false
 	activationError = false
@@ -125,8 +124,8 @@ export default class SignUpModule
 
 	@Action
 	async createAccount(formData: any): Promise<void> {
-		this.context.commit(BaseAuthenticationTypes.REGISTRATION_BEGIN)
-		await api.post('djoser/users/', formData)
+		await this.context.commit(BaseAuthenticationTypes.REGISTRATION_BEGIN)
+		return api.post('djoser/users/', formData)
 			.then(() => {
 				this.context.commit(BaseAuthenticationTypes.REGISTRATION_SUCCESS)
 				toast.success('Success, an activation link has been sent to your email!')
@@ -142,9 +141,9 @@ export default class SignUpModule
 		const uid = router.currentRoute.value.params.uid
 		const activationToken = router.currentRoute.value.params.token
 
-		this.context.commit(BaseAuthenticationTypes.ACTIVATION_BEGIN)
+		await this.context.commit(BaseAuthenticationTypes.ACTIVATION_BEGIN)
 
-		await api.get(`accounts/activate/${ uid }/${ activationToken }`)
+		return api.get(`accounts/activate/${ uid }/${ activationToken }`)
 			.then(() => {
 				this.context.commit(BaseAuthenticationTypes.ACTIVATION_SUCCESS)
 				toast.success('Your account has been activated! You can now Log in.')
@@ -160,9 +159,9 @@ export default class SignUpModule
 		const data = {
 			email
 		}
-		console.log(data)
-		this.context.commit(BaseAuthenticationTypes.ACTIVATION_BEGIN)
-		await api.post('accounts/resend_activation_mail/', data)
+
+		await this.context.commit(BaseAuthenticationTypes.ACTIVATION_BEGIN)
+		return api.post('accounts/resend_activation_mail/', data)
 			.then(() => {
 				this.context.commit(BaseAuthenticationTypes.RE_ACTIVATION_MAIL_SENT)
 				toast.success('A new activation link has been sent to your email.')
@@ -175,12 +174,12 @@ export default class SignUpModule
 
 	@Action
 	async clearRegistrationStatus(): Promise<void> {
-		this.context.commit(BaseAuthenticationTypes.REGISTRATION_CLEAR)
+		return this.context.commit(BaseAuthenticationTypes.REGISTRATION_CLEAR)
 	}
 
 	@Action
 	async clearActivationStatus(): Promise<void> {
-		this.context.commit(BaseAuthenticationTypes.ACTIVATION_CLEAR)
+		return this.context.commit(BaseAuthenticationTypes.ACTIVATION_CLEAR)
 	}
 
 }

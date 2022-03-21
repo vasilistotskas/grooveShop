@@ -8,8 +8,7 @@ import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 @Module({ namespaced: true })
-export default class BlogModule
-	extends AppBaseModule {
+export default class BlogModule extends AppBaseModule {
 	allPosts: Array<PostModel> = []
 	allTags: Array<TagModel> = []
 	allAuthors: Array<AuthorModel> = []
@@ -76,7 +75,7 @@ export default class BlogModule
 	}
 
 	@Action
-	async allPostsFromRemote(): Promise<void> {
+	async fetchAllPostsFromRemote(): Promise<void> {
 		const posts = await clientApollo.query({
 			query: gql`query {
                 allPosts {
@@ -101,11 +100,11 @@ export default class BlogModule
                 }
               }`
 		})
-		this.context.commit('setAllPosts', posts.data.allPosts)
+		return this.context.commit('setAllPosts', posts.data.allPosts)
 	}
 
 	@Action
-	async allTagsFromRemote(): Promise<void> {
+	async fetchAllTagsFromRemote(): Promise<void> {
 		const tags = await clientApollo.query({
 			query: gql`query {
                 allTags {
@@ -113,11 +112,11 @@ export default class BlogModule
                 }
               }`
 		})
-		this.context.commit('setAllTags', tags.data.allTags)
+		return this.context.commit('setAllTags', tags.data.allTags)
 	}
 
 	@Action
-	async allAuthorsFromRemote(): Promise<void> {
+	async fetchAllAuthorsFromRemote(): Promise<void> {
 		const authors = await clientApollo.query({
 			query: gql`query {
                 allAuthors {
@@ -131,11 +130,11 @@ export default class BlogModule
                 }
               }`
 		})
-		this.context.commit('setAllAuthors', authors.data.allAuthors)
+		return this.context.commit('setAllAuthors', authors.data.allAuthors)
 	}
 
 	@Action
-	async postsByTagFromRemote(): Promise<void> {
+	async fetchPostsByTagFromRemote(): Promise<void> {
 		const posts = await clientApollo.query({
 			query: gql`query ($tag: String!) {
                 postsByTag(tag: $tag) {
@@ -163,11 +162,11 @@ export default class BlogModule
 				tag: router.currentRoute.value.params.tag
 			}
 		})
-		this.context.commit('setPostsByTag', posts.data.postsByTag)
+		return this.context.commit('setPostsByTag', posts.data.postsByTag)
 	}
 
 	@Action
-	async postBySlugFromRemote(): Promise<void> {
+	async fetchPostBySlugFromRemote(): Promise<void> {
 		const post = await clientApollo.query({
 			query: gql`query ($slug: String!) {
               postBySlug(slug: $slug) {
@@ -195,11 +194,11 @@ export default class BlogModule
 				slug: router.currentRoute.value.params.slug
 			}
 		})
-		this.context.commit('setPostBySlug', post.data.postBySlug)
+		return this.context.commit('setPostBySlug', post.data.postBySlug)
 	}
 
 	@Action
-	async authorByEmailFromRemote(): Promise<void> {
+	async fetchAuthorByEmailFromRemote(): Promise<void> {
 		const author = await clientApollo.query({
 			query: gql`query ($email: String!) {
                 authorByEmail(email: $email) {
@@ -229,6 +228,6 @@ export default class BlogModule
 				email: router.currentRoute.value.params.email
 			}
 		})
-		this.context.commit('setAuthorByEmail', author.data.authorByEmail)
+		return this.context.commit('setAuthorByEmail', author.data.authorByEmail)
 	}
 }

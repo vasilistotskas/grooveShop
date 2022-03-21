@@ -19,7 +19,7 @@ class Checkout(APIView):
     pay_way = ''
 
     @staticmethod
-    def decrease_product_stock(product):
+    def decrease_product_stock(product) -> None:
         for item in product:
             quantity = item.get('quantity')
             product = item.get('product')

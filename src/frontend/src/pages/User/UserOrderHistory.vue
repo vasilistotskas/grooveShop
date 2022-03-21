@@ -143,7 +143,7 @@ export default class UserOrderHistory extends Vue {
           'method': ApiBaseMethods.GET
         } )
 
-    await store.dispatch('pagination/getPaginatedResults', paginationQuery)
+    await store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
   }
 
   public mediaStreamImage(

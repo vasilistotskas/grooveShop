@@ -119,7 +119,7 @@ export default class ProductReviewModal extends Vue {
 
 
   get reviewButtonText(): string {
-    return this.userHasAlreadyReviewedProduct ? 'Update' : 'BlogPost.vue'
+    return this.userHasAlreadyReviewedProduct ? 'Update' : 'Post'
   }
 
   get reviewCount(): number | null {
@@ -296,11 +296,11 @@ export default class ProductReviewModal extends Vue {
   }
 
   public async reviewModuleInitialize(): Promise<void> {
-    await store.dispatch('product/productFromRemote')
+    await store.dispatch('product/fetchProductFromRemote')
     let IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
 
     if (IsAuthenticated) {
-      await store.dispatch('product/review/userToProductReviewFromRemote')
+      await store.dispatch('product/review/fetchUserToProductReviewFromRemote')
 
       this.comment = cloneDeep(this.userToProductReview.comment)
       this.rate = cloneDeep(this.userToProductReview.rate)

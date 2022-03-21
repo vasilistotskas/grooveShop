@@ -6,8 +6,7 @@ import CategoryModel from '@/state/category/CategoryModel'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 @Module({ namespaced: true })
-export default class CategoryModule
-	extends AppBaseModule {
+export default class CategoryModule extends AppBaseModule {
 	category = new CategoryModel()
 	categoriesTree = new CategoryModel()
 
@@ -30,8 +29,8 @@ export default class CategoryModule
 	}
 
 	@Action
-	async categoriesTreeFromRemote(): Promise<void> {
-		await api.get('categories/categoriesTree/')
+	fetchCategoriesTreeFromRemote(): Promise<void> {
+		return api.get('categories/categoriesTree/')
 			.then((response: any) => {
 				const data = response.data
 				const categories = map(data, rawCategory => new CategoryModel(rawCategory))
@@ -43,8 +42,8 @@ export default class CategoryModule
 	}
 
 	@Action
-	async fetchCategoryFromRemote(categorySlug: CategoryModel['slug']): Promise<void> {
-		await api.get(`categories/${ categorySlug }/`)
+	fetchCategoryFromRemote(categorySlug: CategoryModel['slug']): Promise<void> {
+		return api.get(`categories/${ categorySlug }/`)
 			.then((response: any) => {
 				const data = response.data[0]
 				let category = new CategoryModel(data)

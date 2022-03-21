@@ -17,8 +17,8 @@ export default class PayWayModule extends AppBaseModule {
 	}
 
 	@Action
-	async fetchActivePayWaysFromRemote(): Promise<void> {
-		return await api.get('payways/')
+	fetchActivePayWaysFromRemote(): Promise<void> {
+		return api.get('payways/')
 			.then((response: any) => {
 				const data: PayWayModel = response.data
 				this.context.commit('setActivePayWays', data)

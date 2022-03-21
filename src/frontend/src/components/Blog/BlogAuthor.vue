@@ -49,11 +49,11 @@ export default class BlogAuthor extends Vue {
   }
 
   async created(): Promise<void> {
-    await store.dispatch('blog/authorByEmailFromRemote')
+    await store.dispatch('blog/fetchAuthorByEmailFromRemote')
   }
 
   async updated(): Promise<void> {
-    await store.dispatch('blog/authorByEmailFromRemote')
+    await store.dispatch('blog/fetchAuthorByEmailFromRemote')
   }
 }
 </script>

@@ -9,8 +9,7 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 
 @Module({ namespaced: true })
-export default class CountryModule
-	extends AppBaseModule {
+export default class CountryModule extends AppBaseModule {
 	countries: Array<CountryModel> = []
 	regionsBasedOnAlpha: Array<RegionsModel> = []
 	selectedCountry = new CountryModel()
@@ -53,8 +52,8 @@ export default class CountryModule
 	}
 
 	@Action
-	async getCountriesFromRemote(): Promise<void> {
-		await api.get('countries/')
+	fetchCountriesFromRemote(): Promise<void> {
+		return api.get('countries/')
 			.then((response: any) => {
 				const data: CountryModel = response.data
 				this.context.commit('setCountries', data)
@@ -72,8 +71,8 @@ export default class CountryModule
 				return obj.alpha_2 === userDetails.country
 			})
 			if (result) {
-				this.context.commit('setSelectedCountry', result)
-				this.context.commit('setRegionsBasedOnAlpha', result.regions)
+				await this.context.commit('setSelectedCountry', result)
+				return this.context.commit('setRegionsBasedOnAlpha', result.regions)
 			}
 		}
 	}
@@ -82,6 +81,6 @@ export default class CountryModule
 	async findRegionsBasedOnAlphaFromInput(countryAlpha2Key: CountryModel['alpha_2']): Promise<void> {
 		const country = <CountryModel>find(this.countries, ['alpha_2', countryAlpha2Key])
 		await this.context.commit('setSelectedCountry', country)
-		await this.context.commit('setRegionsBasedOnAlpha', country.regions)
+		return this.context.commit('setRegionsBasedOnAlpha', country.regions)
 	}
 }

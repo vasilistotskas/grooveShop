@@ -182,7 +182,7 @@ export default class Pagination extends Vue {
           'method': ApiBaseMethods.GET
         } )
 
-    await store.dispatch('pagination/getPaginatedResults', paginationQuery)
+    await store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
 
     if (this.routerReplace) await router.replace({ name: `${ this.route }`, query: this.query })
   }
@@ -198,7 +198,7 @@ export default class Pagination extends Vue {
           'method': ApiBaseMethods.GET
         } )
 
-    await store.dispatch('pagination/getPaginatedResults', paginationQuery)
+    await store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
 
     if (this.routerReplace) await router.replace({ name: `${ this.route }`, query: this.query })
   }
@@ -214,7 +214,7 @@ export default class Pagination extends Vue {
           'method': ApiBaseMethods.GET
         } )
 
-    await store.dispatch('pagination/getPaginatedResults', paginationQuery)
+    await store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
 
     if (this.routerReplace) await router.replace({ name: `${ this.route }`, query: this.query })
   }
@@ -230,7 +230,7 @@ export default class Pagination extends Vue {
           'method': ApiBaseMethods.GET
         } )
 
-    await store.dispatch('pagination/getPaginatedResults', paginationQuery)
+    await store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
 
     if (this.routerReplace) await router.replace({ name: `${ this.route }`, query: this.query })
   }
@@ -246,7 +246,7 @@ export default class Pagination extends Vue {
           'method': ApiBaseMethods.GET
         } )
 
-    await store.dispatch('pagination/getPaginatedResults', paginationQuery)
+    await store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
 
     if (this.routerReplace) await router.replace({ name: `${ this.route }`, query: this.query })
   }

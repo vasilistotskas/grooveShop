@@ -7,8 +7,7 @@ import AppBaseModule from '@/state/common/AppBaseModule'
 import { Module, Action, Mutation } from 'vuex-module-decorators'
 
 @Module({ namespaced: true })
-export default class ProductModule
-	extends AppBaseModule {
+export default class ProductModule extends AppBaseModule {
 	product = new ProductModel()
 	latestProducts = [new ProductModel()]
 	product_id!: number
@@ -45,11 +44,11 @@ export default class ProductModule
 	}
 
 	@Action
-	async productFromRemote(): Promise<void> {
+	fetchProductFromRemote(): Promise<void> {
 		let category_slug = router.currentRoute.value.params.category_slug
 		let product_slug = router.currentRoute.value.params.product_slug
 
-		await api.get(`products/${ category_slug }/${ product_slug }`)
+		return api.get(`products/${ category_slug }/${ product_slug }`)
 			.then((response: any) => {
 				const data = response.data
 				let product = new ProductModel(data)
@@ -62,8 +61,8 @@ export default class ProductModule
 	}
 
 	@Action
-	async latestProductsFromRemote(): Promise<void> {
-		await api.get('latest-products/')
+	fetchLatestProductsFromRemote(): Promise<void> {
+		return api.get('latest-products/')
 			.then((response: any) => {
 				const data = response.data
 				const latestProduct = map(data, rawProduct => new ProductModel(rawProduct))
@@ -75,16 +74,18 @@ export default class ProductModule
 	}
 
 	@Action
-	async updateProductHits(): Promise<void> {
+	updateProductHits(): Promise<unknown> {
 		let category_slug = router.currentRoute.value.params.category_slug
 		let product_slug = router.currentRoute.value.params.product_slug
 
-		if (this.product) {
-			await api.patch(`products/${ category_slug }/${ product_slug }/`)
-				.catch((e: Error) => {
-					console.log(e)
-				})
+		if (!this.product) {
+			throw new Error()
 		}
+
+		return api.patch(`products/${ category_slug }/${ product_slug }/`)
+			.catch((e: Error) => {
+				console.log(e)
+			})
 	}
 
 }

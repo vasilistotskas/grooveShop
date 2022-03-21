@@ -266,14 +266,14 @@ export default class ProductVue extends Vue {
     document.title = <string>this.$route.params.product_slug
 
     await Promise.all([
-      await store.dispatch('product/productFromRemote'),
+      await store.dispatch('product/fetchProductFromRemote'),
       store.dispatch('product/updateProductHits'),
 
       this.fetchProductReviews(),
 
       store.commit('product/review/setProductReviewsAverage', this.product.review_average),
       store.commit('product/review/setProductReviewsCounter', this.product.review_counter),
-      await store.dispatch('app/updateMetaTagElement', {
+      store.dispatch('app/updateMetaTagElement', {
         'metaName': 'description',
         'metaAttribute': 'content',
         'newValue': this.product.description
@@ -316,7 +316,7 @@ export default class ProductVue extends Vue {
           'method': ApiBaseMethods.GET
         } )
 
-    await store.dispatch('pagination/getPaginatedResults', paginationQuery)
+    await store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
   }
 
   public buildEndPointUrlForPaginatedResults(): string {

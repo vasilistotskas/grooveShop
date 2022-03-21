@@ -14,7 +14,7 @@ docker-compose run backend sh -c "python manage.py collectstatic --noinput"
 docker-compose run backend sh -c "python manage.py createsuperuser"
 
 docker exec -it 4246d52c608c python manage.py populate_reviews
-docker exec -it 4246d52c608c python manage.py makemigrations
+docker exec -it dcdb5558fb9d python manage.py makemigrations
 
 REM FOR PYTHON ENV ---- run migrations from here
 docker exec -it -i 7179b3a503e4 /bin/sh

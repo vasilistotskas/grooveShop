@@ -358,18 +358,18 @@ export default class Checkout extends Vue {
   }
 
   async created(): Promise<void> {
-    await Promise.all([
-      await store.dispatch('country/getCountriesFromRemote'),
-      store.dispatch('stripeIban/initIBANComponent'),
-      store.dispatch('stripeCard/initStripeComponent')
-    ])
+    await store.dispatch('country/fetchCountriesFromRemote')
   }
 
   async mounted(): Promise<void> {
     document.title = 'Checkout'
     if (this.isAuthenticated) {
-      await store.dispatch('user/data/userDataFromRemote')
+      await store.dispatch('user/data/fetchUserDataFromRemote')
     }
+    await Promise.all([
+      store.dispatch('stripeIban/initIBANComponent'),
+      store.dispatch('stripeCard/initStripeComponent')
+    ])
     this.customerDetailsInitialize()
   }
 

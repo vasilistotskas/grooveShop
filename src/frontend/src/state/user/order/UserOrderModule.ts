@@ -5,8 +5,7 @@ import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 @Module({ namespaced: true })
-export default class UserOrderModule
-	extends AppBaseModule {
+export default class UserOrderModule extends AppBaseModule {
 	orders = [new ProductModel()]
 
 	get getUserOrders(): ProductModel[] {
@@ -24,8 +23,8 @@ export default class UserOrderModule
 	}
 
 	@Action
-	async userOrdersFromRemote(): Promise<void> {
-		await api.get('orders/')
+	fetchUserOrdersFromRemote(): Promise<void> {
+		return api.get('orders/')
 			.then((response: any) => {
 				const data = response.data
 				this.context.commit('setUserOrders', data)

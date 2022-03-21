@@ -9,8 +9,7 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 const toast = useToast()
 
 @Module({ namespaced: true })
-export default class CartModule
-	extends AppBaseModule {
+export default class CartModule extends AppBaseModule {
 
 	cart: Array<CartItemModel> = []
 
@@ -86,8 +85,8 @@ export default class CartModule
 	}
 
 	@Action
-	async createOrder(data: any): Promise<void> {
-		await api.post('checkout/', data)
+	createOrder(data: any): Promise<void> {
+		return api.post('checkout/', data)
 			.then(() => {
 				this.context.commit('clearCart')
 				router.push('/cart/success')

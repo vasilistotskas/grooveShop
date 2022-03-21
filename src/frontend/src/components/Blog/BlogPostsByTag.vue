@@ -35,11 +35,11 @@ export default class BlogPostsByTag extends Vue {
   }
 
   async created(): Promise<void> {
-    await store.dispatch('blog/postsByTagFromRemote')
+    await store.dispatch('blog/fetchPostsByTagFromRemote')
   }
 
   async updated(): Promise<void> {
-    await store.dispatch('blog/postsByTagFromRemote')
+    await store.dispatch('blog/fetchPostsByTagFromRemote')
   }
 
 }

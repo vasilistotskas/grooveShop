@@ -4,8 +4,7 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 import { StripeElement } from '@/libraries/Stripe/StripeElement'
 
 @Module({ namespaced: true })
-export default class StripeCardComponents
-	extends AppBaseModule {
+export default class StripeCardComponents extends AppBaseModule {
 
 	stripeKey: string = 'pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3'
 	ibanError!: any

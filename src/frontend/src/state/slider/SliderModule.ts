@@ -5,8 +5,7 @@ import AppBaseModule from '@/state/common/AppBaseModule'
 import { Module, Action, Mutation } from 'vuex-module-decorators'
 
 @Module({ namespaced: true })
-export default class SliderModule
-	extends AppBaseModule {
+export default class SliderModule extends AppBaseModule {
 	sliders = [new SliderModel()]
 
 	get getSlidersData(): SliderModel[] {
@@ -19,8 +18,8 @@ export default class SliderModule
 	}
 
 	@Action
-	async slidersFromRemote(): Promise<void> {
-		await api.get('sliders/all/')
+	fetchSlidersFromRemote(): Promise<void> {
+		return api.get('sliders/all/')
 			.then((response: any) => {
 				const data = response.data
 				let slider = new SliderModel(data)

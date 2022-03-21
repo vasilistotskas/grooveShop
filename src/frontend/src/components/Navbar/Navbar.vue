@@ -240,7 +240,7 @@ export default class Navbar extends Vue {
           'method': ApiBaseMethods.GET
         } )
 
-    await store.dispatch('pagination/getPaginatedResults', paginationQuery)
+    await store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
 
     await router.push({
       path: '/search',

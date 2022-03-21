@@ -10,8 +10,7 @@ import ProductFavouriteModel from '@/state/product/favourite/ProductFavouriteMod
 const toast = useToast()
 
 @Module({ namespaced: true })
-export default class ProductFavouriteModule
-	extends AppBaseModule {
+export default class ProductFavouriteModule extends AppBaseModule {
 
 	favourites = [new ProductFavouriteModel()]
 	userFavourites = [new ProductFavouriteModel()]
@@ -66,14 +65,13 @@ export default class ProductFavouriteModule
 				console.log(error)
 			}
 		} else {
-			toast.error('You are not logged in')
+			return toast.error('You are not logged in')
 		}
 	}
 
 	@Action
-	async userFavouritesFromRemote(user_id: number): Promise<void> {
-
-		await api.get(`favourites/${ user_id }`)
+	fetchUserFavouritesFromRemote(user_id: number): Promise<void> {
+		return api.get(`favourites/${ user_id }`)
 			.then((response: any) => {
 				let data = response.data
 				this.context.commit('setFavourites', data)
@@ -84,9 +82,8 @@ export default class ProductFavouriteModule
 	}
 
 	@Action
-	async userFavouriteProductsFromRemote(user_id: number): Promise<void> {
-
-		await api.get(`favourites/products/${ user_id }`)
+	fetchUserFavouriteProductsFromRemote(user_id: number): Promise<void> {
+		return api.get(`favourites/products/${ user_id }`)
 			.then((response: any) => {
 				let data = response.data.results
 				const transformedData: any[] = []
@@ -102,7 +99,6 @@ export default class ProductFavouriteModule
 
 	@Action
 	async addToFavourites(): Promise<void> {
-
 		let product_id: number = store.getters['product/getProductId']
 		let data = {
 			'user_id': store.getters['user/data/getUserId'],
@@ -117,12 +113,11 @@ export default class ProductFavouriteModule
 			throw error
 		}
 
-		await this.context.dispatch('userFavouritesFromRemote', user_id)
+		return await this.context.dispatch('fetchUserFavouritesFromRemote', user_id)
 	}
 
 	@Action
 	async removeFromFavourites(): Promise<void> {
-
 		let user_id: number = store.getters['user/data/getUserId']
 		let product_id: number = store.getters['product/getProductId']
 
@@ -132,8 +127,7 @@ export default class ProductFavouriteModule
 		} catch (error) {
 			throw error
 		}
-
-		await this.context.dispatch('userFavouritesFromRemote', user_id)
+		return await this.context.dispatch('fetchUserFavouritesFromRemote', user_id)
 	}
 
 }

@@ -10,8 +10,7 @@ import { BaseAuthenticationTypes } from '@/state/auth/Enum/BaseAuthenticationTyp
 const toast = useToast()
 
 @Module({ namespaced: true })
-export default class AuthModule
-	extends AppBaseModule {
+export default class AuthModule extends AppBaseModule {
 	TOKEN_STORAGE_KEY = 'TOKEN_STORAGE_KEY'
 	isProduction = process.env.NODE_ENV === 'production'
 	isSessionAuthenticated = false
@@ -84,7 +83,7 @@ export default class AuthModule
 	@Action
 	async login(inputs: any): Promise<void> {
 		await this.context.commit(BaseAuthenticationTypes.LOGIN_BEGIN)
-		await api.post('login/', inputs)
+		return api.post('login/', inputs)
 			.then((response: any) => {
 				const token: string = response.data.auth_token
 				this.context.commit(BaseAuthenticationTypes.SET_TOKEN, token)
@@ -103,7 +102,7 @@ export default class AuthModule
 	@Action
 	async logout(): Promise<void> {
 		await this.context.commit(BaseAuthenticationTypes.LOGIN_BEGIN)
-		await api.post('logout/', {})
+		return api.post('logout/', {})
 			.then(() => {
 				this.context.commit(BaseAuthenticationTypes.LOGOUT)
 			})
@@ -120,7 +119,7 @@ export default class AuthModule
 	async initialize(): Promise<void> {
 		const token = localStorage.getItem(this.TOKEN_STORAGE_KEY)
 
-		await api.get('session/')
+		const response = await api.get('session/')
 			.then((response: any) => {
 				this.context.commit(BaseAuthenticationTypes.SET_SESSION_AUTH, response.data.isAuthenticated)
 			})
@@ -136,11 +135,12 @@ export default class AuthModule
 			this.context.commit(BaseAuthenticationTypes.SET_TOKEN, token)
 			this.context.commit(BaseAuthenticationTypes.LOGIN_SUCCESS, true)
 		}
+		return response
 	}
 
 	@Action
-	async clearAllAccountSessions(): Promise<void> {
-		await api.post('session/clear_all/', {})
+	clearAllAccountSessions(): Promise<void> {
+		return api.post('session/clear_all/', {})
 			.then(() => {
 				this.context.commit(BaseAuthenticationTypes.LOGOUT)
 				this.context.commit(BaseAuthenticationTypes.REMOVE_TOKEN)

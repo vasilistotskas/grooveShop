@@ -63,7 +63,7 @@ export default class BlogPost extends Vue {
   }
 
   async created(): Promise<void> {
-    await store.dispatch('blog/postBySlugFromRemote')
+    await store.dispatch('blog/fetchPostBySlugFromRemote')
   }
 
   public mediaStreamImage(
