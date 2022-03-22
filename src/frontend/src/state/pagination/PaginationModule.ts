@@ -7,14 +7,14 @@ import { PaginationQueryParametersModel } from '@/state/pagination/Model/Paginat
 @Module({ namespaced: true })
 export default class PaginationModule extends AppBaseModule {
 	results = []
-	results_count: number = 0
-	results_next_page: string = ''
-	results_previous_page: string = ''
-	results_total_pages: number = 0
-	alternativeToken: string = ''
+	results_count = 0
+	results_next_page = ''
+	results_previous_page = ''
+	results_total_pages = 0
+	alternativeToken = ''
 
-	current_page_number: number = 1
-	current_query: string = ''
+	current_page_number = 1
+	current_query = ''
 
 	show_next_button = false
 	show_previous_button = false
@@ -143,38 +143,38 @@ export default class PaginationModule extends AppBaseModule {
 				Authorization: 'Token ' + this.getUserToken
 			}
 		})
-		.then((response: any) => {
-			const results_data = response.data.results
-			const count_data = response.data.count
-			const next_url_data = response.data.links.next
-			const previous_url_data = response.data.links.previous
-			const total_pages_data = response.data.total_pages
+			.then((response: any) => {
+				const results_data = response.data.results
+				const count_data = response.data.count
+				const next_url_data = response.data.links.next
+				const previous_url_data = response.data.links.previous
+				const total_pages_data = response.data.total_pages
 
-			if (next_url_data) {
-				this.context.commit('setShowNextButton', true)
-			} else {
-				this.context.commit('setShowNextButton', false)
-			}
+				if (next_url_data) {
+					this.context.commit('setShowNextButton', true)
+				} else {
+					this.context.commit('setShowNextButton', false)
+				}
 
-			if (previous_url_data) {
-				this.context.commit('setShowPreviousButton', true)
-			} else {
-				this.context.commit('setShowPreviousButton', false)
-			}
+				if (previous_url_data) {
+					this.context.commit('setShowPreviousButton', true)
+				} else {
+					this.context.commit('setShowPreviousButton', false)
+				}
 
-			this.context.commit('setResults', results_data)
-			this.context.commit('setCountResults', count_data)
-			this.context.commit('setNextPageUrl', next_url_data)
-			this.context.commit('setPreviousPageUrl', previous_url_data)
-			this.context.commit('setTotalPages', total_pages_data)
-		})
-		.catch((e: Error) => {
-			this.context.commit('unsetResults')
-			console.log(e)
-		})
-		.finally(() =>
-			store.commit('app/setLoading', false)
-		)
+				this.context.commit('setResults', results_data)
+				this.context.commit('setCountResults', count_data)
+				this.context.commit('setNextPageUrl', next_url_data)
+				this.context.commit('setPreviousPageUrl', previous_url_data)
+				this.context.commit('setTotalPages', total_pages_data)
+			})
+			.catch((e: Error) => {
+				this.context.commit('unsetResults')
+				console.log(e)
+			})
+			.finally(() =>
+				store.commit('app/setLoading', false)
+			)
 
 	}
 

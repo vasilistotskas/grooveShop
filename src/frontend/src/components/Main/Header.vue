@@ -30,15 +30,15 @@ export default class Header extends Vue {
     return store.getters['cart/getCartTotalLength']
   }
 
-  mounted() {
+  mounted(): void {
     window.addEventListener('scroll', this.onScroll)
   }
 
-  beforeDestroy() {
+  beforeDestroy(): void {
     window.removeEventListener('scroll', this.onScroll)
   }
 
-  onScroll() {
+  onScroll(): void {
     const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
     if (currentScrollPosition < 0) {
       return

@@ -4,9 +4,9 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 @Module({ namespaced: true })
 export default class AppModule extends AppBaseModule {
-	loading: boolean = false
+	loading = false
 	windowWidth: number = window.innerWidth
-	navbarMenuHidden: boolean = true
+	navbarMenuHidden = true
 
 	get getLoading(): boolean {
 		return this.loading

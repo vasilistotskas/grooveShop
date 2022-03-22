@@ -172,23 +172,23 @@ export default class Register extends Vue {
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
-  get registrationCompleted(): any {
+  get registrationCompleted(): boolean {
     return store.getters['signup/getRegistrationCompleted']
   }
 
-  get registrationError(): any {
+  get registrationError(): boolean {
     return store.getters['signup/getRegistrationError']
   }
 
-  get registrationLoading(): any {
+  get registrationLoading(): boolean {
     return store.getters['signup/getRegistrationLoading']
   }
 
-  mounted() {
+  mounted(): void {
     document.title = 'Sign Up'
   }
 
-  updated() {
+  updated(): void {
     const emailFromLocalStorage = store.getters['signup/getRegistrationEmail']
     if (emailFromLocalStorage) this.activationEmailAtLocalStorage = true
   }

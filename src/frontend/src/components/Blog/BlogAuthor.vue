@@ -40,7 +40,7 @@ export default class BlogAuthor extends Vue {
     return store.getters['blog/getAuthorByEmail']
   }
 
-  get authorPostSet(): PostModel[] {
+  get authorPostSet(): Array<PostModel> {
     return this.authorByEmail.postSet
   }
 

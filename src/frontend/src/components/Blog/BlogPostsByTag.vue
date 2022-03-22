@@ -30,7 +30,7 @@ export default class BlogPostsByTag extends Vue {
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
-  get postsByTag(): PostModel[] {
+  get postsByTag(): Array<PostModel> {
     return store.getters['blog/getPostsByTag']
   }
 

@@ -42,23 +42,23 @@ export default class VerifyEmail extends Vue {
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
-  get isAuthenticated(): any {
+  get isAuthenticated(): boolean {
     return store.getters['auth/isAuthenticated']
   }
 
-  get activationCompleted(): any {
+  get activationCompleted(): boolean {
     return store.getters['signup/getActivationCompleted']
   }
 
-  get activationError(): any {
+  get activationError(): boolean {
     return store.getters['signup/getActivationError']
   }
 
-  get activationLoading(): any {
+  get activationLoading(): boolean {
     return store.getters['signup/getActivationLoading']
   }
 
-  get reActivationMailSent(): any {
+  get reActivationMailSent(): boolean {
     return store.getters['signup/getReActivationMailSent']
   }
 

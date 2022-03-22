@@ -2,7 +2,6 @@ import store from '@/store'
 import { forEach } from 'lodash'
 import api from '@/api/api.service'
 import { useToast } from 'vue-toastification'
-
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import ProductFavouriteModel from '@/state/product/favourite/ProductFavouriteModel'
@@ -15,22 +14,22 @@ export default class ProductFavouriteModule extends AppBaseModule {
 	favourites = [new ProductFavouriteModel()]
 	userFavourites = [new ProductFavouriteModel()]
 
-	get getFavouriteData(): ProductFavouriteModel[] {
+	get getFavouriteData(): Array<ProductFavouriteModel> {
 		return this.favourites
 	}
 
-	get getUserFavouriteData(): ProductFavouriteModel[] {
+	get getUserFavouriteData(): Array<ProductFavouriteModel> {
 		return this.userFavourites
 	}
 
 	get getStateIsCurrentProductInFavourites(): boolean {
-		let product_id: number = store.getters['product/getProductId']
+		const product_id: number = store.getters['product/getProductId']
 		const exists = this.favourites.filter(i => i.product_id === product_id)
 		return !!exists.length
 	}
 
 	@Mutation
-	setFavourites(favourites: ProductFavouriteModel[]): void {
+	setFavourites(favourites: Array<ProductFavouriteModel>): void {
 		this.favourites = favourites
 	}
 
@@ -40,7 +39,7 @@ export default class ProductFavouriteModule extends AppBaseModule {
 	}
 
 	@Mutation
-	setUserFavourites(favourites: ProductFavouriteModel[]): void {
+	setUserFavourites(favourites: Array<ProductFavouriteModel>): void {
 		this.userFavourites = favourites
 	}
 
@@ -51,7 +50,7 @@ export default class ProductFavouriteModule extends AppBaseModule {
 
 	@Action
 	async toggleFavourite(product: ProductFavouriteModel): Promise<any> {
-		let IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
+		const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
 		if (IsAuthenticated) {
 			try {
 				if (!this.getStateIsCurrentProductInFavourites) {
@@ -73,7 +72,7 @@ export default class ProductFavouriteModule extends AppBaseModule {
 	fetchUserFavouritesFromRemote(user_id: number): Promise<void> {
 		return api.get(`favourites/${ user_id }`)
 			.then((response: any) => {
-				let data = response.data
+				const data = response.data
 				this.context.commit('setFavourites', data)
 			})
 			.catch((e: Error) => {
@@ -85,7 +84,7 @@ export default class ProductFavouriteModule extends AppBaseModule {
 	fetchUserFavouriteProductsFromRemote(user_id: number): Promise<void> {
 		return api.get(`favourites/products/${ user_id }`)
 			.then((response: any) => {
-				let data = response.data.results
+				const data = response.data.results
 				const transformedData: any[] = []
 				forEach(data, function (value) {
 					transformedData.push(value.product_object)
@@ -99,12 +98,12 @@ export default class ProductFavouriteModule extends AppBaseModule {
 
 	@Action
 	async addToFavourites(): Promise<void> {
-		let product_id: number = store.getters['product/getProductId']
-		let data = {
+		const product_id: number = store.getters['product/getProductId']
+		const data = {
 			'user_id': store.getters['user/data/getUserId'],
 			product_id
 		}
-		let user_id: number = data.user_id
+		const user_id: number = data.user_id
 
 		try {
 			await api.post(`favourites/${ user_id }/`, data)
@@ -118,8 +117,8 @@ export default class ProductFavouriteModule extends AppBaseModule {
 
 	@Action
 	async removeFromFavourites(): Promise<void> {
-		let user_id: number = store.getters['user/data/getUserId']
-		let product_id: number = store.getters['product/getProductId']
+		const user_id: number = store.getters['user/data/getUserId']
+		const product_id: number = store.getters['product/getProductId']
 
 		try {
 			await api.delete(`favourites/delete/${ user_id }/${ product_id }`)

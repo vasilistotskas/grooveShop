@@ -31,7 +31,7 @@ export default class Success extends Vue {
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
-  mounted() {
+  mounted(): void {
     document.title = 'Order Success'
   }
 

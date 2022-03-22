@@ -6,7 +6,7 @@ import { StripeElement } from '@/libraries/Stripe/StripeElement'
 @Module({ namespaced: true })
 export default class StripeCardComponents extends AppBaseModule {
 
-	stripeKey: string = 'pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3'
+	stripeKey = 'pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3'
 	ibanError!: any
 	ibanIsCompleted!: any
 	ibanEl!: any
@@ -36,7 +36,7 @@ export default class StripeCardComponents extends AppBaseModule {
 
 	@Action
 	async initIBANComponent(): Promise<void> {
-		let ibanElementExists = document.getElementById('stripe-iban-element')
+		const ibanElementExists = document.getElementById('stripe-iban-element')
 		if (ibanElementExists) {
 			const init = await initStripeComponent(
 				this.stripeKey,

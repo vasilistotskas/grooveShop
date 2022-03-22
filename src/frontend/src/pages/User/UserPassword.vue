@@ -156,7 +156,7 @@ export default class UserPassword extends Vue {
     }
   }
 
-  clearAllAccountSessions() {
+  clearAllAccountSessions(): void {
     store.dispatch('auth/clearAllAccountSessions')
   }
 

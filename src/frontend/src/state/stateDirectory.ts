@@ -5,6 +5,7 @@ import BlogModule from '@/state/blog/BlogModule'
 import AuthModule from '@/state/auth/auth/AuthModule'
 import Iban from '@/libraries/Stripe/Components/Iban'
 import Card from '@/libraries/Stripe/Components/Card'
+import PayWayModule from '@/state/payway/PayWayModule'
 import SliderModule from '@/state/slider/SliderModule'
 import SearchModule from '@/state/search/SearchModule'
 import AppBaseModule from '@/state/common/AppBaseModule'
@@ -41,7 +42,8 @@ const stateDirectory = <Record<string, typeof AppBaseModule>>{
 	'auth': AuthModule,
 	'password': PasswordModule,
 	'signup': SignUpModule,
-	'blog': BlogModule
+	'blog': BlogModule,
+	'pay_way': PayWayModule
 }
 
 export default stateDirectory

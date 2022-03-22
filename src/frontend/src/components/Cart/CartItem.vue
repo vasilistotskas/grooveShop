@@ -75,7 +75,7 @@ export default class CartItemVue extends Vue {
     return this.item.quantity * this.item.product.price
   }
 
-  get productPath() {
+  get productPath(): string {
     return '/product' + this.item.product.absolute_url
   }
 
@@ -100,11 +100,11 @@ export default class CartItemVue extends Vue {
     return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
   }
 
-  public decrementQuantity(item: Record<string, unknown>): void {
+  public decrementQuantity(item: CartItemModel): void {
     store.commit('cart/decrementQuantity', item)
   }
 
-  public incrementQuantity(item: Record<string, unknown>): void {
+  public incrementQuantity(item: CartItemModel): void {
     store.commit('cart/incrementQuantity', item)
   }
 
@@ -112,7 +112,7 @@ export default class CartItemVue extends Vue {
     store.commit('cart/updateCart')
   }
 
-  public removeFromCart(item: Record<string, unknown>): void {
+  public removeFromCart(item: CartItemModel): void {
     store.commit('cart/removeFromCart', item)
   }
 }

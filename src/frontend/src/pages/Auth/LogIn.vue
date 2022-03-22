@@ -161,7 +161,7 @@ export default class LogIn extends Vue {
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
-  mounted() {
+  mounted(): void {
     document.title = 'Log In'
   }
 

@@ -45,13 +45,13 @@ export default class ProductModule extends AppBaseModule {
 
 	@Action
 	fetchProductFromRemote(): Promise<void> {
-		let category_slug = router.currentRoute.value.params.category_slug
-		let product_slug = router.currentRoute.value.params.product_slug
+		const category_slug = router.currentRoute.value.params.category_slug
+		const product_slug = router.currentRoute.value.params.product_slug
 
 		return api.get(`products/${ category_slug }/${ product_slug }`)
 			.then((response: any) => {
 				const data = response.data
-				let product = new ProductModel(data)
+				const product = new ProductModel(data)
 				this.context.commit('setProduct', product)
 				this.context.commit('setProductId', data.id)
 			})
@@ -75,8 +75,8 @@ export default class ProductModule extends AppBaseModule {
 
 	@Action
 	updateProductHits(): Promise<unknown> {
-		let category_slug = router.currentRoute.value.params.category_slug
-		let product_slug = router.currentRoute.value.params.product_slug
+		const category_slug = router.currentRoute.value.params.category_slug
+		const product_slug = router.currentRoute.value.params.product_slug
 
 		if (!this.product) {
 			throw new Error()

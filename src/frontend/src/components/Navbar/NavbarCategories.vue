@@ -44,6 +44,7 @@ import store from '@/store'
 import { cloneDeep } from 'lodash'
 import { onClickOutside } from '@vueuse/core'
 import { Options, Vue } from 'vue-class-component'
+import CategoryModel from '@/state/category/CategoryModel'
 import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
@@ -61,8 +62,8 @@ export default class NavbarCategories extends Vue {
     headerNavbarMenu: HTMLElement
   }
   categoryBoxHovered = null
-  categoriesTree = []
-  categories = []
+  categoriesTree: Array<CategoryModel> = []
+  categories: Array<CategoryModel> = []
   mainToggleButton!: HTMLElement
   navbarProductsButton!: HTMLElement
 

@@ -29,7 +29,7 @@ export default class Blog extends Vue {
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
-  get allPosts(): PostModel[] {
+  get allPosts(): Array<PostModel> {
     return store.getters['blog/getAllPosts']
   }
 

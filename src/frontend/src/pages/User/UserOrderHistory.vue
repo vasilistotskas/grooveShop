@@ -60,6 +60,7 @@ import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
+import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
@@ -70,7 +71,7 @@ import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpe
   }
 })
 
-export default class UserOrderHistory extends Vue {
+export default class UserOrderHistory extends Vue implements PaginatedInterface<ProductModel> {
 
   uri = window.location.search.substring(1)
   params = new URLSearchParams(this.uri)

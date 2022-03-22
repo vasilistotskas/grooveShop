@@ -75,11 +75,11 @@ export default class CartVue extends Vue {
     return store.getters['cart/getCartTotalPrice']
   }
 
-  mounted() {
+  mounted(): void {
     document.title = 'Cart'
   }
 
-  public removeFromCart(item: CartItemModel) {
+  public removeFromCart(item: CartItemModel): void {
     store.commit('cart/removeFromCart', item)
   }
 }

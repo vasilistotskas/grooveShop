@@ -246,7 +246,7 @@ export default class UserSettings extends Vue {
     return store.getters['auth/isAuthenticated']
   }
 
-  get availableCountries(): CountryModel {
+  get availableCountries(): Array<CountryModel> {
     return store.getters['country/getCountries']
   }
 

@@ -112,7 +112,7 @@ export default class ReviewProductCard extends Vue {
     this.reviewActionsOpen = true
   }
 
-  public reviewBackgroundImage(review: any): string {
+  public reviewBackgroundImage(review: ProductReviewModel): string {
 
     const imageNameFileTypeRemove = review.product.main_image_filename.substring(0, review.product.main_image_filename.lastIndexOf('.')) || review.product.main_image_filename
 

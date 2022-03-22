@@ -24,7 +24,7 @@ export default class ProductFavouriteButton extends Vue {
 
   heartIcon = faHeart
 
-  get isFavourite(): ProductModel {
+  get isFavourite(): boolean {
     return store.getters['product/favourite/getStateIsCurrentProductInFavourites']
   }
 

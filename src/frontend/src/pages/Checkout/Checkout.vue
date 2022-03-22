@@ -326,11 +326,11 @@ export default class Checkout extends Vue {
     return store.getters['auth/isAuthenticated']
   }
 
-  get availableCountries(): CountryModel {
+  get availableCountries(): Array<CountryModel> {
     return store.getters['country/getCountries']
   }
 
-  get regionsBasedOnAlpha(): RegionsModel {
+  get regionsBasedOnAlpha(): Array<RegionsModel> {
     return store.getters['country/getRegionsBasedOnAlpha']
   }
 
@@ -358,7 +358,10 @@ export default class Checkout extends Vue {
   }
 
   async created(): Promise<void> {
-    await store.dispatch('country/fetchCountriesFromRemote')
+    await Promise.all([
+      store.dispatch('country/fetchCountriesFromRemote'),
+      store.dispatch('pay_way/fetchActivePayWaysFromRemote')
+    ])
   }
 
   async mounted(): Promise<void> {

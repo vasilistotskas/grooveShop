@@ -149,7 +149,7 @@ export default class CategoryVue extends Vue implements PaginatedInterface<Categ
     await this.fetchCategoryProducts()
   }
 
-  unmounted() {
+  unmounted(): void {
     store.commit('pagination/unsetResults')
     this.formEl.classList.remove('opened')
     this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)

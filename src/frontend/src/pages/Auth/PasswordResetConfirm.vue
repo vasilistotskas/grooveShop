@@ -149,15 +149,15 @@ export default class PasswordRestConfirm extends Vue {
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
-  get resetCompleted(): any {
+  get resetCompleted(): boolean {
     return store.getters['password/getResetCompleted']
   }
 
-  get resetError(): any {
+  get resetError(): boolean {
     return store.getters['password/getResetError']
   }
 
-  get resetLoading(): any {
+  get resetLoading(): boolean {
     return store.getters['password/getResetLoading']
   }
 

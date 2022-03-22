@@ -109,7 +109,7 @@
       </div>
     </div>
     <div class="container-small">
-      <div v-if="productReviewResults && Object.keys(productReviewResults).length > 0" id="reviews-container"
+      <div v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0" id="reviews-container"
            class="product-page-grid-review"
       >
         <div class="product-reviews-grid">
@@ -123,7 +123,7 @@
           />
 
           <ReviewProductCard
-              v-for="review in productReviewResults"
+              v-for="review in allPaginatedResults"
               :key="review.id"
               :class="{'current-user-review-card': review.user_id == userId }"
               :review="review"
@@ -132,12 +132,12 @@
           />
         </div>
         <Pagination
-            v-if="Object.keys(productReviewResults).length !== 0"
+            v-if="Object.keys(allPaginatedResults).length !== 0"
             :endpoint-url="buildEndPointUrlForPaginatedResults()"
             :max-visible-buttons="3"
             :route="'Product'"
             :router-replace="false"
-            :total-pages="productReviewResultsTotalPages"
+            :total-pages="allPaginatedResultsTotalPages"
         />
       </div>
     </div>
@@ -161,6 +161,7 @@ import ReviewProductCard from '@/components/Reviews/ReviewProductCard.vue'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { faShippingFast } from '@fortawesome/free-solid-svg-icons/faShippingFast'
 import ProductFavouriteButton from '@/components/Product/ProductFavouriteButton.vue'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
@@ -189,7 +190,7 @@ const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.
   }
 })
 
-export default class ProductVue extends Vue {
+export default class ProductVue extends Vue implements PaginatedInterface<ProductReviewModel> {
 
   quantity = 1
   uri = window.location.search.substring(1)
@@ -221,27 +222,31 @@ export default class ProductVue extends Vue {
     return store.getters['product/review/getUserToProductReview']
   }
 
+  get currentPageNumber(): number {
+    return store.getters['pagination/getCurrentPageNumber']
+  }
+
   get currentPageQuery(): string {
     return store.getters['pagination/getCurrentQuery']
   }
 
-  get productReviewResults(): ProductModel {
+  get allPaginatedResults(): Array<any> {
     return store.getters['pagination/getResultData']
   }
 
-  get productReviewResultsCount(): number {
+  get allPaginatedResultsCount(): number {
     return store.getters['pagination/getResultCountData']
   }
 
-  get productReviewResultsNextPageUrl(): string {
+  get allPaginatedResultsNextPageUrl(): URL {
     return store.getters['pagination/getResultNextPageUrl']
   }
 
-  get productReviewResultsPreviousPageUrl(): string {
+  get allPaginatedResultsPreviousPageUrl(): URL {
     return store.getters['pagination/getResultPreviousPageUrl']
   }
 
-  get productReviewResultsTotalPages(): number {
+  get allPaginatedResultsTotalPages(): number {
     return store.getters['pagination/getResultTotalPages']
   }
 
@@ -311,6 +316,7 @@ export default class ProductVue extends Vue {
 
     const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
         .createPaginationQuery({
+          'pageNumber': this.currentPageNumber,
           'endpointUrl': this.buildEndPointUrlForPaginatedResults(),
           'queryParams': this.currentPageQuery,
           'method': ApiBaseMethods.GET

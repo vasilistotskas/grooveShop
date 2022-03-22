@@ -6,7 +6,7 @@ import { StripeElement } from '@/libraries/Stripe/StripeElement'
 @Module({ namespaced: true })
 export default class StripeCardComponents extends AppBaseModule {
 
-	stripeKey: string = 'pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3'
+	stripeKey = 'pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3'
 	element!: StripeElement
 	selector!: string
 	cbOnChange!: (ev: any) => void
@@ -102,7 +102,7 @@ export default class StripeCardComponents extends AppBaseModule {
 
 	@Action
 	async createStripeToken(): Promise<void> {
-		let elements = this.card
+		const elements = this.card
 		await this.stripeInstance.createToken(elements).then((result: any) => {
 			this.context.commit('setResultToken', result)
 		})
@@ -129,7 +129,7 @@ export default class StripeCardComponents extends AppBaseModule {
 		}
 
 		/** Card Number */
-		let cardNumberExists = document.getElementById('stripe-card-number-element')
+		const cardNumberExists = document.getElementById('stripe-card-number-element')
 		if (cardNumberExists) {
 			const initCardNumber = await initStripeComponent(
 				this.stripeKey,
@@ -149,7 +149,7 @@ export default class StripeCardComponents extends AppBaseModule {
 		}
 
 		/** Card Expiry */
-		let cardExpiryExists = document.getElementById('stripe-card-expiry-element')
+		const cardExpiryExists = document.getElementById('stripe-card-expiry-element')
 		if (cardExpiryExists) {
 			const initCardExpiry = await initStripeComponent(
 				this.stripeKey,
@@ -169,7 +169,7 @@ export default class StripeCardComponents extends AppBaseModule {
 		}
 
 		/** Card CVC */
-		let cardCvcExists = document.getElementById('stripe-card-cvc-element')
+		const cardCvcExists = document.getElementById('stripe-card-cvc-element')
 		if (cardCvcExists) {
 			const initCardCvc = await initStripeComponent(
 				this.stripeKey,

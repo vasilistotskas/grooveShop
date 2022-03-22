@@ -14,11 +14,11 @@ export default class CountryModule extends AppBaseModule {
 	regionsBasedOnAlpha: Array<RegionsModel> = []
 	selectedCountry = new CountryModel()
 
-	get getCountries(): CountryModel[] {
+	get getCountries(): Array<CountryModel> {
 		return this.countries
 	}
 
-	get getRegionsBasedOnAlpha(): RegionsModel[] {
+	get getRegionsBasedOnAlpha(): Array<RegionsModel> {
 		return this.regionsBasedOnAlpha
 	}
 
@@ -67,7 +67,7 @@ export default class CountryModule extends AppBaseModule {
 	async findRegionsBasedOnAlphaForLoggedCustomer(): Promise<void> {
 		const userDetails: UserDetailsModel = store.getters['user/data/getUserData']
 		if (userDetails.country) {
-			let result = this.countries.find(obj => {
+			const result = this.countries.find(obj => {
 				return obj.alpha_2 === userDetails.country
 			})
 			if (result) {

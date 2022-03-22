@@ -72,24 +72,24 @@ import { ImageTypeOptions, ImageFitOptions, ImagePositionOptions } from '@/helpe
 
 export default class BlogPostList extends Vue {
   showAuthor: boolean = false
-  posts: PostModel[] = []
+  posts: Array<PostModel> = []
   ImageTypeOptions: any = ImageTypeOptions
   ImageFitOptions: any = ImageFitOptions
   ImagePositionOptions: any = ImagePositionOptions
 
-  get publishedPosts(): PostModel[] {
+  get publishedPosts(): Array<PostModel> {
     return store.getters['blog/getPublishedPosts']
   }
 
-  get allTags(): PostModel[] {
+  get allTags(): Array<PostModel> {
     return store.getters['blog/getAllTags']
   }
 
-  get allAuthors(): PostModel[] {
+  get allAuthors(): Array<PostModel> {
     return store.getters['blog/getAllAuthors']
   }
 
-  get postsByTag(): PostModel[] {
+  get postsByTag(): Array<PostModel> {
     return store.getters['blog/getPostsByTag']
   }
 

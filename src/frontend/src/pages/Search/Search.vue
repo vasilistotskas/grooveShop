@@ -8,16 +8,16 @@
         </div>
 
         <Pagination
-            v-if="Object.keys(searchResults).length !== 0"
+            v-if="Object.keys(allPaginatedResults).length !== 0"
             :endpoint-url="'search'"
             :max-visible-buttons="3"
             :route="'Search'"
-            :total-pages="searchResultsTotalPages"
+            :total-pages="allPaginatedResultsTotalPages"
         />
 
         <div class="product-listing-grid mt-3 mb-3">
           <ProductCard
-              v-for="product in searchResults"
+              v-for="product in allPaginatedResults"
               :key="product.id"
               :product="product"
               class="grid-item"
@@ -38,6 +38,7 @@ import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
+import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
@@ -50,7 +51,7 @@ import { PaginationQueryParametersModel } from '@/state/pagination/Model/Paginat
   }
 })
 
-export default class SearchVue extends Vue {
+export default class SearchVue extends Vue implements PaginatedInterface<ProductModel> {
 
   query: string | null = ''
   uri = window.location.search.substring(1)
@@ -61,23 +62,23 @@ export default class SearchVue extends Vue {
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
-  get searchResults(): ProductModel[] {
+  get allPaginatedResults(): Array<ProductModel> {
     return store.getters['pagination/getResultData']
   }
 
-  get searchResultsCount(): number {
+  get allPaginatedResultsCount(): number {
     return store.getters['pagination/getResultCountData']
   }
 
-  get searchResultsNextPageUrl(): string {
+  get allPaginatedResultsNextPageUrl(): URL {
     return store.getters['pagination/getResultNextPageUrl']
   }
 
-  get searchResultsPreviousPageUrl(): string {
+  get allPaginatedResultsPreviousPageUrl(): URL {
     return store.getters['pagination/getResultPreviousPageUrl']
   }
 
-  get searchResultsTotalPages(): number {
+  get allPaginatedResultsTotalPages(): number {
     return store.getters['pagination/getResultTotalPages']
   }
 

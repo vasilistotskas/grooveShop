@@ -46,7 +46,7 @@ export default class CategoryModule extends AppBaseModule {
 		return api.get(`categories/${ categorySlug }/`)
 			.then((response: any) => {
 				const data = response.data[0]
-				let category = new CategoryModel(data)
+				const category = new CategoryModel(data)
 				this.context.commit('setCategory', category)
 			})
 			.catch((e: Error) => {

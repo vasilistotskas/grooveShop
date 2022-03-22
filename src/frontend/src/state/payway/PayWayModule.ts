@@ -7,7 +7,7 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 export default class PayWayModule extends AppBaseModule {
 	active_pay_ways: Array<PayWayModel> = []
 
-	get getActivePayWays(): PayWayModel[] {
+	get getActivePayWays(): Array<PayWayModel> {
 		return this.active_pay_ways
 	}
 
@@ -18,7 +18,7 @@ export default class PayWayModule extends AppBaseModule {
 
 	@Action
 	fetchActivePayWaysFromRemote(): Promise<void> {
-		return api.get('payways/')
+		return api.get('pay_way/')
 			.then((response: any) => {
 				const data: PayWayModel = response.data
 				this.context.commit('setActivePayWays', data)

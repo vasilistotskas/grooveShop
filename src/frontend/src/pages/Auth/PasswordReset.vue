@@ -75,15 +75,15 @@ export default class PasswordReset extends Vue {
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
-  get emailCompleted(): any {
+  get emailCompleted(): boolean {
     return store.getters['password/getEmailCompleted']
   }
 
-  get emailError(): any {
+  get emailError(): boolean {
     return store.getters['password/getEmailError']
   }
 
-  get emailLoading(): any {
+  get emailLoading(): boolean {
     return store.getters['password/getEmailLoading']
   }
 

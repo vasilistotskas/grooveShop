@@ -3,7 +3,7 @@ import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 export default class ImageUrlModel {
 
 	static buildMediaStreamImageUrl(mediaStreamImageData: ImageUrlInterface) {
-		const mediaStreamPath: string = '/mediastream/media/uploads/'
+		const mediaStreamPath = '/mediastream/media/uploads/'
 		const imageNameFileTypeRemove: string = mediaStreamImageData.imageName.substring(0, mediaStreamImageData.imageName.lastIndexOf('.')) || mediaStreamImageData.imageName
 
 		const width: string = mediaStreamImageData.width ? mediaStreamImageData.width + '/' : ''

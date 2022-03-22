@@ -16,19 +16,19 @@ export default class BlogModule extends AppBaseModule {
 	postBySlug = new PostModel()
 	author = new AuthorModel()
 
-	get getAllPosts(): PostModel[] {
+	get getAllPosts(): Array<PostModel> {
 		return this.allPosts
 	}
 
-	get getAllTags(): TagModel[] {
+	get getAllTags(): Array<TagModel> {
 		return this.allTags
 	}
 
-	get getAllAuthors(): AuthorModel[] {
+	get getAllAuthors(): Array<AuthorModel> {
 		return this.allAuthors
 	}
 
-	get getPostsByTag(): PostModel[] {
+	get getPostsByTag(): Array<PostModel> {
 		return this.postsByTag
 	}
 
@@ -36,7 +36,7 @@ export default class BlogModule extends AppBaseModule {
 		return this.postBySlug
 	}
 
-	get getPublishedPosts(): PostModel[] {
+	get getPublishedPosts(): Array<PostModel> {
 		return this.allPosts.filter(post => post.published)
 	}
 
@@ -45,22 +45,22 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	@Mutation
-	setAllPosts(data: PostModel[]): void {
+	setAllPosts(data: Array<PostModel>): void {
 		this.allPosts = data
 	}
 
 	@Mutation
-	setAllTags(data: TagModel[]): void {
+	setAllTags(data: Array<TagModel>): void {
 		this.allTags = data
 	}
 
 	@Mutation
-	setAllAuthors(data: AuthorModel[]): void {
+	setAllAuthors(data: Array<AuthorModel>): void {
 		this.allAuthors = data
 	}
 
 	@Mutation
-	setPostsByTag(data: PostModel[]): void {
+	setPostsByTag(data: Array<PostModel>): void {
 		this.postsByTag = data
 	}
 

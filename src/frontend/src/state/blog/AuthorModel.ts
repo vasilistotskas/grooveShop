@@ -8,7 +8,7 @@ export default class AuthorModel extends EntityBase {
 	bio!: string
 	website!: string
 	user!: AuthorUserModel
-	postSet!: PostModel[]
+	postSet!: Array<PostModel>
 
 	public constructor(data?: Partial<AuthorModel>) {
 		super(data)

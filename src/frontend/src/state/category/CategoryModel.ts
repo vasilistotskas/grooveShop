@@ -1,4 +1,5 @@
 import EntityBase from '@/state/common/EntityBase'
+import ProductModel from '@/state/product/ProductModel'
 
 export default class CategoryModel extends EntityBase {
 
@@ -13,7 +14,7 @@ export default class CategoryModel extends EntityBase {
 	category_menu_main_banner_filename!: string
 	name!: string
 	parent!: number
-	all_tree_products!: Array<any>
+	all_tree_products!: Array<ProductModel>
 	children!: Array<CategoryModel>
 	slug!: string
 	tags!: string

@@ -5,7 +5,7 @@
         <div class="card-image-content">
           <img v-if="product.main_image_filename" :alt="product.name"
                :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, product.main_image_filename, '150', '150')"
-               class="card-img-top img-fluid"
+               class="card-img-border img-fluid"
                height="150" width="150"
                loading="lazy"
           />

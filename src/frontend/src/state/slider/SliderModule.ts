@@ -22,7 +22,7 @@ export default class SliderModule extends AppBaseModule {
 		return api.get('sliders/all/')
 			.then((response: any) => {
 				const data = response.data
-				let slider = new SliderModel(data)
+				const slider = new SliderModel(data)
 				this.context.commit('setSliders', slider)
 			})
 			.catch((e: Error) => {

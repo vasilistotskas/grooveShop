@@ -115,7 +115,7 @@ export default abstract class EntityUpdatableTransformable<DEST, SOURCE extends 
 		destField: keyof DEST,
 		sourceField: keyof SOURCE,
 		from: Partial<SOURCE>,
-		prefix: string = '',
+		prefix = '',
 		firstEntryDisplayMessage?: string
 	): void {
 		let finalValue: string | boolean = get(from, sourceField) as unknown as boolean
@@ -152,7 +152,7 @@ export default abstract class EntityUpdatableTransformable<DEST, SOURCE extends 
 		firstEntryDisplayMessage?: string,
 		additionalOptions?: Record<string, never>
 	): void {
-		let finalValue: string = ''
+		let finalValue = ''
 		const fieldValue = get(from, sourceField) as unknown as string
 		if (!isUndefined(fieldValue) && !isEmpty(fieldValue)) {
 			finalValue = fieldValue

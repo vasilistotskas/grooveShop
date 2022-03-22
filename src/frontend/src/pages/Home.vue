@@ -175,15 +175,15 @@ export default class Home extends Vue {
     return store.getters['app/isMobile']
   }
 
-  get axiosBaseUrl(): boolean {
+  get axiosBaseUrl(): string | undefined {
     return store.getters['app/axiosBaseUrl']
   }
 
-  get LatestProducts(): [ProductModel] {
+  get LatestProducts(): Array<ProductModel> {
     return store.getters['product/getLatestProductData']
   }
 
-  get homepageSlider(): [SliderModel] {
+  get homepageSlider(): Array<SliderModel> {
     return store.getters['slider/getSlidersData']
   }
 

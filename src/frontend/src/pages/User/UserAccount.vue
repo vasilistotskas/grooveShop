@@ -127,7 +127,7 @@ export default class UserAccount extends Vue {
     return first_name + ' ' + last_name
   }
 
-  created() {
+  created(): void {
     document.title = 'My Account'
     this.$watch(
         () => this.userData,
@@ -137,11 +137,11 @@ export default class UserAccount extends Vue {
     )
   }
 
-  mounted() {
+  mounted(): void {
     this.profileImageUrl = this.userData.get_user_profile_image_url
   }
 
-  updated() {
+  updated(): void {
     if (router.currentRoute.value.name === 'UserAccount') {
       document.title = 'My Account'
     }

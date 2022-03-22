@@ -12,7 +12,7 @@ export default class PostModel extends EntityBase {
 	slug!: string
 	subtitle!: string
 	title!: string
-	tags!: TagModel[]
+	tags!: Array<TagModel>
 
 	public constructor(data?: Partial<PostModel>) {
 		super(data)
