@@ -1,22 +1,28 @@
 <template>
-  <div v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0" class="container">
+  <div
+    v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0"
+    class="container"
+  >
     <div class="product-listing-grid mb-4">
       <ProductCard
-          v-for="product in allPaginatedResults"
-          :key="product.id"
-          :product="product.product_object"
-          class="grid-item"
+        v-for="product in allPaginatedResults"
+        :key="product.id"
+        :product="product.product_object"
+        class="grid-item"
       />
     </div>
     <Pagination
-        v-if="Object.keys(allPaginatedResults).length !== 0"
-        :endpoint-url="buildEndPointUrlForPaginatedResults()"
-        :max-visible-buttons="3"
-        :route="'Favourites'"
-        :total-pages="allPaginatedResultsTotalPages"
+      v-if="Object.keys(allPaginatedResults).length !== 0"
+      :endpoint-url="buildEndPointUrlForPaginatedResults()"
+      :max-visible-buttons="3"
+      :route="'Favourites'"
+      :total-pages="allPaginatedResultsTotalPages"
     />
   </div>
-  <div class="user_profile-no-data" v-else>
+  <div
+    v-else
+    class="user_profile-no-data"
+  >
     <h1>NO FAVOURITES</h1>
   </div>
 </template>

@@ -1,33 +1,54 @@
 <template>
-  <div v-if="src" class="profile-image-grid-container">
-    <form id="uploadImageForm" class="profile-image-grid-form" enctype="multipart/form-data" name="uploadImageForm"
-          title="Change Profile Picture">
+  <div
+    v-if="src"
+    class="profile-image-grid-container"
+  >
+    <form
+      id="uploadImageForm"
+      class="profile-image-grid-form"
+      enctype="multipart/form-data"
+      name="uploadImageForm"
+      title="Change Profile Picture"
+    >
       <div class="profile-image-grid-content">
-        <div :class="{ 'hovering': profileImageHovering }"
-             class="profile-image-part"
-             @mouseout="profileImageHovering = false"
-             @mouseover="profileImageHovering = true"
+        <div
+          :class="{ 'hovering': profileImageHovering }"
+          class="profile-image-part"
+          @mouseout="profileImageHovering = false"
+          @mouseover="profileImageHovering = true"
         >
-          <img :src="src"
-               alt="User Image"
-               class="rounded-circle img-fluid"
-               height="110"
-               width="110"
-               loading="lazy"
-          />
-          <label class="profile-image-label" for="image">
+          <img
+            :src="src"
+            alt="User Image"
+            class="rounded-circle img-fluid"
+            height="110"
+            width="110"
+            loading="lazy"
+          >
+          <label
+            class="profile-image-label"
+            for="image"
+          >
             <input
-                id="image"
-                class="d-none"
-                name="image"
-                type="file"
-                @change="updateUserImage"
+              id="image"
+              class="d-none"
+              name="image"
+              type="file"
+              @change="updateUserImage"
+            >
+            <font-awesome-icon
+              :icon="cameraIcon"
+              size="3x"
             />
-            <font-awesome-icon :icon="cameraIcon" size="3x"/>
           </label>
         </div>
         <div class="profile-fullname-part">
-          <RouterLink :to="{ name: 'UserAccount' }" aria-label="MyAccount" class="btn-w-effect" title="My Account">
+          <RouterLink
+            :to="{ name: 'UserAccount' }"
+            aria-label="MyAccount"
+            class="btn-w-effect"
+            title="My Account"
+          >
             <h5>{{ fullname }}</h5>
           </RouterLink>
         </div>

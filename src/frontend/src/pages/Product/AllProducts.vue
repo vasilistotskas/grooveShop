@@ -1,26 +1,28 @@
 <template>
   <div class="page-search mt-8 mb-5">
-    <Breadcrumbs :bread-crumb-path="breadCrumbPath"/>
+    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="container">
       <div class="content-min-height">
         <div class="col-12 mb-3 mt-3">
-          <h2 class="is-size-5 has-text-grey">All Products</h2>
+          <h2 class="is-size-5 has-text-grey">
+            All Products
+          </h2>
         </div>
 
         <Pagination
-            v-if="Object.keys(allPaginatedResults).length !== 0"
-            :endpoint-url="'products/all'"
-            :max-visible-buttons="3"
-            :route="'AllProducts'"
-            :total-pages="allPaginatedResultsTotalPages"
+          v-if="Object.keys(allPaginatedResults).length !== 0"
+          :endpoint-url="'products/all'"
+          :max-visible-buttons="3"
+          :route="'AllProducts'"
+          :total-pages="allPaginatedResultsTotalPages"
         />
 
         <div class="product-listing-grid mt-3 mb-3">
           <ProductCard
-              v-for="product in allPaginatedResults"
-              :key="product.id"
-              :product="product"
-              class="grid-item"
+            v-for="product in allPaginatedResults"
+            :key="product.id"
+            :product="product"
+            class="grid-item"
           />
         </div>
       </div>

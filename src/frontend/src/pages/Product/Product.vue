@@ -1,31 +1,40 @@
 <template>
   <div class="container min-height-container mt-7">
-    <Breadcrumbs :bread-crumb-path="breadCrumbPath"/>
-    <div v-if="product && Object.keys(product).length > 0" class="product-page-grid-container mb-5">
+    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
+    <div
+      v-if="product && Object.keys(product).length > 0"
+      class="product-page-grid-container mb-5"
+    >
       <div class="product-page-grid-image">
         <figure
-            v-for="image in product.images"
-            :key="image.id"
-            :class="{'image-main': image.is_main }"
-            class="image"
+          v-for="image in product.images"
+          :key="image.id"
+          :class="{'image-main': image.is_main }"
+          class="image"
         >
-          <img :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, image.product_image_filename, '330', '420')"
-               alt="Product Image"
-               class="img-fluid"
-               loading="lazy"
-          />
+          <img
+            :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, image.product_image_filename, '330', '420')"
+            alt="Product Image"
+            class="img-fluid"
+            loading="lazy"
+          >
         </figure>
       </div>
       <div class="product-page-grid-right">
         <div class="product-page-grid-info-part-one">
           <div class="product-page-grid-info">
-            <h1 class="title mb-2">{{ product.name }}</h1>
+            <h1 class="title mb-2">
+              {{ product.name }}
+            </h1>
             <h5 class="mb-4">
               <strong>Product ID: </strong>
               <span>{{ product.id }}</span>
             </h5>
             <!-- Product Review -->
-            <p class="description mb-4" v-html="product.description"></p>
+            <p
+              class="description mb-4"
+              v-html="product.description"
+            />
           </div>
 
           <div class="product-page-grid-price mb-4">
@@ -44,36 +53,65 @@
           </div>
 
           <div class="product-page-information mb-4">
-            <div v-if="product.stock > 0" class="product-page-information-availability">
-              <font-awesome-icon :icon="cubesIcon" :style="{ color: '#53e24aeb' }" size="lg"/>
+            <div
+              v-if="product.stock > 0"
+              class="product-page-information-availability"
+            >
+              <font-awesome-icon
+                :icon="cubesIcon"
+                :style="{ color: '#53e24aeb' }"
+                size="lg"
+              />
               <span>Immediately available</span>
             </div>
-            <div v-else class="product-page-information-availability unavailable">
-              <font-awesome-icon :icon="warningTriangleIcon" :style="{ color: '#FD0002e0' }" size="lg"/>
+            <div
+              v-else
+              class="product-page-information-availability unavailable"
+            >
+              <font-awesome-icon
+                :icon="warningTriangleIcon"
+                :style="{ color: '#FD0002e0' }"
+                size="lg"
+              />
               <span>Out of stock</span>
             </div>
             <div class="product-page-information-delivery">
-              <font-awesome-icon :icon="truckPickupIcon" :style="{ color: '#1f8dfd' }" size="lg"/>
+              <font-awesome-icon
+                :icon="truckPickupIcon"
+                :style="{ color: '#1f8dfd' }"
+                size="lg"
+              />
               <span>Instant delivery</span>
             </div>
           </div>
 
           <div class="product-page-grid-buttons">
-            <input v-model="quantity" class="input" min="1" type="number"/>
-            <button :class="{'disabled': disabled }" :title="`Add to cart ${product.name}`"
-                    class="btn-outline-primary-one addToCartButton"
-                    type="button"
-                    @click="addToCart()"
+            <input
+              v-model="quantity"
+              class="input"
+              min="1"
+              type="number"
             >
-              <font-awesome-icon :icon="shopingBagIcon" :style="{ color: '#53e24aeb' }" size="lg"/>
+            <button
+              :class="{'disabled': disabled }"
+              :title="`Add to cart ${product.name}`"
+              class="btn-outline-primary-one addToCartButton"
+              type="button"
+              @click="addToCart()"
+            >
+              <font-awesome-icon
+                :icon="shopingBagIcon"
+                :style="{ color: '#53e24aeb' }"
+                size="lg"
+              />
               <span>{{ addToCartButtonText }}</span>
             </button>
-            <ProductFavouriteButton :product="product"/>
+            <ProductFavouriteButton :product="product" />
           </div>
         </div>
         <div class="product-page-grid-info-part-two">
           <div class="product-page-grid-modal">
-            <ProductReviewModal/>
+            <ProductReviewModal />
           </div>
         </div>
       </div>
@@ -88,18 +126,19 @@
         </span>
         <span class="product-reviews-average">
           <span class="product-reviews-average-title">Review Average</span>
-          <span class="product-reviews-average-stars"></span>
-          <svg v-for="(star, i) of backgroundStars(productReviewsAverage)"
-               :key="i"
-               aria-hidden="true"
-               class="star star-background"
-               data-icon="star"
-               data-prefix="fas"
-               focusable="false"
-               role="img"
-               viewBox="0 0 576 512"
-               xmlns="http://www.w3.org/2000/svg"
-               v-html="star"
+          <span class="product-reviews-average-stars" />
+          <svg
+            v-for="(star, i) of backgroundStars(productReviewsAverage)"
+            :key="i"
+            aria-hidden="true"
+            class="star star-background"
+            data-icon="star"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            viewBox="0 0 576 512"
+            xmlns="http://www.w3.org/2000/svg"
+            v-html="star"
           />
           <span class="product-reviews-average-count">({{ productReviewsAverage }}/10)</span>
         </span>
@@ -109,35 +148,37 @@
       </div>
     </div>
     <div class="container-small">
-      <div v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0" id="reviews-container"
-           class="product-page-grid-review"
+      <div
+        v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0"
+        id="reviews-container"
+        class="product-page-grid-review"
       >
         <div class="product-reviews-grid">
           <ReviewProductCard
-              v-if="userToProductReview && Object.keys(userToProductReview).length > 0"
-              :key="userToProductReview.id"
-              :class="{'current-user-review-card': userToProductReview.user_id == userId }"
-              :review="userToProductReview"
-              :user-id="userId"
-              class="product-review-main-card"
+            v-if="userToProductReview && Object.keys(userToProductReview).length > 0"
+            :key="userToProductReview.id"
+            :class="{'current-user-review-card': userToProductReview.user_id == userId }"
+            :review="userToProductReview"
+            :user-id="userId"
+            class="product-review-main-card"
           />
 
           <ReviewProductCard
-              v-for="review in allPaginatedResults"
-              :key="review.id"
-              :class="{'current-user-review-card': review.user_id == userId }"
-              :review="review"
-              :user-id="userId"
-              class="product-review-main-card"
+            v-for="review in allPaginatedResults"
+            :key="review.id"
+            :class="{'current-user-review-card': review.user_id == userId }"
+            :review="review"
+            :user-id="userId"
+            class="product-review-main-card"
           />
         </div>
         <Pagination
-            v-if="Object.keys(allPaginatedResults).length !== 0"
-            :endpoint-url="buildEndPointUrlForPaginatedResults()"
-            :max-visible-buttons="3"
-            :route="'Product'"
-            :router-replace="false"
-            :total-pages="allPaginatedResultsTotalPages"
+          v-if="Object.keys(allPaginatedResults).length !== 0"
+          :endpoint-url="buildEndPointUrlForPaginatedResults()"
+          :max-visible-buttons="3"
+          :route="'Product'"
+          :router-replace="false"
+          :total-pages="allPaginatedResultsTotalPages"
         />
       </div>
     </div>
@@ -204,6 +245,8 @@ export default class ProductVue extends Vue implements PaginatedInterface<Produc
   ImageTypeOptions: any = ImageTypeOptions
   ImageFitOptions: any = ImageFitOptions
   ImagePositionOptions: any = ImagePositionOptions
+
+  imageUrl: string = ''
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
@@ -299,7 +342,7 @@ export default class ProductVue extends Vue implements PaginatedInterface<Produc
       fit?: ImageFitOptions,
       position?: ImagePositionOptions,
       trimThreshold?: number
-  ): string {
+  ): string | (() => string) {
     const mediaStreamImageData: ImageUrlInterface = {
       'imageType': imageType,
       'imageName': imageName,
@@ -309,7 +352,14 @@ export default class ProductVue extends Vue implements PaginatedInterface<Produc
       'position': position,
       'trimThreshold': trimThreshold
     }
-    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+
+    ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+        .then(finalUrl => {
+          this.imageUrl = finalUrl
+        })
+
+    return this.imageUrl
+
   }
 
   async fetchProductReviews(): Promise<void> {

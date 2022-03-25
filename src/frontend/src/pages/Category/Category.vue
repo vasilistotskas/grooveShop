@@ -1,33 +1,34 @@
 <template>
   <div class="page-category mt-7 mb-5">
-    <Breadcrumbs :bread-crumb-path="breadCrumbPath"/>
+    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="container">
       <div class="content-min-height">
         <div class="col-12">
-          <img v-if="category.category_menu_main_banner_absolute_url"
-               :alt="category.name"
-               :src="mediaStreamImage(ImageTypeOptions.CATEGORIES, category.category_menu_main_banner_filename, '1920', '370', ImageFitOptions.cover, ImagePositionOptions.entropy)"
-               class="img-fluid"
-               height="370"
-               width="1920"
-               loading="lazy"
-          />
+          <img
+            v-if="category.category_menu_main_banner_absolute_url"
+            :alt="category.name"
+            :src="mediaStreamImage(ImageTypeOptions.CATEGORIES, category.category_menu_main_banner_filename, '1920', '370', ImageFitOptions.cover, ImagePositionOptions.entropy)"
+            class="img-fluid"
+            height="370"
+            width="1920"
+            loading="lazy"
+          >
         </div>
 
         <Pagination
-            v-if="Object.keys(allPaginatedResults).length !== 0"
-            :endpoint-url="buildEndPointUrlForPaginatedResults()"
-            :max-visible-buttons="3"
-            :route="'Category'"
-            :total-pages="allPaginatedResultsTotalPages"
+          v-if="Object.keys(allPaginatedResults).length !== 0"
+          :endpoint-url="buildEndPointUrlForPaginatedResults()"
+          :max-visible-buttons="3"
+          :route="'Category'"
+          :total-pages="allPaginatedResultsTotalPages"
         />
 
         <div class="product-listing-grid mt-3 mb-3">
           <ProductCard
-              v-for="product in allPaginatedResults"
-              :key="product.id"
-              :product="product"
-              class="col-sm-3"
+            v-for="product in allPaginatedResults"
+            :key="product.id"
+            :product="product"
+            class="col-sm-3"
           />
         </div>
       </div>
@@ -73,6 +74,8 @@ export default class CategoryVue extends Vue implements PaginatedInterface<Categ
   ImageTypeOptions: any = ImageTypeOptions
   ImageFitOptions: any = ImageFitOptions
   ImagePositionOptions: any = ImagePositionOptions
+
+  imageUrl: string = ''
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
@@ -185,7 +188,7 @@ export default class CategoryVue extends Vue implements PaginatedInterface<Categ
       fit?: ImageFitOptions,
       position?: ImagePositionOptions,
       trimThreshold?: number
-  ): string {
+  ): string | (() => string) {
     const mediaStreamImageData: ImageUrlInterface = {
       'imageType': imageType,
       'imageName': imageName,
@@ -195,7 +198,14 @@ export default class CategoryVue extends Vue implements PaginatedInterface<Categ
       'position': position,
       'trimThreshold': trimThreshold
     }
-    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+
+    ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+        .then(finalUrl => {
+          this.imageUrl = finalUrl
+        })
+
+    return this.imageUrl
+
   }
 
 }

@@ -1,9 +1,11 @@
 <template>
   <div class="container mt-7">
-    <Breadcrumbs :bread-crumb-path="breadCrumbPath"/>
+    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="page-success">
       <div class="page-success-grid-content">
-        <h1 class="title mb-5">Thank you</h1>
+        <h1 class="title mb-5">
+          Thank you
+        </h1>
 
         <p>Your order will be processed within 48 hours</p>
       </div>

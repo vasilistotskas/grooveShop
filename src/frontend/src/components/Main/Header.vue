@@ -6,7 +6,10 @@
     <!--          <span style="text-decoration: underline;">Here</span>!</a>-->
     <!--      </p>-->
     <!--    </div>-->
-    <Navbar :cart-total-length="cartTotalLength" :preHeadHidden="!showPreHeader"/>
+    <Navbar
+      :cart-total-length="cartTotalLength"
+      :pre-head-hidden="!showPreHeader"
+    />
   </header>
 </template>
 

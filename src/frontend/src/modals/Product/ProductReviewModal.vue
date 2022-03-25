@@ -3,76 +3,104 @@
   <div class="user-actions">
     <!-- Modal -->
     <form id="productReviewForm">
-      <div id="exampleModal" aria-hidden="true" class="modal fade" tabindex="-1">
+      <div
+        id="exampleModal"
+        aria-hidden="true"
+        class="modal fade"
+        tabindex="-1"
+      >
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header mb-3">
-              <h5 id="exampleModalLabel" class="modal-title">Write a review for product <strong>Adidas Shoes</strong>
+              <h5
+                id="exampleModalLabel"
+                class="modal-title"
+              >
+                Write a review for product <strong>Adidas Shoes</strong>
               </h5>
-              <font-awesome-icon :icon="writeReviewIcon" size="lg"/>
+              <font-awesome-icon
+                :icon="writeReviewIcon"
+                size="lg"
+              />
             </div>
             <div class="modal-body">
               <!-- Product Rating -->
               <p>1. Rate</p>
-              <div id="full-stars-example-two" class="col-12">
+              <div
+                id="full-stars-example-two"
+                class="col-12"
+              >
                 <div class="rating">
-                  <input :name="name" :value="rate" type="hidden"/>
-                  <div ref="ratingBoard"
-                       class="rating-board rating-background"
-                       @click="lockSelection($event)"
-                       @mouseenter="unlockSelection($event)"
-                       @mouseleave="reLockSelection($event)"
-                       @mousemove="updateNewSelectionRatio($event)"
-                       @touchend="reLockSelection($event)"
-                       @touchmove="updateNewSelectionRatio($event)"
-                       @touchstart="unlockSelection($event)"
+                  <input
+                    :name="name"
+                    :value="rate"
+                    type="hidden"
                   >
-                    <svg v-for="(star, i) of backgroundStars"
-                         :key="i"
-                         aria-hidden="true"
-                         class="star star-background"
-                         data-icon="star"
-                         data-prefix="fas"
-                         focusable="false"
-                         role="img"
-                         viewBox="0 0 576 512"
-                         xmlns="http://www.w3.org/2000/svg"
-                         v-html="star"
+                  <div
+                    ref="ratingBoard"
+                    class="rating-board rating-background"
+                    @click="lockSelection($event)"
+                    @mouseenter="unlockSelection($event)"
+                    @mouseleave="reLockSelection($event)"
+                    @mousemove="updateNewSelectionRatio($event)"
+                    @touchend="reLockSelection($event)"
+                    @touchmove="updateNewSelectionRatio($event)"
+                    @touchstart="unlockSelection($event)"
+                  >
+                    <svg
+                      v-for="(star, i) of backgroundStars"
+                      :key="i"
+                      aria-hidden="true"
+                      class="star star-background"
+                      data-icon="star"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      viewBox="0 0 576 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                      v-html="star"
                     />
                   </div>
                   <div class="rating-board rating-foreground">
-                    <svg v-for="(star, i) of foregroundStars"
-                         :key="i"
-                         aria-hidden="true"
-                         class="star star-foreground"
-                         focusable="false"
-                         role="img"
-                         viewBox="0 0 576 512"
-                         xmlns="http://www.w3.org/2000/svg"
-                         v-html="star"
+                    <svg
+                      v-for="(star, i) of foregroundStars"
+                      :key="i"
+                      aria-hidden="true"
+                      class="star star-foreground"
+                      focusable="false"
+                      role="img"
+                      viewBox="0 0 576 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                      v-html="star"
                     />
                   </div>
                   <span class="px-2">{{ reviewScoreText }}</span>
                 </div>
               </div>
-              <p class="mt-3">2. Comment</p>
+              <p class="mt-3">
+                2. Comment
+              </p>
               <div class="col-12 review-modal-comment">
                 <div class="form-group">
                   <p>
-                    <textarea id="reviewTextArea"
-                              v-model="comment"
-                              class="form-control"
-                              maxlength="10000"
-                              placeholder="Share your experience..."
-                              rows="6"
-                    >
-                    </textarea>
+                    <textarea
+                      id="reviewTextArea"
+                      v-model="comment"
+                      class="form-control"
+                      maxlength="10000"
+                      placeholder="Share your experience..."
+                      rows="6"
+                    />
                   </p>
                 </div>
               </div>
             </div>
             <div class="modal-footer mt-3">
-              <button class="btn-outline-primary-one" type="button" @click="reviewHandle()">
+              <button
+                class="btn-outline-primary-one"
+                type="button"
+                @click="reviewHandle()"
+              >
                 {{ reviewButtonText }}
               </button>
             </div>

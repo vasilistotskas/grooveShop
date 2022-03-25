@@ -1,16 +1,31 @@
 <template>
-  <div id="activate-account-view" class="container mt-7">
-    <Breadcrumbs :bread-crumb-path="breadCrumbPath"/>
-    <h1 class="mb-3">Verify Email</h1>
-    <template v-if="activationLoading">loading...</template>
+  <div
+    id="activate-account-view"
+    class="container mt-7"
+  >
+    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
+    <h1 class="mb-3">
+      Verify Email
+    </h1>
+    <template v-if="activationLoading">
+      loading...
+    </template>
     <template v-else-if="activationError">
       <span class="activation-error-text">An error occured, your account has been activated or link expired, resend activation link
-        <span class="activation-error-action" @click="activationEmailResend">Here.</span>
+        <span
+          class="activation-error-action"
+          @click="activationEmailResend"
+        >Here.</span>
       </span>
     </template>
     <template v-else-if="activationCompleted">
       <span class="activation-complete-text mb-3">Account activation successful.</span>
-      <RouterLink v-if="!isAuthenticated" aria-label="Log In" title="Log In" to="/log-in">
+      <RouterLink
+        v-if="!isAuthenticated"
+        aria-label="Log In"
+        title="Log In"
+        to="/log-in"
+      >
         <span class="activation-complete-action">Click here to log in.</span>
       </RouterLink>
     </template>

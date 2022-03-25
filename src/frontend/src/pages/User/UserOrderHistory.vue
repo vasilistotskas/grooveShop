@@ -1,33 +1,47 @@
 <template>
-  <div v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0" class="user-order-history">
+  <div
+    v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0"
+    class="user-order-history"
+  >
     <div
-        v-for="order in allPaginatedResults"
-        v-bind:key="order.id"
-        class="mb-4"
-        v-bind:order="order">
-      <h3 class="is-size-4 mb-3">Order #{{ order.id }}</h3>
+      v-for="order in allPaginatedResults"
+      :key="order.id"
+      class="mb-4"
+      :order="order"
+    >
+      <h3 class="is-size-4 mb-3">
+        Order #{{ order.id }}
+      </h3>
       <div class="box">
         <div class="card">
           <div class="card-body card-body-order-history">
             <div class="order-history-grid-head">
-              <span></span>
+              <span />
               <span>Product</span>
               <span>Price</span>
               <span>Quantity</span>
               <span>Total</span>
             </div>
-            <div v-for="item in order.items" v-bind:key="item.product.id"
-                 class="order-history-grid-body">
-              <RouterLink :title="item.product.name" :to="'/product' + item.product.absolute_url" aria-label="Product">
-                  <span>
-                    <img :alt="item.product.name"
-                         :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, item.product.main_image_filename, '75', '75')"
-                         class="border-radius-img img-fluid"
-                         height="75"
-                         width="75"
-                         loading="lazy"
-                    >
-                  </span>
+            <div
+              v-for="item in order.items"
+              :key="item.product.id"
+              class="order-history-grid-body"
+            >
+              <RouterLink
+                :title="item.product.name"
+                :to="'/product' + item.product.absolute_url"
+                aria-label="Product"
+              >
+                <span>
+                  <img
+                    :alt="item.product.name"
+                    :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, item.product.main_image_filename, '75', '75')"
+                    class="border-radius-img img-fluid"
+                    height="75"
+                    width="75"
+                    loading="lazy"
+                  >
+                </span>
                 <span>{{ item.product.name }}</span>
                 <span>${{ item.product.price }}</span>
                 <span>{{ item.quantity }}</span>
@@ -39,16 +53,19 @@
       </div>
     </div>
     <Pagination
-        v-if="Object.keys(allPaginatedResults).length !== 0"
-        :endpointUrl="'orders'"
-        :max-visible-buttons="3"
-        :route="'Orders'"
-        :total-pages="allPaginatedResultsTotalPages"/>
+      v-if="Object.keys(allPaginatedResults).length !== 0"
+      :endpoint-url="'orders'"
+      :max-visible-buttons="3"
+      :route="'Orders'"
+      :total-pages="allPaginatedResultsTotalPages"
+    />
   </div>
-  <div class="user_profile-no-data" v-else>
+  <div
+    v-else
+    class="user_profile-no-data"
+  >
     <h1>NO ORDERS</h1>
   </div>
-
 </template>
 
 <script lang="ts">
@@ -79,6 +96,8 @@ export default class UserOrderHistory extends Vue implements PaginatedInterface<
   ImageTypeOptions: any = ImageTypeOptions
   ImageFitOptions: any = ImageFitOptions
   ImagePositionOptions: any = ImagePositionOptions
+
+  imageUrl: string = ''
 
   get currentPageQuery(): string {
     return store.getters['pagination/getCurrentQuery']
@@ -155,7 +174,7 @@ export default class UserOrderHistory extends Vue implements PaginatedInterface<
       fit?: ImageFitOptions,
       position?: ImagePositionOptions,
       trimThreshold?: number
-  ): string {
+  ): string | (() => string) {
     const mediaStreamImageData: ImageUrlInterface = {
       'imageType': imageType,
       'imageName': imageName,
@@ -165,7 +184,14 @@ export default class UserOrderHistory extends Vue implements PaginatedInterface<
       'position': position,
       'trimThreshold': trimThreshold
     }
-    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+
+    ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+        .then(finalUrl => {
+          this.imageUrl = finalUrl
+        })
+
+    return this.imageUrl
+
   }
 
   itemTotal(item: CartItemModel): number {

@@ -2,78 +2,95 @@
   <div class="home">
     <div class="container mt-9 mb-5">
       <div class="home-top-grid-content">
-        <swiper v-if="homepageSlider[0] && Object.keys(homepageSlider[0]).length > 0"
-                :grabCursor="true"
-                :keyboard="true"
-                :mousewheel="false"
-                :navigation="!!(homepageSlider[0].video && Object.keys(homepageSlider[0].slides).length > 0)"
-                :pagination='{
-                  "clickable": true,
-                  "dynamicBullets": false
-                }'
-                :style="mainSliderStyle"
-                class="grid-item-swipper">
+        <swiper
+          v-if="homepageSlider[0] && Object.keys(homepageSlider[0]).length > 0"
+          :grab-cursor="true"
+          :keyboard="true"
+          :mousewheel="false"
+          :navigation="!!(homepageSlider[0].video && Object.keys(homepageSlider[0].slides).length > 0)"
+          :pagination="{
+            &quot;clickable&quot;: true,
+            &quot;dynamicBullets&quot;: false
+          }"
+          :style="mainSliderStyle"
+          class="grid-item-swipper"
+        >
           <swiper-slide v-if="homepageSlider[0].video">
-            <video ref="mainSliderVideoRef"></video>
+            <video ref="mainSliderVideoRef" />
           </swiper-slide>
 
-          <swiper-slide v-for="slide in homepageSlider[0].slides" :key="slide.id">
-            <img :alt="slide.title ? slide.title : 'no-alt'"
-                 :src="mediaStreamImage(ImageTypeOptions.SLIDES, slide.main_image_filename, '880', '510')"
-                 class="img-fluid"
-                 height="510"
-                 width="880"
-                 loading="lazy"
-            />
+          <swiper-slide
+            v-for="slide in homepageSlider[0].slides"
+            :key="slide.id"
+          >
+            <img
+              :alt="slide.title ? slide.title : 'no-alt'"
+              :src="mediaStreamImage(ImageTypeOptions.SLIDES, slide.main_image_filename, '880', '510')"
+              class="img-fluid"
+              height="510"
+              width="880"
+              loading="lazy"
+            >
           </swiper-slide>
         </swiper>
 
         <div class="grid-item-right">
           <div class="grid-item-content-one">
-            <swiper v-if="homepageSlider[1] && Object.keys(homepageSlider[1]).length > 0"
-                    :bullets="false"
-                    :grab-cursor="true"
-                    :keyboard="true"
-                    :mousewheel="false"
-                    :navigation="false"
-                    :style="mainSliderStyle"
-                    class="grid-item-swipper"
+            <swiper
+              v-if="homepageSlider[1] && Object.keys(homepageSlider[1]).length > 0"
+              :bullets="false"
+              :grab-cursor="true"
+              :keyboard="true"
+              :mousewheel="false"
+              :navigation="false"
+              :style="mainSliderStyle"
+              class="grid-item-swipper"
             >
               <swiper-slide v-if="homepageSlider[1].video">
-                <video ref="mainSliderVideoRef"></video>
+                <video ref="mainSliderVideoRef" />
               </swiper-slide>
 
-              <swiper-slide v-for="slide in homepageSlider[1].slides" :key="slide.id">
-                <img :alt="slide.title ? slide.title : 'no-alt'"
-                     :src="mediaStreamImage(ImageTypeOptions.SLIDES, slide.main_image_filename, '487', '282')"
-                     class="img-fluid"
-                     height="282"
-                     width="487"
-                     loading="lazy"
-                />
+              <swiper-slide
+                v-for="slide in homepageSlider[1].slides"
+                :key="slide.id"
+              >
+                <img
+                  :alt="slide.title ? slide.title : 'no-alt'"
+                  :src="mediaStreamImage(ImageTypeOptions.SLIDES, slide.main_image_filename, '487', '282')"
+                  class="img-fluid"
+                  height="282"
+                  width="487"
+                  loading="lazy"
+                >
               </swiper-slide>
             </swiper>
           </div>
           <div class="grid-item-content-two">
-            <swiper v-if="homepageSlider[2] && Object.keys(homepageSlider[2]).length > 0"
-                    :grab-cursor="true"
-                    :keyboard="true"
-                    :mousewheel="false"
-                    :navigation="false"
-                    :style="mainSliderStyle"
-                    class="grid-item-swipper"
+            <swiper
+              v-if="homepageSlider[2] && Object.keys(homepageSlider[2]).length > 0"
+              :grab-cursor="true"
+              :keyboard="true"
+              :mousewheel="false"
+              :navigation="false"
+              :style="mainSliderStyle"
+              class="grid-item-swipper"
             >
               <swiper-slide v-if="homepageSlider[2].video">
-                <video ref="mainSliderVideoRef"></video>
+                <video ref="mainSliderVideoRef" />
               </swiper-slide>
 
-              <swiper-slide v-for="slide in homepageSlider[2].slides" :key="slide.id">
-                <img :alt="slide.title ? slide.title : 'no-alt'"
-                     :src="mediaStreamImage(ImageTypeOptions.SLIDES, slide.main_image_filename, '487', '282')" class="img-fluid"
-                     height="282"
-                     width="487"
-                     loading="lazy"
-                />
+              <swiper-slide
+                v-for="slide in homepageSlider[2].slides"
+                :key="slide.id"
+              >
+                <img
+                  :alt="slide.title ? slide.title : 'no-alt'"
+                  :src="mediaStreamImage(ImageTypeOptions.SLIDES, slide.main_image_filename, '487', '282')"
+                  class="img-fluid"
+                  height="282"
+                  width="487"
+                  loading="lazy"
+                >
               </swiper-slide>
             </swiper>
           </div>
@@ -84,22 +101,43 @@
     <div class="home-usp-grid-container">
       <div class="home-usp-grid-content mb-5">
         <div class="grid-usp-item">
-          <font-awesome-icon v-if="isMobile" :icon="phoneIcon"/>
-          <font-awesome-icon v-else :icon="phoneIcon" size="3x"/>
+          <font-awesome-icon
+            v-if="isMobile"
+            :icon="phoneIcon"
+          />
+          <font-awesome-icon
+            v-else
+            :icon="phoneIcon"
+            size="3x"
+          />
           <span>Lorem Ipsum
             <span>Lorem Ipsum</span>
           </span>
         </div>
         <div class="grid-usp-item">
-          <font-awesome-icon v-if="isMobile" :icon="envelopeIcon"/>
-          <font-awesome-icon v-else :icon="envelopeIcon" size="3x"/>
+          <font-awesome-icon
+            v-if="isMobile"
+            :icon="envelopeIcon"
+          />
+          <font-awesome-icon
+            v-else
+            :icon="envelopeIcon"
+            size="3x"
+          />
           <span>Lorem Ipsum
             <span>Lorem Ipsum</span>
           </span>
         </div>
         <div class="grid-usp-item">
-          <font-awesome-icon v-if="isMobile" :icon="commentIcon"/>
-          <font-awesome-icon v-else :icon="commentIcon" size="3x"/>
+          <font-awesome-icon
+            v-if="isMobile"
+            :icon="commentIcon"
+          />
+          <font-awesome-icon
+            v-else
+            :icon="commentIcon"
+            size="3x"
+          />
           <span>Lorem Ipsum
             <span>Lorem Ipsum</span>
           </span>
@@ -110,14 +148,16 @@
     <div class="product-listing-container">
       <div class="container mb-5">
         <div class="col-12">
-          <h2 class="mb-2">{{ $t('eshop.test3') }}</h2>
+          <h2 class="mb-2">
+            {{ $t('eshop.test3') }}
+          </h2>
         </div>
         <div class="grid-content-six">
           <ProductCard
-              v-for="product in LatestProducts"
-              :key="product.id"
-              :product="product"
-              class="grid-item"
+            v-for="product in LatestProducts"
+            :key="product.id"
+            :product="product"
+            class="grid-item"
           />
         </div>
       </div>
@@ -171,6 +211,8 @@ export default class Home extends Vue {
   ImageFitOptions: any = ImageFitOptions
   ImagePositionOptions: any = ImagePositionOptions
 
+  imageUrl: string = ''
+
   get isMobile(): boolean {
     return store.getters['app/isMobile']
   }
@@ -217,7 +259,7 @@ export default class Home extends Vue {
       fit?: ImageFitOptions,
       position?: ImagePositionOptions,
       trimThreshold?: number
-  ): string {
+  ): string | (() => string) {
     const mediaStreamImageData: ImageUrlInterface = {
       'imageType': imageType,
       'imageName': imageName,
@@ -227,7 +269,14 @@ export default class Home extends Vue {
       'position': position,
       'trimThreshold': trimThreshold
     }
-    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+
+    ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+        .then(finalUrl => {
+          this.imageUrl = finalUrl
+        })
+
+    return this.imageUrl
+
   }
 
   public mainSliderVideoInit(): void {

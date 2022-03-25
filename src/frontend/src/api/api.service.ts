@@ -1,5 +1,6 @@
 import store from '@/store'
 import session from './session'
+import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 
 const baseUrl = '/api/v1'
 
@@ -22,7 +23,7 @@ export default {
 		this.beforeRequest()
 		return session({
 			url: `${ baseUrl }/${ endpoint }`,
-			method: 'get',
+			method: ApiBaseMethods.GET,
 			params: data,
 			headers: {
 				Authorization: 'Token ' + this.getUserToken()
@@ -34,7 +35,7 @@ export default {
 		this.beforeRequest()
 		return session({
 			url: `${ baseUrl }/${ endpoint }`,
-			method: 'post',
+			method: ApiBaseMethods.POST,
 			data,
 			headers: {
 				Authorization: 'Token ' + this.getUserToken()
@@ -46,7 +47,7 @@ export default {
 		this.beforeRequest()
 		return session({
 			url: `${ baseUrl }/${ endpoint }`,
-			method: 'put',
+			method: ApiBaseMethods.PUT,
 			data,
 			headers: {
 				Authorization: 'Token ' + this.getUserToken()
@@ -58,7 +59,7 @@ export default {
 		this.beforeRequest()
 		return session({
 			url: `${ baseUrl }/${ endpoint }`,
-			method: 'patch',
+			method: ApiBaseMethods.PATCH,
 			data,
 			headers: {
 				Authorization: 'Token ' + this.getUserToken()
@@ -70,7 +71,7 @@ export default {
 		this.beforeRequest()
 		return session({
 			url: `${ baseUrl }/${ endpoint }`,
-			method: 'delete',
+			method: ApiBaseMethods.DELETE,
 			headers: {
 				Authorization: 'Token ' + this.getUserToken()
 			}

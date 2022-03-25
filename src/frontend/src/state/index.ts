@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { camelCase, first, values } from 'lodash'
 
 const modulesCache: any = []

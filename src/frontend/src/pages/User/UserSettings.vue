@@ -1,128 +1,162 @@
 <template>
-  <FormProvider v-if="userData && Object.keys(userData).length > 0"
-                id="userDetailsForm"
-                :errors="formManager.errors"
-                :form="formManager.form"
-                name="userDetailsForm"
-                title=""
-                @submit="handleSubmit()"
+  <FormProvider
+    v-if="userData && Object.keys(userData).length > 0"
+    id="userDetailsForm"
+    :errors="formManager.errors"
+    :form="formManager.form"
+    name="userDetailsForm"
+    title=""
+    @submit="handleSubmit()"
   >
     <div class="grid-account-setting-fields">
       <div class="first_name">
-        <label :for="formManager.form.first_name.$uid" class="label">First Name</label>
+        <label
+          :for="formManager.form.first_name.$uid"
+          class="label"
+        >First Name</label>
         <FormBaseInput
-            :id="formManager.form.first_name.$uid"
-            v-model="formManager.form.first_name.$value"
-            :has-error="formManager.form.first_name.$hasError"
-            :placeholder="userDetails.first_name"
-            :validating="formManager.form.first_name.$validating"
+          :id="formManager.form.first_name.$uid"
+          v-model="formManager.form.first_name.$value"
+          :has-error="formManager.form.first_name.$hasError"
+          :placeholder="userDetails.first_name"
+          :validating="formManager.form.first_name.$validating"
         />
         <FormValidationErrors
-            :errors="formManager.form.first_name.$errors"
-            class="validation-errros"
+          :errors="formManager.form.first_name.$errors"
+          class="validation-errros"
         />
       </div>
 
       <div class="last_name">
-        <label :for="formManager.form.last_name.$uid" class="label">Last Name</label>
+        <label
+          :for="formManager.form.last_name.$uid"
+          class="label"
+        >Last Name</label>
         <FormBaseInput
-            :id="formManager.form.last_name.$uid"
-            v-model="formManager.form.last_name.$value"
-            :has-error="formManager.form.last_name.$hasError"
-            :placeholder="userDetails.last_name"
-            :validating="formManager.form.last_name.$validating"
+          :id="formManager.form.last_name.$uid"
+          v-model="formManager.form.last_name.$value"
+          :has-error="formManager.form.last_name.$hasError"
+          :placeholder="userDetails.last_name"
+          :validating="formManager.form.last_name.$validating"
         />
         <FormValidationErrors
-            :errors="formManager.form.last_name.$errors"
-            class="validation-errros"
+          :errors="formManager.form.last_name.$errors"
+          class="validation-errros"
         />
       </div>
 
       <div class="phone">
-        <label :for="formManager.form.phone.$uid" class="label">Phone</label>
+        <label
+          :for="formManager.form.phone.$uid"
+          class="label"
+        >Phone</label>
         <FormBaseInput
-            :id="formManager.form.phone.$uid"
-            v-model="formManager.form.phone.$value"
-            :has-error="formManager.form.phone.$hasError"
-            :placeholder="userDetails.phone"
-            :validating="formManager.form.phone.$validating"
+          :id="formManager.form.phone.$uid"
+          v-model="formManager.form.phone.$value"
+          :has-error="formManager.form.phone.$hasError"
+          :placeholder="userDetails.phone"
+          :validating="formManager.form.phone.$validating"
         />
         <FormValidationErrors
-            :errors="formManager.form.phone.$errors"
-            class="validation-errros"
+          :errors="formManager.form.phone.$errors"
+          class="validation-errros"
         />
       </div>
 
       <div class="city">
-        <label :for="formManager.form.city.$uid" class="label">City</label>
+        <label
+          :for="formManager.form.city.$uid"
+          class="label"
+        >City</label>
         <FormBaseInput
-            :id="formManager.form.city.$uid"
-            v-model="formManager.form.city.$value"
-            :has-error="formManager.form.city.$hasError"
-            :placeholder="userDetails.city"
-            :validating="formManager.form.city.$validating"
+          :id="formManager.form.city.$uid"
+          v-model="formManager.form.city.$value"
+          :has-error="formManager.form.city.$hasError"
+          :placeholder="userDetails.city"
+          :validating="formManager.form.city.$validating"
         />
         <FormValidationErrors
-            :errors="formManager.form.city.$errors"
-            class="validation-errros"
+          :errors="formManager.form.city.$errors"
+          class="validation-errros"
         />
       </div>
 
       <div class="zipcode">
-        <label :for="formManager.form.zipcode.$uid" class="label">Zipcode</label>
+        <label
+          :for="formManager.form.zipcode.$uid"
+          class="label"
+        >Zipcode</label>
         <FormBaseInput
-            :id="formManager.form.zipcode.$uid"
-            v-model="formManager.form.zipcode.$value"
-            :has-error="formManager.form.zipcode.$hasError"
-            :placeholder="userDetails.zipcode"
-            :validating="formManager.form.zipcode.$validating"
+          :id="formManager.form.zipcode.$uid"
+          v-model="formManager.form.zipcode.$value"
+          :has-error="formManager.form.zipcode.$hasError"
+          :placeholder="userDetails.zipcode"
+          :validating="formManager.form.zipcode.$validating"
         />
         <FormValidationErrors
-            :errors="formManager.form.zipcode.$errors"
-            class="validation-errros"
+          :errors="formManager.form.zipcode.$errors"
+          class="validation-errros"
         />
       </div>
 
       <div class="address">
-        <label :for="formManager.form.address.$uid" class="label">Address</label>
+        <label
+          :for="formManager.form.address.$uid"
+          class="label"
+        >Address</label>
         <FormBaseInput
-            :id="formManager.form.address.$uid"
-            v-model="formManager.form.address.$value"
-            :has-error="formManager.form.address.$hasError"
-            :placeholder="userDetails.address"
-            :validating="formManager.form.address.$validating"
+          :id="formManager.form.address.$uid"
+          v-model="formManager.form.address.$value"
+          :has-error="formManager.form.address.$hasError"
+          :placeholder="userDetails.address"
+          :validating="formManager.form.address.$validating"
         />
         <FormValidationErrors
-            :errors="formManager.form.address.$errors"
-            class="validation-errros"
+          :errors="formManager.form.address.$errors"
+          class="validation-errros"
         />
       </div>
 
       <div class="place">
-        <label :for="formManager.form.place.$uid" class="label">Place</label>
+        <label
+          :for="formManager.form.place.$uid"
+          class="label"
+        >Place</label>
         <FormBaseInput
-            :id="formManager.form.place.$uid"
-            v-model="formManager.form.place.$value"
-            :has-error="formManager.form.place.$hasError"
-            :placeholder="userDetails.place"
-            :validating="formManager.form.place.$validating"
+          :id="formManager.form.place.$uid"
+          v-model="formManager.form.place.$value"
+          :has-error="formManager.form.place.$hasError"
+          :placeholder="userDetails.place"
+          :validating="formManager.form.place.$validating"
         />
         <FormValidationErrors
-            :errors="formManager.form.place.$errors"
-            class="validation-errros"
+          :errors="formManager.form.place.$errors"
+          class="validation-errros"
         />
       </div>
 
       <div class="country">
-        <label class="form-label" for="inputCountry">Country</label>
-        <select id="inputCountry" v-model="userDetails.country" class="form-select" name="country"
-                @change="restRegions"
+        <label
+          class="form-label"
+          for="inputCountry"
+        >Country</label>
+        <select
+          id="inputCountry"
+          v-model="userDetails.country"
+          class="form-select"
+          name="country"
+          @change="restRegions"
         >
-          <option disabled value="choose">Choose...</option>
           <option
-              v-for="country in availableCountries"
-              :key="country.alpha_2"
-              :value="country.alpha_2"
+            disabled
+            value="choose"
+          >
+            Choose...
+          </option>
+          <option
+            v-for="country in availableCountries"
+            :key="country.alpha_2"
+            :value="country.alpha_2"
           >
             {{ country.name }}
           </option>
@@ -130,13 +164,26 @@
       </div>
 
       <div class="region">
-        <label class="form-label" for="inputRegion">Region</label>
-        <select id="inputRegion" v-model="userDetails.region" class="form-select" name="region">
-          <option disabled value="choose">Choose...</option>
+        <label
+          class="form-label"
+          for="inputRegion"
+        >Region</label>
+        <select
+          id="inputRegion"
+          v-model="userDetails.region"
+          class="form-select"
+          name="region"
+        >
           <option
-              v-for="region in regionsBasedOnAlpha"
-              :key="region.alpha"
-              :value="region.alpha"
+            disabled
+            value="choose"
+          >
+            Choose...
+          </option>
+          <option
+            v-for="region in regionsBasedOnAlpha"
+            :key="region.alpha"
+            :value="region.alpha"
           >
             {{ region.name }}
           </option>
@@ -145,11 +192,11 @@
 
       <div class="button">
         <FormSubmitButtons
-            :submit-text="submitButtonText"
-            :submitting="formManager.submitting"
-            class="buttons float-end"
-            gap="2rem"
-            @reset="formManager.resetFields()"
+          :submit-text="submitButtonText"
+          :submitting="formManager.submitting"
+          class="buttons float-end"
+          gap="2rem"
+          @reset="formManager.resetFields()"
         />
       </div>
     </div>

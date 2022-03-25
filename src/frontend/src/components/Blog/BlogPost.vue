@@ -1,25 +1,45 @@
 <template>
-  <div v-if="postBySlug && Object.keys(postBySlug).length > 0" class="container mt-7 mb-5">
-    <Breadcrumbs :bread-crumb-path="breadCrumbPath"/>
+  <div
+    v-if="postBySlug && Object.keys(postBySlug).length > 0"
+    class="container mt-7 mb-5"
+  >
+    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="card mb-3">
       <img
-          :alt="postBySlug.title"
-          :src="mediaStreamImage(ImageTypeOptions.SLIDES, postBySlug.mainImageFilename, '1920', '550')"
-          class="img-fluid"
-          height="550"
-          width="1920"
-          loading="lazy"
-      />
+        :alt="postBySlug.title"
+        :src="mediaStreamImage(ImageTypeOptions.SLIDES, postBySlug.mainImageFilename, '1920', '550')"
+        class="img-fluid"
+        height="550"
+        width="1920"
+        loading="lazy"
+      >
       <div class="card-body">
         <span class="card-title">{{ postBySlug.title }}: {{ postBySlug.subtitle }}</span>
         By
-        <AuthorLink :author="postBySlug.author"/>
-        <p class="card-text">{{ postBySlug.metaDescription }}</p>
-        <p class="card-text" v-html="postBySlug.body"></p>
-        <p class="card-text"><small class="text-muted">{{ displayableDate(postBySlug.publishDate) }}</small></p>
+        <AuthorLink :author="postBySlug.author" />
+        <p class="card-text">
+          {{ postBySlug.metaDescription }}
+        </p>
+        <p
+          class="card-text"
+          v-html="postBySlug.body"
+        />
+        <p class="card-text">
+          <small class="text-muted">{{ displayableDate(postBySlug.publishDate) }}</small>
+        </p>
         <ul>
-          <li v-for="tag in postBySlug.tags" :key="tag.name" class="post__tags">
-            <RouterLink :title="tag.name" :to="`/tag/${tag.name}`" aria-label="Blog Tag">#{{ tag.name }}</RouterLink>
+          <li
+            v-for="tag in postBySlug.tags"
+            :key="tag.name"
+            class="post__tags"
+          >
+            <RouterLink
+              :title="tag.name"
+              :to="`/tag/${tag.name}`"
+              aria-label="Blog Tag"
+            >
+              #{{ tag.name }}
+            </RouterLink>
           </li>
         </ul>
       </div>
@@ -53,6 +73,8 @@ export default class BlogPost extends Vue {
   ImageFitOptions: any = ImageFitOptions
   ImagePositionOptions: any = ImagePositionOptions
 
+  imageUrl: string = ''
+
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
@@ -74,7 +96,7 @@ export default class BlogPost extends Vue {
       fit?: ImageFitOptions,
       position?: ImagePositionOptions,
       trimThreshold?: number
-  ): string {
+  ): string | (() => string) {
     const mediaStreamImageData: ImageUrlInterface = {
       'imageType': imageType,
       'imageName': imageName,
@@ -84,7 +106,14 @@ export default class BlogPost extends Vue {
       'position': position,
       'trimThreshold': trimThreshold
     }
-    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+
+    ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+        .then(finalUrl => {
+          this.imageUrl = finalUrl
+        })
+
+    return this.imageUrl
+
   }
 
   public displayableDate(date: Date): string {

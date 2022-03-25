@@ -21,7 +21,6 @@ import PaginationModule from '@/state/pagination/PaginationModule'
 import ProductReviewModule from '@/state/product/review/ProductReviewModule'
 import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const stateDirectory = <Record<string, typeof AppBaseModule>>{
 	'app': AppModule,
 	'settings': AppSettingsModule,

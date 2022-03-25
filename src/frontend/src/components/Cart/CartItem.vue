@@ -1,35 +1,63 @@
 <template>
   <div class="grid-container-cart">
     <div class="grid-container-cart-item-one">
-      <RouterLink :title="item.product.name" :to="productPath" aria-label="Product">
+      <RouterLink
+        :title="item.product.name"
+        :to="productPath"
+        aria-label="Product"
+      >
         <img
-            :alt="item.product.name"
-            :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, item.product.main_image_filename, '75', '75')"
-            class="border-radius-img img-fluid"
-            height="75"
-            width="75"
-            loading="lazy"
-        />
+          :alt="item.product.name"
+          :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, item.product.main_image_filename, '75', '75')"
+          class="border-radius-img img-fluid"
+          height="75"
+          width="75"
+          loading="lazy"
+        >
         <span>{{ item.product.name }}</span>
       </RouterLink>
     </div>
-    <div class="grid-container-cart-item-two">${{ item.product.price }}</div>
+    <div class="grid-container-cart-item-two">
+      ${{ item.product.price }}
+    </div>
     <div class="grid-container-cart-item-three">
-      <a :title="`Decrease Quantity of ${item.product.name}`" class="btn-outline-primary-main"
-         data-mdb-ripple-color="dark" type="button" @click="decrementQuantity(item)">
-        <font-awesome-icon :icon="minusIcon" size="lg"/>
+      <a
+        :title="`Decrease Quantity of ${item.product.name}`"
+        class="btn-outline-primary-main"
+        data-mdb-ripple-color="dark"
+        type="button"
+        @click="decrementQuantity(item)"
+      >
+        <font-awesome-icon
+          :icon="minusIcon"
+          size="lg"
+        />
       </a>
       {{ item.quantity }}
-      <a :title="`Increase Quantity of ${item.product.name}`" class="btn-outline-primary-main"
-         data-mdb-ripple-color="dark" type="button" @click="incrementQuantity(item)">
-        <font-awesome-icon :icon="plusIcon" size="lg"/>
+      <a
+        :title="`Increase Quantity of ${item.product.name}`"
+        class="btn-outline-primary-main"
+        data-mdb-ripple-color="dark"
+        type="button"
+        @click="incrementQuantity(item)"
+      >
+        <font-awesome-icon
+          :icon="plusIcon"
+          size="lg"
+        />
       </a>
     </div>
-    <div class="grid-container-cart-item-four">${{ itemTotal.toFixed(2) }}</div>
+    <div class="grid-container-cart-item-four">
+      ${{ itemTotal.toFixed(2) }}
+    </div>
     <div class="grid-container-cart-item-five">
-      <button :title="`Remove from cart ${ item.product.name }`" class="btn-outline-primary-main" type="button"
-              @click="removeFromCart(item)">
-        <font-awesome-icon :icon="trashIcon"/>
+      <button
+        :title="`Remove from cart ${ item.product.name }`"
+        class="btn-outline-primary-main"
+        type="button"
+        @click="removeFromCart(item)"
+      >
+        <font-awesome-icon :icon="trashIcon" />
       </button>
     </div>
   </div>
@@ -67,6 +95,8 @@ export default class CartItemVue extends Vue {
   ImageFitOptions: any = ImageFitOptions
   ImagePositionOptions: any = ImagePositionOptions
 
+  imageUrl: string = ''
+
   get isMobile(): boolean {
     return store.getters['app/isMobile']
   }
@@ -87,7 +117,7 @@ export default class CartItemVue extends Vue {
       fit?: ImageFitOptions,
       position?: ImagePositionOptions,
       trimThreshold?: number
-  ): string {
+  ): string | (() => string) {
     const mediaStreamImageData: ImageUrlInterface = {
       'imageType': imageType,
       'imageName': imageName,
@@ -97,7 +127,14 @@ export default class CartItemVue extends Vue {
       'position': position,
       'trimThreshold': trimThreshold
     }
-    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+
+    ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+        .then(finalUrl => {
+          this.imageUrl = finalUrl
+        })
+
+    return this.imageUrl
+
   }
 
   public decrementQuantity(item: CartItemModel): void {

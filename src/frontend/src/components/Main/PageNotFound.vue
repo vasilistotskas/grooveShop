@@ -1,5 +1,8 @@
 <template>
-  <div id="page-not-found" class="container mt-9">
+  <div
+    id="page-not-found"
+    class="container mt-9"
+  >
     <span>PAGE NOT FOUND</span>
   </div>
 </template>

@@ -1,25 +1,33 @@
 <template>
   <div v-if="review.product && Object.keys(review.product).length > 0">
-    <div :style="{ backgroundImage: reviewBackgroundImage(review) }" class="user-review-product-image"></div>
+    <div
+      :style="{ backgroundImage: reviewBackgroundImage(review) }"
+      class="user-review-product-image"
+    />
     <div class="user-review-product-head">
       <div class="user-review-product-name">
-        <RouterLink :title="review.product.name" :to="'/product' + review.product.absolute_url" aria-label="Product">
+        <RouterLink
+          :title="review.product.name"
+          :to="'/product' + review.product.absolute_url"
+          aria-label="Product"
+        >
           <span> {{ review.product.name }}</span>
         </RouterLink>
       </div>
       <div class="user-review-product-content">
         <div class="user-review-product-stars">
-          <svg v-for="(star, i) of backgroundStars(review.rate)"
-               :key="i"
-               aria-hidden="true"
-               class="star star-background"
-               data-icon="star"
-               data-prefix="fas"
-               focusable="false"
-               role="img"
-               viewBox="0 0 576 512"
-               xmlns="http://www.w3.org/2000/svg"
-               v-html="star"
+          <svg
+            v-for="(star, i) of backgroundStars(review.rate)"
+            :key="i"
+            aria-hidden="true"
+            class="star star-background"
+            data-icon="star"
+            data-prefix="fas"
+            focusable="false"
+            role="img"
+            viewBox="0 0 576 512"
+            xmlns="http://www.w3.org/2000/svg"
+            v-html="star"
           />
         </div>
         <div class="user-review-product-count">
@@ -29,7 +37,11 @@
       <div class="user-review-product-date">
         <span>At : {{ review.updated_at }} </span>
         <span>
-          <font-awesome-icon :icon="checkCircleIcon" :style="{ color: '#53e24aeb' }" size="sm"/>
+          <font-awesome-icon
+            :icon="checkCircleIcon"
+            :style="{ color: '#53e24aeb' }"
+            size="sm"
+          />
           Verified Review
         </span>
       </div>
@@ -39,20 +51,37 @@
         <span> {{ review.comment }} </span>
       </div>
     </div>
-    <div v-if="review.user_id == userId" class="user-review-product-actions">
-      <a :title="`Review Settings of ${review.product.name}`" class="user-review-product-settings"
-         @click="openReviewActions"></a>
-      <div v-if="reviewActionsOpen" ref="userReviewsActionTarget" class="user-review-actions-menu">
+    <div
+      v-if="review.user_id == userId"
+      class="user-review-product-actions"
+    >
+      <a
+        :title="`Review Settings of ${review.product.name}`"
+        class="user-review-product-settings"
+        @click="openReviewActions"
+      />
+      <div
+        v-if="reviewActionsOpen"
+        ref="userReviewsActionTarget"
+        class="user-review-actions-menu"
+      >
         <div class="user-review-actions-controls">
           <div class="user-review-actions-edit">
-            <RouterLink :title="review.product.name" :to="'/product' + review.product.absolute_url"
-                        aria-label="Product">
+            <RouterLink
+              :title="review.product.name"
+              :to="'/product' + review.product.absolute_url"
+              aria-label="Product"
+            >
               <span>Update</span>
             </RouterLink>
           </div>
           <div class="user-review-actions-delete">
-            <a :title="`Delete Review of ${review.product.name}`" data-method="delete" rel="nofollow"
-               @click="deleteReview(review.user_id, review.product_id)">Delete</a>
+            <a
+              :title="`Delete Review of ${review.product.name}`"
+              data-method="delete"
+              rel="nofollow"
+              @click="deleteReview(review.user_id, review.product_id)"
+            >Delete</a>
           </div>
         </div>
       </div>

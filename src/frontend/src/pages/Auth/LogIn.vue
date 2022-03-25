@@ -1,51 +1,57 @@
 <template>
   <div class="page-log-in mt-7 mb-5">
     <div class="container">
-      <Breadcrumbs :bread-crumb-path="breadCrumbPath"/>
+      <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
       <div class="card login-card">
         <div class="card-body card-body-border-top">
           <FormProvider
-              :errors="formManager.errors"
-              :form="formManager.form"
-              title="Log In"
-              @submit="handleSubmit()"
+            :errors="formManager.errors"
+            :form="formManager.form"
+            title="Log In"
+            @submit="handleSubmit()"
           >
             <div class="container">
               <div class="email mb-3">
-                <label :for="formManager.form.email.$uid" class="label mb-2">Email</label>
+                <label
+                  :for="formManager.form.email.$uid"
+                  class="label mb-2"
+                >Email</label>
                 <FormBaseInput
-                    :id="formManager.form.email.$uid"
-                    v-model="formManager.form.email.$value"
-                    :has-error="formManager.form.email.$hasError"
-                    :input-with-add-on="true"
-                    :input-with-add-on-icon="envelopeIcon"
-                    :validating="formManager.form.email.$validating"
-                    placeholder="Alice, Bob, Oscar"
-                    @blur="formManager.form.email.onBlur"
+                  :id="formManager.form.email.$uid"
+                  v-model="formManager.form.email.$value"
+                  :has-error="formManager.form.email.$hasError"
+                  :input-with-add-on="true"
+                  :input-with-add-on-icon="envelopeIcon"
+                  :validating="formManager.form.email.$validating"
+                  placeholder="Alice, Bob, Oscar"
+                  @blur="formManager.form.email.onBlur"
                 />
                 <FormValidationErrors
-                    :errors="formManager.form.email.$errors"
-                    class="validation-errros"
+                  :errors="formManager.form.email.$errors"
+                  class="validation-errros"
                 />
               </div>
               <div class="password mb-4">
-                <label :for="formManager.form.password.$uid" class="label mb-2">Password</label>
+                <label
+                  :for="formManager.form.password.$uid"
+                  class="label mb-2"
+                >Password</label>
                 <FormBaseInput
-                    :id="formManager.form.password.$uid"
-                    v-model="formManager.form.password.$value"
-                    :has-error="formManager.form.password.$hasError"
-                    :input-with-add-on="true"
-                    :input-with-add-on-icon="keyIcon"
-                    type="password"
-                    @blur="formManager.form.password.onBlur"
+                  :id="formManager.form.password.$uid"
+                  v-model="formManager.form.password.$value"
+                  :has-error="formManager.form.password.$hasError"
+                  :input-with-add-on="true"
+                  :input-with-add-on-icon="keyIcon"
+                  type="password"
+                  @blur="formManager.form.password.onBlur"
                 />
-                <FormValidationErrors :errors="formManager.form.password.$errors"/>
+                <FormValidationErrors :errors="formManager.form.password.$errors" />
               </div>
               <FormSubmitButtons
-                  :submitting="formManager.submitting"
-                  class="buttons mt-3 mb-3"
-                  gap="2rem"
-                  @reset="formManager.resetFields()"
+                :submitting="formManager.submitting"
+                class="buttons mt-3 mb-3"
+                gap="2rem"
+                @reset="formManager.resetFields()"
               />
             </div>
 
@@ -55,18 +61,24 @@
                 <!-- Checkbox -->
                 <div class="form-check">
                   <input
-                      id="form2Example3"
-                      checked
-                      class="form-check-input form-check-input-main"
-                      type="checkbox"
-                      value=""
-                  />
-                  <label class="form-check-label" for="form2Example3"> Remember me </label>
+                    id="form2Example3"
+                    checked
+                    class="form-check-input form-check-input-main"
+                    type="checkbox"
+                    value=""
+                  >
+                  <label
+                    class="form-check-label"
+                    for="form2Example3"
+                  > Remember me </label>
                 </div>
               </div>
               <div class="grid-item-two">
                 <!-- Simple link -->
-                <RouterLink title="Password Reset" to="/password_reset">
+                <RouterLink
+                  title="Password Reset"
+                  to="/password_reset"
+                >
                   Forgot password?
                 </RouterLink>
               </div>
@@ -77,20 +89,46 @@
           <div class="login-register-field">
             <p class="mb-1">
               Not a member?
-              <RouterLink aria-label="Sign Up" title="Sign Up" to="/sign-up">Register</RouterLink>
+              <RouterLink
+                aria-label="Sign Up"
+                title="Sign Up"
+                to="/sign-up"
+              >
+                Register
+              </RouterLink>
             </p>
-            <p class="mb-3">or sign up with:</p>
+            <p class="mb-3">
+              or sign up with:
+            </p>
           </div>
 
           <div class="login-grid-part-socials mb-3">
             <!-- Facebook -->
-            <a class="btn btn-outline-primary btn-floating mx-1" href="#!" role="button" title="Sign Up with Facebook">
-              <font-awesome-icon :icon="facebookIcon" :style="{ color: '#4267B2' }" size="lg"/>
+            <a
+              class="btn btn-outline-primary btn-floating mx-1"
+              href="#!"
+              role="button"
+              title="Sign Up with Facebook"
+            >
+              <font-awesome-icon
+                :icon="facebookIcon"
+                :style="{ color: '#4267B2' }"
+                size="lg"
+              />
             </a>
 
             <!-- Google -->
-            <a class="btn btn-outline-primary btn-floating mx-1" href="#!" role="button" title="Sign Up with Google">
-              <font-awesome-icon :icon="googleIcon" :style="{ color: '#DB4437' }" size="lg"/>
+            <a
+              class="btn btn-outline-primary btn-floating mx-1"
+              href="#!"
+              role="button"
+              title="Sign Up with Google"
+            >
+              <font-awesome-icon
+                :icon="googleIcon"
+                :style="{ color: '#DB4437' }"
+                size="lg"
+              />
             </a>
           </div>
         </div>

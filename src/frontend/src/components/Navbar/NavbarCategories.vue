@@ -1,39 +1,53 @@
 <template>
   <div class="navbar-main-collapse-menu">
-    <div ref="headerNavbarMenu" :class="{'wrapper': Object.keys(categories).length === 0 }" class="container navbar-menu-grid-container">
-      <ul v-if="categories && Object.keys(categories).length > 0" class="navbar-menu-grid-head">
-        <li v-for="(category, key) in categories" :key="category.id">
+    <div
+      ref="headerNavbarMenu"
+      :class="{'wrapper': Object.keys(categories).length === 0 }"
+      class="container navbar-menu-grid-container"
+    >
+      <ul
+        v-if="categories && Object.keys(categories).length > 0"
+        class="navbar-menu-grid-head"
+      >
+        <li
+          v-for="(category, key) in categories"
+          :key="category.id"
+        >
           <h3>
             <RouterLink
-                :id="category.children ? `id-${category.id}` : '' "
-                :key="category.id"
-                :class="{'has-children': category?.children }"
-                :title="category.name"
-                :to="({ name: 'Category', params: { category_slug: category.slug } })"
-                :toggle="category.children ? 'toggle' : '' "
-                aria-current="page"
-                aria-expanded="false"
-                class="navbar-menu-grid-head-item"
-                role="button"
-                @mouseleave="categoryBoxHovered = null"
-                @mouseover="categoryBoxHovered = key"
+              :id="category.children ? `id-${category.id}` : '' "
+              :key="category.id"
+              :class="{'has-children': category?.children }"
+              :title="category.name"
+              :to="({ name: 'Category', params: { category_slug: category.slug } })"
+              :toggle="category.children ? 'toggle' : '' "
+              aria-current="page"
+              aria-expanded="false"
+              class="navbar-menu-grid-head-item"
+              role="button"
+              @mouseleave="categoryBoxHovered = null"
+              @mouseover="categoryBoxHovered = key"
             >
-              <img :alt="category.name"
-                   :src="categoryBoxHovered === key ?
-                 mediaStreamImage(ImageTypeOptions.CATEGORIES, category.category_menu_image_two_filename, '80', '83') :
-                 mediaStreamImage(ImageTypeOptions.CATEGORIES, category.category_menu_image_one_filename, '80', '83')"
-                   height="83"
-                   width="80"
-                   loading="lazy"
-              />
+              <img
+                :alt="category.name"
+                :src="categoryBoxHovered === key ?
+                  mediaStreamImage(ImageTypeOptions.CATEGORIES, category.category_menu_image_two_filename, '80', '83') :
+                  mediaStreamImage(ImageTypeOptions.CATEGORIES, category.category_menu_image_one_filename, '80', '83')"
+                height="83"
+                width="80"
+                loading="lazy"
+              >
               <span>{{ category.name }}</span>
             </RouterLink>
           </h3>
         </li>
       </ul>
 
-      <div class="navbar-menu-grid-body" style="display: none">
-        <div class="navbar-menu-grid-body-item"></div>
+      <div
+        class="navbar-menu-grid-body"
+        style="display: none"
+      >
+        <div class="navbar-menu-grid-body-item" />
       </div>
     </div>
   </div>
@@ -71,6 +85,8 @@ export default class NavbarCategories extends Vue {
   ImageFitOptions: any = ImageFitOptions
   ImagePositionOptions: any = ImagePositionOptions
 
+  imageUrl: string = ''
+
   get isLoading(): boolean {
     return store.getters['app/getLoading']
   }
@@ -92,7 +108,7 @@ export default class NavbarCategories extends Vue {
       fit?: ImageFitOptions,
       position?: ImagePositionOptions,
       trimThreshold?: number
-  ): string {
+  ): string | (() => string) {
     const mediaStreamImageData: ImageUrlInterface = {
       'imageType': imageType,
       'imageName': imageName,
@@ -102,7 +118,14 @@ export default class NavbarCategories extends Vue {
       'position': position,
       'trimThreshold': trimThreshold
     }
-    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+
+    ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+        .then(finalUrl => {
+          this.imageUrl = finalUrl
+        })
+
+    return this.imageUrl
+
   }
 
   public menuOpenHandle(): void {

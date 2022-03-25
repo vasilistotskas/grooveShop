@@ -1,8 +1,22 @@
 <template>
-  <button class="btn-outline-primary-three" data-mdb-ripple-color="dark" title="Favourite Actions" type="button"
-          @click="favouriteHandle()">
-    <font-awesome-icon v-if="!isFavourite" :icon="heartIcon" size="2x"/>
-    <font-awesome-icon v-else :icon="heartIcon" :style="{ color: '#981d1dc9' }" size="2x"/>
+  <button
+    class="btn-outline-primary-three"
+    data-mdb-ripple-color="dark"
+    title="Favourite Actions"
+    type="button"
+    @click="favouriteHandle()"
+  >
+    <font-awesome-icon
+      v-if="!isFavourite"
+      :icon="heartIcon"
+      size="2x"
+    />
+    <font-awesome-icon
+      v-else
+      :icon="heartIcon"
+      :style="{ color: '#981d1dc9' }"
+      size="2x"
+    />
   </button>
 </template>
 

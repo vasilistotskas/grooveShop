@@ -1,8 +1,11 @@
 <template>
   <div class="container mt-7 mb-5">
-    <Breadcrumbs :bread-crumb-path="breadCrumbPath"/>
+    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <h2>Posts in #{{ $route.params.tag }}</h2>
-    <PostList v-if="postsByTag" :posts="postsByTag"/>
+    <PostList
+      v-if="postsByTag"
+      :posts="postsByTag"
+    />
   </div>
 </template>
 

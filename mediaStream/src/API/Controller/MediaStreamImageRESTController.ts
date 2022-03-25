@@ -106,7 +106,6 @@ export default class MediaStreamImageRESTController {
 	}
 
 	private static resourceTargetPrepare(resourceTarget: any): string {
-		console.log(resourceTarget)
 		return resourceTarget;
 	}
 

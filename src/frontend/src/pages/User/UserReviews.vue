@@ -1,25 +1,31 @@
 <template>
   <div>
-    <div v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0" class="container">
+    <div
+      v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0"
+      class="container"
+    >
       <div class="user-reviews-grid mb-4">
         <ReviewProductCard
-            v-for="review in allPaginatedResults"
-            :key="review.id"
-            :class="{'current-user-review-card': review.user_id == userId }"
-            :review="review"
-            :user-id="userId"
-            class="product-review-main-card"
+          v-for="review in allPaginatedResults"
+          :key="review.id"
+          :class="{'current-user-review-card': review.user_id == userId }"
+          :review="review"
+          :user-id="userId"
+          class="product-review-main-card"
         />
       </div>
       <Pagination
-          v-if="Object.keys(allPaginatedResults).length !== 0"
-          :endpoint-url="buildEndPointUrlForPaginatedResults()"
-          :max-visible-buttons="3"
-          :route="'Reviews'"
-          :total-pages="allPaginatedResultsTotalPages"
+        v-if="Object.keys(allPaginatedResults).length !== 0"
+        :endpoint-url="buildEndPointUrlForPaginatedResults()"
+        :max-visible-buttons="3"
+        :route="'Reviews'"
+        :total-pages="allPaginatedResultsTotalPages"
       />
     </div>
-    <div class="user_profile-no-data" v-else>
+    <div
+      v-else
+      class="user_profile-no-data"
+    >
       <h1>NO REVIEWS</h1>
     </div>
   </div>

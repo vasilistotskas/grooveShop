@@ -1,73 +1,83 @@
 <template>
-  <FormProvider id="userPasswordForm"
-                :errors="formManager.errors"
-                :form="formManager.form"
-                name="userPasswordForm"
-                title=""
-                @submit="handleSubmit()"
+  <FormProvider
+    id="userPasswordForm"
+    :errors="formManager.errors"
+    :form="formManager.form"
+    name="userPasswordForm"
+    title=""
+    @submit="handleSubmit()"
   >
     <div class="grid-account-password-fields">
       <div class="current_password">
-        <label :for="formManager.form.current_password.$uid" class="label">Current Password</label>
+        <label
+          :for="formManager.form.current_password.$uid"
+          class="label"
+        >Current Password</label>
         <FormBaseInput
-            :id="formManager.form.current_password.$uid"
-            v-model="formManager.form.current_password.$value"
-            :has-error="formManager.form.current_password.$hasError"
-            :placeholder="'Current Password'"
-            :validating="formManager.form.current_password.$validating"
-            type="password"
+          :id="formManager.form.current_password.$uid"
+          v-model="formManager.form.current_password.$value"
+          :has-error="formManager.form.current_password.$hasError"
+          :placeholder="'Current Password'"
+          :validating="formManager.form.current_password.$validating"
+          type="password"
         />
         <FormValidationErrors
-            :errors="formManager.form.current_password.$errors"
-            class="validation-errros"
+          :errors="formManager.form.current_password.$errors"
+          class="validation-errros"
         />
       </div>
       <div class="new_password">
-        <label :for="formManager.form.new_password.$uid" class="label">New Password</label>
+        <label
+          :for="formManager.form.new_password.$uid"
+          class="label"
+        >New Password</label>
         <FormBaseInput
-            :id="formManager.form.new_password.$uid"
-            v-model="formManager.form.new_password.$value"
-            :has-error="formManager.form.new_password.$hasError"
-            :placeholder="'New Password'"
-            :validating="formManager.form.new_password.$validating"
-            type="password"
+          :id="formManager.form.new_password.$uid"
+          v-model="formManager.form.new_password.$value"
+          :has-error="formManager.form.new_password.$hasError"
+          :placeholder="'New Password'"
+          :validating="formManager.form.new_password.$validating"
+          type="password"
         />
         <FormValidationErrors
-            :errors="formManager.form.new_password.$errors"
-            class="validation-errros"
+          :errors="formManager.form.new_password.$errors"
+          class="validation-errros"
         />
       </div>
       <div class="re_new_password">
-        <label :for="formManager.form.re_new_password.$uid" class="label">Retype New Password</label>
+        <label
+          :for="formManager.form.re_new_password.$uid"
+          class="label"
+        >Retype New Password</label>
         <FormBaseInput
-            :id="formManager.form.re_new_password.$uid"
-            v-model="formManager.form.re_new_password.$value"
-            :has-error="formManager.form.re_new_password.$hasError"
-            :placeholder="'Retype New Password'"
-            :validating="formManager.form.re_new_password.$validating"
-            type="password"
+          :id="formManager.form.re_new_password.$uid"
+          v-model="formManager.form.re_new_password.$value"
+          :has-error="formManager.form.re_new_password.$hasError"
+          :placeholder="'Retype New Password'"
+          :validating="formManager.form.re_new_password.$validating"
+          type="password"
         />
         <FormValidationErrors
-            :errors="formManager.form.re_new_password.$errors"
-            class="validation-errros"
+          :errors="formManager.form.re_new_password.$errors"
+          class="validation-errros"
         />
       </div>
       <div class="button">
         <FormSubmitButtons
-            :submit-text="submitButtonText"
-            :submitting="formManager.submitting"
-            class="buttons float-end"
-            gap="2rem"
-            @reset="formManager.resetFields()"
+          :submit-text="submitButtonText"
+          :submitting="formManager.submitting"
+          class="buttons float-end"
+          gap="2rem"
+          @reset="formManager.resetFields()"
         />
       </div>
     </div>
   </FormProvider>
 
   <button
-      class="btn btn-outline-primary-two"
-      title="Log Out from all devices"
-      @click="clearAllAccountSessions"
+    class="btn btn-outline-primary-two"
+    title="Log Out from all devices"
+    @click="clearAllAccountSessions"
   >
     Log Out from all devices
   </button>

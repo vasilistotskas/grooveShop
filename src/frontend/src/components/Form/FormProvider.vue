@@ -1,8 +1,17 @@
 <template>
   <div>
-    <h1 v-if="title" class="plr-15 mb-3 mt-3">{{ title }}</h1>
-    <form :class="formClass" class="_form" @submit.prevent="$emit('submit')">
-      <slot></slot>
+    <h1
+      v-if="title"
+      class="plr-15 mb-3 mt-3"
+    >
+      {{ title }}
+    </h1>
+    <form
+      :class="formClass"
+      class="_form"
+      @submit.prevent="$emit('submit')"
+    >
+      <slot />
     </form>
     <!--    <PreFormData :form="form" :errors="errors" />-->
   </div>

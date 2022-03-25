@@ -1,6 +1,14 @@
 <template>
-  <div v-if="errors.length > 0" class="errors">
-    <p v-for="(error, i) in errors" :key="i">{{ error }}</p>
+  <div
+    v-if="errors.length > 0"
+    class="errors"
+  >
+    <p
+      v-for="(error, i) in errors"
+      :key="i"
+    >
+      {{ error }}
+    </p>
   </div>
 </template>
 

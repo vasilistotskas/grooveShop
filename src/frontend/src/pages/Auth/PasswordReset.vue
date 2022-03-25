@@ -1,10 +1,16 @@
 <template>
-  <div id="password-reset-view" class="container mt-7 mb-5">
-    <Breadcrumbs :bread-crumb-path="breadCrumbPath"/>
+  <div
+    id="password-reset-view"
+    class="container mt-7 mb-5"
+  >
+    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="card password-reset-card">
       <div class="card-body card-body-border-top">
         <div>
-          <font-awesome-icon :icon="lockIcon" size="4x"/>
+          <font-awesome-icon
+            :icon="lockIcon"
+            size="4x"
+          />
         </div>
         <h1>Forgot Password?</h1>
         <p>You can reset your password here.</p>
@@ -16,18 +22,30 @@
             <div class="form-group">
               <div class="input-group-w-addon">
                 <span class="input-group-addon">
-                  <font-awesome-icon :icon="envelopeIcon"/>
+                  <font-awesome-icon :icon="envelopeIcon" />
                 </span>
-                <input id="email" v-model="inputs.email" class="form-control" name="email" placeholder="email"
-                       type="email"
-                />
+                <input
+                  id="email"
+                  v-model="inputs.email"
+                  class="form-control"
+                  name="email"
+                  placeholder="email"
+                  type="email"
+                >
               </div>
             </div>
           </form>
-          <button class="btn btn-outline-primary-two" title="Send Password Reset Email" @click="sendResetEmail(inputs)">
+          <button
+            class="btn btn-outline-primary-two"
+            title="Send Password Reset Email"
+            @click="sendResetEmail(inputs)"
+          >
             send email
           </button>
-          <span v-show="emailError" class="error">
+          <span
+            v-show="emailError"
+            class="error"
+          >
             A error occured while processing your request.
           </span>
         </template>
@@ -36,7 +54,11 @@
             <span>Check your inbox for a link to reset your password. If an email doesn't appear within a few
               minutes, check your spam folder.</span>
           </div>
-          <RouterLink aria-label="Log In" title="Log In" to="/log-in">
+          <RouterLink
+            aria-label="Log In"
+            title="Log In"
+            to="/log-in"
+          >
             return to login page
           </RouterLink>
         </template>

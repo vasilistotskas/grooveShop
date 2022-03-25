@@ -2,57 +2,59 @@
   <div class="col-12 mb-3 mt-3 pagination-grid-content">
     <div class="pagination-buttons">
       <button
-          :disabled="isInFirstPage"
-          aria-label="Go to first page"
-          class="btn-outline-primary-one"
-          title="Go to first page"
-          type="button"
-          @click="onClickFirstPage"
+        :disabled="isInFirstPage"
+        aria-label="Go to first page"
+        class="btn-outline-primary-one"
+        title="Go to first page"
+        type="button"
+        @click="onClickFirstPage"
       >
         First
       </button>
 
       <button
-          :disabled="isInFirstPage"
-          aria-label="Go to previous page"
-          class="btn-outline-primary-one"
-          title="Go to previous page"
-          type="button"
-          @click="onClickPreviousPage"
+        :disabled="isInFirstPage"
+        aria-label="Go to previous page"
+        class="btn-outline-primary-one"
+        title="Go to previous page"
+        type="button"
+        @click="onClickPreviousPage"
       >
         Previous
       </button>
 
-      <button v-for="page in pages" :key="page.id"
-              :aria-label="`Go to page number ${page.name}`"
-              :class="{ active: isPageActive(page.name) }"
-              :disabled="page.isDisabled"
-              :title="`Go to page number ${page.name}`"
-              class="btn-outline-primary-one"
-              type="button"
-              @click="onClickPage(page.name)"
+      <button
+        v-for="page in pages"
+        :key="page.id"
+        :aria-label="`Go to page number ${page.name}`"
+        :class="{ active: isPageActive(page.name) }"
+        :disabled="page.isDisabled"
+        :title="`Go to page number ${page.name}`"
+        class="btn-outline-primary-one"
+        type="button"
+        @click="onClickPage(page.name)"
       >
         {{ page.name }}
       </button>
 
       <button
-          :disabled="isInLastPage"
-          aria-label="Go to next page"
-          class="btn-outline-primary-one"
-          title="Go to next page"
-          type="button"
-          @click="onClickNextPage"
+        :disabled="isInLastPage"
+        aria-label="Go to next page"
+        class="btn-outline-primary-one"
+        title="Go to next page"
+        type="button"
+        @click="onClickNextPage"
       >
         Next
       </button>
 
       <button
-          :disabled="isInLastPage"
-          aria-label="Go to last page"
-          class="btn-outline-primary-one"
-          title="Go to Last page"
-          type="button"
-          @click="onClickLastPage"
+        :disabled="isInLastPage"
+        aria-label="Go to last page"
+        class="btn-outline-primary-one"
+        title="Go to Last page"
+        type="button"
+        @click="onClickLastPage"
       >
         Last
       </button>

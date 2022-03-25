@@ -1,14 +1,25 @@
 <template>
-  <div v-if="product && Object.keys(product).length > 0" class="product-card-main">
-    <RouterLink :title="product.name" :to="productPath" aria-label="Product">
+  <div
+    v-if="product && Object.keys(product).length > 0"
+    class="product-card-main"
+  >
+    <RouterLink
+      :title="product.name"
+      :to="productPath"
+      aria-label="Product"
+    >
       <div class="card cardEffect">
         <div class="card-image-content">
-          <img v-if="product.main_image_filename" :alt="product.name"
-               :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, product.main_image_filename, '150', '150')"
-               class="card-img-border img-fluid"
-               height="150" width="150"
-               loading="lazy"
-          />
+          <img
+            v-if="product.main_image_filename"
+            :alt="product.name"
+            :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, product.main_image_filename, '150', '150')"
+            class="card-img-border img-fluid"
+            height="150"
+            width="150"
+            loading="lazy"
+            v-html="product.name"
+          >
         </div>
         <div class="card-body">
           <div class="card-title">
@@ -16,17 +27,18 @@
           </div>
           <div class="card-review-content">
             <div class="card-review-content-stars">
-              <svg v-for="(star, i) of backgroundStars(product.review_average)"
-                   :key="i"
-                   aria-hidden="true"
-                   class="star star-background"
-                   data-icon="star"
-                   data-prefix="fas"
-                   focusable="false"
-                   role="img"
-                   viewBox="0 0 576 512"
-                   xmlns="http://www.w3.org/2000/svg"
-                   v-html="star"
+              <svg
+                v-for="(star, i) of backgroundStars(product.review_average)"
+                :key="i"
+                aria-hidden="true"
+                class="star star-background"
+                data-icon="star"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 576 512"
+                xmlns="http://www.w3.org/2000/svg"
+                v-html="star"
               />
             </div>
             <div class="card-review-content-count">
@@ -39,9 +51,13 @@
             </span>
           </div>
           <div class="card-footer">
-            <a :class="{'disabled': disabled }" :title="`Add to cart - ${product.name}`" class="btn-outline-primary-one btn-product-card"
-               href="#"
-               type="button" @click.prevent="addToCart()"
+            <a
+              :class="{'disabled': disabled }"
+              :title="`Add to cart - ${product.name}`"
+              class="btn-outline-primary-one btn-product-card"
+              href="#"
+              type="button"
+              @click.prevent="addToCart()"
             >{{ addToCartButtonText }}</a>
           </div>
         </div>
@@ -80,6 +96,8 @@ export default class ProductCard extends Vue {
   ImageFitOptions: any = ImageFitOptions
   ImagePositionOptions: any = ImagePositionOptions
 
+  imageUrl: string = ''
+
   get disabled(): boolean {
     return this.product.active === 'False' || this.product.stock <= 0
   }
@@ -114,7 +132,7 @@ export default class ProductCard extends Vue {
       fit?: ImageFitOptions,
       position?: ImagePositionOptions,
       trimThreshold?: number
-  ): string {
+  ): string | (() => string) {
     const mediaStreamImageData: ImageUrlInterface = {
       'imageType': imageType,
       'imageName': imageName,
@@ -124,7 +142,12 @@ export default class ProductCard extends Vue {
       'position': position,
       'trimThreshold': trimThreshold
     }
-    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+
+    ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData).then(finalUrl => {
+      this.imageUrl = finalUrl
+    })
+
+    return this.imageUrl
   }
 
   public contentShorten(productName: any): string {

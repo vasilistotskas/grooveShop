@@ -1,25 +1,25 @@
 <template>
   <div
-      :style="{
+    :style="{
       'column-gap': gap,
       'grid-template-columns': `${r1}fr ${r2}fr`
     }"
-      class="_buttons"
+    class="_buttons"
   >
     <FormBaseButton
-        class="reset-button"
-        title="Reset"
-        type="primary-two"
-        @click="$emit('reset')"
+      class="reset-button"
+      title="Reset"
+      type="primary-two"
+      @click="$emit('reset')"
     >
       Reset
     </FormBaseButton>
     <FormBaseButton
-        :disabled="submitting"
-        class="submit-button"
-        html-type="submit"
-        title="Submit"
-        type="primary"
+      :disabled="submitting"
+      class="submit-button"
+      html-type="submit"
+      title="Submit"
+      type="primary"
     >
       {{ submitText }}
     </FormBaseButton>

@@ -1,7 +1,7 @@
 <template>
   <div class="page-sign-up mt-7 mb-5">
     <div class="container">
-      <Breadcrumbs :bread-crumb-path="breadCrumbPath"/>
+      <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
       <template v-if="registrationLoading">
         loading...
       </template>
@@ -9,71 +9,89 @@
         <div class="card sign-up-card">
           <div class="card-body card-body-border-top">
             <FormProvider
-                :errors="formManager.errors"
-                :form="formManager.form"
-                title="Register"
-                @submit="handleSubmit()"
+              :errors="formManager.errors"
+              :form="formManager.form"
+              title="Register"
+              @submit="handleSubmit()"
             >
               <div class="container">
                 <div class="email mb-3">
-                  <label :for="formManager.form.email.$uid" class="label mb-2">Email</label>
+                  <label
+                    :for="formManager.form.email.$uid"
+                    class="label mb-2"
+                  >Email</label>
                   <FormBaseInput
-                      :id="formManager.form.email.$uid"
-                      v-model="formManager.form.email.$value"
-                      :has-error="formManager.form.email.$hasError"
-                      :input-with-add-on="true"
-                      :input-with-add-on-icon="envelopeIcon"
-                      :validating="formManager.form.email.$validating"
-                      placeholder="Alice, Bob, Oscar"
-                      @blur="formManager.form.email.onBlur"
+                    :id="formManager.form.email.$uid"
+                    v-model="formManager.form.email.$value"
+                    :has-error="formManager.form.email.$hasError"
+                    :input-with-add-on="true"
+                    :input-with-add-on-icon="envelopeIcon"
+                    :validating="formManager.form.email.$validating"
+                    placeholder="Alice, Bob, Oscar"
+                    @blur="formManager.form.email.onBlur"
                   />
                   <FormValidationErrors
-                      :errors="formManager.form.email.$errors"
-                      class="validation-errros"
+                    :errors="formManager.form.email.$errors"
+                    class="validation-errros"
                   />
                 </div>
                 <div class="password mb-3">
-                  <label :for="formManager.form.password.$uid" class="label mb-2">Password</label>
+                  <label
+                    :for="formManager.form.password.$uid"
+                    class="label mb-2"
+                  >Password</label>
                   <FormBaseInput
-                      :id="formManager.form.password.$uid"
-                      v-model="formManager.form.password.$value"
-                      :has-error="formManager.form.password.$hasError"
-                      :input-with-add-on="true"
-                      :input-with-add-on-icon="keyIcon"
-                      type="password"
-                      @blur="formManager.form.password.onBlur"
+                    :id="formManager.form.password.$uid"
+                    v-model="formManager.form.password.$value"
+                    :has-error="formManager.form.password.$hasError"
+                    :input-with-add-on="true"
+                    :input-with-add-on-icon="keyIcon"
+                    type="password"
+                    @blur="formManager.form.password.onBlur"
                   />
-                  <FormValidationErrors :errors="formManager.form.password.$errors"/>
+                  <FormValidationErrors :errors="formManager.form.password.$errors" />
                 </div>
 
                 <div class="confirm-password mb-4">
-                  <label :for="formManager.form.confirmPassword.$uid" class="label mb-2">
+                  <label
+                    :for="formManager.form.confirmPassword.$uid"
+                    class="label mb-2"
+                  >
                     Confirm Password
                   </label>
                   <FormBaseInput
-                      :id="formManager.form.confirmPassword.$uid"
-                      v-model="formManager.form.confirmPassword.$value"
-                      :has-error="formManager.form.confirmPassword.$hasError"
-                      :input-with-add-on="true"
-                      :input-with-add-on-icon="keyIcon"
-                      type="password"
-                      @blur="formManager.form.confirmPassword.onBlur"
+                    :id="formManager.form.confirmPassword.$uid"
+                    v-model="formManager.form.confirmPassword.$value"
+                    :has-error="formManager.form.confirmPassword.$hasError"
+                    :input-with-add-on="true"
+                    :input-with-add-on-icon="keyIcon"
+                    type="password"
+                    @blur="formManager.form.confirmPassword.onBlur"
                   />
-                  <FormValidationErrors :errors="formManager.form.confirmPassword.$errors"/>
+                  <FormValidationErrors :errors="formManager.form.confirmPassword.$errors" />
                 </div>
-                <span v-show="registrationError" class="error">
+                <span
+                  v-show="registrationError"
+                  class="error"
+                >
                   An error occured while processing your request.
                 </span>
                 <FormSubmitButtons
-                    :submitting="formManager.submitting"
-                    class="buttons"
-                    gap="2rem"
-                    @reset="formManager.resetFields()"
+                  :submitting="formManager.submitting"
+                  class="buttons"
+                  gap="2rem"
+                  @reset="formManager.resetFields()"
                 />
               </div>
               <p class="register-login-field mt-4 mb-4">
                 Or
-                <RouterLink aria-label="Log In" title="Log In" to="/log-in">click here</RouterLink>
+                <RouterLink
+                  aria-label="Log In"
+                  title="Log In"
+                  to="/log-in"
+                >
+                  click here
+                </RouterLink>
                 to log in!
               </p>
             </FormProvider>
@@ -89,7 +107,10 @@
             </span>
             <p class="mt-3">
               If you cant find email check your spam folder , if its not there click
-              <span class="registration-resend-action" @click="activationEmailResend">Here</span> to receive new
+              <span
+                class="registration-resend-action"
+                @click="activationEmailResend"
+              >Here</span> to receive new
               activation email.
             </p>
           </div>

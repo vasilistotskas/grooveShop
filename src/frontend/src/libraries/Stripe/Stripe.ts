@@ -76,7 +76,6 @@ export default async function initStripeComponent(
 		const stripeInstance = (window as any).Stripe(stripeKey)
 		const stripeEl = stripeInstance
 			.elements()
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
 			.create(element, { ...COMPONENT_OPTIONS, ...ELEMENT_CONFIG[element] })
 		stripeEl.mount(selector)

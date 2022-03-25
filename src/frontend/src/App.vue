@@ -1,17 +1,18 @@
 <template>
-  <Loader v-show="isLoading" id="mainLoader"/>
+  <Loader
+    v-show="isLoading"
+    id="mainLoader"
+  />
   <div id="wrapper">
-
-    <Header/>
+    <Header />
 
     <section class="main-section">
-      <RouterView/>
+      <RouterView />
     </section>
 
-    <Footer/>
+    <Footer />
 
-    <SocialSidebar/>
-
+    <SocialSidebar />
   </div>
 </template>
 

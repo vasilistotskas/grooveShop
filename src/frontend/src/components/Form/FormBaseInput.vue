@@ -1,19 +1,28 @@
 <template>
-  <div :class="[attrsClassName, { 'input-group-w-addon': inputWithAddOn}]" class="_container">
-    <span v-if="inputWithAddOn" class="input-group-addon">
-      <font-awesome-icon :icon="inputWithAddOnIcon" size="lg"/>
+  <div
+    :class="[attrsClassName, { 'input-group-w-addon': inputWithAddOn}]"
+    class="_container"
+  >
+    <span
+      v-if="inputWithAddOn"
+      class="input-group-addon"
+    >
+      <font-awesome-icon
+        :icon="inputWithAddOnIcon"
+        size="lg"
+      />
     </span>
     <input
-        v-model="value"
-        v-bind="attrsRest"
-        :class="['_input', { '_input-error': hasError, 'form-control': inputWithAddOn }]"
-        :disabled="disabled"
-        :placeholder="placeholder"
-    />
+      v-model="value"
+      v-bind="attrsRest"
+      :class="['_input', { '_input-error': hasError, 'form-control': inputWithAddOn }]"
+      :disabled="disabled"
+      :placeholder="placeholder"
+    >
     <FormLoadingIcon
-        v-if="validating"
-        :class="{ '_loading-icon-error': hasError }"
-        class="_loading-icon"
+      v-if="validating"
+      :class="{ '_loading-icon-error': hasError }"
+      class="_loading-icon"
     />
   </div>
 </template>
@@ -38,6 +47,7 @@ export default defineComponent({
     },
     inputWithAddOnIcon: {
       type: Object,
+      default: () => {},
       required: false
     },
     disabled: {
@@ -45,6 +55,7 @@ export default defineComponent({
     },
     placeholder: {
       type: [String, Number],
+      default: '',
       required: false
     },
     hasError: {

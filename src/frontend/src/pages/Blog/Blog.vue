@@ -1,7 +1,10 @@
 <template>
   <div class="container content-min-height mt-7 mb-5">
-    <Breadcrumbs :bread-crumb-path="breadCrumbPath"/>
-    <PostList v-if="allPosts" :posts="allPosts"/>
+    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
+    <PostList
+      v-if="allPosts"
+      :posts="allPosts"
+    />
   </div>
 </template>
 

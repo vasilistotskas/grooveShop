@@ -1,139 +1,176 @@
 <template>
   <div class="page-checkout container mt-7 mb-5 ">
-    <Breadcrumbs :bread-crumb-path="breadCrumbPath"/>
+    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="checkout-grid-container content-min-height">
       <div class="checkout-grid-order-user-details">
         <div class="checkout-grid-content">
-          <h2 class="subtitle">Shipping details</h2>
-          <p class="has-text-grey mb-4">* All fields are required</p>
+          <h2 class="subtitle">
+            Shipping details
+          </h2>
+          <p class="has-text-grey mb-4">
+            * All fields are required
+          </p>
           <FormProvider
-              id="userDetailsForm"
-              :errors="formManager.errors"
-              :form="formManager.form"
-              :form-class="'form-class checkout-grid-form'"
-              name="userDetailsForm"
-              title=""
-              @submit="handleSubmit()"
+            id="userDetailsForm"
+            :errors="formManager.errors"
+            :form="formManager.form"
+            :form-class="'form-class checkout-grid-form'"
+            name="userDetailsForm"
+            title=""
+            @submit="handleSubmit()"
           >
             <div class="checkout-grid-form-part-left">
               <div class="first_name col-12 mb-3">
-                <label :for="formManager.form.first_name.$uid" class="label">First Name</label>
+                <label
+                  :for="formManager.form.first_name.$uid"
+                  class="label"
+                >First Name</label>
                 <FormBaseInput
-                    :id="formManager.form.first_name.$uid"
-                    v-model="formManager.form.first_name.$value"
-                    :has-error="formManager.form.first_name.$hasError"
-                    :placeholder="customerDetails.first_name"
-                    :validating="formManager.form.first_name.$validating"
+                  :id="formManager.form.first_name.$uid"
+                  v-model="formManager.form.first_name.$value"
+                  :has-error="formManager.form.first_name.$hasError"
+                  :placeholder="customerDetails.first_name"
+                  :validating="formManager.form.first_name.$validating"
                 />
                 <FormValidationErrors
-                    :errors="formManager.form.first_name.$errors"
-                    class="validation-errros"
+                  :errors="formManager.form.first_name.$errors"
+                  class="validation-errros"
                 />
               </div>
 
               <div class="last_name col-12 mb-3">
-                <label :for="formManager.form.last_name.$uid" class="label">Last Name</label>
+                <label
+                  :for="formManager.form.last_name.$uid"
+                  class="label"
+                >Last Name</label>
                 <FormBaseInput
-                    :id="formManager.form.last_name.$uid"
-                    v-model="formManager.form.last_name.$value"
-                    :has-error="formManager.form.last_name.$hasError"
-                    :placeholder="customerDetails.last_name"
-                    :validating="formManager.form.last_name.$validating"
+                  :id="formManager.form.last_name.$uid"
+                  v-model="formManager.form.last_name.$value"
+                  :has-error="formManager.form.last_name.$hasError"
+                  :placeholder="customerDetails.last_name"
+                  :validating="formManager.form.last_name.$validating"
                 />
                 <FormValidationErrors
-                    :errors="formManager.form.last_name.$errors"
-                    class="validation-errros"
+                  :errors="formManager.form.last_name.$errors"
+                  class="validation-errros"
                 />
               </div>
 
               <div class="last_name col-12 mb-3">
-                <label :for="formManager.form.email.$uid" class="label">Email</label>
+                <label
+                  :for="formManager.form.email.$uid"
+                  class="label"
+                >Email</label>
                 <FormBaseInput
-                    :id="formManager.form.email.$uid"
-                    v-model="formManager.form.email.$value"
-                    :has-error="formManager.form.email.$hasError"
-                    :placeholder="customerDetails.email"
-                    :validating="formManager.form.email.$validating"
+                  :id="formManager.form.email.$uid"
+                  v-model="formManager.form.email.$value"
+                  :has-error="formManager.form.email.$hasError"
+                  :placeholder="customerDetails.email"
+                  :validating="formManager.form.email.$validating"
                 />
                 <FormValidationErrors
-                    :errors="formManager.form.email.$errors"
-                    class="validation-errros"
+                  :errors="formManager.form.email.$errors"
+                  class="validation-errros"
                 />
               </div>
 
               <div class="last_name col-12 mb-3">
-                <label :for="formManager.form.phone.$uid" class="label">Phone</label>
+                <label
+                  :for="formManager.form.phone.$uid"
+                  class="label"
+                >Phone</label>
                 <FormBaseInput
-                    :id="formManager.form.phone.$uid"
-                    v-model="formManager.form.phone.$value"
-                    :has-error="formManager.form.phone.$hasError"
-                    :placeholder="customerDetails.phone"
-                    :validating="formManager.form.phone.$validating"
+                  :id="formManager.form.phone.$uid"
+                  v-model="formManager.form.phone.$value"
+                  :has-error="formManager.form.phone.$hasError"
+                  :placeholder="customerDetails.phone"
+                  :validating="formManager.form.phone.$validating"
                 />
                 <FormValidationErrors
-                    :errors="formManager.form.phone.$errors"
-                    class="validation-errros"
+                  :errors="formManager.form.phone.$errors"
+                  class="validation-errros"
                 />
               </div>
             </div>
 
             <div class="checkout-grid-form-part-right">
               <div class="last_name col-12 mb-3">
-                <label :for="formManager.form.address.$uid" class="label">Address</label>
+                <label
+                  :for="formManager.form.address.$uid"
+                  class="label"
+                >Address</label>
                 <FormBaseInput
-                    :id="formManager.form.address.$uid"
-                    v-model="formManager.form.address.$value"
-                    :has-error="formManager.form.address.$hasError"
-                    :placeholder="customerDetails.address"
-                    :validating="formManager.form.address.$validating"
+                  :id="formManager.form.address.$uid"
+                  v-model="formManager.form.address.$value"
+                  :has-error="formManager.form.address.$hasError"
+                  :placeholder="customerDetails.address"
+                  :validating="formManager.form.address.$validating"
                 />
                 <FormValidationErrors
-                    :errors="formManager.form.address.$errors"
-                    class="validation-errros"
+                  :errors="formManager.form.address.$errors"
+                  class="validation-errros"
                 />
               </div>
 
               <div class="last_name col-12 mb-3">
-                <label :for="formManager.form.zipcode.$uid" class="label">Zipcode</label>
+                <label
+                  :for="formManager.form.zipcode.$uid"
+                  class="label"
+                >Zipcode</label>
                 <FormBaseInput
-                    :id="formManager.form.zipcode.$uid"
-                    v-model="formManager.form.zipcode.$value"
-                    :has-error="formManager.form.zipcode.$hasError"
-                    :placeholder="customerDetails.zipcode"
-                    :validating="formManager.form.zipcode.$validating"
+                  :id="formManager.form.zipcode.$uid"
+                  v-model="formManager.form.zipcode.$value"
+                  :has-error="formManager.form.zipcode.$hasError"
+                  :placeholder="customerDetails.zipcode"
+                  :validating="formManager.form.zipcode.$validating"
                 />
                 <FormValidationErrors
-                    :errors="formManager.form.zipcode.$errors"
-                    class="validation-errros"
+                  :errors="formManager.form.zipcode.$errors"
+                  class="validation-errros"
                 />
               </div>
 
               <div class="last_name col-12 mb-3">
-                <label :for="formManager.form.place.$uid" class="label">Place</label>
+                <label
+                  :for="formManager.form.place.$uid"
+                  class="label"
+                >Place</label>
                 <FormBaseInput
-                    :id="formManager.form.place.$uid"
-                    v-model="formManager.form.place.$value"
-                    :has-error="formManager.form.place.$hasError"
-                    :placeholder="customerDetails.place"
-                    :validating="formManager.form.place.$validating"
+                  :id="formManager.form.place.$uid"
+                  v-model="formManager.form.place.$value"
+                  :has-error="formManager.form.place.$hasError"
+                  :placeholder="customerDetails.place"
+                  :validating="formManager.form.place.$validating"
                 />
                 <FormValidationErrors
-                    :errors="formManager.form.place.$errors"
-                    class="validation-errros"
+                  :errors="formManager.form.place.$errors"
+                  class="validation-errros"
                 />
               </div>
 
               <div class="checkout-grid-country-region">
                 <div class="form-outline">
-                  <label class="form-label" for="inputCountry">Country</label>
-                  <select id="inputCountry" v-model="customerDetails.country" class="form-select" name="country"
-                          @change="restRegions"
+                  <label
+                    class="form-label"
+                    for="inputCountry"
+                  >Country</label>
+                  <select
+                    id="inputCountry"
+                    v-model="customerDetails.country"
+                    class="form-select"
+                    name="country"
+                    @change="restRegions"
                   >
-                    <option disabled value="choose">Choose...</option>
                     <option
-                        v-for="country in availableCountries"
-                        :key="country.alpha_2"
-                        :value="country.alpha_2"
+                      disabled
+                      value="choose"
+                    >
+                      Choose...
+                    </option>
+                    <option
+                      v-for="country in availableCountries"
+                      :key="country.alpha_2"
+                      :value="country.alpha_2"
                     >
                       {{ country.name }}
                     </option>
@@ -141,15 +178,27 @@
                 </div>
 
                 <div class="form-outline">
-                  <label class="form-label" for="inputRegion">Region</label>
-                  <select id="inputRegion" ref="regionElement" v-model="customerDetails.region" class="form-select"
-                          name="region"
+                  <label
+                    class="form-label"
+                    for="inputRegion"
+                  >Region</label>
+                  <select
+                    id="inputRegion"
+                    ref="regionElement"
+                    v-model="customerDetails.region"
+                    class="form-select"
+                    name="region"
                   >
-                    <option disabled value="choose">Choose...</option>
                     <option
-                        v-for="region in regionsBasedOnAlpha"
-                        :key="region.alpha"
-                        :value="region.alpha"
+                      disabled
+                      value="choose"
+                    >
+                      Choose...
+                    </option>
+                    <option
+                      v-for="region in regionsBasedOnAlpha"
+                      :key="region.alpha"
+                      :value="region.alpha"
                     >
                       {{ region.name }}
                     </option>
@@ -159,10 +208,20 @@
             </div>
           </FormProvider>
 
-          <div id="stripe-card" ref="stripleElement" class="mb-5 mt-3"></div>
+          <div
+            id="stripe-card"
+            ref="stripleElement"
+            class="mb-5 mt-3"
+          />
           <template v-if="cartTotalLength">
             <div class="checkout-grid-pay-button">
-              <button class="btn btn-outline-primary-one" title="Pay With Stripe" type="button" @click="submitForm">Pay
+              <button
+                class="btn btn-outline-primary-one"
+                title="Pay With Stripe"
+                type="button"
+                @click="submitForm"
+              >
+                Pay
                 with Stripe
               </button>
             </div>
@@ -172,27 +231,39 @@
 
       <div class="checkout-grid-order-info">
         <div class="checkout-grid-title mb-4">
-          <h2 class="title">Your Items</h2>
+          <h2 class="title">
+            Your Items
+          </h2>
         </div>
         <div class="checkout-grid-head">
-          <div v-for="item in cart"
-               :key="item.product.id"
-               class="checkout-grid-head-part-two"
+          <div
+            v-for="item in cart"
+            :key="item.product.id"
+            class="checkout-grid-head-part-two"
           >
             <div class="checkout-grid-head-part-two-product-image">
-              <RouterLink :title="item.product.name" :to="'/product' + item.product.absolute_url" aria-label="Product">
+              <RouterLink
+                :title="item.product.name"
+                :to="'/product' + item.product.absolute_url"
+                aria-label="Product"
+              >
                 <span>
-                  <img :alt="item.product.name"
-                       :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, item.product.main_image_filename, '100', '100')"
-                       height="100"
-                       width="100"
-                       loading="lazy"
+                  <img
+                    :alt="item.product.name"
+                    :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, item.product.main_image_filename, '100', '100')"
+                    height="100"
+                    width="100"
+                    loading="lazy"
                   >
                 </span>
               </RouterLink>
             </div>
             <div class="checkout-grid-head-part-two-product-info">
-              <RouterLink :title="item.product.name" :to="'/product' + item.product.absolute_url" aria-label="Product">
+              <RouterLink
+                :title="item.product.name"
+                :to="'/product' + item.product.absolute_url"
+                aria-label="Product"
+              >
                 <span class="checkout-grid-head-part-two-product-info-name">{{ item.product.name }}</span>
               </RouterLink>
               <span class="checkout-grid-head-part-two-product-info-price">Item Price: ${{ item.product.price }}</span>
@@ -228,7 +299,7 @@ import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
-import { min, exactly, required, email } from '@/components/Form/Utils'
+import { email, exactly, min, required } from '@/components/Form/Utils'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
@@ -262,6 +333,8 @@ export default class Checkout extends Vue {
   ImageTypeOptions: any = ImageTypeOptions
   ImageFitOptions: any = ImageFitOptions
   ImagePositionOptions: any = ImagePositionOptions
+
+  imageUrl: string = ''
 
   formManager = {
     validateFields
@@ -388,7 +461,7 @@ export default class Checkout extends Vue {
       fit?: ImageFitOptions,
       position?: ImagePositionOptions,
       trimThreshold?: number
-  ): string {
+  ): string | (() => string) {
     const mediaStreamImageData: ImageUrlInterface = {
       'imageType': imageType,
       'imageName': imageName,
@@ -398,7 +471,14 @@ export default class Checkout extends Vue {
       'position': position,
       'trimThreshold': trimThreshold
     }
-    return ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+
+    ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
+        .then(finalUrl => {
+          this.imageUrl = finalUrl
+        })
+
+    return this.imageUrl
+
   }
 
   async restRegions(e: any): Promise<void> {
