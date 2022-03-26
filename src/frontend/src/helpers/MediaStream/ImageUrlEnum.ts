@@ -5,6 +5,7 @@ export enum ImageTypeOptions {
 }
 
 export enum ImagePositionOptions {
+	no_position = '',
 	centre = 'centre',
 	center = 'center',
 	left = 'left',
@@ -24,6 +25,7 @@ export enum ImagePositionOptions {
 }
 
 export enum ImageFitOptions {
+	no_fit = '',
 	contain = 'contain',
 	cover = 'cover',
 	fill = 'fill',

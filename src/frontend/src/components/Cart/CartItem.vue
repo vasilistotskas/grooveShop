@@ -128,8 +128,10 @@ export default class CartItemVue extends Vue {
       'trimThreshold': trimThreshold
     }
 
-    ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
-        .then(finalUrl => {
+    const imageModel = new ImageUrlModel(mediaStreamImageData)
+
+    imageModel.buildMediaStreamImageUrl()
+        .then((finalUrl: string) => {
           this.imageUrl = finalUrl
         })
 

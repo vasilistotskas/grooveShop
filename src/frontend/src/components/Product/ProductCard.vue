@@ -143,11 +143,15 @@ export default class ProductCard extends Vue {
       'trimThreshold': trimThreshold
     }
 
-    ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData).then(finalUrl => {
-      this.imageUrl = finalUrl
-    })
+    const imageModel = new ImageUrlModel(mediaStreamImageData)
+
+    imageModel.buildMediaStreamImageUrl()
+        .then((finalUrl: string) => {
+          this.imageUrl = finalUrl
+        })
 
     return this.imageUrl
+
   }
 
   public contentShorten(productName: any): string {

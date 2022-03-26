@@ -199,8 +199,10 @@ export default class CategoryVue extends Vue implements PaginatedInterface<Categ
       'trimThreshold': trimThreshold
     }
 
-    ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
-        .then(finalUrl => {
+    const imageModel = new ImageUrlModel(mediaStreamImageData)
+
+    imageModel.buildMediaStreamImageUrl()
+        .then((finalUrl: string) => {
           this.imageUrl = finalUrl
         })
 

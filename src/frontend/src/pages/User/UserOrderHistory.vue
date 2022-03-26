@@ -185,8 +185,10 @@ export default class UserOrderHistory extends Vue implements PaginatedInterface<
       'trimThreshold': trimThreshold
     }
 
-    ImageUrlModel.buildMediaStreamImageUrl(mediaStreamImageData)
-        .then(finalUrl => {
+    const imageModel = new ImageUrlModel(mediaStreamImageData)
+
+    imageModel.buildMediaStreamImageUrl()
+        .then((finalUrl: string) => {
           this.imageUrl = finalUrl
         })
 
