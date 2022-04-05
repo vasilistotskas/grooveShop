@@ -14,41 +14,10 @@
       </h3>
       <div class="box">
         <div class="card">
-          <div class="card-body card-body-order-history">
-            <div class="order-history-grid-head">
-              <span />
-              <span>Product</span>
-              <span>Price</span>
-              <span>Quantity</span>
-              <span>Total</span>
-            </div>
-            <div
-              v-for="item in order.items"
-              :key="item.product.id"
-              class="order-history-grid-body"
-            >
-              <RouterLink
-                :title="item.product.name"
-                :to="'/product' + item.product.absolute_url"
-                aria-label="Product"
-              >
-                <span>
-                  <img
-                    :alt="item.product.name"
-                    :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, item.product.main_image_filename, '75', '75')"
-                    class="border-radius-img img-fluid"
-                    height="75"
-                    width="75"
-                    loading="lazy"
-                  >
-                </span>
-                <span>{{ item.product.name }}</span>
-                <span>${{ item.product.price }}</span>
-                <span>{{ item.quantity }}</span>
-                <span>${{ itemTotal(item).toFixed(2) }}</span>
-              </RouterLink>
-            </div>
-          </div>
+          <UserOrderHistoryContainer
+            :order="order"
+            class="col-sm-3"
+          />
         </div>
       </div>
     </div>
@@ -56,7 +25,7 @@
       v-if="Object.keys(allPaginatedResults).length !== 0"
       :endpoint-url="'orders'"
       :max-visible-buttons="3"
-      :route="'Orders'"
+      :route="PaginationRoutesEnum.ORDERS"
       :total-pages="allPaginatedResultsTotalPages"
     />
   </div>
@@ -70,66 +39,28 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options, Vue } from 'vue-class-component'
-import CartItemModel from '@/state/cart/CartItemModel'
-import ProductModel from '@/state/product/ProductModel'
+import { Options } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
+import UserOrderModel from '@/state/user/order/UserOrderModel'
 import Pagination from '@/components/Pagination/Pagination.vue'
-import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
-import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
+import PaginationBase from '@/components/Pagination/PaginationBase'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
+import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
+import UserOrderHistoryContainer from '@/components/User/UserOrderHistoryContainer.vue'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
-import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Options({
   name: 'UserOrderHistory',
+  extends: PaginationBase,
   components: {
-    Pagination
+    Pagination,
+    UserOrderHistoryContainer
   }
 })
 
-export default class UserOrderHistory extends Vue implements PaginatedInterface<ProductModel> {
+export default class UserOrderHistory extends PaginationBase<UserOrderModel> implements PaginatedInterface<UserOrderModel> {
 
-  uri = window.location.search.substring(1)
-  params = new URLSearchParams(this.uri)
-
-  ImageTypeOptions: any = ImageTypeOptions
-  ImageFitOptions: any = ImageFitOptions
-  ImagePositionOptions: any = ImagePositionOptions
-
-  imageUrl: string = ''
-
-  get currentPageQuery(): string {
-    return store.getters['pagination/getCurrentQuery']
-  }
-
-  get allPaginatedResults(): Array<ProductModel> {
-    return store.getters['pagination/getResultData']
-  }
-
-  get allPaginatedResultsCount(): number {
-    return store.getters['pagination/getResultCountData']
-  }
-
-  get allPaginatedResultsNextPageUrl(): URL {
-    return store.getters['pagination/getResultNextPageUrl']
-  }
-
-  get allPaginatedResultsPreviousPageUrl(): URL {
-    return store.getters['pagination/getResultPreviousPageUrl']
-  }
-
-  get allPaginatedResultsTotalPages(): number {
-    return store.getters['pagination/getResultTotalPages']
-  }
-
-  get currentPageNumber(): number {
-    let storedPageNumber = store.getters['pagination/getCurrentPageNumber']
-    if (storedPageNumber) {
-      return store.getters['pagination/getCurrentPageNumber']
-    }
-    return 1
-  }
+  PaginationRoutesEnum = PaginationRoutesEnum
 
   async created(): Promise<void> {
 
@@ -145,7 +76,7 @@ export default class UserOrderHistory extends Vue implements PaginatedInterface<
       await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
     }
 
-    await this.fetchUserOrders()
+    await this.fetchPaginationData()
 
   }
 
@@ -153,7 +84,7 @@ export default class UserOrderHistory extends Vue implements PaginatedInterface<
     store.commit('pagination/unsetResults')
   }
 
-  async fetchUserOrders(): Promise<void> {
+  async fetchPaginationData(): Promise<void> {
 
     const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
         .createPaginationQuery({
@@ -166,45 +97,10 @@ export default class UserOrderHistory extends Vue implements PaginatedInterface<
     await store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
   }
 
-  public mediaStreamImage(
-      imageType: string,
-      imageName: string,
-      width?: string,
-      height?: string,
-      fit?: ImageFitOptions,
-      position?: ImagePositionOptions,
-      trimThreshold?: number
-  ): string | (() => string) {
-    const mediaStreamImageData: ImageUrlInterface = {
-      'imageType': imageType,
-      'imageName': imageName,
-      'width': width,
-      'height': height,
-      'fit': fit,
-      'position': position,
-      'trimThreshold': trimThreshold
-    }
-
-    const imageModel = new ImageUrlModel(mediaStreamImageData)
-
-    imageModel.buildMediaStreamImageUrl()
-        .then((finalUrl: string) => {
-          this.imageUrl = finalUrl
-        })
-
-    return this.imageUrl
-
-  }
-
-  itemTotal(item: CartItemModel): number {
-    return item.quantity * item.product.price
-  }
-
-
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@/assets/styles/pages/User/UserOrderHistory"
 
 </style>

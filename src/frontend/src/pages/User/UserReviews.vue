@@ -18,7 +18,7 @@
         v-if="Object.keys(allPaginatedResults).length !== 0"
         :endpoint-url="buildEndPointUrlForPaginatedResults()"
         :max-visible-buttons="3"
-        :route="'Reviews'"
+        :route="PaginationRoutesEnum.REVIEWS"
         :total-pages="allPaginatedResultsTotalPages"
       />
     </div>
@@ -33,18 +33,20 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options, Vue } from 'vue-class-component'
+import { Options } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
-import { PaginationCount } from '@/state/pagination/Type/PaginationTypes'
-import ReviewProductCard from '@/components/Reviews/ReviewProductCard.vue'
+import PaginationBase from '@/components/Pagination/PaginationBase'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
+import ReviewProductCard from '@/components/Reviews/ReviewProductCard.vue'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
+import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Options({
   name: 'UserReviews',
+  extends: PaginationBase,
   components: {
     ReviewProductCard,
     Pagination
@@ -57,42 +59,13 @@ import { PaginationQueryParametersModel } from '@/state/pagination/Model/Paginat
   }
 })
 
-export default class UserReviews extends Vue implements PaginatedInterface<ProductReviewModel> {
+export default class UserReviews extends PaginationBase<ProductReviewModel> implements PaginatedInterface<ProductReviewModel> {
 
-  uri = window.location.search.substring(1)
-  params = new URLSearchParams(this.uri)
   userData = new UserDetailsModel()
+  PaginationRoutesEnum = PaginationRoutesEnum
 
   get userId(): number {
     return store.getters['user/data/getUserId']
-  }
-
-  get allPaginatedResults(): Array<ProductReviewModel> {
-    return store.getters['pagination/getResultData']
-  }
-
-  get allPaginatedResultsCount(): PaginationCount {
-    return store.getters['pagination/getResultCountData']
-  }
-
-  get allPaginatedResultsNextPageUrl(): URL {
-    return store.getters['pagination/getResultNextPageUrl']
-  }
-
-  get allPaginatedResultsPreviousPageUrl(): URL {
-    return store.getters['pagination/getResultPreviousPageUrl']
-  }
-
-  get allPaginatedResultsTotalPages(): PaginationCount {
-    return store.getters['pagination/getResultTotalPages']
-  }
-
-  get currentPageNumber(): number {
-    let storedPageNumber = store.getters['pagination/getCurrentPageNumber']
-    if (storedPageNumber) {
-      return store.getters['pagination/getCurrentPageNumber']
-    }
-    return 1
   }
 
   async created(): Promise<void> {
@@ -109,7 +82,7 @@ export default class UserReviews extends Vue implements PaginatedInterface<Produ
       await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
     }
 
-    await this.fetchUserReviews()
+    await this.fetchPaginationData()
 
   }
 
@@ -117,7 +90,7 @@ export default class UserReviews extends Vue implements PaginatedInterface<Produ
     store.commit('pagination/unsetResults')
   }
 
-  async fetchUserReviews(): Promise<void> {
+  async fetchPaginationData(): Promise<void> {
     const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,

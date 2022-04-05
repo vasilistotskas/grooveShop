@@ -19,7 +19,7 @@
           v-if="Object.keys(allPaginatedResults).length !== 0"
           :endpoint-url="buildEndPointUrlForPaginatedResults()"
           :max-visible-buttons="3"
-          :route="'Category'"
+          :route="PaginationRoutesEnum.CATEGORY"
           :total-pages="allPaginatedResultsTotalPages"
         />
 
@@ -40,22 +40,25 @@
 
 import store from '@/store'
 import router from '@/routes'
-import { Options, Vue } from 'vue-class-component'
+import { Options } from 'vue-class-component'
+import ProductModel from '@/state/product/ProductModel'
 import CategoryModel from '@/state/category/CategoryModel'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
+import PaginationBase from '@/components/Pagination/PaginationBase'
 import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
-import { PaginationCount } from '@/state/pagination/Type/PaginationTypes'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
+import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Options({
-  name: 'CategoryVue',
+  name: 'Category',
+  extends: PaginationBase,
   components: {
     ProductCard,
     Breadcrumbs,
@@ -66,16 +69,15 @@ import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpe
   }
 })
 
-export default class CategoryVue extends Vue implements PaginatedInterface<CategoryModel> {
+export default class Category extends PaginationBase<ProductModel> implements PaginatedInterface<ProductModel> {
 
   formEl = document.getElementById('burgerButton') as HTMLFormElement
-  uri = window.location.search.substring(1)
-  params = new URLSearchParams(this.uri)
   ImageTypeOptions: any = ImageTypeOptions
   ImageFitOptions: any = ImageFitOptions
   ImagePositionOptions: any = ImagePositionOptions
 
   imageUrl: string = ''
+  PaginationRoutesEnum = PaginationRoutesEnum
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
@@ -84,34 +86,6 @@ export default class CategoryVue extends Vue implements PaginatedInterface<Categ
 
   get category(): CategoryModel {
     return store.getters['category/getCategory']
-  }
-
-  get allPaginatedResults(): Array<CategoryModel> {
-    return store.getters['pagination/getResultData']
-  }
-
-  get allPaginatedResultsCount(): PaginationCount {
-    return store.getters['pagination/getResultCountData']
-  }
-
-  get allPaginatedResultsNextPageUrl(): URL {
-    return store.getters['pagination/getResultNextPageUrl']
-  }
-
-  get allPaginatedResultsPreviousPageUrl(): URL {
-    return store.getters['pagination/getResultPreviousPageUrl']
-  }
-
-  get allPaginatedResultsTotalPages(): PaginationCount {
-    return store.getters['pagination/getResultTotalPages']
-  }
-
-  get currentPageNumber(): number {
-    let storedPageNumber = store.getters['pagination/getCurrentPageNumber']
-    if (storedPageNumber) {
-      return store.getters['pagination/getCurrentPageNumber']
-    }
-    return 1
   }
 
   async created(): Promise<void> {
@@ -123,7 +97,7 @@ export default class CategoryVue extends Vue implements PaginatedInterface<Categ
         (to: any, from: any) => {
           if (to.name === 'Category') {
             this.fetchCategory()
-            this.fetchCategoryProducts()
+            this.fetchPaginationData()
           }
           if (to.path !== from.path && to.name === 'Category') {
             store.commit('pagination/unsetResults')
@@ -149,7 +123,7 @@ export default class CategoryVue extends Vue implements PaginatedInterface<Categ
     }
 
     await this.fetchCategory()
-    await this.fetchCategoryProducts()
+    await this.fetchPaginationData()
   }
 
   unmounted(): void {
@@ -163,7 +137,7 @@ export default class CategoryVue extends Vue implements PaginatedInterface<Categ
     store.dispatch('category/fetchCategoryFromRemote', categoryId)
   }
 
-  async fetchCategoryProducts(): Promise<void> {
+  async fetchPaginationData(): Promise<void> {
 
     const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
       .createPaginationQuery({

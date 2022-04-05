@@ -62,14 +62,14 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
 @Options({
-  name: 'CartVue',
+  name: 'Cart',
   components: {
     CartItem,
     Breadcrumbs
   }
 })
 
-export default class CartVue extends Vue {
+export default class Cart extends Vue {
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb

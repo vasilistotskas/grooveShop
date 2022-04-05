@@ -15,7 +15,7 @@
       v-if="Object.keys(allPaginatedResults).length !== 0"
       :endpoint-url="buildEndPointUrlForPaginatedResults()"
       :max-visible-buttons="3"
-      :route="'Favourites'"
+      :route="PaginationRoutesEnum.FAVOURITES"
       :total-pages="allPaginatedResultsTotalPages"
     />
   </div>
@@ -29,17 +29,19 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options, Vue } from 'vue-class-component'
-import ProductModel from '@/state/product/ProductModel'
+import { Options } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import PaginationBase from '@/components/Pagination/PaginationBase'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
+import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Options({
   name: 'UserFavourites',
+  extends: PaginationBase,
   props: {
     userData: {
       type: Object,
@@ -52,39 +54,10 @@ import { PaginationQueryParametersModel } from '@/state/pagination/Model/Paginat
   }
 })
 
-export default class UserFavourites extends Vue implements PaginatedInterface<ProductModel> {
+export default class UserFavourites extends PaginationBase<UserDetailsModel> implements PaginatedInterface<UserDetailsModel> {
 
-  uri = window.location.search.substring(1)
-  params = new URLSearchParams(this.uri)
   userData = new UserDetailsModel()
-
-  get allPaginatedResults(): Array<ProductModel> {
-    return store.getters['pagination/getResultData']
-  }
-
-  get allPaginatedResultsCount(): number {
-    return store.getters['pagination/getResultCountData']
-  }
-
-  get allPaginatedResultsNextPageUrl(): URL {
-    return store.getters['pagination/getResultNextPageUrl']
-  }
-
-  get allPaginatedResultsPreviousPageUrl(): URL {
-    return store.getters['pagination/getResultPreviousPageUrl']
-  }
-
-  get allPaginatedResultsTotalPages(): number {
-    return store.getters['pagination/getResultTotalPages']
-  }
-
-  get currentPageNumber(): number {
-    let storedPageNumber = store.getters['pagination/getCurrentPageNumber']
-    if (storedPageNumber) {
-      return store.getters['pagination/getCurrentPageNumber']
-    }
-    return 1
-  }
+  PaginationRoutesEnum = PaginationRoutesEnum
 
   async created(): Promise<void> {
     document.title = 'My Favourites'
@@ -99,14 +72,14 @@ export default class UserFavourites extends Vue implements PaginatedInterface<Pr
       await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
     }
 
-    await this.fetchUserFavourites()
+    await this.fetchPaginationData()
   }
 
   async unmounted(): Promise<void> {
     store.commit('pagination/unsetResults')
   }
 
-  async fetchUserFavourites(): Promise<void> {
+  async fetchPaginationData(): Promise<void> {
 
     const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
         .createPaginationQuery({

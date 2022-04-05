@@ -83,7 +83,7 @@ import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpe
   }
 })
 
-export default class CartItemVue extends Vue {
+export default class CartItem extends Vue {
 
   item = new CartItemModel()
 

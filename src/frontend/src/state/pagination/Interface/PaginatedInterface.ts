@@ -5,6 +5,9 @@ import {
 } from '@/state/pagination/Type/PaginationTypes'
 export default interface PaginatedInterface<RM> {
 
+	readonly uri: typeof window.location.search
+	readonly params: Record<string, string> | string | URLSearchParams
+
 	readonly allPaginatedResults: Array<RM>
 	readonly allPaginatedResultsCount: PaginationCount
 	readonly allPaginatedResultsNextPageUrl: PaginationLink['next']
@@ -13,6 +16,6 @@ export default interface PaginatedInterface<RM> {
 	readonly currentPageNumber: number
 	readonly currentPageQuery?: string
 
-	readonly uri: typeof window.location.search
-	readonly params: Record<string, string> | string | URLSearchParams
+	fetchPaginationData(): Promise<void> | undefined
+
 }

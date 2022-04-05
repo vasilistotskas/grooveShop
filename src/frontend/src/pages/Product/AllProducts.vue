@@ -13,7 +13,7 @@
           v-if="Object.keys(allPaginatedResults).length !== 0"
           :endpoint-url="'products/all'"
           :max-visible-buttons="3"
-          :route="'AllProducts'"
+          :route="PaginationRoutesEnum.ALL_PRODUCTS"
           :total-pages="allPaginatedResultsTotalPages"
         />
 
@@ -34,19 +34,21 @@
 
 import store from '@/store'
 import router from '@/routes'
-import { Options, Vue } from 'vue-class-component'
+import { Options } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import { PaginationCount } from '@/state/pagination/Type/PaginationTypes'
-import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
+import PaginationBase from '@/components/Pagination/PaginationBase'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
+import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 
 @Options({
   name: 'AllProducts',
+  extends: PaginationBase,
   components: {
     ProductCard,
     Pagination,
@@ -54,42 +56,13 @@ import { PaginationQueryParametersModel } from '@/state/pagination/Model/Paginat
   }
 })
 
-export default class AllProducts extends Vue implements PaginatedInterface<ProductModel> {
+export default class AllProducts extends PaginationBase<ProductModel> implements PaginatedInterface<ProductModel> {
 
-  uri = window.location.search.substring(1)
-  params = new URLSearchParams(this.uri)
+  PaginationRoutesEnum = PaginationRoutesEnum
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
-  }
-
-  get allPaginatedResults(): Array<ProductModel> {
-    return store.getters['pagination/getResultData']
-  }
-
-  get allPaginatedResultsCount(): PaginationCount {
-    return store.getters['pagination/getResultCountData']
-  }
-
-  get allPaginatedResultsNextPageUrl(): URL {
-    return store.getters['pagination/getResultNextPageUrl']
-  }
-
-  get allPaginatedResultsPreviousPageUrl(): URL {
-    return store.getters['pagination/getResultPreviousPageUrl']
-  }
-
-  get allPaginatedResultsTotalPages(): PaginationCount {
-    return store.getters['pagination/getResultTotalPages']
-  }
-
-  get currentPageNumber(): number {
-    let storedPageNumber = store.getters['pagination/getCurrentPageNumber']
-    if (storedPageNumber) {
-      return store.getters['pagination/getCurrentPageNumber']
-    }
-    return 1
   }
 
   async created(): Promise<void> {
@@ -105,7 +78,7 @@ export default class AllProducts extends Vue implements PaginatedInterface<Produ
       await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
     }
 
-    await this.fetchAllProducts()
+    await this.fetchPaginationData()
 
   }
 
@@ -113,7 +86,7 @@ export default class AllProducts extends Vue implements PaginatedInterface<Produ
     store.commit('pagination/unsetResults')
   }
 
-  async fetchAllProducts(): Promise<void> {
+  async fetchPaginationData(): Promise<void> {
     const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
       .createPaginationQuery({
         'pageNumber': this.currentPageNumber,

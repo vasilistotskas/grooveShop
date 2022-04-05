@@ -13,7 +13,7 @@
           v-if="Object.keys(allPaginatedResults).length !== 0"
           :endpoint-url="'search'"
           :max-visible-buttons="3"
-          :route="'Search'"
+          :route="PaginationRoutesEnum.SEARCH"
           :total-pages="allPaginatedResultsTotalPages"
         />
 
@@ -34,18 +34,21 @@
 
 import store from '@/store'
 import router from '@/routes'
-import { Options, Vue } from 'vue-class-component'
+import { Options } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
+import PaginationBase from '@/components/Pagination/PaginationBase'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
+import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Options({
-  name: 'SearchVue',
+  name: 'Search',
+  extends: PaginationBase,
   components: {
     ProductCard,
     Pagination,
@@ -53,43 +56,14 @@ import { PaginationQueryParametersModel } from '@/state/pagination/Model/Paginat
   }
 })
 
-export default class SearchVue extends Vue implements PaginatedInterface<ProductModel> {
+export default class Search extends PaginationBase<ProductModel> implements PaginatedInterface<ProductModel> {
 
   query: string | null = ''
-  uri = window.location.search.substring(1)
-  params = new URLSearchParams(this.uri)
+  PaginationRoutesEnum = PaginationRoutesEnum
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
-  }
-
-  get allPaginatedResults(): Array<ProductModel> {
-    return store.getters['pagination/getResultData']
-  }
-
-  get allPaginatedResultsCount(): number {
-    return store.getters['pagination/getResultCountData']
-  }
-
-  get allPaginatedResultsNextPageUrl(): URL {
-    return store.getters['pagination/getResultNextPageUrl']
-  }
-
-  get allPaginatedResultsPreviousPageUrl(): URL {
-    return store.getters['pagination/getResultPreviousPageUrl']
-  }
-
-  get allPaginatedResultsTotalPages(): number {
-    return store.getters['pagination/getResultTotalPages']
-  }
-
-  get currentPageNumber(): number {
-    return store.getters['pagination/getCurrentPageNumber']
-  }
-
-  get currentPageQuery(): string {
-    return store.getters['pagination/getCurrentQuery']
   }
 
   async mounted(): Promise<void> {
@@ -105,7 +79,7 @@ export default class SearchVue extends Vue implements PaginatedInterface<Product
       store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
     }
 
-    await this.performSearch()
+    await this.fetchPaginationData()
 
   }
 
@@ -113,7 +87,7 @@ export default class SearchVue extends Vue implements PaginatedInterface<Product
     store.commit('pagination/unsetResults')
   }
 
-  async performSearch(): Promise<void> {
+  async fetchPaginationData(): Promise<void> {
 
     const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
         .createPaginationQuery({
