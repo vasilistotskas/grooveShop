@@ -69,9 +69,9 @@ import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpe
 
 export default class BlogPost extends Vue {
 
-  ImageTypeOptions: any = ImageTypeOptions
-  ImageFitOptions: any = ImageFitOptions
-  ImagePositionOptions: any = ImagePositionOptions
+  ImageTypeOptions = ImageTypeOptions
+  ImageFitOptions = ImageFitOptions
+  ImagePositionOptions = ImagePositionOptions
 
   imageUrl: string = ''
 

@@ -92,9 +92,9 @@ export default class ProductCard extends Vue {
   quantity = 1
   product = new ProductModel()
 
-  ImageTypeOptions: any = ImageTypeOptions
-  ImageFitOptions: any = ImageFitOptions
-  ImagePositionOptions: any = ImagePositionOptions
+  ImageTypeOptions = ImageTypeOptions
+  ImageFitOptions = ImageFitOptions
+  ImagePositionOptions = ImagePositionOptions
 
   imageUrl: string = ''
 

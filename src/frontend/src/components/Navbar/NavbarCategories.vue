@@ -81,9 +81,9 @@ export default class NavbarCategories extends Vue {
   mainToggleButton!: HTMLElement
   navbarProductsButton!: HTMLElement
 
-  ImageTypeOptions: any = ImageTypeOptions
-  ImageFitOptions: any = ImageFitOptions
-  ImagePositionOptions: any = ImagePositionOptions
+  ImageTypeOptions = ImageTypeOptions
+  ImageFitOptions = ImageFitOptions
+  ImagePositionOptions = ImagePositionOptions
 
   imageUrl: string = ''
 

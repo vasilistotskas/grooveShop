@@ -98,9 +98,9 @@ import { ImageTypeOptions, ImageFitOptions, ImagePositionOptions } from '@/helpe
 export default class BlogPostList extends Vue {
   showAuthor: boolean = false
   posts: Array<PostModel> = []
-  ImageTypeOptions: any = ImageTypeOptions
-  ImageFitOptions: any = ImageFitOptions
-  ImagePositionOptions: any = ImagePositionOptions
+  ImageTypeOptions = ImageTypeOptions
+  ImageFitOptions = ImageFitOptions
+  ImagePositionOptions = ImagePositionOptions
 
   imageUrl: string = ''
 

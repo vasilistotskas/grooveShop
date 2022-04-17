@@ -207,9 +207,9 @@ export default class Home extends Vue {
   envelopeIcon = faEnvelope
   commentIcon = faComment
 
-  ImageTypeOptions: any = ImageTypeOptions
-  ImageFitOptions: any = ImageFitOptions
-  ImagePositionOptions: any = ImagePositionOptions
+  ImageTypeOptions = ImageTypeOptions
+  ImageFitOptions = ImageFitOptions
+  ImagePositionOptions = ImagePositionOptions
 
   imageUrl: string = ''
 
