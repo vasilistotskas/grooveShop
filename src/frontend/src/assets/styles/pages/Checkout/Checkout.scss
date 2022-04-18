@@ -1,3 +1,9 @@
+.checkout-product-card-container {
+  display: grid;
+  grid-template-columns: 110px auto auto;
+  align-items: center;
+}
+
 .checkout-grid-container {
   display: grid;
   grid-template-columns: 60% 38%;
@@ -88,13 +94,6 @@
           }
 
           &-total {
-            position: absolute;
-            display: grid;
-            bottom: 10px;
-            right: 10px;
-            justify-self: end;
-            align-self: end;
-
             span {
               font-weight: 500;
               color: var(--cp-palette-main-fifth);
@@ -108,7 +107,7 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         margin-top: 15px;
-
+        border-top: 2px solid #80808078;
         span {
           color: var(--cp-palette-main-fifth);
           font-weight: 500;

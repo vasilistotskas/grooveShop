@@ -228,57 +228,11 @@
           </template>
         </div>
       </div>
-
-      <div class="checkout-grid-order-info">
-        <div class="checkout-grid-title mb-4">
-          <h2 class="title">
-            Your Items
-          </h2>
-        </div>
-        <div class="checkout-grid-head">
-          <div
-            v-for="item in cart"
-            :key="item.product.id"
-            class="checkout-grid-head-part-two"
-          >
-            <div class="checkout-grid-head-part-two-product-image">
-              <RouterLink
-                :title="item.product.name"
-                :to="'/product' + item.product.absolute_url"
-                aria-label="Product"
-              >
-                <span>
-                  <img
-                    :alt="item.product.name"
-                    :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, item.product.main_image_filename, '100', '100')"
-                    height="100"
-                    width="100"
-                    loading="lazy"
-                  >
-                </span>
-              </RouterLink>
-            </div>
-            <div class="checkout-grid-head-part-two-product-info">
-              <RouterLink
-                :title="item.product.name"
-                :to="'/product' + item.product.absolute_url"
-                aria-label="Product"
-              >
-                <span class="checkout-grid-head-part-two-product-info-name">{{ item.product.name }}</span>
-              </RouterLink>
-              <span class="checkout-grid-head-part-two-product-info-price">Item Price: ${{ item.product.price }}</span>
-              <span class="checkout-grid-head-part-two-product-info-quantity">Qty: {{ item.quantity }}</span>
-            </div>
-            <div class="checkout-grid-head-part-two-product-total">
-              <span>${{ itemTotal(item).toFixed(2) }}</span>
-            </div>
-          </div>
-        </div>
-        <div class="checkout-grid-head-part-three">
-          <span>Total:</span>
-          <span>${{ cartTotalPrice.toFixed(2) }}</span>
-        </div>
-      </div>
+      <CheckoutProductContainer
+        :cart="cart"
+        :cart-total-length="cartTotalLength"
+        :cart-total-price="cartTotalPrice"
+      />
     </div>
   </div>
 </template>
@@ -294,16 +248,14 @@ import CountryModel from '@/state/country/CountryModel'
 import RegionsModel from '@/state/country/RegionsModel'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
-import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
-import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 import { email, exactly, min, required } from '@/components/Form/Utils'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
-import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import CheckoutProductContainer from '@/components/Checkout/CheckoutProductContainer.vue'
 
 const toast = useToast()
 
@@ -318,24 +270,14 @@ let {
     FormBaseInput,
     FormSubmitButtons,
     FormValidationErrors,
-    Breadcrumbs
+    Breadcrumbs,
+    CheckoutProductContainer
   }
 })
 export default class Checkout extends Vue {
 
-  $refs!: {
-    stripleElement: HTMLFormElement;
-  }
-
   customerDetails = new UserDetailsModel()
-  card = {}
-
-  ImageTypeOptions = ImageTypeOptions
-  ImageFitOptions = ImageFitOptions
-  ImagePositionOptions = ImagePositionOptions
-
-  imageUrl: string = ''
-
+  
   formManager = {
     validateFields
   } = useValidation({
@@ -447,40 +389,6 @@ export default class Checkout extends Vue {
       store.dispatch('stripeCard/initStripeComponent')
     ])
     this.customerDetailsInitialize()
-  }
-
-  itemTotal(item: CartItemModel): number {
-    return item.quantity * item.product.price
-  }
-
-  public mediaStreamImage(
-      imageType: string,
-      imageName: string,
-      width?: string,
-      height?: string,
-      fit?: ImageFitOptions,
-      position?: ImagePositionOptions,
-      trimThreshold?: number
-  ): string | (() => string) {
-    const mediaStreamImageData: ImageUrlInterface = {
-      'imageType': imageType,
-      'imageName': imageName,
-      'width': width,
-      'height': height,
-      'fit': fit,
-      'position': position,
-      'trimThreshold': trimThreshold
-    }
-
-    const imageModel = new ImageUrlModel(mediaStreamImageData)
-
-    imageModel.buildMediaStreamImageUrl()
-        .then((finalUrl: string) => {
-          this.imageUrl = finalUrl
-        })
-
-    return this.imageUrl
-
   }
 
   async restRegions(e: any): Promise<void> {

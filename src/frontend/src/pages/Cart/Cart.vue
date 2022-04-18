@@ -17,7 +17,6 @@
             v-for="item in cart"
             :key="item.id"
             :item="item"
-            @click="removeFromCart(item)"
           />
         </div>
       </div>
@@ -92,9 +91,6 @@ export default class Cart extends Vue {
     document.title = 'Cart'
   }
 
-  public removeFromCart(item: CartItemModel): void {
-    store.commit('cart/removeFromCart', item)
-  }
 }
 </script>
 

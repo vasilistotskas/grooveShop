@@ -3,7 +3,6 @@ import ProductModel from '@/state/product/ProductModel'
 
 export default class CartItemModel extends EntityBase {
 
-	id!: number
 	quantity!: number
 	product!: ProductModel
 
