@@ -149,7 +149,7 @@
     </div>
     <div class="container-small">
       <div
-        v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0"
+        v-if="shouldReviewsAppear"
         id="reviews-container"
         class="product-page-grid-review"
       >
@@ -285,6 +285,11 @@ export default class Product extends PaginationBase<ProductReviewModel> implemen
 
   get disabled(): boolean {
     return this.product.active === 'False' || this.product.stock <= 0
+  }
+
+  get shouldReviewsAppear(): boolean {
+    return (this.allPaginatedResults && Object.keys(this.allPaginatedResults).length > 0)
+        || (this.userToProductReview && Object.keys(this.userToProductReview).length > 0)
   }
 
   async created(): Promise<void> {
