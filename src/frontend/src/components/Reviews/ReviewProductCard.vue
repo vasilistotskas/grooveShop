@@ -1,5 +1,5 @@
 <template>
-  <div v-if="review.product && Object.keys(review.product).length > 0">
+  <div v-if="review && Object.keys(review).length > 0">
     <div
       :style="{ backgroundImage: reviewBackgroundImage(review) }"
       class="user-review-product-image"
@@ -106,7 +106,7 @@ const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.
   props: {
     review: {
       type: Object,
-      required: true
+      required: false
     },
     userId: {
       type: Number,

@@ -20,6 +20,7 @@
         :max-visible-buttons="3"
         :route="PaginationRoutesEnum.REVIEWS"
         :total-pages="allPaginatedResultsTotalPages"
+        :namespace="paginationNamespace"
       />
     </div>
     <div
@@ -42,6 +43,7 @@ import ProductReviewModel from '@/state/product/review/ProductReviewModel'
 import ReviewProductCard from '@/components/Reviews/ReviewProductCard.vue'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
+import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Options({
@@ -63,6 +65,7 @@ export default class UserReviews extends PaginationBase<ProductReviewModel> impl
 
   userData = new UserDetailsModel()
   PaginationRoutesEnum = PaginationRoutesEnum
+  paginationNamespace = PaginationNamespaceDataEnum.USER_REVIEWS
 
   get userId(): number {
     return store.getters['user/data/getUserId']
@@ -73,13 +76,13 @@ export default class UserReviews extends PaginationBase<ProductReviewModel> impl
     document.title = 'My Reviews'
 
     if (this.params.get('query')) {
-      await store.commit('pagination/setCurrentQuery', this.params.get('query'))
+      await store.commit('pagination/setCurrentQuery', { currentQuery: this.params.get('query'), namespace: this.paginationNamespace })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', 1)
+    await store.commit('pagination/setCurrentPageNumber', { pageNumber: 1, namespace: this.paginationNamespace })
 
     if (this.params.get('page')) {
-      await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
+      await store.commit('pagination/setCurrentPageNumber', { pageNumber: Number(this.params.get('page')), namespace: this.paginationNamespace })
     }
 
     await this.fetchPaginationData()
@@ -87,7 +90,7 @@ export default class UserReviews extends PaginationBase<ProductReviewModel> impl
   }
 
   async unmounted(): Promise<void> {
-    store.commit('pagination/unsetResults')
+    store.commit('pagination/unsetResults', this.paginationNamespace)
   }
 
   async fetchPaginationData(): Promise<void> {
@@ -98,7 +101,7 @@ export default class UserReviews extends PaginationBase<ProductReviewModel> impl
           'method': ApiBaseMethods.GET
         } )
 
-    await store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
+    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
   }
 
   public buildEndPointUrlForPaginatedResults(): string {

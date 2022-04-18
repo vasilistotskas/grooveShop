@@ -15,6 +15,7 @@
           :max-visible-buttons="3"
           :route="PaginationRoutesEnum.SEARCH"
           :total-pages="allPaginatedResultsTotalPages"
+          :namespace="paginationNamespace"
         />
 
         <div class="product-listing-grid mt-3 mb-3">
@@ -44,6 +45,7 @@ import PaginationBase from '@/components/Pagination/PaginationBase'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
+import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Options({
@@ -60,6 +62,7 @@ export default class Search extends PaginationBase<ProductModel> implements Pagi
 
   query: string | null = ''
   PaginationRoutesEnum = PaginationRoutesEnum
+  paginationNamespace = PaginationNamespaceDataEnum.SEARCH_PRODUCTS
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
@@ -70,13 +73,13 @@ export default class Search extends PaginationBase<ProductModel> implements Pagi
     document.title = 'Search'
 
     if (this.params.get('query')) {
-      store.commit('pagination/setCurrentQuery', this.params.get('query'))
+      store.commit('pagination/setCurrentQuery', { currentQuery: this.params.get('query'), namespace: this.paginationNamespace })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', 1)
+    await store.commit('pagination/setCurrentPageNumber', { pageNumber: 1, namespace: this.paginationNamespace })
 
     if (this.params.get('page')) {
-      store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
+      store.commit('pagination/setCurrentPageNumber', { pageNumber: Number(this.params.get('page')), namespace: this.paginationNamespace })
     }
 
     await this.fetchPaginationData()
@@ -84,7 +87,7 @@ export default class Search extends PaginationBase<ProductModel> implements Pagi
   }
 
   async unmounted(): Promise<void> {
-    store.commit('pagination/unsetResults')
+    store.commit('pagination/unsetResults', this.paginationNamespace)
   }
 
   async fetchPaginationData(): Promise<void> {
@@ -97,7 +100,7 @@ export default class Search extends PaginationBase<ProductModel> implements Pagi
           'method': ApiBaseMethods.GET
         } )
 
-    await store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
+    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
   }
 
 }

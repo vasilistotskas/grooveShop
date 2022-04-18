@@ -27,6 +27,7 @@
       :max-visible-buttons="3"
       :route="PaginationRoutesEnum.ORDERS"
       :total-pages="allPaginatedResultsTotalPages"
+      :namespace="paginationNamespace"
     />
   </div>
   <div
@@ -47,6 +48,7 @@ import PaginationBase from '@/components/Pagination/PaginationBase'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import UserOrderHistoryContainer from '@/components/User/UserOrderHistoryContainer.vue'
+import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Options({
@@ -61,19 +63,20 @@ import { PaginationQueryParametersModel } from '@/state/pagination/Model/Paginat
 export default class UserOrderHistory extends PaginationBase<UserOrderModel> implements PaginatedInterface<UserOrderModel> {
 
   PaginationRoutesEnum = PaginationRoutesEnum
+  paginationNamespace = PaginationNamespaceDataEnum.USER_ORDER_HISTORY
 
   async created(): Promise<void> {
 
     document.title = 'My Orders'
 
     if (this.params.get('query')) {
-      await store.commit('pagination/setCurrentQuery', this.params.get('query'))
+      await store.commit('pagination/setCurrentQuery', { currentQuery: this.params.get('query'), namespace: this.paginationNamespace })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', 1)
+    await store.commit('pagination/setCurrentPageNumber', { pageNumber: 1, namespace: this.paginationNamespace })
 
     if (this.params.get('page')) {
-      await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
+      await store.commit('pagination/setCurrentPageNumber', { pageNumber: Number(this.params.get('page')), namespace: this.paginationNamespace })
     }
 
     await this.fetchPaginationData()
@@ -81,7 +84,7 @@ export default class UserOrderHistory extends PaginationBase<UserOrderModel> imp
   }
 
   async unmounted(): Promise<void> {
-    store.commit('pagination/unsetResults')
+    store.commit('pagination/unsetResults', this.paginationNamespace)
   }
 
   async fetchPaginationData(): Promise<void> {
@@ -94,7 +97,7 @@ export default class UserOrderHistory extends PaginationBase<UserOrderModel> imp
           'method': ApiBaseMethods.GET
         } )
 
-    await store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
+    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
   }
 
 }

@@ -1,175 +1,188 @@
 import store from '@/store'
 import session from '@/api/session'
 import AppBaseModule from '@/state/common/AppBaseModule'
-import { Module, Action, Mutation } from 'vuex-module-decorators'
+import { Action, Module, Mutation } from 'vuex-module-decorators'
+import PaginationNamespaceDirectory from '@/state/pagination/PaginationNamespaceDirectory'
+import PaginationDataInterface from '@/state/pagination/Interface/PaginationDataInterface'
+import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Module({ namespaced: true })
 export default class PaginationModule extends AppBaseModule {
-	results = []
-	results_count = 0
-	results_next_page = ''
-	results_previous_page = ''
-	results_total_pages = 0
+
+	namespaceData: PaginationDataInterface = PaginationNamespaceDirectory()
+
 	alternativeToken = ''
-
-	current_page_number = 1
-	current_query = ''
-
-	show_next_button = false
-	show_previous_button = false
 
 	get getUserToken(): string | null {
 		return this.alternativeToken || localStorage.getItem('TOKEN_STORAGE_KEY')
 	}
 
-	get getResultData(): Array<any> {
-		return this.results
+	get getResultData() {
+		return (namespace: PaginationNamespaceDataEnum) => {
+			return this.namespaceData[namespace].results
+		}
 	}
 
-	get getResultCountData(): number {
-		return this.results_count
+	get getResultCountData() {
+		return (namespace: PaginationNamespaceDataEnum) => {
+			return this.namespaceData[namespace].results_count
+		}
 	}
 
-	get getResultNextPageUrl(): string {
-		return this.results_next_page
+	get getResultNextPageUrl() {
+		return (namespace: PaginationNamespaceDataEnum) => {
+			return this.namespaceData[namespace].results_next_page
+		}
 	}
 
-	get getResultPreviousPageUrl(): string {
-		return this.results_previous_page
+	get getResultPreviousPageUrl() {
+		return (namespace: PaginationNamespaceDataEnum) => {
+			return this.namespaceData[namespace].results_previous_page
+		}
 	}
 
-	get getResultTotalPages(): number {
-		return this.results_total_pages
+	get getResultTotalPages() {
+		return (namespace: PaginationNamespaceDataEnum) => {
+			return this.namespaceData[namespace].results_total_pages
+		}
 	}
 
-	get getCurrentPageNumber(): number {
-		return this.current_page_number
+	get getCurrentPageNumber() {
+		return (namespace: PaginationNamespaceDataEnum) => {
+			return this.namespaceData[namespace].current_page_number
+		}
 	}
 
-	get getCurrentQuery(): string {
-		return this.current_query
+	get getCurrentQuery() {
+		return (namespace: PaginationNamespaceDataEnum) => {
+			return this.namespaceData[namespace].current_query
+		}
 	}
 
-	get getShowNextButton(): boolean {
-		return this.show_next_button
+	get getShowNextButton() {
+		return (namespace: PaginationNamespaceDataEnum) => {
+			return this.namespaceData[namespace].show_next_button
+		}
 	}
 
-	get getShowPreviousButton(): boolean {
-		return this.show_previous_button
-	}
-
-	@Mutation
-	setResults(data: []): void {
-		this.results = data
-	}
-
-	@Mutation
-	unsetResults(): void {
-		this.results = []
-		this.results_count = 0
-
-		this.results_next_page = ''
-		this.results_previous_page = ''
-		this.results_total_pages = 0
-
-		this.current_page_number = 1
-		this.current_query = ''
-
-		this.show_next_button = false
-		this.show_previous_button = false
+	get getShowPreviousButton() {
+		return (namespace: PaginationNamespaceDataEnum) => {
+			return this.namespaceData[namespace].show_previous_button
+		}
 	}
 
 	@Mutation
-	setCountResults(data: number): void {
-		this.results_count = data
+	setResults(data: Partial<any>): void {
+		this.namespaceData[data.namespace].results = data.results
 	}
 
 	@Mutation
-	setNextPageUrl(data: string): void {
-		this.results_next_page = data
+	unsetResults(namespace: PaginationNamespaceDataEnum): void {
+		this.namespaceData[namespace].results = []
+		this.namespaceData[namespace].results_count = 0
+
+		this.namespaceData[namespace].results_next_page = ''
+		this.namespaceData[namespace].results_previous_page = ''
+		this.namespaceData[namespace].results_total_pages = 0
+
+		this.namespaceData[namespace].current_page_number = 1
+		this.namespaceData[namespace].current_query = ''
+
+		this.namespaceData[namespace].show_next_button = false
+		this.namespaceData[namespace].show_previous_button = false
 	}
 
 	@Mutation
-	setPreviousPageUrl(data: string): void {
-		this.results_previous_page = data
+	setCount(data: Partial<any>): void {
+		this.namespaceData[data.namespace].results_count = data.count
 	}
 
 	@Mutation
-	setTotalPages(data: number): void {
-		this.results_total_pages = data
+	setNextPageUrl(data: Partial<any>): void {
+		this.namespaceData[data.namespace].results_next_page = data.nextPageUrl
 	}
 
 	@Mutation
-	setCurrentPageNumber(data: number): void {
-		this.current_page_number = data
+	setPreviousPageUrl(data: Partial<any>): void {
+		this.namespaceData[data.namespace].results_previous_page = data.previousPageUrl
 	}
 
 	@Mutation
-	setCurrentQuery(data: string): void {
-		this.current_query = data
+	setTotalPages(data: Partial<any>): void {
+		this.namespaceData[data.namespace].results_total_pages = data.totalPages
 	}
 
 	@Mutation
-	setShowNextButton(data: boolean): void {
-		this.show_next_button = data
+	setCurrentPageNumber(data: Partial<any>): void {
+		this.namespaceData[data.namespace].current_page_number = data.pageNumber
 	}
 
 	@Mutation
-	setShowPreviousButton(data: boolean): void {
-		this.show_previous_button = data
+	setCurrentQuery(data: Partial<any>): void {
+		this.namespaceData[data.namespace].current_query = data.currentQuery
+	}
+
+	@Mutation
+	setShowNextButton(data: Partial<any>): void {
+		this.namespaceData[data.namespace].show_next_button = data.showNextButton
+	}
+
+	@Mutation
+	setShowPreviousButton(data: Partial<any>): void {
+		this.namespaceData[data.namespace].show_previous_button = data.showPreviousButton
 	}
 
 	@Action
-	async fetchPaginatedResults(params: PaginationQueryParametersModel): Promise<void> {
+	async fetchPaginatedResults(data: { params: PaginationQueryParametersModel, namespace: PaginationNamespaceDataEnum }): Promise<void> {
 		await store.commit('app/setLoading', true)
 		const baseUrl = '/api/v1'
 
 		let ApiUrl = ''
 
-		if (!params.queryParams && !params.pageNumber) {
-			ApiUrl = `${ baseUrl }/${ params.endpointUrl }`
-		} else if (!params.queryParams) {
-			ApiUrl = `${ baseUrl }/${ params.endpointUrl }/?p=${ params.pageNumber }`
+		if (!data.params.queryParams && !data.params.pageNumber) {
+			ApiUrl = `${ baseUrl }/${ data.params.endpointUrl }`
+		} else if (!data.params.queryParams) {
+			ApiUrl = `${ baseUrl }/${ data.params.endpointUrl }/?p=${ data.params.pageNumber }`
 		} else {
-			ApiUrl = `${ baseUrl }/${ params.endpointUrl }/${ params.queryParams }?p=${ params.pageNumber }`
+			ApiUrl = `${ baseUrl }/${ data.params.endpointUrl }/${ data.params.queryParams }?p=${ data.params.pageNumber }`
 		}
 
 		session({
 			url: ApiUrl,
-			method: params.method,
-			data: params,
+			method: data.params.method,
+			data: data.params,
 			headers: {
 				Authorization: 'Token ' + this.getUserToken
 			}
 		})
 			.then((response: any) => {
-				const results_data = response.data.results
-				const count_data = response.data.count
-				const next_url_data = response.data.links.next
-				const previous_url_data = response.data.links.previous
-				const total_pages_data = response.data.total_pages
+				const results = response.data.results
+				const count = response.data.count
+				const nextPageUrl = response.data.links.next
+				const previousPageUrl = response.data.links.previous
+				const totalPages = response.data.total_pages
 
-				if (next_url_data) {
-					this.context.commit('setShowNextButton', true)
+				if (nextPageUrl) {
+					this.context.commit('setShowNextButton', { showNextButton: true, namespace: data.namespace })
 				} else {
-					this.context.commit('setShowNextButton', false)
+					this.context.commit('setShowNextButton', { showNextButton: false, namespace: data.namespace })
 				}
 
-				if (previous_url_data) {
-					this.context.commit('setShowPreviousButton', true)
+				if (previousPageUrl) {
+					this.context.commit('setShowPreviousButton', { showPreviousButton: true, namespace: data.namespace })
 				} else {
-					this.context.commit('setShowPreviousButton', false)
+					this.context.commit('setShowPreviousButton', { showPreviousButton: false, namespace: data.namespace })
 				}
 
-				this.context.commit('setResults', results_data)
-				this.context.commit('setCountResults', count_data)
-				this.context.commit('setNextPageUrl', next_url_data)
-				this.context.commit('setPreviousPageUrl', previous_url_data)
-				this.context.commit('setTotalPages', total_pages_data)
+				this.context.commit('setResults', { results: results, namespace: data.namespace })
+				this.context.commit('setCount', { count: count, namespace: data.namespace })
+				this.context.commit('setNextPageUrl', { nextPageUrl: nextPageUrl, namespace: data.namespace })
+				this.context.commit('setPreviousPageUrl', { previousPageUrl: previousPageUrl, namespace: data.namespace })
+				this.context.commit('setTotalPages', { totalPages: totalPages, namespace: data.namespace })
 			})
 			.catch((e: Error) => {
-				this.context.commit('unsetResults')
+				this.context.commit('unsetResults', data.namespace)
 				console.log(e)
 			})
 			.finally(() =>

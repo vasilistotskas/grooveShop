@@ -15,6 +15,7 @@
           :max-visible-buttons="3"
           :route="PaginationRoutesEnum.ALL_PRODUCTS"
           :total-pages="allPaginatedResultsTotalPages"
+          :namespace="paginationNamespace"
         />
 
         <div class="product-listing-grid mt-3 mb-3">
@@ -42,9 +43,10 @@ import Pagination from '@/components/Pagination/Pagination.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import PaginationBase from '@/components/Pagination/PaginationBase'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
-import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
-import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
+import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
+import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
+import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Options({
   name: 'AllProducts',
@@ -58,6 +60,7 @@ import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 
 export default class AllProducts extends PaginationBase<ProductModel> implements PaginatedInterface<ProductModel> {
 
+  paginationNamespace = PaginationNamespaceDataEnum.ALL_PRODUCTS
   PaginationRoutesEnum = PaginationRoutesEnum
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
@@ -69,13 +72,13 @@ export default class AllProducts extends PaginationBase<ProductModel> implements
     document.title = 'All Products'
 
     if (this.params.get('query')) {
-      await store.commit('pagination/setCurrentQuery', this.params.get('query'))
+      await store.commit('pagination/setCurrentQuery', { currentQuery: this.params.get('query'), namespace: this.paginationNamespace })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', 1)
+    await store.commit('pagination/setCurrentPageNumber', { pageNumber: 1, namespace: this.paginationNamespace })
 
     if (this.params.get('page')) {
-      await store.commit('pagination/setCurrentPageNumber', Number(this.params.get('page')))
+      await store.commit('pagination/setCurrentPageNumber', { pageNumber: Number(this.params.get('page')), namespace: this.paginationNamespace })
     }
 
     await this.fetchPaginationData()
@@ -83,7 +86,7 @@ export default class AllProducts extends PaginationBase<ProductModel> implements
   }
 
   async unmounted(): Promise<void> {
-    store.commit('pagination/unsetResults')
+    store.commit('pagination/unsetResults', this.paginationNamespace)
   }
 
   async fetchPaginationData(): Promise<void> {
@@ -94,7 +97,7 @@ export default class AllProducts extends PaginationBase<ProductModel> implements
         'method': ApiBaseMethods.GET
       } )
 
-    await store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
+    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
   }
 
 }
