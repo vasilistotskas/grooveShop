@@ -108,6 +108,7 @@ export default class App extends Vue {
 
   public initializeCart(): void {
     store.commit('cart/initializeCart')
+    store.dispatch('cart/cartTotalPriceForPayWayAction')
   }
 
 

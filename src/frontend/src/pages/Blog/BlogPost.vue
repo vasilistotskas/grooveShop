@@ -7,7 +7,7 @@
     <div class="card mb-3">
       <img
         :alt="postBySlug.title"
-        :src="mediaStreamImage(ImageTypeOptions.SLIDES, postBySlug.mainImageFilename, '1920', '550')"
+        :src="mediaStreamImage(ImageTypeOptions.BLOG, postBySlug.mainImageFilename, '1920', '550', ImageFitOptions.cover, ImagePositionOptions.center)"
         class="img-fluid"
         height="550"
         width="1920"
@@ -16,7 +16,7 @@
       <div class="card-body">
         <span class="card-title">{{ postBySlug.title }}: {{ postBySlug.subtitle }}</span>
         By
-        <AuthorLink :author="postBySlug.author" />
+        <BlogAuthorLink :author="postBySlug.author" />
         <p class="card-text">
           {{ postBySlug.metaDescription }}
         </p>
@@ -50,10 +50,10 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import PostModel from '@/state/blog/PostModel'
 import { Options, Vue } from 'vue-class-component'
-import AuthorLink from '@/components/Blog/BlogAuthorLink.vue'
+import BlogPostModel from '@/state/blog/BlogPostModel'
 import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
+import BlogAuthorLink from '@/components/Blog/BlogAuthorLink.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
@@ -62,7 +62,7 @@ import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpe
 @Options({
   name: 'BlogPost',
   components: {
-    AuthorLink,
+    BlogAuthorLink,
     Breadcrumbs
   }
 })
@@ -80,7 +80,7 @@ export default class BlogPost extends Vue {
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
-  get postBySlug(): PostModel {
+  get postBySlug(): BlogPostModel {
     return store.getters['blog/getPostBySlug']
   }
 
@@ -126,6 +126,6 @@ export default class BlogPost extends Vue {
 }
 </script>
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Blog/BlogPost"
+@import "@/assets/styles/pages/Blog/BlogPost"
 
 </style>

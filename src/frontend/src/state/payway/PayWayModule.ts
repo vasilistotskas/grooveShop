@@ -1,3 +1,4 @@
+import store from '@/store'
 import api from '@/api/api.service'
 import PayWayModel from '@/state/payway/PayWayModel'
 import AppBaseModule from '@/state/common/AppBaseModule'
@@ -5,15 +6,37 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 @Module({ namespaced: true })
 export default class PayWayModule extends AppBaseModule {
-	active_pay_ways: Array<PayWayModel> = []
+	activePayWays: Array<PayWayModel> = []
+	selectedPayWay = new PayWayModel()
 
 	get getActivePayWays(): Array<PayWayModel> {
-		return this.active_pay_ways
+		return this.activePayWays
+	}
+
+	get getSelectedPayWay(): PayWayModel {
+		return this.selectedPayWay
+	}
+
+	get getSelectedPayWayName(): PayWayModel['name'] {
+		return this.selectedPayWay.name
+	}
+
+	get getSelectedPayCost(): PayWayModel['cost'] {
+		const cartTotalPrice = store.getters['cart/getCartTotalPrice']
+		if (Number(this.selectedPayWay.free_for_order_amount) < Number(cartTotalPrice) || !this.selectedPayWay.cost) {
+			return 0
+		}
+		return Number(this.selectedPayWay.cost)
 	}
 
 	@Mutation
-	setActivePayWays(active_pay_ways: Array<PayWayModel>): void {
-		this.active_pay_ways = active_pay_ways
+	setActivePayWays(activePayWays: Array<PayWayModel>): void {
+		this.activePayWays = activePayWays
+	}
+
+	@Mutation
+	setSelectedPayWay(selectedPayWay: PayWayModel): void {
+		this.selectedPayWay = selectedPayWay
 	}
 
 	@Action

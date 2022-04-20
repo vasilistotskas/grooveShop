@@ -8,7 +8,7 @@
         v-for="post in posts"
         :key="post.title"
         :post="post"
-        :author="post.author"
+        :author="author"
         class="cardSpecialEffect"
       />
     </div>
@@ -30,7 +30,7 @@ import BlogSidebar from '@/components/Blog/BlogSidebar.vue'
 import BlogPostCard from '@/components/Blog/BlogPostCard.vue'
 
 @Options({
-  name: 'BlogPostList',
+  name: 'BlogAuthorPostList',
   components: {
     BlogSidebar,
     BlogPostCard
@@ -44,13 +44,18 @@ import BlogPostCard from '@/components/Blog/BlogPostCard.vue'
       type: Boolean,
       required: false,
       default: true
+    },
+    author: {
+      type: Object,
+      required: false
     }
   }
 })
 
-export default class BlogPostList extends Vue {
+export default class BlogAuthorPostList extends Vue {
   showAuthor: boolean = false
   posts: Array<BlogPostModel> = []
+  author!: object
 
   get allTags(): Array<BlogPostModel> {
     return store.getters['blog/getAllTags']

@@ -1,76 +1,76 @@
 import router from '@/routes'
 import gql from 'graphql-tag'
-import TagModel from '@/state/blog/TagModel'
-import PostModel from '@/state/blog/PostModel'
-import AuthorModel from '@/state/blog/AuthorModel'
+import BlogTagModel from '@/state/blog/BlogTagModel'
+import BlogPostModel from '@/state/blog/BlogPostModel'
+import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import { clientApollo } from '../../../apollo.provider'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 @Module({ namespaced: true })
 export default class BlogModule extends AppBaseModule {
-	allPosts: Array<PostModel> = []
-	allTags: Array<TagModel> = []
-	allAuthors: Array<AuthorModel> = []
-	postsByTag: Array<PostModel> = []
-	postBySlug = new PostModel()
-	author = new AuthorModel()
+	allPosts: Array<BlogPostModel> = []
+	allTags: Array<BlogTagModel> = []
+	allAuthors: Array<BlogAuthorModel> = []
+	postsByTag: Array<BlogPostModel> = []
+	postBySlug = new BlogPostModel()
+	author = new BlogAuthorModel()
 
-	get getAllPosts(): Array<PostModel> {
+	get getAllPosts(): Array<BlogPostModel> {
 		return this.allPosts
 	}
 
-	get getAllTags(): Array<TagModel> {
+	get getAllTags(): Array<BlogTagModel> {
 		return this.allTags
 	}
 
-	get getAllAuthors(): Array<AuthorModel> {
+	get getAllAuthors(): Array<BlogAuthorModel> {
 		return this.allAuthors
 	}
 
-	get getPostsByTag(): Array<PostModel> {
+	get getPostsByTag(): Array<BlogPostModel> {
 		return this.postsByTag
 	}
 
-	get getPostBySlug(): PostModel {
+	get getPostBySlug(): BlogPostModel {
 		return this.postBySlug
 	}
 
-	get getPublishedPosts(): Array<PostModel> {
+	get getPublishedPosts(): Array<BlogPostModel> {
 		return this.allPosts.filter(post => post.published)
 	}
 
-	get getAuthorByEmail(): AuthorModel {
+	get getAuthorByEmail(): BlogAuthorModel {
 		return this.author
 	}
 
 	@Mutation
-	setAllPosts(data: Array<PostModel>): void {
+	setAllPosts(data: Array<BlogPostModel>): void {
 		this.allPosts = data
 	}
 
 	@Mutation
-	setAllTags(data: Array<TagModel>): void {
+	setAllTags(data: Array<BlogTagModel>): void {
 		this.allTags = data
 	}
 
 	@Mutation
-	setAllAuthors(data: Array<AuthorModel>): void {
+	setAllAuthors(data: Array<BlogAuthorModel>): void {
 		this.allAuthors = data
 	}
 
 	@Mutation
-	setPostsByTag(data: Array<PostModel>): void {
+	setPostsByTag(data: Array<BlogPostModel>): void {
 		this.postsByTag = data
 	}
 
 	@Mutation
-	setPostBySlug(data: PostModel): void {
+	setPostBySlug(data: BlogPostModel): void {
 		this.postBySlug = data
 	}
 
 	@Mutation
-	setAuthorByEmail(data: AuthorModel): void {
+	setAuthorByEmail(data: BlogAuthorModel): void {
 		this.author = data
 	}
 

@@ -52,7 +52,7 @@ import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpe
 })
 export default class CheckoutProductCard extends Vue {
 
-  item = new CartItemModel
+  item = new CartItemModel()
   imageUrl: string = ''
   ImageTypeOptions = ImageTypeOptions
   ImageFitOptions = ImageFitOptions

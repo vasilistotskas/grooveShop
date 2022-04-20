@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-4 mb-4 breadcrumb-container">
+  <div class="container mt-2 mb-4 breadcrumb-container">
     <ul class="breadcrumb">
       <li class="breadcrumb__item">
         <RouterLink

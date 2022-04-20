@@ -228,6 +228,9 @@
           </template>
         </div>
       </div>
+      <CheckoutPayWays
+        :cart-total-price="cartTotalPrice"
+      />
       <CheckoutProductContainer
         :cart="cart"
         :cart-total-length="cartTotalLength"
@@ -253,9 +256,11 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import { email, exactly, min, required } from '@/components/Form/Utils'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
+import CheckoutPayWays from '@/components/Checkout/CheckoutPayWays.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import CheckoutProductContainer from '@/components/Checkout/CheckoutProductContainer.vue'
+import PayWayModel from '@/state/payway/PayWayModel'
 
 const toast = useToast()
 
@@ -271,7 +276,8 @@ let {
     FormSubmitButtons,
     FormValidationErrors,
     Breadcrumbs,
-    CheckoutProductContainer
+    CheckoutProductContainer,
+    CheckoutPayWays
   }
 })
 export default class Checkout extends Vue {
@@ -365,18 +371,19 @@ export default class Checkout extends Vue {
   }
 
   get cartTotalPrice(): number {
-    return store.getters['cart/getCartTotalPrice']
+    return store.getters['cart/getCartTotalPriceForPayWay']
   }
 
   get stripeResultToken(): string {
     return store.getters['stripeCard/getResultToken']
   }
 
+  get getSelectedPayWay(): PayWayModel {
+    return store.getters['pay_way/getSelectedPayWay']
+  }
+
   async created(): Promise<void> {
-    await Promise.all([
-      store.dispatch('country/fetchCountriesFromRemote'),
-      store.dispatch('pay_way/fetchActivePayWaysFromRemote')
-    ])
+    await store.dispatch('country/fetchCountriesFromRemote')
   }
 
   async mounted(): Promise<void> {
@@ -386,8 +393,10 @@ export default class Checkout extends Vue {
     }
     await Promise.all([
       store.dispatch('stripeIban/initIBANComponent'),
-      store.dispatch('stripeCard/initStripeComponent')
+      store.dispatch('stripeCard/initStripeComponent'),
+      store.dispatch('cart/cartTotalPriceForPayWayAction', this.getSelectedPayWay)
     ])
+
     this.customerDetailsInitialize()
   }
 

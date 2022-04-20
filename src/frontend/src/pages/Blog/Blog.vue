@@ -1,7 +1,7 @@
 <template>
   <div class="container content-min-height mt-7 mb-5">
     <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
-    <PostList
+    <BlogPostList
       v-if="allPosts"
       :posts="allPosts"
     />
@@ -11,16 +11,16 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import PostModel from '@/state/blog/PostModel'
 import { Options, Vue } from 'vue-class-component'
-import PostList from '@/components/Blog/BlogPostList.vue'
+import BlogPostModel from '@/state/blog/BlogPostModel'
+import BlogPostList from '@/components/Blog/BlogPostList.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
 @Options({
   name: 'Blog',
   components: {
-    PostList,
+    BlogPostList,
     Breadcrumbs
   }
 })
@@ -32,7 +32,7 @@ export default class Blog extends Vue {
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
-  get allPosts(): Array<PostModel> {
+  get allPosts(): Array<BlogPostModel> {
     return store.getters['blog/getAllPosts']
   }
 

@@ -14,10 +14,11 @@
     <p>{{ authorByEmail.bio }}</p>
 
     <h3>Posts by {{ displayName }}</h3>
-    <PostList
+    <BlogAuthorPostList
       v-if="authorPostSet"
       :posts="authorPostSet"
       :show-author="false"
+      :author="authorByEmail"
     />
   </div>
 </template>
@@ -25,17 +26,17 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import PostModel from '@/state/blog/PostModel'
-import AuthorModel from '@/state/blog/AuthorModel'
 import { Options, Vue } from 'vue-class-component'
-import PostList from '@/components/Blog/BlogPostList.vue'
+import BlogPostModel from '@/state/blog/BlogPostModel'
+import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
+import BlogAuthorPostList from '@/components/Blog/BlogAuthorPostList.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
 @Options({
   name: 'BlogAuthor',
   components: {
-    PostList,
+    BlogAuthorPostList,
     Breadcrumbs
   }
 })
@@ -47,11 +48,11 @@ export default class BlogAuthor extends Vue {
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
-  get authorByEmail(): AuthorModel {
+  get authorByEmail(): BlogAuthorModel {
     return store.getters['blog/getAuthorByEmail']
   }
 
-  get authorPostSet(): Array<PostModel> {
+  get authorPostSet(): Array<BlogPostModel> {
     return this.authorByEmail.postSet
   }
 
@@ -70,6 +71,6 @@ export default class BlogAuthor extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Blog/BlogAuthor"
+@import "@/assets/styles/pages/Blog/BlogAuthor"
 
 </style>

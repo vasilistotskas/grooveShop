@@ -1,9 +1,10 @@
 import EntityBase from '@/state/common/EntityBase'
-import TagModel from '@/state/blog/TagModel'
+import BlogTagModel from '@/state/blog/BlogTagModel'
 
-export default class PostModel extends EntityBase {
+export default class BlogPostModel extends EntityBase {
 
 	id!: number
+	author!: object
 	mainImageAbsoluteUrl!: string
 	mainImageFilename!: string
 	metaDescription!: string
@@ -12,9 +13,9 @@ export default class PostModel extends EntityBase {
 	slug!: string
 	subtitle!: string
 	title!: string
-	tags!: Array<TagModel>
+	tags!: Array<BlogTagModel>
 
-	public constructor(data?: Partial<PostModel>) {
+	public constructor(data?: Partial<BlogPostModel>) {
 		super(data)
 	}
 

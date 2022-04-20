@@ -368,7 +368,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.AUTHOR,
 		name: MainRouteNames.AUTHOR,
-		component: () => import('@/components/Blog/BlogAuthor.vue'),
+		component: () => import('@/pages/Blog/BlogAuthor.vue'),
 		props: true,
 		meta: {
 			breadcrumb: (route: any): Array<BreadcrumbItemInterface> => ([
@@ -390,7 +390,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.POST,
 		name: MainRouteNames.POST,
-		component: () => import('@/components/Blog/BlogPost.vue'),
+		component: () => import('@/pages/Blog/BlogPost.vue'),
 		props: true,
 		meta: {
 			breadcrumb: (route: any): Array<BreadcrumbItemInterface> => ([
@@ -412,7 +412,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.POSTS_BY_TAG,
 		name: MainRouteNames.POSTS_BY_TAG,
-		component: () => import('@/components/Blog/BlogPostsByTag.vue'),
+		component: () => import('@/pages/Blog/BlogPostsByTag.vue'),
 		props: true,
 		meta: {
 			breadcrumb: (route: any): Array<BreadcrumbItemInterface> => ([
@@ -434,7 +434,7 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.PAGE_NOT_FOUND,
 		name: MainRouteNames.PAGE_NOT_FOUND,
-		component: () => import('@/components/Main/PageNotFound.vue'),
+		component: () => import('@/pages/PageNotFound.vue'),
 		props: true
 	},
 	{

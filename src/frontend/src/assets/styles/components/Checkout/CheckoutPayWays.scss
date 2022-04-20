@@ -1,0 +1,10 @@
+.checkout-pay_way {
+  &-container {
+    background-color: var(--cp-palette-main-secondary);
+    padding: 15px 30px 30px;
+    border-radius: 10px;
+    h2 {
+      color: var(--cp-palette-main-fifth);
+    }
+  }
+}

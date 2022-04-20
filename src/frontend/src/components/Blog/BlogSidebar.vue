@@ -45,9 +45,9 @@
 </template>
 
 <script lang="ts">
-import TagModel from '@/state/blog/TagModel'
 import { Options, Vue } from 'vue-class-component'
-import AuthorModel from '@/state/blog/AuthorModel'
+import BlogTagModel from '@/state/blog/BlogTagModel'
+import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import { faTag } from '@fortawesome/free-solid-svg-icons/faTag'
 import { faUserTag } from '@fortawesome/free-solid-svg-icons/faUserTag'
 
@@ -61,13 +61,13 @@ import { faUserTag } from '@fortawesome/free-solid-svg-icons/faUserTag'
 
 export default class BlogSidebar extends Vue {
 
-  tags: Array<TagModel> = []
-  authors: Array<AuthorModel> = []
+  tags: Array<BlogTagModel> = []
+  authors: Array<BlogAuthorModel> = []
 
   tagIcon = faTag
   authorIcon = faUserTag
 
-  public displayName(author: AuthorModel): string {
+  public displayName(author: BlogAuthorModel): string {
     return (author.user?.firstName && author.user?.lastName && `${ author.user?.firstName } ${ author.user?.lastName }`) || `${ author.user?.email }`
   }
 

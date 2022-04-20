@@ -1,7 +1,7 @@
 import router from '@/routes'
 import api from '@/api/api.service'
 import { useToast } from 'vue-toastification'
-
+import PayWayModel from '@/state/payway/PayWayModel'
 import CartItemModel from '@/state/cart/CartItemModel'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
@@ -12,9 +12,14 @@ const toast = useToast()
 export default class CartModule extends AppBaseModule {
 
 	cart: Array<CartItemModel> = []
+	cartTotalPriceForPayWay: number = 0
 
 	get getCart(): Array<CartItemModel> {
 		return this.cart
+	}
+
+	get getCartTotalPriceForPayWay(): number {
+		return this.cartTotalPriceForPayWay
 	}
 
 	get getCartTotalLength(): number {
@@ -29,6 +34,30 @@ export default class CartModule extends AppBaseModule {
 		return this.cart.reduce((acc: number, curVal: CartItemModel) => {
 			return acc += curVal.product.price * curVal.quantity
 		}, 0)
+	}
+
+	@Mutation
+	setCartTotalPriceForPayWay(price: number): void {
+		this.cartTotalPriceForPayWay = price
+	}
+
+	@Action
+	public async cartTotalPriceForPayWayAction(payWay?: PayWayModel): Promise<number> {
+		const cartTotal = this.context.getters['getCartTotalPrice']
+
+		if (!payWay || payWay && Object.keys(payWay).length <= 0) {
+			this.context.commit('setCartTotalPriceForPayWay', cartTotal)
+			return cartTotal
+		}
+
+		if (Number(payWay?.free_for_order_amount) < Number(cartTotal)) {
+			this.context.commit('setCartTotalPriceForPayWay', cartTotal)
+			return cartTotal
+		}
+
+		const total = Number(payWay?.cost) + Number(cartTotal)
+		this.context.commit('setCartTotalPriceForPayWay', total)
+		return total
 	}
 
 	@Mutation

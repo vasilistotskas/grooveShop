@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
-import AuthorModel from '@/state/blog/AuthorModel'
+import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 
 @Options({
   name: 'BlogAuthorLink',
@@ -25,7 +25,7 @@ import AuthorModel from '@/state/blog/AuthorModel'
 })
 export default class BlogAuthorLink extends Vue {
 
-  author = new AuthorModel()
+  author = new BlogAuthorModel()
 
   get displayName(): string {
     return (this.author.user?.firstName && this.author.user?.lastName && `${ this.author.user?.firstName } ${ this.author.user?.lastName }`) || `${ this.author.user?.email }`

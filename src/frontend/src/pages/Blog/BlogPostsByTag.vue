@@ -2,7 +2,7 @@
   <div class="container mt-7 mb-5">
     <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <h2>Posts in #{{ $route.params.tag }}</h2>
-    <PostList
+    <BlogPostList
       v-if="postsByTag"
       :posts="postsByTag"
     />
@@ -12,16 +12,16 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import PostModel from '@/state/blog/PostModel'
 import { Options, Vue } from 'vue-class-component'
-import PostList from '@/components/Blog/BlogPostList.vue'
+import BlogPostModel from '@/state/blog/BlogPostModel'
+import BlogPostList from '@/components/Blog/BlogPostList.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
 @Options({
   name: 'BlogPostsByTag',
   components: {
-    PostList,
+    BlogPostList,
     Breadcrumbs
   }
 })
@@ -33,7 +33,7 @@ export default class BlogPostsByTag extends Vue {
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
-  get postsByTag(): Array<PostModel> {
+  get postsByTag(): Array<BlogPostModel> {
     return store.getters['blog/getPostsByTag']
   }
 
@@ -49,6 +49,6 @@ export default class BlogPostsByTag extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Blog/BlogPostsByTag"
+@import "@/assets/styles/pages/Blog/BlogPostsByTag"
 
 </style>
