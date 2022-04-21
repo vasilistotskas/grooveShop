@@ -17,6 +17,7 @@ class AuthorType(DjangoObjectType):
 class PostType(DjangoObjectType):
     main_image_absolute_url = graphene.String(source='main_image_absolute_url')
     main_image_filename = graphene.String(source='main_image_filename')
+    number_of_likes = graphene.Int(source='number_of_likes')
 
     class Meta:
         model = models.Post
@@ -27,14 +28,49 @@ class TagType(DjangoObjectType):
         model = models.Tag
 
 
+class CategoryType(DjangoObjectType):
+    class Meta:
+        model = models.Category
+
+
+class CommentType(DjangoObjectType):
+    number_of_likes = graphene.Int(source='number_of_likes')
+
+    class Meta:
+        model = models.Comment
+
+
 class Query(graphene.ObjectType):
     all_posts = graphene.List(PostType)
     all_tags = graphene.List(TagType)
     all_authors = graphene.List(AuthorType)
+    all_categories = graphene.List(CategoryType)
+    comments_by_user = graphene.List(CommentType, user_email=graphene.String())
+    comments_by_post = graphene.List(CommentType, post_id=graphene.Int())
+    comment_by_user_to_post = graphene.List(CommentType, user_email=graphene.String(), post_id=graphene.Int())
     author_by_email = graphene.Field(AuthorType, email=graphene.String())
     post_by_slug = graphene.Field(PostType, slug=graphene.String())
     posts_by_author = graphene.List(PostType, email=graphene.String())
     posts_by_tag = graphene.List(PostType, tag=graphene.String())
+
+    @staticmethod
+    def resolve_comments_by_user(root, info, user_email):
+        return models.Comment.objects.select_related("user").filter(
+            user__email=user_email
+        )
+
+    @staticmethod
+    def resolve_comments_by_post(root, info, post_id):
+        return models.Comment.objects.select_related("post").filter(
+            post__id=post_id
+        )
+
+    @staticmethod
+    def resolve_comment_by_user_to_post(root, info, post_id, user_email):
+        return models.Comment.objects.select_related("post").filter(
+            post__id=post_id,
+            user__email=user_email
+        )
 
     @staticmethod
     def resolve_all_posts(root, info):
@@ -54,6 +90,12 @@ class Query(graphene.ObjectType):
     def resolve_all_authors(root, info):
         return (
             models.Profile.objects.select_related("user").all()
+        )
+
+    @staticmethod
+    def resolve_all_categories(root, info):
+        return (
+            models.Category.objects.all()
         )
 
     @staticmethod

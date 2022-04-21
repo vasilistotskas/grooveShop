@@ -1,10 +1,13 @@
+import store from '@/store'
 import router from '@/routes'
 import gql from 'graphql-tag'
 import BlogTagModel from '@/state/blog/BlogTagModel'
 import BlogPostModel from '@/state/blog/BlogPostModel'
-import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import { clientApollo } from '../../../apollo.provider'
 import AppBaseModule from '@/state/common/AppBaseModule'
+import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
+import BlogCommentModel from '@/state/blog/BlogCommentModel'
+import BlogCategoryModel from '@/state/blog/BlogCategoryModel'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 @Module({ namespaced: true })
@@ -12,9 +15,13 @@ export default class BlogModule extends AppBaseModule {
 	allPosts: Array<BlogPostModel> = []
 	allTags: Array<BlogTagModel> = []
 	allAuthors: Array<BlogAuthorModel> = []
+	allCategories: Array<BlogCategoryModel> = []
 	postsByTag: Array<BlogPostModel> = []
 	postBySlug = new BlogPostModel()
 	author = new BlogAuthorModel()
+	commentsByUser: Array<BlogCommentModel> = []
+	commentsByPost: Array<BlogCommentModel> = []
+	commentByUserToPost: Array<BlogCommentModel> = []
 
 	get getAllPosts(): Array<BlogPostModel> {
 		return this.allPosts
@@ -26,6 +33,10 @@ export default class BlogModule extends AppBaseModule {
 
 	get getAllAuthors(): Array<BlogAuthorModel> {
 		return this.allAuthors
+	}
+
+	get getAllCategories(): Array<BlogCategoryModel> {
+		return this.allCategories
 	}
 
 	get getPostsByTag(): Array<BlogPostModel> {
@@ -44,6 +55,18 @@ export default class BlogModule extends AppBaseModule {
 		return this.author
 	}
 
+	get getCommentsByUser(): Array<BlogCommentModel> {
+		return this.commentsByUser
+	}
+
+	get getCommentsByPost(): Array<BlogCommentModel> {
+		return this.commentsByPost
+	}
+
+	get getcommentByUserToPost(): Array<BlogCommentModel> {
+		return this.commentByUserToPost
+	}
+
 	@Mutation
 	setAllPosts(data: Array<BlogPostModel>): void {
 		this.allPosts = data
@@ -57,6 +80,11 @@ export default class BlogModule extends AppBaseModule {
 	@Mutation
 	setAllAuthors(data: Array<BlogAuthorModel>): void {
 		this.allAuthors = data
+	}
+
+	@Mutation
+	setAllCategories(data: Array<BlogCategoryModel>): void {
+		this.allCategories = data
 	}
 
 	@Mutation
@@ -74,11 +102,27 @@ export default class BlogModule extends AppBaseModule {
 		this.author = data
 	}
 
+	@Mutation
+	setCommentsByUser(data: Array<BlogCommentModel>): void {
+		this.commentsByUser = data
+	}
+
+	@Mutation
+	setCommentsByPost(data: Array<BlogCommentModel>): void {
+		this.commentsByPost = data
+	}
+
+	@Mutation
+	setcommentByUserToPost(data: Array<BlogCommentModel>): void {
+		this.commentByUserToPost = data
+	}
+
 	@Action
 	async fetchAllPostsFromRemote(): Promise<void> {
 		const posts = await clientApollo.query({
 			query: gql`query {
                 allPosts {
+				  id
                   title
                   subtitle
                   publishDate
@@ -86,7 +130,11 @@ export default class BlogModule extends AppBaseModule {
                   metaDescription
                   mainImageAbsoluteUrl
                   mainImageFilename
+                  numberOfLikes
                   slug
+                  category {
+                    id
+                  }
                   author {
                     user {
                       email
@@ -134,10 +182,25 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	@Action
+	async fetchAllCategoriesFromRemote(): Promise<void> {
+		const categories = await clientApollo.query({
+			query: gql`query {
+                allCategories {
+                  name
+                  slug
+                  description
+                }
+              }`
+		})
+		return this.context.commit('setAllCategories', categories.data.allCategories)
+	}
+
+	@Action
 	async fetchPostsByTagFromRemote(): Promise<void> {
 		const posts = await clientApollo.query({
 			query: gql`query ($tag: String!) {
                 postsByTag(tag: $tag) {
+				  id
                   title
                   subtitle
                   publishDate
@@ -145,6 +208,10 @@ export default class BlogModule extends AppBaseModule {
                   metaDescription
                   mainImageAbsoluteUrl
                   mainImageFilename
+				  numberOfLikes
+				  category {
+                    id
+                  }
                   slug
                   author {
                     user {
@@ -170,14 +237,19 @@ export default class BlogModule extends AppBaseModule {
 		const post = await clientApollo.query({
 			query: gql`query ($slug: String!) {
               postBySlug(slug: $slug) {
+              	id
                 title
                 subtitle
                 publishDate
                 metaDescription
                 mainImageAbsoluteUrl
                 mainImageFilename
+			    numberOfLikes
                 slug
                 body
+			    category {
+			 	  id
+			    }
                 author {
                   user {
                     email
@@ -218,6 +290,10 @@ export default class BlogModule extends AppBaseModule {
                     mainImageAbsoluteUrl
                     mainImageFilename
                     slug
+                    numberOfLikes
+                    category {
+					  id
+                  	}
                     tags {
                       name
                     }
@@ -229,5 +305,124 @@ export default class BlogModule extends AppBaseModule {
 			}
 		})
 		return this.context.commit('setAuthorByEmail', author.data.authorByEmail)
+	}
+
+	@Action
+	async fetchCommentsByUser(): Promise<void> {
+		const comments = await clientApollo.query({
+			query: gql`query ($userEmail: String!) {
+                commentsByUser(userEmail: $userEmail) {
+                  content
+                  createdAt
+                  isApproved
+                  numberOfLikes
+                  user {
+                    firstName
+                    lastName
+                    email
+                  }
+				  post {
+				  	id
+                    title
+                    subtitle
+                    publishDate
+                    published
+                    metaDescription
+                    mainImageAbsoluteUrl
+                    mainImageFilename
+                    slug
+					numberOfLikes
+                    category {
+					  id
+                  	}
+                    tags {
+                      name
+                    }
+                  }
+                }
+              }`,
+			variables: {
+				userEmail: store.getters['user/data/getUserData'].email
+			}
+		})
+		return this.context.commit('setCommentsByUser', comments.data.commentsByUser)
+	}
+
+	@Action
+	async fetchCommentsByPost(): Promise<void> {
+		const comments = await clientApollo.query({
+			query: gql`query ($postId: Int!) {
+                commentsByPost(postId: $postId) {
+                  content
+                  createdAt
+                  isApproved
+                  numberOfLikes
+				  post {
+				  	id
+                    title
+                    subtitle
+                    publishDate
+                    published
+                    metaDescription
+                    mainImageAbsoluteUrl
+                    mainImageFilename
+                    slug
+					numberOfLikes
+                    category {
+					  id
+                  	}
+                    tags {
+                      name
+                    }
+                  }
+                }
+              }`,
+			variables: {
+				postId: this.context.getters['getPostBySlug'].id
+			}
+		})
+		return this.context.commit('setCommentsByPost', comments.data.commentsByPost)
+	}
+
+	@Action
+	async fetchCommentByUserToPost(): Promise<void> {
+		const comments = await clientApollo.query({
+			query: gql`query ($postId: Int!, $userEmail: String!) {
+                commentByUserToPost(postId: $postId, userEmail: $userEmail) {
+                  content
+                  createdAt
+                  isApproved
+                  numberOfLikes
+				  user {
+                    firstName
+                    lastName
+                    email
+                  }
+				  post {
+				  	id
+                    title
+                    subtitle
+                    publishDate
+                    published
+                    metaDescription
+                    mainImageAbsoluteUrl
+                    mainImageFilename
+                    slug
+					numberOfLikes
+                    category {
+					  id
+                  	}
+                    tags {
+                      name
+                    }
+                  }
+                }
+              }`,
+			variables: {
+				postId: this.context.getters['getPostBySlug'].id,
+				userEmail: store.getters['user/data/getUserData'].email
+			}
+		})
+		return this.context.commit('setcommentByUserToPost', comments.data.commentByUserToPost)
 	}
 }
