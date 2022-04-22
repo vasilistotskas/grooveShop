@@ -32,6 +32,14 @@
             </div>
           </div>
         </form>
+        <div class="footer-safe-payments">
+          <span class="footer-safe-payments-text">Safe Payments</span>
+          <LottiePlayerMain
+            class="footer-safe-payments-lottie"
+            :animation-data="getSafeShieldAnim"
+            :loop="true"
+          />
+        </div>
       </section>
 
       <section class="footer-section-links mb-4 mt-4">
@@ -166,11 +174,19 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component'
+import * as safe_shield from '@/assets/lotties/safe_shield.json'
+import LottiePlayerMain from '@/components/Utilities/LottiePlayerMain.vue'
 
 @Options({
-  name: 'Footer'
+  name: 'Footer',
+  components: {
+    LottiePlayerMain
+  },
 })
 export default class Footer extends Vue {
+  get getSafeShieldAnim(): object {
+    return safe_shield
+  }
 }
 
 </script>

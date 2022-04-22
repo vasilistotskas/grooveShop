@@ -6,6 +6,10 @@
     padding: 15px 30px 30px;
     border-radius: 10px;
     h2 {
+      display: grid;
+      grid-template-columns: 50px auto;
+      justify-content: center;
+      align-items: center;
       color: var(--cp-palette-main-fifth);
     }
   }

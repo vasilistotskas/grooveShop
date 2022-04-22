@@ -1,7 +1,13 @@
 <template v-if="validPayWays && Object.keys(validPayWays).length > 0">
   <div class="checkout-pay_way-container">
     <h2 class="checkout-pay_way-container-title">
-      Choose payment method
+      <LottiePlayerMain
+        ref="anim1"
+        class="about_fedra_world-lottie"
+        :animation-data="getPaymentAnim"
+        @click.prevent="lottieReplay()"
+      />
+      <span>Choose payment method</span>
     </h2>
     <div class="checkout-pay_way-section">
       <div
@@ -38,14 +44,21 @@
 
 <script lang="ts">
 import store from '@/store'
+import { inject } from 'vue'
+import { Emitter } from 'mitt'
 import { Options, Vue } from 'vue-class-component'
 import PayWayModel from '@/state/payway/PayWayModel'
 import { PayWaysEnum } from '@/state/payway/Enum/PayWaysEnum'
+import LottiePlayerMain from '@/components/Utilities/LottiePlayerMain.vue'
 import { faCreditCard } from '@fortawesome/free-solid-svg-icons/faCreditCard'
+import * as payment_animations from '@/assets/lotties/payment_animation.json'
 import { faHandHoldingUsd } from '@fortawesome/free-solid-svg-icons/faHandHoldingUsd'
 
 @Options({
   name: 'CheckoutPayWays',
+  components: {
+    LottiePlayerMain
+  },
   props: {
     cartTotalPrice: Number,
     cartTotalPriceForPayWay: Number
@@ -53,6 +66,8 @@ import { faHandHoldingUsd } from '@fortawesome/free-solid-svg-icons/faHandHoldin
 })
 export default class CheckoutPayWays extends Vue {
 
+  emitter: Emitter<any> | undefined = inject('emitter')
+  PayWaysEnum = PayWaysEnum
   selectedPayWay: string = ''
   cartTotalPrice: number = 0
   cartTotalPriceForPayWay: number = 0
@@ -65,12 +80,20 @@ export default class CheckoutPayWays extends Vue {
     this.selectedPayWay = this.getSelectedPayWayName
   }
 
+  get getPaymentAnim(): object {
+    return payment_animations
+  }
+
   get validPayWays(): Array<PayWayModel> {
     return store.getters['pay_way/getActivePayWays']
   }
 
   get getSelectedPayWayName(): PayWayModel['name'] {
     return store.getters['pay_way/getSelectedPayWayName']
+  }
+
+  public lottieReplay(): void {
+    this.emitter!.emit('lottie-replay')
   }
 
   public getPayWayIcon(payWayName: PayWayModel['name']) {

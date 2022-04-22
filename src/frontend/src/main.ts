@@ -1,3 +1,4 @@
+import mitt from 'mitt'
 import axios from 'axios'
 import App from '@/App.vue'
 import store from './store'
@@ -33,6 +34,8 @@ const ToastOptions: PluginOptions = {
 	}
 }
 
+const emitter = mitt()
+
 createApp(App)
 	.use(store)
 	.use(router, axios)
@@ -41,4 +44,5 @@ createApp(App)
 	.use(apolloProvider.provider)
 	.use(Toast, ToastOptions)
 	.component('font-awesome-icon', FontAwesomeIcon)
+	.provide('emitter', emitter)
 	.mount('#app')

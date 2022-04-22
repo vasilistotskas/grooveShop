@@ -45,3 +45,16 @@
     }
   }
 }
+.footer-section-newsletter {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  .footer-safe-payments {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &-lottie {
+      max-width: 175px;
+    }
+  }
+}
