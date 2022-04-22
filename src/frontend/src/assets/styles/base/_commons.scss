@@ -11,6 +11,9 @@
   --cp-palette-main-light-third: #{$color-palette-main-third-light};
   --cp-palette-main-light-fourth: #{$color-palette-main-fourth-light};
   --cp-palette-main-light-fifth: #{$color-palette-main-fifth-light};
+
+  // GLOBAL
+  --cp-palette-main-global-green: #{$color-palette-global-green};
 }
 
 
@@ -31,8 +34,19 @@ body {
     --cp-palette-main-fifth: var(--cp-palette-main-light-fifth);
   }
 
+  // GLOBAL
+  --cp-palette-main-green: var(--cp-palette-main-global-green);
+
   background-color: var(--cp-palette-main-fourth);
   margin: 0 !important;
+}
+
+.green {
+  color: var(--cp-palette-main-green) !important;
+}
+
+.green-bg {
+  background-color: var(--cp-palette-main-green) !important;
 }
 
 .form-select {

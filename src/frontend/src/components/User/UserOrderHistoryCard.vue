@@ -17,7 +17,7 @@
     </span>
     <span>{{ product.name }}</span>
     <span>${{ product.price }}</span>
-    <span>{{ orderTotal }}</span>
+    <span>{{ quantity }}</span>
     <span>${{ orderTotal.toFixed(2) }}</span>
   </RouterLink>
 </template>
@@ -86,5 +86,6 @@ export default class UserOrderHistoryCard extends Vue  {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/styles/pages/User/UserOrderHistory"
 
 </style>

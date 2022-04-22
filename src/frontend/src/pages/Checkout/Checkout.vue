@@ -208,34 +208,36 @@
             </div>
           </FormProvider>
 
+          <!-- Na ginei modal -->
           <div
+            v-show="getSelectedPayWay.name === PayWaysEnum.CREDIT_CARD"
             id="stripe-card"
             ref="stripleElement"
-            class="mb-5 mt-3"
           />
-          <template v-if="cartTotalLength">
-            <div class="checkout-grid-pay-button">
-              <button
-                class="btn btn-outline-primary-one"
-                title="Pay With Stripe"
-                type="button"
-                @click="submitForm"
-              >
-                Pay
-                with Stripe
-              </button>
-            </div>
-          </template>
         </div>
       </div>
       <CheckoutPayWays
         :cart-total-price="cartTotalPrice"
+        :cart-total-price-for-pay-way="cartTotalPriceForPayWay"
       />
       <CheckoutProductContainer
         :cart="cart"
         :cart-total-length="cartTotalLength"
         :cart-total-price="cartTotalPrice"
+        :cart-total-price-for-pay-way="cartTotalPriceForPayWay"
       />
+      <template v-if="cartTotalLength">
+        <div class="checkout-grid-pay-button">
+          <button
+            class="btn btn-outline-primary-one green-bg"
+            title="Pay Now"
+            type="button"
+            @click="submitForm"
+          >
+            Confirm your purchase
+          </button>
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -243,12 +245,14 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, merge } from 'lodash'
 import { useToast } from 'vue-toastification'
 import { Options, Vue } from 'vue-class-component'
+import PayWayModel from '@/state/payway/PayWayModel'
 import CartItemModel from '@/state/cart/CartItemModel'
 import CountryModel from '@/state/country/CountryModel'
 import RegionsModel from '@/state/country/RegionsModel'
+import { PayWaysEnum } from '@/state/payway/Enum/PayWaysEnum'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
@@ -260,7 +264,6 @@ import CheckoutPayWays from '@/components/Checkout/CheckoutPayWays.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import CheckoutProductContainer from '@/components/Checkout/CheckoutProductContainer.vue'
-import PayWayModel from '@/state/payway/PayWayModel'
 
 const toast = useToast()
 
@@ -283,6 +286,7 @@ let {
 export default class Checkout extends Vue {
 
   customerDetails = new UserDetailsModel()
+  PayWaysEnum = PayWaysEnum
   
   formManager = {
     validateFields
@@ -371,6 +375,10 @@ export default class Checkout extends Vue {
   }
 
   get cartTotalPrice(): number {
+    return store.getters['cart/getCartTotalPrice']
+  }
+
+  get cartTotalPriceForPayWay(): number {
     return store.getters['cart/getCartTotalPriceForPayWay']
   }
 
@@ -407,17 +415,21 @@ export default class Checkout extends Vue {
   }
 
   async submitForm(): Promise<void> {
-    try {
-      await store.dispatch('stripeCard/createStripeToken')
-      if (this.stripeResultToken) {
-        await this.handleSubmit(this.stripeResultToken)
+    if(this.getSelectedPayWay.name === PayWaysEnum.CREDIT_CARD) {
+      try {
+        await store.dispatch('stripeCard/createStripeToken')
+        if (this.stripeResultToken) {
+          await this.handleSubmit(this.stripeResultToken)
+        }
+      } catch (e) {
+        console.log(e)
       }
-    } catch (e) {
-      console.log(e)
+    } else {
+      await this.handleSubmit()
     }
   }
 
-  handleSubmit = async (token: any) => {
+  handleSubmit = async (stripe_token?: any) => {
     const items = []
     try {
       for (let i = 0; i < this.cart.length; i++) {
@@ -443,13 +455,22 @@ export default class Checkout extends Vue {
         phone: formData.phone,
         country: this.customerDetails.country,
         region: this.customerDetails.region,
-        items,
-        stripe_token: token.id
+        items
       }
+
+      if (this.getSelectedPayWay.name === PayWaysEnum.CREDIT_CARD) {
+        const stripeToken = {
+          stripe_token: stripe_token.id
+        }
+        merge(apiData, stripeToken)
+      }
+
       if (this.customerDetails.country === 'choose') {
         toast.error('The country field is missing!')
       } else if (this.customerDetails.region === 'choose') {
         toast.error('The region field is missing!')
+      } else if (Object.keys(this.getSelectedPayWay).length <= 0) {
+        toast.error('You have to select a pay way method')
       } else {
         await store.dispatch('cart/createOrder', apiData)
       }

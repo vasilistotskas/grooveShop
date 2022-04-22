@@ -26,6 +26,9 @@
   }
 
   .checkout-grid-order-info {
+    display: grid;
+    grid-template-rows: auto;
+    gap: 1.5rem;
     height: fit-content;
   }
 
@@ -102,13 +105,11 @@
             }
           }
         }
-
       }
 
       &-three {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        margin-top: 15px;
         border-top: 2px solid #80808078;
         span {
           color: var(--cp-palette-main-fifth);
@@ -150,7 +151,28 @@
   }
 
   .checkout-grid-pay-button {
+    width: 100%;
     display: grid;
     justify-self: end;
+    grid-column: 2;
+    button {
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+
+  .checkout-product-container-extra_costs {
+    display: grid;
+    grid-template-rows: auto;
+    gap: 1rem;
+    padding: 20px 5px 5px;
+    border-top: 2px solid var(--cp-palette-main-third);
+    &-shipping, &-pay_way {
+      display: grid;
+      grid-template-columns: auto auto;
+      &-price {
+        justify-self: end;
+      }
+    }
   }
 }
