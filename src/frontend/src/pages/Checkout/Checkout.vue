@@ -1,5 +1,5 @@
 <template>
-  <GenericModal
+  <CheckoutStripeModal
     ref="checkoutStripeModal"
     :unique-id="'checkoutStripeModal'"
   >
@@ -37,7 +37,7 @@
         </div>
       </template>
     </div>
-  </GenericModal>
+  </CheckoutStripeModal>
   <div class="page-checkout container mt-7 mb-5 ">
     <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="checkout-grid-container content-min-height">
@@ -317,7 +317,6 @@ import FormProvider from '@/components/Form/FormProvider.vue'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import GenericModal from '@/components/Utilities/GenericModal.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormBaseTextarea from '@/components/Form/FormBaseTextarea.vue'
 import { email, exactly, min, required } from '@/components/Form/Utils'
@@ -325,6 +324,7 @@ import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import CheckoutPayWays from '@/components/Checkout/CheckoutPayWays.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import CheckoutStripeModal from '@/components/Utilities/CheckoutStripeModal.vue'
 import CheckoutProductContainer from '@/components/Checkout/CheckoutProductContainer.vue'
 
 const toast = useToast()
@@ -344,8 +344,7 @@ let {
     Breadcrumbs,
     CheckoutProductContainer,
     CheckoutPayWays,
-    GenericModal
-
+    CheckoutStripeModal
   }
 })
 export default class Checkout extends Vue {
