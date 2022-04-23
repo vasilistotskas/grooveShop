@@ -11,8 +11,8 @@ const toast = useToast()
 @Module({ namespaced: true })
 export default class ProductFavouriteModule extends AppBaseModule {
 
-	favourites = [new ProductFavouriteModel()]
-	userFavourites = [new ProductFavouriteModel()]
+	favourites: Array<ProductFavouriteModel> = []
+	userFavourites: Array<ProductFavouriteModel> = []
 
 	get getFavouriteData(): Array<ProductFavouriteModel> {
 		return this.favourites

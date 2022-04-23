@@ -28,8 +28,10 @@ class UserOrderSerializer(serializers.ModelSerializer):
             "address",
             "zipcode",
             "place",
+            "city",
             "phone",
             "stripe_token",
+            "customer_notes",
             "items",
             "paid_amount"
         )
@@ -71,7 +73,9 @@ class OrderSerializer(serializers.ModelSerializer):
             "address",
             "zipcode",
             "place",
+            "city",
             "phone",
+            "customer_notes",
             "stripe_token",
             "items"
         )

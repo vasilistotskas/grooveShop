@@ -1,7 +1,6 @@
 .checkout-pay_way {
   &-container {
     display: grid;
-    gap: 1rem;
     background-color: var(--cp-palette-main-secondary);
     padding: 15px 30px 30px;
     border-radius: 10px;
@@ -11,7 +10,6 @@
   }
   &-section {
     display: grid;
-    gap: 1rem;
   }
   &-content {
     display: grid;
@@ -28,6 +26,7 @@
   &-input-label {
     display: flex;
     align-items: center;
+    gap: 0.25rem;
     &:hover {
       cursor: pointer;
     }

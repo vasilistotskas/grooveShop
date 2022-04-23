@@ -14,7 +14,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ['email']
     readonly_fields = (
         'user', 'first_name', 'last_name', 'email', 'address', 'zipcode', 'place', 'phone',
-        'created_at', 'paid_amount')
+        'created_at', 'paid_amount', 'customer_notes', 'city')
     can_delete = False
     inlines = [OrderItemline]
 

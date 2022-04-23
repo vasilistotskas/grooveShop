@@ -16,6 +16,7 @@
           :value="payWay.name"
           type="radio"
           class="checkout-pay_way-input"
+          @click="managePayWayClick(payWay)"
           @change="setSelectedPayWay(payWay)"
         >
         <label
@@ -71,10 +72,13 @@ export default class CheckoutPayWays extends Vue {
 
   async created(): Promise<void> {
     await store.dispatch('pay_way/fetchActivePayWaysFromRemote')
-  }
 
-  mounted(): void {
-    this.selectedPayWay = this.getSelectedPayWayName
+    this.$watch(
+        () => this.getSelectedPayWayName,
+        (to: any) => {
+          this.selectedPayWay = to
+        }
+    )
   }
 
   get validPayWays(): Array<PayWayModel> {
@@ -106,6 +110,12 @@ export default class CheckoutPayWays extends Vue {
   protected setSelectedPayWay(selectedPayWay: PayWayModel): void {
     store.dispatch('cart/cartTotalPriceForPayWayAction', selectedPayWay)
     store.commit('pay_way/setSelectedPayWay', selectedPayWay)
+  }
+
+  protected managePayWayClick(selectedPayWay: PayWayModel): void {
+    if (selectedPayWay.name === PayWaysEnum.CREDIT_CARD) {
+      this.emitter!.emit('modal-open')
+    }
   }
 
   protected payWayExtraCost(payWay: PayWayModel): string {

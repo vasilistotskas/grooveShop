@@ -1,15 +1,40 @@
 <template>
+  <GenericModal
+    ref="checkoutStripeModal"
+    :unique-id="'checkoutStripeModal'"
+  >
+    <div class="stripe-content">
+      <img
+        class="stripe-content-img_logo"
+        src="http://localhost:8010/backend/static/images/powered_by_stripe.svg"
+        alt="Stripe Logo"
+      >
+      <div
+        id="stripe-card"
+        ref="stripleElement"
+      />
+      <template v-if="cartTotalLength">
+        <div class="checkout-grid-pay-button mt-4">
+          <button
+            class="btn btn-outline-primary-one green-bg"
+            title="Pay Now"
+            type="button"
+            @click="submitForm"
+          >
+            Confirm your purchase
+          </button>
+        </div>
+      </template>
+    </div>
+  </GenericModal>
   <div class="page-checkout container mt-7 mb-5 ">
     <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="checkout-grid-container content-min-height">
       <div class="checkout-grid-order-user-details">
         <div class="checkout-grid-content">
-          <h2 class="subtitle">
+          <h2 class="subtitle mb-4">
             Shipping details
           </h2>
-          <p class="has-text-grey mb-4">
-            * All fields are required
-          </p>
           <FormProvider
             id="userDetailsForm"
             :errors="formManager.errors"
@@ -37,7 +62,60 @@
                   class="validation-errros"
                 />
               </div>
+              <div class="phone col-12 mb-3">
+                <label
+                  :for="formManager.form.phone.$uid"
+                  class="label"
+                >Phone</label>
+                <FormBaseInput
+                  :id="formManager.form.phone.$uid"
+                  v-model="formManager.form.phone.$value"
+                  :has-error="formManager.form.phone.$hasError"
+                  :placeholder="customerDetails.phone"
+                  :validating="formManager.form.phone.$validating"
+                />
+                <FormValidationErrors
+                  :errors="formManager.form.phone.$errors"
+                  class="validation-errros"
+                />
+              </div>
+              <div class="city col-12 mb-3">
+                <label
+                  :for="formManager.form.city.$uid"
+                  class="label"
+                >City</label>
+                <FormBaseInput
+                  :id="formManager.form.city.$uid"
+                  v-model="formManager.form.city.$value"
+                  :has-error="formManager.form.city.$hasError"
+                  :placeholder="customerDetails.city"
+                  :validating="formManager.form.city.$validating"
+                />
+                <FormValidationErrors
+                  :errors="formManager.form.city.$errors"
+                  class="validation-errros"
+                />
+              </div>
+              <div class="address col-12 mb-3">
+                <label
+                  :for="formManager.form.address.$uid"
+                  class="label"
+                >Address</label>
+                <FormBaseInput
+                  :id="formManager.form.address.$uid"
+                  v-model="formManager.form.address.$value"
+                  :has-error="formManager.form.address.$hasError"
+                  :placeholder="customerDetails.address"
+                  :validating="formManager.form.address.$validating"
+                />
+                <FormValidationErrors
+                  :errors="formManager.form.address.$errors"
+                  class="validation-errros"
+                />
+              </div>
+            </div>
 
+            <div class="checkout-grid-form-part-right">
               <div class="last_name col-12 mb-3">
                 <label
                   :for="formManager.form.last_name.$uid"
@@ -55,8 +133,7 @@
                   class="validation-errros"
                 />
               </div>
-
-              <div class="last_name col-12 mb-3">
+              <div class="email col-12 mb-3">
                 <label
                   :for="formManager.form.email.$uid"
                   class="label"
@@ -73,46 +150,7 @@
                   class="validation-errros"
                 />
               </div>
-
-              <div class="last_name col-12 mb-3">
-                <label
-                  :for="formManager.form.phone.$uid"
-                  class="label"
-                >Phone</label>
-                <FormBaseInput
-                  :id="formManager.form.phone.$uid"
-                  v-model="formManager.form.phone.$value"
-                  :has-error="formManager.form.phone.$hasError"
-                  :placeholder="customerDetails.phone"
-                  :validating="formManager.form.phone.$validating"
-                />
-                <FormValidationErrors
-                  :errors="formManager.form.phone.$errors"
-                  class="validation-errros"
-                />
-              </div>
-            </div>
-
-            <div class="checkout-grid-form-part-right">
-              <div class="last_name col-12 mb-3">
-                <label
-                  :for="formManager.form.address.$uid"
-                  class="label"
-                >Address</label>
-                <FormBaseInput
-                  :id="formManager.form.address.$uid"
-                  v-model="formManager.form.address.$value"
-                  :has-error="formManager.form.address.$hasError"
-                  :placeholder="customerDetails.address"
-                  :validating="formManager.form.address.$validating"
-                />
-                <FormValidationErrors
-                  :errors="formManager.form.address.$errors"
-                  class="validation-errros"
-                />
-              </div>
-
-              <div class="last_name col-12 mb-3">
+              <div class="zipcode col-12 mb-3">
                 <label
                   :for="formManager.form.zipcode.$uid"
                   class="label"
@@ -129,8 +167,7 @@
                   class="validation-errros"
                 />
               </div>
-
-              <div class="last_name col-12 mb-3">
+              <div class="place col-12 mb-3">
                 <label
                   :for="formManager.form.place.$uid"
                   class="label"
@@ -147,73 +184,85 @@
                   class="validation-errros"
                 />
               </div>
+            </div>
 
-              <div class="checkout-grid-country-region">
-                <div class="form-outline">
-                  <label
-                    class="form-label"
-                    for="inputCountry"
-                  >Country</label>
-                  <select
-                    id="inputCountry"
-                    v-model="customerDetails.country"
-                    class="form-select"
-                    name="country"
-                    @change="restRegions"
+            <div class="checkout-grid-country-region col-12">
+              <div class="form-outline">
+                <label
+                  class="form-label"
+                  for="inputCountry"
+                >Country</label>
+                <select
+                  id="inputCountry"
+                  v-model="customerDetails.country"
+                  class="form-select"
+                  name="country"
+                  @change="restRegions"
+                >
+                  <option
+                    disabled
+                    value="choose"
                   >
-                    <option
-                      disabled
-                      value="choose"
-                    >
-                      Choose...
-                    </option>
-                    <option
-                      v-for="country in availableCountries"
-                      :key="country.alpha_2"
-                      :value="country.alpha_2"
-                    >
-                      {{ country.name }}
-                    </option>
-                  </select>
-                </div>
+                    Choose...
+                  </option>
+                  <option
+                    v-for="country in availableCountries"
+                    :key="country.alpha_2"
+                    :value="country.alpha_2"
+                  >
+                    {{ country.name }}
+                  </option>
+                </select>
+              </div>
 
-                <div class="form-outline">
-                  <label
-                    class="form-label"
-                    for="inputRegion"
-                  >Region</label>
-                  <select
-                    id="inputRegion"
-                    ref="regionElement"
-                    v-model="customerDetails.region"
-                    class="form-select"
-                    name="region"
+              <div class="form-outline">
+                <label
+                  class="form-label"
+                  for="inputRegion"
+                >Region</label>
+                <select
+                  id="inputRegion"
+                  ref="regionElement"
+                  v-model="customerDetails.region"
+                  class="form-select"
+                  name="region"
+                >
+                  <option
+                    disabled
+                    value="choose"
                   >
-                    <option
-                      disabled
-                      value="choose"
-                    >
-                      Choose...
-                    </option>
-                    <option
-                      v-for="region in regionsBasedOnAlpha"
-                      :key="region.alpha"
-                      :value="region.alpha"
-                    >
-                      {{ region.name }}
-                    </option>
-                  </select>
-                </div>
+                    Choose...
+                  </option>
+                  <option
+                    v-for="region in regionsBasedOnAlpha"
+                    :key="region.alpha"
+                    :value="region.alpha"
+                  >
+                    {{ region.name }}
+                  </option>
+                </select>
               </div>
             </div>
-          </FormProvider>
 
-          <!-- Na ginei modal -->
-          <div
-            v-show="getSelectedPayWay.name === PayWaysEnum.CREDIT_CARD"
-            id="stripe-card"
-            ref="stripleElement"
-          />
+            <div class="customer_notes col-12">
+              <label
+                :for="formManager.form.customer_notes.$uid"
+                class="label"
+              >Order Notes</label>
+              <FormBaseTextarea
+                :id="formManager.form.customer_notes.$uid"
+                v-model="formManager.form.customer_notes.$value"
+                :has-error="formManager.form.customer_notes.$hasError"
+                :validating="formManager.form.customer_notes.$validating"
+                :maxlength="10000"
+                :rows="6"
+              />
+              <FormValidationErrors
+                :errors="formManager.form.customer_notes.$errors"
+                class="validation-errros"
+              />
+            </div>
+          </FormProvider>
         </div>
       </div>
       <CheckoutPayWays
@@ -257,7 +306,9 @@ import FormProvider from '@/components/Form/FormProvider.vue'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
+import GenericModal from '@/components/Utilities/GenericModal.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
+import FormBaseTextarea from '@/components/Form/FormBaseTextarea.vue'
 import { email, exactly, min, required } from '@/components/Form/Utils'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import CheckoutPayWays from '@/components/Checkout/CheckoutPayWays.vue'
@@ -276,11 +327,14 @@ let {
   components: {
     FormProvider,
     FormBaseInput,
+    FormBaseTextarea,
     FormSubmitButtons,
     FormValidationErrors,
     Breadcrumbs,
     CheckoutProductContainer,
-    CheckoutPayWays
+    CheckoutPayWays,
+    GenericModal
+
   }
 })
 export default class Checkout extends Vue {
@@ -336,8 +390,20 @@ export default class Checkout extends Vue {
     place: {
       $value: '',
       $rules: [
-        required('Place is required'),
         min(2)('Place has to be longer than 1 characters')
+      ]
+    },
+    city: {
+      $value: '',
+      $rules: [
+        required('City is required'),
+        min(2)('City has to be longer than 1 characters')
+      ]
+    },
+    customer_notes: {
+      $value: '',
+      $rules: [
+        min(5)('Place has to be longer than 5 characters')
       ]
     }
   })
@@ -453,8 +519,10 @@ export default class Checkout extends Vue {
         zipcode: formData.zipcode,
         place: formData.place,
         phone: formData.phone,
+        city: formData.city,
         country: this.customerDetails.country,
         region: this.customerDetails.region,
+        customer_notes: formData.customer_notes,
         items
       }
 
@@ -497,6 +565,9 @@ export default class Checkout extends Vue {
       }
       if (this.customerDetails.place !== null) {
         this.formManager.form.place.$value = cloneDeep(this.userData.place)
+      }
+      if (this.customerDetails.city !== null) {
+        this.formManager.form.city.$value = cloneDeep(this.userData.city)
       }
       if (this.customerDetails.email !== null) {
         this.formManager.form.email.$value = cloneDeep(this.userData.email)

@@ -45,6 +45,8 @@ ALLOWED_HOSTS.extend(
     )
 )
 
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8010']
+
 # Application definition
 DJANGO_APPS = [
     'django.contrib.admin',
