@@ -1,3 +1,4 @@
+import { ComputedRef } from 'vue'
 import session from '@/api/session'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
@@ -7,6 +8,7 @@ export default class AppModule extends AppBaseModule {
 	loading = false
 	windowWidth: number = window.innerWidth
 	navbarMenuHidden = true
+	checkoutErrors!: ComputedRef
 
 	get getLoading(): boolean {
 		return this.loading
@@ -28,6 +30,10 @@ export default class AppModule extends AppBaseModule {
 		return this.windowWidth <= 990
 	}
 
+	get getCheckoutErrors(): ComputedRef {
+		return this.checkoutErrors
+	}
+
 	@Mutation
 	setNavbarMenuHidden(shouldBeLoad: boolean): void {
 		this.navbarMenuHidden = shouldBeLoad
@@ -41,6 +47,11 @@ export default class AppModule extends AppBaseModule {
 	@Mutation
 	setWindowWidth(width: number): void {
 		this.windowWidth = width
+	}
+
+	@Mutation
+	setCheckoutErrors(errors: ComputedRef): void {
+		this.checkoutErrors = errors
 	}
 
 	@Action

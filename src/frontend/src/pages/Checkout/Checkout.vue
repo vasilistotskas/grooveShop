@@ -4,6 +4,17 @@
     :unique-id="'checkoutStripeModal'"
   >
     <div class="stripe-content">
+      <div
+        v-if="formManager.errors"
+        class="stripe-modal-checkout-errors"
+      >
+        <span
+          v-for="error in formManager.errors"
+          :key="error.id"
+        >
+          {{ error }}
+        </span>
+      </div>
       <img
         class="stripe-content-img_logo"
         src="http://localhost:8010/backend/static/images/powered_by_stripe.svg"
@@ -402,9 +413,7 @@ export default class Checkout extends Vue {
     },
     customer_notes: {
       $value: '',
-      $rules: [
-        min(5)('Place has to be longer than 5 characters')
-      ]
+      $rules: []
     }
   })
 
@@ -495,19 +504,23 @@ export default class Checkout extends Vue {
     }
   }
 
-  handleSubmit = async (stripe_token?: any) => {
+  buildCartItems(): Array<any> {
     const items = []
-    try {
-      for (let i = 0; i < this.cart.length; i++) {
-        const item = this.cart[i]
-        const obj = {
-          product: item.product.id,
-          quantity: item.quantity,
-          price: item.product.price * item.quantity
-        }
-        items.push(obj)
+    for (let i = 0; i < this.cart.length; i++) {
+      const item = this.cart[i]
+      const obj = {
+        product: item.product.id,
+        quantity: item.quantity,
+        price: item.product.price * item.quantity
       }
+      items.push(obj)
+    }
+    return items
+  }
 
+  handleSubmit = async (stripe_token?: any) => {
+    const items = this.buildCartItems()
+    try {
       const formData: any = await validateFields()
       const apiData = {
         user_id: this.customerDetails.id ? this.customerDetails.id : this.userData.id,
@@ -545,6 +558,7 @@ export default class Checkout extends Vue {
 
     } catch (e) {
       if (e instanceof ValidationError) {
+        store.commit('app/setCheckoutErrors', this.formManager.errors)
         console.log(e.message)
       }
     }

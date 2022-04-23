@@ -194,6 +194,15 @@
   img {
     max-width: 420px;
   }
+  .stripe-modal-checkout-errors {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    font-size: 13px;
+    span {
+      color: lighten($color-palette-main-primary, 12.5%);
+    }
+  }
 }
 
 .checkout-grid-order-info {
