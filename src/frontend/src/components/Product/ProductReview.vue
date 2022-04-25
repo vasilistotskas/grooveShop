@@ -122,9 +122,9 @@ const starSvg = '<path data-v-558dc688="" fill="currentColor" d="M259.3 17.8L194
 const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z" class=""></path>'
 
 @Options({
-  name: 'ProductReviewModal'
+  name: 'ProductReview'
 })
-export default class ProductReviewModal extends Vue {
+export default class ProductReview extends Vue {
 
   $refs!: {
     ratingBoard: HTMLElement;
@@ -346,5 +346,5 @@ export default class ProductReviewModal extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/modals/ProductReviewModal"
+@import "@/assets/styles/pages/Product/ProductReview"
 </style>

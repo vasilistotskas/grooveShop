@@ -10,10 +10,15 @@ const toast = useToast()
 @Module({ namespaced: true })
 export default class UserDataModule extends AppBaseModule {
 	user_id!: number | undefined
+	user_email!: string | undefined
 	data = new UserDetailsModel()
 
 	get getUserId(): number | undefined {
 		return this.user_id
+	}
+
+	get getUserEmail(): string | undefined {
+		return this.user_email
 	}
 
 	get getUserData(): UserDetailsModel {
@@ -28,6 +33,11 @@ export default class UserDataModule extends AppBaseModule {
 	@Mutation
 	setUserId(user_id: number) {
 		this.user_id = user_id
+	}
+
+	@Mutation
+	setUserEmail(user_email: string) {
+		this.user_email = user_email
 	}
 
 	@Mutation
@@ -52,6 +62,7 @@ export default class UserDataModule extends AppBaseModule {
 				const data = response.data
 				this.context.commit('setUserData', data[0])
 				this.context.commit('setUserId', data[0].id)
+				this.context.commit('setUserEmail', data[0].email)
 				store.dispatch('country/findRegionsBasedOnAlphaForLoggedCustomer')
 				store.dispatch('product/favourite/fetchUserFavouritesFromRemote', response.data[0].user)
 			})
