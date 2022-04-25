@@ -64,9 +64,7 @@ export default class BlogPostList extends Vue {
     await Promise.all([
       store.dispatch('blog/fetchAllTagsFromRemote'),
       store.dispatch('blog/fetchAllAuthorsFromRemote'),
-      store.dispatch('blog/fetchAllCategoriesFromRemote'),
-      store.dispatch('blog/fetchCommentsByPost'),
-      store.dispatch('blog/fetchCommentByUserToPost')
+      store.dispatch('blog/fetchAllCategoriesFromRemote')
     ])
   }
 

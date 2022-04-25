@@ -84,8 +84,16 @@ export default class BlogPost extends Vue {
     return store.getters['blog/getPostBySlug']
   }
 
+  get isAuthenticated(): boolean {
+    return store.getters['auth/isAuthenticated']
+  }
+  
   async created(): Promise<void> {
     await store.dispatch('blog/fetchPostBySlugFromRemote')
+    await store.dispatch('blog/fetchCommentsByPost')
+    if (this.isAuthenticated) {
+      await store.dispatch('blog/fetchCommentByUserToPost')
+    }
   }
 
   public mediaStreamImage(

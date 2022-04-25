@@ -351,8 +351,9 @@ export default class BlogModule extends AppBaseModule {
 
 	@Action
 	async fetchCommentsByPost(): Promise<void> {
-		const comments = await clientApollo.query({
-			query: gql`query ($postId: Int!) {
+		try {
+			const comments = await clientApollo.query({
+				query: gql`query ($postId: Int!) {
                 commentsByPost(postId: $postId) {
                   content
                   createdAt
@@ -378,17 +379,21 @@ export default class BlogModule extends AppBaseModule {
                   }
                 }
               }`,
-			variables: {
-				postId: this.context.getters['getPostBySlug'].id
-			}
-		})
-		return this.context.commit('setCommentsByPost', comments.data.commentsByPost)
+				variables: {
+					postId: Number(this.context.getters['getPostBySlug'].id)
+				}
+			})
+			return this.context.commit('setCommentsByPost', comments.data.commentsByPost)
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2))
+		}
 	}
 
 	@Action
 	async fetchCommentByUserToPost(): Promise<void> {
-		const comments = await clientApollo.query({
-			query: gql`query ($postId: Int!, $userEmail: String!) {
+		try {
+			const comments = await clientApollo.query({
+				query: gql`query ($postId: Int!, $userEmail: String!) {
                 commentByUserToPost(postId: $postId, userEmail: $userEmail) {
                   content
                   createdAt
@@ -419,12 +424,15 @@ export default class BlogModule extends AppBaseModule {
                   }
                 }
               }`,
-			variables: {
-				postId: this.context.getters['getPostBySlug'].id,
-				userEmail: store.getters['user/data/getUserData'].email
-			}
-		})
-		return this.context.commit('setCommentByUserToPost', comments.data.commentByUserToPost)
+				variables: {
+					postId: Number(this.context.getters['getPostBySlug'].id),
+					userEmail: store.getters['user/data/getUserData'].email
+				}
+			})
+			return this.context.commit('setCommentByUserToPost', comments.data.commentByUserToPost)
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2))
+		}
 	}
 
 	@Action
@@ -444,7 +452,7 @@ export default class BlogModule extends AppBaseModule {
                 }
               }`,
 			variables: {
-				post_id: this.context.getters['getPostBySlug'].id,
+				post_id: Number(this.context.getters['getPostBySlug'].id),
 				user_email: store.getters['user/data/getUserData'].email,
 				content: content,
 			}
@@ -468,7 +476,7 @@ export default class BlogModule extends AppBaseModule {
                 }
               }`,
 			variables: {
-				id: commentId,
+				id: Number(commentId),
 				user_email: store.getters['user/data/getUserData'].email
 			}
 		})
@@ -486,7 +494,7 @@ export default class BlogModule extends AppBaseModule {
                 }
               }`,
 			variables: {
-				id: postId,
+				id: Number(postId),
 				user_email: store.getters['user/data/getUserData'].email
 			}
 		})
