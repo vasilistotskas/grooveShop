@@ -1,7 +1,9 @@
 import graphene
-from . import models
+from .models import *
 from graphene_django import DjangoObjectType
 from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class UserType(DjangoObjectType):
@@ -11,7 +13,7 @@ class UserType(DjangoObjectType):
 
 class AuthorType(DjangoObjectType):
     class Meta:
-        model = models.Profile
+        model = Profile
 
 
 class PostType(DjangoObjectType):
@@ -20,24 +22,24 @@ class PostType(DjangoObjectType):
     number_of_likes = graphene.Int(source='number_of_likes')
 
     class Meta:
-        model = models.Post
+        model = Post
 
 
 class TagType(DjangoObjectType):
     class Meta:
-        model = models.Tag
+        model = Tag
 
 
 class CategoryType(DjangoObjectType):
     class Meta:
-        model = models.Category
+        model = Category
 
 
 class CommentType(DjangoObjectType):
     number_of_likes = graphene.Int(source='number_of_likes')
 
     class Meta:
-        model = models.Comment
+        model = Comment
 
 
 class Query(graphene.ObjectType):
@@ -55,19 +57,19 @@ class Query(graphene.ObjectType):
 
     @staticmethod
     def resolve_comments_by_user(root, info, user_email):
-        return models.Comment.objects.select_related("user").filter(
+        return Comment.objects.select_related("user").filter(
             user__email=user_email
         )
 
     @staticmethod
     def resolve_comments_by_post(root, info, post_id):
-        return models.Comment.objects.select_related("post").filter(
+        return Comment.objects.select_related("post").filter(
             post__id=post_id
         )
 
     @staticmethod
     def resolve_comment_by_user_to_post(root, info, post_id, user_email):
-        return models.Comment.objects.select_related("post").filter(
+        return Comment.objects.select_related("post").filter(
             post__id=post_id,
             user__email=user_email
         )
@@ -75,7 +77,7 @@ class Query(graphene.ObjectType):
     @staticmethod
     def resolve_all_posts(root, info):
         return (
-            models.Post.objects.prefetch_related("tags")
+            Post.objects.prefetch_related("tags")
                 .select_related("author")
                 .all()
         )
@@ -83,31 +85,31 @@ class Query(graphene.ObjectType):
     @staticmethod
     def resolve_all_tags(root, info):
         return (
-            models.Tag.objects.all()
+            Tag.objects.all()
         )
 
     @staticmethod
     def resolve_all_authors(root, info):
         return (
-            models.Profile.objects.select_related("user").all()
+            Profile.objects.select_related("user").all()
         )
 
     @staticmethod
     def resolve_all_categories(root, info):
         return (
-            models.Category.objects.all()
+            Category.objects.all()
         )
 
     @staticmethod
     def resolve_author_by_email(root, info, email):
-        return models.Profile.objects.select_related("user").get(
+        return Profile.objects.select_related("user").get(
             user__email=email
         )
 
     @staticmethod
     def resolve_post_by_slug(root, info, slug):
         return (
-            models.Post.objects.prefetch_related("tags")
+            Post.objects.prefetch_related("tags")
                 .select_related("author")
                 .get(slug=slug)
         )
@@ -115,7 +117,7 @@ class Query(graphene.ObjectType):
     @staticmethod
     def resolve_posts_by_author(root, info, email):
         return (
-            models.Post.objects.prefetch_related("tags")
+            Post.objects.prefetch_related("tags")
                 .select_related("author")
                 .filter(author__user__email=email)
         )
@@ -123,10 +125,66 @@ class Query(graphene.ObjectType):
     @staticmethod
     def resolve_posts_by_tag(root, info, tag):
         return (
-            models.Post.objects.prefetch_related("tags")
+            Post.objects.prefetch_related("tags")
                 .select_related("author")
                 .filter(tags__name__iexact=tag)
         )
 
 
-schema = graphene.Schema(query=Query)
+class UpdatePostLikesMutation(graphene.Mutation):
+    class Arguments:
+        # The input arguments for this mutation
+        id = graphene.ID(required=True)
+        user_email = graphene.String(required=True)
+
+    # The class attributes define the response of the mutation
+    post = graphene.Field(PostType)
+
+    @classmethod
+    def mutate(cls, root, info, user_email, id):
+        post = Post.objects.get(pk=id)
+        post.likes.add(User.objects.get(email=user_email))
+        post.save()
+        # Notice we return an instance of this mutation
+        return UpdatePostLikesMutation(post=post)
+
+
+class UpdateCommentLikesMutations(graphene.Mutation):
+    class Arguments:
+        id = graphene.ID(required=True)
+        user_email = graphene.String(required=True)
+
+    comment = graphene.Field(CommentType)
+
+    @classmethod
+    def mutate(cls, root, info, id, user_email):
+        comment = Comment.objects.get(pk=id)
+        comment.likes.add(User.objects.get(email=user_email))
+        comment.save()
+        return UpdateCommentLikesMutations(comment=comment)
+
+
+class CommentCreateMutation(graphene.Mutation):
+    class Arguments:
+        post_id = graphene.ID(required=True)
+        user_email = graphene.String(required=True)
+        content = graphene.String(required=True)
+
+    comment = graphene.Field(CommentType)
+
+    @classmethod
+    def mutate(cls, root, info, post_id, user_email, content):
+        user = User.objects.get(email=user_email)
+        post = Post.objects.get(pk=post_id)
+        comment = Comment.objects.create(content=content, user=user, post=post)
+        comment.save()
+        return CommentCreateMutation(comment=comment)
+
+
+class Mutation(graphene.ObjectType):
+    update_post_likes = UpdatePostLikesMutation.Field()
+    update_comment_likes = UpdateCommentLikesMutations.Field()
+    create_comment = CommentCreateMutation.Field()
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation)

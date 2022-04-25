@@ -1,6 +1,7 @@
 import store from '@/store'
 import router from '@/routes'
 import gql from 'graphql-tag'
+import { ApolloQueryResult } from '@apollo/client'
 import BlogTagModel from '@/state/blog/BlogTagModel'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import { clientApollo } from '../../../apollo.provider'
@@ -63,7 +64,7 @@ export default class BlogModule extends AppBaseModule {
 		return this.commentsByPost
 	}
 
-	get getcommentByUserToPost(): Array<BlogCommentModel> {
+	get getCommentByUserToPost(): Array<BlogCommentModel> {
 		return this.commentByUserToPost
 	}
 
@@ -113,7 +114,7 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	@Mutation
-	setcommentByUserToPost(data: Array<BlogCommentModel>): void {
+	setCommentByUserToPost(data: Array<BlogCommentModel>): void {
 		this.commentByUserToPost = data
 	}
 
@@ -342,7 +343,7 @@ export default class BlogModule extends AppBaseModule {
                 }
               }`,
 			variables: {
-				userEmail: store.getters['user/data/getUserData'].email
+				userEmail: store.getters['user/data/getUserEmail']
 			}
 		})
 		return this.context.commit('setCommentsByUser', comments.data.commentsByUser)
@@ -423,6 +424,72 @@ export default class BlogModule extends AppBaseModule {
 				userEmail: store.getters['user/data/getUserData'].email
 			}
 		})
-		return this.context.commit('setcommentByUserToPost', comments.data.commentByUserToPost)
+		return this.context.commit('setCommentByUserToPost', comments.data.commentByUserToPost)
+	}
+
+	@Action
+	async createCommentToPost(content: string): Promise<void> {
+		const comment = await clientApollo.query({
+			query: gql`mutation ($post_id: ID!, $user_email: String!, $content: String!) {
+                createComment(postId: $post_id, userEmail: $user_email, content: $content) {
+				  comment {
+			        content
+				    post {
+					  id
+				    }
+					user {
+					  email
+					}
+				  }
+                }
+              }`,
+			variables: {
+				post_id: this.context.getters['getPostBySlug'].id,
+				user_email: store.getters['user/data/getUserData'].email,
+				content: content,
+			}
+		})
+		return this.context.commit('setCommentByUserToPost', comment.data.createComment)
+	}
+
+	@Action
+	async updateCommentLikes(commentId: number): Promise<ApolloQueryResult<any>> {
+		const comment = await clientApollo.query({
+			query: gql`mutation ($id: ID!, $user_email: String!) {
+                updateCommentLikes(id:$id, userEmail: $user_email) {
+					comment {
+						post {
+							id
+						}
+						user {
+							email
+						}
+					}
+                }
+              }`,
+			variables: {
+				id: commentId,
+				user_email: store.getters['user/data/getUserData'].email
+			}
+		})
+		return comment
+	}
+
+	@Action
+	async updatePostLikes(postId: number): Promise<ApolloQueryResult<any>> {
+		const post = await clientApollo.query({
+			query: gql`mutation ($id: ID!, $user_email: String!) {
+                updatePostLikes(id:$id, userEmail: $user_email) {
+				  post {
+				    id
+				  }
+                }
+              }`,
+			variables: {
+				id: postId,
+				user_email: store.getters['user/data/getUserData'].email
+			}
+		})
+		return post
 	}
 }

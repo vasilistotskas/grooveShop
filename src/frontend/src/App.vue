@@ -88,10 +88,11 @@ export default class App extends Vue {
     ])
 
     if (this.isAuthenticated) {
+      await store.dispatch('user/data/fetchUserDataFromRemote')
       await Promise.all([
-        store.dispatch('user/data/fetchUserDataFromRemote'),
         store.dispatch('user/order/fetchUserOrdersFromRemote'),
-        store.dispatch('country/fetchCountriesFromRemote')
+        store.dispatch('country/fetchCountriesFromRemote'),
+        store.dispatch('blog/fetchCommentsByUser')
       ])
     }
   }
