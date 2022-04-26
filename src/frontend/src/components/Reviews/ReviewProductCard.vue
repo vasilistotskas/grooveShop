@@ -111,8 +111,7 @@ const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.
     userId: {
       type: Number,
       required: false
-    },
-    userReviewsActionTarget: HTMLElement
+    }
   }
 })
 
