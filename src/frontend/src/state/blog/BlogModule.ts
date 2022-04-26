@@ -68,6 +68,10 @@ export default class BlogModule extends AppBaseModule {
 		return this.commentByUserToPost
 	}
 
+	get getUserHasAlreadyCommentedPost(): boolean {
+		return this.getCommentByUserToPost && Object.keys(this.getCommentByUserToPost).length > 0
+	}
+
 	@Mutation
 	setAllPosts(data: Array<BlogPostModel>): void {
 		this.allPosts = data
@@ -436,7 +440,7 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	@Action
-	async createCommentToPost(content: string): Promise<void> {
+	async createCommentToPost(data: Partial<any>): Promise<void> {
 		const comment = await clientApollo.query({
 			query: gql`mutation ($post_id: ID!, $user_email: String!, $content: String!) {
                 createComment(postId: $post_id, userEmail: $user_email, content: $content) {
@@ -454,14 +458,29 @@ export default class BlogModule extends AppBaseModule {
 			variables: {
 				post_id: Number(this.context.getters['getPostBySlug'].id),
 				user_email: store.getters['user/data/getUserData'].email,
-				content: content,
+				content: data.comment,
 			}
 		})
 		return this.context.commit('setCommentByUserToPost', comment.data.createComment)
 	}
 
 	@Action
-	async updateCommentLikes(commentId: number): Promise<ApolloQueryResult<any>> {
+	async deleteCommentFromPost(): Promise<void> {
+		const comment = await clientApollo.query({
+			query: gql`mutation ($comment_id: ID!) {
+			  deleteComment(commentId: $comment_id) {
+				deleted
+			  }
+			}`,
+			variables: {
+				comment_id: Number(this.context.getters['getCommentByUserToPost'].id)
+			}
+		})
+		return comment.data.deleteComment
+	}
+
+	@Action
+	async updateCommentLikes(): Promise<ApolloQueryResult<any>> {
 		const comment = await clientApollo.query({
 			query: gql`mutation ($id: ID!, $user_email: String!) {
                 updateCommentLikes(id:$id, userEmail: $user_email) {
@@ -476,7 +495,7 @@ export default class BlogModule extends AppBaseModule {
                 }
               }`,
 			variables: {
-				id: Number(commentId),
+				id: Number(this.context.getters['getCommentByUserToPost'].id),
 				user_email: store.getters['user/data/getUserData'].email
 			}
 		})

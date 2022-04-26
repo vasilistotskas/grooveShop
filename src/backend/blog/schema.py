@@ -181,10 +181,24 @@ class CommentCreateMutation(graphene.Mutation):
         return CommentCreateMutation(comment=comment)
 
 
+class CommentDeleteMutation(graphene.Mutation):
+    class Arguments:
+        comment_id = graphene.ID(required=True)
+
+    deleted = graphene.Boolean()
+
+    @classmethod
+    def mutate(cls, root, info, comment_id):
+        comment = Comment.objects.get(pk=comment_id)
+        comment.delete()
+        return cls(deleted=True)
+
+
 class Mutation(graphene.ObjectType):
     update_post_likes = UpdatePostLikesMutation.Field()
     update_comment_likes = UpdateCommentLikesMutations.Field()
     create_comment = CommentCreateMutation.Field()
+    delete_comment = CommentDeleteMutation.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
