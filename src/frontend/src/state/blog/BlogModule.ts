@@ -421,6 +421,12 @@ export default class BlogModule extends AppBaseModule {
                       name
                     }
                   }
+				  user {
+				  	id
+                    firstName
+                    lastName
+                    email
+                  }
                 }
               }`,
 				variables: {

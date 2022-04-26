@@ -63,6 +63,13 @@ class Query(graphene.ObjectType):
 
     @staticmethod
     def resolve_comments_by_post(root, info, post_id):
+        user = info.context.user
+
+        if not user.is_anonymous:
+            return Comment.objects.select_related("post").filter(
+                post__id=post_id
+            ).exclude(user=user)
+
         return Comment.objects.select_related("post").filter(
             post__id=post_id
         )

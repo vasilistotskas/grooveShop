@@ -39,6 +39,7 @@
 import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
 import BlogPostModel from '@/state/blog/BlogPostModel'
+import BlogCommentModel from '@/state/blog/BlogCommentModel'
 import BlogCommentCard from '@/components/Blog/BlogCommentCard.vue'
 
 @Options({
@@ -63,10 +64,10 @@ export default class BlogComments extends Vue {
   }
 
   get allBlogPostComments(): Array<BlogPostModel> {
-    return store.getters['blog/fetchCommentsByPost']
+    return store.getters['blog/getCommentsByPost']
   }
 
-  get commentByUserToPost(): BlogPostModel {
+  get commentByUserToPost(): BlogCommentModel {
     return store.getters['blog/getCommentByUserToPost']
   }
 

@@ -44,7 +44,6 @@
         </ul>
       </div>
     </div>
-
     <BlogComment />
   </div>
   <BlogComments

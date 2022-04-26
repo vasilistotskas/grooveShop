@@ -43,8 +43,10 @@
 
 <script lang="ts">
 import store from '@/store'
+import { cloneDeep } from 'lodash'
 import { useToast } from 'vue-toastification'
 import { Options, Vue } from 'vue-class-component'
+import BlogCommentModel from '@/state/blog/BlogCommentModel'
 import { faPenSquare } from '@fortawesome/free-solid-svg-icons/faPenSquare'
 
 const toast = useToast()
@@ -58,6 +60,23 @@ export default class BlogComment extends Vue {
   writeReviewIcon = faPenSquare
   comment: string = ''
 
+
+  get reviewButtonText(): string {
+    return this.userHasAlreadyCommentedPost ? 'Update' : 'Post'
+  }
+
+  get userHasAlreadyCommentedPost(): boolean {
+    return store.getters['blog/getUserHasAlreadyCommentedPost']
+  }
+
+  get commentByUserToPost(): BlogCommentModel {
+    return store.getters['blog/getCommentByUserToPost']
+  }
+
+  async mounted(): Promise<void> {
+    await this.commentModuleInitialize()
+  }
+
   public async reviewHandle(): Promise<void | string | number> {
     if (this.comment) {
       await store.dispatch('blog/createCommentToPost', this.comment)
@@ -66,12 +85,17 @@ export default class BlogComment extends Vue {
     }
   }
 
-  get reviewButtonText(): string {
-    return this.userHasAlreadyCommentedPost ? 'Update' : 'Post'
-  }
+  public async commentModuleInitialize(): Promise<void> {
+    let IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
 
-  get userHasAlreadyCommentedPost(): boolean {
-    return store.getters['blog/getUserHasAlreadyCommentedPost']
+    if (!IsAuthenticated) {
+      return
+    }
+
+    await store.dispatch('blog/fetchCommentByUserToPost')
+
+    this.comment = cloneDeep(this.commentByUserToPost.content)
+
   }
 
 }
