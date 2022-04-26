@@ -42,10 +42,12 @@
 </template>
 
 <script lang="ts">
+import store from '@/store'
+import { useToast } from 'vue-toastification'
 import { Options, Vue } from 'vue-class-component'
 import { faPenSquare } from '@fortawesome/free-solid-svg-icons/faPenSquare'
-import store from '@/store'
 
+const toast = useToast()
 
 @Options({
   name: 'BlogComment'
@@ -56,15 +58,12 @@ export default class BlogComment extends Vue {
   writeReviewIcon = faPenSquare
   comment: string = ''
 
-  public async reviewHandle(): Promise<void> {
-    const formEl = document.getElementById('blogPostComment') as HTMLFormElement
-    const data = new FormData(formEl)
-
-    if (this.comment !== null) {
-      data.append('comment', this.comment)
+  public async reviewHandle(): Promise<void | string | number> {
+    if (this.comment) {
+      await store.dispatch('blog/createCommentToPost', this.comment)
+    } else {
+      return toast.error('You have to write a comment')
     }
-
-    await store.dispatch('blog/createCommentToPost', data)
   }
 
   get reviewButtonText(): string {

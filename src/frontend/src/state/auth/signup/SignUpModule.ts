@@ -1,10 +1,9 @@
 import router from '@/routes'
 import api from '@/api/api.service'
 import { useToast } from 'vue-toastification'
-
 import AppBaseModule from '@/state/common/AppBaseModule'
-import { BaseAuthenticationTypes } from '@/state/auth/Enum/BaseAuthenticationTypes'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
+import { BaseAuthenticationTypes } from '@/state/auth/Enum/BaseAuthenticationTypes'
 import ToastRegisterActivationFail from '@/components/Toast/ToastRegisterActivationFail.vue'
 
 const toast = useToast()

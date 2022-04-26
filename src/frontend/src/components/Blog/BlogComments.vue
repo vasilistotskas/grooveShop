@@ -36,10 +36,10 @@
 </template>
 
 <script lang="ts">
+import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
 import BlogPostModel from '@/state/blog/BlogPostModel'
-import store from '@/store'
-
+import BlogCommentCard from '@/components/Blog/BlogCommentCard.vue'
 
 @Options({
   name: 'BlogComments',
@@ -48,7 +48,7 @@ import store from '@/store'
   },
   props: {
     post: {
-      type: BlogPostModel,
+      type: Object,
       required: true
     }
   }

@@ -44,7 +44,13 @@
         </ul>
       </div>
     </div>
+
+    <BlogComment />
   </div>
+  <BlogComments
+    v-if="postBySlug && Object.keys(postBySlug).length > 0"
+    :post="postBySlug"
+  />
 </template>
 
 <script lang="ts">
@@ -52,6 +58,8 @@ import store from '@/store'
 import router from '@/routes'
 import { Options, Vue } from 'vue-class-component'
 import BlogPostModel from '@/state/blog/BlogPostModel'
+import BlogComment from '@/components/Blog/BlogComment.vue'
+import BlogComments from '@/components/Blog/BlogComments.vue'
 import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import BlogAuthorLink from '@/components/Blog/BlogAuthorLink.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
@@ -63,7 +71,15 @@ import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpe
   name: 'BlogPost',
   components: {
     BlogAuthorLink,
-    Breadcrumbs
+    Breadcrumbs,
+    BlogComment,
+    BlogComments
+  },
+  props: {
+    slug: {
+      type: String,
+      required: true
+    }
   }
 })
 

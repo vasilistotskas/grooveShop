@@ -142,6 +142,7 @@ export default class BlogModule extends AppBaseModule {
                   }
                   author {
                     user {
+                      id
                       email
                       firstName
                       lastName
@@ -176,6 +177,7 @@ export default class BlogModule extends AppBaseModule {
                   website
                   bio
                   user {
+                    id
                     firstName
                     lastName
                     email
@@ -220,6 +222,7 @@ export default class BlogModule extends AppBaseModule {
                   slug
                   author {
                     user {
+                      id
                       email
                       firstName
                       lastName
@@ -257,6 +260,7 @@ export default class BlogModule extends AppBaseModule {
 			    }
                 author {
                   user {
+                    id
                     email
                     firstName
                     lastName
@@ -282,6 +286,7 @@ export default class BlogModule extends AppBaseModule {
                   website
                   bio
                   user {
+                    id
                     firstName
                     lastName
                     email
@@ -322,6 +327,7 @@ export default class BlogModule extends AppBaseModule {
                   isApproved
                   numberOfLikes
                   user {
+                    id
                     firstName
                     lastName
                     email
@@ -396,7 +402,7 @@ export default class BlogModule extends AppBaseModule {
 	@Action
 	async fetchCommentByUserToPost(): Promise<void> {
 		try {
-			const comments = await clientApollo.query({
+			const comment = await clientApollo.query({
 				query: gql`query ($postId: Int!, $userEmail: String!) {
                 commentByUserToPost(postId: $postId, userEmail: $userEmail) {
                   content
@@ -404,6 +410,7 @@ export default class BlogModule extends AppBaseModule {
                   isApproved
                   numberOfLikes
 				  user {
+				  	id
                     firstName
                     lastName
                     email
@@ -433,16 +440,17 @@ export default class BlogModule extends AppBaseModule {
 					userEmail: store.getters['user/data/getUserData'].email
 				}
 			})
-			return this.context.commit('setCommentByUserToPost', comments.data.commentByUserToPost)
+			return this.context.commit('setCommentByUserToPost', comment.data.commentByUserToPost[0])
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
 	}
 
 	@Action
-	async createCommentToPost(data: Partial<any>): Promise<void> {
-		const comment = await clientApollo.query({
-			query: gql`mutation ($post_id: ID!, $user_email: String!, $content: String!) {
+	async createCommentToPost(content: string): Promise<void> {
+		try {
+			const comment = await clientApollo.mutate({
+				mutation: gql`mutation ($post_id: ID!, $user_email: String!, $content: String!) {
                 createComment(postId: $post_id, userEmail: $user_email, content: $content) {
 				  comment {
 			        content
@@ -450,24 +458,29 @@ export default class BlogModule extends AppBaseModule {
 					  id
 				    }
 					user {
+					  id
 					  email
 					}
 				  }
                 }
               }`,
-			variables: {
-				post_id: Number(this.context.getters['getPostBySlug'].id),
-				user_email: store.getters['user/data/getUserData'].email,
-				content: data.comment,
-			}
-		})
-		return this.context.commit('setCommentByUserToPost', comment.data.createComment)
+				variables: {
+					post_id: Number(this.context.getters['getPostBySlug'].id),
+					user_email: String(store.getters['user/data/getUserData'].email),
+					content: String(content),
+				}
+			})
+			console.log('sssss', comment.data.createComment)
+			return this.context.commit('setCommentByUserToPost', comment.data.createComment)
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2))
+		}
 	}
 
 	@Action
 	async deleteCommentFromPost(): Promise<void> {
-		const comment = await clientApollo.query({
-			query: gql`mutation ($comment_id: ID!) {
+		const comment = await clientApollo.mutate({
+			mutation: gql`mutation ($comment_id: ID!) {
 			  deleteComment(commentId: $comment_id) {
 				deleted
 			  }
@@ -481,15 +494,16 @@ export default class BlogModule extends AppBaseModule {
 
 	@Action
 	async updateCommentLikes(): Promise<ApolloQueryResult<any>> {
-		const comment = await clientApollo.query({
-			query: gql`mutation ($id: ID!, $user_email: String!) {
+		const comment = await clientApollo.mutate({
+			mutation: gql`mutation ($id: ID!, $user_email: String!) {
                 updateCommentLikes(id:$id, userEmail: $user_email) {
 					comment {
 						post {
-							id
+						  id
 						}
 						user {
-							email
+						  id
+						  email
 						}
 					}
                 }
@@ -499,13 +513,13 @@ export default class BlogModule extends AppBaseModule {
 				user_email: store.getters['user/data/getUserData'].email
 			}
 		})
-		return comment
+		return comment.data.updateCommentLikes
 	}
 
 	@Action
 	async updatePostLikes(postId: number): Promise<ApolloQueryResult<any>> {
-		const post = await clientApollo.query({
-			query: gql`mutation ($id: ID!, $user_email: String!) {
+		const post = await clientApollo.mutate({
+			mutation: gql`mutation ($id: ID!, $user_email: String!) {
                 updatePostLikes(id:$id, userEmail: $user_email) {
 				  post {
 				    id
@@ -517,6 +531,6 @@ export default class BlogModule extends AppBaseModule {
 				user_email: store.getters['user/data/getUserData'].email
 			}
 		})
-		return post
+		return post.data.updatePostLikes
 	}
 }
