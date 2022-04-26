@@ -124,8 +124,9 @@ export default class BlogModule extends AppBaseModule {
 
 	@Action
 	async fetchAllPostsFromRemote(): Promise<void> {
-		const posts = await clientApollo.query({
-			query: gql`query {
+		try {
+			const posts = await clientApollo.query({
+				query: gql`query {
                 allPosts {
 				  id
                   title
@@ -153,26 +154,34 @@ export default class BlogModule extends AppBaseModule {
                   }
                 }
               }`
-		})
-		return this.context.commit('setAllPosts', posts.data.allPosts)
+			})
+			return this.context.commit('setAllPosts', posts.data.allPosts)
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2))
+		}
 	}
 
 	@Action
 	async fetchAllTagsFromRemote(): Promise<void> {
-		const tags = await clientApollo.query({
-			query: gql`query {
+		try {
+			const tags = await clientApollo.query({
+				query: gql`query {
                 allTags {
                   name
                 }
               }`
-		})
-		return this.context.commit('setAllTags', tags.data.allTags)
+			})
+			return this.context.commit('setAllTags', tags.data.allTags)
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2))
+		}
 	}
 
 	@Action
 	async fetchAllAuthorsFromRemote(): Promise<void> {
-		const authors = await clientApollo.query({
-			query: gql`query {
+		try {
+			const authors = await clientApollo.query({
+				query: gql`query {
                 allAuthors {
                   website
                   bio
@@ -184,28 +193,36 @@ export default class BlogModule extends AppBaseModule {
                   }
                 }
               }`
-		})
-		return this.context.commit('setAllAuthors', authors.data.allAuthors)
+			})
+			return this.context.commit('setAllAuthors', authors.data.allAuthors)
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2))
+		}
 	}
 
 	@Action
 	async fetchAllCategoriesFromRemote(): Promise<void> {
-		const categories = await clientApollo.query({
-			query: gql`query {
+		try {
+			const categories = await clientApollo.query({
+				query: gql`query {
                 allCategories {
                   name
                   slug
                   description
                 }
               }`
-		})
-		return this.context.commit('setAllCategories', categories.data.allCategories)
+			})
+			return this.context.commit('setAllCategories', categories.data.allCategories)
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2))
+		}
 	}
 
 	@Action
 	async fetchPostsByTagFromRemote(): Promise<void> {
-		const posts = await clientApollo.query({
-			query: gql`query ($tag: String!) {
+		try {
+			const posts = await clientApollo.query({
+				query: gql`query ($tag: String!) {
                 postsByTag(tag: $tag) {
 				  id
                   title
@@ -233,55 +250,63 @@ export default class BlogModule extends AppBaseModule {
                   }
                 }
               }`,
-			variables: {
-				tag: router.currentRoute.value.params.tag
-			}
-		})
-		return this.context.commit('setPostsByTag', posts.data.postsByTag)
+				variables: {
+					tag: router.currentRoute.value.params.tag
+				}
+			})
+			return this.context.commit('setPostsByTag', posts.data.postsByTag)
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2))
+		}
 	}
 
 	@Action
 	async fetchPostBySlugFromRemote(): Promise<void> {
-		const post = await clientApollo.query({
-			query: gql`query ($slug: String!) {
-              postBySlug(slug: $slug) {
-              	id
-                title
-                subtitle
-                publishDate
-                metaDescription
-                mainImageAbsoluteUrl
-                mainImageFilename
-			    numberOfLikes
-                slug
-                body
-			    category {
-			 	  id
+		try {
+			const post = await clientApollo.query({
+				query: gql`query ($slug: String!) {
+			    postBySlug(slug: $slug) {
+				  id
+				  title
+				  subtitle
+				  publishDate
+				  metaDescription
+				  mainImageAbsoluteUrl
+				  mainImageFilename
+				  numberOfLikes
+				  slug
+				  body
+				  category {
+				    id
+				  }
+				  author {
+				    user {
+				  	id
+				  	email
+				  	firstName
+				  	lastName
+				    }
+				  }
+				  tags {
+				    name
+				  }
 			    }
-                author {
-                  user {
-                    id
-                    email
-                    firstName
-                    lastName
-                  }
-                }
-                tags {
-                  name
-                }
-              }
-            }`,
-			variables: {
-				slug: router.currentRoute.value.params.slug
-			}
-		})
-		return this.context.commit('setPostBySlug', post.data.postBySlug)
+			  }`,
+				variables: {
+					slug: router.currentRoute.value.params.slug
+				}
+			})
+			return this.context.commit('setPostBySlug', post.data.postBySlug)
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2))
+		}
 	}
 
 	@Action
 	async fetchAuthorByEmailFromRemote(): Promise<void> {
-		const author = await clientApollo.query({
-			query: gql`query ($email: String!) {
+		try {
+			const author = await clientApollo.query({
+				query: gql`query ($email: String!) {
                 authorByEmail(email: $email) {
                   website
                   bio
@@ -310,18 +335,23 @@ export default class BlogModule extends AppBaseModule {
                   }
                 }
               }`,
-			variables: {
-				email: router.currentRoute.value.params.email
-			}
-		})
-		return this.context.commit('setAuthorByEmail', author.data.authorByEmail)
+				variables: {
+					email: router.currentRoute.value.params.email
+				}
+			})
+			return this.context.commit('setAuthorByEmail', author.data.authorByEmail)
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2))
+		}
 	}
 
 	@Action
 	async fetchCommentsByUser(): Promise<void> {
-		const comments = await clientApollo.query({
-			query: gql`query ($userEmail: String!) {
+		try {
+			const comments = await clientApollo.query({
+				query: gql`query ($userEmail: String!) {
                 commentsByUser(userEmail: $userEmail) {
+                  id
                   content
                   createdAt
                   isApproved
@@ -352,11 +382,14 @@ export default class BlogModule extends AppBaseModule {
                   }
                 }
               }`,
-			variables: {
-				userEmail: store.getters['user/data/getUserEmail']
-			}
-		})
-		return this.context.commit('setCommentsByUser', comments.data.commentsByUser)
+				variables: {
+					userEmail: store.getters['user/data/getUserEmail']
+				}
+			})
+			return this.context.commit('setCommentsByUser', comments.data.commentsByUser)
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2))
+		}
 	}
 
 	@Action
@@ -365,6 +398,7 @@ export default class BlogModule extends AppBaseModule {
 			const comments = await clientApollo.query({
 				query: gql`query ($postId: Int!) {
                 commentsByPost(postId: $postId) {
+                  id
                   content
                   createdAt
                   isApproved
@@ -405,6 +439,7 @@ export default class BlogModule extends AppBaseModule {
 			const comment = await clientApollo.query({
 				query: gql`query ($postId: Int!, $userEmail: String!) {
                 commentByUserToPost(postId: $postId, userEmail: $userEmail) {
+                  id
                   content
                   createdAt
                   isApproved
@@ -453,6 +488,7 @@ export default class BlogModule extends AppBaseModule {
 				mutation: gql`mutation ($post_id: ID!, $user_email: String!, $content: String!) {
                 createComment(postId: $post_id, userEmail: $user_email, content: $content) {
 				  comment {
+				    id
 			        content
 				    post {
 					  id
@@ -470,7 +506,6 @@ export default class BlogModule extends AppBaseModule {
 					content: String(content),
 				}
 			})
-			console.log('sssss', comment.data.createComment)
 			return this.context.commit('setCommentByUserToPost', comment.data.createComment)
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
@@ -479,58 +514,71 @@ export default class BlogModule extends AppBaseModule {
 
 	@Action
 	async deleteCommentFromPost(): Promise<void> {
-		const comment = await clientApollo.mutate({
-			mutation: gql`mutation ($comment_id: ID!) {
-			  deleteComment(commentId: $comment_id) {
-				deleted
-			  }
-			}`,
-			variables: {
-				comment_id: Number(this.context.getters['getCommentByUserToPost'].id)
-			}
-		})
-		return comment.data.deleteComment
+		try {
+			const comment = await clientApollo.mutate({
+				mutation: gql`mutation ($comment_id: ID!) {
+			    deleteComment(commentId: $comment_id) {
+				  deleted
+			    }
+			  }`,
+				variables: {
+					comment_id: Number(this.context.getters['getCommentByUserToPost'].id)
+				}
+			})
+			return comment.data.deleteComment
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2))
+		}
 	}
 
 	@Action
-	async updateCommentLikes(): Promise<ApolloQueryResult<any>> {
-		const comment = await clientApollo.mutate({
-			mutation: gql`mutation ($id: ID!, $user_email: String!) {
+	async updateCommentLikes(): Promise<Promise<ApolloQueryResult<any>> | undefined> {
+		try {
+			const comment = await clientApollo.mutate({
+				mutation: gql`mutation ($id: ID!, $user_email: String!) {
                 updateCommentLikes(id:$id, userEmail: $user_email) {
-					comment {
-						post {
-						  id
-						}
-						user {
-						  id
-						  email
-						}
+				  comment {
+					id
+					post {
+					  id
 					}
+					user {
+					  id
+					  email
+					}
+				  }
                 }
               }`,
-			variables: {
-				id: Number(this.context.getters['getCommentByUserToPost'].id),
-				user_email: store.getters['user/data/getUserData'].email
-			}
-		})
-		return comment.data.updateCommentLikes
+				variables: {
+					id: Number(this.context.getters['getCommentByUserToPost'].id),
+					user_email: store.getters['user/data/getUserData'].email
+				}
+			})
+			return comment.data.updateCommentLikes
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2))
+		}
 	}
 
 	@Action
-	async updatePostLikes(postId: number): Promise<ApolloQueryResult<any>> {
-		const post = await clientApollo.mutate({
-			mutation: gql`mutation ($id: ID!, $user_email: String!) {
+	async updatePostLikes(postId: number): Promise<Promise<ApolloQueryResult<any>> | undefined> {
+		try {
+			const post = await clientApollo.mutate({
+				mutation: gql`mutation ($id: ID!, $user_email: String!) {
                 updatePostLikes(id:$id, userEmail: $user_email) {
 				  post {
 				    id
 				  }
                 }
               }`,
-			variables: {
-				id: Number(postId),
-				user_email: store.getters['user/data/getUserData'].email
-			}
-		})
-		return post.data.updatePostLikes
+				variables: {
+					id: Number(postId),
+					user_email: store.getters['user/data/getUserData'].email
+				}
+			})
+			return post.data.updatePostLikes
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2))
+		}
 	}
 }
