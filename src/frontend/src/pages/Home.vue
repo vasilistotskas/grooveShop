@@ -2,97 +2,59 @@
   <div class="home">
     <div class="container mt-9 mb-5">
       <div class="home-top-grid-content">
-        <swiper
+        <HomePageMainSlider
           v-if="homepageSlider[0] && Object.keys(homepageSlider[0]).length > 0"
+          :slider="homepageSlider[0]"
           :grab-cursor="true"
           :keyboard="true"
           :mousewheel="false"
           :navigation="!!(homepageSlider[0].video && Object.keys(homepageSlider[0].slides).length > 0)"
           :pagination="{
-            &quot;clickable&quot;: true,
-            &quot;dynamicBullets&quot;: false
+            'clickable': true,
+            'dynamicBullets' : false
           }"
           :style="mainSliderStyle"
+          :img-height="510"
+          :img-width="880"
           class="grid-item-swipper"
-        >
-          <swiper-slide v-if="homepageSlider[0].video">
-            <video ref="mainSliderVideoRef" />
-          </swiper-slide>
-
-          <swiper-slide
-            v-for="slide in homepageSlider[0].slides"
-            :key="slide.id"
-          >
-            <img
-              :alt="slide.title ? slide.title : 'no-alt'"
-              :src="mediaStreamImage(ImageTypeOptions.SLIDES, slide.main_image_filename, '880', '510')"
-              class="img-fluid"
-              height="510"
-              width="880"
-              loading="lazy"
-            >
-          </swiper-slide>
-        </swiper>
+        />
 
         <div class="grid-item-right">
           <div class="grid-item-content-one">
-            <swiper
+            <HomePageMainSlider
               v-if="homepageSlider[1] && Object.keys(homepageSlider[1]).length > 0"
-              :bullets="false"
+              :slider="homepageSlider[1]"
               :grab-cursor="true"
               :keyboard="true"
               :mousewheel="false"
-              :navigation="false"
+              :navigation="!!(homepageSlider[1].video && Object.keys(homepageSlider[1].slides).length > 0)"
+              :pagination="{
+                'clickable': true,
+                'dynamicBullets' : false
+              }"
               :style="mainSliderStyle"
+              :img-height="282"
+              :img-width="487"
               class="grid-item-swipper"
-            >
-              <swiper-slide v-if="homepageSlider[1].video">
-                <video ref="mainSliderVideoRef" />
-              </swiper-slide>
-
-              <swiper-slide
-                v-for="slide in homepageSlider[1].slides"
-                :key="slide.id"
-              >
-                <img
-                  :alt="slide.title ? slide.title : 'no-alt'"
-                  :src="mediaStreamImage(ImageTypeOptions.SLIDES, slide.main_image_filename, '487', '282')"
-                  class="img-fluid"
-                  height="282"
-                  width="487"
-                  loading="lazy"
-                >
-              </swiper-slide>
-            </swiper>
+            />
           </div>
           <div class="grid-item-content-two">
-            <swiper
+            <HomePageMainSlider
               v-if="homepageSlider[2] && Object.keys(homepageSlider[2]).length > 0"
+              :slider="homepageSlider[2]"
               :grab-cursor="true"
               :keyboard="true"
               :mousewheel="false"
-              :navigation="false"
+              :navigation="!!(homepageSlider[2].video && Object.keys(homepageSlider[2].slides).length > 0)"
+              :pagination="{
+                'clickable': true,
+                'dynamicBullets' : false
+              }"
               :style="mainSliderStyle"
+              :img-height="282"
+              :img-width="487"
               class="grid-item-swipper"
-            >
-              <swiper-slide v-if="homepageSlider[2].video">
-                <video ref="mainSliderVideoRef" />
-              </swiper-slide>
-
-              <swiper-slide
-                v-for="slide in homepageSlider[2].slides"
-                :key="slide.id"
-              >
-                <img
-                  :alt="slide.title ? slide.title : 'no-alt'"
-                  :src="mediaStreamImage(ImageTypeOptions.SLIDES, slide.main_image_filename, '487', '282')"
-                  class="img-fluid"
-                  height="282"
-                  width="487"
-                  loading="lazy"
-                >
-              </swiper-slide>
-            </swiper>
+            />
           </div>
         </div>
       </div>
@@ -168,35 +130,24 @@
 <script lang="ts">
 import store from '@/store'
 import 'swiper/swiper-bundle.css'
-import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Options, Vue } from 'vue-class-component'
 import SliderModel from '@/state/slider/SliderModel'
 import ProductModel from '@/state/product/ProductModel'
 import ProductCard from '@/components/Product/ProductCard.vue'
-import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import { faPhone } from '@fortawesome/free-solid-svg-icons/faPhone'
 import { faComment } from '@fortawesome/free-solid-svg-icons/faComment'
-import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
-import SwiperCore, { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper'
-import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
-
-SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard])
+import HomePageMainSlider from '@/components/Sliders/Swiper/HomePageMainSlider.vue'
 
 @Options({
   name: 'Home',
   components: {
     ProductCard,
-    Swiper,
-    SwiperSlide
+    HomePageMainSlider
   }
 })
 
 export default class Home extends Vue {
-
-  $refs!: {
-    mainSliderVideoRef: HTMLVideoElement;
-  }
 
   mainSliderStyle = {
     '--swiper-navigation-color': '#fff',
@@ -207,18 +158,8 @@ export default class Home extends Vue {
   envelopeIcon = faEnvelope
   commentIcon = faComment
 
-  ImageTypeOptions = ImageTypeOptions
-  ImageFitOptions = ImageFitOptions
-  ImagePositionOptions = ImagePositionOptions
-
-  imageUrl: string = ''
-
   get isMobile(): boolean {
     return store.getters['app/isMobile']
-  }
-
-  get axiosBaseUrl(): string | undefined {
-    return store.getters['app/axiosBaseUrl']
   }
 
   get LatestProducts(): Array<ProductModel> {
@@ -234,11 +175,6 @@ export default class Home extends Vue {
       store.dispatch('product/fetchLatestProductsFromRemote'),
       store.dispatch('slider/fetchSlidersFromRemote')
     ])
-    try {
-      this.mainSliderVideoInit()
-    } catch (err) {
-      console.log(err)
-    }
   }
 
   async mounted(): Promise<void> {
@@ -249,48 +185,6 @@ export default class Home extends Vue {
       'metaAttribute': 'content',
       'newValue': 'test'
     })
-  }
-
-  public mediaStreamImage(
-      imageType: string,
-      imageName: string,
-      width?: string,
-      height?: string,
-      fit?: ImageFitOptions,
-      position?: ImagePositionOptions,
-      trimThreshold?: number
-  ): string | (() => string) {
-    const mediaStreamImageData: ImageUrlInterface = {
-      'imageType': imageType,
-      'imageName': imageName,
-      'width': width,
-      'height': height,
-      'fit': fit,
-      'position': position,
-      'trimThreshold': trimThreshold
-    }
-
-    const imageModel = new ImageUrlModel(mediaStreamImageData)
-
-    imageModel.buildMediaStreamImageUrl()
-        .then((finalUrl: string) => {
-          this.imageUrl = finalUrl
-        })
-
-    return this.imageUrl
-
-  }
-
-  public mainSliderVideoInit(): void {
-    if (this.homepageSlider && Object.keys(this.homepageSlider).length > 0 && this.$refs.mainSliderVideoRef) {
-      this.$refs.mainSliderVideoRef.src = this.axiosBaseUrl + this.homepageSlider[0].video
-      this.$refs.mainSliderVideoRef.crossOrigin = 'anonymous'
-      this.$refs.mainSliderVideoRef.loop = false
-      this.$refs.mainSliderVideoRef.autoplay = true
-      this.$refs.mainSliderVideoRef.playsInline = true
-      this.$refs.mainSliderVideoRef.muted = true
-      this.$refs.mainSliderVideoRef.play()
-    }
   }
 
 }

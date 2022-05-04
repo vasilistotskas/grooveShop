@@ -31,7 +31,7 @@
           <button
             class="btn-outline-primary-one"
             type="button"
-            @click="reviewHandle()"
+            @click="commentHandle()"
           >
             {{ reviewButtonText }}
           </button>
@@ -77,7 +77,7 @@ export default class BlogComment extends Vue {
     await this.commentModuleInitialize()
   }
 
-  public async reviewHandle(): Promise<void | string | number> {
+  public async commentHandle(): Promise<void | string | number> {
     if (this.comment) {
       await store.dispatch('blog/createCommentToPost', this.comment)
     } else {
