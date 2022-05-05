@@ -1,0 +1,44 @@
+$color-palette-main-primary: #981d1dc9;
+$color-palette-main-secondary: #080808;
+$color-palette-main-third: #30363d;
+$color-palette-main-fourth: #0d1117;
+$color-palette-main-fifth: #dbdfe3;
+
+$color-palette-main-primary-light: #981d1dc9;
+$color-palette-main-secondary-light: #ffffff;
+$color-palette-main-third-light: #dfdfdf;
+$color-palette-main-fourth-light: #f1f1f1;
+$color-palette-main-fifth-light: #080808;
+
+$form-check-input: #1f8dfd;
+$rating-starts: #f68b24;
+$color-palette-global-green: #43993e;
+
+$grid-breakpoints: (
+        xs: 0,
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1200px,
+        xlplus: 1440px,
+        xxl: 1620px,
+        xxxl: 1920px,
+) !default;
+
+$container-sizes: (
+        sm: 100%,
+        md: 1160px,
+        lg: 1560px
+) !default;
+
+@mixin container {
+  @extend .container;
+  max-width: map-get($container-sizes, 'lg');
+  @media screen and (max-width: map-get($grid-breakpoints, 'xxl')) {
+    max-width: map-get($container-sizes, 'md');
+  }
+  @media screen and (max-width: map-get($grid-breakpoints, 'xl')) {
+    max-width: map-get($container-sizes, 'sm');
+  }
+}
+

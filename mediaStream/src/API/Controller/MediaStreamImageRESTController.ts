@@ -44,7 +44,7 @@ export default class MediaStreamImageRESTController {
 		@Res() res: Response
 	): Promise<void> {
 		const request = new CacheImageRequest({
-			resourceTarget: `http://backend:8001/media/uploads/${imageType}/${imageName}.${format}`,
+			resourceTarget: `http://backend:8001/backend/media/uploads/${imageType}/${imageName}.${format}`,
 			resizeOptions: new ResizeOptions({
 				width,
 				height,
@@ -69,7 +69,7 @@ export default class MediaStreamImageRESTController {
 		@Res() res: Response
 	): Promise<void> {
 		const request = new CacheImageRequest({
-			resourceTarget: MediaStreamImageRESTController.resourceTargetPrepare(`http://backend:8001/static/files/images/${imageName}.${format}`),
+			resourceTarget: MediaStreamImageRESTController.resourceTargetPrepare(`http://backend:8001/backend/static/files/images/${imageName}.${format}`),
 			resizeOptions: new ResizeOptions({
 				width,
 				height,
@@ -106,7 +106,6 @@ export default class MediaStreamImageRESTController {
 	}
 
 	private static resourceTargetPrepare(resourceTarget: any): string {
-		console.log(resourceTarget)
 		return resourceTarget;
 	}
 
