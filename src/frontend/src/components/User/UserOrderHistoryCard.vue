@@ -6,14 +6,15 @@
     aria-label="Product"
   >
     <span>
-      <img
+      <GrooveImage
         :alt="product.name"
-        :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, product.main_image_filename, '75', '75')"
-        class="border-radius-img img-fluid"
-        height="75"
-        width="75"
-        loading="lazy"
-      >
+        :file-name="product.main_image_filename"
+        :use-media-stream="true"
+        :class="'border-radius-img img-fluid'"
+        :img-type="ImageTypeOptions.PRODUCTS"
+        :img-width="75"
+        :img-height="75"
+      />
     </span>
     <span>{{ product.name }}</span>
     <span>${{ product.price }}</span>
@@ -26,14 +27,14 @@
 import { Options, Vue } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
 import Pagination from '@/components/Pagination/Pagination.vue'
-import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
-import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
-import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import GrooveImage from '@/components/Utilities/GrooveImage.vue'
+import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Options({
   name: 'UserOrderHistoryCard',
   components: {
-    Pagination
+    Pagination,
+    GrooveImage
   },
   props: {
     product: Object,
@@ -49,38 +50,6 @@ export default class UserOrderHistoryCard extends Vue  {
   quantity = 0
 
   ImageTypeOptions = ImageTypeOptions
-  ImageFitOptions = ImageFitOptions
-  ImagePositionOptions = ImagePositionOptions
-
-  imageUrl: string = ''
-
-  public mediaStreamImage(
-      imageType: string,
-      imageName: string,
-      width?: string,
-      height?: string,
-      fit?: ImageFitOptions,
-      position?: ImagePositionOptions,
-      trimThreshold?: number
-  ): string | (() => string) {
-    const mediaStreamImageData: ImageUrlInterface = {
-      'imageType': imageType,
-      'imageName': imageName,
-      'width': width,
-      'height': height,
-      'fit': fit,
-      'position': position,
-      'trimThreshold': trimThreshold
-    }
-
-    const imageModel = new ImageUrlModel(mediaStreamImageData)
-
-    imageModel.buildMediaStreamImageUrl()
-        .then((finalUrl: string) => {
-          this.imageUrl = finalUrl
-        })
-    return this.imageUrl
-  }
 
 }
 </script>

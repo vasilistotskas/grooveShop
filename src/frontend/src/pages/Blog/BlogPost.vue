@@ -5,14 +5,16 @@
   >
     <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="card mb-3">
-      <img
+      <GrooveImage
         :alt="postBySlug.title"
-        :src="mediaStreamImage(ImageTypeOptions.BLOG, postBySlug.mainImageFilename, '1920', '550', ImageFitOptions.cover, ImagePositionOptions.center)"
-        class="img-fluid"
-        height="550"
-        width="1920"
-        loading="lazy"
-      >
+        :file-name="postBySlug.mainImageFilename"
+        :use-media-stream="true"
+        :img-type="ImageTypeOptions.BLOG"
+        :img-width="1920"
+        :img-height="550"
+        :img-fit="ImageFitOptions.cover"
+        :img-position="ImagePositionOptions.center"
+      />
       <div class="card-body">
         <span class="card-title">{{ postBySlug.title }}: {{ postBySlug.subtitle }}</span>
         By
@@ -59,10 +61,9 @@ import { Options, Vue } from 'vue-class-component'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import BlogComment from '@/components/Blog/BlogComment.vue'
 import BlogComments from '@/components/Blog/BlogComments.vue'
-import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
+import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import BlogAuthorLink from '@/components/Blog/BlogAuthorLink.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
@@ -72,7 +73,8 @@ import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpe
     BlogAuthorLink,
     Breadcrumbs,
     BlogComment,
-    BlogComments
+    BlogComments,
+    GrooveImage
   },
   props: {
     slug: {
@@ -87,8 +89,6 @@ export default class BlogPost extends Vue {
   ImageTypeOptions = ImageTypeOptions
   ImageFitOptions = ImageFitOptions
   ImagePositionOptions = ImagePositionOptions
-
-  imageUrl: string = ''
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
@@ -109,36 +109,6 @@ export default class BlogPost extends Vue {
     if (this.isAuthenticated) {
       await store.dispatch('blog/fetchCommentByUserToPost')
     }
-  }
-
-  public mediaStreamImage(
-      imageType: string,
-      imageName: string,
-      width?: string,
-      height?: string,
-      fit?: ImageFitOptions,
-      position?: ImagePositionOptions,
-      trimThreshold?: number
-  ): string | (() => string) {
-    const mediaStreamImageData: ImageUrlInterface = {
-      'imageType': imageType,
-      'imageName': imageName,
-      'width': width,
-      'height': height,
-      'fit': fit,
-      'position': position,
-      'trimThreshold': trimThreshold
-    }
-
-    const imageModel = new ImageUrlModel(mediaStreamImageData)
-
-    imageModel.buildMediaStreamImageUrl()
-        .then((finalUrl: string) => {
-          this.imageUrl = finalUrl
-        })
-
-    return this.imageUrl
-
   }
 
   public displayableDate(date: Date): string {

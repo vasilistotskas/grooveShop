@@ -18,8 +18,15 @@ class Profile(models.Model):
 
 
 class Tag(models.Model):
+
+    TAG_STATUS = (
+        ('True', 'Active'),
+        ('False', 'Not Active'),
+    )
+
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, unique=True)
+    active = models.CharField(max_length=15, choices=TAG_STATUS, default=True)
 
     def __str__(self):
         return self.name
@@ -29,12 +36,31 @@ class Category(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField()
+    image = models.ImageField(upload_to='uploads/blog/', blank=True, null=True)
 
     class Meta:
         ordering = ["-name"]
 
     def __str__(self):
         return self.name
+
+    @property
+    def main_image_absolute_url(self) -> str:
+        try:
+            if self.id is not None:
+                image = settings.APP_BASE_URL + self.image.url
+            else:
+                image = ""
+            return image
+        except:
+            return ""
+
+    @property
+    def main_image_filename(self) -> str:
+        try:
+            return os.path.basename(self.image.name)
+        except:
+            return ""
 
 
 class Post(models.Model):
@@ -85,9 +111,6 @@ class Post(models.Model):
 
     def number_of_likes(self):
         return self.likes.count()
-
-    def get_absolute_url(self) -> str:
-        return reverse("blog:post", kwargs={"slug": self.slug})
 
 
 class Comment(models.Model):

@@ -17,14 +17,14 @@
           @mouseout="profileImageHovering = false"
           @mouseover="profileImageHovering = true"
         >
-          <img
+          <GrooveImage
+            :alt="'User Image'"
             :src="src"
-            alt="User Image"
-            class="rounded-circle img-fluid"
-            height="110"
-            width="110"
-            loading="lazy"
-          >
+            :use-media-stream="false"
+            :img-class="'rounded-circle img-fluid'"
+            :img-height="110"
+            :img-width="110"
+          />
           <label
             class="profile-image-label"
             for="image"
@@ -60,11 +60,15 @@
 <script lang="ts">
 import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
+import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
 
 
 @Options({
   name: 'UserProfileImage',
+  components: {
+    GrooveImage
+  },
   props: {
     fullname: {
       type: String,

@@ -15,7 +15,6 @@ import SignUpModule from '@/state/auth/signup/SignUpModule'
 import CategoryModule from '@/state/category/CategoryModule'
 import AppSettingsModule from '@/state/app/AppSettingsModule'
 import UserDataModule from '@/state/user/data/UserDataModule'
-import UserOrderModule from '@/state/user/order/UserOrderModule'
 import PasswordModule from '@/state/auth/password/PasswordModule'
 import PaginationModule from '@/state/pagination/PaginationModule'
 import ProductReviewModule from '@/state/product/review/ProductReviewModule'
@@ -30,7 +29,6 @@ const stateDirectory = <Record<string, typeof AppBaseModule>>{
 	'product.review': ProductReviewModule,
 	'user': UserModule,
 	'user.data': UserDataModule,
-	'user.order': UserOrderModule,
 	'cart': CartModule,
 	'search': SearchModule,
 	'pagination': PaginationModule,

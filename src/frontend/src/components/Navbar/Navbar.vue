@@ -10,14 +10,14 @@
               title="DeepWeb.gr - Home Page"
               to="/"
             >
-              <img
-                alt="Website Logo"
-                class="main-logo img-fluid"
-                src="http://localhost:8010/backend/static/images/websiteLogo.png"
-                height="85"
-                width="175"
-                loading="lazy"
-              >
+              <GrooveImage
+                :alt="'Website Logo'"
+                :src="'http://localhost:8010/backend/static/images/websiteLogo.png'"
+                :use-media-stream="false"
+                :img-class="'main-logo img-fluid'"
+                :img-height="85"
+                :img-width="175"
+              />
             </RouterLink>
           </h1>
         </div>
@@ -243,6 +243,7 @@ import { Options, Vue } from 'vue-class-component'
 import CategoryModel from '@/state/category/CategoryModel'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import { faSun } from '@fortawesome/free-solid-svg-icons/faSun'
+import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import { faMoon } from '@fortawesome/free-solid-svg-icons/faMoon'
@@ -256,7 +257,8 @@ import { PaginationQueryParametersModel } from '@/state/pagination/Model/Paginat
 @Options({
   name: 'Navbar',
   components: {
-    NavbarCategories
+    NavbarCategories,
+    GrooveImage
   },
   props: {
     cartTotalLength: Number,

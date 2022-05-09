@@ -6,14 +6,15 @@
         :to="productPath"
         aria-label="Product"
       >
-        <img
+        <GrooveImage
           :alt="item.product.name"
-          :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, item.product.main_image_filename, '75', '75')"
-          class="border-radius-img img-fluid"
-          height="75"
-          width="75"
-          loading="lazy"
-        >
+          :file-name="item.product.main_image_filename"
+          :use-media-stream="true"
+          :img-class="'border-radius-img img-fluid'"
+          :img-type="ImageTypeOptions.PRODUCTS"
+          :img-width="75"
+          :img-height="75"
+        />
         <span>{{ item.product.name }}</span>
       </RouterLink>
     </div>
@@ -67,15 +68,17 @@
 import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
 import CartItemModel from '@/state/cart/CartItemModel'
-import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
+import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
-import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
+import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle'
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle'
-import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Options({
   name: 'CartItem',
+  components: {
+    GrooveImage
+  },
   props: {
     item: {
       type: Object
@@ -92,10 +95,6 @@ export default class CartItem extends Vue {
   plusIcon = faPlusCircle
 
   ImageTypeOptions = ImageTypeOptions
-  ImageFitOptions = ImageFitOptions
-  ImagePositionOptions = ImagePositionOptions
-
-  imageUrl: string = ''
 
   get isMobile(): boolean {
     return store.getters['app/isMobile']
@@ -107,36 +106,6 @@ export default class CartItem extends Vue {
 
   get productPath(): string {
     return '/product' + this.item.product.absolute_url
-  }
-
-  public mediaStreamImage(
-      imageType: string,
-      imageName: string,
-      width?: string,
-      height?: string,
-      fit?: ImageFitOptions,
-      position?: ImagePositionOptions,
-      trimThreshold?: number
-  ): string | (() => string) {
-    const mediaStreamImageData: ImageUrlInterface = {
-      'imageType': imageType,
-      'imageName': imageName,
-      'width': width,
-      'height': height,
-      'fit': fit,
-      'position': position,
-      'trimThreshold': trimThreshold
-    }
-
-    const imageModel = new ImageUrlModel(mediaStreamImageData)
-
-    imageModel.buildMediaStreamImageUrl()
-        .then((finalUrl: string) => {
-          this.imageUrl = finalUrl
-        })
-
-    return this.imageUrl
-
   }
 
   public decrementQuantity(item: CartItemModel): void {

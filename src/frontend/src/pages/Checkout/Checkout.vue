@@ -15,11 +15,14 @@
           {{ error }}
         </span>
       </div>
-      <img
-        class="stripe-content-img_logo"
-        src="http://localhost:8010/backend/static/images/powered_by_stripe.svg"
-        alt="Stripe Logo"
-      >
+      <GrooveImage
+        :alt="'Stripe Logo'"
+        :src="'http://localhost:8010/backend/static/images/powered_by_stripe.svg'"
+        :use-media-stream="false"
+        :img-class="'stripe-content-img_logo'"
+        :img-height="268"
+        :img-width="462"
+      />
       <div
         id="stripe-card"
         ref="stripleElement"
@@ -312,9 +315,11 @@ import PayWayModel from '@/state/payway/PayWayModel'
 import CartItemModel from '@/state/cart/CartItemModel'
 import CountryModel from '@/state/country/CountryModel'
 import RegionsModel from '@/state/country/RegionsModel'
+import CartItemCheckout from '@/state/cart/CartItemCheckout'
 import { PayWaysEnum } from '@/state/payway/Enum/PayWaysEnum'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
+import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
@@ -344,14 +349,15 @@ let {
     Breadcrumbs,
     CheckoutProductContainer,
     CheckoutPayWays,
-    CheckoutStripeModal
+    CheckoutStripeModal,
+    GrooveImage
   }
 })
 export default class Checkout extends Vue {
 
   customerDetails = new UserDetailsModel()
   PayWaysEnum = PayWaysEnum
-  
+
   formManager = {
     validateFields
   } = useValidation({
@@ -503,7 +509,7 @@ export default class Checkout extends Vue {
     }
   }
 
-  buildCartItems(): Array<any> {
+  buildCartItems(): Array<CartItemCheckout> {
     const items = []
     for (let i = 0; i < this.cart.length; i++) {
       const item = this.cart[i]

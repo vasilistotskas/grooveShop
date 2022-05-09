@@ -1,4 +1,5 @@
 import EntityBase from '@/state/common/EntityBase'
+import ProductImageModel from '@/state/product/ProductImageModel'
 
 export default class ProductModel extends EntityBase {
 
@@ -25,7 +26,7 @@ export default class ProductModel extends EntityBase {
 	main_image_filename!: string
 	review_average!: number
 	review_counter!: number
-	images!: Array<any>
+	images!: Array<ProductImageModel>
 
 	public constructor(data?: Partial<ProductModel>) {
 		super(data)

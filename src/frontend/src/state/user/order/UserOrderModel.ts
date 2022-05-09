@@ -1,4 +1,5 @@
 import EntityBase from '@/state/common/EntityBase'
+import OrderItemModel from '@/state/user/order/OrderItemModel'
 
 export default class UserOrderModel extends EntityBase {
 	id!: number
@@ -13,7 +14,7 @@ export default class UserOrderModel extends EntityBase {
 	strin_token!: string
 	customer_notes!: string
 	zipcode!: string
-	items!: Array<any>
+	items!: Array<OrderItemModel>
 
 	constructor(data?: Partial<UserOrderModel>) {
 		super(data)

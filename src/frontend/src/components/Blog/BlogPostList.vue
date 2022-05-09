@@ -9,7 +9,6 @@
         :key="post.title"
         :post="post"
         :author="post.author"
-        class="cardSpecialEffect"
       />
     </div>
     <div v-else>

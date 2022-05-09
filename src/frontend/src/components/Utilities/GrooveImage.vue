@@ -1,8 +1,18 @@
 <template>
   <img
+    v-if="useMediaStream"
     :alt="alt"
     :src="mediaStreamImage(imgType, fileName, imgWidth, imgHeight)"
-    :class="{ imgClass }"
+    :class="imgClass"
+    :height="imgHeight"
+    :width="imgWidth"
+    :loading="loading"
+  >
+  <img
+    v-else
+    :alt="alt"
+    :src="source"
+    :class="imgClass"
     :height="imgHeight"
     :width="imgWidth"
     :loading="loading"
@@ -18,9 +28,19 @@ import { ImageFitOptions, ImagePositionOptions } from '@/helpers/MediaStream/Ima
 @Options({
   name: 'GrooveImage',
   props: {
+    useMediaStream: {
+      type: Boolean,
+      default: true,
+      required: false
+    },
+    source: {
+      type: String,
+      default: 'backend/static/images/no_photo.jpg',
+      required: false
+    },
     alt: {
       type: String,
-      default: false,
+      default: 'no alt',
       required: false
     },
     loading: {
@@ -35,11 +55,11 @@ import { ImageFitOptions, ImagePositionOptions } from '@/helpers/MediaStream/Ima
     },
     fileName: {
       type: String,
-      required: true
+      required: false
     },
     imgType: {
       type: String,
-      required: true
+      required: false
     },
     imgFit: {
       type: String,
@@ -64,6 +84,8 @@ import { ImageFitOptions, ImagePositionOptions } from '@/helpers/MediaStream/Ima
 
 export default class GrooveImage extends Vue {
 
+  useMediaStream!: boolean
+  source!: string
   alt!: string
   loading!: string
   fileName!: string

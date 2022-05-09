@@ -12,12 +12,14 @@
           :class="{'image-main': image.is_main }"
           class="image"
         >
-          <img
-            :src="mediaStreamImage(ImageTypeOptions.PRODUCTS, image.product_image_filename, '330', '420')"
-            alt="Product Image"
-            class="img-fluid"
-            loading="lazy"
-          >
+          <GrooveImage
+            :alt="product.name"
+            :file-name="image.product_image_filename"
+            :use-media-stream="true"
+            :img-type="ImageTypeOptions.PRODUCTS"
+            :img-width="330"
+            :img-height="420"
+          />
         </figure>
       </div>
       <div class="product-page-grid-right">
@@ -128,18 +130,17 @@ import store from '@/store'
 import router from '@/routes'
 import { Options, Vue } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
-import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
+import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import ProductReview from '@/components/Product/ProductReview.vue'
 import { faCubes } from '@fortawesome/free-solid-svg-icons/faCubes'
 import ProductReviews from '@/components/Product/ProductReviews.vue'
-import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
+import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import { faShippingFast } from '@fortawesome/free-solid-svg-icons/faShippingFast'
 import ProductFavouriteButton from '@/components/Product/ProductFavouriteButton.vue'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
-import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 const starSvg = '<path data-v-558dc688="" fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" class=""></path>'
 const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z" class=""></path>'
@@ -150,7 +151,8 @@ const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.
     ProductFavouriteButton,
     ProductReview,
     ProductReviews,
-    Breadcrumbs
+    Breadcrumbs,
+    GrooveImage
   },
   props: {
     category_slug: {
@@ -172,10 +174,6 @@ export default class Product extends Vue {
   warningTriangleIcon = faExclamationTriangle
 
   ImageTypeOptions = ImageTypeOptions
-  ImageFitOptions = ImageFitOptions
-  ImagePositionOptions = ImagePositionOptions
-
-  imageUrl: string = ''
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
@@ -208,39 +206,7 @@ export default class Product extends Vue {
         'newValue': this.product.description
       })
     ])
-
   }
-
-  public mediaStreamImage(
-      imageType: string,
-      imageName: string,
-      width?: string,
-      height?: string,
-      fit?: ImageFitOptions,
-      position?: ImagePositionOptions,
-      trimThreshold?: number
-  ): string | (() => string) {
-    const mediaStreamImageData: ImageUrlInterface = {
-      'imageType': imageType,
-      'imageName': imageName,
-      'width': width,
-      'height': height,
-      'fit': fit,
-      'position': position,
-      'trimThreshold': trimThreshold
-    }
-
-    const imageModel = new ImageUrlModel(mediaStreamImageData)
-
-    imageModel.buildMediaStreamImageUrl()
-        .then((finalUrl: string) => {
-          this.imageUrl = finalUrl
-        })
-
-    return this.imageUrl
-
-  }
-
 
   public addToCart(): void {
 

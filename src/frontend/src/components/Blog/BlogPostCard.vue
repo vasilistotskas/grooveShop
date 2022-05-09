@@ -3,15 +3,18 @@
     v-if="post && Object.keys(post).length > 0"
     :title="post.slug"
     :to="`/post/${post.slug}`"
+    class="cardSpecialEffect"
     aria-label="Blog Post"
   >
     <div class="card blog-card">
-      <img
+      <GrooveImage
         :alt="post.title"
-        class="img-fluid"
-        :src="mediaStreamImage(ImageTypeOptions.BLOG, post.mainImageFilename, '462', '268', ImageFitOptions.cover, ImagePositionOptions.entropy)"
-        loading="lazy"
-      >
+        :file-name="post.mainImageFilename"
+        :use-media-stream="true"
+        :img-type="ImageTypeOptions.BLOG"
+        :img-height="268"
+        :img-width="462"
+      />
       <div class="card-body">
         <span class="card-title">{{ post.title }}: {{ post.subtitle }}</span>
         <span v-if="showAuthor">
@@ -37,7 +40,7 @@
             </RouterLink>
           </li>
         </ul>
-        <small class="text-muted">{{ displayableDate(post.publishDate) }}</small>
+        <small class="text-muted">{{ myContext.displayableDate(post.publishDate) }}</small>
       </div>
       <span class="line-1" />
       <span class="line-2" />
@@ -48,19 +51,19 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
 import BlogPostModel from '@/state/blog/BlogPostModel'
+import { Vue, setup, Options } from 'vue-class-component'
 import BlogSidebar from '@/components/Blog/BlogSidebar.vue'
-import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
+import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import BlogAuthorLink from '@/components/Blog/BlogAuthorLink.vue'
-import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
-import { ImageTypeOptions, ImageFitOptions, ImagePositionOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Options({
   name: 'BlogPostCard',
   components: {
     BlogAuthorLink,
-    BlogSidebar
+    BlogSidebar,
+    GrooveImage
   },
   props: {
     post: {
@@ -84,45 +87,16 @@ export default class BlogPostCard extends Vue {
   showAuthor: boolean = false
   author!: object
   ImageTypeOptions = ImageTypeOptions
-  ImageFitOptions = ImageFitOptions
-  ImagePositionOptions = ImagePositionOptions
 
-  imageUrl: string = ''
-
-  public mediaStreamImage(
-      imageType: string,
-      imageName: string,
-      width?: string,
-      height?: string,
-      fit?: ImageFitOptions,
-      position?: ImagePositionOptions,
-      trimThreshold?: number
-  ): string | (() => string) {
-    const mediaStreamImageData: ImageUrlInterface = {
-      'imageType': imageType,
-      'imageName': imageName,
-      'width': width,
-      'height': height,
-      'fit': fit,
-      'position': position,
-      'trimThreshold': trimThreshold
+  myContext = setup(() => {
+    const displayableDate = (date:string) => {
+      const options: any = { dateStyle: 'full', timeStyle: 'medium' }
+      return new Intl.DateTimeFormat('en-US', options).format(new Date(date))
     }
-
-    const imageModel = new ImageUrlModel(mediaStreamImageData)
-
-    imageModel.buildMediaStreamImageUrl()
-        .then((finalUrl: string) => {
-          this.imageUrl = finalUrl
-        })
-
-    return this.imageUrl
-
-  }
-
-  public displayableDate(date: string): string {
-    const options: any = { dateStyle: 'full', timeStyle: 'medium' }
-    return new Intl.DateTimeFormat('en-US', options).format(new Date(date))
-  }
+    return {
+      displayableDate
+    }
+  })
 
 }
 </script>

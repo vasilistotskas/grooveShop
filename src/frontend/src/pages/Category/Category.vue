@@ -4,15 +4,17 @@
     <div class="container">
       <div class="content-min-height">
         <div class="col-12">
-          <img
+          <GrooveImage
             v-if="category.category_menu_main_banner_absolute_url"
             :alt="category.name"
-            :src="mediaStreamImage(ImageTypeOptions.CATEGORIES, category.category_menu_main_banner_filename, '1920', '370', ImageFitOptions.cover, ImagePositionOptions.entropy)"
-            class="img-fluid"
-            height="370"
-            width="1920"
-            loading="lazy"
-          >
+            :file-name="category.category_menu_main_banner_filename"
+            :use-media-stream="true"
+            :img-type="ImageTypeOptions.CATEGORIES"
+            :img-width="1920"
+            :img-height="370"
+            :img-fit="ImageFitOptions.cover"
+            :img-position="ImagePositionOptions.entropy"
+          />
         </div>
 
         <Pagination
@@ -47,10 +49,9 @@ import CategoryModel from '@/state/category/CategoryModel'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
-import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
+import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import PaginationBase from '@/components/Pagination/PaginationBase'
-import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
@@ -64,7 +65,8 @@ import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpe
   components: {
     ProductCard,
     Breadcrumbs,
-    Pagination
+    Pagination,
+    GrooveImage
   },
   props: {
     category_slug: String
@@ -79,7 +81,6 @@ export default class Category extends PaginationBase<ProductModel> implements Pa
   ImagePositionOptions = ImagePositionOptions
   paginationNamespace = PaginationNamespaceDataEnum.CATEGORY_PRODUCTS
 
-  imageUrl: string = ''
   PaginationRoutesEnum = PaginationRoutesEnum
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
@@ -94,7 +95,6 @@ export default class Category extends PaginationBase<ProductModel> implements Pa
   async created(): Promise<void> {
 
     document.title = this.$route.params.category_slug + ' Category'
-
     this.$watch(
         () => this.$route,
         (to: any, from: any) => {
@@ -155,36 +155,6 @@ export default class Category extends PaginationBase<ProductModel> implements Pa
   public buildEndPointUrlForPaginatedResults(): string {
     const categoryId = this.$route.params.category_slug
     return 'category_products' + `/${ categoryId }`
-  }
-
-  public mediaStreamImage(
-      imageType: string,
-      imageName: string,
-      width?: string,
-      height?: string,
-      fit?: ImageFitOptions,
-      position?: ImagePositionOptions,
-      trimThreshold?: number
-  ): string | (() => string) {
-    const mediaStreamImageData: ImageUrlInterface = {
-      'imageType': imageType,
-      'imageName': imageName,
-      'width': width,
-      'height': height,
-      'fit': fit,
-      'position': position,
-      'trimThreshold': trimThreshold
-    }
-
-    const imageModel = new ImageUrlModel(mediaStreamImageData)
-
-    imageModel.buildMediaStreamImageUrl()
-        .then((finalUrl: string) => {
-          this.imageUrl = finalUrl
-        })
-
-    return this.imageUrl
-
   }
 
 }

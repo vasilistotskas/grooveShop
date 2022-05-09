@@ -28,15 +28,16 @@
               @mouseleave="categoryBoxHovered = null"
               @mouseover="categoryBoxHovered = key"
             >
-              <img
+              <GrooveImage
                 :alt="category.name"
-                :src="categoryBoxHovered === key ?
-                  mediaStreamImage(ImageTypeOptions.CATEGORIES, category.category_menu_image_two_filename, '80', '83') :
-                  mediaStreamImage(ImageTypeOptions.CATEGORIES, category.category_menu_image_one_filename, '80', '83')"
-                height="83"
-                width="80"
-                loading="lazy"
-              >
+                :file-name="categoryBoxHovered === key ?
+                  category.category_menu_image_two_filename :
+                  category.category_menu_image_two_filename"
+                :use-media-stream="true"
+                :img-type="ImageTypeOptions.CATEGORIES"
+                :img-width="80"
+                :img-height="83"
+              />
               <span>{{ category.name }}</span>
             </RouterLink>
           </h3>
@@ -59,12 +60,14 @@ import { cloneDeep } from 'lodash'
 import { onClickOutside } from '@vueuse/core'
 import { Options, Vue } from 'vue-class-component'
 import CategoryModel from '@/state/category/CategoryModel'
-import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
-import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
-import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import GrooveImage from '@/components/Utilities/GrooveImage.vue'
+import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Options({
   name: 'NavbarCategories',
+  components: {
+    GrooveImage
+  },
   props: {
     categoriesTree: Array,
     mainToggleButton: HTMLElement,
@@ -82,10 +85,6 @@ export default class NavbarCategories extends Vue {
   navbarProductsButton!: HTMLElement
 
   ImageTypeOptions = ImageTypeOptions
-  ImageFitOptions = ImageFitOptions
-  ImagePositionOptions = ImagePositionOptions
-
-  imageUrl: string = ''
 
   get isLoading(): boolean {
     return store.getters['app/getLoading']
@@ -98,36 +97,6 @@ export default class NavbarCategories extends Vue {
         this.menuOpenHandle()
       }
     })
-  }
-
-  public mediaStreamImage(
-      imageType: string,
-      imageName: string,
-      width?: string,
-      height?: string,
-      fit?: ImageFitOptions,
-      position?: ImagePositionOptions,
-      trimThreshold?: number
-  ): string | (() => string) {
-    const mediaStreamImageData: ImageUrlInterface = {
-      'imageType': imageType,
-      'imageName': imageName,
-      'width': width,
-      'height': height,
-      'fit': fit,
-      'position': position,
-      'trimThreshold': trimThreshold
-    }
-
-    const imageModel = new ImageUrlModel(mediaStreamImageData)
-
-    imageModel.buildMediaStreamImageUrl()
-        .then((finalUrl: string) => {
-          this.imageUrl = finalUrl
-        })
-
-    return this.imageUrl
-
   }
 
   public menuOpenHandle(): void {

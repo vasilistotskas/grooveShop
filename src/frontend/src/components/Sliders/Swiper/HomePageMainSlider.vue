@@ -20,7 +20,7 @@
       <GrooveImage
         :alt="slide.title ? slide.title : 'no-alt'"
         :file-name="slide.main_image_filename"
-        :img-class="'img-fluid'"
+        :use-media-stream="true"
         :img-type="ImageTypeOptions.SLIDES"
         :img-fit="ImageFitOptions.contain"
         :img-position="ImagePositionOptions.center"
