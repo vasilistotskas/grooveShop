@@ -33,7 +33,7 @@
     </div>
   </div>
   <div
-    v-if="comment.user.id == userId"
+    v-if="comment.user.id === userId"
     class="blog-comments-card-actions"
   >
     <a

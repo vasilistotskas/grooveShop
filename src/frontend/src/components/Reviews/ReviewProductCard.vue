@@ -52,7 +52,7 @@
       </div>
     </div>
     <div
-      v-if="review.user_id == userId"
+      v-if="review.user_id === userId"
       class="user-review-product-actions"
     >
       <a

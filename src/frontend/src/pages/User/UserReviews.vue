@@ -8,7 +8,7 @@
         <ReviewProductCard
           v-for="review in allPaginatedResults"
           :key="review.id"
-          :class="{'current-user-review-card': review.user_id == userId }"
+          :class="{'current-user-review-card': review.user_id === userId }"
           :review="review"
           :user-id="userId"
           class="product-review-main-card"

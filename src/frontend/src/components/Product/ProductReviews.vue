@@ -41,7 +41,7 @@
           <ReviewProductCard
             v-if="userToProductReview && Object.keys(userToProductReview).length > 0"
             :key="userToProductReview.id"
-            :class="{'current-user-review-card': userToProductReview.user_id == userId }"
+            :class="{'current-user-review-card': userToProductReview.user_id === userId }"
             :review="userToProductReview"
             :user-id="userId"
             class="product-review-main-card"
@@ -51,7 +51,7 @@
             v-for="review in allPaginatedResults"
             :key="review.id"
             :review="review"
-            :class="{'current-user-review-card': review.user_id == userId }"
+            :class="{'current-user-review-card': review.user_id === userId }"
             :route="PaginationRoutesEnum.REVIEWS"
             :user-id="userId"
             class="product-review-main-card"
