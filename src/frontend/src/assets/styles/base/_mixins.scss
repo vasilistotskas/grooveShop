@@ -1,0 +1,31 @@
+@mixin primary_button {
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 7px;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  user-select: none;
+  border: 1px solid transparent;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  background-color: transparent;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  border: unset;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}

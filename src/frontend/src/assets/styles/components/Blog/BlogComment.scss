@@ -1,0 +1,50 @@
+.blog-comment {
+  &-wrapper {
+
+  }
+  &-container {
+    text-align: center;
+  }
+  &-header {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    &-title {
+
+    }
+  }
+  &-body {
+    &-title {
+
+    }
+    &-textarea {
+      &-content {
+        width: 50%;
+        background-color: var(--cp-palette-main-third);
+      }
+    }
+    &-label {
+      font-size: 24px;
+    }
+  }
+
+  &-footer {
+    &-btn {
+      @extend .primary_button;
+      width: 50%;
+      color: var(--cp-palette-main-fifth);
+      border: var(--cp-palette-main-primary);
+      background-color: var(--cp-palette-main-primary);
+
+      a {
+        color: var(--cp-palette-main-fifth);
+      }
+
+      @media screen and (max-width: map-get($grid-breakpoints, 'xl')) {
+        width: 100%;
+      }
+    }
+  }
+}

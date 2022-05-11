@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="post && Object.keys(post).length > 0"
-    class="blog-comments-wrapper"
+    class="blog-comments-wrapper mt-5"
   >
     <div
       id="comments-container"

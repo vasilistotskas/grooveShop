@@ -128,12 +128,12 @@
               <font-awesome-icon
                 v-if="isMobile"
                 :icon="heartIcon"
-                :style="{ color: '#981d1dc9' }"
+                :style="{ color: 'rgba(200,60,60,0.79)' }"
               />
               <font-awesome-icon
                 v-else
                 :icon="heartIcon"
-                :style="{ color: '#981d1dc9' }"
+                :style="{ color: 'rgba(200,60,60,0.79)' }"
                 size="2x"
               />
             </RouterLink>
@@ -164,12 +164,12 @@
               <font-awesome-icon
                 v-if="isMobile"
                 :icon="userIcon"
-                :style="{ color: '#981d1dc9' }"
+                :style="{ color: 'rgba(200,60,60,0.79)' }"
               />
               <font-awesome-icon
                 v-else
                 :icon="userIcon"
-                :style="{ color: '#981d1dc9' }"
+                :style="{ color: 'rgba(200,60,60,0.79)' }"
                 size="2x"
               />
             </RouterLink>

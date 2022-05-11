@@ -111,7 +111,7 @@ export default class BlogPost extends Vue {
     }
   }
 
-  public displayableDate(date: Date): string {
+  public displayableDate(date: string): string {
     const options: any = { dateStyle: 'full', timeStyle: 'medium' }
     return new Intl.DateTimeFormat('en-US', options).format(new Date(date))
   }

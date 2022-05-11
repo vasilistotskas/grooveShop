@@ -1,6 +1,6 @@
 :root {
   // DARK
-  --cp-palette-main-dark-primary: #{$color-palette-main-primary};
+  --cp-palette-main-dark-primary: #{$color-palette-main-primary-light};
   --cp-palette-main-dark-secondary: #{$color-palette-main-secondary};
   --cp-palette-main-dark-third: #{$color-palette-main-third};
   --cp-palette-main-dark-fourth: #{$color-palette-main-fourth};
@@ -39,189 +39,6 @@ body {
 
   background-color: var(--cp-palette-main-fourth);
   margin: 0 !important;
-}
-
-.green {
-  color: var(--cp-palette-main-green) !important;
-}
-
-.green-bg {
-  background-color: var(--cp-palette-main-green) !important;
-}
-
-.form-select {
-  display: block;
-  width: 100%;
-  height: 43px;
-  padding: 11px 12px;
-  font-size: 14px;
-  line-height: 1.428571429;
-  color: var(--cp-palette-main-fifth);
-  vertical-align: middle;
-  background-color: var(--cp-palette-main-fourth);
-  border: 1px solid var(--cp-palette-main-third);
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
-  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
-  transition: all 0.3s ease-in-out;
-  background-image: none;
-}
-
-.d-none {
-  display: none !important;
-}
-
-table {
-  color: var(--cp-palette-main-fourth) !important;
-}
-
-.plr-15 {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-.mb-1 {
-  margin-bottom: 0.25rem !important;
-}
-
-.mb-2 {
-  margin-bottom: 0.5rem !important;
-}
-
-.mb-3 {
-  margin-bottom: 1rem !important;
-}
-
-.mb-4 {
-  margin-bottom: 1.5rem !important;
-}
-
-.mb-5 {
-  margin-bottom: 3rem !important;
-}
-
-.mb-6 {
-  margin-bottom: 5rem !important;
-}
-
-.mb-7 {
-  margin-bottom: 7rem !important;
-}
-
-.mb-8 {
-  margin-bottom: 9rem !important;
-}
-
-.mb-9 {
-  margin-bottom: 11rem !important;
-}
-
-.mt-1 {
-  margin-top: 0.25rem !important;
-}
-
-.mt-2 {
-  margin-top: 0.5rem !important;
-}
-
-.mt-3 {
-  margin-top: 1rem !important;
-}
-
-.mt-4 {
-  margin-top: 1.5rem !important;
-}
-
-.mt-5 {
-  margin-top: 3rem !important;
-}
-
-.mt-6 {
-  margin-top: 5rem !important;
-}
-
-.mt-7 {
-  margin-top: 7rem !important;
-}
-
-.mt-8 {
-  margin-top: 9rem !important;
-}
-
-.mt-9 {
-  margin-top: 11rem !important;
-}
-
-.pt-1 {
-  padding-top: 0.25rem !important;
-}
-
-.pt-2 {
-  padding-top: 0.5rem !important;
-}
-
-.pt-3 {
-  padding-top: 1rem !important;
-}
-
-.pt-4 {
-  padding-top: 1.5rem !important;
-}
-
-.pt-5 {
-  padding-top: 3rem !important;
-}
-
-.pt-6 {
-  padding-top: 5rem !important;
-}
-
-.pt-7 {
-  padding-top: 7rem !important;
-}
-
-.pt-8 {
-  padding-top: 9rem !important;
-}
-
-.pt-9 {
-  margin-bottom: 11rem !important;
-}
-
-.pb-1 {
-  padding-bottom: 0.25rem !important;
-}
-
-.pb-2 {
-  padding-bottom: 0.5rem !important;
-}
-
-.pb-3 {
-  padding-bottom: 1rem !important;
-}
-
-.pb-4 {
-  padding-bottom: 1.5rem !important;
-}
-
-.pb-5 {
-  padding-bottom: 3rem !important;
-}
-
-.pb-6 {
-  padding-bottom: 5rem !important;
-}
-
-.pb-7 {
-  padding-bottom: 7rem !important;
-}
-
-.pb-8 {
-  padding-bottom: 9rem !important;
-}
-
-.pb-9 {
-  padding-bottom: 11rem !important;
 }
 
 .grid-section {
@@ -596,38 +413,41 @@ table {
 .border-radius-img {
   border-radius: 10px;
 }
+.primary_button {
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 7px;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  user-select: none;
+  border: 1px solid transparent;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  background-color: transparent;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  border: unset;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
 
 .btn-outline-primary {
   &-one, &-two, &-three, &-main {
-    padding: 10px;
-    text-align: center;
-    width: 100%;
-    margin: 0 auto;
-    border-radius: 7px;
-    text-decoration: none;
-    vertical-align: middle;
-    cursor: pointer;
-    display: inline-block;
-    font-weight: 400;
-    line-height: 1.5;
-    user-select: none;
-    border: 1px solid transparent;
-    font-size: 14px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    background-color: transparent;
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    border: unset;
-
-    &:focus {
-      outline: none;
-      box-shadow: none;
-    }
-
-    &:hover {
-      cursor: pointer;
-    }
+    @extend .primary_button
   }
 
   &-main {

@@ -14,7 +14,7 @@
     <font-awesome-icon
       v-else
       :icon="heartIcon"
-      :style="{ color: '#981d1dc9' }"
+      :style="{ color: 'rgba(200,60,60,0.79)' }"
       size="2x"
     />
   </button>

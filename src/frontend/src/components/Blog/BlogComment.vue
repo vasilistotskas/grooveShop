@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-comment-wrapper">
+  <div class="blog-comment-wrapper mt-5">
     <form id="blogPostComment">
       <div class="blog-comment-container">
         <div class="blog-comment-header">
@@ -13,7 +13,7 @@
         </div>
         <div class="blog-comment-body">
           <h2 class="blog-comment-body-title">
-            <label for="commentTextArea">
+            <label class="blog-comment-body-label" for="commentTextArea">
               Your Comment
             </label>
           </h2>
@@ -21,6 +21,7 @@
             <textarea
               id="commentTextArea"
               v-model="comment"
+              class="blog-comment-body-textarea-content"
               maxlength="10000"
               placeholder="Share your experience..."
               rows="6"
@@ -29,7 +30,7 @@
         </div>
         <div class="blog-comment-footer">
           <button
-            class="btn-outline-primary-one"
+            class="blog-comment-footer-btn"
             type="button"
             @click="commentHandle()"
           >
