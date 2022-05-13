@@ -1,0 +1,30 @@
+.blog-comments-card {
+  &-container {
+    position: relative;
+    display: grid;
+    grid-template-columns: 100px auto;
+    gap: 20px 15px;
+    align-items: center;
+    border-radius: 8px;
+    background-color: var(--cp-palette-main-fourth);
+    padding: 30px;
+    border: 1px solid var(--cp-palette-main-third);
+    content-visibility: auto;
+  }
+  &-wrapper {
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgba(246, 139, 36, 0.4);
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+    padding: 0;
+    vertical-align: baseline;
+    font: inherit;
+    font-size: 100%;
+  }
+  &-user {
+    border: 1px solid $rating-starts;
+  }
+}

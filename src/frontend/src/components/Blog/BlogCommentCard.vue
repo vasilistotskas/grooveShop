@@ -1,68 +1,71 @@
 <template>
   <div
-    v-if="comment && Object.keys(comment).length > 0"
-    :style="{ backgroundImage: commentBackgroundImage(comment) }"
-    class="blog-comments-card-wrapper"
-  />
-  <div class="blog-comments-card-head">
-    <div class="blog-comments-card-name">
-      <RouterLink
-        :title="comment.post.slug"
-        :to="`/post/${comment.post.slug}`"
-        aria-label="Blog Post"
-        class="blog-comments-card-link"
-      >
-        <span class="blog-comments-card-name-title"> {{ comment.post.title }}</span>
-      </RouterLink>
-    </div>
-    <div class="blog-comments-card-date">
-      <span class="blog-comments-card-date-created">At : {{ comment.created_at }} </span>
-      <span class="blog-comments-card-date-title">
-        <font-awesome-icon
-          :icon="checkCircleIcon"
-          :style="{ color: '#53e24aeb' }"
-          size="sm"
-        />
-        Verified Comment
-      </span>
-    </div>
-  </div>
-  <div class="blog-comments-card-body">
-    <div class="blog-comments-card-comment">
-      <span> {{ comment.content }} </span>
-    </div>
-  </div>
-  <div
-    v-if="comment.user.id === userId"
-    class="blog-comments-card-actions"
+    v-if="comment && Object.keys(comment).length > 0" 
+    class="blog-comments-card-container"
   >
-    <a
-      :title="`Comment Settings of ${comment.post.title}`"
-      class="blog-comments-card-actions-settings"
-      @click="openCommentActions"
-    />
+    <div class="blog-comments-card-wrapper">
+      {{ comment.user.firstName }} {{ comment.user.lastName }}
+    </div>
+    <div class="blog-comments-card-head">
+      <div class="blog-comments-card-name">
+        <RouterLink
+          :title="comment.post.slug"
+          :to="`/post/${comment.post.slug}`"
+          aria-label="Blog Post"
+          class="blog-comments-card-link"
+        >
+          <span class="blog-comments-card-name-title"> {{ comment.post.title }}</span>
+        </RouterLink>
+      </div>
+      <div class="blog-comments-card-date">
+        <span class="blog-comments-card-date-created">At : {{ comment.createdAt }} </span>
+        <span class="blog-comments-card-date-title">
+          <font-awesome-icon
+            :icon="checkCircleIcon"
+            :style="{ color: '#53e24aeb' }"
+            size="sm"
+          />
+          Verified Comment
+        </span>
+      </div>
+    </div>
+    <div class="blog-comments-card-body">
+      <div class="blog-comments-card-comment">
+        <span> {{ comment.content }} </span>
+      </div>
+    </div>
     <div
-      v-if="commentActionsOpen"
-      ref="userCommentActionTarget"
-      class="blog-comments-card-actions-menu"
+      v-if="comment.user.id === userId"
+      class="blog-comments-card-actions"
     >
-      <div class="blog-comments-card-actions-controls">
-        <div class="blog-comments-card-actions-edit">
-          <RouterLink
-            :title="comment.post.slug"
-            :to="`/post/${comment.post.slug}`"
-            aria-label="Blog Post"
-          >
-            <span>Update</span>
-          </RouterLink>
-        </div>
-        <div class="blog-comments-card-actions-delete">
-          <a
-            :title="`Delete Comment of ${comment.post.title}`"
-            data-method="delete"
-            rel="nofollow"
-            @click="deleteComment(comment.id)"
-          >Delete</a>
+      <a
+        :title="`Comment Settings of ${comment.post.title}`"
+        class="blog-comments-card-actions-settings"
+        @click="openCommentActions"
+      />
+      <div
+        v-if="commentActionsOpen"
+        ref="userCommentActionTarget"
+        class="blog-comments-card-actions-menu"
+      >
+        <div class="blog-comments-card-actions-controls">
+          <div class="blog-comments-card-actions-edit">
+            <RouterLink
+              :title="comment.post.slug"
+              :to="`/post/${comment.post.slug}`"
+              aria-label="Blog Post"
+            >
+              <span>Update</span>
+            </RouterLink>
+          </div>
+          <div class="blog-comments-card-actions-delete">
+            <a
+              :title="`Delete Comment of ${comment.post.title}`"
+              data-method="delete"
+              rel="nofollow"
+              @click="deleteComment(comment.id)"
+            >Delete</a>
+          </div>
         </div>
       </div>
     </div>
@@ -126,21 +129,6 @@ export default class BlogCommentCard extends Vue {
 
   public openCommentActions() {
     this.commentActionsOpen = true
-  }
-
-  public commentBackgroundImage(comment: BlogCommentModel): string {
-
-    const imageNameFileTypeRemove = comment.post.mainImageFilename.substring(0, comment.post.mainImageFilename.lastIndexOf('.')) || comment.post.mainImageFilename
-
-    if (router.currentRoute.value.name === 'Post') {
-      return 'url(' + this.userData.main_image_absolute_url + ')'
-    }
-
-    if (router.currentRoute.value.name === 'Comments') {
-      return 'url(' + 'http://localhost:8010' + '/mediastream/media/uploads/' + 'products' + '/' + imageNameFileTypeRemove + '/' + '100' + '/' + '100' + ')'
-    }
-
-    return ''
   }
 
   public async deleteComment(comment_id: BlogCommentModel['id']): Promise<void> {

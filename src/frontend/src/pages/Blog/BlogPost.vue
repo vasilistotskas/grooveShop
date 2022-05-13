@@ -12,8 +12,6 @@
         :img-type="ImageTypeOptions.BLOG"
         :img-width="1920"
         :img-height="550"
-        :img-fit="ImageFitOptions.cover"
-        :img-position="ImagePositionOptions.center"
       />
       <div class="card-body">
         <span class="card-title">{{ postBySlug.title }}: {{ postBySlug.subtitle }}</span>

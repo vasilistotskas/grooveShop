@@ -1,35 +1,30 @@
 <template>
   <div
     v-if="post && Object.keys(post).length > 0"
-    class="blog-comments-wrapper mt-5"
+    class="blog-comments-container mt-5 mb-5"
   >
     <div
-      id="comments-container"
-      class="blog-comments-container container-small"
+      v-if="shouldCommentsAppear"
+      class="blog-comments-wrapper container-small"
     >
-      <div
-        v-if="shouldCommentsAppear"
-        class="blog-comments-wrapper-grid"
-      >
-        <div class="blog-comments-container-grid">
-          <BlogCommentCard
-            v-if="commentByUserToPost && Object.keys(commentByUserToPost).length > 0"
-            :key="commentByUserToPost.id"
-            :class="{'blog-comment-card-user': commentByUserToPost.user_id === userId }"
-            :comment="commentByUserToPost"
-            :user-id="userId"
-            class="blog-comment-card"
-          />
+      <div class="blog-comments-content">
+        <BlogCommentCard
+          v-if="commentByUserToPost && Object.keys(commentByUserToPost).length > 0"
+          :key="commentByUserToPost.id"
+          :class="{'blog-comments-card-user': commentByUserToPost.user_id === userId }"
+          :comment="commentByUserToPost"
+          :user-id="userId"
+          class="blog-comment-card"
+        />
 
-          <BlogCommentCard
-            v-for="comment in allBlogPostComments"
-            :key="comment.id"
-            :comment="comment"
-            :class="{'blog-comments-card-user': comment.user_id === userId }"
-            :user-id="userId"
-            class="blog-comment-card"
-          />
-        </div>
+        <BlogCommentCard
+          v-for="comment in allBlogPostComments"
+          :key="comment.id"
+          :comment="comment"
+          :class="{'blog-comments-card-user': comment.user_id === userId }"
+          :user-id="userId"
+          class="blog-comment-card"
+        />
       </div>
     </div>
   </div>
