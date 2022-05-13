@@ -19,11 +19,14 @@
         >
           <GrooveImage
             :alt="'User Image'"
-            :src="src"
-            :use-media-stream="false"
             :img-class="'rounded-circle img-fluid'"
+            :file-name="src"
+            :use-media-stream="true"
+            :img-type="ImageTypeOptions.USERS"
             :img-height="110"
             :img-width="110"
+            :img-fit="ImageFitOptions.outside"
+            :img-position="ImagePositionOptions.center"
           />
           <label
             class="profile-image-label"
@@ -62,6 +65,7 @@ import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
+import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOptions, ImageTypeOptions} from '@/helpers/MediaStream/ImageUrlEnum'
 
 
 @Options({
@@ -85,6 +89,12 @@ export default class UserProfileImage extends Vue {
 
   profileImageHovering: boolean = false
   cameraIcon = faCamera
+
+  ImagePathOptions = ImagePathOptions
+  ImageFormatOptions = ImageFormatOptions
+  ImageFitOptions = ImageFitOptions
+  ImagePositionOptions = ImagePositionOptions
+  ImageTypeOptions = ImageTypeOptions
 
   async updateUserImage(): Promise<void> {
     const formEl = document.getElementById('uploadImageForm') as HTMLFormElement

@@ -12,11 +12,14 @@
             >
               <GrooveImage
                 :alt="'Website Logo'"
-                :src="'http://localhost:8010/backend/static/images/websiteLogo.png'"
-                :use-media-stream="false"
+                :file-name="'websiteLogo'"
+                :path-type="ImagePathOptions.static"
                 :img-class="'main-logo img-fluid'"
                 :img-height="85"
                 :img-width="175"
+                :img-fit="ImageFitOptions.outside"
+                :img-position="ImagePositionOptions.center"
+                :img-format="ImageFormatOptions.png"
               />
             </RouterLink>
           </h1>
@@ -253,6 +256,7 @@ import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
 import AppSettingsThemeModeOption from '@/state/app/AppSettingsThemeModeOption'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
+import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOptions} from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Options({
   name: 'Navbar',
@@ -276,6 +280,11 @@ export default class Navbar extends Vue {
   heartIcon = faHeart
   searchIcon = faSearch
   shoppingCartIcon = faShoppingCart
+
+  ImagePathOptions = ImagePathOptions
+  ImageFormatOptions = ImageFormatOptions
+  ImageFitOptions = ImageFitOptions
+  ImagePositionOptions = ImagePositionOptions
 
   $refs!: {
     mainToggleButton: HTMLElement

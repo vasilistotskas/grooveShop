@@ -6,9 +6,9 @@
     <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="user-account-page-main-part">
       <UserProfileImage
-        v-model="profileImageUrl"
+        v-model="profileImageFilename"
         :fullname="fullname"
-        :src="profileImageUrl"
+        :src="profileImageFilename"
       />
       <nav class="user-account-grid-navbar">
         <div
@@ -147,7 +147,7 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 })
 
 export default class UserAccount extends Vue {
-  profileImageUrl: any = ''
+  profileImageFilename: string = ''
   cogsIcon = faCogs
   starIcon = faStar
   truckIcon = faTruck
@@ -190,13 +190,13 @@ export default class UserAccount extends Vue {
     this.$watch(
         () => this.userData,
         (image: UserDetailsModel) => {
-          this.profileImageUrl = image.get_user_profile_image_url
+          this.profileImageFilename = image.main_image_filename
         }
     )
   }
 
   mounted(): void {
-    this.profileImageUrl = this.userData.get_user_profile_image_url
+    this.profileImageFilename = this.userData.main_image_filename
   }
 
   updated(): void {

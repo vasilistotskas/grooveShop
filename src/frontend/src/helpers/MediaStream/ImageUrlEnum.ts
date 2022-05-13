@@ -3,6 +3,7 @@ export enum ImageTypeOptions {
 	PRODUCTS = 'products',
 	CATEGORIES = 'categories',
 	BLOG = 'blog',
+	USERS = 'users'
 }
 
 export enum ImagePositionOptions {
@@ -39,7 +40,8 @@ export enum ImageFormatOptions {
 	jpg = 'jpg',
 	jpeg = 'jpeg',
 	png = 'png',
-	webp = 'webp'
+	webp = 'webp',
+	svg = 'svg'
 }
 
 export enum ImagePathOptions {
