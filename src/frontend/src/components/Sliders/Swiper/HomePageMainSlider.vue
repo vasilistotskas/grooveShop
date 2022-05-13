@@ -22,7 +22,7 @@
         :file-name="slide.main_image_filename"
         :use-media-stream="true"
         :img-type="ImageTypeOptions.SLIDES"
-        :img-fit="ImageFitOptions.contain"
+        :img-fit="ImageFitOptions.outside"
         :img-position="ImagePositionOptions.center"
         :img-height="imgHeight"
         :img-width="imgWidth"

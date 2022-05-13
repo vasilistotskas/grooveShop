@@ -56,20 +56,20 @@ export default class MediaStreamImageRESTController {
 		await this.streamRequestedResource(request, res)
 	}
 
-	@Get('static/files/images/:imageName/:width?/:height?/:fit?/:position?/:trimThreshold?/:format?')
+	@Get('static/images/:imageName/:width?/:height?/:fit?/:position?/:trimThreshold?/:format?')
 	public async staticImage(
 		@Param('imageType') imageType: string,
 		@Param('imageName') imageName: string,
-		@Param('format') format: 'jpg'|'jpeg'|'png'|'webp' = 'jpg',
 		@Param('width') width: number = null,
 		@Param('height') height: number = null,
 		@Param('fit') fit: FitOptions = FitOptions.contain,
 		@Param('position') position = PositionOptions.entropy,
 		@Param('trimThreshold') trimThreshold = 5,
+		@Param('format') format: 'jpg'|'jpeg'|'png'|'webp' = 'jpg',
 		@Res() res: Response
 	): Promise<void> {
 		const request = new CacheImageRequest({
-			resourceTarget: MediaStreamImageRESTController.resourceTargetPrepare(`http://backend:8001/backend/static/files/images/${imageName}.${format}`),
+			resourceTarget: MediaStreamImageRESTController.resourceTargetPrepare(`http://backend:8001/backend/static/images/${imageName}.${format}`),
 			resizeOptions: new ResizeOptions({
 				width,
 				height,

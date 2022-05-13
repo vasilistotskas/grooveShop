@@ -2,7 +2,7 @@
   <img
     v-if="useMediaStream"
     :alt="alt"
-    :src="mediaStreamImage(imgType, fileName, imgWidth, imgHeight)"
+    :src="mediaStreamImage(pathType, imgType, fileName, imgWidth, imgHeight, imgFit, imgPosition, imgTrimThreshold, imgFormat )"
     :class="imgClass"
     :height="imgHeight"
     :width="imgWidth"
@@ -23,7 +23,13 @@
 import { Options, Vue } from 'vue-class-component'
 import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
-import { ImageFitOptions, ImagePositionOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import {
+  ImageFitOptions,
+  ImagePositionOptions,
+  ImageTypeOptions,
+  ImageFormatOptions,
+  ImagePathOptions
+} from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Options({
   name: 'GrooveImage',
@@ -53,31 +59,48 @@ import { ImageFitOptions, ImagePositionOptions } from '@/helpers/MediaStream/Ima
       required: false,
       default: 'img-fluid'
     },
-    fileName: {
+    pathType: {
       type: String,
-      required: false
+      required: false,
+      default: ImagePathOptions.media
     },
     imgType: {
       type: String,
       required: false
     },
+    fileName: {
+      type: String,
+      required: false
+    },
+    imgWidth: {
+      type: Number,
+      required: true,
+      default: 1200,
+    },
+    imgHeight: {
+      type: Number,
+      required: true,
+      default: 250,
+    },
     imgFit: {
       type: String,
       required: false,
-      default: 'contain'
+      default: ImageFitOptions.outside
     },
     imgPosition: {
       type: String,
       required: false,
-      default: 'center'
+      default: ImagePositionOptions.center
     },
-    imgHeight: {
+    imgTrimThreshold: {
       type: Number,
-      required: true
+      required: false,
+      default: 5
     },
-    imgWidth: {
-      type: Number,
-      required: true
+    imgFormat: {
+      type: String,
+      required: false,
+      default: ImageFormatOptions.jpg
     }
   }
 })
@@ -88,34 +111,40 @@ export default class GrooveImage extends Vue {
   source!: string
   alt!: string
   loading!: string
-  fileName!: string
   imgClass!: string
+  pathType!: ImagePathOptions
+  imgType!: ImageTypeOptions
+  fileName!: string
   imgHeight!: number
   imgWidth!: number
-
-  imgType!: string
-  imgFit!: string
-  imgPosition!: string
+  imgFit!: ImageFitOptions
+  imgPosition!: ImagePositionOptions
+  imgTrimThreshold!: number
+  imgFormat!: ImageFormatOptions
 
   imageUrl: string = ''
 
   public mediaStreamImage(
-      imageType: string,
-      imageName: string,
-      width?: string,
-      height?: string,
+      pathType: ImagePathOptions,
+      imageType: ImageTypeOptions,
+      fileName: string,
+      width: number,
+      height: number,
       fit?: ImageFitOptions,
       position?: ImagePositionOptions,
-      trimThreshold?: number
+      trimThreshold?: number,
+      format?: ImageFormatOptions
   ): string | (() => string) {
     const mediaStreamImageData: ImageUrlInterface = {
+      'pathType': pathType,
       'imageType': imageType,
-      'imageName': imageName,
+      'fileName': fileName,
       'width': width,
       'height': height,
       'fit': fit,
       'position': position,
-      'trimThreshold': trimThreshold
+      'trimThreshold': trimThreshold,
+      'format': format
     }
 
     const imageModel = new ImageUrlModel(mediaStreamImageData)

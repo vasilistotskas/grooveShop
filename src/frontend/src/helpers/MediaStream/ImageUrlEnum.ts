@@ -33,3 +33,16 @@ export enum ImageFitOptions {
 	inside = 'inside',
 	outside = 'outside'
 }
+
+export enum ImageFormatOptions {
+	no_format = '',
+	jpg = 'jpg',
+	jpeg = 'jpeg',
+	png = 'png',
+	webp = 'webp'
+}
+
+export enum ImagePathOptions {
+	static = 'static',
+	media = 'media'
+}

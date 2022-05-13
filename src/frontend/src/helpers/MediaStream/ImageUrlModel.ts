@@ -1,41 +1,60 @@
 import session from '@/api/session'
 import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
-import { ImageFitOptions, ImagePositionOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import {
+	ImageFitOptions,
+	ImageFormatOptions,
+	ImagePathOptions,
+	ImagePositionOptions
+} from '@/helpers/MediaStream/ImageUrlEnum'
 
 export default class ImageUrlModel {
-	private static mediaStreamPath: string = '/mediastream/media/uploads/'
+	private static mediaStreamPath: string = ''
+
+	private static pathType: ImagePathOptions
 	private static imageType: string
-	private static imageName: string
-	private static width?: string
-	private static height?: string
+	private static fileName: string
+	private static width?: number
+	private static height?: number
 	private static fit?: ImageFitOptions
 	private static position?: ImagePositionOptions
-	private static trimThreshold?: number | string
+	private static trimThreshold?: number
+	private static format?: ImageFormatOptions
 
 	constructor(data: Partial<ImageUrlInterface>) {
+		ImageUrlModel.pathType = data.pathType ?? ImagePathOptions.media
 		ImageUrlModel.imageType = data.imageType ?? ''
-		ImageUrlModel.imageName = data.imageName ?? ''
-		ImageUrlModel.width = data?.width ?? ''
-		ImageUrlModel.height = data?.height ?? ''
+		ImageUrlModel.fileName = data.fileName ?? ''
+		ImageUrlModel.width = data?.width ?? 1200
+		ImageUrlModel.height = data?.height ?? 250
 		ImageUrlModel.fit = data?.fit ?? ImageFitOptions.no_fit
 		ImageUrlModel.position = data?.position ?? ImagePositionOptions.no_position
-		ImageUrlModel.trimThreshold = data?.trimThreshold ?? ''
+		ImageUrlModel.trimThreshold = data?.trimThreshold ?? 5
+		ImageUrlModel.format = data?.format ?? ImageFormatOptions.no_format
+
+		ImageUrlModel.mediaStreamPath = '/mediastream/media/uploads/'
+
+		if (!(ImageUrlModel.pathType == ImagePathOptions.media)) {
+			ImageUrlModel.mediaStreamPath = '/mediastream/static/images'
+		}
+
 		Object.assign(this, data)
 	}
 
 	private static buildImageUrl(): string {
 		let fit = ''
 		let position = ''
-		let trimThreshold = ''
+		let trimThreshold = 5
+		let format = ''
 		if (this.fit != '') {
 			fit = this.fit + '/'
 		}
 		if (this.position != '') {
 			position = this.position + '/'
 		}
-		if (this.trimThreshold != '') {
-			trimThreshold = this.trimThreshold as string
+		if (this.format != '') {
+			format = this.format as string
 		}
+
 		return 'http://localhost:8010' +
 			this.mediaStreamPath +
 			this.imageType + '/' +
@@ -44,22 +63,25 @@ export default class ImageUrlModel {
 			this.height + '/' +
 			fit +
 			position +
-			trimThreshold
+			trimThreshold + '.' +
+			format
 	}
 
 	private static buildApiUrl(): string {
 		let fit = ''
 		let position = ''
-		let trimThreshold = ''
+		let trimThreshold = 5
+		let format = ''
 		if (this.fit != '') {
 			fit = this.fit + '/'
 		}
 		if (this.position != '') {
 			position = this.position + '/'
 		}
-		if (this.trimThreshold != '') {
-			trimThreshold = this.trimThreshold as string
+		if (this.format != '') {
+			format = this.format as string
 		}
+
 		return this.mediaStreamPath +
 			this.imageType + '/' +
 			this.buildImageNameFileTypeRemove() + '/' +
@@ -67,11 +89,12 @@ export default class ImageUrlModel {
 			this.height + '/' +
 			fit +
 			position +
-			trimThreshold
+			trimThreshold + '/' +
+			format
 	}
 
 	private static buildImageNameFileTypeRemove(): string {
-		return ImageUrlModel.imageName.substring(0, ImageUrlModel.imageName.lastIndexOf('.')) || ImageUrlModel.imageName
+		return ImageUrlModel.fileName.substring(0, ImageUrlModel.fileName.lastIndexOf('.')) || ImageUrlModel.fileName
 	}
 
 	public async buildMediaStreamImageUrl(): Promise<string> {
