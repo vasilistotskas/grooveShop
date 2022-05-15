@@ -368,10 +368,10 @@ export default class Navbar extends PaginationBase<ProductModel> implements Pagi
     await store.commit('pagination/unsetResults', this.paginationNamespace)
     await store.commit('pagination/setCurrentQuery', { currentQuery: this.searchQuery, namespace: this.paginationNamespace })
 
-    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+    const paginationQuery = PaginationQueryParametersModel
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,
-          'endpointUrl': `search`,
+          'endpointUrl': `search-product`,
           'queryParams': this.searchQuery,
           'method': ApiBaseMethods.POST
         } )

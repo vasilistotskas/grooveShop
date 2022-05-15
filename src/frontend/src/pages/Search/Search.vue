@@ -11,7 +11,7 @@
 
         <Pagination
           v-if="Object.keys(allPaginatedResults).length !== 0"
-          :endpoint-url="'search'"
+          :endpoint-url="'search-product'"
           :max-visible-buttons="3"
           :route="PaginationRoutesEnum.SEARCH"
           :total-pages="allPaginatedResultsTotalPages"
@@ -72,14 +72,14 @@ export default class Search extends PaginationBase<ProductModel> implements Pagi
   async mounted(): Promise<void> {
     document.title = 'Search'
 
-    if (this.params.get('query')) {
-      store.commit('pagination/setCurrentQuery', { currentQuery: this.params.get('query'), namespace: this.paginationNamespace })
+    if (this.params.query) {
+      store.commit('pagination/setCurrentQuery', { currentQuery: this.params.query, namespace: this.paginationNamespace })
     }
 
     await store.commit('pagination/setCurrentPageNumber', { pageNumber: 1, namespace: this.paginationNamespace })
 
-    if (this.params.get('page')) {
-      store.commit('pagination/setCurrentPageNumber', { pageNumber: Number(this.params.get('page')), namespace: this.paginationNamespace })
+    if (this.params.page) {
+      store.commit('pagination/setCurrentPageNumber', { pageNumber: Number(this.params.page), namespace: this.paginationNamespace })
     }
 
     await this.fetchPaginationData()
@@ -95,7 +95,7 @@ export default class Search extends PaginationBase<ProductModel> implements Pagi
     const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,
-          'endpointUrl': `search`,
+          'endpointUrl': `search-product`,
           'queryParams': this.currentPageQuery,
           'method': ApiBaseMethods.GET
         } )

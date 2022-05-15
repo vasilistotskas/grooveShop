@@ -1,4 +1,5 @@
 import store from '@/store'
+import router from '@/routes'
 import { Options, Vue } from 'vue-class-component'
 
 @Options({
@@ -9,7 +10,7 @@ export default class PaginationBase<RM> extends Vue  {
 	protected paginationNamespace!: string;
 
 	uri = window.location.search.substring(1)
-	params = new URLSearchParams(this.uri)
+	params = router.currentRoute.value.query
 
 	get currentPageQuery(): string {
 		return store.getters['pagination/getCurrentQuery'](this.paginationNamespace)

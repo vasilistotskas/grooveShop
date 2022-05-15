@@ -65,14 +65,14 @@ export default class UserFavourites extends PaginationBase<UserDetailsModel> imp
   async created(): Promise<void> {
     document.title = 'My Favourites'
 
-    if (this.params.get('query')) {
-      await store.commit('pagination/setCurrentQuery', { currentQuery: this.params.get('query'), namespace: this.paginationNamespace })
+    if (this.params.query) {
+      await store.commit('pagination/setCurrentQuery', { currentQuery: this.params.query, namespace: this.paginationNamespace })
     }
 
     await store.commit('pagination/setCurrentPageNumber', { pageNumber: 1, namespace: this.paginationNamespace })
 
-    if (this.params.get('page')) {
-      await store.commit('pagination/setCurrentPageNumber', { pageNumber: Number(this.params.get('page')), namespace: this.paginationNamespace })
+    if (this.params.page) {
+      await store.commit('pagination/setCurrentPageNumber', { pageNumber: Number(this.params.page), namespace: this.paginationNamespace })
     }
 
     await this.fetchPaginationData()

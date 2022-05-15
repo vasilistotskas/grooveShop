@@ -149,7 +149,6 @@ export default class ProductReviews extends PaginationBase<ProductReviewModel> i
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,
           'endpointUrl': this.buildEndPointUrlForPaginatedResults(),
-          'queryParams': this.currentPageQuery,
           'method': ApiBaseMethods.GET
         } )
 

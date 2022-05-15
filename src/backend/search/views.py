@@ -1,32 +1,30 @@
 from django.db.models import Q
 from backend.search.paginators import *
+from .filters import SearchProductFilter
 from backend.product.models import Product
 from rest_framework import status, generics
 from rest_framework.response import Response
 from backend.product.serializers import ProductSerializer
+from django_filters.rest_framework import DjangoFilterBackend
 
 
-class Search(generics.ListAPIView):
-    queryset = Product.objects.all()
+class SearchProduct(generics.ListAPIView):
     serializer_class = ProductSerializer
     pagination_class = SearchPagination
 
-    def post(self, request, *args, **kwargs):
-        query = request.data.get('query', '')
-        if query:
-            products = Product.objects.filter(
-                Q(name__icontains=query) |
-                Q(description__icontains=query) |
-                Q(id__icontains=query)
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+
+        queryset = Product.objects.all()
+        query = self.request.query_params.get('query')
+
+        if query is not None:
+            queryset = queryset.filter(
+                Q(name__contains=query) |
+                Q(description__contains=query) |
+                Q(id__contains=query)
             )
-            queryset = self.filter_queryset(products)
-
-            page = self.paginate_queryset(queryset)
-            if page is not None:
-                serializer = self.get_serializer(page, many=True)
-                return self.get_paginated_response(serializer.data)
-
-            serializer = self.get_serializer(queryset, many=True)
-            return Response(serializer.data)
-        else:
-            return Response({"products": []}, status=status.HTTP_404_NOT_FOUND)
+        return queryset

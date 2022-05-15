@@ -107,7 +107,7 @@ export default class Pagination extends Vue {
 
   query: any
   uri = window.location.search.substring(1)
-  params = new URLSearchParams(this.uri)
+  params = router.currentRoute.value.query
   maxVisibleButtons!: number
   totalPages!: number
   route!: string
@@ -261,8 +261,8 @@ export default class Pagination extends Vue {
   }
 
   public initializeRouterQuery(): void {
-    if (this.params.get('query')) {
-      this.query = { ...this.$route.query, 'query': this.params.get('query'), 'page': this.currentPageNumber }
+    if (this.params.query) {
+      this.query = { ...this.$route.query, 'query': this.params.query, 'page': this.currentPageNumber }
     } else {
       this.query = { ...this.$route.query, 'page': this.currentPageNumber }
     }
