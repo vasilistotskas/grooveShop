@@ -103,14 +103,14 @@
               name="query"
               placeholder="Search"
               type="search"
-              @keyup.enter="searchPerform"
+              @keyup.enter="fetchPaginationData"
             >
             <button
               aria-label="search"
               class="btn-outline-primary-main"
               title="Search"
               type="submit"
-              @click="searchPerform"
+              @click="fetchPaginationData"
             >
               <font-awesome-icon
                 :icon="searchIcon"
@@ -243,6 +243,7 @@
 import store from '@/store'
 import router from '@/routes'
 import { Options, Vue } from 'vue-class-component'
+import ProductModel from '@/state/product/ProductModel'
 import CategoryModel from '@/state/category/CategoryModel'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import { faSun } from '@fortawesome/free-solid-svg-icons/faSun'
@@ -251,10 +252,13 @@ import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import { faMoon } from '@fortawesome/free-solid-svg-icons/faMoon'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
+import PaginationBase from '@/components/Pagination/PaginationBase'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
 import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
 import AppSettingsThemeModeOption from '@/state/app/AppSettingsThemeModeOption'
+import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart'
+import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOptions} from '@/helpers/MediaStream/ImageUrlEnum'
 
@@ -269,7 +273,8 @@ import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOpt
     preHeadHidden: Boolean
   }
 })
-export default class Navbar extends Vue {
+export default class Navbar extends PaginationBase<ProductModel> implements PaginatedInterface<ProductModel> {
+  paginationNamespace = PaginationNamespaceDataEnum.SEARCH_PRODUCTS
   searchQuery: string = ''
   preHeadHidden: boolean = true
 
@@ -303,10 +308,6 @@ export default class Navbar extends Vue {
 
   get categoriesTreeData(): Array<CategoryModel> {
     return store.getters['category/getCategoriesTree']
-  }
-
-  get currentPageNumber(): number {
-    return store.getters['pagination/getCurrentPageNumber']
   }
 
   get isAuthenticated(): boolean {
@@ -363,19 +364,19 @@ export default class Navbar extends Vue {
     store.commit('app/setNavbarMenuHidden', !this.navbarMenuHidden)
   }
 
-  async searchPerform(): Promise<void> {
-    await store.commit('pagination/unsetResults')
-    await store.commit('pagination/setCurrentQuery', this.searchQuery)
+  async fetchPaginationData(): Promise<void> {
+    await store.commit('pagination/unsetResults', this.paginationNamespace)
+    await store.commit('pagination/setCurrentQuery', { currentQuery: this.searchQuery, namespace: this.paginationNamespace })
 
     const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,
           'endpointUrl': `search`,
           'queryParams': this.searchQuery,
-          'method': ApiBaseMethods.GET
+          'method': ApiBaseMethods.POST
         } )
 
-    await store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
+    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
 
     await router.push({
       path: '/search',
