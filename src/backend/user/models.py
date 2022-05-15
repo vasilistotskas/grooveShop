@@ -67,12 +67,6 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
                 user_sessions.append(session.pk)
         return Session.objects.filter(pk__in=user_sessions).delete()
 
-    def get_full_name(self):
-        return self.first_name
-
-    def get_short_name(self):
-        return self.first_name
-
     def __str__(self):
         return self.email
 
