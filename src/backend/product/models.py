@@ -1,6 +1,8 @@
 import os
 import string
 import random
+from typing import Union
+from decimal import Decimal
 from django.db import models
 from django.conf import settings
 from mptt.models import MPTTModel
@@ -146,7 +148,7 @@ class Product(SeoModel):
     class Meta:
         ordering = ('-date_added',)
 
-    def __str__(self) -> CharField:
+    def __str__(self) -> str:
         return self.name
 
     def likes_counter(self) -> int:
@@ -170,26 +172,26 @@ class Product(SeoModel):
             cnt = int(reviews["count"])
         return cnt
 
-    def vat_percent(self) -> int:
+    def vat_percent(self) -> Union[Decimal, int]:
         if self.vat:
             return self.vat.value
         return 0
 
-    def vat_value(self) -> int:
+    def vat_value(self) -> Union[Decimal, int]:
         if self.vat:
             return (self.price * self.vat.value) / 100
         return 0
 
-    def discount_value(self) -> int:
+    def discount_value(self) -> Decimal:
         return (self.price * self.discount_percent) / 100
 
-    def price_save_percent(self) -> float:
+    def price_save_percent(self) -> Decimal:
         final_price = self.price - self.discount_value()
         product_save_value = self.price - final_price
         product_save_percent = (final_price * product_save_value) / self.price
         return product_save_percent
 
-    def final_price(self) -> float:
+    def final_price(self) -> Decimal:
         return self.price - self.discount_value()
 
     def main_image_absolute_url(self) -> str:
