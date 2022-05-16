@@ -142,7 +142,7 @@ export default class Category extends PaginationBase<ProductModel> implements Pa
 
   async fetchPaginationData(): Promise<void> {
 
-    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+    const paginationQuery = PaginationQueryParametersModel
       .createPaginationQuery({
         'pageNumber': this.currentPageNumber,
         'endpointUrl': this.buildEndPointUrlForPaginatedResults(),

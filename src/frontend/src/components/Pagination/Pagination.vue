@@ -183,7 +183,7 @@ export default class Pagination extends Vue {
   async onClickNextPage(): Promise<void> {
     await store.commit('pagination/setCurrentPageNumber', { pageNumber: this.currentPageNumber + 1, namespace: this.namespace })
 
-    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+    const paginationQuery = PaginationQueryParametersModel
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,
           'endpointUrl': `${ this.endpointUrl }`,
@@ -199,7 +199,7 @@ export default class Pagination extends Vue {
   async onClickPreviousPage(): Promise<void> {
     await store.commit('pagination/setCurrentPageNumber', { pageNumber: this.currentPageNumber - 1, namespace: this.namespace })
 
-    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+    const paginationQuery = PaginationQueryParametersModel
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,
           'endpointUrl': `${ this.endpointUrl }`,
@@ -215,7 +215,7 @@ export default class Pagination extends Vue {
   async onClickPage(pageNumber: number) {
     await store.commit('pagination/setCurrentPageNumber', { pageNumber: pageNumber, namespace: this.namespace })
 
-    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+    const paginationQuery = PaginationQueryParametersModel
         .createPaginationQuery({
           'pageNumber': pageNumber,
           'endpointUrl': `${ this.endpointUrl }`,
@@ -231,7 +231,7 @@ export default class Pagination extends Vue {
   async onClickFirstPage(): Promise<void> {
     await store.commit('pagination/setCurrentPageNumber', { pageNumber: 1, namespace: this.namespace })
 
-    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+    const paginationQuery = PaginationQueryParametersModel
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,
           'endpointUrl': `${ this.endpointUrl }`,
@@ -247,7 +247,7 @@ export default class Pagination extends Vue {
   async onClickLastPage(): Promise<void> {
     await store.commit('pagination/setCurrentPageNumber', { pageNumber: this.totalPages, namespace: this.namespace })
 
-    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+    const paginationQuery = PaginationQueryParametersModel
         .createPaginationQuery({
           'pageNumber': this.totalPages,
           'endpointUrl': `${ this.endpointUrl }`,

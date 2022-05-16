@@ -145,7 +145,7 @@ export default class ProductReviews extends PaginationBase<ProductReviewModel> i
   
   async fetchPaginationData(): Promise<void> {
 
-    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+    const paginationQuery = PaginationQueryParametersModel
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,
           'endpointUrl': this.buildEndPointUrlForPaginatedResults(),

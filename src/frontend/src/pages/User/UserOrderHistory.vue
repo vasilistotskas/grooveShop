@@ -89,7 +89,7 @@ export default class UserOrderHistory extends PaginationBase<UserOrderModel> imp
 
   async fetchPaginationData(): Promise<void> {
 
-    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+    const paginationQuery = PaginationQueryParametersModel
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,
           'endpointUrl': `orders`,

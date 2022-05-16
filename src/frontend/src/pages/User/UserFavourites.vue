@@ -84,7 +84,7 @@ export default class UserFavourites extends PaginationBase<UserDetailsModel> imp
 
   async fetchPaginationData(): Promise<void> {
 
-    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+    const paginationQuery = PaginationQueryParametersModel
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,
           'endpointUrl': this.buildEndPointUrlForPaginatedResults(),

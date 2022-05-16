@@ -92,7 +92,7 @@ export default class Search extends PaginationBase<ProductModel> implements Pagi
 
   async fetchPaginationData(): Promise<void> {
 
-    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+    const paginationQuery = PaginationQueryParametersModel
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,
           'endpointUrl': `search-product`,

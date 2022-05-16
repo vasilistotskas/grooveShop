@@ -90,7 +90,7 @@ export default class AllProducts extends PaginationBase<ProductModel> implements
   }
 
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
+    const paginationQuery = PaginationQueryParametersModel
       .createPaginationQuery({
         'pageNumber': this.currentPageNumber,
         'endpointUrl': 'products/all',
