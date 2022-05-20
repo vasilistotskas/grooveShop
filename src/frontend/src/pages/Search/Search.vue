@@ -73,7 +73,7 @@ export default class Search extends PaginationBase<ProductModel> implements Pagi
     document.title = 'Search'
 
     if (this.params.query) {
-      store.commit('pagination/setCurrentQuery', { currentQuery: this.params.query, namespace: this.paginationNamespace })
+      store.commit('pagination/setCurrentQuery', { currentQuery: this.params, namespace: this.paginationNamespace })
     }
 
     await store.commit('pagination/setCurrentPageNumber', { pageNumber: 1, namespace: this.paginationNamespace })
@@ -96,7 +96,10 @@ export default class Search extends PaginationBase<ProductModel> implements Pagi
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,
           'endpointUrl': `search-product`,
-          'queryParams': this.currentPageQuery,
+          'queryParams': {
+            'page': this.currentPageNumber,
+            'query': this.currentPageQuery
+          },
           'method': ApiBaseMethods.GET
         } )
 

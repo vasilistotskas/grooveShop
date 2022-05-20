@@ -145,7 +145,7 @@ export default class PaginationModule extends AppBaseModule {
 		} else if (!data.params.queryParams) {
 			ApiUrl = `${ baseUrl }/${ data.params.endpointUrl }/?p=${ data.params.pageNumber }`
 		} else {
-			ApiUrl = `${ baseUrl }/${ data.params.endpointUrl }?p=${ data.params.pageNumber }&query=${ data.params.queryParams }`
+			ApiUrl = `${ baseUrl }/${ data.params.endpointUrl }?p=${ data.params.pageNumber }&query=${ data.params.queryParams.query['query'] }`
 		}
 
 		session({
@@ -190,5 +190,6 @@ export default class PaginationModule extends AppBaseModule {
 			)
 
 	}
+
 
 }

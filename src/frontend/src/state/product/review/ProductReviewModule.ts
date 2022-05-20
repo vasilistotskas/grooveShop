@@ -8,11 +8,13 @@ import PaginationModel from '@/state/pagination/PaginationModel'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
+import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
 
 const toast = useToast()
 
 @Module({ namespaced: true })
 export default class ProductReviewModule extends AppBaseModule {
+	namespace = PaginationNamespaceDataEnum.USER_REVIEWS
 	productReviews: Array<ProductReviewModel> = []
 	productReviewsAverage = 0
 	productReviewsCounter = 0
@@ -80,17 +82,20 @@ export default class ProductReviewModule extends AppBaseModule {
 	}
 
 	@Mutation
-	removeUserToProductReview(data: any): void {
+	removeUserToProductReview(data: Partial<any>): void {
 
 		if (router.currentRoute.value.name === 'Product') {
 			const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
 				.createPaginationQuery({
 					'endpointUrl': `reviews/product/${ data.product_id }`,
-					'queryParams': store.getters['pagination/getCurrentQuery'],
+					'queryParams': {
+						'page': store.getters['pagination/getCurrentPageNumber'](this.namespace),
+						'query': store.getters['pagination/getCurrentQuery'](this.namespace)
+					},
 					'method': ApiBaseMethods.GET
 				} )
 
-			store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
+			store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.namespace })
 				.then(() => toast.error('Your review has been deleted'))
 		}
 
@@ -98,11 +103,14 @@ export default class ProductReviewModule extends AppBaseModule {
 			const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
 				.createPaginationQuery({
 					'endpointUrl': `reviews/user/${ data.user_id }`,
-					'queryParams': store.getters['pagination/getCurrentQuery'],
+					'queryParams': {
+						'page': store.getters['pagination/getCurrentPageNumber'](this.namespace),
+						'query': store.getters['pagination/getCurrentQuery'](this.namespace)
+					},
 					'method': ApiBaseMethods.GET
 				} )
 
-			store.dispatch('pagination/fetchPaginatedResults', paginationQuery)
+			store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.namespace })
 				.then(() => toast.error('Your review has been deleted'))
 		}
 
@@ -135,7 +143,7 @@ export default class ProductReviewModule extends AppBaseModule {
 	}
 
 	@Action
-	async toggleReview(data: any): Promise<any> {
+	async toggleReview(data: Partial<any>): Promise<any> {
 		const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
 		if (IsAuthenticated) {
 			const product_id: number = store.getters['product/getProductId']
@@ -184,7 +192,7 @@ export default class ProductReviewModule extends AppBaseModule {
 	}
 
 	@Action
-	createCurrentProductReview(data: any): Promise<void> {
+	createCurrentProductReview(data: Partial<any>): Promise<void> {
 		const product_id: number = store.getters['product/getProductId']
 		return api.post(`reviews/product/${ product_id }/`, data)
 			.then((response: any) => {
@@ -213,7 +221,7 @@ export default class ProductReviewModule extends AppBaseModule {
 	}
 
 	@Action
-	updateCurrentProductReview(data: any): Promise<void> {
+	updateCurrentProductReview(data: Partial<any>): Promise<void> {
 		const user_id: number = store.getters['user/data/getUserId']
 		const product_id: number = store.getters['product/getProductId']
 
@@ -230,7 +238,7 @@ export default class ProductReviewModule extends AppBaseModule {
 	}
 
 	@Action
-	deleteCurrentProductReview(data: any): Promise<void> {
+	deleteCurrentProductReview(data: Partial<any>): Promise<void> {
 		return api.delete(`reviews/review/${ data.user_id }/${ data.product_id }/`)
 			.then(() => {
 				this.context.commit('removeUserToProductReview', data)

@@ -187,7 +187,10 @@ export default class Pagination extends Vue {
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,
           'endpointUrl': `${ this.endpointUrl }`,
-          'queryParams': this.currentPageQuery,
+          'queryParams': {
+            'page': this.currentPageNumber,
+            'query': this.currentPageQuery
+          },
           'method': ApiBaseMethods.GET
         } )
 
@@ -203,7 +206,10 @@ export default class Pagination extends Vue {
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,
           'endpointUrl': `${ this.endpointUrl }`,
-          'queryParams': this.currentPageQuery,
+          'queryParams': {
+            'page': this.currentPageNumber,
+            'query': this.currentPageQuery
+          },
           'method': ApiBaseMethods.GET
         } )
 
@@ -219,7 +225,10 @@ export default class Pagination extends Vue {
         .createPaginationQuery({
           'pageNumber': pageNumber,
           'endpointUrl': `${ this.endpointUrl }`,
-          'queryParams': this.currentPageQuery,
+          'queryParams': {
+            'page': this.currentPageNumber,
+            'query': this.currentPageQuery
+          },
           'method': ApiBaseMethods.GET
         } )
 
@@ -235,7 +244,10 @@ export default class Pagination extends Vue {
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,
           'endpointUrl': `${ this.endpointUrl }`,
-          'queryParams': this.currentPageQuery,
+          'queryParams': {
+            'page': this.currentPageNumber,
+            'query': this.currentPageQuery
+          },
           'method': ApiBaseMethods.GET
         } )
 
@@ -251,7 +263,10 @@ export default class Pagination extends Vue {
         .createPaginationQuery({
           'pageNumber': this.totalPages,
           'endpointUrl': `${ this.endpointUrl }`,
-          'queryParams': this.currentPageQuery,
+          'queryParams': {
+            'page': this.currentPageNumber,
+            'query': this.currentPageQuery
+          },
           'method': ApiBaseMethods.GET
         } )
 

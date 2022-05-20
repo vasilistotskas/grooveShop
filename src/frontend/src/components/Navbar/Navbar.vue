@@ -372,8 +372,11 @@ export default class Navbar extends PaginationBase<ProductModel> implements Pagi
         .createPaginationQuery({
           'pageNumber': this.currentPageNumber,
           'endpointUrl': `search-product`,
-          'queryParams': this.searchQuery,
-          'method': ApiBaseMethods.POST
+          'queryParams': {
+            'page': this.currentPageNumber,
+            'query': this.searchQuery
+          },
+          'method': ApiBaseMethods.GET
         } )
 
     await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })

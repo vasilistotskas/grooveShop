@@ -19,7 +19,7 @@ export default class AppModule extends AppBaseModule {
 	}
 
 	get axiosBaseUrl(): string | undefined {
-		return session.defaults.baseURL
+		return 'http://localhost:8010'
 	}
 
 	get getWindowWidth(): number {
