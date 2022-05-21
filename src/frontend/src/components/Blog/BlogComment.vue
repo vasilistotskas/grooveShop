@@ -13,7 +13,10 @@
         </div>
         <div class="blog-comment-body">
           <h2 class="blog-comment-body-title">
-            <label class="blog-comment-body-label" for="commentTextArea">
+            <label
+              class="blog-comment-body-label"
+              for="commentTextArea"
+            >
               Your Comment
             </label>
           </h2>

@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-import logging
+from django.views import View
 from django.contrib import admin
 from django.conf import settings
 from django.shortcuts import render
@@ -21,58 +21,65 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.middleware.csrf import get_token
 from graphene_django.views import GraphQLView
-from django.views.decorators.gzip import gzip_page
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
-@gzip_page
-def index_view(
-        request,
-        category_slug='None',
-        product_slug='None',
-        uid='None',
-        token='None',
-        username='None',
-        slug='None',
-        tag='None',
-):
-    get_token(request)
-    return render(request, 'dist/index.html')
+class IndexView(View):
+    template_name = 'dist/index.html'
+
+    def get(
+            self,
+            request,
+            category_slug='None',
+            product_slug='None',
+            uid='None',
+            token='None',
+            username='None',
+            slug='None',
+            tag='None',
+    ):
+        get_token(request)
+
+        to_render = {
+            'SiteTitle': 'DeepWeb'
+        }
+
+        return render(request, "dist/index.html", to_render)
 
 
-handler400 = index_view
-handler403 = index_view
-handler404 = index_view
-handler500 = index_view
+handler400 = IndexView.as_view()
+handler403 = IndexView.as_view()
+handler404 = IndexView.as_view()
+handler500 = IndexView.as_view()
 
 front_urls = [
-    path('', index_view, name='index'),
-    path('log-in', index_view, name='index'),
-    path('sign-up', index_view, name='index'),
-    path('accounts/activate/<uid>/<token>', index_view, name='index'),
-    path('accounts/activate/verify_mail_resend', index_view, name='index'),
-    path('password_reset', index_view, name='index'),
-    path('password-reset', index_view, name='index'),
-    path('password_reset/<uid>/<token>', index_view, name='index'),
-    path('password-reset/<uid>/<token>', index_view, name='index'),
-    path('user-account', index_view, name='index'),
-    path('user-account/orders', index_view, name='index'),
-    path('user-account/settings', index_view, name='index'),
-    path('user-account/favourites', index_view, name='index'),
-    path('user-account/reviews', index_view, name='index'),
-    path('user-account/password', index_view, name='index'),
-    path('search', index_view, name='index'),
-    path('cart', index_view, name='index'),
-    path('cart/success', index_view, name='index'),
-    path('cart/checkout', index_view, name='index'),
-    path('products/all', index_view, name='index'),
-    path('product/<category_slug>/<product_slug>', index_view, name='index'),
-    path('category/<category_slug>', index_view, name='index'),
-    path('blog', index_view, name='index'),
-    path('author/<username>', index_view, name='index'),
-    path('post/<slug>', index_view, name='index'),
-    path('tag/<tag>', index_view, name='index'),
+    path('', IndexView.as_view(), name='index'),
+    path('log-in', IndexView.as_view(), name='index'),
+    path('sign-up', IndexView.as_view(), name='index'),
+    path('accounts/activate/<uid>/<token>', IndexView.as_view(), name='index'),
+    path('accounts/activate/verify_mail_resend', IndexView.as_view(), name='index'),
+    path('password_reset', IndexView.as_view(), name='index'),
+    path('password-reset', IndexView.as_view(), name='index'),
+    path('password_reset/<uid>/<token>', IndexView.as_view(), name='index'),
+    path('password-reset/<uid>/<token>', IndexView.as_view(), name='index'),
+    path('user-account', IndexView.as_view(), name='index'),
+    path('user-account/orders', IndexView.as_view(), name='index'),
+    path('user-account/settings', IndexView.as_view(), name='index'),
+    path('user-account/favourites', IndexView.as_view(), name='index'),
+    path('user-account/reviews', IndexView.as_view(), name='index'),
+    path('user-account/password', IndexView.as_view(), name='index'),
+    path('search', IndexView.as_view(), name='index'),
+    path('cart', IndexView.as_view(), name='index'),
+    path('cart/success', IndexView.as_view(), name='index'),
+    path('cart/checkout', IndexView.as_view(), name='index'),
+    path('products/all', IndexView.as_view(), name='index'),
+    path('product/<category_slug>/<product_slug>', IndexView.as_view(), name='index'),
+    path('category/<category_slug>', IndexView.as_view(), name='index'),
+    path('blog', IndexView.as_view(), name='index'),
+    path('author/<username>', IndexView.as_view(), name='index'),
+    path('post/<slug>', IndexView.as_view(), name='index'),
+    path('tag/<tag>', IndexView.as_view(), name='index'),
 ]
 
 urlpatterns = [
