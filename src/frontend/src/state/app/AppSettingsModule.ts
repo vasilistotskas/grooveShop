@@ -34,10 +34,13 @@ export default class AppSettingsModule extends AppBaseModule {
 	@Action
 	async toggleThemeMode(): Promise<AppSettingsThemeModeOption> {
 		const currentThemeMode = this.context.getters['getSettings'].themeMode
-		const nextThemeMode = (currentThemeMode === AppSettingsThemeModeOption.Light)
-			? AppSettingsThemeModeOption.Dark
-			: AppSettingsThemeModeOption.Light
+		const nextThemeMode = (currentThemeMode === AppSettingsThemeModeOption.light)
+			? AppSettingsThemeModeOption.dark
+			: AppSettingsThemeModeOption.light
 		await this.context.dispatch('updateSetting', { key: 'themeMode', value: nextThemeMode })
+
+		localStorage.setItem('themeModeFromLocalStorage', nextThemeMode)
+
 		return nextThemeMode
 	}
 

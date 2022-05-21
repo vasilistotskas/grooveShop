@@ -1,6 +1,7 @@
 enum AppSettingsThemeModeOption {
-	Light = 'light',
-	Dark = 'dark'
+	no_theme = '',
+	light = 'light',
+	dark = 'dark'
 }
 
 export default AppSettingsThemeModeOption

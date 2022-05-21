@@ -87,7 +87,9 @@
               :icon="blogIcon"
               size="2x"
             />
-            <h4>BLOG</h4>
+            <h3 class="navbar-blog-title">
+              BLOG
+            </h3>
             <span class="line-1" />
             <span class="line-2" />
             <span class="line-3" />
@@ -211,20 +213,7 @@
               <span class="cart-total-length">{{ cartTotalLength }}</span>
             </RouterLink>
           </li>
-          <li class="navigation-header-part toggle-dark-mode-part">
-            <a
-              :aria-label="'Toggle Dark Mode'"
-              :title="'Toggle Dark Mode'"
-              class="toggle-dark-mode-button"
-              href="javascript:void(0);"
-              @click="toggleThemeMode()"
-            >
-              <font-awesome-icon
-                :icon="themeIconClass"
-                size="lg"
-              />
-            </a>
-          </li>
+          <ThemeModeSwitcher />
         </ul>
       </div>
       <!--    <transition name="fade">-->
@@ -242,20 +231,18 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { Options, Vue } from 'vue-class-component'
+import { Options } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
 import CategoryModel from '@/state/category/CategoryModel'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
-import { faSun } from '@fortawesome/free-solid-svg-icons/faSun'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
-import { faMoon } from '@fortawesome/free-solid-svg-icons/faMoon'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import PaginationBase from '@/components/Pagination/PaginationBase'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
 import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
-import AppSettingsThemeModeOption from '@/state/app/AppSettingsThemeModeOption'
+import ThemeModeSwitcher from '@/components/Utilities/ThemeModeSwitcher.vue'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart'
 import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
@@ -266,7 +253,8 @@ import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOpt
   name: 'Navbar',
   components: {
     NavbarCategories,
-    GrooveImage
+    GrooveImage,
+    ThemeModeSwitcher
   },
   props: {
     cartTotalLength: Number,
@@ -278,9 +266,7 @@ export default class Navbar extends PaginationBase<ProductModel> implements Pagi
   searchQuery: string = ''
   preHeadHidden: boolean = true
 
-  sunIcon = faSun
   blogIcon = faBlog
-  moonIcon = faMoon
   userIcon = faUser
   heartIcon = faHeart
   searchIcon = faSearch
@@ -296,8 +282,6 @@ export default class Navbar extends PaginationBase<ProductModel> implements Pagi
     navbarProductsButton: HTMLElement
   }
 
-  themeModeFromPreference: AppSettingsThemeModeOption = AppSettingsThemeModeOption.Light
-
   get navbarMenuHidden(): boolean {
     return store.getters['app/getNavbarMenuHidden']
   }
@@ -312,49 +296,6 @@ export default class Navbar extends PaginationBase<ProductModel> implements Pagi
 
   get isAuthenticated(): boolean {
     return store.getters['auth/isAuthenticated']
-  }
-
-  get getThemeMode(): AppSettingsThemeModeOption {
-    return store.getters['settings/getSettings'].themeMode
-  }
-
-  get themeIconClass(): typeof faMoon | typeof faSun {
-    switch (this.getThemeMode) {
-      case AppSettingsThemeModeOption.Dark:
-        return this.moonIcon
-      case AppSettingsThemeModeOption.Light:
-      default:
-        return this.sunIcon
-    }
-  }
-
-  async created(): Promise<void> {
-
-    this.$watch(
-        () => this.getThemeMode,
-        (newThemeMode: AppSettingsThemeModeOption, oldThemeMode: AppSettingsThemeModeOption) => {
-          this.switchThemeModeFromTo(oldThemeMode, newThemeMode)
-        }
-    )
-
-    this.$watch(
-        () => this.themeModeFromPreference,
-        () => {
-          this.updateThemeModeFromPreference()
-        }
-    )
-
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-      this.themeModeFromPreference = e.matches ? AppSettingsThemeModeOption.Dark : AppSettingsThemeModeOption.Light
-    })
-
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      this.themeModeFromPreference = AppSettingsThemeModeOption.Dark
-    }
-  }
-
-  mounted(): void {
-    this.updateThemeModeFromPreference()
   }
 
   public menuToggle(): void {
@@ -385,48 +326,6 @@ export default class Navbar extends PaginationBase<ProductModel> implements Pagi
       path: '/search',
       query: { ...this.$route.query, query: this.searchQuery, page: this.currentPageNumber }
     })
-  }
-
-  public updateThemeModeFromPreference(): void {
-
-    store.dispatch('settings/toggleThemeModeFromPreference', this.themeModeFromPreference).then(
-        (themeMode) => this.updateThemeMode(themeMode)
-    )
-  }
-
-  public toggleThemeMode(): void {
-    store.dispatch('settings/toggleThemeMode').then(
-        (themeMode) => this.updateThemeMode(themeMode)
-    )
-  }
-
-  // @ts-ignore
-  public updateThemeMode(themeMode: AppSettingsThemeModeOption = null): void {
-    if (null === themeMode) {
-      themeMode = this.getThemeMode
-    }
-
-    switch (themeMode) {
-      case AppSettingsThemeModeOption.Dark:
-        this.switchThemeModeFromTo(AppSettingsThemeModeOption.Light, AppSettingsThemeModeOption.Dark)
-        break
-      case AppSettingsThemeModeOption.Light:
-      default:
-        this.switchThemeModeFromTo(AppSettingsThemeModeOption.Dark, AppSettingsThemeModeOption.Light)
-        break
-    }
-  }
-
-  public switchThemeModeFromTo(from: AppSettingsThemeModeOption, to: AppSettingsThemeModeOption): void {
-    const bodyElement = document.body
-    bodyElement.classList.remove(from)
-    bodyElement.classList.add(to)
-    this.updateMetaTagElement('color-scheme', 'content', to)
-  }
-
-  public updateMetaTagElement(metaName: string, metaAttribute: string, newValue: string): void {
-    const metaTagElement = <Element>document.querySelector(`meta[name=${ metaName }]`)
-    metaTagElement.setAttribute(metaAttribute, newValue)
   }
 
 }
