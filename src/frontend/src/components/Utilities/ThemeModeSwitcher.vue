@@ -61,7 +61,7 @@ export default class ThemeModeSwitcher extends Vue {
     this.$watch(
         () => this.getThemeMode,
         (newThemeMode: AppSettingsThemeModeOption, oldThemeMode: AppSettingsThemeModeOption) => {
-          this.switchThemeModeFromTo(oldThemeMode, newThemeMode)
+          ThemeModeSwitcher.switchThemeModeFromTo(oldThemeMode, newThemeMode)
         }
     )
 
@@ -85,13 +85,25 @@ export default class ThemeModeSwitcher extends Vue {
     this.updateThemeModeFromPreference()
   }
 
-  public updateThemeModeFromLocalStorage(): void {
+  private static switchThemeModeFromTo(from: AppSettingsThemeModeOption, to: AppSettingsThemeModeOption): void {
+    const bodyElement = document.body
+    bodyElement.classList.remove(from)
+    bodyElement.classList.add(to)
+
+    store.dispatch('app/updateMetaTagElement', {
+      'metaName': 'color-scheme',
+      'metaAttribute': 'content',
+      'newValue': to
+    })
+  }
+
+  private updateThemeModeFromLocalStorage(): void {
     store.dispatch('settings/toggleThemeModeFromPreference', this.themeModeFromLocalStorage).then(
         (themeMode) => this.updateThemeMode(themeMode)
     )
   }
 
-  public updateThemeModeFromPreference(): void {
+  private updateThemeModeFromPreference(): void {
     if (AppSettingsThemeModeOption.no_theme === this.themeModeFromLocalStorage) {
       store.dispatch('settings/toggleThemeModeFromPreference', this.themeModeFromPreference).then(
           (themeMode) => this.updateThemeMode(themeMode)
@@ -101,39 +113,26 @@ export default class ThemeModeSwitcher extends Vue {
     }
   }
 
-  public toggleThemeMode(): void {
+  private toggleThemeMode(): void {
     store.dispatch('settings/toggleThemeMode').then(
         (themeMode) => this.updateThemeMode(themeMode)
     )
   }
 
-
-  public updateThemeMode(themeMode: AppSettingsThemeModeOption = AppSettingsThemeModeOption.no_theme): void {
+  private updateThemeMode(themeMode: AppSettingsThemeModeOption = AppSettingsThemeModeOption.no_theme): void {
     if (AppSettingsThemeModeOption.no_theme === themeMode) {
       themeMode = this.getThemeMode
     }
 
     switch (themeMode) {
       case AppSettingsThemeModeOption.dark:
-        this.switchThemeModeFromTo(AppSettingsThemeModeOption.light, AppSettingsThemeModeOption.dark)
+        ThemeModeSwitcher.switchThemeModeFromTo(AppSettingsThemeModeOption.light, AppSettingsThemeModeOption.dark)
         break
       case AppSettingsThemeModeOption.light:
       default:
-        this.switchThemeModeFromTo(AppSettingsThemeModeOption.dark, AppSettingsThemeModeOption.light)
+        ThemeModeSwitcher.switchThemeModeFromTo(AppSettingsThemeModeOption.dark, AppSettingsThemeModeOption.light)
         break
     }
-  }
-
-  public switchThemeModeFromTo(from: AppSettingsThemeModeOption, to: AppSettingsThemeModeOption): void {
-    const bodyElement = document.body
-    bodyElement.classList.remove(from)
-    bodyElement.classList.add(to)
-    this.updateMetaTagElement('color-scheme', 'content', to)
-  }
-
-  public updateMetaTagElement(metaName: string, metaAttribute: string, newValue: string): void {
-    const metaTagElement = <Element>document.querySelector(`meta[name=${ metaName }]`)
-    metaTagElement.setAttribute(metaAttribute, newValue)
   }
 
 }

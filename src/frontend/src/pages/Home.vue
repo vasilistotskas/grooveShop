@@ -183,7 +183,7 @@ export default class Home extends Vue {
     await store.dispatch('app/updateMetaTagElement', {
       'metaName': 'description',
       'metaAttribute': 'content',
-      'newValue': 'test'
+      'newValue': 'Deep Web Homepage'
     })
   }
 
