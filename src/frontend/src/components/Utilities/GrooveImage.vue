@@ -30,29 +30,30 @@ import {
   ImageFormatOptions,
   ImagePathOptions
 } from '@/helpers/MediaStream/ImageUrlEnum'
+import { HtmlImageLoadingOptions } from '@/components/Sliders/Enums/SliderEnum'
 
 @Options({
   name: 'GrooveImage',
   props: {
     useMediaStream: {
       type: Boolean,
-      default: true,
-      required: false
+      required: false,
+      default: true
     },
     source: {
       type: String,
-      default: 'backend/static/images/no_photo.jpg',
-      required: false
+      required: false,
+      default: 'backend/static/images/no_photo.jpg'
     },
     alt: {
       type: String,
-      default: 'no alt',
-      required: false
+      required: false,
+      default: 'no alt'
     },
     loading: {
       type: String,
       required: false,
-      default: 'lazy'
+      default: HtmlImageLoadingOptions.lazy
     },
     imgClass: {
       type: String,
@@ -106,6 +107,8 @@ import {
 })
 
 export default class GrooveImage extends Vue {
+
+  ImagePathOptions = ImagePathOptions
 
   useMediaStream!: boolean
   source!: string
