@@ -1,6 +1,7 @@
 import store from '@/store'
 import router from '@/routes'
 import gql from 'graphql-tag'
+import { isEmpty } from 'lodash'
 import { ApolloQueryResult } from '@apollo/client'
 import BlogTagModel from '@/state/blog/BlogTagModel'
 import BlogPostModel from '@/state/blog/BlogPostModel'
@@ -22,7 +23,7 @@ export default class BlogModule extends AppBaseModule {
 	author = new BlogAuthorModel()
 	commentsByUser: Array<BlogCommentModel> = []
 	commentsByPost: Array<BlogCommentModel> = []
-	commentByUserToPost: Array<BlogCommentModel> = []
+	commentByUserToPost = new BlogCommentModel()
 
 	get getAllPosts(): Array<BlogPostModel> {
 		return this.allPosts
@@ -64,12 +65,13 @@ export default class BlogModule extends AppBaseModule {
 		return this.commentsByPost
 	}
 
-	get getCommentByUserToPost(): Array<BlogCommentModel> {
+	get getCommentByUserToPost(): BlogCommentModel {
 		return this.commentByUserToPost
 	}
 
-	get getUserHasAlreadyCommentedPost(): boolean {
-		return this.getCommentByUserToPost && Object.keys(this.getCommentByUserToPost).length > 0
+	get getUserCommentToPostEmpty(): boolean {
+		const commentByUserToPost = this.context.getters['getCommentByUserToPost']
+		return isEmpty(commentByUserToPost)
 	}
 
 	@Mutation
@@ -118,7 +120,7 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	@Mutation
-	setCommentByUserToPost(data: Array<BlogCommentModel>): void {
+	setCommentByUserToPost(data: BlogCommentModel): void {
 		this.commentByUserToPost = data
 	}
 
@@ -482,6 +484,14 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	@Action
+	async getCommentMergedWithUserProfile(commentData: BlogCommentModel): Promise<BlogCommentModel> {
+		const userProfile = {
+			userProfile: await this.context.dispatch('fetchUserProfileByUserId', Number(commentData.user.id))
+		}
+		return { ...commentData, ...userProfile }
+	}
+
+	@Action
 	async fetchCommentByUserToPost(): Promise<void> {
 		try {
 			const comment = await clientApollo.query({
@@ -526,11 +536,7 @@ export default class BlogModule extends AppBaseModule {
 
 			const commentData = comment.data.commentByUserToPost
 
-			const userProfile = {
-				userProfile: await this.context.dispatch('fetchUserProfileByUserId', Number(commentData.user.id))
-			}
-
-			const dataMerged = {...commentData, ...userProfile}
+			const dataMerged = await this.context.dispatch('getCommentMergedWithUserProfile', commentData)
 
 			return this.context.commit('setCommentByUserToPost', dataMerged)
 		} catch (error) {
@@ -545,10 +551,21 @@ export default class BlogModule extends AppBaseModule {
 				mutation: gql`mutation ($post_id: ID!, $user_email: String!, $content: String!) {
                 createComment(postId: $post_id, userEmail: $user_email, content: $content) {
 				  comment {
-				    id
-			        content
+				    content
+				    createdAt
+				    isApproved
+				    numberOfLikes
 				    post {
-					  id
+				  	 id
+                     title
+                     subtitle
+                     publishDate
+                     published
+                     metaDescription
+                     mainImageAbsoluteUrl
+                     mainImageFilename
+                     slug
+					 numberOfLikes
 				    }
 					user {
 					  id
@@ -563,7 +580,59 @@ export default class BlogModule extends AppBaseModule {
 					content: String(content),
 				}
 			})
-			return this.context.commit('setCommentByUserToPost', comment.data.createComment)
+
+			const commentData = comment.data.createComment
+
+			const dataMerged = await this.context.dispatch('getCommentMergedWithUserProfile', commentData)
+
+			return this.context.commit('setCommentByUserToPost', dataMerged)
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2))
+		}
+	}
+
+	@Action
+	async updateCommentToPost(content: string): Promise<void> {
+		try {
+			const comment = await clientApollo.mutate({
+				mutation: gql`mutation ($comment_id: ID!, $content: String!) {
+                updateComment(commentId: $comment_id, content: $content) {
+				  comment {
+				    id
+				    content
+				    createdAt
+				    isApproved
+				    numberOfLikes
+				    post {
+				  	 id
+                     title
+                     subtitle
+                     publishDate
+                     published
+                     metaDescription
+                     mainImageAbsoluteUrl
+                     mainImageFilename
+                     slug
+					 numberOfLikes
+				    }
+					user {
+					  id
+					  email
+					}
+				  }
+                }
+              }`,
+				variables: {
+					comment_id: Number(this.context.getters['getCommentByUserToPost'].id),
+					content: String(content),
+				}
+			})
+
+			const commentData = comment.data.updateComment.comment
+
+			const dataMerged = await this.context.dispatch('getCommentMergedWithUserProfile', commentData)
+
+			return this.context.commit('setCommentByUserToPost', dataMerged)
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}

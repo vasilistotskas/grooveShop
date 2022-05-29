@@ -43,6 +43,7 @@
                   :input-with-add-on="true"
                   :input-with-add-on-icon="keyIcon"
                   type="password"
+                  autocomplete="on"
                   @blur="formManager.form.password.onBlur"
                 />
                 <FormValidationErrors :errors="formManager.form.password.$errors" />

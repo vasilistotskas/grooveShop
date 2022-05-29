@@ -202,6 +202,21 @@ class CommentCreateMutation(graphene.Mutation):
         return CommentCreateMutation(comment=comment)
 
 
+class CommentUpdateMutation(graphene.Mutation):
+    class Arguments:
+        comment_id = graphene.ID(required=True)
+        content = graphene.String(required=True)
+
+    comment = graphene.Field(CommentType)
+
+    @classmethod
+    def mutate(cls, root, info, comment_id, content):
+        comment = Comment.objects.get(pk=comment_id)
+        comment.content = content
+        comment.save()
+        return CommentUpdateMutation(comment=comment)
+
+
 class CommentDeleteMutation(graphene.Mutation):
     class Arguments:
         comment_id = graphene.ID(required=True)
@@ -219,6 +234,7 @@ class Mutation(graphene.ObjectType):
     update_post_likes = UpdatePostLikesMutation.Field()
     update_comment_likes = UpdateCommentLikesMutations.Field()
     create_comment = CommentCreateMutation.Field()
+    update_comment = CommentUpdateMutation.Field()
     delete_comment = CommentDeleteMutation.Field()
 
 

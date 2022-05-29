@@ -64,13 +64,16 @@ export default class BlogComment extends Vue {
   writeReviewIcon = faPenSquare
   comment: string = ''
 
-
-  get reviewButtonText(): string {
-    return this.userHasAlreadyCommentedPost ? 'Update' : 'Post'
+  get isAuthenticated(): boolean {
+    return store.getters['auth/isAuthenticated']
   }
 
-  get userHasAlreadyCommentedPost(): boolean {
-    return store.getters['blog/getUserHasAlreadyCommentedPost']
+  get reviewButtonText(): string {
+    return this.userCommentToPostEmpty ? 'Post' : 'Update'
+  }
+
+  get userCommentToPostEmpty(): boolean {
+    return store.getters['blog/getUserCommentToPostEmpty']
   }
 
   get commentByUserToPost(): BlogCommentModel {
@@ -82,10 +85,20 @@ export default class BlogComment extends Vue {
   }
 
   public async commentHandle(): Promise<void | string | number> {
-    if (this.comment) {
-      await store.dispatch('blog/createCommentToPost', this.comment)
-    } else {
+    if (!this.isAuthenticated) {
+      return toast.error('You are not logged in')
+    }
+
+    if (!this.comment) {
       return toast.error('You have to write a comment')
+    }
+
+    if (!this.userCommentToPostEmpty) {
+      await store.dispatch('blog/updateCommentToPost', this.comment)
+      return toast.success('Your comment has been updated')
+    } else {
+      await store.dispatch('blog/createCommentToPost', this.comment)
+      return toast.success('Your comment has been created')
     }
   }
 
