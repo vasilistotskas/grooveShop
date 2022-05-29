@@ -50,7 +50,6 @@ export default class UserModule extends AppBaseModule {
 			store.commit('product/favourite/unsetUserFavourites')
 			store.commit('product/review/unsetUserToProductReview')
 			store.commit('product/review/unsetUserReviews')
-			store.commit('user/order/unsetUserOrders')
 			store.commit('country/unsetUserCountryData')
 		})
 	}
@@ -72,7 +71,7 @@ export default class UserModule extends AppBaseModule {
 	}
 
 	@Action
-	async updateUserDetails(data: any): Promise<void> {
+	async updateUserProfile(data: any): Promise<void> {
 		const user_id = await this.context.getters['getUserId']
 
 		try {

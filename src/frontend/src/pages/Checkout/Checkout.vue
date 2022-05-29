@@ -50,11 +50,11 @@
             Shipping details
           </h2>
           <FormProvider
-            id="userDetailsForm"
+            id="customerDetailsForm"
             :errors="formManager.errors"
             :form="formManager.form"
             :form-class="'form-class checkout-grid-form'"
-            name="userDetailsForm"
+            name="customerDetailsForm"
             title=""
             @submit="handleSubmit()"
           >

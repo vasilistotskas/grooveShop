@@ -65,10 +65,12 @@ export default class CountryModule extends AppBaseModule {
 
 	@Action
 	async findRegionsBasedOnAlphaForLoggedCustomer(): Promise<void> {
-		const userDetails: UserProfileModel = store.getters['user/getUserData']
-		if (userDetails.country) {
-			const result = this.countries.find(obj => {
-				return obj.alpha_2 === userDetails.country
+		const UserProfileModel: UserProfileModel = store.getters['user/getUserData']
+
+		if (UserProfileModel.country) {
+			const countries = this.context.getters['getCountries']
+			const result = countries.find((country: CountryModel) => {
+				return country.alpha_2 === UserProfileModel.country
 			})
 			if (result) {
 				await this.context.commit('setSelectedCountry', result)

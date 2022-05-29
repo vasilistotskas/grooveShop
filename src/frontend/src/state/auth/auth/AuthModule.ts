@@ -148,7 +148,6 @@ export default class AuthModule extends AppBaseModule {
 				store.commit('product/favourite/unsetUserFavourites')
 				store.commit('product/review/unsetUserToProductReview')
 				store.commit('product/review/unsetUserReviews')
-				store.commit('user/order/unsetUserOrders')
 				store.commit('country/unsetUserCountryData')
 				toast.success('Logged Out')
 			})

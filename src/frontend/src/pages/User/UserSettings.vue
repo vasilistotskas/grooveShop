@@ -1,10 +1,10 @@
 <template>
   <FormProvider
     v-if="userData && Object.keys(userData).length > 0"
-    id="userDetailsForm"
+    id="userProfileForm"
     :errors="formManager.errors"
     :form="formManager.form"
-    name="userDetailsForm"
+    name="userProfileForm"
     title=""
     @submit="handleSubmit()"
   >
@@ -18,7 +18,7 @@
           :id="formManager.form.first_name.$uid"
           v-model="formManager.form.first_name.$value"
           :has-error="formManager.form.first_name.$hasError"
-          :placeholder="userDetails.first_name"
+          :placeholder="userProfile.first_name"
           :validating="formManager.form.first_name.$validating"
         />
         <FormValidationErrors
@@ -36,7 +36,7 @@
           :id="formManager.form.last_name.$uid"
           v-model="formManager.form.last_name.$value"
           :has-error="formManager.form.last_name.$hasError"
-          :placeholder="userDetails.last_name"
+          :placeholder="userProfile.last_name"
           :validating="formManager.form.last_name.$validating"
         />
         <FormValidationErrors
@@ -54,7 +54,7 @@
           :id="formManager.form.phone.$uid"
           v-model="formManager.form.phone.$value"
           :has-error="formManager.form.phone.$hasError"
-          :placeholder="userDetails.phone"
+          :placeholder="userProfile.phone"
           :validating="formManager.form.phone.$validating"
         />
         <FormValidationErrors
@@ -72,7 +72,7 @@
           :id="formManager.form.city.$uid"
           v-model="formManager.form.city.$value"
           :has-error="formManager.form.city.$hasError"
-          :placeholder="userDetails.city"
+          :placeholder="userProfile.city"
           :validating="formManager.form.city.$validating"
         />
         <FormValidationErrors
@@ -90,7 +90,7 @@
           :id="formManager.form.zipcode.$uid"
           v-model="formManager.form.zipcode.$value"
           :has-error="formManager.form.zipcode.$hasError"
-          :placeholder="userDetails.zipcode"
+          :placeholder="userProfile.zipcode"
           :validating="formManager.form.zipcode.$validating"
         />
         <FormValidationErrors
@@ -108,7 +108,7 @@
           :id="formManager.form.address.$uid"
           v-model="formManager.form.address.$value"
           :has-error="formManager.form.address.$hasError"
-          :placeholder="userDetails.address"
+          :placeholder="userProfile.address"
           :validating="formManager.form.address.$validating"
         />
         <FormValidationErrors
@@ -126,7 +126,7 @@
           :id="formManager.form.place.$uid"
           v-model="formManager.form.place.$value"
           :has-error="formManager.form.place.$hasError"
-          :placeholder="userDetails.place"
+          :placeholder="userProfile.place"
           :validating="formManager.form.place.$validating"
         />
         <FormValidationErrors
@@ -142,7 +142,7 @@
         >Country</label>
         <select
           id="inputCountry"
-          v-model="userDetails.country"
+          v-model="userProfile.country"
           class="form-select"
           name="country"
           @change="restRegions"
@@ -170,7 +170,7 @@
         >Region</label>
         <select
           id="inputRegion"
-          v-model="userDetails.region"
+          v-model="userProfile.region"
           class="form-select"
           name="region"
         >
@@ -239,7 +239,7 @@ let {
 
 export default class UserSettings extends Vue {
 
-  userDetails = new UserProfileModel()
+  userProfile = new UserProfileModel()
   userData = new UserProfileModel()
   submitButtonText: string = 'Update'
   formManager = {
@@ -304,13 +304,13 @@ export default class UserSettings extends Vue {
   async mounted(): Promise<void> {
     document.title = 'My Settings'
 
-    this.userDetailsInitialize()
+    this.userProfileInitialize()
   }
 
   async restRegions(e: any): Promise<void> {
     const countryAlpha2Key = e.target.value
     await store.dispatch('country/findRegionsBasedOnAlphaFromInput', countryAlpha2Key)
-    this.userDetails.region = 'choose'
+    this.userProfile.region = 'choose'
   }
 
   handleSubmit = async () => {
@@ -325,11 +325,11 @@ export default class UserSettings extends Vue {
         city: formData.city,
         zipcode: formData.zipcode,
         address: formData.address,
-        country: this.userDetails.country,
-        region: this.userDetails.region
+        country: this.userProfile.country,
+        region: this.userProfile.region
       }
 
-      await store.dispatch('user/data/updateUserDetails', apiData)
+      await store.dispatch('user/updateUserProfile', apiData)
 
     } catch (e) {
       if (e instanceof ValidationError) {
@@ -338,28 +338,28 @@ export default class UserSettings extends Vue {
     }
   }
 
-  public userDetailsInitialize(): void {
+  public userProfileInitialize(): void {
     if (this.isAuthenticated) {
-      this.userDetails = cloneDeep(this.userData)
-      if (this.userDetails.first_name !== null) {
+      this.userProfile = cloneDeep(this.userData)
+      if (this.userProfile.first_name !== null) {
         this.formManager.form.first_name.$value = cloneDeep(this.userData.first_name)
       }
-      if (this.userDetails.last_name !== null) {
+      if (this.userProfile.last_name !== null) {
         this.formManager.form.last_name.$value = cloneDeep(this.userData.last_name)
       }
-      if (this.userDetails.phone !== null) {
+      if (this.userProfile.phone !== null) {
         this.formManager.form.phone.$value = String(cloneDeep(this.userData.phone) as unknown as string)
       }
-      if (this.userDetails.place !== null) {
+      if (this.userProfile.place !== null) {
         this.formManager.form.place.$value = cloneDeep(this.userData.place)
       }
-      if (this.userDetails.city !== null) {
+      if (this.userProfile.city !== null) {
         this.formManager.form.city.$value = cloneDeep(this.userData.city)
       }
-      if (this.userDetails.zipcode !== null) {
+      if (this.userProfile.zipcode !== null) {
         this.formManager.form.zipcode.$value = String(cloneDeep(this.userData.zipcode) as unknown as string)
       }
-      if (this.userDetails.address !== null) {
+      if (this.userProfile.address !== null) {
         this.formManager.form.address.$value = cloneDeep(this.userData.address)
       }
     }
