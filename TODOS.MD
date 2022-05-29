@@ -1,11 +1,5 @@
 # !!!! TODOS !!!!
 
-# PAYWAYS:
-```
-CARD
-ANTIKATAVOLI
-ETC
-```
 # BACKEND CLEAR
 
 # UI :
@@ -14,7 +8,6 @@ ETC
 ```
 
 # ERROR PAGES !!! (404, 500 , ETC) ---> ready , need an ui
-
 
 # SEARCH :
 ```

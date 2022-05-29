@@ -24,6 +24,12 @@
     font: inherit;
     font-size: 100%;
   }
+  &-head {
+
+  }
+  &-body {
+    grid-column: 2;
+  }
   &-user {
     border: 1px solid $rating-starts;
   }

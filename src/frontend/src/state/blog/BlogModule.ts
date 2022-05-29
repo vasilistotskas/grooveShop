@@ -346,6 +346,26 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	@Action
+	async fetchUserProfileByUserId(userId: number): Promise<Partial<any> | undefined> {
+		try {
+			const user_profile = await clientApollo.query({
+				query: gql`query ($userId: Int!) {
+                userProfileByUserId(userId: $userId) {
+                  mainImageAbsoluteUrl
+                  mainImageFilename
+                }
+              }`,
+				variables: {
+					userId: userId
+				}
+			})
+			return user_profile.data.userProfileByUserId
+		} catch (error) {
+			console.log(JSON.stringify(error, null, 2))
+		}
+	}
+
+	@Action
 	async fetchCommentsByUser(): Promise<void> {
 		try {
 			const comments = await clientApollo.query({
@@ -433,10 +453,32 @@ export default class BlogModule extends AppBaseModule {
 					postId: Number(this.context.getters['getPostBySlug'].id)
 				}
 			})
-			return this.context.commit('setCommentsByPost', comments.data.commentsByPost)
+
+			const fetchedComments = comments.data.commentsByPost
+
+			const commentsMergedWithUserProfile: Array<any> = await this.context.dispatch('getCommentsMergedWithUserProfile', fetchedComments)
+
+			return this.context.commit('setCommentsByPost', commentsMergedWithUserProfile)
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
+	}
+
+	@Action
+	async getCommentsMergedWithUserProfile(fetchedComments: Array<BlogCommentModel>): Promise<Array<BlogCommentModel>> {
+		const commentsMergedWithUserProfile: Array<BlogCommentModel> = []
+
+		for (const comment of fetchedComments) {
+
+			const userProfile = {
+				userProfile: await this.context.dispatch('fetchUserProfileByUserId', Number(comment.user.id))
+			}
+
+			const dataMerged = {...comment, ...userProfile}
+			commentsMergedWithUserProfile.push(dataMerged)
+		}
+
+		return commentsMergedWithUserProfile
 	}
 
 	@Action
@@ -481,7 +523,16 @@ export default class BlogModule extends AppBaseModule {
 					userEmail: store.getters['user/data/getUserData'].email
 				}
 			})
-			return this.context.commit('setCommentByUserToPost', comment.data.commentByUserToPost[0])
+
+			const commentData = comment.data.commentByUserToPost
+
+			const userProfile = {
+				userProfile: await this.context.dispatch('fetchUserProfileByUserId', Number(commentData.user.id))
+			}
+
+			const dataMerged = {...commentData, ...userProfile}
+
+			return this.context.commit('setCommentByUserToPost', dataMerged)
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}

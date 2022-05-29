@@ -116,8 +116,8 @@ const routes: Array<RouteRecordRaw> = [
 		},
 		children: [
 			{
-				path: MainRoutePaths.ORDERS,
-				name: MainRouteNames.ORDERS,
+				path: MainRoutePaths.USER_ACCOUNT_ORDERS,
+				name: MainRouteNames.USER_ACCOUNT_ORDERS,
 				component: () => import('@/pages/User/UserOrderHistory.vue'),
 				meta: {
 					breadcrumb: (): Array<BreadcrumbItemInterface> => ([
@@ -137,8 +137,8 @@ const routes: Array<RouteRecordRaw> = [
 				}
 			},
 			{
-				path: MainRoutePaths.SETTINGS,
-				name: MainRouteNames.SETTINGS,
+				path: MainRoutePaths.USER_ACCOUNT_SETTINGS,
+				name: MainRouteNames.USER_ACCOUNT_SETTINGS,
 				component: () => import('@/pages/User/UserSettings.vue'),
 				meta: {
 					breadcrumb: (): Array<BreadcrumbItemInterface> => ([
@@ -158,8 +158,8 @@ const routes: Array<RouteRecordRaw> = [
 				}
 			},
 			{
-				path: MainRoutePaths.FAVOURITES,
-				name: MainRouteNames.FAVOURITES,
+				path: MainRoutePaths.USER_ACCOUNT_FAVOURITES,
+				name: MainRouteNames.USER_ACCOUNT_FAVOURITES,
 				component: () => import('@/pages/User/UserFavourites.vue'),
 				meta: {
 					breadcrumb: () => ([
@@ -179,8 +179,8 @@ const routes: Array<RouteRecordRaw> = [
 				}
 			},
 			{
-				path: MainRoutePaths.REVIEWS,
-				name: MainRouteNames.REVIEWS,
+				path: MainRoutePaths.USER_ACCOUNT_REVIEWS,
+				name: MainRouteNames.USER_ACCOUNT_REVIEWS,
 				component: () => import('@/pages/User/UserReviews.vue'),
 				meta: {
 					breadcrumb: (): Array<BreadcrumbItemInterface> => ([
@@ -200,8 +200,8 @@ const routes: Array<RouteRecordRaw> = [
 				}
 			},
 			{
-				path: MainRoutePaths.PASSWORD,
-				name: MainRouteNames.PASSWORD,
+				path: MainRoutePaths.USER_ACCOUNT_PASSWORD,
+				name: MainRouteNames.USER_ACCOUNT_PASSWORD,
 				component: () => import('@/pages/User/UserPassword.vue'),
 				meta: {
 					breadcrumb: (): Array<BreadcrumbItemInterface> => ([

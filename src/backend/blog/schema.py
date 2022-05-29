@@ -1,5 +1,6 @@
 import graphene
 from .models import *
+from backend.user.models import UserProfile
 from graphene_django import DjangoObjectType
 from django.contrib.auth import get_user_model
 
@@ -9,6 +10,14 @@ User = get_user_model()
 class UserType(DjangoObjectType):
     class Meta:
         model = get_user_model()
+
+
+class UserProfileType(DjangoObjectType):
+    main_image_absolute_url = graphene.String(source='main_image_absolute_url')
+    main_image_filename = graphene.String(source='main_image_filename')
+
+    class Meta:
+        model = UserProfile
 
 
 class AuthorType(DjangoObjectType):
@@ -47,13 +56,18 @@ class Query(graphene.ObjectType):
     all_tags = graphene.List(TagType)
     all_authors = graphene.List(AuthorType)
     all_categories = graphene.List(CategoryType)
+    user_profile_by_user_id = graphene.Field(UserProfileType, user_id=graphene.Int())
     comments_by_user = graphene.List(CommentType, user_email=graphene.String())
     comments_by_post = graphene.List(CommentType, post_id=graphene.Int())
-    comment_by_user_to_post = graphene.List(CommentType, user_email=graphene.String(), post_id=graphene.Int())
+    comment_by_user_to_post = graphene.Field(CommentType, user_email=graphene.String(), post_id=graphene.Int())
     author_by_email = graphene.Field(AuthorType, email=graphene.String())
     post_by_slug = graphene.Field(PostType, slug=graphene.String())
     posts_by_author = graphene.List(PostType, email=graphene.String())
     posts_by_tag = graphene.List(PostType, tag=graphene.String())
+
+    @staticmethod
+    def resolve_user_profile_by_user_id(root, info, user_id):
+        return UserProfile.objects.get(pk=user_id)
 
     @staticmethod
     def resolve_comments_by_user(root, info, user_email):
@@ -79,7 +93,7 @@ class Query(graphene.ObjectType):
         return Comment.objects.select_related("post").filter(
             post__id=post_id,
             user__email=user_email
-        )
+        ).first()
 
     @staticmethod
     def resolve_all_posts(root, info):

@@ -88,7 +88,7 @@
 
     <div class="user-account-page-main-content">
       <div
-        v-if="$router.currentRoute.value.name === 'UserAccount'"
+        v-if="$router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT"
         class="user-account-main-page"
       >
         <div class="user-account-main-page-head">
@@ -128,6 +128,7 @@
 import store from '@/store'
 import router from '@/routes'
 import { Options, Vue } from 'vue-class-component'
+import { MainRouteNames } from '@/routes/Enum/MainRouteNames'
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
 import { faCogs } from '@fortawesome/free-solid-svg-icons/faCogs'
@@ -147,6 +148,7 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 })
 
 export default class UserAccount extends Vue {
+  MainRouteNames = MainRouteNames
   profileImageFilename: string = ''
   cogsIcon = faCogs
   starIcon = faStar
@@ -200,7 +202,7 @@ export default class UserAccount extends Vue {
   }
 
   updated(): void {
-    if (router.currentRoute.value.name === 'UserAccount') {
+    if (router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT) {
       document.title = 'My Account'
     }
   }

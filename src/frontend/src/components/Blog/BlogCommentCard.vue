@@ -3,9 +3,10 @@
     v-if="comment && Object.keys(comment).length > 0" 
     class="blog-comments-card-container"
   >
-    <div class="blog-comments-card-wrapper">
-      {{ comment.user.firstName }} {{ comment.user.lastName }}
-    </div>
+    <div
+      class="blog-comments-card-wrapper"
+      :style="{ backgroundImage: commentBackgroundImage(comment) }"
+    />
     <div class="blog-comments-card-head">
       <div class="blog-comments-card-name">
         <RouterLink
@@ -78,8 +79,9 @@ import router from '@/routes'
 import { onClickOutside } from '@vueuse/core'
 import { Options, Vue } from 'vue-class-component'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
+import { MainRouteNames } from '@/routes/Enum/MainRouteNames'
 import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
 
 @Options({
   name: 'BlogCommentCard',
@@ -100,7 +102,7 @@ import UserDetailsModel from '@/state/user/data/UserDetailsModel'
 })
 
 export default class BlogCommentCard extends Vue {
-
+  MainRouteNames = MainRouteNames
   $refs!: {
     userCommentActionTarget: HTMLElement;
   }
@@ -136,6 +138,22 @@ export default class BlogCommentCard extends Vue {
       await store.dispatch('blog/deleteCommentFromPost', comment_id)
     }
   }
+
+  public commentBackgroundImage(comment: BlogCommentModel): string {
+
+    const imageNameFileTypeRemove = comment.post.mainImageFilename.substring(0, comment.post.mainImageFilename.lastIndexOf('.')) || comment.post.mainImageFilename
+
+    if (router.currentRoute.value.name === MainRouteNames.POST) {
+      return 'url(' + comment.userProfile.mainImageAbsoluteUrl + ')'
+    }
+
+    if (router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT_BLOG_COMMENTS) {
+      return 'url(' + 'http://localhost:8010' + '/mediastream/media/uploads/' + 'blog' + '/' + imageNameFileTypeRemove + '/' + '100' + '/' + '100' + ')'
+    }
+
+    return ''
+  }
+
 }
 </script>
 

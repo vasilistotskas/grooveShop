@@ -95,6 +95,7 @@ import router from '@/routes'
 import { constant, times } from 'lodash'
 import { onClickOutside } from '@vueuse/core'
 import { Options, Vue } from 'vue-class-component'
+import { MainRouteNames } from '@/routes/Enum/MainRouteNames'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
 
@@ -116,7 +117,7 @@ const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.
 })
 
 export default class ReviewProductCard extends Vue {
-
+  MainRouteNames = MainRouteNames
   $refs!: {
     userReviewsActionTarget: HTMLElement;
   }
@@ -144,11 +145,11 @@ export default class ReviewProductCard extends Vue {
 
     const imageNameFileTypeRemove = review.product.main_image_filename.substring(0, review.product.main_image_filename.lastIndexOf('.')) || review.product.main_image_filename
 
-    if (router.currentRoute.value.name === 'Product') {
+    if (router.currentRoute.value.name === MainRouteNames.PRODUCT) {
       return 'url(' + review.userprofile.main_image_absolute_url + ')'
     }
 
-    if (router.currentRoute.value.name === 'Reviews') {
+    if (router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT_REVIEWS) {
       return 'url(' + 'http://localhost:8010' + '/mediastream/media/uploads/' + 'products' + '/' + imageNameFileTypeRemove + '/' + '100' + '/' + '100' + ')'
     }
 
