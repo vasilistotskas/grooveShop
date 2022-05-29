@@ -1,5 +1,6 @@
 # !!!! TODOS !!!!
 
+# shall i make a base component with base methods like 'isAuthenticated' and extend all pages vue components
 # BACKEND CLEAR
 
 # UI :

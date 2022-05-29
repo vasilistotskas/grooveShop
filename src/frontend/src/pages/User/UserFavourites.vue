@@ -95,8 +95,8 @@ export default class UserFavourites extends PaginationBase<UserProfileModel> imp
   }
 
   public buildEndPointUrlForPaginatedResults(): string {
-    const user_id = this.userData.id
-    return 'favourites/products' + `/${ user_id }`
+    const userId = this.userData.id
+    return 'favourites/products' + `/${ userId }`
   }
 
 }

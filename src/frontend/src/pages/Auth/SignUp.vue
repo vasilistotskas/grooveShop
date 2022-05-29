@@ -28,6 +28,7 @@
                     :input-with-add-on-icon="envelopeIcon"
                     :validating="formManager.form.email.$validating"
                     placeholder="Alice, Bob, Oscar"
+                    autocomplete="username"
                     @blur="formManager.form.email.onBlur"
                   />
                   <FormValidationErrors

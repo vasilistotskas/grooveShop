@@ -108,7 +108,11 @@
               />
               <span>{{ addToCartButtonText }}</span>
             </button>
-            <ProductFavouriteButton :product="product" />
+            <FavouriteButton 
+              :model="product" 
+              :getter-type="'product/favourite/getIsCurrentProductInUserFavourites'"
+              :dispatch-type="'product/favourite/toggleFavourite'"
+            />
           </div>
         </div>
         <div class="product-page-grid-info-part-two">
@@ -136,10 +140,10 @@ import ProductReview from '@/components/Product/ProductReview.vue'
 import { faCubes } from '@fortawesome/free-solid-svg-icons/faCubes'
 import ProductReviews from '@/components/Product/ProductReviews.vue'
 import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import FavouriteButton from '@/components/Utilities/FavouriteButton.vue'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import { faShippingFast } from '@fortawesome/free-solid-svg-icons/faShippingFast'
-import ProductFavouriteButton from '@/components/Product/ProductFavouriteButton.vue'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
 
 const starSvg = '<path data-v-558dc688="" fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" class=""></path>'
@@ -148,7 +152,7 @@ const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.
 @Options({
   name: 'Product',
   components: {
-    ProductFavouriteButton,
+    FavouriteButton,
     ProductReview,
     ProductReviews,
     Breadcrumbs,

@@ -52,13 +52,13 @@
 import store from '@/store'
 import { Options } from 'vue-class-component'
 import PayWayModel from '@/state/payway/PayWayModel'
-import GenericModalClass from '@/components/Utilities/GenericModalClass'
+import GenericModalModel from '@/components/Utilities/Model/GenericModalModel'
 
 @Options({
   name: 'CheckoutStripeModal',
-  extends: GenericModalClass
+  extends: GenericModalModel
 })
-export default class CheckoutStripeModal extends GenericModalClass {
+export default class CheckoutStripeModal extends GenericModalModel {
 
   closeModal(): void {
     store.commit('pay_way/setSelectedPayWay', new PayWayModel())

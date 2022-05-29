@@ -50,13 +50,13 @@
 
 <script lang="ts">
 import { Options } from 'vue-class-component'
-import GenericModalClass from '@/components/Utilities/GenericModalClass'
+import GenericModalModel from '@/components/Utilities/Model/GenericModalModel'
 
 @Options({
   name: 'GenericModal',
-  extends: GenericModalClass
+  extends: GenericModalModel
 })
-export default class GenericModal extends GenericModalClass {}
+export default class GenericModal extends GenericModalModel {}
 </script>
 
 <style lang="scss" scoped>

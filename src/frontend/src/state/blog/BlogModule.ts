@@ -24,6 +24,7 @@ export default class BlogModule extends AppBaseModule {
 	commentsByUser: Array<BlogCommentModel> = []
 	commentsByPost: Array<BlogCommentModel> = []
 	commentByUserToPost = new BlogCommentModel()
+	userFavouriteBlogPosts: Array<BlogPostModel> = []
 
 	get getAllPosts(): Array<BlogPostModel> {
 		return this.allPosts
@@ -72,6 +73,17 @@ export default class BlogModule extends AppBaseModule {
 	get getUserCommentToPostEmpty(): boolean {
 		const commentByUserToPost = this.context.getters['getCommentByUserToPost']
 		return isEmpty(commentByUserToPost)
+	}
+
+	get getUserFavouriteBlogPosts(): Array<BlogPostModel> {
+		return this.userFavouriteBlogPosts
+	}
+
+	get getIsCurrentPostInUserFavourites(): boolean {
+		const postId: number = this.context.getters['getPostBySlug']
+		const favouritePosts = this.context.getters['getUserFavouriteBlogPosts']
+		const exists = favouritePosts.filter((i: BlogPostModel) => i.id === postId)
+		return !!exists.length
 	}
 
 	@Mutation

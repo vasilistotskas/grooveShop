@@ -22,9 +22,10 @@ export default class ProductFavouriteModule extends AppBaseModule {
 		return this.userFavourites
 	}
 
-	get getStateIsCurrentProductInFavourites(): boolean {
-		const product_id: number = store.getters['product/getProductId']
-		const exists = this.favourites.filter(i => i.product_id === product_id)
+	get getIsCurrentProductInUserFavourites(): boolean {
+		const productId: number = store.getters['product/getProductId']
+		const favouriteProducts = this.context.getters['getFavouriteData']
+		const exists = favouriteProducts.filter((i: ProductFavouriteModel) => i.product_id === productId)
 		return !!exists.length
 	}
 
@@ -53,7 +54,7 @@ export default class ProductFavouriteModule extends AppBaseModule {
 		const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
 		if (IsAuthenticated) {
 			try {
-				if (!this.getStateIsCurrentProductInFavourites) {
+				if (!this.getIsCurrentProductInUserFavourites) {
 					await this.context.dispatch('addToFavourites', product)
 					return 'The product was added to the favourites'
 				} else {
@@ -69,8 +70,8 @@ export default class ProductFavouriteModule extends AppBaseModule {
 	}
 
 	@Action
-	fetchUserFavouritesFromRemote(user_id: number): Promise<void> {
-		return api.get(`favourites/${ user_id }`)
+	fetchUserFavouritesFromRemote(userId: number): Promise<void> {
+		return api.get(`favourites/${ userId }`)
 			.then((response: any) => {
 				const data = response.data
 				this.context.commit('setFavourites', data)
@@ -81,8 +82,8 @@ export default class ProductFavouriteModule extends AppBaseModule {
 	}
 
 	@Action
-	fetchUserFavouriteProductsFromRemote(user_id: number): Promise<void> {
-		return api.get(`favourites/products/${ user_id }`)
+	fetchUserFavouriteProductsFromRemote(userId: number): Promise<void> {
+		return api.get(`favourites/products/${ userId }`)
 			.then((response: any) => {
 				const data = response.data.results
 				const transformedData: any[] = []
@@ -98,35 +99,35 @@ export default class ProductFavouriteModule extends AppBaseModule {
 
 	@Action
 	async addToFavourites(): Promise<void> {
-		const product_id: number = store.getters['product/getProductId']
+		const productId: number = store.getters['product/getProductId']
 		const data = {
 			'user_id': store.getters['user/getUserId'],
-			product_id
+			productId
 		}
-		const user_id: number = data.user_id
+		const userId: number = data.user_id
 
 		try {
-			await api.post(`favourites/${ user_id }/`, data)
+			await api.post(`favourites/${ userId }/`, data)
 			toast.success('Added to favourites')
 		} catch (error) {
 			throw error
 		}
 
-		return await this.context.dispatch('fetchUserFavouritesFromRemote', user_id)
+		return await this.context.dispatch('fetchUserFavouritesFromRemote', userId)
 	}
 
 	@Action
 	async removeFromFavourites(): Promise<void> {
-		const user_id: number = store.getters['user/getUserId']
-		const product_id: number = store.getters['product/getProductId']
+		const userId: number = store.getters['user/getUserId']
+		const productId: number = store.getters['product/getProductId']
 
 		try {
-			await api.delete(`favourites/delete/${ user_id }/${ product_id }`)
+			await api.delete(`favourites/delete/${ userId }/${ productId }`)
 			toast.success('Removed from favourites')
 		} catch (error) {
 			throw error
 		}
-		return await this.context.dispatch('fetchUserFavouritesFromRemote', user_id)
+		return await this.context.dispatch('fetchUserFavouritesFromRemote', userId)
 	}
 
 }

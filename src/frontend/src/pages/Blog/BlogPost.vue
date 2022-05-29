@@ -10,7 +10,7 @@
         :file-name="postBySlug.mainImageFilename"
         :use-media-stream="true"
         :img-type="ImageTypeOptions.BLOG"
-        :img-width="1920"
+        :img-width="300"
         :img-height="550"
       />
       <div class="card-body">
@@ -43,6 +43,13 @@
           </li>
         </ul>
       </div>
+      <div class="favourite-button-content">
+        <FavouriteButton
+          :model="postBySlug"
+          :getter-type="'blog/getIsCurrentPostInUserFavourites'"
+          :dispatch-type="'blog/toggleFavourite'"
+        />
+      </div>
     </div>
     <BlogComment />
   </div>
@@ -62,6 +69,7 @@ import BlogComments from '@/components/Blog/BlogComments.vue'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import BlogAuthorLink from '@/components/Blog/BlogAuthorLink.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
+import FavouriteButton from '@/components/Utilities/FavouriteButton.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
@@ -72,7 +80,8 @@ import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpe
     Breadcrumbs,
     BlogComment,
     BlogComments,
-    GrooveImage
+    GrooveImage,
+    FavouriteButton
   },
   props: {
     slug: {

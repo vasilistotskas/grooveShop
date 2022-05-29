@@ -166,10 +166,10 @@ export default class ReviewProductCard extends Vue {
     return stars
   }
 
-  public async deleteReview(user_id: number, product_id: number): Promise<void> {
+  public async deleteReview(userId: number, productId: number): Promise<void> {
     let data = {
-      user_id,
-      product_id
+      userId,
+      productId
     }
 
     if (confirm('Are you sure you want to delete your rating?')) {

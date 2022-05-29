@@ -105,8 +105,8 @@ export default class UserReviews extends PaginationBase<ProductReviewModel> impl
   }
 
   public buildEndPointUrlForPaginatedResults(): string {
-    const user_id = this.userData.id
-    return `reviews/user/${ user_id }`
+    const userId = this.userData.id
+    return `reviews/user/${ userId }`
   }
 
 }

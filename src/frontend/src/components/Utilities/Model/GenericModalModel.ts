@@ -4,7 +4,7 @@ import { Options, Vue } from 'vue-class-component'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 
 @Options({
-	name: 'GenericModalClass',
+	name: 'GenericModalModel',
 	props: {
 		shouldModalStartInOpenState: {
 			type: Boolean,
@@ -22,7 +22,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 		},
 	}
 })
-export default class GenericModalClass extends Vue {
+export default class GenericModalModel extends Vue {
 
 	emitter: Emitter<any> | undefined = inject('emitter')
 

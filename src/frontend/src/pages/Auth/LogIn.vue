@@ -24,6 +24,7 @@
                   :input-with-add-on-icon="envelopeIcon"
                   :validating="formManager.form.email.$validating"
                   placeholder="Alice, Bob, Oscar"
+                  autocomplete="username"
                   @blur="formManager.form.email.onBlur"
                 />
                 <FormValidationErrors
@@ -43,7 +44,7 @@
                   :input-with-add-on="true"
                   :input-with-add-on-icon="keyIcon"
                   type="password"
-                  autocomplete="on"
+                  autocomplete="current-password"
                   @blur="formManager.form.password.onBlur"
                 />
                 <FormValidationErrors :errors="formManager.form.password.$errors" />

@@ -21,7 +21,6 @@
           v-for="comment in allBlogPostComments"
           :key="comment.id"
           :comment="comment"
-          :class="{'blog-comments-card-user': comment.user_id === userId }"
           :user-id="userId"
           class="blog-comment-card"
         />
