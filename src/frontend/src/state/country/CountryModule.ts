@@ -6,7 +6,7 @@ import CountryModel from '@/state/country/CountryModel'
 import RegionsModel from '@/state/country/RegionsModel'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import UserProfileModel from '@/state/user/data/UserProfileModel'
 
 @Module({ namespaced: true })
 export default class CountryModule extends AppBaseModule {
@@ -65,7 +65,7 @@ export default class CountryModule extends AppBaseModule {
 
 	@Action
 	async findRegionsBasedOnAlphaForLoggedCustomer(): Promise<void> {
-		const userDetails: UserDetailsModel = store.getters['user/data/getUserData']
+		const userDetails: UserProfileModel = store.getters['user/data/getUserData']
 		if (userDetails.country) {
 			const result = this.countries.find(obj => {
 				return obj.alpha_2 === userDetails.country

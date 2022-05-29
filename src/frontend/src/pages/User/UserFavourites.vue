@@ -34,7 +34,7 @@ import { Options } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
-import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import UserProfileModel from '@/state/user/data/UserProfileModel'
 import PaginationBase from '@/components/Pagination/PaginationBase'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
@@ -56,9 +56,9 @@ import { PaginationQueryParametersModel } from '@/state/pagination/Model/Paginat
   }
 })
 
-export default class UserFavourites extends PaginationBase<UserDetailsModel> implements PaginatedInterface<UserDetailsModel> {
+export default class UserFavourites extends PaginationBase<UserProfileModel> implements PaginatedInterface<UserProfileModel> {
 
-  userData = new UserDetailsModel()
+  userData = new UserProfileModel()
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceDataEnum.USER_FAVOURITES
 

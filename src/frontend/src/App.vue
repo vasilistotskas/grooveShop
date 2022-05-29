@@ -28,7 +28,7 @@ import Loader from '@/components/Main/Loader.vue'
 import CountryModel from '@/state/country/CountryModel'
 import RegionsModel from '@/state/country/RegionsModel'
 import SocialSidebar from '@/components/Main/SocialSidebar.vue'
-import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import UserProfileModel from '@/state/user/data/UserProfileModel'
 
 @Options({
   name: 'App',
@@ -61,11 +61,11 @@ export default class App extends Vue {
     return store.getters['cart/getCartTotalLength']
   }
 
-  get userData(): UserDetailsModel {
+  get userData(): UserProfileModel {
     if (this.isAuthenticated) {
       return store.getters['user/data/getUserData']
     }
-    return new UserDetailsModel
+    return new UserProfileModel
   }
 
   get availableCountries(): CountryModel {

@@ -212,7 +212,7 @@ import RegionsModel from '@/state/country/RegionsModel'
 import CountryModel from '@/state/country/CountryModel'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
-import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import UserProfileModel from '@/state/user/data/UserProfileModel'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
@@ -239,8 +239,8 @@ let {
 
 export default class UserSettings extends Vue {
 
-  userDetails = new UserDetailsModel()
-  userData = new UserDetailsModel()
+  userDetails = new UserProfileModel()
+  userData = new UserProfileModel()
   submitButtonText: string = 'Update'
   formManager = {
     validateFields

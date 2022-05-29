@@ -1,6 +1,6 @@
 import EntityBase from '@/state/common/EntityBase'
 
-export default class UserDetailsModel extends EntityBase {
+export default class UserProfileModel extends EntityBase {
 	id!: number
 	user!: number
 	address!: string
@@ -17,7 +17,7 @@ export default class UserDetailsModel extends EntityBase {
 	region!: string
 	zipcode!: number
 
-	constructor(data?: Partial<UserDetailsModel>) {
+	constructor(data?: Partial<UserProfileModel>) {
 		super(data)
 	}
 

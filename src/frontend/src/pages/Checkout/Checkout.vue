@@ -320,7 +320,7 @@ import { PayWaysEnum } from '@/state/payway/Enum/PayWaysEnum'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
-import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import UserProfileModel from '@/state/user/data/UserProfileModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormBaseTextarea from '@/components/Form/FormBaseTextarea.vue'
@@ -355,7 +355,7 @@ let {
 })
 export default class Checkout extends Vue {
 
-  customerDetails = new UserDetailsModel()
+  customerDetails = new UserProfileModel()
   PayWaysEnum = PayWaysEnum
 
   formManager = {
@@ -443,11 +443,11 @@ export default class Checkout extends Vue {
     return store.getters['cart/getCart']
   }
 
-  get userData(): UserDetailsModel {
+  get userData(): UserProfileModel {
     if (this.isAuthenticated) {
       return store.getters['user/data/getUserData']
     }
-    return new UserDetailsModel
+    return new UserProfileModel
   }
 
   get cartTotalLength(): number {

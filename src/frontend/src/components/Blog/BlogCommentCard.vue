@@ -80,7 +80,7 @@ import { onClickOutside } from '@vueuse/core'
 import { Options, Vue } from 'vue-class-component'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
 import { MainRouteNames } from '@/routes/Enum/MainRouteNames'
-import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import UserProfileModel from '@/state/user/data/UserProfileModel'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
 
 @Options({
@@ -122,11 +122,11 @@ export default class BlogCommentCard extends Vue {
     return store.getters['auth/isAuthenticated']
   }
 
-  get userData(): UserDetailsModel {
+  get userData(): UserProfileModel {
     if (this.isAuthenticated) {
       return store.getters['user/data/getUserData']
     }
-    return new UserDetailsModel
+    return new UserProfileModel
   }
 
   public openCommentActions() {

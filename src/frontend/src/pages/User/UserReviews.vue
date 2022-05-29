@@ -37,7 +37,7 @@ import store from '@/store'
 import { Options } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import Pagination from '@/components/Pagination/Pagination.vue'
-import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import UserProfileModel from '@/state/user/data/UserProfileModel'
 import PaginationBase from '@/components/Pagination/PaginationBase'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
 import ReviewProductCard from '@/components/Reviews/ReviewProductCard.vue'
@@ -63,7 +63,7 @@ import { PaginationQueryParametersModel } from '@/state/pagination/Model/Paginat
 
 export default class UserReviews extends PaginationBase<ProductReviewModel> implements PaginatedInterface<ProductReviewModel> {
 
-  userData = new UserDetailsModel()
+  userData = new UserProfileModel()
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceDataEnum.USER_REVIEWS
 

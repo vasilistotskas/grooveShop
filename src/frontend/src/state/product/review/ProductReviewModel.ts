@@ -1,6 +1,6 @@
 import EntityBase from '@/state/common/EntityBase'
 import ProductModel from '@/state/product/ProductModel'
-import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import UserProfileModel from '@/state/user/data/UserProfileModel'
 
 export default class ProductReviewModel extends EntityBase {
 
@@ -13,7 +13,7 @@ export default class ProductReviewModel extends EntityBase {
 	status!: string
 	created_at!: string
 	updated_at!: string
-	userprofile!: UserDetailsModel
+	userprofile!: UserProfileModel
 
 	public constructor(data?: Partial<ProductReviewModel>) {
 		super(data)

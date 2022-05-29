@@ -3,7 +3,7 @@ import api from '@/api/api.service'
 import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import UserDetailsModel from '@/state/user/data/UserDetailsModel'
+import UserProfileModel from '@/state/user/data/UserProfileModel'
 
 const toast = useToast()
 
@@ -11,7 +11,7 @@ const toast = useToast()
 export default class UserDataModule extends AppBaseModule {
 	user_id!: number | undefined
 	user_email!: string | undefined
-	data = new UserDetailsModel()
+	data = new UserProfileModel()
 
 	get getUserId(): number | undefined {
 		return this.user_id
@@ -21,12 +21,12 @@ export default class UserDataModule extends AppBaseModule {
 		return this.user_email
 	}
 
-	get getUserData(): UserDetailsModel {
+	get getUserData(): UserProfileModel {
 		return this.data
 	}
 
 	@Mutation
-	setUserData(data: UserDetailsModel): void {
+	setUserData(data: UserProfileModel): void {
 		this.data = data
 	}
 
@@ -42,7 +42,7 @@ export default class UserDataModule extends AppBaseModule {
 
 	@Mutation
 	unsetUserData(): void {
-		this.data = new UserDetailsModel()
+		this.data = new UserProfileModel()
 		this.user_id = undefined
 
 		store.dispatch('auth/logout').then(() => {
