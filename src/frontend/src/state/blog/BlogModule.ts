@@ -403,7 +403,7 @@ export default class BlogModule extends AppBaseModule {
                 }
               }`,
 				variables: {
-					userEmail: store.getters['user/data/getUserEmail']
+					userEmail: store.getters['user/getUserEmail']
 				}
 			})
 			return this.context.commit('setCommentsByUser', comments.data.commentsByUser)
@@ -520,7 +520,7 @@ export default class BlogModule extends AppBaseModule {
               }`,
 				variables: {
 					postId: Number(this.context.getters['getPostBySlug'].id),
-					userEmail: store.getters['user/data/getUserData'].email
+					userEmail: store.getters['user/getUserData'].email
 				}
 			})
 
@@ -559,7 +559,7 @@ export default class BlogModule extends AppBaseModule {
               }`,
 				variables: {
 					post_id: Number(this.context.getters['getPostBySlug'].id),
-					user_email: String(store.getters['user/data/getUserData'].email),
+					user_email: String(store.getters['user/getUserData'].email),
 					content: String(content),
 				}
 			})
@@ -608,7 +608,7 @@ export default class BlogModule extends AppBaseModule {
               }`,
 				variables: {
 					id: Number(this.context.getters['getCommentByUserToPost'].id),
-					user_email: store.getters['user/data/getUserData'].email
+					user_email: store.getters['user/getUserData'].email
 				}
 			})
 			return comment.data.updateCommentLikes
@@ -630,7 +630,7 @@ export default class BlogModule extends AppBaseModule {
               }`,
 				variables: {
 					id: Number(postId),
-					user_email: store.getters['user/data/getUserData'].email
+					user_email: store.getters['user/getUserData'].email
 				}
 			})
 			return post.data.updatePostLikes

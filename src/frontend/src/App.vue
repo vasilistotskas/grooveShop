@@ -63,7 +63,7 @@ export default class App extends Vue {
 
   get userData(): UserProfileModel {
     if (this.isAuthenticated) {
-      return store.getters['user/data/getUserData']
+      return store.getters['user/getUserData']
     }
     return new UserProfileModel
   }
@@ -88,7 +88,7 @@ export default class App extends Vue {
     ])
 
     if (this.isAuthenticated) {
-      await store.dispatch('user/data/fetchUserDataFromRemote')
+      await store.dispatch('user/fetchUserDataFromRemote')
       await Promise.all([
         store.dispatch('country/fetchCountriesFromRemote'),
         store.dispatch('blog/fetchCommentsByUser')

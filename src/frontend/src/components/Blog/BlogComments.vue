@@ -55,7 +55,7 @@ export default class BlogComments extends Vue {
   post!: BlogPostModel
 
   get userId(): number {
-    return store.getters['user/data/getUserId']
+    return store.getters['user/getUserId']
   }
 
   get allBlogPostComments(): Array<BlogPostModel> {

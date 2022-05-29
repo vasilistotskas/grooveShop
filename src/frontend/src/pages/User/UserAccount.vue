@@ -167,7 +167,7 @@ export default class UserAccount extends Vue {
 
   get userData(): UserProfileModel {
     if (this.isAuthenticated) {
-      return store.getters['user/data/getUserData']
+      return store.getters['user/getUserData']
     }
     return new UserProfileModel
   }
@@ -208,7 +208,7 @@ export default class UserAccount extends Vue {
   }
 
   public logout(): void {
-    store.commit('user/data/unsetUserData')
+    store.commit('user/unsetUserData')
     router.push('/')
   }
 

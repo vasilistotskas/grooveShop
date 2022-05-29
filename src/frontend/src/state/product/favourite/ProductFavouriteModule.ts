@@ -100,7 +100,7 @@ export default class ProductFavouriteModule extends AppBaseModule {
 	async addToFavourites(): Promise<void> {
 		const product_id: number = store.getters['product/getProductId']
 		const data = {
-			'user_id': store.getters['user/data/getUserId'],
+			'user_id': store.getters['user/getUserId'],
 			product_id
 		}
 		const user_id: number = data.user_id
@@ -117,7 +117,7 @@ export default class ProductFavouriteModule extends AppBaseModule {
 
 	@Action
 	async removeFromFavourites(): Promise<void> {
-		const user_id: number = store.getters['user/data/getUserId']
+		const user_id: number = store.getters['user/getUserId']
 		const product_id: number = store.getters['product/getProductId']
 
 		try {

@@ -124,7 +124,7 @@ export default class BlogCommentCard extends Vue {
 
   get userData(): UserProfileModel {
     if (this.isAuthenticated) {
-      return store.getters['user/data/getUserData']
+      return store.getters['user/getUserData']
     }
     return new UserProfileModel
   }

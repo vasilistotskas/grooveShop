@@ -1,7 +1,7 @@
 import AppModule from '@/state/app/AppModule'
 import CartModule from '@/state/cart/CartModule'
-import UserModule from '@/state/user/UserModule'
 import BlogModule from '@/state/blog/BlogModule'
+import UserModule from '@/state/user/data/UserModule'
 import AuthModule from '@/state/auth/auth/AuthModule'
 import Iban from '@/libraries/Stripe/Components/Iban'
 import Card from '@/libraries/Stripe/Components/Card'
@@ -14,7 +14,6 @@ import CountryModule from '@/state/country/CountryModule'
 import SignUpModule from '@/state/auth/signup/SignUpModule'
 import CategoryModule from '@/state/category/CategoryModule'
 import AppSettingsModule from '@/state/app/AppSettingsModule'
-import UserDataModule from '@/state/user/data/UserDataModule'
 import PasswordModule from '@/state/auth/password/PasswordModule'
 import PaginationModule from '@/state/pagination/PaginationModule'
 import ProductReviewModule from '@/state/product/review/ProductReviewModule'
@@ -28,7 +27,6 @@ const stateDirectory = <Record<string, typeof AppBaseModule>>{
 	'product.favourite': ProductFavouriteModule,
 	'product.review': ProductReviewModule,
 	'user': UserModule,
-	'user.data': UserDataModule,
 	'cart': CartModule,
 	'search': SearchModule,
 	'pagination': PaginationModule,

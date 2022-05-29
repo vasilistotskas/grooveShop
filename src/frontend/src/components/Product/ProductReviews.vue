@@ -111,7 +111,7 @@ export default class ProductReviews extends PaginationBase<ProductReviewModel> i
   paginationNamespace = PaginationNamespaceDataEnum.PRODUCT_PAGE_REVIEWS
 
   get userId(): number {
-    return store.getters['user/data/getUserId']
+    return store.getters['user/getUserId']
   }
 
   get userToProductReview(): ProductReviewModel {

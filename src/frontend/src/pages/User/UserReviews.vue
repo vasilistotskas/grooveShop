@@ -68,7 +68,7 @@ export default class UserReviews extends PaginationBase<ProductReviewModel> impl
   paginationNamespace = PaginationNamespaceDataEnum.USER_REVIEWS
 
   get userId(): number {
-    return store.getters['user/data/getUserId']
+    return store.getters['user/getUserId']
   }
 
   async created(): Promise<void> {

@@ -8,7 +8,7 @@ import UserProfileModel from '@/state/user/data/UserProfileModel'
 const toast = useToast()
 
 @Module({ namespaced: true })
-export default class UserDataModule extends AppBaseModule {
+export default class UserModule extends AppBaseModule {
 	user_id!: number | undefined
 	user_email!: string | undefined
 	data = new UserProfileModel()

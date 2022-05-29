@@ -445,7 +445,7 @@ export default class Checkout extends Vue {
 
   get userData(): UserProfileModel {
     if (this.isAuthenticated) {
-      return store.getters['user/data/getUserData']
+      return store.getters['user/getUserData']
     }
     return new UserProfileModel
   }
@@ -477,7 +477,7 @@ export default class Checkout extends Vue {
   async mounted(): Promise<void> {
     document.title = 'Checkout'
     if (this.isAuthenticated) {
-      await store.dispatch('user/data/fetchUserDataFromRemote')
+      await store.dispatch('user/fetchUserDataFromRemote')
     }
     await Promise.all([
       store.dispatch('stripeIban/initIBANComponent'),

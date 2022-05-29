@@ -49,7 +49,7 @@ export default class ProductReviewModule extends AppBaseModule {
 	@Mutation
 	setProductReviews(productReviews: Array<ProductReviewModel>): void {
 
-		const user_id: number = store.getters['user/data/getUserId']
+		const user_id: number = store.getters['user/getUserId']
 
 		productReviews.forEach(function (item, i) {
 			if (item.user_id === user_id) {
@@ -147,7 +147,7 @@ export default class ProductReviewModule extends AppBaseModule {
 		const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
 		if (IsAuthenticated) {
 			const product_id: number = store.getters['product/getProductId']
-			const user_id: number = store.getters['user/data/getUserId']
+			const user_id: number = store.getters['user/getUserId']
 			data.append('user_id', user_id)
 			data.append('product_id', product_id)
 			try {
@@ -207,7 +207,7 @@ export default class ProductReviewModule extends AppBaseModule {
 
 	@Action
 	fetchUserToProductReviewFromRemote(): Promise<void> {
-		const user_id: number = store.getters['user/data/getUserId']
+		const user_id: number = store.getters['user/getUserId']
 		const product_id: number = store.getters['product/getProductId']
 
 		return api.get(`reviews/review/${ user_id }/${ product_id }/`)
@@ -222,7 +222,7 @@ export default class ProductReviewModule extends AppBaseModule {
 
 	@Action
 	updateCurrentProductReview(data: Partial<any>): Promise<void> {
-		const user_id: number = store.getters['user/data/getUserId']
+		const user_id: number = store.getters['user/getUserId']
 		const product_id: number = store.getters['product/getProductId']
 
 		return api.patch(`reviews/review/${ user_id }/${ product_id }/`, data)

@@ -215,7 +215,7 @@ export default class LogIn extends Vue {
       }
       await store.dispatch('auth/login', apiData)
           .then(() => {
-            store.dispatch('user/data/fetchUserDataFromRemote')
+            store.dispatch('user/fetchUserDataFromRemote')
           })
           .catch((error: Error) => {
             console.log(error)
