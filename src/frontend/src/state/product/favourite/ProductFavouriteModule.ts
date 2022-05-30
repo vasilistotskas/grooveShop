@@ -50,23 +50,23 @@ export default class ProductFavouriteModule extends AppBaseModule {
 	}
 
 	@Action
-	async toggleFavourite(product: ProductFavouriteModel): Promise<any> {
+	async toggleFavourite(product: ProductFavouriteModel): Promise<boolean> {
 		const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
 		if (IsAuthenticated) {
 			try {
 				if (!this.getIsCurrentProductInUserFavourites) {
-					await this.context.dispatch('addToFavourites', product)
-					return 'The product was added to the favourites'
+					return await this.context.dispatch('addProductToFavourites', product)
 				} else {
-					await this.context.dispatch('removeFromFavourites', product)
-					return 'The product was removed from favourites'
+					return await this.context.dispatch('removeProductFavourites', product)
 				}
 			} catch (error) {
 				console.log(error)
 			}
 		} else {
-			return toast.error('You are not logged in')
+			toast.error('You are not logged in')
 		}
+
+		return false
 	}
 
 	@Action
@@ -98,36 +98,39 @@ export default class ProductFavouriteModule extends AppBaseModule {
 	}
 
 	@Action
-	async addToFavourites(): Promise<void> {
+	async addProductToFavourites(): Promise<boolean> {
 		const productId: number = store.getters['product/getProductId']
 		const data = {
 			'user_id': store.getters['user/getUserId'],
-			productId
+			'product_id': productId
 		}
 		const userId: number = data.user_id
 
 		try {
 			await api.post(`favourites/${ userId }/`, data)
-			toast.success('Added to favourites')
 		} catch (error) {
 			throw error
 		}
 
-		return await this.context.dispatch('fetchUserFavouritesFromRemote', userId)
+		await this.context.dispatch('fetchUserFavouritesFromRemote', userId)
+
+		return true
 	}
 
 	@Action
-	async removeFromFavourites(): Promise<void> {
+	async removeProductFavourites(): Promise<boolean> {
 		const userId: number = store.getters['user/getUserId']
 		const productId: number = store.getters['product/getProductId']
 
 		try {
 			await api.delete(`favourites/delete/${ userId }/${ productId }`)
-			toast.success('Removed from favourites')
 		} catch (error) {
 			throw error
 		}
-		return await this.context.dispatch('fetchUserFavouritesFromRemote', userId)
+
+		await this.context.dispatch('fetchUserFavouritesFromRemote', userId)
+
+		return false
 	}
 
 }

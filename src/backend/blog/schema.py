@@ -156,33 +156,48 @@ class UpdatePostLikesMutation(graphene.Mutation):
     class Arguments:
         # The input arguments for this mutation
         id = graphene.ID(required=True)
-        user_email = graphene.String(required=True)
+        user_id = graphene.ID(required=True)
 
     # The class attributes define the response of the mutation
     post = graphene.Field(PostType)
+    liked = graphene.Boolean()
 
     @classmethod
-    def mutate(cls, root, info, user_email, id):
+    def mutate(cls, root, info, id, user_id):
         post = Post.objects.get(pk=id)
-        post.likes.add(User.objects.get(email=user_email))
+        user = User.objects.get(id=user_id)
+        liked = False
+        if post.likes.contains(user):
+            post.likes.remove(user)
+        else:
+            post.likes.add(user)
+            liked = True
         post.save()
         # Notice we return an instance of this mutation
-        return UpdatePostLikesMutation(post=post)
+        return UpdatePostLikesMutation(post=post, liked=liked)
 
 
 class UpdateCommentLikesMutations(graphene.Mutation):
     class Arguments:
         id = graphene.ID(required=True)
-        user_email = graphene.String(required=True)
+        user_id = graphene.ID(required=True)
 
     comment = graphene.Field(CommentType)
+    liked = graphene.Boolean()
 
     @classmethod
-    def mutate(cls, root, info, id, user_email):
+    def mutate(cls, root, info, id, user_id):
         comment = Comment.objects.get(pk=id)
-        comment.likes.add(User.objects.get(email=user_email))
+        user = User.objects.get(id=user_id)
+        liked = False
+        if comment.likes.contains(user):
+            comment.likes.remove(user)
+        else:
+            comment.likes.add(user)
+            liked = True
         comment.save()
-        return UpdateCommentLikesMutations(comment=comment)
+        # Notice we return an instance of this mutation
+        return UpdateCommentLikesMutations(comment=comment, liked=liked)
 
 
 class CommentCreateMutation(graphene.Mutation):

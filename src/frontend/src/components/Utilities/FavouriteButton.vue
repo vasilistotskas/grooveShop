@@ -22,9 +22,12 @@
 
 <script lang="ts">
 import store from '@/store'
+import { useToast } from 'vue-toastification'
 import { Options, Vue } from 'vue-class-component'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import FavouriteButtonInterface from '@/components/Utilities/Interface/FavouriteButtonInterface'
+
+const toast = useToast()
 
 @Options({
   name: 'FavouriteButton',
@@ -53,15 +56,21 @@ export default class FavouriteButton extends Vue implements FavouriteButtonInter
   model!: Partial<any>
   getterType!: string
   dispatchType!: string
-
+  isFavourite = false
   icon = faHeart
 
-  get isFavourite(): boolean {
+  mounted(): void {
+    this.isFavourite = store.getters[this.getterType]
+    this.computeIsFavourite()
+  }
+
+  computeIsFavourite(): void {
     return store.getters[this.getterType]
   }
 
   async favouriteHandle(): Promise<void> {
-    await store.dispatch(this.dispatchType, this.model)
+    this.isFavourite = await store.dispatch(this.dispatchType, this.model)
+    this.isFavourite ? toast.success('Added to Favourites') : toast.info('Removed From Favourites')
   }
 
 }

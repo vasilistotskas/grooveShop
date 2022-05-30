@@ -1,5 +1,6 @@
 import EntityBase from '@/state/common/EntityBase'
 import BlogTagModel from '@/state/blog/BlogTagModel'
+import PostLikesModel from '@/state/blog/PostLikesModel'
 import BlogCategoryModel from '@/state/blog/BlogCategoryModel'
 
 export default class BlogPostModel extends EntityBase {
@@ -13,6 +14,7 @@ export default class BlogPostModel extends EntityBase {
 	publishDate!: string
 	published!: boolean
 	slug!: string
+	likes!: Array<PostLikesModel>
 	subtitle!: string
 	title!: string
 	tags!: Array<BlogTagModel>

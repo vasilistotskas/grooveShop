@@ -119,7 +119,7 @@ class Comment(models.Model):
     is_approved = models.BooleanField(default=False)
 
     # Each comment can receive likes from multiple users, and each user can like multiple comments
-    likes = models.ManyToManyField(User, related_name='comment_like')
+    likes = models.ManyToManyField(User, related_name='comment_like', blank=True)
 
     # Each comment belongs to one user and one post
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)

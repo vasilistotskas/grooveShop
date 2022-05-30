@@ -1,7 +1,8 @@
 import store from '@/store'
 import router from '@/routes'
 import gql from 'graphql-tag'
-import { isEmpty } from 'lodash'
+import { isEmpty, some } from 'lodash'
+import { useToast } from 'vue-toastification'
 import { ApolloQueryResult } from '@apollo/client'
 import BlogTagModel from '@/state/blog/BlogTagModel'
 import BlogPostModel from '@/state/blog/BlogPostModel'
@@ -11,6 +12,8 @@ import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
 import BlogCategoryModel from '@/state/blog/BlogCategoryModel'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
+
+const toast = useToast()
 
 @Module({ namespaced: true })
 export default class BlogModule extends AppBaseModule {
@@ -80,10 +83,9 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	get getIsCurrentPostInUserFavourites(): boolean {
-		const postId: number = this.context.getters['getPostBySlug']
-		const favouritePosts = this.context.getters['getUserFavouriteBlogPosts']
-		const exists = favouritePosts.filter((i: BlogPostModel) => i.id === postId)
-		return !!exists.length
+		const postLikes = this.context.getters['getPostBySlug'].likes
+		const userEmail = store.getters['user/getUserData'].email
+		return some(postLikes, { email: userEmail })
 	}
 
 	@Mutation
@@ -290,6 +292,9 @@ export default class BlogModule extends AppBaseModule {
 				  numberOfLikes
 				  slug
 				  body
+				  likes {
+				   email
+          		  }
 				  category {
 				    id
 				  }
@@ -560,8 +565,8 @@ export default class BlogModule extends AppBaseModule {
 	async createCommentToPost(content: string): Promise<void> {
 		try {
 			const comment = await clientApollo.mutate({
-				mutation: gql`mutation ($post_id: ID!, $user_email: String!, $content: String!) {
-                createComment(postId: $post_id, userEmail: $user_email, content: $content) {
+				mutation: gql`mutation ($postId: ID!, $userEmail: String!, $content: String!) {
+                createComment(postId: $postId, userEmail: $userEmail, content: $content) {
 				  comment {
 				    content
 				    createdAt
@@ -587,8 +592,8 @@ export default class BlogModule extends AppBaseModule {
                 }
               }`,
 				variables: {
-					post_id: Number(this.context.getters['getPostBySlug'].id),
-					user_email: String(store.getters['user/getUserData'].email),
+					postId: Number(this.context.getters['getPostBySlug'].id),
+					userEmail: String(store.getters['user/getUserData'].email),
 					content: String(content),
 				}
 			})
@@ -607,8 +612,8 @@ export default class BlogModule extends AppBaseModule {
 	async updateCommentToPost(content: string): Promise<void> {
 		try {
 			const comment = await clientApollo.mutate({
-				mutation: gql`mutation ($comment_id: ID!, $content: String!) {
-                updateComment(commentId: $comment_id, content: $content) {
+				mutation: gql`mutation ($commentId: ID!, $content: String!) {
+                updateComment(commentId: $commentId, content: $content) {
 				  comment {
 				    id
 				    content
@@ -635,7 +640,7 @@ export default class BlogModule extends AppBaseModule {
                 }
               }`,
 				variables: {
-					comment_id: Number(this.context.getters['getCommentByUserToPost'].id),
+					commentId: Number(this.context.getters['getCommentByUserToPost'].id),
 					content: String(content),
 				}
 			})
@@ -654,13 +659,13 @@ export default class BlogModule extends AppBaseModule {
 	async deleteCommentFromPost(): Promise<void> {
 		try {
 			const comment = await clientApollo.mutate({
-				mutation: gql`mutation ($comment_id: ID!) {
-			    deleteComment(commentId: $comment_id) {
+				mutation: gql`mutation ($commentId: ID!) {
+			    deleteComment(commentId: $commentId) {
 				  deleted
 			    }
 			  }`,
 				variables: {
-					comment_id: Number(this.context.getters['getCommentByUserToPost'].id)
+					commentId: Number(this.context.getters['getCommentByUserToPost'].id)
 				}
 			})
 			return comment.data.deleteComment
@@ -673,8 +678,8 @@ export default class BlogModule extends AppBaseModule {
 	async updateCommentLikes(): Promise<Promise<ApolloQueryResult<any>> | undefined> {
 		try {
 			const comment = await clientApollo.mutate({
-				mutation: gql`mutation ($id: ID!, $user_email: String!) {
-                updateCommentLikes(id:$id, userEmail: $user_email) {
+				mutation: gql`mutation ($id: ID!, $userId: ID!) {
+                updateCommentLikes(id:$id, userId: $userId) {
 				  comment {
 					id
 					post {
@@ -684,12 +689,13 @@ export default class BlogModule extends AppBaseModule {
 					  id
 					  email
 					}
+					liked
 				  }
                 }
               }`,
 				variables: {
 					id: Number(this.context.getters['getCommentByUserToPost'].id),
-					user_email: store.getters['user/getUserData'].email
+					userId: store.getters['user/getUserId']
 				}
 			})
 			return comment.data.updateCommentLikes
@@ -702,21 +708,32 @@ export default class BlogModule extends AppBaseModule {
 	async updatePostLikes(postId: number): Promise<Promise<ApolloQueryResult<any>> | undefined> {
 		try {
 			const post = await clientApollo.mutate({
-				mutation: gql`mutation ($id: ID!, $user_email: String!) {
-                updatePostLikes(id:$id, userEmail: $user_email) {
+				mutation: gql`mutation ($id: ID!, $userId: ID!) {
+                updatePostLikes(id:$id, userId: $userId) {
 				  post {
 				    id
 				  }
+				  liked
                 }
               }`,
 				variables: {
 					id: Number(postId),
-					user_email: store.getters['user/getUserData'].email
+					userId: store.getters['user/getUserId']
 				}
 			})
-			return post.data.updatePostLikes
+			return post.data.updatePostLikes.liked
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
+		}
+	}
+
+	@Action
+	async toggleFavourite(post: BlogPostModel): Promise<any> {
+		const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
+		if (IsAuthenticated) {
+			return await this.context.dispatch('updatePostLikes', post.id)
+		} else {
+			return toast.error('You are not logged in')
 		}
 	}
 }

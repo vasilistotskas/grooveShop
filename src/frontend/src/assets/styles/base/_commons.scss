@@ -52,6 +52,7 @@ body {
 }
 
 .card {
+  position: relative;
   background-color: transparent !important;
   display: grid;
   content-visibility: auto;
