@@ -48,6 +48,7 @@
                     :input-with-add-on="true"
                     :input-with-add-on-icon="keyIcon"
                     type="password"
+                    autocomplete="new-password"
                     @blur="formManager.form.password.onBlur"
                   />
                   <FormValidationErrors :errors="formManager.form.password.$errors" />
@@ -67,6 +68,7 @@
                     :input-with-add-on="true"
                     :input-with-add-on-icon="keyIcon"
                     type="password"
+                    autocomplete="new-password"
                     @blur="formManager.form.confirmPassword.onBlur"
                   />
                   <FormValidationErrors :errors="formManager.form.confirmPassword.$errors" />
