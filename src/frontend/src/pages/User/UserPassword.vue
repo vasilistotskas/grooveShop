@@ -19,6 +19,7 @@
           :has-error="formManager.form.current_password.$hasError"
           :placeholder="'Current Password'"
           :validating="formManager.form.current_password.$validating"
+          autocomplete="current-password"
           type="password"
         />
         <FormValidationErrors
@@ -37,6 +38,7 @@
           :has-error="formManager.form.new_password.$hasError"
           :placeholder="'New Password'"
           :validating="formManager.form.new_password.$validating"
+          autocomplete="new-password"
           type="password"
         />
         <FormValidationErrors
@@ -55,6 +57,7 @@
           :has-error="formManager.form.re_new_password.$hasError"
           :placeholder="'Retype New Password'"
           :validating="formManager.form.re_new_password.$validating"
+          autocomplete="new-password"
           type="password"
         />
         <FormValidationErrors

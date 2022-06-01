@@ -20,13 +20,13 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
 @Options({
-  name: 'Checkout',
+  name: 'CheckoutSuccess',
   components: {
     Breadcrumbs
   }
 })
 
-export default class Success extends Vue {
+export default class CheckoutSuccess extends Vue {
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
@@ -41,6 +41,6 @@ export default class Success extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/Order/OrderSuccess"
+@import "@/assets/styles/pages/Checkout/CheckoutSuccess"
 
 </style>
