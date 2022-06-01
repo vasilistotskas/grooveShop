@@ -1,4 +1,4 @@
-Django>=3.2.3,<3.3
+Django==4.0.4
 psycopg2-binary==2.9.3
 djangorestframework==3.12.2
 django-cors-headers==3.7.0
@@ -8,7 +8,7 @@ stripe==2.56.0
 django-admin-thumbnails==0.2.6
 django-mptt==0.13.4
 django-js-asset==1.2.2
-graphene-django==2.15.0
+graphene-django==3.0.0b7
 django-redis==4.12.1
 celery==5.2.1
 Faker==6.6.1

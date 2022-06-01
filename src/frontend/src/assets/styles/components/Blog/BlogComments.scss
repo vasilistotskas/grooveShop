@@ -1,0 +1,7 @@
+.blog-comments {
+  &-content {
+    display: grid;
+    gap: 15px;
+    grid-template-rows: repeat(1, 1fr);
+  }
+}

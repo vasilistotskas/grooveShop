@@ -1,0 +1,34 @@
+.order-history-grid {
+  &-head, &-body a {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 70px;
+    align-items: center;
+    justify-items: center;
+  }
+
+  &-head {
+    padding-bottom: 10px;
+    span {
+      font-weight: 500;
+    }
+  }
+
+  &-body {
+    padding: 10px;
+    border: 1px solid var(--cp-palette-main-third);
+    background-color: var(--cp-palette-main-fourth);
+    border-radius: 8px;
+
+    &:hover {
+      box-shadow: 0 0 2px 1px #f800007d;
+    }
+  }
+}
+
+.card-body-order-history {
+  background-color: var(--cp-palette-main-secondary) !important;
+  border-radius: 10px;
+  padding-top: 30px !important;
+  padding-bottom: 30px !important;
+}

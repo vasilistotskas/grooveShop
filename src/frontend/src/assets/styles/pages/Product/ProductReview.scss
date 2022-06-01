@@ -1,0 +1,61 @@
+.rating {
+  position: relative;
+  height: 26px;
+  display: flex;
+  align-items: center;
+
+  &-background {
+    position: relative;
+    z-index: 1;
+  }
+
+  &-foreground {
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  &-board {
+    top: 0;
+    left: 0;
+    height: 26px;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .star {
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
+
+    &-foreground {
+      color: $rating-starts;
+    }
+
+    &-background {
+      color: var(--cp-palette-main-third);
+    }
+  }
+}
+
+#productReviewForm {
+  .modal-footer {
+    display: grid;
+    justify-content: end;
+    align-content: end;
+  }
+
+  .btn-outline-primary-one {
+    max-width: 130px;
+    min-width: 130px;
+  }
+}
+
+.modal-header {
+  display: flex;
+  gap: 10px;
+}

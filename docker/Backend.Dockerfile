@@ -5,10 +5,10 @@ ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
 COPY ./requirements.txt /requirements.txt
-COPY ./app /app
+COPY ./src /src
 COPY ./scripts /scripts
 
-WORKDIR /app
+WORKDIR /src
 
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
@@ -19,18 +19,18 @@ RUN python -m venv /py && \
         build-base postgresql-dev musl-dev linux-headers && \
     /py/bin/pip install -r /requirements.txt && \
     apk del .tmp-deps && \
-    adduser --disabled-password --no-create-home app && \
-    mkdir -p /app/static && \
-    mkdir -p /app/media && \
-    mkdir -p /app/files && \
-    mkdir -p /app/logs && \
-    chown -R app:app /app && \
-    chmod -R 755 /app && \
+    adduser --disabled-password --no-create-home backend && \
+    mkdir -p /src/backend/static && \
+    mkdir -p /src/backend/media && \
+    mkdir -p /src/backend/files && \
+    mkdir -p /src/backend/logs && \
+    chown -R backend:backend /src && \
+    chmod -R 755 /src && \
     chmod -R +x /scripts
 
 ENV PATH="/scripts:/py/bin:$PATH"
 ENV LIBRARY_PATH=/lib:/usr/lib
 
-USER app
+USER backend
 
 #CMD ["run.sh"]
