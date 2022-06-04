@@ -36,9 +36,6 @@ router.beforeEach((to, from, next) => {
 	RouteModel.routeBeforeEach(to, from, next)
 })
 
-// @TODO experimental
-const routeNames = RouteModel.createRouteModel(router.getRoutes()).routeNames
-
 export default router
 
 

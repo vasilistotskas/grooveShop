@@ -1,4 +1,5 @@
 import AppModule from '@/state/app/AppModule'
+import TipModule from '@/state/tip/TipModule'
 import CartModule from '@/state/cart/CartModule'
 import BlogModule from '@/state/blog/BlogModule'
 import UserModule from '@/state/user/data/UserModule'
@@ -38,7 +39,8 @@ const stateDirectory = <Record<string, typeof AppBaseModule>>{
 	'password': PasswordModule,
 	'signup': SignUpModule,
 	'blog': BlogModule,
-	'pay_way': PayWayModule
+	'pay_way': PayWayModule,
+	'tip': TipModule
 }
 
 export default stateDirectory

@@ -1,13 +1,12 @@
 import { createStore } from 'vuex'
 import appStateModules from '@/state'
-import RootState from '@/state/RootState'
 import { config } from 'vuex-module-decorators'
 import stateDirectory from '@/state/stateDirectory'
 import { each, split, slice, join, has, set } from 'lodash'
 
 config.rawError = true
 
-each(stateDirectory, (item: any, path: any) => {
+each(stateDirectory, (item: any, path: string) => {
 	const elements = split(path, '.')
 	each(elements, (element: any, idx: any) => {
 		const elementIterator = slice(elements, idx)
@@ -21,7 +20,7 @@ each(stateDirectory, (item: any, path: any) => {
 	set(appStateModules, fullPath, item)
 })
 
-const store = createStore<RootState>({
+const store = createStore({
 	strict: true,
 	modules: appStateModules,
 	plugins: []

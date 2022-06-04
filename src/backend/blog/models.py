@@ -2,7 +2,6 @@ import os
 from django.db import models
 from django.conf import settings
 from tinymce.models import HTMLField
-from django.shortcuts import reverse
 
 User = settings.AUTH_USER_MODEL
 

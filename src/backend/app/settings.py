@@ -64,7 +64,8 @@ PROJECT_APPS = [
     'backend.search',
     'backend.slider',
     'backend.blog',
-    'backend.seo'
+    'backend.seo',
+    'backend.tip'
 ]
 THIRD_PARTY_APPS = [
     'rest_framework',
@@ -209,7 +210,7 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # graphql schema
 GRAPHENE = {
-    "SCHEMA": "backend.blog.schema.schema",
+    "SCHEMA": "backend.core.schema.schema",
 }
 
 # Tinymce admin panel editor config

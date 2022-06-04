@@ -14,10 +14,14 @@
     <div v-else>
       <span>No Posts Found</span>
     </div>
-    <BlogSidebar
-      :authors="allAuthors"
-      :tags="allTags"
-    />
+    <TipSidebar>
+
+    </TipSidebar>
+    
+    <!--    <BlogSidebar-->
+    <!--      :authors="allAuthors"-->
+    <!--      :tags="allTags"-->
+    <!--    />-->
   </div>
 </template>
 
@@ -25,6 +29,7 @@
 import store from '@/store'
 import { Options, Vue } from 'vue-class-component'
 import BlogPostModel from '@/state/blog/BlogPostModel'
+import TipSidebar from '@/components/Tip/TipSidebar.vue'
 import BlogSidebar from '@/components/Blog/BlogSidebar.vue'
 import BlogPostCard from '@/components/Blog/BlogPostCard.vue'
 
@@ -32,6 +37,7 @@ import BlogPostCard from '@/components/Blog/BlogPostCard.vue'
   name: 'BlogPostList',
   components: {
     BlogSidebar,
+    TipSidebar,
     BlogPostCard
   },
   props: {

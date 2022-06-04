@@ -5,6 +5,7 @@ REM createordersfaker.bat
 REM createblogfaker.bat
 
 docker-compose run backend sh -c "python manage.py makemigrations --noinput"
+docker-compose run backend sh -c "python manage.py migrate"
 docker-compose run backend sh -c "python manage.py populate_users"
 docker-compose run backend sh -c "python manage.py populate_products"
 docker-compose run backend sh -c "python manage.py populate_orders"

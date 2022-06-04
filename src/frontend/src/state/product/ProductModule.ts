@@ -9,7 +9,7 @@ import { Module, Action, Mutation } from 'vuex-module-decorators'
 @Module({ namespaced: true })
 export default class ProductModule extends AppBaseModule {
 	product = new ProductModel()
-	latestProducts = [new ProductModel()]
+	latestProducts: Array<ProductModel> = []
 	product_id!: number
 
 	get getProductData(): ProductModel {

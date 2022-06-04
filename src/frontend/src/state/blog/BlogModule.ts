@@ -12,6 +12,7 @@ import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
 import BlogCategoryModel from '@/state/blog/BlogCategoryModel'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
+import UserProfileModelGql from '@/state/user/data/UserProfileModelGql'
 
 const toast = useToast()
 
@@ -139,7 +140,7 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	@Action
-	async fetchAllPostsFromRemote(): Promise<void> {
+	async fetchAllPostsFromRemote(): Promise<Array<BlogPostModel> | undefined> {
 		try {
 			const posts = await clientApollo.query({
 				query: gql`query {
@@ -171,14 +172,17 @@ export default class BlogModule extends AppBaseModule {
                 }
               }`
 			})
-			return this.context.commit('setAllPosts', posts.data.allPosts)
+
+			const data = posts.data.allPosts
+			this.context.commit('setAllPosts', data)
+			return data
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
 	}
 
 	@Action
-	async fetchAllTagsFromRemote(): Promise<void> {
+	async fetchAllTagsFromRemote(): Promise<Array<BlogTagModel> | undefined> {
 		try {
 			const tags = await clientApollo.query({
 				query: gql`query {
@@ -187,14 +191,16 @@ export default class BlogModule extends AppBaseModule {
                 }
               }`
 			})
-			return this.context.commit('setAllTags', tags.data.allTags)
+			const data = tags.data.allTags
+			this.context.commit('setAllTags', data)
+			return data
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
 	}
 
 	@Action
-	async fetchAllAuthorsFromRemote(): Promise<void> {
+	async fetchAllAuthorsFromRemote(): Promise<Array<BlogAuthorModel> | undefined> {
 		try {
 			const authors = await clientApollo.query({
 				query: gql`query {
@@ -210,14 +216,16 @@ export default class BlogModule extends AppBaseModule {
                 }
               }`
 			})
-			return this.context.commit('setAllAuthors', authors.data.allAuthors)
+			const data = authors.data.allAuthors
+			this.context.commit('setAllAuthors', data)
+			return data
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
 	}
 
 	@Action
-	async fetchAllCategoriesFromRemote(): Promise<void> {
+	async fetchAllCategoriesFromRemote(): Promise<Array<BlogCategoryModel> | undefined> {
 		try {
 			const categories = await clientApollo.query({
 				query: gql`query {
@@ -228,14 +236,16 @@ export default class BlogModule extends AppBaseModule {
                 }
               }`
 			})
-			return this.context.commit('setAllCategories', categories.data.allCategories)
+			const data = categories.data.allCategories
+			this.context.commit('setAllCategories', data)
+			return data
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
 	}
 
 	@Action
-	async fetchPostsByTagFromRemote(): Promise<void> {
+	async fetchPostsByTagFromRemote(): Promise<Array<BlogPostModel> | undefined> {
 		try {
 			const posts = await clientApollo.query({
 				query: gql`query ($tag: String!) {
@@ -270,14 +280,16 @@ export default class BlogModule extends AppBaseModule {
 					tag: router.currentRoute.value.params.tag
 				}
 			})
-			return this.context.commit('setPostsByTag', posts.data.postsByTag)
+			const data = posts.data.postsByTag
+			this.context.commit('setPostsByTag', data)
+			return data
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
 	}
 
 	@Action
-	async fetchPostBySlugFromRemote(): Promise<void> {
+	async fetchPostBySlugFromRemote(): Promise<BlogPostModel | undefined> {
 		try {
 			const post = await clientApollo.query({
 				query: gql`query ($slug: String!) {
@@ -315,14 +327,16 @@ export default class BlogModule extends AppBaseModule {
 					slug: router.currentRoute.value.params.slug
 				}
 			})
-			return this.context.commit('setPostBySlug', post.data.postBySlug)
+			const data = post.data.postBySlug
+			this.context.commit('setPostBySlug', data)
+			return data
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
 	}
 
 	@Action
-	async fetchAuthorByEmailFromRemote(): Promise<void> {
+	async fetchAuthorByEmailFromRemote(): Promise<BlogAuthorModel | undefined> {
 		try {
 			const author = await clientApollo.query({
 				query: gql`query ($email: String!) {
@@ -358,16 +372,18 @@ export default class BlogModule extends AppBaseModule {
 					email: router.currentRoute.value.params.email
 				}
 			})
-			return this.context.commit('setAuthorByEmail', author.data.authorByEmail)
+			const data = author.data.authorByEmail
+			this.context.commit('setAuthorByEmail', author.data.authorByEmail)
+			return data
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
 	}
 
 	@Action
-	async fetchUserProfileByUserId(userId: number): Promise<Partial<any> | undefined> {
+	async fetchUserProfileByUserId(userId: number): Promise<UserProfileModelGql | undefined> {
 		try {
-			const user_profile = await clientApollo.query({
+			const userProfile = await clientApollo.query({
 				query: gql`query ($userId: Int!) {
                 userProfileByUserId(userId: $userId) {
                   mainImageAbsoluteUrl
@@ -378,14 +394,14 @@ export default class BlogModule extends AppBaseModule {
 					userId: userId
 				}
 			})
-			return user_profile.data.userProfileByUserId
+			return userProfile.data.userProfileByUserId
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
 	}
 
 	@Action
-	async fetchCommentsByUser(): Promise<void> {
+	async fetchCommentsByUser(): Promise<Array<BlogCommentModel> | undefined> {
 		try {
 			const comments = await clientApollo.query({
 				query: gql`query ($userEmail: String!) {
@@ -425,14 +441,16 @@ export default class BlogModule extends AppBaseModule {
 					userEmail: store.getters['user/getUserEmail']
 				}
 			})
-			return this.context.commit('setCommentsByUser', comments.data.commentsByUser)
+			const data = comments.data.commentsByUser
+			this.context.commit('setCommentsByUser',data)
+			return data
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
 	}
 
 	@Action
-	async fetchCommentsByPost(): Promise<void> {
+	async fetchCommentsByPost(): Promise<Array<BlogCommentModel> | undefined> {
 		try {
 			const comments = await clientApollo.query({
 				query: gql`query ($postId: Int!) {
@@ -477,7 +495,9 @@ export default class BlogModule extends AppBaseModule {
 
 			const commentsMergedWithUserProfile: Array<any> = await this.context.dispatch('getCommentsMergedWithUserProfile', fetchedComments)
 
-			return this.context.commit('setCommentsByPost', commentsMergedWithUserProfile)
+			this.context.commit('setCommentsByPost', commentsMergedWithUserProfile)
+
+			return commentsMergedWithUserProfile
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
@@ -509,7 +529,7 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	@Action
-	async fetchCommentByUserToPost(): Promise<void> {
+	async fetchCommentByUserToPost(): Promise<BlogCommentModel | undefined> {
 		try {
 			const comment = await clientApollo.query({
 				query: gql`query ($postId: Int!, $userEmail: String!) {
@@ -555,14 +575,16 @@ export default class BlogModule extends AppBaseModule {
 
 			const dataMerged = await this.context.dispatch('getCommentMergedWithUserProfile', commentData)
 
-			return this.context.commit('setCommentByUserToPost', dataMerged)
+			this.context.commit('setCommentByUserToPost', dataMerged)
+
+			return dataMerged
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
 	}
 
 	@Action
-	async createCommentToPost(content: string): Promise<void> {
+	async createCommentToPost(content: string): Promise<BlogCommentModel | undefined> {
 		try {
 			const comment = await clientApollo.mutate({
 				mutation: gql`mutation ($postId: ID!, $userEmail: String!, $content: String!) {
@@ -602,14 +624,15 @@ export default class BlogModule extends AppBaseModule {
 
 			const dataMerged = await this.context.dispatch('getCommentMergedWithUserProfile', commentData)
 
-			return this.context.commit('setCommentByUserToPost', dataMerged)
+			this.context.commit('setCommentByUserToPost', dataMerged)
+			return dataMerged
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
 	}
 
 	@Action
-	async updateCommentToPost(content: string): Promise<void> {
+	async updateCommentToPost(content: string): Promise<BlogCommentModel | undefined> {
 		try {
 			const comment = await clientApollo.mutate({
 				mutation: gql`mutation ($commentId: ID!, $content: String!) {
@@ -649,7 +672,9 @@ export default class BlogModule extends AppBaseModule {
 
 			const dataMerged = await this.context.dispatch('getCommentMergedWithUserProfile', commentData)
 
-			return this.context.commit('setCommentByUserToPost', dataMerged)
+			this.context.commit('setCommentByUserToPost', dataMerged)
+
+			return dataMerged
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
