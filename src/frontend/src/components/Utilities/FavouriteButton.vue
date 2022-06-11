@@ -23,13 +23,13 @@
 <script lang="ts">
 import store from '@/store'
 import { useToast } from 'vue-toastification'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import FavouriteButtonInterface from '@/components/Utilities/Interface/FavouriteButtonInterface'
 
 const toast = useToast()
 
-@Options({
+@Component({
   name: 'FavouriteButton',
   props: {
     model: {

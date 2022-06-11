@@ -11,10 +11,10 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 
-@Options({
+@Component({
   name: 'BlogAuthorLink',
   props: {
     author: {

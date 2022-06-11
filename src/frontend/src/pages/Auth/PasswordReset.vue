@@ -70,13 +70,13 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
-@Options({
+@Component({
   name: 'PasswordReset',
   components: {
     Breadcrumbs

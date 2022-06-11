@@ -35,7 +35,7 @@
 import store from '@/store'
 import 'swiper/swiper-bundle.css'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import SliderModel from '@/state/slider/SliderModel'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import SwiperCore, { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper'
@@ -43,7 +43,7 @@ import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpe
 
 SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard])
 
-@Options({
+@Component({
   name: 'HomePageMainSlider',
   components: {
     GrooveImage,

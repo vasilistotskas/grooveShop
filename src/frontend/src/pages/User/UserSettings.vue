@@ -207,7 +207,7 @@
 import store from '@/store'
 import { cloneDeep } from 'lodash'
 import { min } from '@/components/Form/Utils'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import RegionsModel from '@/state/country/RegionsModel'
 import CountryModel from '@/state/country/CountryModel'
 import FormProvider from '@/components/Form/FormProvider.vue'
@@ -221,7 +221,7 @@ let {
   validateFields
 } = useValidation({})
 
-@Options({
+@Component({
   name: 'UserSettings',
   components: {
     FormProvider,

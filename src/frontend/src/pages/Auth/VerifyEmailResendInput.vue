@@ -38,10 +38,10 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 
-@Options({
+@Component({
   name: 'VerifyEmailResendInput',
   props: {
     activationEmailAtLocalStorage: {

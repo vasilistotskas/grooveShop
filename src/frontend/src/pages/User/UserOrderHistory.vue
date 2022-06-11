@@ -40,7 +40,7 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options } from 'vue-class-component'
+import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import UserOrderModel from '@/state/user/order/UserOrderModel'
 import Pagination from '@/components/Pagination/Pagination.vue'
@@ -51,7 +51,7 @@ import UserOrderHistoryContainer from '@/components/User/UserOrderHistoryContain
 import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
-@Options({
+@Component({
   name: 'UserOrderHistory',
   extends: PaginationBase,
   components: {

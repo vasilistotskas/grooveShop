@@ -50,11 +50,11 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options } from 'vue-class-component'
+import { Options as Component } from 'vue-class-component'
 import PayWayModel from '@/state/payway/PayWayModel'
 import GenericModalModel from '@/components/Utilities/Model/GenericModalModel'
 
-@Options({
+@Component({
   name: 'CheckoutStripeModal',
   extends: GenericModalModel
 })

@@ -45,13 +45,13 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import BlogTagModel from '@/state/blog/BlogTagModel'
 import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import { faTag } from '@fortawesome/free-solid-svg-icons/faTag'
 import { faUserTag } from '@fortawesome/free-solid-svg-icons/faUserTag'
 
-@Options({
+@Component({
   name: 'BlogSidebar',
   props: {
     tags: Array,

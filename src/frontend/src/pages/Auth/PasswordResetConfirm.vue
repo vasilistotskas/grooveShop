@@ -103,7 +103,7 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import { equal, min } from '@/components/Form/Utils'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
@@ -118,7 +118,7 @@ let {
   validateFields
 } = useValidation({})
 
-@Options({
+@Component({
   name: 'PasswordRestConfirm',
   components: {
     Breadcrumbs,

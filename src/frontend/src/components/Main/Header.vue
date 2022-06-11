@@ -15,10 +15,10 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import Navbar from '@/components/Navbar/Navbar.vue'
 
-@Options({
+@Component({
   name: 'Header',
   components: {
     Navbar

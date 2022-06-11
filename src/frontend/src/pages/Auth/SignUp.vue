@@ -126,7 +126,7 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import { min, email, equal } from '@/components/Form/Utils'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import { faKey } from '@fortawesome/free-solid-svg-icons/faKey'
@@ -143,7 +143,7 @@ let {
   validateFields
 } = useValidation({})
 
-@Options({
+@Component({
   name: 'Register',
   components: {
     FormProvider,

@@ -62,7 +62,7 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import BlogComment from '@/components/Blog/BlogComment.vue'
 import BlogComments from '@/components/Blog/BlogComments.vue'
@@ -73,7 +73,7 @@ import FavouriteButton from '@/components/Utilities/FavouriteButton.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
-@Options({
+@Component({
   name: 'BlogPost',
   components: {
     BlogAuthorLink,

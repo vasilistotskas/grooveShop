@@ -28,3 +28,8 @@ docker exec -it a0d879e07554 bash
 
 REM NAMED DOCKER YML FILES RUN
 docker-compose -f docker-compose-dev.yml up --build
+
+REM FOR VIRTUAL ENV
+pip install virtualenv
+virtualenv env
+env\scripts\activate

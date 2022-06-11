@@ -127,7 +127,7 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import { MainRouteNames } from '@/routes/Enum/MainRouteNames'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
@@ -139,7 +139,7 @@ import { faTruck } from '@fortawesome/free-solid-svg-icons/faTruck'
 import UserProfileImage from '@/components/User/UserProfileImage.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
-@Options({
+@Component({
   name: 'UserAccount',
   components: {
     UserProfileImage,

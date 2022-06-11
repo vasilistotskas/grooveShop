@@ -45,14 +45,14 @@
 import store from '@/store'
 import { inject } from 'vue'
 import { Emitter } from 'mitt'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import PayWayModel from '@/state/payway/PayWayModel'
 import { PayWaysEnum } from '@/state/payway/Enum/PayWaysEnum'
 import * as credit_card_lottie from '@/assets/lotties/credit_card.json'
 import LottiePlayerMain from '@/components/Utilities/LottiePlayerMain.vue'
 import * as pay_on_delivery_lottie from '@/assets/lotties/pay_on_delivery.json'
 
-@Options({
+@Component({
   name: 'CheckoutPayWays',
   components: {
     LottiePlayerMain

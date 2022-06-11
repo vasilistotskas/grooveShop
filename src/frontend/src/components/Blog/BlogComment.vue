@@ -49,13 +49,13 @@
 import store from '@/store'
 import { cloneDeep } from 'lodash'
 import { useToast } from 'vue-toastification'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
 import { faPenSquare } from '@fortawesome/free-solid-svg-icons/faPenSquare'
 
 const toast = useToast()
 
-@Options({
+@Component({
   name: 'BlogComment'
 })
 

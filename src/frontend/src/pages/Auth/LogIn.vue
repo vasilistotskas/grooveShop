@@ -143,7 +143,7 @@
 import store from '@/store'
 import router from '@/routes'
 import session from '@/api/session'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import { required } from '@/components/Form/Utils'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
@@ -161,7 +161,7 @@ let {
   validateFields
 } = useValidation({})
 
-@Options({
+@Component({
   name: 'LogIn',
   components: {
     FormProvider,

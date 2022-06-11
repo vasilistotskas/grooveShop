@@ -48,10 +48,38 @@ class IndexView(View):
         return render(request, "dist/index.html", to_render)
 
 
-handler400 = IndexView.as_view()
-handler403 = IndexView.as_view()
-handler404 = IndexView.as_view()
-handler500 = IndexView.as_view()
+def error_400(request, exception):
+    context = {}
+    response = render(request, 'dist/index.html', context=context)
+    response.status_code = 400
+    return response
+
+
+def error_403(request, exception):
+    context = {}
+    response = render(request, 'dist/index.html', context=context)
+    response.status_code = 403
+    return response
+
+
+def error_404(request, exception):
+    context = {}
+    response = render(request, 'dist/index.html', context=context)
+    response.status_code = 404
+    return response
+
+
+def error_500(request):
+    context = {}
+    response = render(request, 'dist/index.html', context=context)
+    response.status_code = 500
+    return response
+
+
+handler400 = error_400
+handler403 = error_403
+handler404 = error_404
+handler500 = error_500
 
 front_urls = [
     path('', IndexView.as_view(), name='index'),

@@ -39,11 +39,11 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
-@Options({
+@Component({
   name: 'VerifyEmail',
   components: {
     Breadcrumbs

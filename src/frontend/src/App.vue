@@ -22,7 +22,7 @@ import store from '@/store'
 import _, { LoDashStatic } from 'lodash'
 import packageMeta from '@/../package.json'
 import Footer from '@/components/Main/Footer.vue'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import Header from '@/components/Main/Header.vue'
 import Loader from '@/components/Main/Loader.vue'
 import CountryModel from '@/state/country/CountryModel'
@@ -30,7 +30,7 @@ import RegionsModel from '@/state/country/RegionsModel'
 import SocialSidebar from '@/components/Main/SocialSidebar.vue'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
 
-@Options({
+@Component({
   name: 'App',
   components: {
     Header,

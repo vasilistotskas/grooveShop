@@ -34,12 +34,12 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import PayWayModel from '@/state/payway/PayWayModel'
 import CartItemModel from '@/state/cart/CartItemModel'
 import CheckoutProductCard from '@/components/Checkout/CheckoutProductCard.vue'
 
-@Options({
+@Component({
   name: 'CheckoutProductContainer',
   components: {
     CheckoutProductCard

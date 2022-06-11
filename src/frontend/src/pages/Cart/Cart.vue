@@ -54,13 +54,13 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import CartItem from '@/components/Cart/CartItem.vue'
 import CartItemModel from '@/state/cart/CartItemModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
-@Options({
+@Component({
   name: 'Cart',
   components: {
     CartItem,

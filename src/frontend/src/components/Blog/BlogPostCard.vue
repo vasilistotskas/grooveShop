@@ -52,13 +52,13 @@
 
 <script lang="ts">
 import BlogPostModel from '@/state/blog/BlogPostModel'
-import { Vue, setup, Options } from 'vue-class-component'
 import BlogSidebar from '@/components/Blog/BlogSidebar.vue'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import BlogAuthorLink from '@/components/Blog/BlogAuthorLink.vue'
+import { Vue, setup, Options as Component} from 'vue-class-component'
 import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
-@Options({
+@Component({
   name: 'BlogPostCard',
   components: {
     BlogAuthorLink,

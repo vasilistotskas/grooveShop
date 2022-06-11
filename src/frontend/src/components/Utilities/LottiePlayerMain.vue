@@ -6,10 +6,10 @@
 import { inject } from 'vue'
 import { Emitter } from 'mitt'
 import * as Lottie from 'lottie-web'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import { AnimationConfigWithData, AnimationConfigWithPath, AnimationItem, LottiePlayer } from 'lottie-web'
 
-@Options({
+@Component({
   name: 'LottiePlayerMain',
   props: {
     animationData: {

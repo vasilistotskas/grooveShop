@@ -173,11 +173,11 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import * as safe_shield from '@/assets/lotties/safe_shield.json'
 import LottiePlayerMain from '@/components/Utilities/LottiePlayerMain.vue'
 
-@Options({
+@Component({
   name: 'Footer',
   components: {
     LottiePlayerMain

@@ -14,9 +14,7 @@
     <div v-else>
       <span>No Posts Found</span>
     </div>
-    <TipSidebar>
-
-    </TipSidebar>
+    <TipSidebar :all-tips="allTips" />
     
     <!--    <BlogSidebar-->
     <!--      :authors="allAuthors"-->
@@ -27,13 +25,14 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import TipSidebar from '@/components/Tip/TipSidebar.vue'
 import BlogSidebar from '@/components/Blog/BlogSidebar.vue'
 import BlogPostCard from '@/components/Blog/BlogPostCard.vue'
+import TipModel from '@/state/tip/TipModel'
 
-@Options({
+@Component({
   name: 'BlogPostList',
   components: {
     BlogSidebar,
@@ -65,11 +64,16 @@ export default class BlogPostList extends Vue {
     return store.getters['blog/getAllAuthors']
   }
 
+  get allTips(): Array<TipModel> {
+    return store.getters['tip/getAllTips']
+  }
+
   async mounted(): Promise<void> {
     await Promise.all([
       store.dispatch('blog/fetchAllTagsFromRemote'),
       store.dispatch('blog/fetchAllAuthorsFromRemote'),
-      store.dispatch('blog/fetchAllCategoriesFromRemote')
+      store.dispatch('blog/fetchAllCategoriesFromRemote'),
+      store.dispatch('tip/fetchAllTipsFromRemote')
     ])
   }
 

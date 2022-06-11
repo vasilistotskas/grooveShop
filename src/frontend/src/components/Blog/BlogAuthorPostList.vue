@@ -24,12 +24,12 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import BlogSidebar from '@/components/Blog/BlogSidebar.vue'
 import BlogPostCard from '@/components/Blog/BlogPostCard.vue'
 
-@Options({
+@Component({
   name: 'BlogAuthorPostList',
   components: {
     BlogSidebar,

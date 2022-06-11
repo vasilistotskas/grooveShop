@@ -35,7 +35,7 @@
 
 import store from '@/store'
 import router from '@/routes'
-import { Options } from 'vue-class-component'
+import { Options as Component } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
@@ -48,7 +48,7 @@ import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEn
 import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
-@Options({
+@Component({
   name: 'Search',
   extends: PaginationBase,
   components: {

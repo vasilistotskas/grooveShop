@@ -58,12 +58,12 @@
 import store from '@/store'
 import { cloneDeep } from 'lodash'
 import { onClickOutside } from '@vueuse/core'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import CategoryModel from '@/state/category/CategoryModel'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
-@Options({
+@Component({
   name: 'NavbarCategories',
   components: {
     GrooveImage

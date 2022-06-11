@@ -5,9 +5,9 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 
-@Options({
+@Component({
   name: 'ToastRegisterActivationFail'
 })
 

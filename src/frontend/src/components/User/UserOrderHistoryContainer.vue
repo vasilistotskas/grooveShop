@@ -23,12 +23,12 @@
 
 <script lang="ts">
 import { forEach } from 'lodash'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import UserOrderModel from '@/state/user/order/UserOrderModel'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import UserOrderHistoryCard from '@/components/User/UserOrderHistoryCard.vue'
 
-@Options({
+@Component({
   name: 'UserOrderHistoryContainer',
   components: {
     Pagination,

@@ -1,9 +1,9 @@
 import { inject } from 'vue'
 import { Emitter } from 'mitt'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 
-@Options({
+@Component({
 	name: 'GenericModalModel',
 	props: {
 		shouldModalStartInOpenState: {

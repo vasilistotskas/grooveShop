@@ -66,7 +66,7 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import CartItemModel from '@/state/cart/CartItemModel'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
@@ -74,7 +74,7 @@ import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle'
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle'
 
-@Options({
+@Component({
   name: 'CartItem',
   components: {
     GrooveImage

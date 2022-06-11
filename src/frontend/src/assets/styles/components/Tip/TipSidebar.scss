@@ -1,0 +1,22 @@
+.tip-sidebar {
+  &-section {
+    position: relative;
+  }
+  &-head {
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background: var(--cp-palette-main-dark-primary);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    &-title {
+
+    }
+  }
+  &-wrapper {
+
+  }
+  &-content {
+
+  }
+}

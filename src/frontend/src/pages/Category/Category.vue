@@ -43,8 +43,8 @@
 
 import store from '@/store'
 import router from '@/routes'
-import { Options } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
+import { Options as Component } from 'vue-class-component'
 import CategoryModel from '@/state/category/CategoryModel'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
@@ -59,7 +59,7 @@ import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationN
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
-@Options({
+@Component({
   name: 'Category',
   extends: PaginationBase,
   components: {

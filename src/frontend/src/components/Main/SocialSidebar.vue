@@ -106,7 +106,7 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
 import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub'
 import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter'
@@ -114,7 +114,7 @@ import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons/faLinkedin'
 import { faInstagram } from '@fortawesome/free-brands-svg-icons/faInstagram'
 
-@Options({
+@Component({
   name: 'SocialSidebar'
 })
 export default class SocialSidebar extends Vue {

@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 import {
@@ -32,7 +32,7 @@ import {
 } from '@/helpers/MediaStream/ImageUrlEnum'
 import { HtmlImageLoadingOptions } from '@/components/Sliders/Enums/SliderEnum'
 
-@Options({
+@Component({
   name: 'GrooveImage',
   props: {
     useMediaStream: {

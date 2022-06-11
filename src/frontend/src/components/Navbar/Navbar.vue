@@ -231,7 +231,7 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { Options } from 'vue-class-component'
+import { Options as Component } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
 import CategoryModel from '@/state/category/CategoryModel'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
@@ -249,7 +249,7 @@ import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationN
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOptions} from '@/helpers/MediaStream/ImageUrlEnum'
 
-@Options({
+@Component({
   name: 'Navbar',
   components: {
     NavbarCategories,

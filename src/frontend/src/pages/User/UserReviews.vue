@@ -34,7 +34,7 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options } from 'vue-class-component'
+import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
@@ -46,7 +46,7 @@ import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEn
 import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
 import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
-@Options({
+@Component({
   name: 'UserReviews',
   extends: PaginationBase,
   components: {

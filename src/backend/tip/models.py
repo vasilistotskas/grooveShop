@@ -7,10 +7,10 @@ from backend.tip.validators import validate_file_extension
 
 class Tip(models.Model):
     TIP_TYPES = (
-        ('success', 'Success'),
-        ('info', 'Info'),
-        ('error', 'Error'),
-        ('warning', 'Warning'),
+        ('success', 'success'),
+        ('info', 'info'),
+        ('error', 'error'),
+        ('warning', 'warning'),
     )
     title = models.CharField(max_length=200)
     content = models.TextField(max_length=1000)

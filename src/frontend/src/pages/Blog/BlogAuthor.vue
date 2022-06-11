@@ -26,14 +26,14 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import BlogAuthorPostList from '@/components/Blog/BlogAuthorPostList.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
-@Options({
+@Component({
   name: 'BlogAuthor',
   components: {
     BlogAuthorPostList,

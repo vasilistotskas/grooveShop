@@ -1,8 +1,8 @@
 import store from '@/store'
 import router from '@/routes'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 
-@Options({
+@Component({
 	name: 'PaginationBase'
 })
 export default class PaginationBase<RM> extends Vue  {
@@ -17,7 +17,7 @@ export default class PaginationBase<RM> extends Vue  {
 	}
 
 	get allPaginatedResults(): Array<RM> {
-		return store.getters['pagination/getResultData'](this.paginationNamespace)
+		return <Array<RM>>store.getters['pagination/getResultData'](this.paginationNamespace)
 	}
 
 	get allPaginatedResultsCount(): number {

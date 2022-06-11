@@ -1,0 +1,30 @@
+.tip-card {
+  &-container {
+    position: relative;
+    &:last-child {
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+  }
+  &-wrapper {
+    position: relative;
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+  &-title {
+
+  }
+  &-content {
+
+  }
+  &-icon {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    &-image {
+      max-width: 26px;
+      max-height: 26px;
+    }
+  }
+}

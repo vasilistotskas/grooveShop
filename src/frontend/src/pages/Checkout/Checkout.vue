@@ -310,7 +310,7 @@ import store from '@/store'
 import router from '@/routes'
 import { cloneDeep, merge } from 'lodash'
 import { useToast } from 'vue-toastification'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import PayWayModel from '@/state/payway/PayWayModel'
 import CartItemModel from '@/state/cart/CartItemModel'
 import CountryModel from '@/state/country/CountryModel'
@@ -338,7 +338,7 @@ let {
   validateFields
 } = useValidation({})
 
-@Options({
+@Component({
   name: 'Checkout',
   components: {
     FormProvider,

@@ -62,13 +62,13 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
 import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOptions, ImageTypeOptions} from '@/helpers/MediaStream/ImageUrlEnum'
 
 
-@Options({
+@Component({
   name: 'UserProfileImage',
   components: {
     GrooveImage
