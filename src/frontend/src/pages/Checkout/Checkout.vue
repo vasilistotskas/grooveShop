@@ -279,10 +279,17 @@
           </FormProvider>
         </div>
       </div>
-      <CheckoutPayWays
-        :cart-total-price="cartTotalPrice"
-        :cart-total-price-for-pay-way="cartTotalPriceForPayWay"
-      />
+      <Suspense>
+        <template #default>
+          <CheckoutPayWays
+            :cart-total-price="cartTotalPrice"
+            :cart-total-price-for-pay-way="cartTotalPriceForPayWay"
+          />
+        </template>
+        <template #fallback>
+          <span>Loading...</span>
+        </template>
+      </Suspense>
       <CheckoutProductContainer
         :cart="cart"
         :cart-total-length="cartTotalLength"

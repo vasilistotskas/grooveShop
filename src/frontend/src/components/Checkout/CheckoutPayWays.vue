@@ -25,7 +25,6 @@
         >
           <span class="checkout-pay_way-icon">
             <LottiePlayerMain
-              class="about_fedra_world-lottie"
               :animation-data="getPayWayLottie(payWay.name)"
               :loop="true"
             />
@@ -42,89 +41,82 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
-import { inject } from 'vue'
 import { Emitter } from 'mitt'
-import { Options as Component, Vue } from 'vue-class-component'
+import { useStore } from 'vuex'
+import { defineComponent, inject, watch } from 'vue'
 import PayWayModel from '@/state/payway/PayWayModel'
 import { PayWaysEnum } from '@/state/payway/Enum/PayWaysEnum'
 import * as credit_card_lottie from '@/assets/lotties/credit_card.json'
 import LottiePlayerMain from '@/components/Utilities/LottiePlayerMain.vue'
 import * as pay_on_delivery_lottie from '@/assets/lotties/pay_on_delivery.json'
 
-@Component({
-  name: 'CheckoutPayWays',
+export default defineComponent({
   components: {
     LottiePlayerMain
   },
   props: {
-    cartTotalPrice: Number,
-    cartTotalPriceForPayWay: Number
+    cartTotalPrice: {
+      type: Number,
+      required: true,
+      // custom validation can use any type for 'any' and validate data
+      validator: (cartTotalPrice: any) => typeof cartTotalPrice === 'number'
+    },
+    cartTotalPriceForPayWay: {
+      type: Number,
+      required: true
+    }
+  },
+  async setup(props) {
+    const store = useStore()
+    const emitter: Emitter<any> | undefined = inject('emitter')
+
+
+    let selectedPayWay: string = ''
+    const getSelectedPayWayName = () => store.getters['pay_way/getSelectedPayWayName']
+    watch(getSelectedPayWayName, (to: any) => {
+      selectedPayWay = to
+    })
+
+    const validPayWays: Array<PayWayModel> = await store.dispatch('pay_way/fetchActivePayWaysFromRemote')
+    const getPayWayLottie = (payWayName: PayWayModel['name']): object => {
+      switch(payWayName) {
+        case PayWaysEnum.CREDIT_CARD: {
+          return credit_card_lottie
+        }
+        case PayWaysEnum.PAY_ON_DELIVERY: {
+          return pay_on_delivery_lottie
+        }
+        default: {
+          return credit_card_lottie
+        }
+      }
+    }
+    const setSelectedPayWay = async (selectedPayWay: PayWayModel): Promise<void> => {
+      await store.dispatch('cart/cartTotalPriceForPayWayAction', selectedPayWay)
+      store.commit('pay_way/setSelectedPayWay', selectedPayWay)
+    }
+    const managePayWayClick = (selectedPayWay: PayWayModel): void => {
+      if (selectedPayWay.name === PayWaysEnum.CREDIT_CARD) {
+        emitter!.emit('modal-open')
+      }
+    }
+    const payWayExtraCost = (payWay: PayWayModel): string => {
+      if (payWay.free_for_order_amount < props.cartTotalPrice) {
+        return '(<span class="checkout-pay_way-cost-free green">Free</span>)'
+      }
+      return '(+' + payWay.cost + '€ per shipment)'
+    }
+
+    return {
+      validPayWays,
+      selectedPayWay,
+      managePayWayClick,
+      setSelectedPayWay,
+      getPayWayLottie,
+      payWayExtraCost
+    }
   }
 })
-export default class CheckoutPayWays extends Vue {
-
-  emitter: Emitter<any> | undefined = inject('emitter')
-  PayWaysEnum = PayWaysEnum
-  selectedPayWay: string = ''
-  cartTotalPrice: number = 0
-  cartTotalPriceForPayWay: number = 0
-
-  async created(): Promise<void> {
-    await store.dispatch('pay_way/fetchActivePayWaysFromRemote')
-
-    this.$watch(
-        () => this.getSelectedPayWayName,
-        (to: any) => {
-          this.selectedPayWay = to
-        }
-    )
-  }
-
-  get validPayWays(): Array<PayWayModel> {
-    return store.getters['pay_way/getActivePayWays']
-  }
-
-  get getSelectedPayWayName(): PayWayModel['name'] {
-    return store.getters['pay_way/getSelectedPayWayName']
-  }
-
-  public lottieReplay(): void {
-    this.emitter!.emit('lottie-replay')
-  }
-
-  public getPayWayLottie(payWayName: PayWayModel['name']): object {
-    switch(payWayName) {
-      case PayWaysEnum.CREDIT_CARD: {
-        return credit_card_lottie
-      }
-      case PayWaysEnum.PAY_ON_DELIVERY: {
-        return pay_on_delivery_lottie
-      }
-      default: {
-        return credit_card_lottie
-      }
-    }
-  }
-
-  protected setSelectedPayWay(selectedPayWay: PayWayModel): void {
-    store.dispatch('cart/cartTotalPriceForPayWayAction', selectedPayWay)
-    store.commit('pay_way/setSelectedPayWay', selectedPayWay)
-  }
-
-  protected managePayWayClick(selectedPayWay: PayWayModel): void {
-    if (selectedPayWay.name === PayWaysEnum.CREDIT_CARD) {
-      this.emitter!.emit('modal-open')
-    }
-  }
-
-  protected payWayExtraCost(payWay: PayWayModel): string {
-    if (payWay.free_for_order_amount < this.cartTotalPrice) {
-      return '(<span class="checkout-pay_way-cost-free green">Free</span>)'
-    }
-    return '(+' + payWay.cost + '€ per shipment)'
-  }
-}
 </script>
 
 <style lang="scss" scoped>
