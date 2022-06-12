@@ -40,11 +40,12 @@ export default class PayWayModule extends AppBaseModule {
 	}
 
 	@Action
-	fetchActivePayWaysFromRemote(): Promise<void> {
+	fetchActivePayWaysFromRemote(): Promise<void | PayWayModel> {
 		return api.get('pay_way/')
 			.then((response: any) => {
 				const data: PayWayModel = response.data
 				this.context.commit('setActivePayWays', data)
+				return data
 			})
 			.catch((e: Error) => {
 				console.log(e)

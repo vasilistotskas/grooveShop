@@ -26,7 +26,7 @@ export default class TipModule extends AppBaseModule {
 				  id
                   title
                   content
-                  type
+                  kind
                   icon
                   url
                   createdAt

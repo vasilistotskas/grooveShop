@@ -6,7 +6,7 @@ from backend.tip.validators import validate_file_extension
 
 
 class Tip(models.Model):
-    TIP_TYPES = (
+    TIP_KINDS = (
         ('success', 'success'),
         ('info', 'info'),
         ('error', 'error'),
@@ -14,7 +14,7 @@ class Tip(models.Model):
     )
     title = models.CharField(max_length=200)
     content = models.TextField(max_length=1000)
-    type = models.CharField(max_length=10, choices=TIP_TYPES, default=True)
+    kind = models.CharField(max_length=10, choices=TIP_KINDS, default=True)
     icon = models.FileField(upload_to="uploads/tip/", validators=[validate_file_extension])
     url = models.CharField(max_length=200)
     created_at = models.DateField(auto_now_add=True)

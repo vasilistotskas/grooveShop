@@ -1,4 +1,4 @@
-export enum TipTypeEnum {
+export enum TipKindEnum {
 	SUCCESS = 'SUCCESS',
 	INFO = 'INFO',
 	ERROR = 'ERROR',

@@ -51,6 +51,7 @@ import LottiePlayerMain from '@/components/Utilities/LottiePlayerMain.vue'
 import * as pay_on_delivery_lottie from '@/assets/lotties/pay_on_delivery.json'
 
 export default defineComponent({
+  name: 'CheckoutPayWays',
   components: {
     LottiePlayerMain
   },
@@ -70,10 +71,9 @@ export default defineComponent({
     const store = useStore()
     const emitter: Emitter<any> | undefined = inject('emitter')
 
-
     let selectedPayWay: string = ''
     const getSelectedPayWayName = () => store.getters['pay_way/getSelectedPayWayName']
-    watch(getSelectedPayWayName, (to: any) => {
+    watch(getSelectedPayWayName, (to: PayWaysEnum) => {
       selectedPayWay = to
     })
 

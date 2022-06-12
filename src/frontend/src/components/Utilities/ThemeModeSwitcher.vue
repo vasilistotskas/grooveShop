@@ -27,16 +27,16 @@ import AppSettingsThemeModeOption from '@/state/app/AppSettingsThemeModeOption'
 })
 export default class ThemeModeSwitcher extends Vue {
 
-  static sunIcon = faSun
-  static moonIcon = faMoon
+  sunIcon = faSun
+  moonIcon = faMoon
 
-  static themeModeFromPreference: AppSettingsThemeModeOption = AppSettingsThemeModeOption.light
+  themeModeFromPreference: AppSettingsThemeModeOption = AppSettingsThemeModeOption.light
 
-  static get getThemeMode(): AppSettingsThemeModeOption {
+  get getThemeMode(): AppSettingsThemeModeOption {
     return store.getters['settings/getSettings'].themeMode
   }
 
-  static get themeModeFromLocalStorage(): AppSettingsThemeModeOption {
+  get themeModeFromLocalStorage(): AppSettingsThemeModeOption {
     const themeModeFromLocalStorage = localStorage.getItem('themeModeFromLocalStorage') as AppSettingsThemeModeOption
 
     if (null === themeModeFromLocalStorage) {
@@ -46,38 +46,29 @@ export default class ThemeModeSwitcher extends Vue {
     return themeModeFromLocalStorage
   }
 
-  static get themeIconClass(): typeof faMoon | typeof faSun {
-    switch (ThemeModeSwitcher.getThemeMode) {
+  get themeIconClass(): typeof faMoon | typeof faSun {
+    switch (this.getThemeMode) {
       case AppSettingsThemeModeOption.dark:
-        return ThemeModeSwitcher.moonIcon
+        return this.moonIcon
       case AppSettingsThemeModeOption.light:
       default:
-        return ThemeModeSwitcher.sunIcon
-    }
-  }
-
-  static watch = {
-    getThemeMode: (newThemeMode: AppSettingsThemeModeOption, oldThemeMode: AppSettingsThemeModeOption) => {
-      ThemeModeSwitcher.switchThemeModeFromTo(oldThemeMode, newThemeMode)
-    },
-    themeModeFromPreference: () => {
-      ThemeModeSwitcher.updateThemeModeFromPreference()
+        return this.sunIcon
     }
   }
 
   async created(): Promise<void> {
 
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-      ThemeModeSwitcher.themeModeFromPreference = e.matches ? AppSettingsThemeModeOption.dark : AppSettingsThemeModeOption.light
+      this.themeModeFromPreference = e.matches ? AppSettingsThemeModeOption.dark : AppSettingsThemeModeOption.light
     })
 
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      ThemeModeSwitcher.themeModeFromPreference = AppSettingsThemeModeOption.dark
+      this.themeModeFromPreference = AppSettingsThemeModeOption.dark
     }
   }
 
   mounted(): void {
-    ThemeModeSwitcher.updateThemeModeFromPreference()
+    this.updateThemeModeFromPreference()
   }
 
   private static switchThemeModeFromTo(from: AppSettingsThemeModeOption, to: AppSettingsThemeModeOption): void {
@@ -92,31 +83,31 @@ export default class ThemeModeSwitcher extends Vue {
     })
   }
 
-  private static updateThemeModeFromLocalStorage(): void {
-    store.dispatch('settings/toggleThemeModeFromPreference', ThemeModeSwitcher.themeModeFromLocalStorage).then(
-        (themeMode) => ThemeModeSwitcher.updateThemeMode(themeMode)
+  private updateThemeModeFromLocalStorage(): void {
+    store.dispatch('settings/toggleThemeModeFromPreference', this.themeModeFromLocalStorage).then(
+        (themeMode) => this.updateThemeMode(themeMode)
     )
   }
 
-  private static updateThemeModeFromPreference(): void {
-    if (AppSettingsThemeModeOption.no_theme === ThemeModeSwitcher.themeModeFromLocalStorage) {
-      store.dispatch('settings/toggleThemeModeFromPreference', ThemeModeSwitcher.themeModeFromPreference).then(
-          (themeMode) => ThemeModeSwitcher.updateThemeMode(themeMode)
+  private updateThemeModeFromPreference(): void {
+    if (AppSettingsThemeModeOption.no_theme === this.themeModeFromLocalStorage) {
+      store.dispatch('settings/toggleThemeModeFromPreference', this.themeModeFromPreference).then(
+          (themeMode) => this.updateThemeMode(themeMode)
       )
     } else {
-      ThemeModeSwitcher.updateThemeModeFromLocalStorage()
+      this.updateThemeModeFromLocalStorage()
     }
   }
 
-  private static toggleThemeMode(): void {
+  private toggleThemeMode(): void {
     store.dispatch('settings/toggleThemeMode').then(
-        (themeMode) => ThemeModeSwitcher.updateThemeMode(themeMode)
+        (themeMode) => this.updateThemeMode(themeMode)
     )
   }
 
-  private static updateThemeMode(themeMode: AppSettingsThemeModeOption = AppSettingsThemeModeOption.no_theme): void {
+  private updateThemeMode(themeMode: AppSettingsThemeModeOption = AppSettingsThemeModeOption.no_theme): void {
     if (AppSettingsThemeModeOption.no_theme === themeMode) {
-      themeMode = ThemeModeSwitcher.getThemeMode
+      themeMode = this.getThemeMode
     }
 
     switch (themeMode) {
@@ -132,7 +123,6 @@ export default class ThemeModeSwitcher extends Vue {
 
 }
 </script>
-
 <style lang="scss" scoped>
 
 </style>

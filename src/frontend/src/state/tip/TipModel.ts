@@ -1,12 +1,12 @@
 import EntityBase from '@/state/common/EntityBase'
-import { TipTypeEnum } from '@/state/tip/Enum/TipEnum'
+import { TipKindEnum } from '@/state/tip/Enum/TipEnum'
 
 export default class TipModel extends EntityBase {
 
 	id!: number
 	title!: string
 	content!: string
-	type!: TipTypeEnum
+	kind!: TipKindEnum
 	icon!: string
 	url!: string
 	createdAt!: string
