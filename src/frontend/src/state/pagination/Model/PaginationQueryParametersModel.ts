@@ -6,7 +6,7 @@ export class PaginationQueryParametersModel extends EntityBase{
 	pageNumber?: number
 	endpointUrl?: string
 	method?: ApiBaseMethods
-	queryParams?: Partial<any>
+	queryParams?: Record<any, any>
 
 	private constructor(data?: Partial<PaginationQueryInterface>) {
 		super(data)

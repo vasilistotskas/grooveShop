@@ -1,4 +1,4 @@
-export type RM = {}
+export type TPaginatedModel = Record<any, any>
 export type PaginationCount = number
 export type PaginationLink = {
 	next: URL,

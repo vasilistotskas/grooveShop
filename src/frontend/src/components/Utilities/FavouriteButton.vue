@@ -59,9 +59,9 @@ const toast = useToast()
     }
   }
 })
-export default class FavouriteButton extends Vue implements FavouriteButtonInterface<Partial<any>> {
+export default class FavouriteButton extends Vue implements FavouriteButtonInterface<Record<any, any>> {
 
-  model!: Partial<any>
+  model!: Record<any, any>
   getterType!: string
   dispatchType!: string
   isFavourite = false
@@ -83,8 +83,8 @@ export default class FavouriteButton extends Vue implements FavouriteButtonInter
   }
 
   async favouriteHandle(): Promise<void> {
-    await store.dispatch(this.dispatchType, this.model).then((test: any) => {
-      this.isFavourite = test
+    await store.dispatch(this.dispatchType, this.model).then((isFavourite: boolean) => {
+      this.isFavourite = isFavourite
     })
     this.isFavourite ? toast.success('Added to Favourites') : toast.info('Removed From Favourites')
   }

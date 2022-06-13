@@ -1,5 +1,5 @@
 import EntityBase from '@/state/common/EntityBase'
-import { RM, PaginationTotalPages } from '@/state/pagination/Type/PaginationTypes'
+import { TPaginatedModel, PaginationTotalPages } from '@/state/pagination/Type/PaginationTypes'
 
 export default class PaginationModel extends EntityBase {
 

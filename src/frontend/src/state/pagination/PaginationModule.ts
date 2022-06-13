@@ -73,7 +73,7 @@ export default class PaginationModule extends AppBaseModule {
 	}
 
 	@Mutation
-	setResults(data: Partial<any>): void {
+	setResults(data: Record<any, any>): void {
 		this.namespaceData[data.namespace].results = data.results
 	}
 
@@ -94,42 +94,42 @@ export default class PaginationModule extends AppBaseModule {
 	}
 
 	@Mutation
-	setCount(data: Partial<any>): void {
+	setCount(data: Record<any, any>): void {
 		this.namespaceData[data.namespace].results_count = data.count
 	}
 
 	@Mutation
-	setNextPageUrl(data: Partial<any>): void {
+	setNextPageUrl(data: Record<any, any>): void {
 		this.namespaceData[data.namespace].results_next_page = data.nextPageUrl
 	}
 
 	@Mutation
-	setPreviousPageUrl(data: Partial<any>): void {
+	setPreviousPageUrl(data: Record<any, any>): void {
 		this.namespaceData[data.namespace].results_previous_page = data.previousPageUrl
 	}
 
 	@Mutation
-	setTotalPages(data: Partial<any>): void {
+	setTotalPages(data: Record<any, any>): void {
 		this.namespaceData[data.namespace].results_total_pages = data.totalPages
 	}
 
 	@Mutation
-	setCurrentPageNumber(data: Partial<any>): void {
+	setCurrentPageNumber(data: Record<any, any>): void {
 		this.namespaceData[data.namespace].current_page_number = data.pageNumber
 	}
 
 	@Mutation
-	setCurrentQuery(data: Partial<any>): void {
+	setCurrentQuery(data: Record<any, any>): void {
 		this.namespaceData[data.namespace].current_query = data.currentQuery
 	}
 
 	@Mutation
-	setShowNextButton(data: Partial<any>): void {
+	setShowNextButton(data: Record<any, any>): void {
 		this.namespaceData[data.namespace].show_next_button = data.showNextButton
 	}
 
 	@Mutation
-	setShowPreviousButton(data: Partial<any>): void {
+	setShowPreviousButton(data: Record<any, any>): void {
 		this.namespaceData[data.namespace].show_previous_button = data.showPreviousButton
 	}
 

@@ -1,8 +1,8 @@
 import { IconDefinition } from '@fortawesome/fontawesome-common-types'
 
-export default interface FavouriteButtonInterface<TPaginatedModel> {
+export default interface FavouriteButtonInterface<TModel> {
 
-	readonly model: RM
+	readonly model: TModel
 	readonly getterType: string
 	readonly dispatchType: string
 	readonly icon: IconDefinition

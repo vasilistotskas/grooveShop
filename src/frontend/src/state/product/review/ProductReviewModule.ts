@@ -82,7 +82,7 @@ export default class ProductReviewModule extends AppBaseModule {
 	}
 
 	@Mutation
-	removeUserToProductReview(data: Partial<any>): void {
+	removeUserToProductReview(data: Record<any, any>): void {
 
 		if (router.currentRoute.value.name === 'Product') {
 			const paginationQuery: PaginationQueryParametersModel = PaginationQueryParametersModel
@@ -143,7 +143,7 @@ export default class ProductReviewModule extends AppBaseModule {
 	}
 
 	@Action
-	async toggleReview(data: Partial<any>): Promise<any> {
+	async toggleReview(data: Record<any, any>): Promise<any> {
 		const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
 		if (IsAuthenticated) {
 			const product_id: number = store.getters['product/getProductId']
@@ -192,7 +192,7 @@ export default class ProductReviewModule extends AppBaseModule {
 	}
 
 	@Action
-	createCurrentProductReview(data: Partial<any>): Promise<void> {
+	createCurrentProductReview(data: Record<any, any>): Promise<void> {
 		const product_id: number = store.getters['product/getProductId']
 		return api.post(`reviews/product/${ product_id }/`, data)
 			.then((response: any) => {
@@ -221,7 +221,7 @@ export default class ProductReviewModule extends AppBaseModule {
 	}
 
 	@Action
-	updateCurrentProductReview(data: Partial<any>): Promise<void> {
+	updateCurrentProductReview(data: Record<any, any>): Promise<void> {
 		const user_id: number = store.getters['user/getUserId']
 		const product_id: number = store.getters['product/getProductId']
 
@@ -238,7 +238,7 @@ export default class ProductReviewModule extends AppBaseModule {
 	}
 
 	@Action
-	deleteCurrentProductReview(data: Partial<any>): Promise<void> {
+	deleteCurrentProductReview(data: Record<any, any>): Promise<void> {
 		return api.delete(`reviews/review/${ data.user_id }/${ data.product_id }/`)
 			.then(() => {
 				this.context.commit('removeUserToProductReview', data)

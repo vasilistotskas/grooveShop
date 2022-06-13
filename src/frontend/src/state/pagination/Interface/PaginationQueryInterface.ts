@@ -4,5 +4,5 @@ export default interface PaginationQueryInterface {
 	pageNumber?: number
 	endpointUrl: string
 	method: ApiBaseMethods
-	queryParams?: Partial<any>
+	queryParams?: Record<any, any>
 }
