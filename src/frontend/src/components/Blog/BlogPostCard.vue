@@ -1,69 +1,92 @@
 <template>
-  <RouterLink
+  <div
     v-if="post && Object.keys(post).length > 0"
-    :title="post.slug"
-    :to="`/post/${post.slug}`"
-    class="cardSpecialEffect"
-    aria-label="Blog Post"
+    class="blog-post-card-container"
   >
-    <div class="card blog-card">
-      <GrooveImage
-        :alt="post.title"
-        :file-name="post.mainImageFilename"
-        :use-media-stream="true"
-        :img-type="ImageTypeOptions.BLOG"
-        :img-height="268"
-        :img-width="462"
-      />
-      <div class="card-body">
-        <span class="card-title">{{ post.title }}: {{ post.subtitle }}</span>
-        <span v-if="showAuthor">
-          by <BlogAuthorLink :author="author" />
-        </span>
-        <p class="card-text">
-          {{ post.metaDescription }}
-        </p>
-        <ul class="grid-post-list-tags">
-          <li
-            v-for="tag in post.tags"
-            :key="tag.name"
-            class="post__tags"
+    <div class="blog-post-card-wrapper">
+      <RouterLink
+        :title="post.slug"
+        :to="`/post/${post.slug}`"
+        class="blog-post-card-link"
+        aria-label="Blog Post"
+      >
+        <GrooveImage
+          :alt="post.title"
+          :file-name="post.mainImageFilename"
+          :use-media-stream="true"
+          :img-class="'blog-post-card-image'"
+          :img-type="ImageTypeOptions.BLOG"
+          :img-format="ImageFormatOptions.png"
+          :img-height="500"
+          :img-width="900"
+          :img-fit="ImageFitOptions.fill"
+          :img-position="ImagePositionOptions.center"
+        />
+        <div class="blog-post-card-body">
+          <span
+            v-if="showAuthor"
+            class="blog-post-card-body-author"
           >
-            <RouterLink
-              :title="tag.name"
-              :to="`/tag/${tag.name}`"
-              aria-label="Blog Tag"
+            by <BlogAuthorLink :author="author" />
+          </span>
+          <span class="blog-post-card-body-title">{{ post.title }}: {{ post.subtitle }}</span>
+          <p class="blog-post-card-body-description">
+            {{ post.metaDescription }}
+          </p>
+          <ul class="blog-post-card-body-tags">
+            <li
+              v-for="tag in post.tags"
+              :key="tag.name"
+              class="blog-post-card-body-tag"
             >
-              #{{
-                tag.name
-              }}
-            </RouterLink>
-          </li>
-        </ul>
-        <small class="text-muted">{{ myContext.displayableDate(post.publishDate) }}</small>
+              <RouterLink
+                :title="tag.name"
+                :to="`/tag/${tag.name}`"
+                class="blog-post-card-body-tag-link"
+                aria-label="Blog Tag"
+              >
+                <span class="blog-post-card-body-tag-name">
+                  #{{
+                    tag.name
+                  }}
+                </span>
+              </RouterLink>
+            </li>
+          </ul>
+        </div>
+      </RouterLink>
+      <div class="blog-post-card-body-actions">
+        <div class="blog-post-card-body-actions-like">
+          <FavouriteButton
+            :model="post"
+            :dispatch-type="'blog/toggleFavourite'"
+          />
+        </div>
+
+        <div class="blog-post-card-body-actions-comment" />
+
+        <div class="blog-post-card-body-actions-share" />
       </div>
-      <span class="line-1" />
-      <span class="line-2" />
-      <span class="line-3" />
-      <span class="line-4" />
     </div>
-  </RouterLink>
+  </div>
 </template>
 
 <script lang="ts">
 import BlogPostModel from '@/state/blog/BlogPostModel'
-import BlogSidebar from '@/components/Blog/BlogSidebar.vue'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import BlogAuthorLink from '@/components/Blog/BlogAuthorLink.vue'
+import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
 import { Vue, setup, Options as Component} from 'vue-class-component'
-import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import FavouriteButton from '@/components/Utilities/FavouriteButton.vue'
+import { ImageFitOptions, ImageFormatOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Component({
   name: 'BlogPostCard',
   components: {
     BlogAuthorLink,
-    BlogSidebar,
-    GrooveImage
+    BlogTagsSidebar,
+    GrooveImage,
+    FavouriteButton
   },
   props: {
     post: {
@@ -83,6 +106,9 @@ import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 })
 
 export default class BlogPostCard extends Vue {
+  ImageFormatOptions = ImageFormatOptions
+  ImageFitOptions = ImageFitOptions
+  ImagePositionOptions = ImagePositionOptions
   post = new BlogPostModel()
   showAuthor: boolean = false
   author!: object
@@ -102,6 +128,6 @@ export default class BlogPostCard extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Blog/BlogPostList"
+@import "@/assets/styles/components/Blog/BlogPostCard"
 
 </style>

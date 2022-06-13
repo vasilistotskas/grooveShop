@@ -24,8 +24,8 @@
 </template>
 
 <script lang="ts">
-import { Options as Component, Vue } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'

@@ -28,7 +28,6 @@ export default class BlogModule extends AppBaseModule {
 	commentsByUser: Array<BlogCommentModel> = []
 	commentsByPost: Array<BlogCommentModel> = []
 	commentByUserToPost = new BlogCommentModel()
-	userFavouriteBlogPosts: Array<BlogPostModel> = []
 
 	get getAllPosts(): Array<BlogPostModel> {
 		return this.allPosts
@@ -77,10 +76,6 @@ export default class BlogModule extends AppBaseModule {
 	get getUserCommentToPostEmpty(): boolean {
 		const commentByUserToPost = this.context.getters['getCommentByUserToPost']
 		return isEmpty(commentByUserToPost)
-	}
-
-	get getUserFavouriteBlogPosts(): Array<BlogPostModel> {
-		return this.userFavouriteBlogPosts
 	}
 
 	get getIsCurrentPostInUserFavourites(): boolean {
@@ -139,6 +134,13 @@ export default class BlogModule extends AppBaseModule {
 		this.commentByUserToPost = data
 	}
 
+	@Mutation
+	clearPostData(): void {
+		this.postBySlug = new BlogPostModel()
+		this.commentByUserToPost = new BlogCommentModel()
+		this.commentsByPost = []
+	}
+
 	@Action
 	async fetchAllPostsFromRemote(): Promise<Array<BlogPostModel> | undefined> {
 		try {
@@ -158,6 +160,9 @@ export default class BlogModule extends AppBaseModule {
                   category {
                     id
                   }
+				  likes {
+				   email
+          		  }
                   author {
                     user {
                       id
@@ -170,7 +175,8 @@ export default class BlogModule extends AppBaseModule {
                     name
                   }
                 }
-              }`
+              }`,
+				fetchPolicy: 'no-cache'
 			})
 
 			const data = posts.data.allPosts
@@ -325,7 +331,8 @@ export default class BlogModule extends AppBaseModule {
 			  }`,
 				variables: {
 					slug: router.currentRoute.value.params.slug
-				}
+				},
+				fetchPolicy: 'no-cache'
 			})
 			const data = post.data.postBySlug
 			this.context.commit('setPostBySlug', data)

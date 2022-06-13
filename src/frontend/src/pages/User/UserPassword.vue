@@ -89,9 +89,9 @@
 <script lang="ts">
 
 import store from '@/store'
-import { Options as Component, Vue } from 'vue-class-component'
 import { equal, min } from '@/components/Form/Utils'
 import FormProvider from '@/components/Form/FormProvider.vue'
+import { Options as Component, Vue } from 'vue-class-component'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'

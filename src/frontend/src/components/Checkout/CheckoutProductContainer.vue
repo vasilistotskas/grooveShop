@@ -34,9 +34,9 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options as Component, Vue } from 'vue-class-component'
 import PayWayModel from '@/state/payway/PayWayModel'
 import CartItemModel from '@/state/cart/CartItemModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import CheckoutProductCard from '@/components/Checkout/CheckoutProductCard.vue'
 
 @Component({

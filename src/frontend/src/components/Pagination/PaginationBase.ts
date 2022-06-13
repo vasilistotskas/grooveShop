@@ -5,7 +5,7 @@ import { Options as Component, Vue } from 'vue-class-component'
 @Component({
 	name: 'PaginationBase'
 })
-export default class PaginationBase<RM> extends Vue  {
+export default class PaginationBase<TPaginatedModel> extends Vue  {
 
 	protected paginationNamespace!: string;
 
@@ -16,8 +16,8 @@ export default class PaginationBase<RM> extends Vue  {
 		return store.getters['pagination/getCurrentQuery'](this.paginationNamespace)
 	}
 
-	get allPaginatedResults(): Array<RM> {
-		return <Array<RM>>store.getters['pagination/getResultData'](this.paginationNamespace)
+	get allPaginatedResults(): Array<TPaginatedModel> {
+		return <Array<TPaginatedModel>>store.getters['pagination/getResultData'](this.paginationNamespace)
 	}
 
 	get allPaginatedResultsCount(): number {

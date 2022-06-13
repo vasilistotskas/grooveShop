@@ -1,8 +1,8 @@
 <template>
-  <div class="blog-main-content">
+  <div class="blog-post-list-container">
     <div
       v-if="posts && Object.keys(posts).length > 0"
-      class="grid-post-list"
+      class="blog-post-list-wrapper"
     >
       <BlogPostCard
         v-for="post in posts"
@@ -12,11 +12,11 @@
       />
     </div>
     <div v-else>
-      <span>No Posts Found</span>
+      <span class="blog-post-list-no_posts">No Posts Found</span>
     </div>
     <TipSidebar :all-tips="allTips" />
     
-    <!--    <BlogSidebar-->
+    <!--    <BlogTagsSidebar-->
     <!--      :authors="allAuthors"-->
     <!--      :tags="allTags"-->
     <!--    />-->
@@ -25,17 +25,17 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options as Component, Vue } from 'vue-class-component'
+import TipModel from '@/state/tip/TipModel'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import TipSidebar from '@/components/Tip/TipSidebar.vue'
-import BlogSidebar from '@/components/Blog/BlogSidebar.vue'
 import BlogPostCard from '@/components/Blog/BlogPostCard.vue'
-import TipModel from '@/state/tip/TipModel'
+import { Options as Component, Vue } from 'vue-class-component'
+import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
 
 @Component({
   name: 'BlogPostList',
   components: {
-    BlogSidebar,
+    BlogTagsSidebar,
     TipSidebar,
     BlogPostCard
   },

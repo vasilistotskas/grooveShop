@@ -39,8 +39,8 @@
 </template>
 
 <script lang="ts">
-import { Options as Component, Vue } from 'vue-class-component'
 import CartItemModel from '@/state/cart/CartItemModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 

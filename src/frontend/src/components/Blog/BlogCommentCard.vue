@@ -77,9 +77,9 @@
 import store from '@/store'
 import router from '@/routes'
 import { onClickOutside } from '@vueuse/core'
-import { Options as Component, Vue } from 'vue-class-component'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
 import { MainRouteNames } from '@/routes/Enum/MainRouteNames'
+import { Options as Component, Vue } from 'vue-class-component'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
 

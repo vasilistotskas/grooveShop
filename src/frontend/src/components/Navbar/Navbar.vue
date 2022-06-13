@@ -231,8 +231,8 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { Options as Component } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
+import { Options as Component } from 'vue-class-component'
 import CategoryModel from '@/state/category/CategoryModel'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'

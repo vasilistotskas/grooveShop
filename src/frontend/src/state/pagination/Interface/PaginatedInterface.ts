@@ -5,12 +5,12 @@ import {
 	PaginationTotalPages,
 } from '@/state/pagination/Type/PaginationTypes'
 
-export default interface PaginatedInterface<RM> {
+export default interface PaginatedInterface<TPaginatedModel> {
 
 	readonly uri: typeof window.location.search
 	readonly params: LocationQuery
 
-	readonly allPaginatedResults: Array<RM>
+	readonly allPaginatedResults: Array<TPaginatedModel>
 	readonly allPaginatedResultsCount: PaginationCount
 	readonly allPaginatedResultsNextPageUrl: PaginationLink['next']
 	readonly allPaginatedResultsPreviousPageUrl: PaginationLink['previous']

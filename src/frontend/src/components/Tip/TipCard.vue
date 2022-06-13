@@ -5,12 +5,6 @@
     :style="{ background: tipBackground(tip.kind) }"
   >
     <div class="tip-card-wrapper">
-      <h4 class="tip-card-title">
-        {{ tip.title }}
-      </h4>
-      <div class="tip-card-content">
-        {{ contentShorten(tip.content) }}
-      </div>
       <div class="tip-card-icon">
         <GrooveImage
           :alt="tip.title"
@@ -20,6 +14,19 @@
           :img-width="36"
           :class="'tip-card-icon-image'"
         />
+      </div>
+      <h4 class="tip-card-title">
+        {{ tip.title }}
+      </h4>
+      <div class="tip-card-content">
+        {{ contentShorten(tip.content) }}
+      </div>
+      <div class="tip-card-bottom">
+        <font-awesome-icon
+          class="tip-card-bottom-icon"
+          :icon="globeIcon"
+        />
+        <span class="tip-card-bottom-text">webpage</span>
       </div>
     </div>
   </div>
@@ -32,6 +39,7 @@ import TipModel from '@/state/tip/TipModel'
 import { TipKindEnum } from '@/state/tip/Enum/TipEnum'
 import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
+import { faGlobe } from '@fortawesome/free-solid-svg-icons/faGlobe'
 
 @Component({
   name: 'TipSidebar',
@@ -50,6 +58,8 @@ export default class TipCard extends Vue {
 
   tip = new TipModel()
 
+  globeIcon = faGlobe
+  
   public contentShorten(content: string): string {
     return helpers.contentShorten(content, 0, 50)
   }
@@ -57,16 +67,16 @@ export default class TipCard extends Vue {
   protected tipBackground(kind: TipKindEnum): string {
     switch(kind) {
       case TipKindEnum.SUCCESS: {
-        return 'linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 35%, rgba(142,231,99,1) 100%)'
+        return 'linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 25%, rgba(115,0,0,0.7483368347338936) 90%)'
       }
       case TipKindEnum.INFO: {
-        return 'linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 35%, rgba(16,183,184,1) 100%)'
+        return 'linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 25%, rgba(115,0,0,0.7483368347338936) 90%)'
       }
       case TipKindEnum.ERROR: {
-        return 'linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 35%, rgba(184,16,16,1) 100%)'
+        return 'linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 25%, rgba(115,0,0,0.7483368347338936) 90%)'
       }
       case TipKindEnum.WARNING: {
-        return 'linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 35%, rgba(184,16,16,1) 100%)'
+        return 'linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 25%, rgba(115,0,0,0.7483368347338936) 90%)'
       }
       default: {
         return ''

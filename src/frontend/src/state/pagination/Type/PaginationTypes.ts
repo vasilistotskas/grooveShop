@@ -4,5 +4,5 @@ export type PaginationLink = {
 	next: URL,
 	previous: URL
 }
-export type PaginationResults = Array<RM>
+export type PaginationResults = Array<TPaginatedModel>
 export type PaginationTotalPages = number

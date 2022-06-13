@@ -48,6 +48,7 @@
           :model="postBySlug"
           :getter-type="'blog/getIsCurrentPostInUserFavourites'"
           :dispatch-type="'blog/toggleFavourite'"
+          :use-store="true"
         />
       </div>
     </div>
@@ -116,6 +117,10 @@ export default class BlogPost extends Vue {
     if (this.isAuthenticated) {
       await store.dispatch('blog/fetchCommentByUserToPost')
     }
+  }
+
+  unmounted(): void {
+    store.commit('blog/clearPostData')
   }
 
   public displayableDate(date: string): string {

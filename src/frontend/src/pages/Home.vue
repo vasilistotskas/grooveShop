@@ -130,10 +130,10 @@
 <script lang="ts">
 import store from '@/store'
 import 'swiper/swiper-bundle.css'
-import { Options as Component, Vue } from 'vue-class-component'
 import SliderModel from '@/state/slider/SliderModel'
 import ProductModel from '@/state/product/ProductModel'
 import ProductCard from '@/components/Product/ProductCard.vue'
+import { Options as Component, Vue } from 'vue-class-component'
 import { faPhone } from '@fortawesome/free-solid-svg-icons/faPhone'
 import { faComment } from '@fortawesome/free-solid-svg-icons/faComment'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'

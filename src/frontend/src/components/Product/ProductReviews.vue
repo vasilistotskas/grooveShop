@@ -74,8 +74,8 @@
 <script lang="ts">
 import store from '@/store'
 import { constant, times } from 'lodash'
-import { Options as Component } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
+import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import PaginationBase from '@/components/Pagination/PaginationBase'

@@ -66,8 +66,8 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options as Component, Vue } from 'vue-class-component'
 import CartItemModel from '@/state/cart/CartItemModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'

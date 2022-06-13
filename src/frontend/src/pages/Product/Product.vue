@@ -112,6 +112,7 @@
               :model="product" 
               :getter-type="'product/favourite/getIsCurrentProductInUserFavourites'"
               :dispatch-type="'product/favourite/toggleFavourite'"
+              :use-store="true"
             />
           </div>
         </div>
@@ -132,8 +133,8 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { Options as Component, Vue } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import ProductReview from '@/components/Product/ProductReview.vue'

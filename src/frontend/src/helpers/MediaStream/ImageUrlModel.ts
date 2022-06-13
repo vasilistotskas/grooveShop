@@ -63,7 +63,7 @@ export default class ImageUrlModel {
 			this.height + '/' +
 			fit +
 			position +
-			trimThreshold + '.' +
+			trimThreshold + '/' +
 			format
 	}
 

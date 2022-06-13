@@ -24,8 +24,8 @@
 <script lang="ts">
 
 import TipModel from '@/state/tip/TipModel'
-import { Options as Component, Vue } from 'vue-class-component'
 import TipCard from '@/components/Tip/TipCard.vue'
+import { Options as Component, Vue } from 'vue-class-component'
 
 @Component({
   name: 'TipSidebar',

@@ -11,8 +11,8 @@
 </template>
 
 <script lang="ts">
-import { Options as Component, Vue } from 'vue-class-component'
 import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
+import { Options as Component, Vue } from 'vue-class-component'
 
 @Component({
   name: 'BlogAuthorLink',

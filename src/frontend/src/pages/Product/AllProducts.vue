@@ -35,8 +35,8 @@
 
 import store from '@/store'
 import router from '@/routes'
-import { Options as Component } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
+import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'

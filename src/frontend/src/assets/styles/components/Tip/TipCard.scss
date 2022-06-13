@@ -9,22 +9,37 @@
   &-wrapper {
     position: relative;
     display: grid;
-    gap: 0.75rem;
-    padding: 1rem;
+    gap: 1.25rem;
+    padding: 1rem 1.5rem;
   }
   &-title {
-
+    font-weight: 500;
   }
   &-content {
-
+    font-size: 13px;
   }
   &-icon {
     position: absolute;
     right: 5px;
-    top: 5px;
+    top: 10px;
     &-image {
       max-width: 26px;
       max-height: 26px;
+    }
+  }
+  &-bottom {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid var(--cp-palette-main-dark-primary);
+    padding-bottom: 1rem;
+    &-icon {
+
+    }
+    &-text {
+      font-weight: 500;
+      font-size: 14px;
     }
   }
 }

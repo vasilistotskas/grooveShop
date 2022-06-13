@@ -45,21 +45,21 @@
 </template>
 
 <script lang="ts">
-import { Options as Component, Vue } from 'vue-class-component'
 import BlogTagModel from '@/state/blog/BlogTagModel'
 import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import { faTag } from '@fortawesome/free-solid-svg-icons/faTag'
 import { faUserTag } from '@fortawesome/free-solid-svg-icons/faUserTag'
 
 @Component({
-  name: 'BlogSidebar',
+  name: 'BlogTagsSidebar',
   props: {
     tags: Array,
     authors: Array
   }
 })
 
-export default class BlogSidebar extends Vue {
+export default class BlogTagsSidebar extends Vue {
 
   tags: Array<BlogTagModel> = []
   authors: Array<BlogAuthorModel> = []
@@ -75,6 +75,6 @@ export default class BlogSidebar extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Blog/BlogSidebar"
+@import "@/assets/styles/components/Blog/BlogTagsSidebar"
 
 </style>

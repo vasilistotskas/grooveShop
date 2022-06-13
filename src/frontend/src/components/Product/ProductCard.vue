@@ -70,8 +70,8 @@
 import store from '@/store'
 import { constant, times } from 'lodash'
 import { helpers } from '@/helpers/main'
-import { Options as Component, Vue } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 

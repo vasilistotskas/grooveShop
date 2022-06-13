@@ -31,9 +31,9 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options as Component, Vue } from 'vue-class-component'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import BlogCommentCard from '@/components/Blog/BlogCommentCard.vue'
 
 @Component({

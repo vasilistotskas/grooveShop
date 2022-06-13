@@ -15,8 +15,8 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options as Component, Vue } from 'vue-class-component'
 import Navbar from '@/components/Navbar/Navbar.vue'
+import { Options as Component, Vue } from 'vue-class-component'
 
 @Component({
   name: 'Header',

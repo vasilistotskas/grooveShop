@@ -8,7 +8,7 @@ export default class PaginationModel extends EntityBase {
 		next: URL,
 		previous: URL
 	}
-	results!: Array<RM>
+	results!: Array<TPaginatedModel>
 	total_pages!: PaginationTotalPages
 
 	public constructor(data?: Partial<PaginationModel>) {
