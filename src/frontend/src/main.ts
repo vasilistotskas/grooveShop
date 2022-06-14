@@ -6,6 +6,7 @@ import router from '@/routes'
 import { i18n } from '@/locales'
 import { createApp } from 'vue'
 import 'vue-toastification/dist/index.css'
+import VueSocialSharing from 'vue-social-sharing'
 import * as apolloProvider from '../apollo.provider'
 import { createValidation } from 'vue3-form-validation'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -43,6 +44,7 @@ createApp(App)
 	.use(validation)
 	.use(apolloProvider.provider)
 	.use(Toast, ToastOptions)
+	.use(VueSocialSharing)
 	.component('font-awesome-icon', FontAwesomeIcon)
 	.provide('emitter', emitter)
 	.mount('#app')
