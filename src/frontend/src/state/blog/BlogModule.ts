@@ -760,12 +760,7 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	@Action
-	async toggleFavourite(post: BlogPostModel): Promise<any> {
-		const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
-		if (IsAuthenticated) {
-			return await this.context.dispatch('updatePostLikes', post.id)
-		} else {
-			return toast.error('You are not logged in')
-		}
+	async toggleFavourite(post: BlogPostModel): Promise<boolean> {
+		return await this.context.dispatch('updatePostLikes', post.id)
 	}
 }

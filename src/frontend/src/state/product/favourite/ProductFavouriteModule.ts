@@ -51,19 +51,14 @@ export default class ProductFavouriteModule extends AppBaseModule {
 
 	@Action
 	async toggleFavourite(product: ProductFavouriteModel): Promise<boolean> {
-		const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
-		if (IsAuthenticated) {
-			try {
-				if (!this.getIsCurrentProductInUserFavourites) {
-					return await this.context.dispatch('addProductToFavourites', product)
-				} else {
-					return await this.context.dispatch('removeProductFavourites', product)
-				}
-			} catch (error) {
-				console.log(error)
+		try {
+			if (!this.getIsCurrentProductInUserFavourites) {
+				return await this.context.dispatch('addProductToFavourites', product)
+			} else {
+				return await this.context.dispatch('removeProductFavourites', product)
 			}
-		} else {
-			toast.error('You are not logged in')
+		} catch (error) {
+			console.log(error)
 		}
 
 		return false

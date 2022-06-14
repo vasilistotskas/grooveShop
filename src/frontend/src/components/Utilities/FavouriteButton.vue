@@ -83,6 +83,11 @@ export default class FavouriteButton extends Vue implements FavouriteButtonInter
   }
 
   async favouriteHandle(): Promise<void> {
+    const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
+    if (!IsAuthenticated) {
+      toast.error('You are not logged in')
+      return
+    }
     await store.dispatch(this.dispatchType, this.model).then((isFavourite: boolean) => {
       this.isFavourite = isFavourite
     })
