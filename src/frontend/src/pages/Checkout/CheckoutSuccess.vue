@@ -3,9 +3,7 @@
     <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="page-success">
       <div class="page-success-grid-content">
-        <h1 class="title mb-5">
-          Thank you
-        </h1>
+        <h1 class="title mb-5">Thank you</h1>
 
         <p>Your order will be processed within 48 hours</p>
       </div>
@@ -22,12 +20,10 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 @Component({
   name: 'CheckoutSuccess',
   components: {
-    Breadcrumbs
-  }
+    Breadcrumbs,
+  },
 })
-
 export default class CheckoutSuccess extends Vue {
-
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
@@ -36,11 +32,9 @@ export default class CheckoutSuccess extends Vue {
   mounted(): void {
     document.title = 'Order Success'
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/Checkout/CheckoutSuccess"
-
+@import '@/assets/styles/pages/Checkout/CheckoutSuccess';
 </style>

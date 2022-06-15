@@ -1,16 +1,9 @@
 <template>
   <div v-if="review && Object.keys(review).length > 0">
-    <div
-      :style="{ backgroundImage: reviewBackgroundImage(review) }"
-      class="user-review-product-image"
-    />
+    <div :style="{ backgroundImage: reviewBackgroundImage(review) }" class="user-review-product-image" />
     <div class="user-review-product-head">
       <div class="user-review-product-name">
-        <RouterLink
-          :title="review.product.name"
-          :to="'/product' + review.product.absolute_url"
-          aria-label="Product"
-        >
+        <RouterLink :title="review.product.name" :to="'/product' + review.product.absolute_url" aria-label="Product">
           <span> {{ review.product.name }}</span>
         </RouterLink>
       </div>
@@ -37,11 +30,7 @@
       <div class="user-review-product-date">
         <span>At : {{ review.updated_at }} </span>
         <span>
-          <font-awesome-icon
-            :icon="checkCircleIcon"
-            :style="{ color: '#53e24aeb' }"
-            size="sm"
-          />
+          <font-awesome-icon :icon="checkCircleIcon" :style="{ color: '#53e24aeb' }" size="sm" />
           Verified Review
         </span>
       </div>
@@ -51,37 +40,17 @@
         <span> {{ review.comment }} </span>
       </div>
     </div>
-    <div
-      v-if="review.user_id === userId"
-      class="user-review-product-actions"
-    >
-      <a
-        :title="`Review Settings of ${review.product.name}`"
-        class="user-review-product-settings"
-        @click="openReviewActions"
-      />
-      <div
-        v-if="reviewActionsOpen"
-        ref="userReviewsActionTarget"
-        class="user-review-actions-menu"
-      >
+    <div v-if="review.user_id === userId" class="user-review-product-actions">
+      <a :title="`Review Settings of ${review.product.name}`" class="user-review-product-settings" @click="openReviewActions" />
+      <div v-if="reviewActionsOpen" ref="userReviewsActionTarget" class="user-review-actions-menu">
         <div class="user-review-actions-controls">
           <div class="user-review-actions-edit">
-            <RouterLink
-              :title="review.product.name"
-              :to="'/product' + review.product.absolute_url"
-              aria-label="Product"
-            >
+            <RouterLink :title="review.product.name" :to="'/product' + review.product.absolute_url" aria-label="Product">
               <span>Update</span>
             </RouterLink>
           </div>
           <div class="user-review-actions-delete">
-            <a
-              :title="`Delete Review of ${review.product.name}`"
-              data-method="delete"
-              rel="nofollow"
-              @click="deleteReview(review.user_id, review.product_id)"
-            >Delete</a>
+            <a :title="`Delete Review of ${review.product.name}`" data-method="delete" rel="nofollow" @click="deleteReview(review.user_id, review.product_id)">Delete</a>
           </div>
         </div>
       </div>
@@ -99,30 +68,31 @@ import { Options as Component, Vue } from 'vue-class-component'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
 
-const starSvg = '<path data-v-558dc688="" fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" class=""></path>'
-const starHalfSvg = '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z" class=""></path>'
+const starSvg =
+  '<path data-v-558dc688="" fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" class=""></path>'
+const starHalfSvg =
+  '<path data-v-558dc688="" fill="currentColor" d="M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z" class=""></path>'
 
 @Component({
   name: 'ReviewProductCard',
   props: {
     review: {
       type: Object,
-      required: false
+      required: false,
     },
     userId: {
       type: Number,
-      required: false
-    }
-  }
+      required: false,
+    },
+  },
 })
-
 export default class ReviewProductCard extends Vue {
   MainRouteNames = MainRouteNames
   $refs!: {
-    userReviewsActionTarget: HTMLElement;
+    userReviewsActionTarget: HTMLElement
   }
   review = new ProductReviewModel()
-  userId: number = 0
+  userId = 0
   reviewActionsOpen = false
 
   checkCircleIcon = faCheckCircle
@@ -142,7 +112,6 @@ export default class ReviewProductCard extends Vue {
   }
 
   public reviewBackgroundImage(review: ProductReviewModel): string {
-
     const imageNameFileTypeRemove = review.product.main_image_filename.substring(0, review.product.main_image_filename.lastIndexOf('.')) || review.product.main_image_filename
 
     if (router.currentRoute.value.name === MainRouteNames.PRODUCT) {
@@ -169,18 +138,16 @@ export default class ReviewProductCard extends Vue {
   public async deleteReview(userId: number, productId: number): Promise<void> {
     let data = {
       userId,
-      productId
+      productId,
     }
 
     if (confirm('Are you sure you want to delete your rating?')) {
       await store.dispatch('product/review/deleteCurrentProductReview', data)
     }
-
   }
 }
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/components/Reviews/ReviewProductCard"
-
+@import '@/assets/styles/components/Reviews/ReviewProductCard';
 </style>

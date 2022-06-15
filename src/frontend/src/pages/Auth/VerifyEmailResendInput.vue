@@ -1,37 +1,18 @@
 <template>
-  <div
-    id="registration-complete-view"
-    class="registration-complete-message container mt-8"
-  >
+  <div id="registration-complete-view" class="registration-complete-message container mt-8">
     <div class="registration-complete-message-content">
       <span>Please enter the email with which you registered</span>
-      <form
-        class="mb-3 mt-3"
-        @submit.prevent="submit"
-      >
+      <form class="mb-3 mt-3" @submit.prevent="submit">
         <div class="form-group">
           <div class="input-group-w-addon">
             <span class="input-group-addon">
               <font-awesome-icon :icon="envelopeIcon" />
             </span>
-            <input
-              id="email"
-              v-model="resendMailInputs.email"
-              class="form-control"
-              name="email"
-              placeholder="email"
-              type="email"
-            >
+            <input id="email" v-model="resendMailInputs.email" class="form-control" name="email" placeholder="email" type="email" />
           </div>
         </div>
       </form>
-      <button
-        class="btn btn-outline-primary-two"
-        title="Activation Email Resend"
-        @click="activationEmailResend(resendMailInputs)"
-      >
-        send email
-      </button>
+      <button class="btn btn-outline-primary-two" title="Activation Email Resend" @click="activationEmailResend(resendMailInputs)">send email</button>
     </div>
   </div>
 </template>
@@ -46,16 +27,14 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
   props: {
     activationEmailAtLocalStorage: {
       type: Boolean,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
 })
-
 export default class VerifyEmailResendInput extends Vue {
-
   activationEmailAtLocalStorage = false
   resendMailInputs = {
-    email: ''
+    email: '',
   }
   envelopeIcon = faEnvelope
 
@@ -73,12 +52,9 @@ export default class VerifyEmailResendInput extends Vue {
 
     await store.dispatch('signup/activationEmailResend', email)
   }
-
-
 }
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/pages/Auth/VerifyEmailResendInput"
-
+@import '@/assets/styles/pages/Auth/VerifyEmailResendInput';
 </style>

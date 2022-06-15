@@ -4,18 +4,10 @@
       <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
       <div class="card login-card">
         <div class="card-body card-body-border-top">
-          <FormProvider
-            :errors="formManager.errors"
-            :form="formManager.form"
-            title="Log In"
-            @submit="handleSubmit()"
-          >
+          <FormProvider :errors="formManager.errors" :form="formManager.form" title="Log In" @submit="handleSubmit()">
             <div class="container">
               <div class="email mb-3">
-                <label
-                  :for="formManager.form.email.$uid"
-                  class="label mb-2"
-                >Email</label>
+                <label :for="formManager.form.email.$uid" class="label mb-2">Email</label>
                 <FormBaseInput
                   :id="formManager.form.email.$uid"
                   v-model="formManager.form.email.$value"
@@ -27,16 +19,10 @@
                   autocomplete="username"
                   @blur="formManager.form.email.onBlur"
                 />
-                <FormValidationErrors
-                  :errors="formManager.form.email.$errors"
-                  class="validation-errros"
-                />
+                <FormValidationErrors :errors="formManager.form.email.$errors" class="validation-errros" />
               </div>
               <div class="password mb-4">
-                <label
-                  :for="formManager.form.password.$uid"
-                  class="label mb-2"
-                >Password</label>
+                <label :for="formManager.form.password.$uid" class="label mb-2">Password</label>
                 <FormBaseInput
                   :id="formManager.form.password.$uid"
                   v-model="formManager.form.password.$value"
@@ -49,12 +35,7 @@
                 />
                 <FormValidationErrors :errors="formManager.form.password.$errors" />
               </div>
-              <FormSubmitButtons
-                :submitting="formManager.submitting"
-                class="buttons mt-3 mb-3"
-                gap="2rem"
-                @reset="formManager.resetFields()"
-              />
+              <FormSubmitButtons :submitting="formManager.submitting" class="buttons mt-3 mb-3" gap="2rem" @reset="formManager.resetFields()" />
             </div>
 
             <!-- 2 column grid layout for inline styling -->
@@ -62,27 +43,13 @@
               <div class="grid-item-one">
                 <!-- Checkbox -->
                 <div class="form-check">
-                  <input
-                    id="form2Example3"
-                    checked
-                    class="form-check-input form-check-input-main"
-                    type="checkbox"
-                    value=""
-                  >
-                  <label
-                    class="form-check-label"
-                    for="form2Example3"
-                  > Remember me </label>
+                  <input id="form2Example3" checked class="form-check-input form-check-input-main" type="checkbox" value="" />
+                  <label class="form-check-label" for="form2Example3"> Remember me </label>
                 </div>
               </div>
               <div class="grid-item-two">
                 <!-- Simple link -->
-                <RouterLink
-                  title="Password Reset"
-                  to="/password_reset"
-                >
-                  Forgot password?
-                </RouterLink>
+                <RouterLink title="Password Reset" to="/password_reset"> Forgot password? </RouterLink>
               </div>
             </div>
           </FormProvider>
@@ -91,46 +58,20 @@
           <div class="login-register-field">
             <p class="mb-1">
               Not a member?
-              <RouterLink
-                aria-label="Sign Up"
-                title="Sign Up"
-                to="/sign-up"
-              >
-                Register
-              </RouterLink>
+              <RouterLink aria-label="Sign Up" title="Sign Up" to="/sign-up"> Register </RouterLink>
             </p>
-            <p class="mb-3">
-              or sign up with:
-            </p>
+            <p class="mb-3">or sign up with:</p>
           </div>
 
           <div class="login-grid-part-socials mb-3">
             <!-- Facebook -->
-            <a
-              class="btn btn-outline-primary btn-floating mx-1"
-              href="#!"
-              role="button"
-              title="Sign Up with Facebook"
-            >
-              <font-awesome-icon
-                :icon="facebookIcon"
-                :style="{ color: '#4267B2' }"
-                size="lg"
-              />
+            <a class="btn btn-outline-primary btn-floating mx-1" href="#!" role="button" title="Sign Up with Facebook">
+              <font-awesome-icon :icon="facebookIcon" :style="{ color: '#4267B2' }" size="lg" />
             </a>
 
             <!-- Google -->
-            <a
-              class="btn btn-outline-primary btn-floating mx-1"
-              href="#!"
-              role="button"
-              title="Sign Up with Google"
-            >
-              <font-awesome-icon
-                :icon="googleIcon"
-                :style="{ color: '#DB4437' }"
-                size="lg"
-              />
+            <a class="btn btn-outline-primary btn-floating mx-1" href="#!" role="button" title="Sign Up with Google">
+              <font-awesome-icon :icon="googleIcon" :style="{ color: '#DB4437' }" size="lg" />
             </a>
           </div>
         </div>
@@ -157,9 +98,7 @@ import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
-let {
-  validateFields
-} = useValidation({})
+let { validateFields } = useValidation({})
 
 @Component({
   name: 'LogIn',
@@ -168,28 +107,20 @@ let {
     FormBaseInput,
     FormSubmitButtons,
     FormValidationErrors,
-    Breadcrumbs
-  }
+    Breadcrumbs,
+  },
 })
-
 export default class LogIn extends Vue {
-
-  formManager = {
-    validateFields
-  } = useValidation({
+  formManager = ({ validateFields } = useValidation({
     email: {
       $value: '',
-      $rules: [
-        required('Email is required')
-      ]
+      $rules: [required('Email is required')],
     },
     password: {
       $value: '',
-      $rules: [
-        required('Password is required')
-      ]
-    }
-  })
+      $rules: [required('Password is required')],
+    },
+  }))
 
   keyIcon = faKey
   googleIcon = faGoogle
@@ -213,15 +144,16 @@ export default class LogIn extends Vue {
       const formData: any = await validateFields()
       const apiData = {
         email: formData.email,
-        password: formData.password
+        password: formData.password,
       }
-      await store.dispatch('auth/login', apiData)
-          .then(() => {
-            store.dispatch('user/fetchUserDataFromRemote')
-          })
-          .catch((error: Error) => {
-            console.log(error)
-          })
+      await store
+        .dispatch('auth/login', apiData)
+        .then(() => {
+          store.dispatch('user/fetchUserDataFromRemote')
+        })
+        .catch((error: Error) => {
+          console.log(error)
+        })
     } catch (e) {
       if (e instanceof ValidationError) {
         console.log(e.message)
@@ -229,10 +161,8 @@ export default class LogIn extends Vue {
     }
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/Auth/LogIn"
-
+@import '@/assets/styles/pages/Auth/LogIn';
 </style>

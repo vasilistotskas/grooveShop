@@ -1,14 +1,11 @@
 <template>
   <div>
-    <div
-      v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0"
-      class="container"
-    >
+    <div v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0" class="container">
       <div class="user-reviews-grid mb-4">
         <ReviewProductCard
           v-for="review in allPaginatedResults"
           :key="review.id"
-          :class="{'current-user-review-card': review.user_id === userId }"
+          :class="{ 'current-user-review-card': review.user_id === userId }"
           :review="review"
           :user-id="userId"
           class="product-review-main-card"
@@ -23,10 +20,7 @@
         :namespace="paginationNamespace"
       />
     </div>
-    <div
-      v-else
-      class="user_profile-no-data"
-    >
+    <div v-else class="user_profile-no-data">
       <h1>NO REVIEWS</h1>
     </div>
   </div>
@@ -51,18 +45,16 @@ import { PaginationQueryParametersModel } from '@/state/pagination/Model/Paginat
   extends: PaginationBase,
   components: {
     ReviewProductCard,
-    Pagination
+    Pagination,
   },
   props: {
     userData: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 })
-
 export default class UserReviews extends PaginationBase<ProductReviewModel> implements PaginatedInterface<ProductReviewModel> {
-
   userData = new UserProfileModel()
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceDataEnum.USER_REVIEWS
@@ -72,7 +64,6 @@ export default class UserReviews extends PaginationBase<ProductReviewModel> impl
   }
 
   async created(): Promise<void> {
-
     document.title = 'My Reviews'
 
     if (this.params.query) {
@@ -86,7 +77,6 @@ export default class UserReviews extends PaginationBase<ProductReviewModel> impl
     }
 
     await this.fetchPaginationData()
-
   }
 
   async unmounted(): Promise<void> {
@@ -94,25 +84,22 @@ export default class UserReviews extends PaginationBase<ProductReviewModel> impl
   }
 
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery = PaginationQueryParametersModel
-        .createPaginationQuery({
-          'pageNumber': this.currentPageNumber,
-          'endpointUrl': this.buildEndPointUrlForPaginatedResults(),
-          'method': ApiBaseMethods.GET
-        } )
+    const paginationQuery = PaginationQueryParametersModel.createPaginationQuery({
+      pageNumber: this.currentPageNumber,
+      endpointUrl: this.buildEndPointUrlForPaginatedResults(),
+      method: ApiBaseMethods.GET,
+    })
 
     await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
   }
 
   public buildEndPointUrlForPaginatedResults(): string {
     const userId = this.userData.id
-    return `reviews/user/${ userId }`
+    return `reviews/user/${userId}`
   }
-
 }
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/pages/User/UserReviews"
-
+@import '@/assets/styles/pages/User/UserReviews';
 </style>

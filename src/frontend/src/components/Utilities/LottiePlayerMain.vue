@@ -14,33 +14,32 @@ import { AnimationConfigWithData, AnimationConfigWithPath, AnimationItem, Lottie
   props: {
     animationData: {
       type: [Object, String],
-      required: true
+      required: true,
     },
     loop: {
       type: [Boolean, Number],
-      default: false
+      default: false,
     },
     autoPlay: {
       type: Boolean,
-      default: true
+      default: true,
     },
     renderer: {
       type: String,
-      default: 'svg'
+      default: 'svg',
     },
     speed: {
       type: Number,
-      default: 1
-    }
-  }
+      default: 1,
+    },
+  },
 })
 export default class LottiePlayerMain extends Vue {
-
   emitter: Emitter<any> | undefined = inject('emitter')
 
   anim!: AnimationItem
-  animationData!: AnimationItem|string
-  loop!: boolean|number
+  animationData!: AnimationItem | string
+  loop!: boolean | number
   autoPlay!: boolean
   renderer!: string
   speed!: number
@@ -50,26 +49,25 @@ export default class LottiePlayerMain extends Vue {
   }
 
   mounted() {
-    this.emitter!.on('lottie-replay', () => this.replay())
-    this.emitter!.on('lottie-play', () => this.play())
-    this.emitter!.on('lottie-stop', () => this.stop())
-    this.emitter!.on('lottie-pause', () => this.pause())
+    this.emitter?.on('lottie-replay', () => this.replay())
+    this.emitter?.on('lottie-play', () => this.play())
+    this.emitter?.on('lottie-stop', () => this.stop())
+    this.emitter?.on('lottie-pause', () => this.pause())
 
     this.init()
   }
 
   beforeDestroy() {
-    if (this.anim)
-      this.anim.destroy()
+    if (this.anim) this.anim.destroy()
   }
 
   init() {
-    const settings = <AnimationConfigWithPath<any> | AnimationConfigWithData<any>> {
-      container: this.$refs.animation,
+    const settings: AnimationConfigWithPath<any> | AnimationConfigWithData<any> = {
+      container: this.$refs.animation as Element,
       renderer: this.renderer,
       loop: this.loop,
       autoplay: this.autoPlay,
-      animationData: this.animationData
+      animationData: this.animationData,
     }
     this.anim = this.getLottieInstance.loadAnimation(settings)
     this.anim.addEventListener('loopComplete', () => {
@@ -89,18 +87,15 @@ export default class LottiePlayerMain extends Vue {
   }
 
   play() {
-    if (this.anim)
-      this.anim.play()
+    if (this.anim) this.anim.play()
   }
 
   stop() {
-    if (this.anim)
-      this.anim.stop()
+    if (this.anim) this.anim.stop()
   }
 
   pause() {
-    if (this.anim)
-      this.anim.pause()
+    if (this.anim) this.anim.pause()
   }
 }
 </script>

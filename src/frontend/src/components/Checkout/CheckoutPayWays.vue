@@ -4,11 +4,7 @@
       <span>Choose payment method</span>
     </h2>
     <div class="checkout-pay_way-section">
-      <div
-        v-for="payWay in validPayWays"
-        :key="payWay.name"
-        class="checkout-pay_way-content"
-      >
+      <div v-for="payWay in validPayWays" :key="payWay.name" class="checkout-pay_way-content">
         <input
           :id="payWay.name"
           v-model="selectedPayWay"
@@ -18,22 +14,13 @@
           class="checkout-pay_way-input"
           @click="managePayWayClick(payWay)"
           @change="setSelectedPayWay(payWay)"
-        >
-        <label
-          class="checkout-pay_way-input-label"
-          :for="payWay.name"
-        >
+        />
+        <label class="checkout-pay_way-input-label" :for="payWay.name">
           <span class="checkout-pay_way-icon">
-            <LottiePlayerMain
-              :animation-data="getPayWayLottie(payWay.name)"
-              :loop="true"
-            />
+            <LottiePlayerMain :animation-data="getPayWayLottie(payWay.name)" :loop="true" />
           </span>
           <span class="checkout-pay_way-name">{{ payWay.name }}</span>
-          <span
-            class="checkout-pay_way-cost"
-            v-html="payWayExtraCost(payWay)"
-          />
+          <span class="checkout-pay_way-cost" v-html="payWayExtraCost(payWay)" />
         </label>
       </div>
     </div>
@@ -53,25 +40,25 @@ import * as pay_on_delivery_lottie from '@/assets/lotties/pay_on_delivery.json'
 export default defineComponent({
   name: 'CheckoutPayWays',
   components: {
-    LottiePlayerMain
+    LottiePlayerMain,
   },
   props: {
     cartTotalPrice: {
       type: Number,
       required: true,
       // custom validation can use any type for 'any' and validate data
-      validator: (cartTotalPrice: any) => typeof cartTotalPrice === 'number'
+      validator: (cartTotalPrice: any) => typeof cartTotalPrice === 'number',
     },
     cartTotalPriceForPayWay: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   async setup(props) {
     const store = useStore()
     const emitter: Emitter<any> | undefined = inject('emitter')
 
-    let selectedPayWay: string = ''
+    let selectedPayWay = ''
     const getSelectedPayWayName = () => store.getters['pay_way/getSelectedPayWayName']
     watch(getSelectedPayWayName, (to: PayWaysEnum) => {
       selectedPayWay = to
@@ -79,7 +66,7 @@ export default defineComponent({
 
     const validPayWays: Array<PayWayModel> = await store.dispatch('pay_way/fetchActivePayWaysFromRemote')
     const getPayWayLottie = (payWayName: PayWayModel['name']): object => {
-      switch(payWayName) {
+      switch (payWayName) {
         case PayWaysEnum.CREDIT_CARD: {
           return credit_card_lottie
         }
@@ -113,13 +100,12 @@ export default defineComponent({
       managePayWayClick,
       setSelectedPayWay,
       getPayWayLottie,
-      payWayExtraCost
+      payWayExtraCost,
     }
-  }
+  },
 })
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Checkout/CheckoutPayWays"
-
+@import '@/assets/styles/components/Checkout/CheckoutPayWays';
 </style>

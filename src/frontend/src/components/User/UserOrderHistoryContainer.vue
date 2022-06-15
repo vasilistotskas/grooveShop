@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="order && Object.keys(order).length > 0"
-    class="card-body card-body-order-history"
-  >
+  <div v-if="order && Object.keys(order).length > 0" class="card-body card-body-order-history">
     <div class="order-history-grid-head">
       <span />
       <span>Product</span>
@@ -10,14 +7,7 @@
       <span>Quantity</span>
       <span>Total</span>
     </div>
-    <UserOrderHistoryCard
-      v-for="item in order.items"
-      :key="item.product.id"
-      :product="item.product"
-      :order-total="orderTotal"
-      :quantity="item.quantity"
-      class="order-history-grid-body"
-    />
+    <UserOrderHistoryCard v-for="item in order.items" :key="item.product.id" :product="item.product" :order-total="orderTotal" :quantity="item.quantity" class="order-history-grid-body" />
   </div>
 </template>
 
@@ -32,30 +22,25 @@ import UserOrderHistoryCard from '@/components/User/UserOrderHistoryCard.vue'
   name: 'UserOrderHistoryContainer',
   components: {
     Pagination,
-    UserOrderHistoryCard
+    UserOrderHistoryCard,
   },
   props: {
-    order: Object
-  }
+    order: Object,
+  },
 })
-
-export default class UserOrderHistoryContainer extends Vue  {
-
+export default class UserOrderHistoryContainer extends Vue {
   order = new UserOrderModel()
 
   get orderTotal(): number {
     let total = 0
-    forEach(this.order.items, (item : any) => {
+    forEach(this.order.items, (item: any) => {
       total += item.quantity * item.product.price
     })
     return total
   }
-
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/User/UserOrderHistory"
-
+@import '@/assets/styles/pages/User/UserOrderHistory';
 </style>

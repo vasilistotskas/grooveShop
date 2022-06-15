@@ -1,21 +1,13 @@
 <template>
   <div class="blog-post-list-container">
-    <div
-      v-if="posts && Object.keys(posts).length > 0"
-      class="blog-post-list-wrapper"
-    >
-      <BlogPostCard
-        v-for="post in posts"
-        :key="post.title"
-        :post="post"
-        :author="post.author"
-      />
+    <div v-if="posts && Object.keys(posts).length > 0" class="blog-post-list-wrapper">
+      <BlogPostCard v-for="post in posts" :key="post.title" :post="post" :author="post.author" />
     </div>
     <div v-else>
       <span class="blog-post-list-no_posts">No Posts Found</span>
     </div>
     <TipSidebar :all-tips="allTips" />
-    
+
     <!--    <BlogTagsSidebar-->
     <!--      :authors="allAuthors"-->
     <!--      :tags="allTags"-->
@@ -37,23 +29,22 @@ import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
   components: {
     BlogTagsSidebar,
     TipSidebar,
-    BlogPostCard
+    BlogPostCard,
   },
   props: {
     posts: {
       type: Array,
-      required: true
+      required: true,
     },
     showAuthor: {
       type: Boolean,
       required: false,
-      default: true
-    }
-  }
+      default: true,
+    },
+  },
 })
-
 export default class BlogPostList extends Vue {
-  showAuthor: boolean = false
+  showAuthor = false
   posts: Array<BlogPostModel> = []
 
   get allTags(): Array<BlogPostModel> {
@@ -73,14 +64,12 @@ export default class BlogPostList extends Vue {
       store.dispatch('blog/fetchAllTagsFromRemote'),
       store.dispatch('blog/fetchAllAuthorsFromRemote'),
       store.dispatch('blog/fetchAllCategoriesFromRemote'),
-      store.dispatch('tip/fetchAllTipsFromRemote')
+      store.dispatch('tip/fetchAllTipsFromRemote'),
     ])
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Blog/BlogPostList"
-
+@import '@/assets/styles/components/Blog/BlogPostList';
 </style>

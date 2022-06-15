@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="page-not-found"
-    class="container mt-9"
-  >
+  <div id="page-not-found" class="container mt-9">
     <span>PAGE NOT FOUND</span>
   </div>
 </template>
@@ -11,20 +8,15 @@
 import { Options as Component, Vue } from 'vue-class-component'
 
 @Component({
-  name: 'PageNotFound'
+  name: 'PageNotFound',
 })
-
 export default class PageNotFound extends Vue {
-
   mounted(): void {
     document.title = 'Page Not Found'
   }
-
 }
-
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/PageNotFound"
-
+@import '@/assets/styles/pages/PageNotFound';
 </style>

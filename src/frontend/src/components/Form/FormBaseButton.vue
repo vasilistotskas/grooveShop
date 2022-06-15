@@ -1,9 +1,5 @@
 <template>
-  <button
-    :class="['button buttonEffect', type, { disabled }]"
-    :disabled="disabled"
-    :type="htmlType"
-  >
+  <button :class="['button buttonEffect', type, { disabled }]" :disabled="disabled" :type="htmlType">
     <slot />
   </button>
 </template>
@@ -16,21 +12,20 @@ export default defineComponent({
     htmlType: {
       type: String,
       default: 'button',
-      validator: htmlType => ['button', 'reset', 'submit'].includes(htmlType)
+      validator: (htmlType) => ['button', 'reset', 'submit'].includes(htmlType),
     },
     type: {
       type: String,
       default: 'default',
-      validator: type => ['default', 'primary', 'primary-two', 'danger'].includes(type)
+      validator: (type) => ['default', 'primary', 'primary-two', 'danger'].includes(type),
     },
     disabled: {
-      type: Boolean
-    }
-  }
+      type: Boolean,
+    },
+  },
 })
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Form/FormBaseButton"
-
+@import '@/assets/styles/components/Form/FormBaseButton';
 </style>

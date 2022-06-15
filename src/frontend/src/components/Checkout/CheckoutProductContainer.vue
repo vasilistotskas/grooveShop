@@ -1,19 +1,10 @@
 <template>
-  <div
-    v-if="cart && Object.keys(cart).length > 0"
-    class="checkout-grid-order-info"
-  >
+  <div v-if="cart && Object.keys(cart).length > 0" class="checkout-grid-order-info">
     <div class="checkout-grid-title">
-      <h2 class="title">
-        Your Items
-      </h2>
+      <h2 class="title">Your Items</h2>
     </div>
     <div class="checkout-grid-head">
-      <CheckoutProductCard
-        v-for="item in cart"
-        :key="item.product.id"
-        :item="item"
-      />
+      <CheckoutProductCard v-for="item in cart" :key="item.product.id" :item="item" />
     </div>
     <div class="checkout-product-container-extra_costs">
       <span class="checkout-product-container-extra_costs-shipping">
@@ -42,14 +33,14 @@ import CheckoutProductCard from '@/components/Checkout/CheckoutProductCard.vue'
 @Component({
   name: 'CheckoutProductContainer',
   components: {
-    CheckoutProductCard
+    CheckoutProductCard,
   },
   props: {
     cart: Array,
     cartTotalLength: Number,
     cartTotalPriceForPayWay: Number,
-    cartTotalPrice: Number
-  }
+    cartTotalPrice: Number,
+  },
 })
 export default class CheckoutProductContainer extends Vue {
   cart: Array<CartItemModel> = []
@@ -69,11 +60,9 @@ export default class CheckoutProductContainer extends Vue {
     }
     return payWay.cost + '€'
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/Checkout/Checkout"
-
+@import '@/assets/styles/pages/Checkout/Checkout';
 </style>

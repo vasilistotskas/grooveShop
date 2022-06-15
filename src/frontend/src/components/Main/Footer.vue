@@ -11,34 +11,17 @@
             </div>
             <div class="grid-item-two">
               <!-- Email input -->
-              <input
-                id="form5Example21"
-                class="form-control"
-                type="email"
-              >
-              <label
-                class="form-label mt-2"
-                for="form5Example21"
-              >Email address</label>
+              <input id="form5Example21" class="form-control" type="email" />
+              <label class="form-label mt-2" for="form5Example21">Email address</label>
             </div>
             <div class="grid-item-three">
-              <button
-                class="btn-outline-primary-one mb-4"
-                title="Subscribe to Newsletter"
-                type="submit"
-              >
-                Subscribe
-              </button>
+              <button class="btn-outline-primary-one mb-4" title="Subscribe to Newsletter" type="submit">Subscribe</button>
             </div>
           </div>
         </form>
         <div class="footer-safe-payments">
           <span class="footer-safe-payments-text">Safe Payments</span>
-          <LottiePlayerMain
-            class="footer-safe-payments-lottie"
-            :animation-data="getSafeShieldAnim"
-            :loop="true"
-          />
+          <LottiePlayerMain class="footer-safe-payments-lottie" :animation-data="getSafeShieldAnim" :loop="true" />
         </div>
       </section>
 
@@ -47,28 +30,16 @@
           <span class="text-uppercase">Links</span>
           <ul>
             <li>
-              <a
-                href="#!"
-                title="Footer Link 1"
-              >Link 1</a>
+              <a href="#!" title="Footer Link 1">Link 1</a>
             </li>
             <li>
-              <a
-                href="#!"
-                title="Footer Link 2"
-              >Link 2</a>
+              <a href="#!" title="Footer Link 2">Link 2</a>
             </li>
             <li>
-              <a
-                href="#!"
-                title="Footer Link 3"
-              >Link 3</a>
+              <a href="#!" title="Footer Link 3">Link 3</a>
             </li>
             <li>
-              <a
-                href="#!"
-                title="Footer Link 1"
-              >Link 4</a>
+              <a href="#!" title="Footer Link 1">Link 4</a>
             </li>
           </ul>
         </div>
@@ -76,28 +47,16 @@
           <span class="text-uppercase">Links</span>
           <ul>
             <li>
-              <a
-                href="#!"
-                title="Footer Link 1"
-              >Link 1</a>
+              <a href="#!" title="Footer Link 1">Link 1</a>
             </li>
             <li>
-              <a
-                href="#!"
-                title="Footer Link 2"
-              >Link 2</a>
+              <a href="#!" title="Footer Link 2">Link 2</a>
             </li>
             <li>
-              <a
-                href="#!"
-                title="Footer Link 3"
-              >Link 3</a>
+              <a href="#!" title="Footer Link 3">Link 3</a>
             </li>
             <li>
-              <a
-                href="#!"
-                title="Footer Link 1"
-              >Link 4</a>
+              <a href="#!" title="Footer Link 1">Link 4</a>
             </li>
           </ul>
         </div>
@@ -105,28 +64,16 @@
           <span class="text-uppercase">Links</span>
           <ul>
             <li>
-              <a
-                href="#!"
-                title="Footer Link 1"
-              >Link 1</a>
+              <a href="#!" title="Footer Link 1">Link 1</a>
             </li>
             <li>
-              <a
-                href="#!"
-                title="Footer Link 2"
-              >Link 2</a>
+              <a href="#!" title="Footer Link 2">Link 2</a>
             </li>
             <li>
-              <a
-                href="#!"
-                title="Footer Link 3"
-              >Link 3</a>
+              <a href="#!" title="Footer Link 3">Link 3</a>
             </li>
             <li>
-              <a
-                href="#!"
-                title="Footer Link 1"
-              >Link 4</a>
+              <a href="#!" title="Footer Link 1">Link 4</a>
             </li>
           </ul>
         </div>
@@ -134,28 +81,16 @@
           <span class="text-uppercase">Links</span>
           <ul>
             <li>
-              <a
-                href="#!"
-                title="Footer Link 1"
-              >Link 1</a>
+              <a href="#!" title="Footer Link 1">Link 1</a>
             </li>
             <li>
-              <a
-                href="#!"
-                title="Footer Link 2"
-              >Link 2</a>
+              <a href="#!" title="Footer Link 2">Link 2</a>
             </li>
             <li>
-              <a
-                href="#!"
-                title="Footer Link 3"
-              >Link 3</a>
+              <a href="#!" title="Footer Link 3">Link 3</a>
             </li>
             <li>
-              <a
-                href="#!"
-                title="Footer Link 1"
-              >Link 4</a>
+              <a href="#!" title="Footer Link 1">Link 4</a>
             </li>
           </ul>
         </div>
@@ -164,10 +99,7 @@
 
     <div class="main-copyright text-center p-3">
       <span>© 2020 Copyright:</span>
-      <a
-        href="#"
-        title="Made By Groove"
-      >GrooveBtch</a>
+      <a href="#" title="Made By Groove">GrooveBtch</a>
     </div>
   </footer>
 </template>
@@ -180,7 +112,7 @@ import LottiePlayerMain from '@/components/Utilities/LottiePlayerMain.vue'
 @Component({
   name: 'Footer',
   components: {
-    LottiePlayerMain
+    LottiePlayerMain,
   },
 })
 export default class Footer extends Vue {
@@ -188,10 +120,8 @@ export default class Footer extends Vue {
     return safe_shield
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Main/Footer"
-
+@import '@/assets/styles/components/Main/Footer';
 </style>

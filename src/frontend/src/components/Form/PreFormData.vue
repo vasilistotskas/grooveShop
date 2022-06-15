@@ -10,26 +10,21 @@ export default defineComponent({
   props: {
     form: {
       type: Object,
-      required: true
+      required: true,
     },
     errors: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     formJSON() {
-      return JSON.stringify(
-          this.form,
-          (k, v) => (typeof v === 'function' ? 'function' : v),
-          2
-      )
-    }
-  }
+      return JSON.stringify(this.form, (k, v) => (typeof v === 'function' ? 'function' : v), 2)
+    },
+  },
 })
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Form/PreFormData"
-
+@import '@/assets/styles/components/Form/PreFormData';
 </style>

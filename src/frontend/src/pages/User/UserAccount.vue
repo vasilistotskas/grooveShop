@@ -1,96 +1,37 @@
 <template>
-  <div
-    v-if="userData && Object.keys(userData).length > 0"
-    class="user-account-main-container container mt-7 mb-5"
-  >
+  <div v-if="userData && Object.keys(userData).length > 0" class="user-account-main-container container mt-7 mb-5">
     <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="user-account-page-main-part">
-      <UserProfileImage
-        v-model="profileImageFilename"
-        :fullname="fullname"
-        :src="profileImageFilename"
-      />
+      <UserProfileImage v-model="profileImageFilename" :fullname="fullname" :src="profileImageFilename" />
       <nav class="user-account-grid-navbar">
-        <div
-          id="navbarNavAccount"
-          class="user-account-grid-navbar-paths"
-        >
-          <RouterLink
-            :to="{ name: 'Orders' }"
-            aria-label="Orders"
-            class="nav-link"
-            title="Orders"
-          >
-            <font-awesome-icon
-              :icon="truckIcon"
-              size="1x"
-            />
+        <div id="navbarNavAccount" class="user-account-grid-navbar-paths">
+          <RouterLink :to="{ name: 'Orders' }" aria-label="Orders" class="nav-link" title="Orders">
+            <font-awesome-icon :icon="truckIcon" size="1x" />
             <span>Orders</span>
           </RouterLink>
-          <RouterLink
-            :to="{ name: 'Favourites' }"
-            aria-label="Favourites"
-            class="nav-link"
-            title="Favourites"
-          >
-            <font-awesome-icon
-              :icon="heartIcon"
-              size="1x"
-            />
+          <RouterLink :to="{ name: 'Favourites' }" aria-label="Favourites" class="nav-link" title="Favourites">
+            <font-awesome-icon :icon="heartIcon" size="1x" />
             <span>Favourites</span>
           </RouterLink>
-          <RouterLink
-            :to="{ name: 'Reviews' }"
-            aria-label="Reviews"
-            class="nav-link"
-            title="Reviews"
-          >
-            <font-awesome-icon
-              :icon="starIcon"
-              size="1x"
-            />
+          <RouterLink :to="{ name: 'Reviews' }" aria-label="Reviews" class="nav-link" title="Reviews">
+            <font-awesome-icon :icon="starIcon" size="1x" />
             <span>Reviews</span>
           </RouterLink>
-          <RouterLink
-            :to="{ name: 'Settings' }"
-            aria-label="Settings"
-            class="nav-link"
-            title="Settings"
-          >
-            <font-awesome-icon
-              :icon="cogsIcon"
-              size="1x"
-            />
+          <RouterLink :to="{ name: 'Settings' }" aria-label="Settings" class="nav-link" title="Settings">
+            <font-awesome-icon :icon="cogsIcon" size="1x" />
             <span>Settings</span>
           </RouterLink>
-          <RouterLink
-            :to="{ name: 'Password' }"
-            aria-label="Password"
-            class="nav-link"
-            title="Password"
-          >
-            <font-awesome-icon
-              :icon="lockIcon"
-              size="1x"
-            />
+          <RouterLink :to="{ name: 'Password' }" aria-label="Password" class="nav-link" title="Password">
+            <font-awesome-icon :icon="lockIcon" size="1x" />
             <span>Password</span>
           </RouterLink>
         </div>
-        <button
-          class="btn btn-outline-primary-two"
-          title="Log Out"
-          @click="logout()"
-        >
-          Log out
-        </button>
+        <button class="btn btn-outline-primary-two" title="Log Out" @click="logout()">Log out</button>
       </nav>
     </div>
 
     <div class="user-account-page-main-content">
-      <div
-        v-if="$router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT"
-        class="user-account-main-page"
-      >
+      <div v-if="$router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT" class="user-account-main-page">
         <div class="user-account-main-page-head">
           <span class="head-title">General Account Information</span>
         </div>
@@ -116,10 +57,7 @@
         </div>
       </div>
 
-      <router-view
-        :key="$route.path"
-        :user-data="userData"
-      />
+      <router-view :key="$route.path" :user-data="userData" />
     </div>
   </div>
 </template>
@@ -143,13 +81,12 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
   name: 'UserAccount',
   components: {
     UserProfileImage,
-    Breadcrumbs
-  }
+    Breadcrumbs,
+  },
 })
-
 export default class UserAccount extends Vue {
   MainRouteNames = MainRouteNames
-  profileImageFilename: string = ''
+  profileImageFilename = ''
   cogsIcon = faCogs
   starIcon = faStar
   truckIcon = faTruck
@@ -169,7 +106,7 @@ export default class UserAccount extends Vue {
     if (this.isAuthenticated) {
       return store.getters['user/getUserData']
     }
-    return new UserProfileModel
+    return new UserProfileModel()
   }
 
   get fullname(): string {
@@ -190,10 +127,10 @@ export default class UserAccount extends Vue {
   created(): void {
     document.title = 'My Account'
     this.$watch(
-        () => this.userData,
-        (image: UserProfileModel) => {
-          this.profileImageFilename = image.main_image_filename
-        }
+      () => this.userData,
+      (image: UserProfileModel) => {
+        this.profileImageFilename = image.main_image_filename
+      }
     )
   }
 
@@ -211,11 +148,9 @@ export default class UserAccount extends Vue {
     store.commit('user/unsetUserData')
     router.push('/')
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/User/UserAccount"
-
+@import '@/assets/styles/pages/User/UserAccount';
 </style>

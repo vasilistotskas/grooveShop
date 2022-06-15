@@ -1,8 +1,5 @@
 <template>
-  <Loader
-    v-show="isLoading"
-    id="mainLoader"
-  />
+  <Loader v-show="isLoading" id="mainLoader" />
   <div id="wrapper">
     <Header />
 
@@ -15,7 +12,6 @@
     <SocialSidebar />
   </div>
 </template>
-
 
 <script lang="ts">
 import store from '@/store'
@@ -36,11 +32,10 @@ import UserProfileModel from '@/state/user/data/UserProfileModel'
     Header,
     Footer,
     SocialSidebar,
-    Loader
-  }
+    Loader,
+  },
 })
 export default class App extends Vue {
-
   get lodash(): LoDashStatic {
     return _
   }
@@ -65,7 +60,7 @@ export default class App extends Vue {
     if (this.isAuthenticated) {
       return store.getters['user/getUserData']
     }
-    return new UserProfileModel
+    return new UserProfileModel()
   }
 
   get availableCountries(): CountryModel {
@@ -76,17 +71,12 @@ export default class App extends Vue {
     return store.getters['country/getRegionsBasedOnAlpha']
   }
 
-  get cartData(): {} {
+  get cartData(): Record<any, any> {
     return store.getters['cart/getCart']
   }
 
   async created(): Promise<void> {
-    await Promise.all([
-      this.initializeAuth(),
-      this.initializeCart(),
-      store.dispatch('category/fetchCategoriesTreeFromRemote'),
-      store.dispatch('country/fetchCountriesFromRemote')
-    ])
+    await Promise.all([this.initializeAuth(), this.initializeCart(), store.dispatch('category/fetchCategoriesTreeFromRemote'), store.dispatch('country/fetchCountriesFromRemote')])
 
     if (this.isAuthenticated) {
       await store.dispatch('user/fetchUserDataFromRemote')
@@ -108,12 +98,9 @@ export default class App extends Vue {
     store.commit('cart/initializeCart')
     store.dispatch('cart/cartTotalPriceForPayWayAction')
   }
-
-
 }
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/base/_commons"
-
+@import '@/assets/styles/base/_commons';
 </style>

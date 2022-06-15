@@ -11,31 +11,19 @@ import { RouteModel } from '@/routes/Model/RouteModel'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
-	history: createWebHistory(process.env.BASE_URL),
-	routes:[
-		...routes,
-		...authRoutes,
-		...userRoutes,
-		...cartRoutes,
-		...blogRoutes,
-		...searchRoutes,
-		...productRoutes,
-		...checkoutRoutes,
-		...categoryRoutes,
-	],
-	scrollBehavior(to, from, savedPosition) {
-		if (savedPosition) {
-			return savedPosition
-		} else {
-			return { top: 0 }
-		}
-	}
+  history: createWebHistory(process.env.BASE_URL),
+  routes: [...routes, ...authRoutes, ...userRoutes, ...cartRoutes, ...blogRoutes, ...searchRoutes, ...productRoutes, ...checkoutRoutes, ...categoryRoutes],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  },
 })
 
 router.beforeEach((to, from, next) => {
-	RouteModel.routeBeforeEach(to, from, next)
+  RouteModel.routeBeforeEach(to, from, next)
 })
 
 export default router
-
-

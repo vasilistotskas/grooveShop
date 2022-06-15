@@ -1,19 +1,8 @@
 <template>
-  <div
-    v-if="tip && Object.keys(tip).length > 0"
-    class="tip-card-container"
-    :style="{ background: tipBackground(tip.kind) }"
-  >
+  <div v-if="tip && Object.keys(tip).length > 0" class="tip-card-container" :style="{ background: tipBackground(tip.kind) }">
     <div class="tip-card-wrapper">
       <div class="tip-card-icon">
-        <GrooveImage
-          :alt="tip.title"
-          :src="tip.mainImageAbsoluteUrl"
-          :use-media-stream="false"
-          :img-height="36"
-          :img-width="36"
-          :class="'tip-card-icon-image'"
-        />
+        <GrooveImage :alt="tip.title" :src="tip.mainImageAbsoluteUrl" :use-media-stream="false" :img-height="36" :img-width="36" :class="'tip-card-icon-image'" />
       </div>
       <h4 class="tip-card-title">
         {{ tip.title }}
@@ -22,10 +11,7 @@
         {{ contentShorten(tip.content) }}
       </div>
       <div class="tip-card-bottom">
-        <font-awesome-icon
-          class="tip-card-bottom-icon"
-          :icon="globeIcon"
-        />
+        <font-awesome-icon class="tip-card-bottom-icon" :icon="globeIcon" />
         <span class="tip-card-bottom-text">webpage</span>
       </div>
     </div>
@@ -33,7 +19,6 @@
 </template>
 
 <script lang="ts">
-
 import { helpers } from '@/helpers/main'
 import TipModel from '@/state/tip/TipModel'
 import { TipKindEnum } from '@/state/tip/Enum/TipEnum'
@@ -44,28 +29,26 @@ import { faGlobe } from '@fortawesome/free-solid-svg-icons/faGlobe'
 @Component({
   name: 'TipSidebar',
   components: {
-    GrooveImage
+    GrooveImage,
   },
   props: {
     tip: {
       type: Object,
-      required: true
+      required: true,
     },
-  }
+  },
 })
-
 export default class TipCard extends Vue {
-
   tip = new TipModel()
 
   globeIcon = faGlobe
-  
+
   public contentShorten(content: string): string {
     return helpers.contentShorten(content, 0, 50)
   }
 
   protected tipBackground(kind: TipKindEnum): string {
-    switch(kind) {
+    switch (kind) {
       case TipKindEnum.SUCCESS: {
         return 'linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 25%, rgba(115,0,0,0.7483368347338936) 90%)'
       }
@@ -83,11 +66,9 @@ export default class TipCard extends Vue {
       }
     }
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Tip/TipCard"
-
+@import '@/assets/styles/components/Tip/TipCard';
 </style>

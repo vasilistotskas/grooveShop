@@ -27,12 +27,7 @@
         />
 
         <div class="product-listing-grid mt-3 mb-3">
-          <ProductCard
-            v-for="product in allPaginatedResults"
-            :key="product.id"
-            :product="product"
-            class="col-sm-3"
-          />
+          <ProductCard v-for="product in allPaginatedResults" :key="product.id" :product="product" class="col-sm-3" />
         </div>
       </div>
     </div>
@@ -40,7 +35,6 @@
 </template>
 
 <script lang="ts">
-
 import store from '@/store'
 import router from '@/routes'
 import ProductModel from '@/state/product/ProductModel'
@@ -66,15 +60,13 @@ import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpe
     ProductCard,
     Breadcrumbs,
     Pagination,
-    GrooveImage
+    GrooveImage,
   },
   props: {
-    category_slug: String
-  }
+    category_slug: String,
+  },
 })
-
 export default class Category extends PaginationBase<ProductModel> implements PaginatedInterface<ProductModel> {
-
   formEl = document.getElementById('burgerButton') as HTMLFormElement
   ImageTypeOptions = ImageTypeOptions
   ImageFitOptions = ImageFitOptions
@@ -93,22 +85,21 @@ export default class Category extends PaginationBase<ProductModel> implements Pa
   }
 
   async created(): Promise<void> {
-
     document.title = this.$route.params.category_slug + ' Category'
     this.$watch(
-        () => this.$route,
-        (to: any, from: any) => {
-          if (to.name === 'Category') {
-            this.fetchCategory()
-            this.fetchPaginationData()
-          }
-          if (to.path !== from.path && to.name === 'Category') {
-            store.commit('pagination/unsetResults', this.paginationNamespace)
-            this.formEl.classList.toggle('opened')
-            this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)
-            store.commit('app/setNavbarMenuHidden', true)
-          }
+      () => this.$route,
+      (to: any, from: any) => {
+        if (to.name === 'Category') {
+          this.fetchCategory()
+          this.fetchPaginationData()
         }
+        if (to.path !== from.path && to.name === 'Category') {
+          store.commit('pagination/unsetResults', this.paginationNamespace)
+          this.formEl.classList.toggle('opened')
+          this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)
+          store.commit('app/setNavbarMenuHidden', true)
+        }
+      }
     )
 
     this.formEl.classList.remove('opened')
@@ -141,26 +132,22 @@ export default class Category extends PaginationBase<ProductModel> implements Pa
   }
 
   async fetchPaginationData(): Promise<void> {
-
-    const paginationQuery = PaginationQueryParametersModel
-      .createPaginationQuery({
-        'pageNumber': this.currentPageNumber,
-        'endpointUrl': this.buildEndPointUrlForPaginatedResults(),
-        'method': ApiBaseMethods.GET
-      } )
+    const paginationQuery = PaginationQueryParametersModel.createPaginationQuery({
+      pageNumber: this.currentPageNumber,
+      endpointUrl: this.buildEndPointUrlForPaginatedResults(),
+      method: ApiBaseMethods.GET,
+    })
 
     await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
   }
 
   public buildEndPointUrlForPaginatedResults(): string {
     const categoryId = this.$route.params.category_slug
-    return 'category_products' + `/${ categoryId }`
+    return 'category_products' + `/${categoryId}`
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/Category/Category"
-
+@import '@/assets/styles/pages/Category/Category';
 </style>

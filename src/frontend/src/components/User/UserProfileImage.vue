@@ -1,22 +1,8 @@
 <template>
-  <div
-    v-if="src"
-    class="profile-image-grid-container"
-  >
-    <form
-      id="uploadImageForm"
-      class="profile-image-grid-form"
-      enctype="multipart/form-data"
-      name="uploadImageForm"
-      title="Change Profile Picture"
-    >
+  <div v-if="src" class="profile-image-grid-container">
+    <form id="uploadImageForm" class="profile-image-grid-form" enctype="multipart/form-data" name="uploadImageForm" title="Change Profile Picture">
       <div class="profile-image-grid-content">
-        <div
-          :class="{ 'hovering': profileImageHovering }"
-          class="profile-image-part"
-          @mouseout="profileImageHovering = false"
-          @mouseover="profileImageHovering = true"
-        >
+        <div :class="{ hovering: profileImageHovering }" class="profile-image-part" @mouseout="profileImageHovering = false" @mouseover="profileImageHovering = true">
           <GrooveImage
             :alt="'User Image'"
             :img-class="'rounded-circle img-fluid'"
@@ -28,30 +14,13 @@
             :img-fit="ImageFitOptions.outside"
             :img-position="ImagePositionOptions.center"
           />
-          <label
-            class="profile-image-label"
-            for="image"
-          >
-            <input
-              id="image"
-              class="d-none"
-              name="image"
-              type="file"
-              @change="updateUserImage"
-            >
-            <font-awesome-icon
-              :icon="cameraIcon"
-              size="3x"
-            />
+          <label class="profile-image-label" for="image">
+            <input id="image" class="d-none" name="image" type="file" @change="updateUserImage" />
+            <font-awesome-icon :icon="cameraIcon" size="3x" />
           </label>
         </div>
         <div class="profile-fullname-part">
-          <RouterLink
-            :to="{ name: 'UserAccount' }"
-            aria-label="MyAccount"
-            class="btn-w-effect"
-            title="My Account"
-          >
+          <RouterLink :to="{ name: 'UserAccount' }" aria-label="MyAccount" class="btn-w-effect" title="My Account">
             <h5>{{ fullname }}</h5>
           </RouterLink>
         </div>
@@ -65,29 +34,26 @@ import store from '@/store'
 import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
-import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOptions, ImageTypeOptions} from '@/helpers/MediaStream/ImageUrlEnum'
-
+import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Component({
   name: 'UserProfileImage',
   components: {
-    GrooveImage
+    GrooveImage,
   },
   props: {
     fullname: {
       type: String,
-      default: ''
+      default: '',
     },
     src: {
       type: String,
-      default: ''
-    }
-  }
+      default: '',
+    },
+  },
 })
-
 export default class UserProfileImage extends Vue {
-
-  profileImageHovering: boolean = false
+  profileImageHovering = false
   cameraIcon = faCamera
 
   ImagePathOptions = ImagePathOptions
@@ -101,11 +67,9 @@ export default class UserProfileImage extends Vue {
     const data = new FormData(formEl)
     await store.dispatch('user/updateUserProfile', data)
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/User/UserProfileImage"
-
+@import '@/assets/styles/components/User/UserProfileImage';
 </style>

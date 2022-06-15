@@ -1,36 +1,18 @@
 <template>
-  <div
-    id="password-reset-confirm-view"
-    class="container mt-7 mb-5"
-  >
+  <div id="password-reset-confirm-view" class="container mt-7 mb-5">
     <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="card password-reset-card">
       <div class="card-body card-body-border-top">
         <div>
-          <font-awesome-icon
-            :icon="lockIcon"
-            size="4x"
-          />
+          <font-awesome-icon :icon="lockIcon" size="4x" />
         </div>
         <h1>Reset Password Confirm</h1>
-        <template v-if="resetLoading">
-          loading...
-        </template>
+        <template v-if="resetLoading"> loading... </template>
         <template v-else-if="!resetCompleted">
-          <FormProvider
-            id="userPasswordForm"
-            :errors="formManager.errors"
-            :form="formManager.form"
-            name="userPasswordForm"
-            title=""
-            @submit="handleSubmit()"
-          >
+          <FormProvider id="userPasswordForm" :errors="formManager.errors" :form="formManager.form" name="userPasswordForm" title="" @submit="handleSubmit()">
             <div class="grid-account-password-fields">
               <div class="new_password">
-                <label
-                  :for="formManager.form.password1.$uid"
-                  class="label"
-                >New Password</label>
+                <label :for="formManager.form.password1.$uid" class="label">New Password</label>
                 <FormBaseInput
                   :id="formManager.form.password1.$uid"
                   v-model="formManager.form.password1.$value"
@@ -41,16 +23,10 @@
                   :input-with-add-on-icon="lockIcon"
                   type="password"
                 />
-                <FormValidationErrors
-                  :errors="formManager.form.password1.$errors"
-                  class="validation-errros"
-                />
+                <FormValidationErrors :errors="formManager.form.password1.$errors" class="validation-errros" />
               </div>
               <div class="re_new_password">
-                <label
-                  :for="formManager.form.password2.$uid"
-                  class="label"
-                >Retype New Password</label>
+                <label :for="formManager.form.password2.$uid" class="label">Retype New Password</label>
                 <FormBaseInput
                   :id="formManager.form.password2.$uid"
                   v-model="formManager.form.password2.$value"
@@ -61,39 +37,19 @@
                   :input-with-add-on-icon="lockIcon"
                   type="password"
                 />
-                <FormValidationErrors
-                  :errors="formManager.form.password2.$errors"
-                  class="validation-errros"
-                />
+                <FormValidationErrors :errors="formManager.form.password2.$errors" class="validation-errros" />
               </div>
               <div class="button">
-                <FormSubmitButtons
-                  :submit-text="submitButtonText"
-                  :submitting="formManager.submitting"
-                  class="buttons float-end"
-                  gap="2rem"
-                  @reset="formManager.resetFields()"
-                />
+                <FormSubmitButtons :submit-text="submitButtonText" :submitting="formManager.submitting" class="buttons float-end" gap="2rem" @reset="formManager.resetFields()" />
               </div>
             </div>
           </FormProvider>
 
-          <span
-            v-show="resetError"
-            class="error"
-          >
-            A error occured while processing your request.
-          </span>
+          <span v-show="resetError" class="error"> A error occured while processing your request. </span>
         </template>
         <template v-else>
           <span>Your password has been reset.</span>
-          <RouterLink
-            aria-label="Log In"
-            title="Log In"
-            to="/log-in"
-          >
-            return to login page
-          </RouterLink>
+          <RouterLink aria-label="Log In" title="Log In" to="/log-in"> return to login page </RouterLink>
         </template>
       </div>
     </div>
@@ -114,9 +70,7 @@ import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
-let {
-  validateFields
-} = useValidation({})
+let { validateFields } = useValidation({})
 
 @Component({
   name: 'PasswordRestConfirm',
@@ -125,34 +79,31 @@ let {
     FormProvider,
     FormBaseInput,
     FormSubmitButtons,
-    FormValidationErrors
-  }
+    FormValidationErrors,
+  },
 })
 export default class PasswordRestConfirm extends Vue {
-
-  submitButtonText: string = 'Reset password'
+  submitButtonText = 'Reset password'
 
   inputs = {
     password1: '',
     password2: '',
     uid: '',
-    token: ''
+    token: '',
   }
 
   lockIcon = faLock
 
-  formManager = {
-    validateFields
-  } = useValidation({
+  formManager = ({ validateFields } = useValidation({
     password1: {
       $value: '',
       $rules: [
         min(8)('Password has to be longer than 7 characters'),
         {
           key: 'pw',
-          rule: equal('Passwords do not match')
-        }
-      ]
+          rule: equal('Passwords do not match'),
+        },
+      ],
     },
     password2: {
       $value: '',
@@ -160,11 +111,11 @@ export default class PasswordRestConfirm extends Vue {
         min(8)('Password has to be longer than 7 characters'),
         {
           key: 'pw',
-          rule: equal('Passwords do not match')
-        }
-      ]
-    }
-  })
+          rule: equal('Passwords do not match'),
+        },
+      ],
+    },
+  }))
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
@@ -185,9 +136,9 @@ export default class PasswordRestConfirm extends Vue {
 
   mounted(): void {
     document.title = 'Password Reset Confirm'
-    this.inputs.uid = <string>this.$route.params.uid
-    this.inputs.token = <string>this.$route.params.token
-}
+    this.inputs.uid = this.$route.params.uid as string
+    this.inputs.token = this.$route.params.token as string
+  }
 
   handleSubmit = async () => {
     try {
@@ -196,7 +147,7 @@ export default class PasswordRestConfirm extends Vue {
         password1: formData.password1,
         password2: formData.password2,
         uid: this.inputs.uid,
-        token: this.inputs.token
+        token: this.inputs.token,
       }
 
       await store.dispatch('password/resetPasswordConfirm', apiData)
@@ -210,11 +161,9 @@ export default class PasswordRestConfirm extends Vue {
   async clearResetStatus(): Promise<void> {
     await store.dispatch('password/clearResetStatus')
   }
-
 }
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/pages/Auth/PasswordResetConfirm"
-
+@import '@/assets/styles/pages/Auth/PasswordResetConfirm';
 </style>

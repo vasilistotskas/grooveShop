@@ -25,6 +25,7 @@
     "lodash": "^4.17.21",
     "lottie-web": "^5.9.2",
     "mitt": "^3.0.0",
+    "prettier": "^2.7.0",
     "swiper": "^6.7.5",
     "universal-cookie": "^4.0.4",
     "uuid": "^8.3.2",
@@ -32,6 +33,7 @@
     "vue-class-component": "^8.0.0-rc.1",
     "vue-i18n": "^9.1.9",
     "vue-router": "^4.0.12",
+    "vue-social-sharing": "^4.0.0-alpha4",
     "vue-toastification": "^2.0.0-rc.5",
     "vue3-form-validation": "^5.1.0",
     "vuex": "^4.0.2"
@@ -40,20 +42,23 @@
     "@babel/core": "^7.17.0",
     "@babel/eslint-parser": "^7.17.0",
     "@types/lodash": "^4.14.176",
-    "@typescript-eslint/eslint-plugin": "^5.12.0",
-    "@typescript-eslint/parser": "^5.12.0",
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
+    "@typescript-eslint/parser": "^5.28.0",
     "@vue/cli-plugin-babel": "^5.0.1",
     "@vue/cli-plugin-typescript": "^5.0.1",
     "@vue/cli-service": "^5.0.1",
     "@vue/compiler-sfc": "^3.2.31",
     "@vue/eslint-config-typescript": "^10.0.0",
-    "eslint": "^7.2.0",
-    "eslint-plugin-vue": "^8.4.1",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^8.7.1",
     "fibers": "^5.0.0",
     "sass": "^1.43.3",
     "sass-loader": "^10",
     "style-resources-loader": "^1.4.1",
     "typescript": "~4.5.5",
+    "vue-eslint-parser": "^9.0.2",
     "vuex-module-decorators": "^1.0.1"
   },
   "eslintConfig": {
@@ -64,8 +69,10 @@
     "extends": [
       "plugin:vue/vue3-recommended"
     ],
+    "parser": "vue-eslint-parser",
     "parserOptions": {
-      "parser": "@typescript-eslint/parser"
+      "parser": "@typescript-eslint/parser",
+      "sourceType": "module"
     },
     "rules": {}
   },

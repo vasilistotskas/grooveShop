@@ -3,40 +3,19 @@
     <form id="blogPostComment">
       <div class="blog-comment-container">
         <div class="blog-comment-header">
-          <h1 class="blog-comment-header-title">
-            Make a comment
-          </h1>
-          <font-awesome-icon
-            :icon="writeReviewIcon"
-            size="lg"
-          />
+          <h1 class="blog-comment-header-title">Make a comment</h1>
+          <font-awesome-icon :icon="writeReviewIcon" size="lg" />
         </div>
         <div class="blog-comment-body">
           <h2 class="blog-comment-body-title">
-            <label
-              class="blog-comment-body-label"
-              for="commentTextArea"
-            >
-              Your Comment
-            </label>
+            <label class="blog-comment-body-label" for="commentTextArea"> Your Comment </label>
           </h2>
           <div class="blog-comment-body-textarea">
-            <textarea
-              id="commentTextArea"
-              v-model="comment"
-              class="blog-comment-body-textarea-content"
-              maxlength="10000"
-              placeholder="Share your experience..."
-              rows="6"
-            />
+            <textarea id="commentTextArea" v-model="comment" class="blog-comment-body-textarea-content" maxlength="10000" placeholder="Share your experience..." rows="6" />
           </div>
         </div>
         <div class="blog-comment-footer">
-          <button
-            class="blog-comment-footer-btn"
-            type="button"
-            @click="commentHandle()"
-          >
+          <button class="blog-comment-footer-btn" type="button" @click="commentHandle()">
             {{ reviewButtonText }}
           </button>
         </div>
@@ -56,13 +35,11 @@ import { faPenSquare } from '@fortawesome/free-solid-svg-icons/faPenSquare'
 const toast = useToast()
 
 @Component({
-  name: 'BlogComment'
+  name: 'BlogComment',
 })
-
 export default class BlogComment extends Vue {
-
   writeReviewIcon = faPenSquare
-  comment: string = ''
+  comment = ''
 
   get isAuthenticated(): boolean {
     return store.getters['auth/isAuthenticated']
@@ -112,13 +89,10 @@ export default class BlogComment extends Vue {
     await store.dispatch('blog/fetchCommentByUserToPost')
 
     this.comment = cloneDeep(this.commentByUserToPost.content)
-
   }
-
 }
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/components/Blog/BlogComment"
-
+@import '@/assets/styles/components/Blog/BlogComment';
 </style>

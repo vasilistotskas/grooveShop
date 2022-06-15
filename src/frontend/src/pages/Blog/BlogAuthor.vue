@@ -1,25 +1,12 @@
 <template>
-  <div
-    v-if="authorByEmail"
-    class="container mt-7 mb-5"
-  >
+  <div v-if="authorByEmail" class="container mt-7 mb-5">
     <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <h2>{{ displayName }}</h2>
-    <a
-      :href="authorByEmail.website"
-      :title="`Visit Website of ${displayName}`"
-      rel="noopener noreferrer"
-      target="_blank"
-    >Website</a>
+    <a :href="authorByEmail.website" :title="`Visit Website of ${displayName}`" rel="noopener noreferrer" target="_blank">Website</a>
     <p>{{ authorByEmail.bio }}</p>
 
     <h3>Posts by {{ displayName }}</h3>
-    <BlogAuthorPostList
-      v-if="authorPostSet"
-      :posts="authorPostSet"
-      :show-author="false"
-      :author="authorByEmail"
-    />
+    <BlogAuthorPostList v-if="authorPostSet" :posts="authorPostSet" :show-author="false" :author="authorByEmail" />
   </div>
 </template>
 
@@ -37,12 +24,10 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
   name: 'BlogAuthor',
   components: {
     BlogAuthorPostList,
-    Breadcrumbs
-  }
+    Breadcrumbs,
+  },
 })
-
 export default class BlogAuthor extends Vue {
-
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
@@ -57,7 +42,9 @@ export default class BlogAuthor extends Vue {
   }
 
   get displayName(): string {
-    return (this.authorByEmail.user?.firstName && this.authorByEmail.user?.lastName && `${ this.authorByEmail.user?.firstName } ${ this.authorByEmail.user?.lastName }`) || `${ this.authorByEmail.user?.email }`
+    return (
+      (this.authorByEmail.user?.firstName && this.authorByEmail.user?.lastName && `${this.authorByEmail.user?.firstName} ${this.authorByEmail.user?.lastName}`) || `${this.authorByEmail.user?.email}`
+    )
   }
 
   async created(): Promise<void> {
@@ -71,6 +58,5 @@ export default class BlogAuthor extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/Blog/BlogAuthor"
-
+@import '@/assets/styles/pages/Blog/BlogAuthor';
 </style>

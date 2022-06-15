@@ -1,10 +1,7 @@
 <template>
   <div class="container content-min-height mt-7 mb-5">
     <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
-    <BlogPostList
-      v-if="allPosts"
-      :posts="allPosts"
-    />
+    <BlogPostList v-if="allPosts" :posts="allPosts" />
   </div>
 </template>
 
@@ -21,12 +18,10 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
   name: 'Blog',
   components: {
     BlogPostList,
-    Breadcrumbs
-  }
+    Breadcrumbs,
+  },
 })
-
 export default class Blog extends Vue {
-
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
@@ -39,15 +34,11 @@ export default class Blog extends Vue {
   async mounted(): Promise<void> {
     document.title = 'Blog'
 
-    await Promise.all([
-      store.dispatch('blog/fetchAllPostsFromRemote'),
-    ])
+    await Promise.all([store.dispatch('blog/fetchAllPostsFromRemote')])
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/Blog/Blog"
-
+@import '@/assets/styles/pages/Blog/Blog';
 </style>

@@ -1,16 +1,9 @@
 <template>
   <div>
-    <h1
-      v-if="title"
-      class="plr-15 mb-3 mt-3"
-    >
+    <h1 v-if="title" class="plr-15 mb-3 mt-3">
       {{ title }}
     </h1>
-    <form
-      :class="formClass"
-      class="_form"
-      @submit.prevent="$emit('submit')"
-    >
+    <form :class="formClass" class="_form" @submit.prevent="$emit('submit')">
       <slot />
     </form>
     <!--    <PreFormData :form="form" :errors="errors" />-->
@@ -24,26 +17,25 @@ export default defineComponent({
   props: {
     title: {
       type: String,
-      required: true
+      required: true,
     },
     form: {
       type: Object,
-      required: true
+      required: true,
     },
     formClass: {
       type: String,
-      default: ''
+      default: '',
     },
     errors: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
-  emits: ['submit']
+  emits: ['submit'],
 })
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Form/FormProvider"
-
+@import '@/assets/styles/components/Form/FormProvider';
 </style>

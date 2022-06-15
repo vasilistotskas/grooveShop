@@ -1,10 +1,5 @@
 <template>
-  <RouterLink
-    v-if="product && Object.keys(product).length > 0"
-    :title="product.name"
-    :to="'/product' + product.absolute_url"
-    aria-label="Product"
-  >
+  <RouterLink v-if="product && Object.keys(product).length > 0" :title="product.name" :to="'/product' + product.absolute_url" aria-label="Product">
     <span>
       <GrooveImage
         :alt="product.name"
@@ -34,27 +29,23 @@ import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
   name: 'UserOrderHistoryCard',
   components: {
     Pagination,
-    GrooveImage
+    GrooveImage,
   },
   props: {
     product: Object,
     orderTotal: Number,
-    quantity: Number
-  }
+    quantity: Number,
+  },
 })
-
-export default class UserOrderHistoryCard extends Vue  {
-
+export default class UserOrderHistoryCard extends Vue {
   product = new ProductModel()
   orderTotal = 0
   quantity = 0
 
   ImageTypeOptions = ImageTypeOptions
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/User/UserOrderHistory"
-
+@import '@/assets/styles/pages/User/UserOrderHistory';
 </style>

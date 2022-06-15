@@ -1,22 +1,7 @@
 <template>
-  <button
-    class="btn-outline-primary-three"
-    data-mdb-ripple-color="dark"
-    title="Favourite Actions"
-    type="button"
-    @click="favouriteHandle()"
-  >
-    <font-awesome-icon
-      v-if="!isFavourite"
-      :icon="icon"
-      size="2x"
-    />
-    <font-awesome-icon
-      v-else
-      :icon="icon"
-      :style="{ color: 'rgba(200,60,60,0.79)' }"
-      size="2x"
-    />
+  <button class="btn-outline-primary-three" data-mdb-ripple-color="dark" title="Favourite Actions" type="button" @click="favouriteHandle()">
+    <font-awesome-icon v-if="!isFavourite" :icon="icon" size="2x" />
+    <font-awesome-icon v-else :icon="icon" :style="{ color: 'rgba(200,60,60,0.79)' }" size="2x" />
   </button>
 </template>
 
@@ -35,32 +20,31 @@ const toast = useToast()
   props: {
     model: {
       type: Object,
-      required: true
+      required: true,
     },
     getterType: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     dispatchType: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     icon: {
       type: Object,
       required: false,
-      default: faHeart
+      default: faHeart,
     },
     useStore: {
       type: Boolean,
       required: false,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
 })
 export default class FavouriteButton extends Vue implements FavouriteButtonInterface<Record<any, any>> {
-
   model!: Record<any, any>
   getterType!: string
   dispatchType!: string
@@ -94,10 +78,8 @@ export default class FavouriteButton extends Vue implements FavouriteButtonInter
     this.isFavourite ? toast.success('Added to Favourites') : toast.info('Removed From Favourites')
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Blog/BlogFavouriteButton"
-
+@import '@/assets/styles/components/Blog/BlogFavouriteButton';
 </style>

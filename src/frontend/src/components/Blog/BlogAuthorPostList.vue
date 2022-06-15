@@ -1,59 +1,46 @@
 <template>
   <div class="blog-main-content">
-    <div
-      v-if="posts && Object.keys(posts).length > 0"
-      class="grid-post-list"
-    >
-      <BlogPostCard
-        v-for="post in posts"
-        :key="post.title"
-        :post="post"
-        :author="author"
-        class="cardSpecialEffect"
-      />
+    <div v-if="posts && Object.keys(posts).length > 0" class="grid-post-list">
+      <BlogPostCard v-for="post in posts" :key="post.title" :post="post" :author="author" class="cardSpecialEffect" />
     </div>
     <div v-else>
       <span>No Posts Found</span>
     </div>
-    <BlogTagsSidebar
-      :authors="allAuthors"
-      :tags="allTags"
-    />
+    <BlogTagsSidebar :authors="allAuthors" :tags="allTags" />
   </div>
 </template>
 
 <script lang="ts">
 import store from '@/store'
 import BlogPostModel from '@/state/blog/BlogPostModel'
-import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
 import BlogPostCard from '@/components/Blog/BlogPostCard.vue'
 import { Options as Component, Vue } from 'vue-class-component'
+import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
 
 @Component({
   name: 'BlogAuthorPostList',
   components: {
     BlogTagsSidebar,
-    BlogPostCard
+    BlogPostCard,
   },
   props: {
     posts: {
       type: Array,
-      required: true
+      required: true,
     },
     showAuthor: {
       type: Boolean,
       required: false,
-      default: true
+      default: true,
     },
     author: {
       type: Object,
-      required: false
-    }
-  }
+      required: false,
+    },
+  },
 })
-
 export default class BlogAuthorPostList extends Vue {
-  showAuthor: boolean = false
+  showAuthor = false
   posts: Array<BlogPostModel> = []
   author!: object
 
@@ -66,17 +53,11 @@ export default class BlogAuthorPostList extends Vue {
   }
 
   async mounted(): Promise<void> {
-    await Promise.all([
-      store.dispatch('blog/fetchAllTagsFromRemote'),
-      store.dispatch('blog/fetchAllAuthorsFromRemote'),
-      store.dispatch('blog/fetchAllCategoriesFromRemote')
-    ])
+    await Promise.all([store.dispatch('blog/fetchAllTagsFromRemote'), store.dispatch('blog/fetchAllAuthorsFromRemote'), store.dispatch('blog/fetchAllCategoriesFromRemote')])
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Blog/BlogPostList"
-
+@import '@/assets/styles/components/Blog/BlogPostList';
 </style>

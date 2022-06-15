@@ -4,9 +4,7 @@
     <div class="container">
       <div class="content-min-height">
         <div class="col-12 mb-3 mt-3">
-          <h2 class="is-size-5 has-text-grey">
-            Search term: "{{ currentPageQuery }}"
-          </h2>
+          <h2 class="is-size-5 has-text-grey">Search term: "{{ currentPageQuery }}"</h2>
         </div>
 
         <Pagination
@@ -19,12 +17,7 @@
         />
 
         <div class="product-listing-grid mt-3 mb-3">
-          <ProductCard
-            v-for="product in allPaginatedResults"
-            :key="product.id"
-            :product="product"
-            class="grid-item"
-          />
+          <ProductCard v-for="product in allPaginatedResults" :key="product.id" :product="product" class="grid-item" />
         </div>
       </div>
     </div>
@@ -32,7 +25,6 @@
 </template>
 
 <script lang="ts">
-
 import store from '@/store'
 import router from '@/routes'
 import ProductModel from '@/state/product/ProductModel'
@@ -54,12 +46,10 @@ import { PaginationQueryParametersModel } from '@/state/pagination/Model/Paginat
   components: {
     ProductCard,
     Pagination,
-    Breadcrumbs
-  }
+    Breadcrumbs,
+  },
 })
-
 export default class Search extends PaginationBase<ProductModel> implements PaginatedInterface<ProductModel> {
-
   query: string | null = ''
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceDataEnum.SEARCH_PRODUCTS
@@ -83,7 +73,6 @@ export default class Search extends PaginationBase<ProductModel> implements Pagi
     }
 
     await this.fetchPaginationData()
-
   }
 
   async unmounted(): Promise<void> {
@@ -91,25 +80,21 @@ export default class Search extends PaginationBase<ProductModel> implements Pagi
   }
 
   async fetchPaginationData(): Promise<void> {
-
-    const paginationQuery = PaginationQueryParametersModel
-        .createPaginationQuery({
-          'pageNumber': this.currentPageNumber,
-          'endpointUrl': `search-product`,
-          'queryParams': {
-            'page': this.currentPageNumber,
-            'query': this.currentPageQuery
-          },
-          'method': ApiBaseMethods.GET
-        } )
+    const paginationQuery = PaginationQueryParametersModel.createPaginationQuery({
+      pageNumber: this.currentPageNumber,
+      endpointUrl: `search-product`,
+      queryParams: {
+        page: this.currentPageNumber,
+        query: this.currentPageQuery,
+      },
+      method: ApiBaseMethods.GET,
+    })
 
     await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/Search/Search"
-
+@import '@/assets/styles/pages/Search/Search';
 </style>

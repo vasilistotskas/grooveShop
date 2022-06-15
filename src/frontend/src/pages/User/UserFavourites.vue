@@ -1,15 +1,7 @@
 <template>
-  <div
-    v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0"
-    class="container"
-  >
+  <div v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0" class="container">
     <div class="product-listing-grid mb-4">
-      <ProductCard
-        v-for="product in allPaginatedResults"
-        :key="product.id"
-        :product="product.product_object"
-        class="grid-item"
-      />
+      <ProductCard v-for="product in allPaginatedResults" :key="product.id" :product="product.product_object" class="grid-item" />
     </div>
     <Pagination
       v-if="Object.keys(allPaginatedResults).length !== 0"
@@ -20,10 +12,7 @@
       :namespace="paginationNamespace"
     />
   </div>
-  <div
-    v-else
-    class="user_profile-no-data"
-  >
+  <div v-else class="user_profile-no-data">
     <h1>NO FAVOURITES</h1>
   </div>
 </template>
@@ -47,17 +36,15 @@ import { PaginationQueryParametersModel } from '@/state/pagination/Model/Paginat
   props: {
     userData: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
     ProductCard,
-    Pagination
-  }
+    Pagination,
+  },
 })
-
 export default class UserFavourites extends PaginationBase<UserProfileModel> implements PaginatedInterface<UserProfileModel> {
-
   userData = new UserProfileModel()
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceDataEnum.USER_FAVOURITES
@@ -83,25 +70,21 @@ export default class UserFavourites extends PaginationBase<UserProfileModel> imp
   }
 
   async fetchPaginationData(): Promise<void> {
-
-    const paginationQuery = PaginationQueryParametersModel
-        .createPaginationQuery({
-          'pageNumber': this.currentPageNumber,
-          'endpointUrl': this.buildEndPointUrlForPaginatedResults(),
-          'method': ApiBaseMethods.GET
-        } )
+    const paginationQuery = PaginationQueryParametersModel.createPaginationQuery({
+      pageNumber: this.currentPageNumber,
+      endpointUrl: this.buildEndPointUrlForPaginatedResults(),
+      method: ApiBaseMethods.GET,
+    })
 
     await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
   }
 
   public buildEndPointUrlForPaginatedResults(): string {
     const userId = this.userData.id
-    return 'favourites/products' + `/${ userId }`
+    return 'favourites/products' + `/${userId}`
   }
-
 }
 </script>
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/User/UserSettings"
-
+@import '@/assets/styles/pages/User/UserSettings';
 </style>

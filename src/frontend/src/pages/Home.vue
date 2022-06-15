@@ -10,8 +10,8 @@
           :mousewheel="false"
           :navigation="!!(homepageSlider[0].video && Object.keys(homepageSlider[0].slides).length > 0)"
           :pagination="{
-            'clickable': true,
-            'dynamicBullets' : false
+            clickable: true,
+            dynamicBullets: false,
           }"
           :style="mainSliderStyle"
           :img-height="510"
@@ -29,8 +29,8 @@
               :mousewheel="false"
               :navigation="!!(homepageSlider[1].video && Object.keys(homepageSlider[1].slides).length > 0)"
               :pagination="{
-                'clickable': true,
-                'dynamicBullets' : false
+                clickable: true,
+                dynamicBullets: false,
               }"
               :style="mainSliderStyle"
               :img-height="282"
@@ -47,8 +47,8 @@
               :mousewheel="false"
               :navigation="!!(homepageSlider[2].video && Object.keys(homepageSlider[2].slides).length > 0)"
               :pagination="{
-                'clickable': true,
-                'dynamicBullets' : false
+                clickable: true,
+                dynamicBullets: false,
               }"
               :style="mainSliderStyle"
               :img-height="282"
@@ -63,44 +63,26 @@
     <div class="home-usp-grid-container">
       <div class="home-usp-grid-content mb-5">
         <div class="grid-usp-item">
-          <font-awesome-icon
-            v-if="isMobile"
-            :icon="phoneIcon"
-          />
-          <font-awesome-icon
-            v-else
-            :icon="phoneIcon"
-            size="3x"
-          />
-          <span>Lorem Ipsum
+          <font-awesome-icon v-if="isMobile" :icon="phoneIcon" />
+          <font-awesome-icon v-else :icon="phoneIcon" size="3x" />
+          <span
+            >Lorem Ipsum
             <span>Lorem Ipsum</span>
           </span>
         </div>
         <div class="grid-usp-item">
-          <font-awesome-icon
-            v-if="isMobile"
-            :icon="envelopeIcon"
-          />
-          <font-awesome-icon
-            v-else
-            :icon="envelopeIcon"
-            size="3x"
-          />
-          <span>Lorem Ipsum
+          <font-awesome-icon v-if="isMobile" :icon="envelopeIcon" />
+          <font-awesome-icon v-else :icon="envelopeIcon" size="3x" />
+          <span
+            >Lorem Ipsum
             <span>Lorem Ipsum</span>
           </span>
         </div>
         <div class="grid-usp-item">
-          <font-awesome-icon
-            v-if="isMobile"
-            :icon="commentIcon"
-          />
-          <font-awesome-icon
-            v-else
-            :icon="commentIcon"
-            size="3x"
-          />
-          <span>Lorem Ipsum
+          <font-awesome-icon v-if="isMobile" :icon="commentIcon" />
+          <font-awesome-icon v-else :icon="commentIcon" size="3x" />
+          <span
+            >Lorem Ipsum
             <span>Lorem Ipsum</span>
           </span>
         </div>
@@ -115,12 +97,7 @@
           </h2>
         </div>
         <div class="grid-content-six">
-          <ProductCard
-            v-for="product in LatestProducts"
-            :key="product.id"
-            :product="product"
-            class="grid-item"
-          />
+          <ProductCard v-for="product in LatestProducts" :key="product.id" :product="product" class="grid-item" />
         </div>
       </div>
     </div>
@@ -143,15 +120,13 @@ import HomePageMainSlider from '@/components/Sliders/Swiper/HomePageMainSlider.v
   name: 'Home',
   components: {
     ProductCard,
-    HomePageMainSlider
-  }
+    HomePageMainSlider,
+  },
 })
-
 export default class Home extends Vue {
-
   mainSliderStyle = {
     '--swiper-navigation-color': '#fff',
-    '--swiper-pagination-color': '#fff'
+    '--swiper-pagination-color': '#fff',
   }
 
   phoneIcon = faPhone
@@ -171,26 +146,21 @@ export default class Home extends Vue {
   }
 
   async beforeCreate(): Promise<void> {
-    await Promise.all([
-      store.dispatch('product/fetchLatestProductsFromRemote'),
-      store.dispatch('slider/fetchSlidersFromRemote')
-    ])
+    await Promise.all([store.dispatch('product/fetchLatestProductsFromRemote'), store.dispatch('slider/fetchSlidersFromRemote')])
   }
 
   async mounted(): Promise<void> {
     document.title = 'DeepWeb'
 
     await store.dispatch('app/updateMetaTagElement', {
-      'metaName': 'description',
-      'metaAttribute': 'content',
-      'newValue': 'Deep Web Homepage'
+      metaName: 'description',
+      metaAttribute: 'content',
+      newValue: 'Deep Web Homepage',
     })
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/Home"
-
+@import '@/assets/styles/pages/Home';
 </style>

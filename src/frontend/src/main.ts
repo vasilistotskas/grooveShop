@@ -13,38 +13,38 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast, { PluginOptions, TYPE } from 'vue-toastification'
 
 const validation = createValidation({
-	defaultValidationBehavior: <never>'lazy',
-	validationBehavior: {
-		change: ({ force }: any) => !force,
-		lazy: ({ touched }: any) => touched,
-		submit: ({ submit, hasError }: any) => submit || hasError
-	}
+  defaultValidationBehavior: <never>'lazy',
+  validationBehavior: {
+    change: ({ force }: any) => !force,
+    lazy: ({ touched }: any) => touched,
+    submit: ({ submit, hasError }: any) => submit || hasError,
+  },
 })
 
 const ToastOptions: PluginOptions = {
-	toastDefaults: {
-		// ToastOptions object for each type of toast
-		[TYPE.ERROR]: {
-			timeout: 5000,
-			closeButton: false
-		},
-		[TYPE.SUCCESS]: {
-			timeout: 5000,
-			hideProgressBar: true
-		}
-	}
+  toastDefaults: {
+    // ToastOptions object for each type of toast
+    [TYPE.ERROR]: {
+      timeout: 5000,
+      closeButton: false,
+    },
+    [TYPE.SUCCESS]: {
+      timeout: 5000,
+      hideProgressBar: true,
+    },
+  },
 }
 
 const emitter = mitt()
 
 createApp(App)
-	.use(store)
-	.use(router, axios)
-	.use(i18n)
-	.use(validation)
-	.use(apolloProvider.provider)
-	.use(Toast, ToastOptions)
-	.use(VueSocialSharing)
-	.component('font-awesome-icon', FontAwesomeIcon)
-	.provide('emitter', emitter)
-	.mount('#app')
+  .use(store)
+  .use(router, axios)
+  .use(i18n)
+  .use(validation)
+  .use(apolloProvider.provider)
+  .use(Toast, ToastOptions)
+  .use(VueSocialSharing)
+  .component('font-awesome-icon', FontAwesomeIcon)
+  .provide('emitter', emitter)
+  .mount('#app')

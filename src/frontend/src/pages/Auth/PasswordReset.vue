@@ -1,22 +1,14 @@
 <template>
-  <div
-    id="password-reset-view"
-    class="container mt-7 mb-5"
-  >
+  <div id="password-reset-view" class="container mt-7 mb-5">
     <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="card password-reset-card">
       <div class="card-body card-body-border-top">
         <div>
-          <font-awesome-icon
-            :icon="lockIcon"
-            size="4x"
-          />
+          <font-awesome-icon :icon="lockIcon" size="4x" />
         </div>
         <h1>Forgot Password?</h1>
         <p>You can reset your password here.</p>
-        <template v-if="emailLoading">
-          loading...
-        </template>
+        <template v-if="emailLoading"> loading... </template>
         <template v-else-if="!emailCompleted">
           <form @submit.prevent="submit">
             <div class="form-group">
@@ -24,43 +16,18 @@
                 <span class="input-group-addon">
                   <font-awesome-icon :icon="envelopeIcon" />
                 </span>
-                <input
-                  id="email"
-                  v-model="inputs.email"
-                  class="form-control"
-                  name="email"
-                  placeholder="email"
-                  type="email"
-                >
+                <input id="email" v-model="inputs.email" class="form-control" name="email" placeholder="email" type="email" />
               </div>
             </div>
           </form>
-          <button
-            class="btn btn-outline-primary-two"
-            title="Send Password Reset Email"
-            @click="sendResetEmail(inputs)"
-          >
-            send email
-          </button>
-          <span
-            v-show="emailError"
-            class="error"
-          >
-            A error occured while processing your request.
-          </span>
+          <button class="btn btn-outline-primary-two" title="Send Password Reset Email" @click="sendResetEmail(inputs)">send email</button>
+          <span v-show="emailError" class="error"> A error occured while processing your request. </span>
         </template>
         <template v-else>
           <div class="password-reset-message">
-            <span>Check your inbox for a link to reset your password. If an email doesn't appear within a few
-              minutes, check your spam folder.</span>
+            <span>Check your inbox for a link to reset your password. If an email doesn't appear within a few minutes, check your spam folder.</span>
           </div>
-          <RouterLink
-            aria-label="Log In"
-            title="Log In"
-            to="/log-in"
-          >
-            return to login page
-          </RouterLink>
+          <RouterLink aria-label="Log In" title="Log In" to="/log-in"> return to login page </RouterLink>
         </template>
       </div>
     </div>
@@ -79,14 +46,12 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 @Component({
   name: 'PasswordReset',
   components: {
-    Breadcrumbs
-  }
+    Breadcrumbs,
+  },
 })
-
 export default class PasswordReset extends Vue {
-
   inputs = {
-    email: ''
+    email: '',
   }
 
   lockIcon = faLock
@@ -124,11 +89,9 @@ export default class PasswordReset extends Vue {
   async clearEmailStatus(): Promise<void> {
     await store.dispatch('password/clearEmailStatus')
   }
-
 }
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/pages/Auth/PasswordReset"
-
+@import '@/assets/styles/pages/Auth/PasswordReset';
 </style>

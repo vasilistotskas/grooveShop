@@ -13,10 +13,7 @@
       <video ref="mainSliderVideoRef" />
     </swiper-slide>
 
-    <swiper-slide
-      v-for="slide in slider.slides"
-      :key="slide.id"
-    >
+    <swiper-slide v-for="slide in slider.slides" :key="slide.id">
       <GrooveImage
         :alt="slide.title ? slide.title : 'no-alt'"
         :file-name="slide.main_image_filename"
@@ -48,58 +45,56 @@ SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard])
   components: {
     GrooveImage,
     Swiper,
-    SwiperSlide
+    SwiperSlide,
   },
   props: {
     slider: {
       type: Object,
-      required: true
+      required: true,
     },
     style: {
       type: Object,
-      required: false
+      required: false,
     },
     grabCursor: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     keyboard: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     mousewheel: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     navigation: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     pagination: {
       type: Object,
-      required: false
+      required: false,
     },
     imgHeight: {
       type: Number,
-      required: true
+      required: true,
     },
     imgWidth: {
       type: Number,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 })
-
 export default class HomePageMainSlider extends Vue {
-
   $refs!: {
-    mainSliderVideoRef: HTMLVideoElement;
+    mainSliderVideoRef: HTMLVideoElement
   }
-  
+
   slider!: SliderModel
   style!: object
   grabCursor!: boolean
@@ -137,11 +132,9 @@ export default class HomePageMainSlider extends Vue {
       this.$refs.mainSliderVideoRef.play()
     }
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/Home"
-
+@import '@/assets/styles/pages/Home';
 </style>
