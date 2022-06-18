@@ -33,7 +33,7 @@ import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import { Options as Component, Vue } from 'vue-class-component'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import PaginatedQueryParams from '@/state/pagination/Interface/PaginatedQueryParams'
-import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
+import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
   name: 'Pagination',
@@ -76,7 +76,7 @@ export default class Pagination extends Vue {
   route!: string
   endpointUrl!: string
   routerReplace!: boolean
-  namespace!: typeof PaginationNamespaceDataEnum
+  namespace!: typeof PaginationNamespaceTypesEnum
 
   get startPage(): number {
     if (this.currentPageNumber === 1) {

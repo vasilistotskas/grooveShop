@@ -28,7 +28,7 @@ import PaginationBase from '@/components/Pagination/PaginationBase'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
-import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
+import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
   name: 'UserFavourites',
@@ -47,7 +47,7 @@ import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationN
 export default class UserFavourites extends PaginationBase<UserProfileModel> implements PaginatedInterface<UserProfileModel> {
   userData = new UserProfileModel()
   PaginationRoutesEnum = PaginationRoutesEnum
-  paginationNamespace = PaginationNamespaceDataEnum.USER_FAVOURITES
+  paginationNamespace = PaginationNamespaceTypesEnum.USER_FAVOURITES
 
   async created(): Promise<void> {
     document.title = 'My Favourites'

@@ -38,7 +38,7 @@ import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
-import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
+import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
   name: 'Search',
@@ -52,7 +52,7 @@ import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationN
 export default class Search extends PaginationBase<ProductModel> implements PaginatedInterface<ProductModel> {
   query: string | null = ''
   PaginationRoutesEnum = PaginationRoutesEnum
-  paginationNamespace = PaginationNamespaceDataEnum.SEARCH_PRODUCTS
+  paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb

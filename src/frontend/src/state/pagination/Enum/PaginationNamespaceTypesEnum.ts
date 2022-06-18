@@ -1,4 +1,4 @@
-export enum PaginationNamespaceDataEnum {
+export enum PaginationNamespaceTypesEnum {
   CATEGORY_PRODUCTS = 'categoryProducts',
   ALL_PRODUCTS = 'allProducts',
   PRODUCT_PAGE_REVIEWS = 'productPageReviews',

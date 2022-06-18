@@ -1,6 +1,8 @@
+import NamespacedDataRecord from '@/state/common/Interface/NamespacedDataRecord'
+
 export default interface PaginationDataInterface {
   [key: string]: {
-    results: Array<any>
+    results: Array<NamespacedDataRecord>
     results_count: number
     results_next_page: string
     results_previous_page: string

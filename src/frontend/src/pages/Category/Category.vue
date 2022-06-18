@@ -50,7 +50,7 @@ import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
-import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
+import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Component({
@@ -71,7 +71,7 @@ export default class Category extends PaginationBase<ProductModel> implements Pa
   ImageTypeOptions = ImageTypeOptions
   ImageFitOptions = ImageFitOptions
   ImagePositionOptions = ImagePositionOptions
-  paginationNamespace = PaginationNamespaceDataEnum.CATEGORY_PRODUCTS
+  paginationNamespace = PaginationNamespaceTypesEnum.CATEGORY_PRODUCTS
 
   PaginationRoutesEnum = PaginationRoutesEnum
 

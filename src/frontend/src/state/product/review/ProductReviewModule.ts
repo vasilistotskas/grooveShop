@@ -9,13 +9,13 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 import PaginatedModel from '@/state/pagination/Model/PaginatedModel'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
-import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
+import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 const toast = useToast()
 
 @Module({ namespaced: true })
 export default class ProductReviewModule extends AppBaseModule {
-  namespace = PaginationNamespaceDataEnum.USER_REVIEWS
+  namespace = PaginationNamespaceTypesEnum.USER_REVIEWS
   productReviews: Array<ProductReviewModel> = []
   productReviewsAverage = 0
   productReviewsCounter = 0

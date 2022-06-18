@@ -1,8 +1,8 @@
-import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
+import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 const PaginationNamespaceDirectory = () => {
   let newObject = {}
-  Object.values(PaginationNamespaceDataEnum).forEach((key) => {
+  Object.values(PaginationNamespaceTypesEnum).forEach((key) => {
     newObject = {
       ...newObject,
       [key]: {

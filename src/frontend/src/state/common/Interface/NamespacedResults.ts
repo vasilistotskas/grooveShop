@@ -1,4 +1,6 @@
-export default interface NamespacedResults<T> {
+import NamespacedDataRecord from '@/state/common/Interface/NamespacedDataRecord'
+
+export default interface NamespacedResults {
   readonly namespace: number
-  readonly results: Array<T>
+  readonly results: Array<NamespacedDataRecord>
 }

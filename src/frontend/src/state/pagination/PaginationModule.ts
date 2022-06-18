@@ -10,7 +10,7 @@ import PaginatedQueryParams from '@/state/pagination/Interface/PaginatedQueryPar
 import PaginatedDataInterface from '@/state/pagination/Interface/PaginatedDataInterface'
 import PaginationNamespaceDirectory from '@/state/pagination/PaginationNamespaceDirectory'
 import PaginationDataInterface from '@/state/pagination/Interface/PaginationDataInterface'
-import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
+import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Module({ namespaced: true })
 export default class PaginationModule extends AppBaseModule {
@@ -23,66 +23,66 @@ export default class PaginationModule extends AppBaseModule {
   }
 
   get getResultData() {
-    return (namespace: PaginationNamespaceDataEnum) => {
+    return (namespace: PaginationNamespaceTypesEnum) => {
       return this.namespaceData[namespace].results
     }
   }
 
   get getResultCountData() {
-    return (namespace: PaginationNamespaceDataEnum) => {
+    return (namespace: PaginationNamespaceTypesEnum) => {
       return this.namespaceData[namespace].results_count
     }
   }
 
   get getResultNextPageUrl() {
-    return (namespace: PaginationNamespaceDataEnum) => {
+    return (namespace: PaginationNamespaceTypesEnum) => {
       return this.namespaceData[namespace].results_next_page
     }
   }
 
   get getResultPreviousPageUrl() {
-    return (namespace: PaginationNamespaceDataEnum) => {
+    return (namespace: PaginationNamespaceTypesEnum) => {
       return this.namespaceData[namespace].results_previous_page
     }
   }
 
   get getResultTotalPages() {
-    return (namespace: PaginationNamespaceDataEnum) => {
+    return (namespace: PaginationNamespaceTypesEnum) => {
       return this.namespaceData[namespace].results_total_pages
     }
   }
 
   get getCurrentPageNumber() {
-    return (namespace: PaginationNamespaceDataEnum) => {
+    return (namespace: PaginationNamespaceTypesEnum) => {
       return this.namespaceData[namespace].current_page_number
     }
   }
 
   get getCurrentQuery() {
-    return (namespace: PaginationNamespaceDataEnum) => {
+    return (namespace: PaginationNamespaceTypesEnum) => {
       return this.namespaceData[namespace].current_query
     }
   }
 
   get getShowNextButton() {
-    return (namespace: PaginationNamespaceDataEnum) => {
+    return (namespace: PaginationNamespaceTypesEnum) => {
       return this.namespaceData[namespace].show_next_button
     }
   }
 
   get getShowPreviousButton() {
-    return (namespace: PaginationNamespaceDataEnum) => {
+    return (namespace: PaginationNamespaceTypesEnum) => {
       return this.namespaceData[namespace].show_previous_button
     }
   }
 
   @Mutation
-  setResults<T>(data: NamespacedResults<T>): void {
+  setResults(data: NamespacedResults): void {
     this.namespaceData[data.namespace].results = data.results
   }
 
   @Mutation
-  unsetResults(namespace: PaginationNamespaceDataEnum): void {
+  unsetResults(namespace: PaginationNamespaceTypesEnum): void {
     this.namespaceData[namespace].results = []
     this.namespaceData[namespace].results_count = 0
 
@@ -98,42 +98,42 @@ export default class PaginationModule extends AppBaseModule {
   }
 
   @Mutation
-  setCount<T>(data: PaginatedDataInterface<T>): void {
+  setCount(data: PaginatedDataInterface): void {
     this.namespaceData[data.namespace].results_count = data.count
   }
 
   @Mutation
-  setNextPageUrl<T>(data: PaginatedDataInterface<T>): void {
+  setNextPageUrl(data: PaginatedDataInterface): void {
     this.namespaceData[data.namespace].results_next_page = data.nextPageUrl
   }
 
   @Mutation
-  setPreviousPageUrl<T>(data: PaginatedDataInterface<T>): void {
+  setPreviousPageUrl(data: PaginatedDataInterface): void {
     this.namespaceData[data.namespace].results_previous_page = data.previousPageUrl
   }
 
   @Mutation
-  setTotalPages<T>(data: PaginatedDataInterface<T>): void {
+  setTotalPages(data: PaginatedDataInterface): void {
     this.namespaceData[data.namespace].results_total_pages = data.totalPages
   }
 
   @Mutation
-  setCurrentPageNumber<T>(data: PaginatedDataInterface<T>): void {
+  setCurrentPageNumber(data: PaginatedDataInterface): void {
     this.namespaceData[data.namespace].current_page_number = data.pageNumber
   }
 
   @Mutation
-  setCurrentQuery<T>(data: PaginatedDataInterface<T>): void {
+  setCurrentQuery(data: PaginatedDataInterface): void {
     this.namespaceData[data.namespace].current_query = data.currentQuery
   }
 
   @Mutation
-  setShowNextButton<T>(data: PaginatedDataInterface<T>): void {
+  setShowNextButton(data: PaginatedDataInterface): void {
     this.namespaceData[data.namespace].show_next_button = data.showNextButton
   }
 
   @Mutation
-  setShowPreviousButton<T>(data: PaginatedDataInterface<T>): void {
+  setShowPreviousButton(data: PaginatedDataInterface): void {
     this.namespaceData[data.namespace].show_previous_button = data.showPreviousButton
   }
 
@@ -155,7 +155,7 @@ export default class PaginationModule extends AppBaseModule {
   }
 
   @Action
-  async fetchPaginatedResults<T>(data: { params: PaginationModel; namespace: PaginationNamespaceDataEnum }): Promise<void> {
+  async fetchPaginatedResults<T>(data: { params: PaginationModel; namespace: PaginationNamespaceTypesEnum }): Promise<void> {
     await store.commit('app/setLoading', true)
     const baseUrl = '/api/v1'
 

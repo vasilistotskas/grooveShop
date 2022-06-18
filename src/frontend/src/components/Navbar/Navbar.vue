@@ -121,7 +121,7 @@ import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import ThemeModeSwitcher from '@/components/Utilities/ThemeModeSwitcher.vue'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart'
-import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
+import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Component({
@@ -137,7 +137,7 @@ import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOpt
   },
 })
 export default class Navbar extends PaginationBase<ProductModel> implements PaginatedInterface<ProductModel> {
-  paginationNamespace = PaginationNamespaceDataEnum.SEARCH_PRODUCTS
+  paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
 
   searchQuery = {
     query: '',

@@ -38,7 +38,7 @@ import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
-import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
+import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
   name: 'AllProducts',
@@ -50,7 +50,7 @@ import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationN
   },
 })
 export default class AllProducts extends PaginationBase<ProductModel> implements PaginatedInterface<ProductModel> {
-  paginationNamespace = PaginationNamespaceDataEnum.ALL_PRODUCTS
+  paginationNamespace = PaginationNamespaceTypesEnum.ALL_PRODUCTS
   PaginationRoutesEnum = PaginationRoutesEnum
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
