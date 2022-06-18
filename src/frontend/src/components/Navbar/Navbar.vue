@@ -54,7 +54,7 @@
         </div>
         <div class="search-header">
           <div class="search-buttons-container">
-            <input v-model="searchQuery" aria-label="Search" class="form-control search-form-control me-2" name="query" placeholder="Search" type="search" @keyup.enter="fetchPaginationData" />
+            <input v-model="searchQuery.query" aria-label="Search" class="form-control search-form-control me-2" name="query" placeholder="Search" type="search" @keyup.enter="fetchPaginationData" />
             <button aria-label="search" class="btn-outline-primary-main" title="Search" type="submit" @click="fetchPaginationData">
               <font-awesome-icon :icon="searchIcon" :style="{ color: '#3b3b3b' }" size="lg" />
             </button>
@@ -117,11 +117,11 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import PaginationBase from '@/components/Pagination/PaginationBase'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
 import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
+import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import ThemeModeSwitcher from '@/components/Utilities/ThemeModeSwitcher.vue'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart'
 import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
-import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Component({
@@ -138,7 +138,11 @@ import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOpt
 })
 export default class Navbar extends PaginationBase<ProductModel> implements PaginatedInterface<ProductModel> {
   paginationNamespace = PaginationNamespaceDataEnum.SEARCH_PRODUCTS
-  searchQuery = ''
+
+  searchQuery = {
+    query: '',
+  }
+
   preHeadHidden = true
 
   blogIcon = faBlog
@@ -184,13 +188,10 @@ export default class Navbar extends PaginationBase<ProductModel> implements Pagi
     await store.commit('pagination/unsetResults', this.paginationNamespace)
     await store.commit('pagination/setCurrentQuery', { currentQuery: this.searchQuery, namespace: this.paginationNamespace })
 
-    const paginationQuery = PaginationQueryParametersModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationQuery({
       pageNumber: this.currentPageNumber,
       endpointUrl: `search-product`,
-      queryParams: {
-        page: this.currentPageNumber,
-        query: this.searchQuery,
-      },
+      queryParams: this.searchQuery,
       method: ApiBaseMethods.GET,
     })
 
@@ -198,7 +199,7 @@ export default class Navbar extends PaginationBase<ProductModel> implements Pagi
 
     await router.push({
       path: '/search',
-      query: { ...this.$route.query, query: this.searchQuery, page: this.currentPageNumber },
+      query: { ...this.$route.query, query: this.searchQuery.query, page: this.currentPageNumber },
     })
   }
 }

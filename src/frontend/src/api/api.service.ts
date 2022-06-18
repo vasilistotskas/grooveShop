@@ -1,6 +1,7 @@
 import store from '@/store'
 import session from './session'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
+import { ApiGetData, ApiPatchData, ApiPostData, ApiPutData } from '@/api/Type/ApiData'
 
 const baseUrl = '/api/v1'
 
@@ -19,7 +20,7 @@ export default {
     store.commit('app/setLoading', false)
   },
 
-  get(endpoint: string, data?: Record<string, string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]>): Promise<unknown> {
+  get(endpoint: string, data?: ApiGetData): Promise<unknown> {
     this.beforeRequest()
     return session({
       url: `${baseUrl}/${endpoint}`,
@@ -31,7 +32,7 @@ export default {
     }).finally(() => this.afterResponse())
   },
 
-  post(endpoint: string, data: Record<string, unknown>): Promise<unknown> {
+  post<T>(endpoint: string, data: ApiPostData<T>): Promise<unknown> {
     this.beforeRequest()
     return session({
       url: `${baseUrl}/${endpoint}`,
@@ -43,7 +44,7 @@ export default {
     }).finally(() => this.afterResponse())
   },
 
-  put(endpoint: string, data: Record<string, string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]>): Promise<unknown> {
+  put(endpoint: string, data: ApiPutData): Promise<unknown> {
     this.beforeRequest()
     return session({
       url: `${baseUrl}/${endpoint}`,
@@ -55,7 +56,7 @@ export default {
     }).finally(() => this.afterResponse())
   },
 
-  patch(endpoint: string, data?: Record<string, string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]>): Promise<unknown> {
+  patch(endpoint: string, data?: ApiPatchData): Promise<unknown> {
     this.beforeRequest()
     return session({
       url: `${baseUrl}/${endpoint}`,

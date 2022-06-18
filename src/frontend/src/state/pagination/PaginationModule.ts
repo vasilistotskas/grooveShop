@@ -1,11 +1,16 @@
 import store from '@/store'
 import session from '@/api/session'
+import { AxiosResponse } from 'axios'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
+import PaginatedModel from '@/state/pagination/Model/PaginatedModel'
+import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
+import NamespacedResults from '@/state/common/Interface/NamespacedResults'
+import PaginatedQueryParams from '@/state/pagination/Interface/PaginatedQueryParams'
+import PaginatedDataInterface from '@/state/pagination/Interface/PaginatedDataInterface'
 import PaginationNamespaceDirectory from '@/state/pagination/PaginationNamespaceDirectory'
 import PaginationDataInterface from '@/state/pagination/Interface/PaginationDataInterface'
 import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
-import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Module({ namespaced: true })
 export default class PaginationModule extends AppBaseModule {
@@ -72,7 +77,7 @@ export default class PaginationModule extends AppBaseModule {
   }
 
   @Mutation
-  setResults(data: Record<any, any>): void {
+  setResults<T>(data: NamespacedResults<T>): void {
     this.namespaceData[data.namespace].results = data.results
   }
 
@@ -93,47 +98,64 @@ export default class PaginationModule extends AppBaseModule {
   }
 
   @Mutation
-  setCount(data: Record<any, any>): void {
+  setCount<T>(data: PaginatedDataInterface<T>): void {
     this.namespaceData[data.namespace].results_count = data.count
   }
 
   @Mutation
-  setNextPageUrl(data: Record<any, any>): void {
+  setNextPageUrl<T>(data: PaginatedDataInterface<T>): void {
     this.namespaceData[data.namespace].results_next_page = data.nextPageUrl
   }
 
   @Mutation
-  setPreviousPageUrl(data: Record<any, any>): void {
+  setPreviousPageUrl<T>(data: PaginatedDataInterface<T>): void {
     this.namespaceData[data.namespace].results_previous_page = data.previousPageUrl
   }
 
   @Mutation
-  setTotalPages(data: Record<any, any>): void {
+  setTotalPages<T>(data: PaginatedDataInterface<T>): void {
     this.namespaceData[data.namespace].results_total_pages = data.totalPages
   }
 
   @Mutation
-  setCurrentPageNumber(data: Record<any, any>): void {
+  setCurrentPageNumber<T>(data: PaginatedDataInterface<T>): void {
     this.namespaceData[data.namespace].current_page_number = data.pageNumber
   }
 
   @Mutation
-  setCurrentQuery(data: Record<any, any>): void {
+  setCurrentQuery<T>(data: PaginatedDataInterface<T>): void {
     this.namespaceData[data.namespace].current_query = data.currentQuery
   }
 
   @Mutation
-  setShowNextButton(data: Record<any, any>): void {
+  setShowNextButton<T>(data: PaginatedDataInterface<T>): void {
     this.namespaceData[data.namespace].show_next_button = data.showNextButton
   }
 
   @Mutation
-  setShowPreviousButton(data: Record<any, any>): void {
+  setShowPreviousButton<T>(data: PaginatedDataInterface<T>): void {
     this.namespaceData[data.namespace].show_previous_button = data.showPreviousButton
   }
 
   @Action
-  async fetchPaginatedResults(data: { params: PaginationQueryParametersModel; namespace: PaginationNamespaceDataEnum }): Promise<void> {
+  buildPaginationQueryString(queryParams: Partial<PaginatedQueryParams>): string {
+    let finalQueryString = ''
+
+    let i = 0
+    for (const [filterKey, filterValue] of Object.entries(queryParams)) {
+      if (i < Object.entries(queryParams).length - 1) {
+        finalQueryString += filterKey + '=' + filterValue + '&'
+      } else {
+        finalQueryString += filterKey + '=' + filterValue
+      }
+      i++
+    }
+
+    return finalQueryString
+  }
+
+  @Action
+  async fetchPaginatedResults<T>(data: { params: PaginationModel; namespace: PaginationNamespaceDataEnum }): Promise<void> {
     await store.commit('app/setLoading', true)
     const baseUrl = '/api/v1'
 
@@ -144,7 +166,8 @@ export default class PaginationModule extends AppBaseModule {
     } else if (!data.params.queryParams) {
       ApiUrl = `${baseUrl}/${data.params.endpointUrl}/?p=${data.params.pageNumber}`
     } else {
-      ApiUrl = `${baseUrl}/${data.params.endpointUrl}?p=${data.params.pageNumber}&query=${data.params.queryParams.query['query']}`
+      const queryStringBuild = await this.context.dispatch('buildPaginationQueryString', data.params.queryParams)
+      ApiUrl = `${baseUrl}/${data.params.endpointUrl}?p=${data.params.pageNumber}&${queryStringBuild}`
     }
 
     session({
@@ -155,11 +178,11 @@ export default class PaginationModule extends AppBaseModule {
         Authorization: 'Token ' + this.getUserToken,
       },
     })
-      .then((response: any) => {
+      .then((response: AxiosResponse<Partial<PaginatedModel<T>>>) => {
         const results = response.data.results
         const count = response.data.count
-        const nextPageUrl = response.data.links.next
-        const previousPageUrl = response.data.links.previous
+        const nextPageUrl = response.data.links?.next
+        const previousPageUrl = response.data.links?.previous
         const totalPages = response.data.total_pages
 
         if (nextPageUrl) {

@@ -58,6 +58,7 @@ import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
+import UpdatePasswordApiData from '@/pages/Auth/Interface/UpdatePasswordApiData'
 
 let { validateFields } = useValidation({})
 
@@ -108,8 +109,8 @@ export default class UserPassword extends Vue {
 
   handleSubmit = async () => {
     try {
-      const formData: any = await validateFields()
-      const apiData = {
+      const formData = (await validateFields()) as UpdatePasswordApiData
+      const apiData: UpdatePasswordApiData = {
         current_password: formData.current_password,
         new_password: formData.new_password,
         re_new_password: formData.re_new_password,

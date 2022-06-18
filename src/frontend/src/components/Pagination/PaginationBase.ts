@@ -1,6 +1,7 @@
 import store from '@/store'
 import router from '@/routes'
 import { Options as Component, Vue } from 'vue-class-component'
+import PaginatedQueryParams from '@/state/pagination/Interface/PaginatedQueryParams'
 
 @Component({
   name: 'PaginationBase',
@@ -11,7 +12,7 @@ export default class PaginationBase<TPaginatedModel> extends Vue {
   uri = window.location.search.substring(1)
   params = router.currentRoute.value.query
 
-  get currentPageQuery(): string {
+  get currentPageQuery(): Partial<PaginatedQueryParams> {
     return store.getters['pagination/getCurrentQuery'](this.paginationNamespace)
   }
 

@@ -46,11 +46,11 @@ import Pagination from '@/components/Pagination/Pagination.vue'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import PaginationBase from '@/components/Pagination/PaginationBase'
+import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
-import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Component({
@@ -132,7 +132,7 @@ export default class Category extends PaginationBase<ProductModel> implements Pa
   }
 
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery = PaginationQueryParametersModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationQuery({
       pageNumber: this.currentPageNumber,
       endpointUrl: this.buildEndPointUrlForPaginatedResults(),
       method: ApiBaseMethods.GET,

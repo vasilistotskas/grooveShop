@@ -25,10 +25,10 @@ import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
 import PaginationBase from '@/components/Pagination/PaginationBase'
+import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
-import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Component({
   name: 'UserFavourites',
@@ -70,7 +70,7 @@ export default class UserFavourites extends PaginationBase<UserProfileModel> imp
   }
 
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery = PaginationQueryParametersModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationQuery({
       pageNumber: this.currentPageNumber,
       endpointUrl: this.buildEndPointUrlForPaginatedResults(),
       method: ApiBaseMethods.GET,

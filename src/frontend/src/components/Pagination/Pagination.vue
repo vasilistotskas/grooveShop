@@ -31,8 +31,9 @@ import store from '@/store'
 import router from '@/routes'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import { Options as Component, Vue } from 'vue-class-component'
+import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
+import PaginatedQueryParams from '@/state/pagination/Interface/PaginatedQueryParams'
 import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
-import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Component({
   name: 'Pagination',
@@ -126,7 +127,7 @@ export default class Pagination extends Vue {
     return store.getters['pagination/getCurrentPageNumber'](this.namespace)
   }
 
-  get currentPageQuery(): string {
+  get currentPageQuery(): Partial<PaginatedQueryParams> {
     return store.getters['pagination/getCurrentQuery'](this.namespace)
   }
 
@@ -145,13 +146,10 @@ export default class Pagination extends Vue {
   async onClickNextPage(): Promise<void> {
     await store.commit('pagination/setCurrentPageNumber', { pageNumber: this.currentPageNumber + 1, namespace: this.namespace })
 
-    const paginationQuery = PaginationQueryParametersModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationQuery({
       pageNumber: this.currentPageNumber,
       endpointUrl: `${this.endpointUrl}`,
-      queryParams: {
-        page: this.currentPageNumber,
-        query: this.currentPageQuery,
-      },
+      queryParams: this.currentPageQuery,
       method: ApiBaseMethods.GET,
     })
 
@@ -163,13 +161,10 @@ export default class Pagination extends Vue {
   async onClickPreviousPage(): Promise<void> {
     await store.commit('pagination/setCurrentPageNumber', { pageNumber: this.currentPageNumber - 1, namespace: this.namespace })
 
-    const paginationQuery = PaginationQueryParametersModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationQuery({
       pageNumber: this.currentPageNumber,
       endpointUrl: `${this.endpointUrl}`,
-      queryParams: {
-        page: this.currentPageNumber,
-        query: this.currentPageQuery,
-      },
+      queryParams: this.currentPageQuery,
       method: ApiBaseMethods.GET,
     })
 
@@ -181,13 +176,10 @@ export default class Pagination extends Vue {
   async onClickPage(pageNumber: number) {
     await store.commit('pagination/setCurrentPageNumber', { pageNumber: pageNumber, namespace: this.namespace })
 
-    const paginationQuery = PaginationQueryParametersModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationQuery({
       pageNumber: pageNumber,
       endpointUrl: `${this.endpointUrl}`,
-      queryParams: {
-        page: this.currentPageNumber,
-        query: this.currentPageQuery,
-      },
+      queryParams: this.currentPageQuery,
       method: ApiBaseMethods.GET,
     })
 
@@ -199,13 +191,10 @@ export default class Pagination extends Vue {
   async onClickFirstPage(): Promise<void> {
     await store.commit('pagination/setCurrentPageNumber', { pageNumber: 1, namespace: this.namespace })
 
-    const paginationQuery = PaginationQueryParametersModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationQuery({
       pageNumber: this.currentPageNumber,
       endpointUrl: `${this.endpointUrl}`,
-      queryParams: {
-        page: this.currentPageNumber,
-        query: this.currentPageQuery,
-      },
+      queryParams: this.currentPageQuery,
       method: ApiBaseMethods.GET,
     })
 
@@ -217,13 +206,10 @@ export default class Pagination extends Vue {
   async onClickLastPage(): Promise<void> {
     await store.commit('pagination/setCurrentPageNumber', { pageNumber: this.totalPages, namespace: this.namespace })
 
-    const paginationQuery = PaginationQueryParametersModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationQuery({
       pageNumber: this.totalPages,
       endpointUrl: `${this.endpointUrl}`,
-      queryParams: {
-        page: this.currentPageNumber,
-        query: this.currentPageQuery,
-      },
+      queryParams: this.currentPageQuery,
       method: ApiBaseMethods.GET,
     })
 

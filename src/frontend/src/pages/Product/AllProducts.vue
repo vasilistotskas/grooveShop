@@ -34,11 +34,11 @@ import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import PaginationBase from '@/components/Pagination/PaginationBase'
+import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
-import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Component({
   name: 'AllProducts',
@@ -79,7 +79,7 @@ export default class AllProducts extends PaginationBase<ProductModel> implements
   }
 
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery = PaginationQueryParametersModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationQuery({
       pageNumber: this.currentPageNumber,
       endpointUrl: 'products/all',
       method: ApiBaseMethods.GET,

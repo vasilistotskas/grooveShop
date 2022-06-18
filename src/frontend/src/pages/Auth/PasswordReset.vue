@@ -16,11 +16,11 @@
                 <span class="input-group-addon">
                   <font-awesome-icon :icon="envelopeIcon" />
                 </span>
-                <input id="email" v-model="inputs.email" class="form-control" name="email" placeholder="email" type="email" />
+                <input id="email" v-model="email" class="form-control" name="email" placeholder="email" type="email" />
               </div>
             </div>
           </form>
-          <button class="btn btn-outline-primary-two" title="Send Password Reset Email" @click="sendResetEmail(inputs)">send email</button>
+          <button class="btn btn-outline-primary-two" title="Send Password Reset Email" @click="sendResetEmail(email)">send email</button>
           <span v-show="emailError" class="error"> A error occured while processing your request. </span>
         </template>
         <template v-else>
@@ -50,9 +50,7 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
   },
 })
 export default class PasswordReset extends Vue {
-  inputs = {
-    email: '',
-  }
+  email = ''
 
   lockIcon = faLock
   envelopeIcon = faEnvelope
@@ -82,8 +80,8 @@ export default class PasswordReset extends Vue {
     await store.dispatch('password/clearEmailStatus')
   }
 
-  async sendResetEmail(inputs: any): Promise<void> {
-    await store.dispatch('password/sendPasswordResetEmail', inputs)
+  async sendResetEmail(email: string): Promise<void> {
+    await store.dispatch('password/sendPasswordResetEmail', email)
   }
 
   async clearEmailStatus(): Promise<void> {

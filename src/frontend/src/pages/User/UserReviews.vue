@@ -34,11 +34,11 @@ import Pagination from '@/components/Pagination/Pagination.vue'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
 import PaginationBase from '@/components/Pagination/PaginationBase'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
+import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import ReviewProductCard from '@/components/Reviews/ReviewProductCard.vue'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
-import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Component({
   name: 'UserReviews',
@@ -84,7 +84,7 @@ export default class UserReviews extends PaginationBase<ProductReviewModel> impl
   }
 
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery = PaginationQueryParametersModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationQuery({
       pageNumber: this.currentPageNumber,
       endpointUrl: this.buildEndPointUrlForPaginatedResults(),
       method: ApiBaseMethods.GET,

@@ -5,6 +5,7 @@ import PayWayModel from '@/state/payway/PayWayModel'
 import CartItemModel from '@/state/cart/CartItemModel'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
+import UserOrderModel from '@/state/user/order/UserOrderModel'
 
 const toast = useToast()
 
@@ -108,9 +109,9 @@ export default class CartModule extends AppBaseModule {
   }
 
   @Action
-  createOrder(data: any): Promise<void> {
+  createOrder(data: UserOrderModel): Promise<void> {
     return api
-      .post('checkout/', data)
+      .post<UserOrderModel>('checkout/', data)
       .then(() => {
         this.context.commit('clearCart')
         router.push('/cart/success')

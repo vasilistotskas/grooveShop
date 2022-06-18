@@ -1,12 +1,9 @@
 import store from '@/store'
-import { forEach } from 'lodash'
 import api from '@/api/api.service'
-import { useToast } from 'vue-toastification'
+import { AxiosResponse } from 'axios'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import ProductFavouriteModel from '@/state/product/favourite/ProductFavouriteModel'
-
-const toast = useToast()
 
 @Module({ namespaced: true })
 export default class ProductFavouriteModule extends AppBaseModule {
@@ -67,26 +64,9 @@ export default class ProductFavouriteModule extends AppBaseModule {
   fetchUserFavouritesFromRemote(userId: number): Promise<void> {
     return api
       .get(`favourites/${userId}`)
-      .then((response: any) => {
+      .then((response: AxiosResponse<Array<ProductFavouriteModel>>) => {
         const data = response.data
         this.context.commit('setFavourites', data)
-      })
-      .catch((e: Error) => {
-        console.log(e)
-      })
-  }
-
-  @Action
-  fetchUserFavouriteProductsFromRemote(userId: number): Promise<void> {
-    return api
-      .get(`favourites/products/${userId}`)
-      .then((response: any) => {
-        const data = response.data.results
-        const transformedData: any[] = []
-        forEach(data, function (value) {
-          transformedData.push(value.product_object)
-        })
-        this.context.commit('setUserFavourites', transformedData)
       })
       .catch((e: Error) => {
         console.log(e)

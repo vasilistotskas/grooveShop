@@ -1,7 +1,7 @@
 import { map } from 'lodash'
 import router from '@/routes'
 import api from '@/api/api.service'
-
+import { AxiosResponse } from 'axios'
 import ProductModel from '@/state/product/ProductModel'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Module, Action, Mutation } from 'vuex-module-decorators'
@@ -50,7 +50,7 @@ export default class ProductModule extends AppBaseModule {
 
     return api
       .get(`products/${category_slug}/${product_slug}`)
-      .then((response: any) => {
+      .then((response: AxiosResponse<ProductModel>) => {
         const data = response.data
         const product = new ProductModel(data)
         this.context.commit('setProduct', product)
@@ -65,7 +65,7 @@ export default class ProductModule extends AppBaseModule {
   fetchLatestProductsFromRemote(): Promise<void> {
     return api
       .get('latest-products/')
-      .then((response: any) => {
+      .then((response: AxiosResponse<Array<ProductModel>>) => {
         const data = response.data
         const latestProduct = map(data, (rawProduct) => new ProductModel(rawProduct))
         this.context.commit('setLatestProduct', latestProduct)

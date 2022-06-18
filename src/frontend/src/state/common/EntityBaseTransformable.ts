@@ -8,7 +8,7 @@ export default abstract class EntityBaseTransformable<DEST, SOURCE extends Entit
   public abstract transformFromEntityBase(entity: Partial<SOURCE>): Promise<void>
 
   public findFieldTruth<T>(dummyInstance: T): keyof T {
-    return first(keys(pickBy(dummyInstance as any, (field) => field === true))) as keyof T
+    return first(keys(pickBy((<unknown>dummyInstance) as object | null | undefined, (field) => field === true))) as keyof T
   }
 
   protected setFieldIfExists(destField: keyof DEST, sourceField: keyof SOURCE, from: Partial<SOURCE>, preProcessor = (item: unknown): unknown => item): void {
@@ -28,7 +28,7 @@ export default abstract class EntityBaseTransformable<DEST, SOURCE extends Entit
       set(this, destField, 'D')
       return
     }
-    set(this, destField, fieldValue === true ? 'Y' : 'N')
+    set(this, destField, fieldValue ? 'Y' : 'N')
   }
 
   protected setFieldIfExistsBooleanFromTinyInt(destField: keyof DEST, sourceField: keyof SOURCE, from: Partial<SOURCE>): void {

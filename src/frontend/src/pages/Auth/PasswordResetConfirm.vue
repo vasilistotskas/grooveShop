@@ -59,18 +59,19 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { Options as Component, Vue } from 'vue-class-component'
 import { equal, min } from '@/components/Form/Utils'
 import FormProvider from '@/components/Form/FormProvider.vue'
+import { Options as Component, Vue } from 'vue-class-component'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
+import ResetPasswordApiData from '@/pages/Auth/Interface/ResetPasswordApiData'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
-let { validateFields } = useValidation({})
+let { validateFields } = useValidation({} as ResetPasswordApiData)
 
 @Component({
   name: 'PasswordRestConfirm',
@@ -90,7 +91,7 @@ export default class PasswordRestConfirm extends Vue {
     password2: '',
     uid: '',
     token: '',
-  }
+  } as ResetPasswordApiData
 
   lockIcon = faLock
 
@@ -142,8 +143,8 @@ export default class PasswordRestConfirm extends Vue {
 
   handleSubmit = async () => {
     try {
-      const formData: any = await validateFields()
-      const apiData = {
+      const formData = await validateFields()
+      const apiData: ResetPasswordApiData = {
         password1: formData.password1,
         password2: formData.password2,
         uid: this.inputs.uid,

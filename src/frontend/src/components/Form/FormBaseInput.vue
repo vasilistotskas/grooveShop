@@ -28,7 +28,7 @@ export default defineComponent({
     },
     inputWithAddOnIcon: {
       type: Object,
-      default: () => Object,
+      default: Object,
       required: false,
     },
     disabled: {

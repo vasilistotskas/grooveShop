@@ -1,11 +1,11 @@
 import { camelCase, first, values } from 'lodash'
 
-const modulesCache: any = []
+const modulesCache: Record<string, any> = []
 const storeData = { modules: {} }
 
 ;(function updateModules() {
   const requireModule = require.context('.', true, /\w+(\.state\.ts)$/)
-  requireModule.keys().forEach((fileName: any) => {
+  requireModule.keys().forEach((fileName: string) => {
     const moduleDefinition = requireModule(fileName).default || requireModule(fileName)
 
     if (modulesCache[fileName] === moduleDefinition) {
@@ -22,7 +22,7 @@ const storeData = { modules: {} }
       .map(camelCase)
 
     const { modules } = getNamespace(storeData, modulePath)
-    modules[modulePath.pop()] = {
+    modules[modulePath.pop() as string] = {
       namespaced: true,
       ...first(values(moduleDefinition)), // l33t h4ck to extract the module definition from ts
     }

@@ -1,7 +1,7 @@
-import { find } from 'lodash'
 import store from '@/store'
+import { find } from 'lodash'
 import api from '@/api/api.service'
-
+import { AxiosResponse } from 'axios'
 import CountryModel from '@/state/country/CountryModel'
 import RegionsModel from '@/state/country/RegionsModel'
 import AppBaseModule from '@/state/common/AppBaseModule'
@@ -55,8 +55,8 @@ export default class CountryModule extends AppBaseModule {
   fetchCountriesFromRemote(): Promise<void> {
     return api
       .get('countries/')
-      .then((response: any) => {
-        const data: CountryModel = response.data
+      .then((response: AxiosResponse<Array<CountryModel>>) => {
+        const data = response.data
         this.context.commit('setCountries', data)
       })
       .catch((e: Error) => {

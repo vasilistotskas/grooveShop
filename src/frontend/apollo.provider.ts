@@ -1,5 +1,5 @@
-import { InMemoryCache, ApolloClient } from "@apollo/client/core"
-import { createApolloProvider } from "@vue/apollo-option"
+import { createApolloProvider } from '@vue/apollo-option'
+import { InMemoryCache, ApolloClient } from '@apollo/client/core'
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -18,7 +18,7 @@ const cache = new InMemoryCache({
 
 export const clientApollo = new ApolloClient({
   cache: cache,
-  uri: "http://localhost:8010/graphql",
+  uri: 'http://localhost:8010/graphql',
 })
 
 export const provider = createApolloProvider({

@@ -52,7 +52,7 @@ export default class SignUpModule extends AppBaseModule {
   }
 
   @Mutation
-  setRegistrationEmail(email: any): void {
+  setRegistrationEmail(email: string): void {
     this.registrationEmail = email
     localStorage.setItem('registrationEmail', email)
   }
@@ -122,7 +122,7 @@ export default class SignUpModule extends AppBaseModule {
   }
 
   @Action
-  async createAccount(formData: any): Promise<void> {
+  async createAccount(formData: FormData): Promise<void> {
     await this.context.commit(BaseAuthenticationTypes.REGISTRATION_BEGIN)
     return api
       .post('djoser/users/', formData)
@@ -156,7 +156,7 @@ export default class SignUpModule extends AppBaseModule {
   }
 
   @Action
-  async activationEmailResend(email: any): Promise<void> {
+  async activationEmailResend(email: string): Promise<void> {
     const data = {
       email,
     }
@@ -168,7 +168,7 @@ export default class SignUpModule extends AppBaseModule {
         this.context.commit(BaseAuthenticationTypes.RE_ACTIVATION_MAIL_SENT)
         toast.success('A new activation link has been sent to your email.')
       })
-      .catch((e: Error) => {
+      .catch(() => {
         this.context.commit(BaseAuthenticationTypes.ACTIVATION_FAILURE)
         toast.error(ToastRegisterActivationFail)
       })

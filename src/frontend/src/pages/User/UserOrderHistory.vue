@@ -29,11 +29,11 @@ import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import UserOrderModel from '@/state/user/order/UserOrderModel'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import PaginationBase from '@/components/Pagination/PaginationBase'
+import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import UserOrderHistoryContainer from '@/components/User/UserOrderHistoryContainer.vue'
 import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
-import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
 
 @Component({
   name: 'UserOrderHistory',
@@ -68,7 +68,7 @@ export default class UserOrderHistory extends PaginationBase<UserOrderModel> imp
   }
 
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery = PaginationQueryParametersModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationQuery({
       pageNumber: this.currentPageNumber,
       endpointUrl: `orders`,
       method: ApiBaseMethods.GET,

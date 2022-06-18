@@ -731,7 +731,7 @@ export default class BlogModule extends AppBaseModule {
   }
 
   @Action
-  async updateCommentLikes(): Promise<Promise<ApolloQueryResult<any>> | undefined> {
+  async updateCommentLikes(): Promise<Promise<ApolloQueryResult<boolean>> | undefined> {
     try {
       const comment = await clientApollo.mutate({
         mutation: gql`
@@ -763,7 +763,7 @@ export default class BlogModule extends AppBaseModule {
   }
 
   @Action
-  async updatePostLikes(postId: number): Promise<Promise<ApolloQueryResult<any>> | undefined> {
+  async updatePostLikes(postId: number): Promise<ApolloQueryResult<boolean> | undefined> {
     try {
       const post = await clientApollo.mutate({
         mutation: gql`

@@ -115,7 +115,7 @@
 <script lang="ts">
 import store from '@/store'
 import { cloneDeep } from 'lodash'
-import { min } from '@/components/Form/Utils'
+import { exactly, min } from '@/components/Form/Utils'
 import RegionsModel from '@/state/country/RegionsModel'
 import CountryModel from '@/state/country/CountryModel'
 import FormProvider from '@/components/Form/FormProvider.vue'
@@ -158,9 +158,7 @@ export default class UserSettings extends Vue {
     },
     phone: {
       $value: '',
-      $rules: [
-        // exactly(10)("Phone number has to be 10 characters")
-      ],
+      $rules: [exactly(10)('Phone number has to be 10 characters')],
     },
     city: {
       $value: '',

@@ -22,15 +22,15 @@ import { forEach } from 'lodash'
 import BlogTagModel from '@/state/blog/BlogTagModel'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
 
-export const facebookIcon = faFacebook
-export const props = defineProps({
+const facebookIcon = faFacebook
+const props = defineProps({
   post: {
     type: Object,
     default: () => Object,
   },
 })
 
-export const getPostTagsSeparated = (tags: Array<BlogTagModel>) => {
+const getPostTagsSeparated = (tags: Array<BlogTagModel>) => {
   const tagNames: Array<BlogTagModel['name']> = []
   forEach(tags, (tag) => {
     tagNames.push(tag.name)

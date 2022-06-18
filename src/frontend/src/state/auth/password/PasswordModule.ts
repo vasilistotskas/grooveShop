@@ -1,10 +1,11 @@
+import router from '@/routes'
 import api from '@/api/api.service'
 import { useToast } from 'vue-toastification'
-
 import AppBaseModule from '@/state/common/AppBaseModule'
-import { BaseAuthenticationTypes } from '@/state/auth/Enum/BaseAuthenticationTypes'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import router from '@/routes'
+import ResetPasswordApiData from '@/pages/Auth/Interface/ResetPasswordApiData'
+import UpdatePasswordApiData from '@/pages/Auth/Interface/UpdatePasswordApiData'
+import { BaseAuthenticationTypes } from '@/state/auth/Enum/BaseAuthenticationTypes'
 
 const toast = useToast()
 
@@ -120,7 +121,7 @@ export default class PasswordModule extends AppBaseModule {
   }
 
   @Action
-  updateUserPassword(data: any): Promise<void> {
+  updateUserPassword(data: UpdatePasswordApiData): Promise<void> {
     return api
       .post('djoser/users/set_password/', data)
       .then(() => this.context.commit(BaseAuthenticationTypes.PASSWORD_CHANGE_SUCCESS))
@@ -135,9 +136,9 @@ export default class PasswordModule extends AppBaseModule {
   }
 
   @Action
-  sendPasswordResetEmail(data: any): Promise<void> {
+  sendPasswordResetEmail(email: string): Promise<void> {
     return api
-      .post('djoser/users/reset_password/', data)
+      .post('djoser/users/reset_password/', email)
       .then(() => this.context.commit(BaseAuthenticationTypes.PASSWORD_EMAIL_SUCCESS))
       .catch(() => {
         this.context.commit(BaseAuthenticationTypes.PASSWORD_EMAIL_FAILURE)
@@ -145,7 +146,7 @@ export default class PasswordModule extends AppBaseModule {
   }
 
   @Action
-  resetPasswordConfirm(data: any): Promise<void> {
+  resetPasswordConfirm(data: ResetPasswordApiData): Promise<void> {
     const reset_data = {
       uid: data.uid,
       token: data.token,

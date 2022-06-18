@@ -1,5 +1,6 @@
 import store from '@/store'
 import api from '@/api/api.service'
+import { AxiosResponse } from 'axios'
 import PayWayModel from '@/state/payway/PayWayModel'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
@@ -40,11 +41,11 @@ export default class PayWayModule extends AppBaseModule {
   }
 
   @Action
-  fetchActivePayWaysFromRemote(): Promise<void | PayWayModel> {
+  fetchActivePayWaysFromRemote(): Promise<void | Array<PayWayModel>> {
     return api
       .get('pay_way/')
-      .then((response: any) => {
-        const data: PayWayModel = response.data
+      .then((response: AxiosResponse<Array<PayWayModel>>) => {
+        const data: Array<PayWayModel> = response.data
         this.context.commit('setActivePayWays', data)
         return data
       })

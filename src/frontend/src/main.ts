@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast, { PluginOptions, TYPE } from 'vue-toastification'
 
 const validation = createValidation({
-  defaultValidationBehavior: <never>'lazy',
+  defaultValidationBehavior: <never>'change',
   validationBehavior: {
     change: ({ force }: any) => !force,
     lazy: ({ touched }: any) => touched,

@@ -1,5 +1,6 @@
 import store from '@/store'
 import api from '@/api/api.service'
+import { AxiosResponse } from 'axios'
 import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
@@ -58,7 +59,7 @@ export default class UserModule extends AppBaseModule {
   fetchUserDataFromRemote(): Promise<void> {
     return api
       .get('userprofile/data')
-      .then((response: any) => {
+      .then((response: AxiosResponse<Array<UserProfileModel>>) => {
         const data = response.data
         this.context.commit('setUserData', data[0])
         this.context.commit('setUserId', data[0].id)
@@ -72,12 +73,14 @@ export default class UserModule extends AppBaseModule {
   }
 
   @Action
-  async updateUserProfile(data: any): Promise<void> {
+  async updateUserProfile(data: Record<string, string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]>): Promise<void> {
     const user_id = await this.context.getters['getUserId']
 
     const response = await api
       .patch(`userprofile/${user_id}/`, data)
-      .then((response: any) => this.context.commit('setUserData', response.data))
+      .then((response: AxiosResponse<UserProfileModel>) => {
+        this.context.commit('setUserData', response.data)
+      })
       .catch((e: Error) => {
         console.log(e)
       })
