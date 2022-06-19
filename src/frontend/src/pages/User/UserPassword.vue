@@ -58,7 +58,7 @@ import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
-import UpdatePasswordApiData from '@/pages/Auth/Interface/UpdatePasswordApiData'
+import UpdatePasswordApiData from '@/state/auth/Interface/UpdatePasswordApiData'
 
 let { validateFields } = useValidation({})
 

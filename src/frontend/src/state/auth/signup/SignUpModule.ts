@@ -3,7 +3,6 @@ import api from '@/api/api.service'
 import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import { BaseAuthenticationTypes } from '@/state/auth/Enum/BaseAuthenticationTypes'
 import ToastRegisterActivationFail from '@/components/Toast/ToastRegisterActivationFail.vue'
 
 const toast = useToast()
@@ -64,25 +63,25 @@ export default class SignUpModule extends AppBaseModule {
   }
 
   @Mutation
-  [BaseAuthenticationTypes.ACTIVATION_BEGIN](): void {
+  activationBegin(): void {
     this.activationLoading = true
   }
 
   @Mutation
-  [BaseAuthenticationTypes.ACTIVATION_CLEAR](): void {
+  activationClear(): void {
     this.activationCompleted = false
     this.activationError = false
     this.activationLoading = false
   }
 
   @Mutation
-  [BaseAuthenticationTypes.ACTIVATION_FAILURE](): void {
+  activationFailure(): void {
     this.activationError = true
     this.activationLoading = false
   }
 
   @Mutation
-  [BaseAuthenticationTypes.ACTIVATION_SUCCESS](): void {
+  activationSuccess(): void {
     this.activationCompleted = true
     this.activationError = false
     this.activationLoading = false
@@ -90,32 +89,32 @@ export default class SignUpModule extends AppBaseModule {
   }
 
   @Mutation
-  [BaseAuthenticationTypes.RE_ACTIVATION_MAIL_SENT](): void {
+  reActivationEmailSend(): void {
     this.reActivationMailSent = true
     this.activationError = false
     this.activationLoading = false
   }
 
   @Mutation
-  [BaseAuthenticationTypes.REGISTRATION_BEGIN](): void {
+  registrationBegin(): void {
     this.registrationLoading = true
   }
 
   @Mutation
-  [BaseAuthenticationTypes.REGISTRATION_CLEAR](): void {
+  registrationClear(): void {
     this.registrationCompleted = false
     this.registrationError = false
     this.registrationLoading = false
   }
 
   @Mutation
-  [BaseAuthenticationTypes.REGISTRATION_FAILURE](): void {
+  registrationFailure(): void {
     this.registrationError = true
     this.registrationLoading = false
   }
 
   @Mutation
-  [BaseAuthenticationTypes.REGISTRATION_SUCCESS](): void {
+  registrationSuccess(): void {
     this.registrationCompleted = true
     this.registrationError = false
     this.registrationLoading = false
@@ -123,15 +122,15 @@ export default class SignUpModule extends AppBaseModule {
 
   @Action
   async createAccount(formData: FormData): Promise<void> {
-    await this.context.commit(BaseAuthenticationTypes.REGISTRATION_BEGIN)
+    await this.context.commit('registrationBegin')
     return api
       .post('djoser/users/', formData)
       .then(() => {
-        this.context.commit(BaseAuthenticationTypes.REGISTRATION_SUCCESS)
+        this.context.commit('registrationSuccess')
         toast.success('Success, an activation link has been sent to your email!')
       })
       .catch(() => {
-        this.context.commit(BaseAuthenticationTypes.REGISTRATION_FAILURE)
+        this.context.commit('registrationFailure')
         toast.error('This name is already taken')
       })
   }
@@ -141,16 +140,16 @@ export default class SignUpModule extends AppBaseModule {
     const uid = router.currentRoute.value.params.uid
     const activationToken = router.currentRoute.value.params.token
 
-    await this.context.commit(BaseAuthenticationTypes.ACTIVATION_BEGIN)
+    await this.context.commit('activationBegin')
 
     return api
       .get(`accounts/activate/${uid}/${activationToken}`)
       .then(() => {
-        this.context.commit(BaseAuthenticationTypes.ACTIVATION_SUCCESS)
+        this.context.commit('activationSuccess')
         toast.success('Your account has been activated! You can now Log in.')
       })
       .catch(() => {
-        this.context.commit(BaseAuthenticationTypes.ACTIVATION_FAILURE)
+        this.context.commit('activationFailure')
         toast.error(ToastRegisterActivationFail)
       })
   }
@@ -161,26 +160,26 @@ export default class SignUpModule extends AppBaseModule {
       email,
     }
 
-    await this.context.commit(BaseAuthenticationTypes.ACTIVATION_BEGIN)
+    await this.context.commit('activationBegin')
     return api
       .post('accounts/resend_activation_mail/', data)
       .then(() => {
-        this.context.commit(BaseAuthenticationTypes.RE_ACTIVATION_MAIL_SENT)
+        this.context.commit('reActivationEmailSend')
         toast.success('A new activation link has been sent to your email.')
       })
       .catch(() => {
-        this.context.commit(BaseAuthenticationTypes.ACTIVATION_FAILURE)
+        this.context.commit('activationFailure')
         toast.error(ToastRegisterActivationFail)
       })
   }
 
   @Action
   async clearRegistrationStatus(): Promise<void> {
-    return this.context.commit(BaseAuthenticationTypes.REGISTRATION_CLEAR)
+    return this.context.commit('registrationClear')
   }
 
   @Action
   async clearActivationStatus(): Promise<void> {
-    return this.context.commit(BaseAuthenticationTypes.ACTIVATION_CLEAR)
+    return this.context.commit('activationClear')
   }
 }

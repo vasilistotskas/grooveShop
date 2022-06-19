@@ -68,7 +68,7 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
-import ResetPasswordApiData from '@/pages/Auth/Interface/ResetPasswordApiData'
+import ResetPasswordApiData from '@/state/auth/Interface/ResetPasswordApiData'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
 let { validateFields } = useValidation({} as ResetPasswordApiData)

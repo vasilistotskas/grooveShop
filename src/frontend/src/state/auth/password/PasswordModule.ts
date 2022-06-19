@@ -3,9 +3,8 @@ import api from '@/api/api.service'
 import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import ResetPasswordApiData from '@/pages/Auth/Interface/ResetPasswordApiData'
-import UpdatePasswordApiData from '@/pages/Auth/Interface/UpdatePasswordApiData'
-import { BaseAuthenticationTypes } from '@/state/auth/Enum/BaseAuthenticationTypes'
+import ResetPasswordApiData from '@/state/auth/Interface/ResetPasswordApiData'
+import UpdatePasswordApiData from '@/state/auth/Interface/UpdatePasswordApiData'
 
 const toast = useToast()
 
@@ -58,63 +57,63 @@ export default class PasswordModule extends AppBaseModule {
   }
 
   @Mutation
-  [BaseAuthenticationTypes.PASSWORD_RESET_BEGIN](): void {
+  passwordResetBegin(): void {
     this.resetLoading = true
   }
 
   @Mutation
-  [BaseAuthenticationTypes.PASSWORD_RESET_CLEAR](): void {
+  passwordResetClear(): void {
     this.resetCompleted = false
     this.resetError = false
     this.resetLoading = false
   }
 
   @Mutation
-  [BaseAuthenticationTypes.PASSWORD_RESET_FAILURE](): void {
+  passwordResetFailure(): void {
     this.resetError = true
     this.resetLoading = false
   }
 
   @Mutation
-  [BaseAuthenticationTypes.PASSWORD_RESET_SUCCESS](): void {
+  passwordResetSuccess(): void {
     this.resetCompleted = true
     this.resetError = false
     this.resetLoading = false
   }
 
   @Mutation
-  [BaseAuthenticationTypes.PASSWORD_CHANGE_FAILURE](): void {
+  passwordChangeFailure(): void {
     this.changeError = true
     this.changeLoading = false
   }
 
   @Mutation
-  [BaseAuthenticationTypes.PASSWORD_CHANGE_SUCCESS](): void {
+  passwordChangeSuccess(): void {
     this.changeCompleted = true
     this.changeError = false
     this.changeLoading = false
   }
 
   @Mutation
-  [BaseAuthenticationTypes.PASSWORD_EMAIL_BEGIN](): void {
+  passwordEmailBegin(): void {
     this.emailLoading = true
   }
 
   @Mutation
-  [BaseAuthenticationTypes.PASSWORD_EMAIL_CLEAR](): void {
+  passwordEmailClear(): void {
     this.emailCompleted = false
     this.emailError = false
     this.emailLoading = false
   }
 
   @Mutation
-  [BaseAuthenticationTypes.PASSWORD_EMAIL_FAILURE](): void {
+  passwordEmailFailure(): void {
     this.emailError = true
     this.emailLoading = false
   }
 
   @Mutation
-  [BaseAuthenticationTypes.PASSWORD_EMAIL_SUCCESS](): void {
+  passwordEmailSuccess(): void {
     this.emailCompleted = true
     this.emailError = false
     this.emailLoading = false
@@ -124,12 +123,12 @@ export default class PasswordModule extends AppBaseModule {
   updateUserPassword(data: UpdatePasswordApiData): Promise<void> {
     return api
       .post('djoser/users/set_password/', data)
-      .then(() => this.context.commit(BaseAuthenticationTypes.PASSWORD_CHANGE_SUCCESS))
+      .then(() => this.context.commit('passwordChangeSuccess'))
       .then(() => {
         router.push('/log-in').then(() => toast.success('Password Updated, login to continue'))
       })
       .catch((e: Error) => {
-        this.context.commit(BaseAuthenticationTypes.PASSWORD_CHANGE_FAILURE)
+        this.context.commit('passwordChangeFailure')
         router.push('/user-account/password').then(() => toast.error('Current Password is not correct'))
         console.log(e)
       })
@@ -139,9 +138,9 @@ export default class PasswordModule extends AppBaseModule {
   sendPasswordResetEmail(email: string): Promise<void> {
     return api
       .post('djoser/users/reset_password/', email)
-      .then(() => this.context.commit(BaseAuthenticationTypes.PASSWORD_EMAIL_SUCCESS))
+      .then(() => this.context.commit('passwordEmailSuccess'))
       .catch(() => {
-        this.context.commit(BaseAuthenticationTypes.PASSWORD_EMAIL_FAILURE)
+        this.context.commit('passwordEmailFailure')
       })
   }
 
@@ -154,19 +153,19 @@ export default class PasswordModule extends AppBaseModule {
     }
     return api
       .post('djoser/users/reset_password_confirm/', reset_data)
-      .then(() => this.context.commit(BaseAuthenticationTypes.PASSWORD_RESET_SUCCESS))
+      .then(() => this.context.commit('passwordResetSuccess'))
       .catch(() => {
-        this.context.commit(BaseAuthenticationTypes.PASSWORD_RESET_FAILURE)
+        this.context.commit('passwordResetFailure')
       })
   }
 
   @Action
   async clearResetStatus(): Promise<void> {
-    return this.context.commit(BaseAuthenticationTypes.PASSWORD_RESET_CLEAR)
+    return this.context.commit('passwordResetClear')
   }
 
   @Action
   async clearEmailStatus(): Promise<void> {
-    return this.context.commit(BaseAuthenticationTypes.PASSWORD_EMAIL_CLEAR)
+    return this.context.commit('passwordEmailClear')
   }
 }

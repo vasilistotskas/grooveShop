@@ -2,10 +2,11 @@ import store from '@/store'
 import router from '@/routes'
 import api from '@/api/api.service'
 import session from '@/api/session'
+import { AxiosResponse } from 'axios'
 import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import { BaseAuthenticationTypes } from '@/state/auth/Enum/BaseAuthenticationTypes'
+import LogInInputApiData from '@/state/auth/Interface/LogInInputApiData'
 
 const toast = useToast()
 
@@ -18,7 +19,7 @@ export default class AuthModule extends AppBaseModule {
   initialState = {
     authenticating: false,
     error: false,
-    token: null,
+    token: '',
   }
 
   get getInitialState(): Record<string, unknown> {
@@ -35,81 +36,84 @@ export default class AuthModule extends AppBaseModule {
   }
 
   @Mutation
-  [BaseAuthenticationTypes.SET_SESSION_AUTH](payload: any): void {
+  setSessionAuth(payload: boolean): void {
     this.isSessionAuthenticated = payload
   }
 
   @Mutation
-  [BaseAuthenticationTypes.LOGIN_BEGIN](): void {
+  logInBegin(): void {
     this.initialState.authenticating = true
     this.initialState.error = false
   }
 
   @Mutation
-  [BaseAuthenticationTypes.LOGIN_FAILURE](): void {
+  logInFailure(): void {
     this.initialState.authenticating = false
     this.initialState.error = true
   }
 
   @Mutation
-  [BaseAuthenticationTypes.LOGIN_SUCCESS](): void {
+  logInSuccess(): void {
     this.initialState.authenticating = true
     this.initialState.error = false
   }
 
   @Mutation
-  [BaseAuthenticationTypes.LOGOUT](): void {
+  afterLogOut(): void {
     this.initialState.authenticating = false
     this.initialState.error = false
     this.isSessionAuthenticated = false
   }
 
   @Mutation
-  [BaseAuthenticationTypes.SET_TOKEN](token: any): void {
+  setToken(token: string): void {
+    console.log('setToken - token', token)
     if (!this.isProduction) localStorage.setItem(this.TOKEN_STORAGE_KEY, token)
     session.defaults.headers.common['Authorization'] = 'Token ' + token
     this.initialState.token = token
   }
 
   @Mutation
-  [BaseAuthenticationTypes.REMOVE_TOKEN](): void {
+  removeToken(): void {
     localStorage.removeItem(this.TOKEN_STORAGE_KEY)
     localStorage.removeItem('userid')
     session.defaults.headers.common['Authorization'] = ''
     delete session.defaults.headers.Authorization
-    this.initialState.token = null
+    this.initialState.token = ''
   }
 
   @Action
-  async login(inputs: any): Promise<void> {
-    await this.context.commit(BaseAuthenticationTypes.LOGIN_BEGIN)
+  async login(inputs: LogInInputApiData): Promise<void> {
+    console.log('login - inputs', inputs)
+    await this.context.commit('logInBegin')
     return api
       .post('login/', inputs)
-      .then((response: any) => {
+      .then((response: AxiosResponse<Record<string, string>>) => {
+        console.log('login - response', response)
         const token: string = response.data.auth_token
-        this.context.commit(BaseAuthenticationTypes.SET_TOKEN, token)
+        this.context.commit('setToken', token)
         router.push('/')
       })
       .then(() => {
-        this.context.commit(BaseAuthenticationTypes.LOGIN_SUCCESS)
+        this.context.commit('logInSuccess')
         toast.success('Success')
       })
       .catch(() => {
-        this.context.commit(BaseAuthenticationTypes.LOGIN_FAILURE)
+        this.context.commit('logInFailure')
         toast.error('Please enter a valid username and password. Note that both fields may be case-sensitive.')
       })
   }
 
   @Action
   async logout(): Promise<void> {
-    await this.context.commit(BaseAuthenticationTypes.LOGIN_BEGIN)
+    await this.context.commit('logInBegin')
     return api
       .post('logout/', {})
       .then(() => {
-        this.context.commit(BaseAuthenticationTypes.LOGOUT)
+        this.context.commit('afterLogOut')
       })
       .then(() => {
-        this.context.commit(BaseAuthenticationTypes.REMOVE_TOKEN)
+        this.context.commit('removeToken')
         toast.success('Logged Out')
       })
       .catch((e: Error) => {
@@ -123,8 +127,8 @@ export default class AuthModule extends AppBaseModule {
 
     const response = await api
       .get('session/')
-      .then((response: any) => {
-        this.context.commit(BaseAuthenticationTypes.SET_SESSION_AUTH, response.data.isAuthenticated)
+      .then((response: AxiosResponse<Record<string, boolean>>) => {
+        this.context.commit('setSessionAuth', response.data.isAuthenticated)
       })
       .catch((e: Error) => {
         console.log(e)
@@ -132,11 +136,11 @@ export default class AuthModule extends AppBaseModule {
 
     // for token auth
     if (this.isProduction && token) {
-      this.context.commit(BaseAuthenticationTypes.REMOVE_TOKEN)
+      this.context.commit('removeToken')
     }
     if (!this.isProduction && token) {
-      this.context.commit(BaseAuthenticationTypes.SET_TOKEN, token)
-      this.context.commit(BaseAuthenticationTypes.LOGIN_SUCCESS, true)
+      this.context.commit('setToken', token)
+      this.context.commit('logInSuccess', true)
     }
     return response
   }
@@ -146,8 +150,8 @@ export default class AuthModule extends AppBaseModule {
     return api
       .post('session/clear_all/', {})
       .then(() => {
-        this.context.commit(BaseAuthenticationTypes.LOGOUT)
-        this.context.commit(BaseAuthenticationTypes.REMOVE_TOKEN)
+        this.context.commit('afterLogOut')
+        this.context.commit('removeToken')
         store.commit('product/favourite/unsetFavourites')
         store.commit('product/favourite/unsetUserFavourites')
         store.commit('product/review/unsetUserToProductReview')
