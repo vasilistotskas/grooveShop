@@ -122,8 +122,10 @@ import FormProvider from '@/components/Form/FormProvider.vue'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import { Options as Component, Vue } from 'vue-class-component'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
+import { HTMLElementEvent } from '@/state/common/Types/HelpingTypes'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
+import UserProfileApiData from '@/state/user/Interface/UserProfileApiData'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 
 let { validateFields } = useValidation({})
@@ -204,16 +206,16 @@ export default class UserSettings extends Vue {
     this.userProfileInitialize()
   }
 
-  async restRegions(e: any): Promise<void> {
-    const countryAlpha2Key = e.target.value
+  async restRegions(e: HTMLElementEvent<HTMLTextAreaElement>): Promise<void> {
+    const countryAlpha2Key = e.target?.value
     await store.dispatch('country/findRegionsBasedOnAlphaFromInput', countryAlpha2Key)
     this.userProfile.region = 'choose'
   }
 
   handleSubmit = async () => {
     try {
-      const formData: any = await validateFields()
-      const apiData = {
+      const formData = (await validateFields()) as UserProfileModel
+      const apiData: UserProfileApiData = {
         user_id: 1,
         first_name: formData.first_name,
         last_name: formData.last_name,

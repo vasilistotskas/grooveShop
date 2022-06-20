@@ -67,7 +67,7 @@ const userRoutes: Array<RouteRecordRaw> = [
         name: MainRouteNames.USER_ACCOUNT_FAVOURITES,
         component: () => import('@/pages/User/UserFavourites.vue'),
         meta: {
-          breadcrumb: () => [
+          breadcrumb: (): Array<BreadcrumbItemInterface> => [
             {
               name: 'User Account',
               to: {

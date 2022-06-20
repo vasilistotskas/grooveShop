@@ -44,8 +44,8 @@ const toast = useToast()
     },
   },
 })
-export default class FavouriteButton extends Vue implements FavouriteButtonInterface<Record<any, any>> {
-  model!: Record<any, any>
+export default class FavouriteButton extends Vue implements FavouriteButtonInterface<Record<string, never>> {
+  model!: Record<string, never>
   getterType!: string
   dispatchType!: string
   isFavourite = false

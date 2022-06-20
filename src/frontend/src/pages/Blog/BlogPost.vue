@@ -32,10 +32,12 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { Options as Component, Vue } from 'vue-class-component'
+import { RouteParams } from 'vue-router'
 import BlogPostModel from '@/state/blog/BlogPostModel'
+import DateTimeFormatOptions = Intl.DateTimeFormatOptions
 import BlogComment from '@/components/Blog/BlogComment.vue'
 import BlogComments from '@/components/Blog/BlogComments.vue'
+import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import BlogAuthorLink from '@/components/Blog/BlogAuthorLink.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
@@ -66,7 +68,7 @@ export default class BlogPost extends Vue {
   ImagePositionOptions = ImagePositionOptions
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
@@ -91,7 +93,7 @@ export default class BlogPost extends Vue {
   }
 
   public displayableDate(date: string): string {
-    const options: any = { dateStyle: 'full', timeStyle: 'medium' }
+    const options: DateTimeFormatOptions = { dateStyle: 'full', timeStyle: 'medium' }
     return new Intl.DateTimeFormat('en-US', options).format(new Date(date))
   }
 }

@@ -151,11 +151,11 @@ export default class ProductReviews extends PaginationBase<ProductReviewModel> i
     return `reviews/product/${product_id}`
   }
 
-  public isOddNumber(num: any) {
+  public isOddNumber(num: number) {
     return num % 2
   }
 
-  public backgroundStars(productRate: any): string[] {
+  public backgroundStars(productRate: number): string[] {
     const stars: string[] = times(productRate / 2, constant(starSvg)) as string[]
 
     if (this.isOddNumber(productRate)) {

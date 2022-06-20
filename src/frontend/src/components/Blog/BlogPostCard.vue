@@ -48,6 +48,7 @@
 
 <script lang="ts">
 import BlogPostModel from '@/state/blog/BlogPostModel'
+import DateTimeFormatOptions = Intl.DateTimeFormatOptions
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import BlogAuthorLink from '@/components/Blog/BlogAuthorLink.vue'
 import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
@@ -94,7 +95,7 @@ export default class BlogPostCard extends Vue {
 
   myContext = setup(() => {
     const displayableDate = (date: string) => {
-      const options: any = { dateStyle: 'full', timeStyle: 'medium' }
+      const options: DateTimeFormatOptions = { dateStyle: 'full', timeStyle: 'medium' }
       return new Intl.DateTimeFormat('en-US', options).format(new Date(date))
     }
 

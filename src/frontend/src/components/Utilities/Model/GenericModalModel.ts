@@ -1,5 +1,5 @@
 import { inject } from 'vue'
-import { Emitter } from 'mitt'
+import { Emitter, EventType } from 'mitt'
 import { Options as Component, Vue } from 'vue-class-component'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 
@@ -23,7 +23,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
   },
 })
 export default class GenericModalModel extends Vue {
-  emitter: Emitter<any> | undefined = inject('emitter')
+  emitter: Emitter<Record<EventType, unknown>> | undefined = inject('emitter')
 
   isModalCurrentlyOpen = false
   shouldModalStartInOpenState!: boolean
@@ -51,7 +51,7 @@ export default class GenericModalModel extends Vue {
   }
 
   created(): void {
-    this.emitter!.on('modal-open', () => this.openModal())
-    this.emitter!.on('modal-close', () => this.closeModal())
+    this.emitter?.on('modal-open', () => this.openModal())
+    this.emitter?.on('modal-close', () => this.closeModal())
   }
 }

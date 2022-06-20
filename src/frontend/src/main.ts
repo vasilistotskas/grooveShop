@@ -8,16 +8,16 @@ import { createApp } from 'vue'
 import 'vue-toastification/dist/index.css'
 import VueSocialSharing from 'vue-social-sharing'
 import * as apolloProvider from '../apollo.provider'
-import { createValidation } from 'vue3-form-validation'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast, { PluginOptions, TYPE } from 'vue-toastification'
+import { createValidation, ValidationBehaviorInfo } from 'vue3-form-validation'
 
 const validation = createValidation({
   defaultValidationBehavior: <never>'change',
   validationBehavior: {
-    change: ({ force }: any) => !force,
-    lazy: ({ touched }: any) => touched,
-    submit: ({ submit, hasError }: any) => submit || hasError,
+    change: ({ force }: ValidationBehaviorInfo) => !force,
+    lazy: ({ touched }: ValidationBehaviorInfo) => touched,
+    submit: ({ submit, hasError }: ValidationBehaviorInfo) => submit || hasError,
   },
 })
 

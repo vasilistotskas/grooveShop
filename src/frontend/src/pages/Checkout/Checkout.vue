@@ -203,12 +203,14 @@ import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
+import { HTMLElementEvent } from '@/state/common/Types/HelpingTypes'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormBaseTextarea from '@/components/Form/FormBaseTextarea.vue'
 import { email, exactly, min, required } from '@/components/Form/Utils'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import CheckoutPayWays from '@/components/Checkout/CheckoutPayWays.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
+import CheckoutOrderApiData from '@/state/cart/Interface/CheckoutOrderApiData'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import CheckoutStripeModal from '@/components/Utilities/CheckoutStripeModal.vue'
 import CheckoutProductContainer from '@/components/Checkout/CheckoutProductContainer.vue'
@@ -276,8 +278,8 @@ export default class Checkout extends Vue {
   }))
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
-    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    return currentRouteMetaBreadcrumb()
   }
 
   get isAuthenticated(): boolean {
@@ -337,8 +339,8 @@ export default class Checkout extends Vue {
     this.customerDetailsInitialize()
   }
 
-  async restRegions(e: any): Promise<void> {
-    const countryAlpha2Key = e.target.value
+  async restRegions(e: HTMLElementEvent<HTMLTextAreaElement>): Promise<void> {
+    const countryAlpha2Key = e.target?.value
     await store.dispatch('country/findRegionsBasedOnAlphaFromInput', countryAlpha2Key)
     this.customerDetails.region = 'choose'
   }
@@ -375,8 +377,8 @@ export default class Checkout extends Vue {
   handleSubmit = async (stripe_token?: any) => {
     const items = this.buildCartItems()
     try {
-      const formData: any = await validateFields()
-      const apiData = {
+      const formData = (await validateFields()) as CheckoutOrderApiData
+      const apiData: CheckoutOrderApiData = {
         user_id: this.customerDetails.id ? this.customerDetails.id : this.userData.id,
         pay_way: 'Credit Card',
         first_name: formData.first_name,

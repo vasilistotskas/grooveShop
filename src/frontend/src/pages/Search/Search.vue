@@ -55,8 +55,8 @@ export default class Search extends PaginationBase<ProductModel> implements Pagi
   paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
-    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    return currentRouteMetaBreadcrumb()
   }
 
   async mounted(): Promise<void> {

@@ -26,7 +26,7 @@ const productRoutes: Array<RouteRecordRaw> = [
     component: () => import('@/pages/Product/Product.vue'),
     props: true,
     meta: {
-      breadcrumb: (route: any): Array<BreadcrumbItemInterface> => [
+      breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> => [
         {
           name: route.category_slug,
           to: {

@@ -517,7 +517,7 @@ export default class BlogModule extends AppBaseModule {
 
       const fetchedComments = comments.data.commentsByPost
 
-      const commentsMergedWithUserProfile: Array<any> = await this.context.dispatch('getCommentsMergedWithUserProfile', fetchedComments)
+      const commentsMergedWithUserProfile: Array<BlogCommentModel> = await this.context.dispatch('getCommentsMergedWithUserProfile', fetchedComments)
 
       this.context.commit('setCommentsByPost', commentsMergedWithUserProfile)
 

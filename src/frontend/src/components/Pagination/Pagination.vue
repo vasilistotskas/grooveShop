@@ -8,15 +8,15 @@
       <button
         v-for="page in pages"
         :key="page.id"
-        :aria-label="`Go to page number ${page.name}`"
-        :class="{ active: isPageActive(page.name) }"
+        :aria-label="`Go to page number ${page.number}`"
+        :class="{ active: isPageActive(page.number) }"
         :disabled="page.isDisabled"
-        :title="`Go to page number ${page.name}`"
+        :title="`Go to page number ${page.number}`"
         class="btn-outline-primary-one"
         type="button"
-        @click="onClickPage(page.name)"
+        @click="onClickPage(page.number)"
       >
-        {{ page.name }}
+        {{ page.number }}
       </button>
 
       <button :disabled="isInLastPage" aria-label="Go to next page" class="btn-outline-primary-one" title="Go to next page" type="button" @click="onClickNextPage">Next</button>
@@ -29,10 +29,12 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
+import { LocationQueryValue } from 'vue-router'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import { Options as Component, Vue } from 'vue-class-component'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import PaginatedQueryParams from '@/state/pagination/Interface/PaginatedQueryParams'
+import PaginationPageInterface from '@/state/pagination/Interface/PaginationPageInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
@@ -68,7 +70,7 @@ import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/Pagination
   },
 })
 export default class Pagination extends Vue {
-  query: any
+  query?: Record<string, string | LocationQueryValue[] | number>
   uri = window.location.search.substring(1)
   params = router.currentRoute.value.query
   maxVisibleButtons!: number
@@ -95,7 +97,7 @@ export default class Pagination extends Vue {
     return Math.min(this.startPage + this.maxVisibleButtons - 1, this.totalPages)
   }
 
-  get pages(): any {
+  get pages(): Array<PaginationPageInterface> {
     const range = []
 
     let endPageNumber: number
@@ -107,7 +109,7 @@ export default class Pagination extends Vue {
 
     for (let i = this.startPage; i <= endPageNumber; i += 1) {
       range.push({
-        name: i,
+        number: i,
         isDisabled: this.currentPageNumber === i,
       })
     }

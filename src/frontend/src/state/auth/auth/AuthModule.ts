@@ -5,8 +5,8 @@ import session from '@/api/session'
 import { AxiosResponse } from 'axios'
 import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/state/common/AppBaseModule'
+import LogInApiData from '@/state/auth/Interface/LogInApiData'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import LogInInputApiData from '@/state/auth/Interface/LogInInputApiData'
 
 const toast = useToast()
 
@@ -67,7 +67,6 @@ export default class AuthModule extends AppBaseModule {
 
   @Mutation
   setToken(token: string): void {
-    console.log('setToken - token', token)
     if (!this.isProduction) localStorage.setItem(this.TOKEN_STORAGE_KEY, token)
     session.defaults.headers.common['Authorization'] = 'Token ' + token
     this.initialState.token = token
@@ -83,13 +82,11 @@ export default class AuthModule extends AppBaseModule {
   }
 
   @Action
-  async login(inputs: LogInInputApiData): Promise<void> {
-    console.log('login - inputs', inputs)
+  async login(inputs: LogInApiData): Promise<void> {
     await this.context.commit('logInBegin')
     return api
       .post('login/', inputs)
       .then((response: AxiosResponse<Record<string, string>>) => {
-        console.log('login - response', response)
         const token: string = response.data.auth_token
         this.context.commit('setToken', token)
         router.push('/')

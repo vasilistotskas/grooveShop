@@ -103,7 +103,7 @@ export default class ReviewProductCard extends Vue {
     })
   }
 
-  public isOddNumber(num: any) {
+  public isOddNumber(num: number) {
     return num % 2
   }
 
@@ -125,7 +125,7 @@ export default class ReviewProductCard extends Vue {
     return ''
   }
 
-  public backgroundStars(productRate: any): string[] {
+  public backgroundStars(productRate: number): string[] {
     const stars: string[] = times(productRate / 2, constant(starSvg)) as string[]
 
     if (this.isOddNumber(productRate)) {

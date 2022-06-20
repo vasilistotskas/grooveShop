@@ -26,7 +26,7 @@ const blogRoutes: Array<RouteRecordRaw> = [
     component: () => import('@/pages/Blog/BlogAuthor.vue'),
     props: true,
     meta: {
-      breadcrumb: (route: any): Array<BreadcrumbItemInterface> => [
+      breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> => [
         {
           name: 'Blog',
           to: {
@@ -48,7 +48,7 @@ const blogRoutes: Array<RouteRecordRaw> = [
     component: () => import('@/pages/Blog/BlogPost.vue'),
     props: true,
     meta: {
-      breadcrumb: (route: any): Array<BreadcrumbItemInterface> => [
+      breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> => [
         {
           name: 'Blog',
           to: {
@@ -70,7 +70,7 @@ const blogRoutes: Array<RouteRecordRaw> = [
     component: () => import('@/pages/Blog/BlogPostsByTag.vue'),
     props: true,
     meta: {
-      breadcrumb: (route: any): Array<BreadcrumbItemInterface> => [
+      breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> => [
         {
           name: 'Blog',
           to: {

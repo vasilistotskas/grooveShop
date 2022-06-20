@@ -13,9 +13,10 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { Options as Component, Vue } from 'vue-class-component'
+import { RouteParams } from 'vue-router'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import BlogAuthorPostList from '@/components/Blog/BlogAuthorPostList.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
@@ -29,7 +30,7 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 })
 export default class BlogAuthor extends Vue {
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 

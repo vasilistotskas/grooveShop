@@ -80,6 +80,7 @@
 
 <script lang="ts">
 import store from '@/store'
+import { RouteLocationNormalized } from 'vue-router'
 import { Options as Component, Vue } from 'vue-class-component'
 import { first, last, filter, times, constant, cloneDeep } from 'lodash'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
@@ -103,7 +104,6 @@ export default class ProductReview extends Vue {
   size = 16
   review = ''
   comment = ''
-  userComment: any = ProductReviewModel
   rate = 0
   reviewCountMax = 10
   starCountMax = 5
@@ -138,11 +138,11 @@ export default class ProductReview extends Vue {
     return Number(liveReviewCountRatio.toFixed(1)) - 0.04
   }
 
-  get liveReviewCount(): number | any {
+  get liveReviewCount(): number | undefined {
     return Math.round(Number(this.liveReviewCountRatio.toFixed(2)) * this.reviewCountMax)
   }
 
-  get reviewScoreText(): any {
+  get reviewScoreText(): string | undefined {
     const breakpoints = [
       {
         threshold: 0.2,
@@ -213,13 +213,13 @@ export default class ProductReview extends Vue {
   created() {
     this.$watch(
       () => this.liveReviewCount,
-      (to: any) => {
-        this.rate = to
+      (to: RouteLocationNormalized) => {
+        this.rate = to as unknown as number
       }
     )
     this.$watch(
       () => this.userToProductReview,
-      (to: any) => {
+      (to: RouteLocationNormalized) => {
         if (Object.keys(to).length <= 0) {
           this.clearModule()
         }

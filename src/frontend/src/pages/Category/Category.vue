@@ -44,6 +44,7 @@ import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
+import { RouteLocationNormalized, RouteParams } from 'vue-router'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import PaginationBase from '@/components/Pagination/PaginationBase'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
@@ -76,7 +77,7 @@ export default class Category extends PaginationBase<ProductModel> implements Pa
   PaginationRoutesEnum = PaginationRoutesEnum
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
@@ -88,7 +89,7 @@ export default class Category extends PaginationBase<ProductModel> implements Pa
     document.title = this.$route.params.category_slug + ' Category'
     this.$watch(
       () => this.$route,
-      (to: any, from: any) => {
+      (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
         if (to.name === 'Category') {
           this.fetchCategory()
           this.fetchPaginationData()

@@ -10,7 +10,7 @@ const categoryRoutes: Array<RouteRecordRaw> = [
     component: () => import('@/pages/Category/Category.vue'),
     props: true,
     meta: {
-      breadcrumb: (route: any): Array<BreadcrumbItemInterface> => [
+      breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> => [
         {
           name: 'Category - ' + route.category_slug,
           to: {

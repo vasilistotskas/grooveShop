@@ -8,11 +8,11 @@
             <span class="input-group-addon">
               <font-awesome-icon :icon="envelopeIcon" />
             </span>
-            <input id="email" v-model="resendMailInputs.email" class="form-control" name="email" placeholder="email" type="email" />
+            <input id="email" v-model="email" class="form-control" name="email" placeholder="email" type="email" />
           </div>
         </div>
       </form>
-      <button class="btn btn-outline-primary-two" title="Activation Email Resend" @click="activationEmailResend(resendMailInputs)">send email</button>
+      <button class="btn btn-outline-primary-two" title="Activation Email Resend" @click="activationEmailResend(email)">send email</button>
     </div>
   </div>
 </template>
@@ -33,24 +33,20 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 })
 export default class VerifyEmailResendInput extends Vue {
   activationEmailAtLocalStorage = false
-  resendMailInputs = {
-    email: '',
-  }
+  email = ''
   envelopeIcon = faEnvelope
 
-  async activationEmailResend(resendMailInputs: any): Promise<void> {
-    let email = ''
+  async activationEmailResend(email: string): Promise<void> {
+    let finalEmail = ''
     const emailFromLocalStorage = store.getters['signup/getRegistrationEmail']
-    const emailFromFormInput = resendMailInputs.email
-
     if (emailFromLocalStorage) {
-      email = emailFromLocalStorage
+      finalEmail = emailFromLocalStorage
       this.activationEmailAtLocalStorage = true
     } else {
-      email = emailFromFormInput
+      finalEmail = email
     }
 
-    await store.dispatch('signup/activationEmailResend', email)
+    await store.dispatch('signup/activationEmailResend', finalEmail)
   }
 }
 </script>

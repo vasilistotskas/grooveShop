@@ -28,8 +28,8 @@
 </template>
 
 <script lang="ts">
-import { Emitter } from 'mitt'
 import { useStore } from 'vuex'
+import { Emitter, EventType } from 'mitt'
 import { defineComponent, inject, watch } from 'vue'
 import PayWayModel from '@/state/payway/PayWayModel'
 import { PayWaysEnum } from '@/state/payway/Enum/PayWaysEnum'
@@ -46,8 +46,6 @@ export default defineComponent({
     cartTotalPrice: {
       type: Number,
       required: true,
-      // custom validation can use any type for 'any' and validate data
-      validator: (cartTotalPrice: any) => typeof cartTotalPrice === 'number',
     },
     cartTotalPriceForPayWay: {
       type: Number,
@@ -56,7 +54,7 @@ export default defineComponent({
   },
   async setup(props) {
     const store = useStore()
-    const emitter: Emitter<any> | undefined = inject('emitter')
+    const emitter: Emitter<Record<EventType, unknown>> | undefined = inject('emitter')
 
     let selectedPayWay = ''
     const getSelectedPayWayName = () => store.getters['pay_way/getSelectedPayWayName']
@@ -84,7 +82,7 @@ export default defineComponent({
     }
     const managePayWayClick = (selectedPayWay: PayWayModel): void => {
       if (selectedPayWay.name === PayWaysEnum.CREDIT_CARD) {
-        emitter!.emit('modal-open')
+        emitter?.emit('modal-open')
       }
     }
     const payWayExtraCost = (payWay: PayWayModel): string => {

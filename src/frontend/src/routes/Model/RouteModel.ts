@@ -1,7 +1,7 @@
 import { map } from 'lodash'
 import store from '@/store'
 import { useToast } from 'vue-toastification'
-import { _RouteRecordBase, NavigationGuardNext, RouteLocationNormalized, RouteRecordNormalized } from 'vue-router'
+import { _RouteRecordBase, NavigationGuardNext, RouteLocationNormalized, RouteRecord, RouteRecordNormalized } from 'vue-router'
 
 const toast = useToast()
 
@@ -10,7 +10,7 @@ export class RouteModel {
   routePaths: Array<_RouteRecordBase['path']> = []
 
   constructor(routes: RouteRecordNormalized[]) {
-    map(routes, (route: any) => {
+    map(routes, (route: RouteRecord) => {
       this.routeNames.push(route.name)
       this.routePaths.push(route.path)
     })

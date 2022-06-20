@@ -107,15 +107,15 @@ export default class ProductCard extends Vue {
     store.commit('cart/addToCart', item)
   }
 
-  public contentShorten(productName: any): string {
+  public contentShorten(productName: string): string {
     return helpers.contentShorten(productName, 0, 50)
   }
 
-  public isOddNumber(num: any) {
+  public isOddNumber(num: number) {
     return num % 2
   }
 
-  public backgroundStars(productRate: any): string[] {
+  public backgroundStars(productRate: number): string[] {
     const stars: string[] = times(productRate / 2, constant(starSvg)) as string[]
 
     if (this.isOddNumber(productRate)) {

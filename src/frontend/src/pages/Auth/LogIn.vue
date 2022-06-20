@@ -84,10 +84,11 @@
 import store from '@/store'
 import router from '@/routes'
 import session from '@/api/session'
-import { Options as Component, Vue } from 'vue-class-component'
 import { required } from '@/components/Form/Utils'
 import FormProvider from '@/components/Form/FormProvider.vue'
+import LogInApiData from '@/state/auth/Interface/LogInApiData'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
+import { Options as Component, Vue } from 'vue-class-component'
 import { faKey } from '@fortawesome/free-solid-svg-icons/faKey'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
@@ -128,8 +129,8 @@ export default class LogIn extends Vue {
   facebookIcon = faFacebook
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
-    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    return currentRouteMetaBreadcrumb()
   }
 
   mounted(): void {
@@ -141,8 +142,8 @@ export default class LogIn extends Vue {
     localStorage.removeItem('token')
 
     try {
-      const formData: any = await validateFields()
-      const apiData = {
+      const formData: LogInApiData = await validateFields()
+      const apiData: LogInApiData = {
         email: formData.email,
         password: formData.password,
       }

@@ -4,10 +4,10 @@
 
 <script lang="ts">
 import { inject } from 'vue'
-import { Emitter } from 'mitt'
 import * as Lottie from 'lottie-web'
+import { Emitter, EventType } from 'mitt'
 import { Options as Component, Vue } from 'vue-class-component'
-import { AnimationConfigWithData, AnimationConfigWithPath, AnimationItem, LottiePlayer } from 'lottie-web'
+import { AnimationConfigWithData, AnimationConfigWithPath, AnimationItem, LottiePlayer, RendererType } from 'lottie-web'
 
 @Component({
   name: 'LottiePlayerMain',
@@ -35,13 +35,13 @@ import { AnimationConfigWithData, AnimationConfigWithPath, AnimationItem, Lottie
   },
 })
 export default class LottiePlayerMain extends Vue {
-  emitter: Emitter<any> | undefined = inject('emitter')
+  emitter: Emitter<Record<EventType, unknown>> | undefined = inject('emitter')
 
   anim!: AnimationItem
   animationData!: AnimationItem | string
   loop!: boolean | number
   autoPlay!: boolean
-  renderer!: string
+  renderer!: RendererType | undefined
   speed!: number
 
   get getLottieInstance(): LottiePlayer {
@@ -62,7 +62,7 @@ export default class LottiePlayerMain extends Vue {
   }
 
   init() {
-    const settings: AnimationConfigWithPath<any> | AnimationConfigWithData<any> = {
+    const settings: AnimationConfigWithPath<RendererType> | AnimationConfigWithData<RendererType> = {
       container: this.$refs.animation as Element,
       renderer: this.renderer,
       loop: this.loop,

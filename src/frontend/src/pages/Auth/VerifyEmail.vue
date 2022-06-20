@@ -27,6 +27,7 @@ import store from '@/store'
 import router from '@/routes'
 import { Options as Component, Vue } from 'vue-class-component'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
+import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
 @Component({
@@ -37,8 +38,8 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 })
 export default class VerifyEmail extends Vue {
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
-    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    return currentRouteMetaBreadcrumb()
   }
 
   get isAuthenticated(): boolean {
@@ -83,7 +84,7 @@ export default class VerifyEmail extends Vue {
     }
   }
 
-  beforeRouteLeave(to: any, from: any, next: any) {
+  beforeRouteLeave(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
     this.clearActivationStatus()
     next()
   }

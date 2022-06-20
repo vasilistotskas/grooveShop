@@ -14,6 +14,7 @@
 <script lang="ts">
 import { forEach } from 'lodash'
 import UserOrderModel from '@/state/user/order/UserOrderModel'
+import OrderItemModel from '@/state/user/order/OrderItemModel'
 import { Options as Component, Vue } from 'vue-class-component'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import UserOrderHistoryCard from '@/components/User/UserOrderHistoryCard.vue'
@@ -33,7 +34,7 @@ export default class UserOrderHistoryContainer extends Vue {
 
   get orderTotal(): number {
     let total = 0
-    forEach(this.order.items, (item: any) => {
+    forEach(this.order.items, (item: OrderItemModel) => {
       total += item.quantity * item.product.price
     })
     return total
