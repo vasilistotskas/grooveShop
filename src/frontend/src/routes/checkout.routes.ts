@@ -27,8 +27,8 @@ const checkoutRoutes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: MainRoutePaths.SUCCESS,
-    name: MainRouteNames.SUCCESS,
+    path: MainRoutePaths.CHECKOUT_SUCCESS,
+    name: MainRouteNames.CHECKOUT_SUCCESS,
     component: () => import('@/pages/Checkout/CheckoutSuccess.vue'),
     meta: {
       breadcrumb: (): Array<BreadcrumbItemInterface> => [
@@ -42,6 +42,27 @@ const checkoutRoutes: Array<RouteRecordRaw> = [
           name: 'Checkout Success',
           to: {
             full_path: 'cart/success',
+          },
+        },
+      ],
+    },
+  },
+  {
+    path: MainRoutePaths.CHECKOUT_ERROR,
+    name: MainRouteNames.CHECKOUT_ERROR,
+    component: () => import('@/pages/Checkout/CheckoutError.vue'),
+    meta: {
+      breadcrumb: (): Array<BreadcrumbItemInterface> => [
+        {
+          name: 'Cart',
+          to: {
+            full_path: 'cart',
+          },
+        },
+        {
+          name: 'Checkout Error',
+          to: {
+            full_path: 'cart/error',
           },
         },
       ],

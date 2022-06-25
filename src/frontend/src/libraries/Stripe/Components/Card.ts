@@ -18,13 +18,13 @@ export default class StripeCardComponents extends AppBaseModule {
   cardExpiryError!: (ev: any) => void
   cardNumberEl!: any
   cardExpiryIsCompleted!: any
-  cardCvcIsCompleted!: any
+  cardCvcIsCompleted!: boolean
   cardExpiryEl!: any
   cardCvcEl!: any
   resultToken!: any
-  card!: any
-  cardIsCompleted!: any
-  cardError!: any
+  card!: Record<string, string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]>
+  cardIsCompleted!: boolean
+  cardError!: string
 
   get getResultToken(): any {
     return this.resultToken
@@ -65,12 +65,12 @@ export default class StripeCardComponents extends AppBaseModule {
   }
 
   @Mutation
-  setCardIsCompleted(complete: any): void {
+  setCardIsCompleted(complete: boolean): void {
     this.cardIsCompleted = complete
   }
 
   @Mutation
-  setCardCvcIsCompleted(complete: any): void {
+  setCardCvcIsCompleted(complete: boolean): void {
     this.cardCvcIsCompleted = complete
   }
 

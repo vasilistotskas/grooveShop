@@ -20,6 +20,7 @@ import packageMeta from '@/../package.json'
 import Footer from '@/components/Main/Footer.vue'
 import Header from '@/components/Main/Header.vue'
 import Loader from '@/components/Main/Loader.vue'
+import CartItemModel from '@/state/cart/CartItemModel'
 import CountryModel from '@/state/country/CountryModel'
 import RegionsModel from '@/state/country/RegionsModel'
 import { Options as Component, Vue } from 'vue-class-component'
@@ -71,7 +72,7 @@ export default class App extends Vue {
     return store.getters['country/getRegionsBasedOnAlpha']
   }
 
-  get cartData(): Record<any, any> {
+  get cartData(): Array<CartItemModel> {
     return store.getters['cart/getCart']
   }
 

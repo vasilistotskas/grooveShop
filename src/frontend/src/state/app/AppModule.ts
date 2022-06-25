@@ -1,5 +1,6 @@
 import { ComputedRef } from 'vue'
 import AppBaseModule from '@/state/common/AppBaseModule'
+import MetaData from '@/state/common/Interface/MetaData'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 @Module({ namespaced: true })
@@ -59,7 +60,7 @@ export default class AppModule extends AppBaseModule {
   }
 
   @Action
-  updateMetaTagElement(metaData: any): void {
+  updateMetaTagElement(metaData: MetaData): void {
     const metaTagElement = <Element>document.querySelector(`meta[name=${metaData.metaName}]`)
     metaTagElement.setAttribute(metaData.metaAttribute, metaData.newValue)
   }
