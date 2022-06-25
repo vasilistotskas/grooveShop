@@ -36,7 +36,7 @@ export default defineComponent({
     },
     textareaWithAddOnIcon: {
       type: Object,
-      default: () => Object,
+      default: Object,
       required: false,
     },
     disabled: {

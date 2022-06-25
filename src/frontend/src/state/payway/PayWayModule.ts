@@ -19,7 +19,14 @@ export default class PayWayModule extends AppBaseModule {
   }
 
   get getSelectedPayWayName(): PayWayModel['name'] {
+    if (this.selectedPayWay.name === undefined) {
+      return ''
+    }
     return this.selectedPayWay.name
+  }
+
+  get getPayWayChecked(): boolean {
+    return this.selectedPayWay.name !== undefined
   }
 
   get getSelectedPayCost(): PayWayModel['cost'] {

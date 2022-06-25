@@ -21,13 +21,17 @@ export default class StripeCardComponents extends AppBaseModule {
   cardCvcIsCompleted!: boolean
   cardExpiryEl!: any
   cardCvcEl!: any
-  resultToken!: any
+  resultToken!: string
   card!: Record<string, string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]>
   cardIsCompleted!: boolean
   cardError!: string
 
-  get getResultToken(): any {
+  get getResultToken(): string {
     return this.resultToken
+  }
+
+  get getStripeKey(): string {
+    return this.stripeKey
   }
 
   @Mutation

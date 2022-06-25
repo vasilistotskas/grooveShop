@@ -14,7 +14,9 @@
         :img-height="268"
         :img-width="462"
       />
-      <div id="stripe-card" ref="stripleElement" />
+      <StripeElements v-if="stripeLoaded" v-slot="{ elements, instance }" ref="elms" :stripe-key="stripeKey" :instance-options="instanceOptions" :elements-options="elementsOptions">
+        <StripeElement ref="card" :elements="elements" :options="cardOptions" :instance="instance" />
+      </StripeElements>
       <template v-if="cartTotalLength">
         <div class="checkout-grid-pay-button mt-4">
           <button class="btn btn-outline-primary-one green-bg" title="Pay Now" type="button" @click="submitForm">Confirm your purchase</button>
@@ -197,6 +199,7 @@ import CountryModel from '@/state/country/CountryModel'
 import RegionsModel from '@/state/country/RegionsModel'
 import CartItemCheckout from '@/state/cart/CartItemCheckout'
 import { PayWaysEnum } from '@/state/payway/Enum/PayWaysEnum'
+import { StripeElements, StripeElement } from 'vue-stripe-js'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import { Options as Component, Vue } from 'vue-class-component'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
@@ -214,6 +217,7 @@ import CheckoutOrderApiData from '@/state/cart/Interface/CheckoutOrderApiData'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import CheckoutStripeModal from '@/components/Utilities/CheckoutStripeModal.vue'
 import CheckoutProductContainer from '@/components/Checkout/CheckoutProductContainer.vue'
+import { loadStripe, Stripe, StripeCardElementOptions, StripeConstructorOptions, StripeElementsOptions } from '@stripe/stripe-js'
 
 const toast = useToast()
 
@@ -232,11 +236,36 @@ let { validateFields } = useValidation({})
     CheckoutPayWays,
     CheckoutStripeModal,
     GrooveImage,
+    StripeElements,
+    StripeElement,
   },
 })
 export default class Checkout extends Vue {
   customerDetails = new UserProfileModel()
   PayWaysEnum = PayWaysEnum
+  stripeKey = store.getters['stripeCard/getStripeKey']
+  instanceOptions: StripeConstructorOptions = {
+    // https://stripe.com/docs/js/initializing#init_stripe_js-options
+  }
+  elementsOptions: StripeElementsOptions = {
+    // https://stripe.com/docs/js/elements_object/create#stripe_elements-options
+  }
+  cardOptions: StripeCardElementOptions = {
+    value: {
+      postalCode: '12345',
+    },
+    style: {
+      base: {
+        color: 'white',
+      },
+    },
+  }
+  stripeLoaded = false
+
+  $refs!: {
+    elms: any
+    card: any
+  }
 
   formManager = ({ validateFields } = useValidation({
     first_name: {
@@ -325,8 +354,19 @@ export default class Checkout extends Vue {
     return store.getters['pay_way/getSelectedPayWay']
   }
 
+  beforeCreate() {
+    const stripePromise = loadStripe(this.stripeKey)
+    stripePromise.then(() => {
+      this.stripeLoaded = true
+    })
+  }
+
   async created(): Promise<void> {
     await store.dispatch('country/fetchCountriesFromRemote')
+  }
+
+  unmounted(): void {
+    store.commit('pay_way/setSelectedPayWay', new PayWayModel())
   }
 
   async mounted(): Promise<void> {
@@ -334,7 +374,7 @@ export default class Checkout extends Vue {
     if (this.isAuthenticated) {
       await store.dispatch('user/fetchUserDataFromRemote')
     }
-    await Promise.all([store.dispatch('stripeIban/initIBANComponent'), store.dispatch('stripeCard/initStripeComponent'), store.dispatch('cart/cartTotalPriceForPayWayAction', this.getSelectedPayWay)])
+    await store.dispatch('cart/cartTotalPriceForPayWayAction', this.getSelectedPayWay)
 
     this.customerDetailsInitialize()
   }
@@ -348,7 +388,11 @@ export default class Checkout extends Vue {
   async submitForm(): Promise<void> {
     if (this.getSelectedPayWay.name === PayWaysEnum.CREDIT_CARD) {
       try {
-        await store.dispatch('stripeCard/createStripeToken')
+        const cardElement = this.$refs.card.stripeElement
+        const instance: Stripe = this.$refs.elms.instance
+        await instance.createToken(cardElement).then((result: object) => {
+          store.commit('stripeCard/setResultToken', result)
+        })
         if (this.stripeResultToken) {
           await this.handleSubmit(this.stripeResultToken)
         }

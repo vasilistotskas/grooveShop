@@ -56,11 +56,8 @@ export default defineComponent({
     const store = useStore()
     const emitter: Emitter<Record<EventType, unknown>> | undefined = inject('emitter')
 
-    let selectedPayWay = ''
+    let selectedPayWay = store.getters['pay_way/getSelectedPayWayName']
     const getSelectedPayWayName = () => store.getters['pay_way/getSelectedPayWayName']
-    watch(getSelectedPayWayName, (to: PayWaysEnum) => {
-      selectedPayWay = to
-    })
 
     const validPayWays: Array<PayWayModel> = await store.dispatch('pay_way/fetchActivePayWaysFromRemote')
     const getPayWayLottie = (payWayName: PayWayModel['name']): object => {
@@ -80,10 +77,11 @@ export default defineComponent({
       await store.dispatch('cart/cartTotalPriceForPayWayAction', selectedPayWay)
       store.commit('pay_way/setSelectedPayWay', selectedPayWay)
     }
-    const managePayWayClick = (selectedPayWay: PayWayModel): void => {
+    const managePayWayClick = async (selectedPayWay: PayWayModel): Promise<void> => {
       if (selectedPayWay.name === PayWaysEnum.CREDIT_CARD) {
         emitter?.emit('modal-open')
       }
+      await setSelectedPayWay(selectedPayWay)
     }
     const payWayExtraCost = (payWay: PayWayModel): string => {
       if (payWay.free_for_order_amount < props.cartTotalPrice) {
@@ -99,6 +97,7 @@ export default defineComponent({
       setSelectedPayWay,
       getPayWayLottie,
       payWayExtraCost,
+      getSelectedPayWayName,
     }
   },
 })
