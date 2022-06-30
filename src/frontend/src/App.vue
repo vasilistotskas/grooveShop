@@ -103,5 +103,9 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
-@import '@/assets/styles/base/_commons';
+@import '@/assets/styles/base/commons';
+@import '@/assets/styles/base/form_colors';
+@import '@/assets/styles/base/helpers';
+@import '@/assets/styles/base/mixins';
+@import '@/assets/styles/base/typography';
 </style>

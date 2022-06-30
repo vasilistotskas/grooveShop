@@ -1,8 +1,8 @@
 <template>
   <li class="navigation-header-part toggle-dark-mode-part">
-    <a :aria-label="'Toggle Dark Mode'" :title="'Toggle Dark Mode'" class="toggle-dark-mode-button" href="javascript:void(0);" @click="toggleThemeMode()">
+    <button :aria-label="'Toggle Dark Mode'" :title="'Toggle Dark Mode'" rel="nofollow" class="toggle-dark-mode-button" @click="toggleThemeMode()">
       <font-awesome-icon :icon="themeIconClass" size="lg" />
-    </a>
+    </button>
   </li>
 </template>
 

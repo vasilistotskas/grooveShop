@@ -12,6 +12,7 @@
                 :img-class="'main-logo img-fluid'"
                 :img-height="85"
                 :img-width="175"
+                loading="eager"
                 :img-fit="ImageFitOptions.outside"
                 :img-position="ImagePositionOptions.center"
                 :img-format="ImageFormatOptions.png"

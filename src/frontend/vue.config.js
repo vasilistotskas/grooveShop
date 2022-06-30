@@ -32,15 +32,7 @@ module.exports = {
     },
   },
 
-  css: {
-    loaderOptions: {
-      sass: {
-        additionalData: `
-          @import "@/assets/styles/app.scss";
-        `,
-      },
-    },
-  },
+  transpileDependencies: ['vue-meta'],
 
   pluginOptions: {
     compression: {
@@ -75,5 +67,11 @@ module.exports = {
 
   configureWebpack: {
     devtool: 'eval-source-map',
+    optimization: {
+      splitChunks: {
+        minSize: 10000,
+        maxSize: 100000,
+      },
+    },
   },
 }

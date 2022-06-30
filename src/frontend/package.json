@@ -33,6 +33,7 @@
     "vue": "^3.2.35",
     "vue-class-component": "^8.0.0-rc.1",
     "vue-i18n": "^9.1.9",
+    "vue-meta": "^3.0.0-alpha.10",
     "vue-router": "^4.0.12",
     "vue-social-sharing": "^4.0.0-alpha4",
     "vue-toastification": "^2.0.0-rc.5",

@@ -54,7 +54,7 @@
           <div class="product-page-grid-buttons">
             <input v-model="quantity" class="input" min="1" type="number" />
             <button :class="{ disabled: disabled }" :title="`Add to cart ${product.name}`" class="btn-outline-primary-one addToCartButton" type="button" @click="addToCart()">
-              <font-awesome-icon :icon="shopingBagIcon" :style="{ color: '#53e24aeb' }" size="lg" />
+              <font-awesome-icon :icon="shoppingBagIcon" :style="{ color: '#53e24aeb' }" size="lg" />
               <span>{{ addToCartButtonText }}</span>
             </button>
             <FavouriteButton :model="product" :getter-type="'product/favourite/getIsCurrentProductInUserFavourites'" :dispatch-type="'product/favourite/toggleFavourite'" :use-store="true" />
@@ -76,7 +76,7 @@ import store from '@/store'
 import router from '@/routes'
 import { RouteParams } from 'vue-router'
 import ProductModel from '@/state/product/ProductModel'
-import { Options as Component, Vue } from 'vue-class-component'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import ProductReview from '@/components/Product/ProductReview.vue'
@@ -88,6 +88,8 @@ import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import { faShippingFast } from '@fortawesome/free-solid-svg-icons/faShippingFast'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
+import { useMeta } from 'vue-meta'
+import { computed } from '@vue/runtime-core'
 
 @Component({
   name: 'Product',
@@ -108,10 +110,19 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExcla
   },
 })
 export default class Product extends Vue {
+  meta = setup(() =>
+    useMeta(
+      computed(() => ({
+        title: this.product?.name ?? '',
+        description: this.product?.description ?? '',
+      }))
+    )
+  )
+
   quantity = 1
 
   cubesIcon = faCubes
-  shopingBagIcon = faShoppingBag
+  shoppingBagIcon = faShoppingBag
   truckPickupIcon = faShippingFast
   warningTriangleIcon = faExclamationTriangle
 

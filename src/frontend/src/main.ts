@@ -10,6 +10,7 @@ import VueSocialSharing from 'vue-social-sharing'
 import * as apolloProvider from '../apollo.provider'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast, { PluginOptions, TYPE } from 'vue-toastification'
+import { createMetaManager, plugin as metaPlugin } from 'vue-meta'
 import { createValidation, ValidationBehaviorInfo } from 'vue3-form-validation'
 
 const validation = createValidation({
@@ -36,10 +37,13 @@ const ToastOptions: PluginOptions = {
 }
 
 const emitter = mitt()
+const metaManager = createMetaManager()
 
 createApp(App)
   .use(store)
   .use(router, axios)
+  .use(metaManager)
+  .use(metaPlugin)
   .use(i18n)
   .use(validation)
   .use(apolloProvider.provider)
