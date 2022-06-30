@@ -30,7 +30,7 @@
 <script lang="ts">
 import { useStore } from 'vuex'
 import { Emitter, EventType } from 'mitt'
-import { defineComponent, inject, watch } from 'vue'
+import { defineComponent, inject } from 'vue'
 import PayWayModel from '@/state/payway/PayWayModel'
 import { PayWaysEnum } from '@/state/payway/Enum/PayWaysEnum'
 import * as credit_card_lottie from '@/assets/lotties/credit_card.json'

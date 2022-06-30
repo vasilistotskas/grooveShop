@@ -1,5 +1,5 @@
 <template>
-  <div :class="`cp-utilities-generic_modal-wrapper ${isModalCurrentlyOpen ? 'open' : 'closed'}`">
+  <div :class="`cp-utilities-generic_modal-wrapper ${isModalCurrentlyOpen ? 'open' : 'closed'}`" :ref="getMyId">
     <div class="cp-utilities-generic_modal-overlay" @click="closeModal">
       <svg class="cp-utilities-generic_modal-overlay-static" xmlns="http://www.w3.org/2000/svg">
         <filter :id="getMyId">

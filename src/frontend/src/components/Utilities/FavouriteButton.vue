@@ -1,5 +1,5 @@
 <template>
-  <button class="btn-outline-primary-three" data-mdb-ripple-color="dark" title="Favourite Actions" type="button" @click="favouriteHandle()">
+  <button :class="btnClass" data-mdb-ripple-color="dark" title="Favourite Actions" type="button" @click="favouriteHandle()">
     <font-awesome-icon v-if="!isFavourite" :icon="icon" size="2x" />
     <font-awesome-icon v-else :icon="icon" :style="{ color: 'rgba(200,60,60,0.79)' }" size="2x" />
   </button>
@@ -42,6 +42,11 @@ const toast = useToast()
       required: false,
       default: false,
     },
+    btnClass: {
+      type: String,
+      required: false,
+      default: 'btn-outline-primary-three',
+    },
   },
 })
 export default class FavouriteButton extends Vue implements FavouriteButtonInterface<Record<string, never>> {
@@ -51,6 +56,7 @@ export default class FavouriteButton extends Vue implements FavouriteButtonInter
   isFavourite = false
   icon = faHeart
   useStore!: boolean
+  btnClass!: string
 
   mounted(): void {
     this.isFavourite = this.getIsFavourite

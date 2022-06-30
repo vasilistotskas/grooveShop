@@ -15,11 +15,11 @@
         />
         <div class="blog-post-card-body">
           <span v-if="showAuthor" class="blog-post-card-body-author"> by <BlogAuthorLink :author="author" /> </span>
-          <span class="blog-post-card-body-title">{{ post.title }}: {{ post.subtitle }}</span>
+          <span class="blog-post-card-body-title">{{ post.title }}</span>
           <p class="blog-post-card-body-description">
-            {{ post.metaDescription }}
+            {{ post.subtitle }}
           </p>
-          <ul class="blog-post-card-body-tags">
+          <ul class="blog-post-card-body-tags" v-if="post.tags.length > 0">
             <li v-for="tag in post.tags" :key="tag.name" class="blog-post-card-body-tag">
               <RouterLink :title="tag.name" :to="`/tag/${tag.name}`" class="blog-post-card-body-tag-link" aria-label="Blog Tag">
                 <span class="blog-post-card-body-tag-name"> #{{ tag.name }} </span>
@@ -30,16 +30,19 @@
       </RouterLink>
       <div class="blog-post-card-body-actions">
         <div class="blog-post-card-body-actions-like">
-          <FavouriteButton :model="post" :dispatch-type="'blog/toggleFavourite'" />
+          <FavouriteButton btn-class="blog-post-card-body-actions-like-btn" :model="post" :dispatch-type="'blog/toggleFavourite'" />
+          <span class="blog-post-card-body-actions-like-count">609</span>
         </div>
 
         <div class="blog-post-card-body-actions-comment">
           <font-awesome-icon :icon="commentIcon" />
           <span class="blog-post-card-body-actions-comment-count">120</span>
         </div>
-
         <div class="blog-post-card-body-actions-share">
-          <BlogShareActions :post="post" />
+          <span class="blog-post-card-body-actions-share-text" @click="$refs[`postActionModal${post.id}`].openModal()"> SHARE </span>
+          <GenericModal :unique-id="`postActionModal${post.id}`" :ref="`postActionModal${post.id}`">
+            <BlogShareActions :post="post" />
+          </GenericModal>
         </div>
       </div>
     </div>
@@ -51,6 +54,7 @@ import BlogPostModel from '@/state/blog/BlogPostModel'
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import BlogAuthorLink from '@/components/Blog/BlogAuthorLink.vue'
+import GenericModal from '@/components/Utilities/GenericModal.vue'
 import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
 import BlogShareActions from '@/components/Blog/BlogShareActions.vue'
 import { Vue, setup, Options as Component } from 'vue-class-component'
@@ -66,6 +70,7 @@ import { ImageFitOptions, ImageFormatOptions, ImagePositionOptions, ImageTypeOpt
     GrooveImage,
     FavouriteButton,
     BlogShareActions,
+    GenericModal,
   },
   props: {
     post: {

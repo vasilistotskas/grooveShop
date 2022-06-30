@@ -44,13 +44,16 @@
     grid-template-rows: auto auto;
   }
   &-body {
+    display: grid;
+    gap: 1rem;
     background-color: var(--cp-palette-main-fourth);
     padding: 1rem 2rem;
     &-title {
-
+      font-weight: 700;
+      font-size: 20px;
     }
     &-author {
-
+      text-decoration: underline;
     }
     &-description {
 
@@ -68,6 +71,28 @@
     }
     &-date {
 
+    }
+    &-actions {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      align-items: center;
+      &-like {
+        &-btn {
+
+        }
+      }
+      &-comment {
+        &-count {
+
+        }
+      }
+      &-share {
+        &-text {
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
     }
   }
 }
