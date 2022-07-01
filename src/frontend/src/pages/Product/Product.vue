@@ -74,22 +74,22 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
+import { useMeta } from 'vue-meta'
 import { RouteParams } from 'vue-router'
+import { computed } from '@vue/runtime-core'
 import ProductModel from '@/state/product/ProductModel'
-import { Options as Component, setup, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import ProductReview from '@/components/Product/ProductReview.vue'
 import { faCubes } from '@fortawesome/free-solid-svg-icons/faCubes'
 import ProductReviews from '@/components/Product/ProductReviews.vue'
 import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import FavouriteButton from '@/components/Utilities/FavouriteButton.vue'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import { faShippingFast } from '@fortawesome/free-solid-svg-icons/faShippingFast'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
-import { useMeta } from 'vue-meta'
-import { computed } from '@vue/runtime-core'
 
 @Component({
   name: 'Product',

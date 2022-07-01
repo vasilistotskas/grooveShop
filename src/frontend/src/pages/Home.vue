@@ -107,11 +107,13 @@
 <script lang="ts">
 import store from '@/store'
 import 'swiper/swiper-bundle.css'
+import { useMeta } from 'vue-meta'
+import { computed } from '@vue/runtime-core'
 import SliderModel from '@/state/slider/SliderModel'
 import ProductModel from '@/state/product/ProductModel'
 import ProductCard from '@/components/Product/ProductCard.vue'
-import { Options as Component, Vue } from 'vue-class-component'
 import { faPhone } from '@fortawesome/free-solid-svg-icons/faPhone'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import { faComment } from '@fortawesome/free-solid-svg-icons/faComment'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import HomePageMainSlider from '@/components/Sliders/Swiper/HomePageMainSlider.vue'
@@ -124,6 +126,15 @@ import HomePageMainSlider from '@/components/Sliders/Swiper/HomePageMainSlider.v
   },
 })
 export default class Home extends Vue {
+  meta = setup(() =>
+    useMeta(
+      computed(() => ({
+        title: 'Deep Web Homepage',
+        description: 'Deep Web Homepage',
+      }))
+    )
+  )
+
   mainSliderStyle = {
     '--swiper-navigation-color': '#fff',
     '--swiper-pagination-color': '#fff',
@@ -147,16 +158,6 @@ export default class Home extends Vue {
 
   async beforeCreate(): Promise<void> {
     await Promise.all([store.dispatch('product/fetchLatestProductsFromRemote'), store.dispatch('slider/fetchSlidersFromRemote')])
-  }
-
-  async mounted(): Promise<void> {
-    document.title = 'DeepWeb'
-
-    await store.dispatch('app/updateMetaTagElement', {
-      metaName: 'description',
-      metaAttribute: 'content',
-      newValue: 'Deep Web Homepage',
-    })
   }
 }
 </script>
