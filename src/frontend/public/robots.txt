@@ -1,12 +1,3 @@
-User-agent: Slurp
-Disallow: /
-User-agent: AhrefsBot
-Disallow: /
-User-agent: MJ12bot
-Disallow: /
-User-agent: Ezooms
-Disallow: /
-User-agent: Baiduspider
-Disallow: /
-User-agent: YandexBot
-Disallow: /
+User-Agent: *
+Disallow: /private/
+Disallow: /junk/

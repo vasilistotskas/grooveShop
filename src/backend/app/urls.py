@@ -17,10 +17,13 @@ from django.views import View
 from django.contrib import admin
 from django.conf import settings
 from django.shortcuts import render
+from django.http import HttpResponse
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.middleware.csrf import get_token
 from graphene_django.views import GraphQLView
+from django.views.generic.base import TemplateView
+from django.views.decorators.http import require_GET
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
@@ -93,11 +96,21 @@ handler403 = error_403
 handler404 = error_404
 handler500 = error_500
 
+
+@require_GET
+def robots_txt(request):
+    lines = [
+        "User-Agent: *",
+        "Disallow: /private/",
+        "Disallow: /junk/",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
+
+
 front_urls = [
     path('', IndexView.as_view(), name='index'),
     path('index.html', IndexView.as_view(), name='index'),
-    path('manifest.json', IndexView.as_view(), name='index'),
-    path('robots.txt', IndexView.as_view(), name='index'),
+    path('robots.txt', robots_txt),
     path('offline/', OfflineView.as_view(), name='offline'),
     path('log-in', IndexView.as_view(), name='index'),
     path('sign-up', IndexView.as_view(), name='index'),

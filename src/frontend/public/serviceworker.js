@@ -77,13 +77,3 @@ self.addEventListener('notificationclick', function (event) {
     event.waitUntil(promiseChain)
   }
 })
-
-const FALLBACK_URL = '/offline'
-
-const networkOnly = NetworkOnly()
-
-const route = new NavigationRoute(({ event }) => {
-  return networkOnly.handle({ event }).catch(() => caches.match(FALLBACK_URL))
-})
-
-registerRoute(route)
