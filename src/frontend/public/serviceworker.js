@@ -1,8 +1,3 @@
-const { registerRoute } = require('workbox-routing')
-const { NetworkOnly } = require('workbox-strategies')
-const { NavigationRoute } = require('workbox-routing')
-const { precacheAndRoute } = require('workbox-precaching')
-
 var staticCacheName = 'django-pwa-v' + new Date().getTime()
 
 var filesToCache = [
