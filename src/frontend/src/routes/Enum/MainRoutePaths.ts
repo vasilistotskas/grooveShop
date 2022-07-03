@@ -26,4 +26,5 @@ export enum MainRoutePaths {
   POSTS_BY_TAG = '/tag/:tag',
   PAGE_NOT_FOUND = '/errors/error_404',
   NOT_FOUND = '/:pathMatch(.*)*',
+  OFFLINE = '/offline',
 }

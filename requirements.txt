@@ -1,4 +1,4 @@
-Django==4.0.4
+Django>=3.2.3,<3.3
 psycopg2-binary==2.9.3
 djangorestframework==3.12.2
 django-cors-headers==3.7.0
@@ -17,3 +17,4 @@ django-tinymce==3.4.0
 gunicorn==20.1.0
 whitenoise==5.3.0
 django-filter==2.4.0
+django-pwa==1.0.10

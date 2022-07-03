@@ -27,4 +27,5 @@ export enum MainRouteNames {
   POSTS_BY_TAG = 'PostsByTag',
   PAGE_NOT_FOUND = 'PageNotFound',
   NOT_FOUND = 'NotFound',
+  OFFLINE = 'Offline',
 }

@@ -21,7 +21,7 @@
         </form>
         <div class="footer-safe-payments">
           <span class="footer-safe-payments-text">Safe Payments</span>
-          <LottiePlayerMain class="footer-safe-payments-lottie" :animation-data="getSafeShieldAnim" :loop="true" />
+          <LottiePlayerMain class="footer-safe-payments-lottie" :animation-data="getSafeShieldAnim" :loop="false" />
         </div>
       </section>
 

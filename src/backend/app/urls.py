@@ -48,6 +48,18 @@ class IndexView(View):
         return render(request, "dist/index.html", to_render)
 
 
+class OfflineView(View):
+    template_name = 'dist/offline.html'
+
+    def get(
+            self,
+            request
+    ):
+        get_token(request)
+
+        return render(request, "dist/offline.html")
+
+
 def error_400(request, exception):
     context = {}
     response = render(request, 'dist/index.html', context=context)
@@ -83,6 +95,10 @@ handler500 = error_500
 
 front_urls = [
     path('', IndexView.as_view(), name='index'),
+    path('index.html', IndexView.as_view(), name='index'),
+    path('manifest.json', IndexView.as_view(), name='index'),
+    path('robots.txt', IndexView.as_view(), name='index'),
+    path('offline/', OfflineView.as_view(), name='offline'),
     path('log-in', IndexView.as_view(), name='index'),
     path('sign-up', IndexView.as_view(), name='index'),
     path('accounts/activate/<uid>/<token>', IndexView.as_view(), name='index'),
@@ -127,6 +143,7 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     # vue urls
     path('', include(front_urls)),
+    path('', include('pwa.urls'))
 ]
 
 urlpatterns += static(

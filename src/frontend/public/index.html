@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load pwa %}
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -22,6 +23,7 @@
     <link href="http://localhost:8010/backend/static/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
     <link crossorigin="use-credentials" href="http://localhost:8010/backend/static/manifest.json" rel="manifest">
 
+    {% progressive_web_app_meta %}
     <meta content="#ffffff" name="msapplication-TileColor">
     <meta name="color-scheme" content="light dark">
     <meta content="/ms-icon-144x144.png" name="msapplication-TileImage">

@@ -4,8 +4,8 @@
   "background_color": "#0D1117",
   "theme_color": "#0D1117",
   "display": "standalone",
-  "start_url": ".",
-  "prefer_related_applications": "false",
+  "start_url": "http://localhost:8010",
+  "prefer_related_applications": false,
   "icons": [
     {
      "src": "\/backend/static/favicon/android-icon-36x36.png",
