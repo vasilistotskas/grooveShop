@@ -1,20 +1,12 @@
 var staticCacheName = 'django-pwa-v' + new Date().getTime()
 
-var filesToCache = [
-  '/offline',
-  '/backend/static/favicon/apple-icon-57x57.png',
-  '/backend/static/favicon/apple-icon-60x60.png',
-  '/backend/static/favicon/apple-icon-72x72.png',
-  '/backend/static/favicon/apple-icon-76x76.png',
-  '/backend/static/favicon/apple-icon-114x114.png',
-  '/backend/static/favicon/apple-icon-120x120.png',
-  '/backend/static/favicon/apple-icon-144x144.png',
-  '/backend/static/favicon/apple-icon-152x152.png',
-  '/backend/static/favicon/apple-icon-180x180.png',
-  '/backend/static/favicon/android-icon-192x192.png',
+const filesToCache = [
+  '/',
+  '/backend/static/js/chunk-vendors.js',
+  '/backend/static/js/app.js',
+  '/backend/static/favicon/favicon-16x16.png',
   '/backend/static/favicon/favicon-32x32.png',
   '/backend/static/favicon/favicon-96x96.png',
-  '/backend/static/favicon/favicon-16x16.png',
 ]
 
 // Cache on install
@@ -22,7 +14,7 @@ self.addEventListener('install', (event) => {
   this.skipWaiting()
   event.waitUntil(
     caches.open(staticCacheName).then((cache) => {
-      return fetch('/offline/').then((response) => cache.put('/offline/', new Response(response.body)))
+      return cache.addAll(filesToCache)
     })
   )
 })
@@ -42,16 +34,18 @@ self.addEventListener('activate', (event) => {
 })
 
 // Serve from Cache
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', function (event) {
+  const requestUrl = new URL(event.request.url)
+  if (requestUrl.origin === location.origin) {
+    if (requestUrl.pathname === '/') {
+      event.respondWith(caches.match('/'))
+      return
+    }
+  }
   event.respondWith(
-    caches
-      .match(event.request)
-      .then((response) => {
-        return response || fetch(event.request)
-      })
-      .catch(() => {
-        return caches.match('offline/')
-      })
+    caches.match(event.request).then(function (response) {
+      return response || fetch(event.request)
+    })
   )
 })
 

@@ -232,8 +232,8 @@ PWA_APP_ICONS = [
 ]
 PWA_APP_ICONS_APPLE = [
     {
-        'src': '/backend/static/favicon/android-icon-192x192.png',
-        'sizes': '192x192'
+        'src': '/backend/static/favicon/apple-icon-180x180.png',
+        'sizes': '180x180'
     }
 ]
 PWA_APP_SPLASH_SCREEN = [
