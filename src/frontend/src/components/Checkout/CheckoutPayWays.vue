@@ -56,7 +56,7 @@ export default defineComponent({
     const store = useStore()
     const emitter: Emitter<Record<EventType, unknown>> | undefined = inject('emitter')
 
-    let selectedPayWay = store.getters['pay_way/getSelectedPayWayName']
+    const selectedPayWay = store.getters['pay_way/getSelectedPayWayName']
     const getSelectedPayWayName = () => store.getters['pay_way/getSelectedPayWayName']
 
     const validPayWays: Array<PayWayModel> = await store.dispatch('pay_way/fetchActivePayWaysFromRemote')

@@ -29,8 +29,8 @@
 </template>
 
 <script lang="ts">
+import 'swiper/css'
 import store from '@/store'
-import 'swiper/swiper-bundle.css'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import SliderModel from '@/state/slider/SliderModel'
 import { Options as Component, Vue } from 'vue-class-component'

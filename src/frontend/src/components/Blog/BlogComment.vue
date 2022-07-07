@@ -80,7 +80,7 @@ export default class BlogComment extends Vue {
   }
 
   public async commentModuleInitialize(): Promise<void> {
-    let IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
+    const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
 
     if (!IsAuthenticated) {
       return

@@ -77,7 +77,7 @@ export default class AuthModule extends AppBaseModule {
     localStorage.removeItem(this.TOKEN_STORAGE_KEY)
     localStorage.removeItem('userid')
     session.defaults.headers.common['Authorization'] = ''
-    delete session.defaults.headers.Authorization
+    delete session.defaults.headers.common['Authorization']
     this.initialState.token = ''
   }
 

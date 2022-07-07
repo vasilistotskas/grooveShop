@@ -287,7 +287,7 @@ export default class ProductReview extends Vue {
 
   public async reviewModuleInitialize(): Promise<void> {
     await store.dispatch('product/fetchProductFromRemote')
-    let IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
+    const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
 
     if (IsAuthenticated) {
       await store.dispatch('product/review/fetchUserToProductReviewFromRemote')

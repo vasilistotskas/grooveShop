@@ -136,7 +136,7 @@ export default class ReviewProductCard extends Vue {
   }
 
   public async deleteReview(userId: number, productId: number): Promise<void> {
-    let data = {
+    const data = {
       userId,
       productId,
     }

@@ -105,8 +105,8 @@
 </template>
 
 <script lang="ts">
+import 'swiper/css'
 import store from '@/store'
-import 'swiper/swiper-bundle.css'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import SliderModel from '@/state/slider/SliderModel'
