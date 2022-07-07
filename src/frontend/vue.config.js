@@ -22,21 +22,14 @@ module.exports = {
     },
   },
 
-  pwa: {
-    name: 'My App',
-    themeColor: '#4DBA87',
-    msTileColor: '#000000',
-    appleMobileWebAppCapable: 'yes',
-    appleMobileWebAppStatusBarStyle: 'black',
+  configureWebpack: (config) => {
+    if (process.env.NODE_ENV === 'development') {
+      config.devtool = 'eval-source-map'
 
-    // configure the workbox plugin
-    workboxPluginMode: 'InjectManifest',
-    workboxOptions: {
-      // swSrc is required in InjectManifest mode.
-      swSrc: './src/sw.js',
-      compileSrc: true,
-      swDest: 'service-worker.js',
-      exclude: ['index.html', '/index.html', 'manifest.json', '/manifest.json', 'robots.txt', '/robots.txt', /index\.html$/, /manifest\.html$/, /manifest\.json$/, /robots\.txt$/],
-    },
+      config.output.devtoolModuleFilenameTemplate = (info) =>
+        info.resourcePath.match(/^\.\/\S*?\.vue$/) ? `webpack-generated:///${info.resourcePath}?${info.hash}` : `webpack-yourCode:///${info.resourcePath}`
+
+      config.output.devtoolFallbackModuleFilenameTemplate = 'webpack:///[resource-path]?[hash]'
+    }
   },
 }

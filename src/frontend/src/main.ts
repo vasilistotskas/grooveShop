@@ -3,8 +3,9 @@ import axios from 'axios'
 import App from '@/App.vue'
 import store from './store'
 import router from '@/routes'
-import { i18n } from '@/locales'
 import { createApp } from 'vue'
+import './registerServiceWorker'
+import { i18n } from '@/locales'
 import 'vue-toastification/dist/index.css'
 import VueSocialSharing from 'vue-social-sharing'
 import * as apolloProvider from '../apollo.provider'
@@ -12,7 +13,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast, { PluginOptions, TYPE } from 'vue-toastification'
 import { createMetaManager, plugin as metaPlugin } from 'vue-meta'
 import { createValidation, ValidationBehaviorInfo } from 'vue3-form-validation'
-import './registerServiceWorker'
 
 const validation = createValidation({
   defaultValidationBehavior: <never>'change',
