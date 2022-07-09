@@ -48,9 +48,9 @@ ALLOWED_HOSTS.extend(
 CSRF_TRUSTED_ORIGINS = ['http://localhost:8010']
 
 # Graphql force_text warning (w8ing for version 3)
-# import django
-# from django.utils.encoding import force_str
-# django.utils.encoding.force_text = force_str
+import django
+from django.utils.encoding import force_str
+django.utils.encoding.force_text = force_str
 
 # Application definition
 DJANGO_APPS = [
@@ -81,7 +81,6 @@ THIRD_PARTY_APPS = [
     'mptt',
     'tinymce',
     'django_filters',
-    'pwa'
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
@@ -214,48 +213,7 @@ STATICFILES_DIRS = (
     BASE_DIR.joinpath('files'),
 )
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'backend/static', 'serviceworker.js')
-PWA_APP_NAME = 'Groove Application'
-PWA_APP_DESCRIPTION = "Groove App Desc"
-PWA_APP_THEME_COLOR = '#0A0302'
-PWA_APP_BACKGROUND_COLOR = '#ffffff'
-PWA_APP_DISPLAY = 'standalone'
-PWA_APP_SCOPE = '/'
-PWA_APP_ORIENTATION = 'any'
-PWA_APP_START_URL = '/'
-PWA_APP_STATUS_BAR_COLOR = 'default'
-PWA_APP_ICONS = [
-    {
-        'src': '/backend/static/favicon/favicon-16x16.png',
-        'sizes': '16x16'
-    },
-    {
-        'src': '/backend/static/favicon/favicon-32x32.png',
-        'sizes': '32x32'
-    },
-    {
-        'src': '/backend/static/favicon/android-icon-192x192.png',
-        'sizes': '192x192'
-    }
-]
-PWA_APP_ICONS_APPLE = [
-    {
-        'src': '/backend/static/favicon/apple-icon-152x152.png',
-        'sizes': '152x152'
-    },
-    {
-        'src': '/backend/static/favicon/apple-icon-180x180.png',
-        'sizes': '180x180'
-    }
-]
-PWA_APP_SPLASH_SCREEN = [
-    {
-        'src': '/backend/static/favicon/512x512.png',
-        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
-    }
-]
-PWA_APP_DIR = 'ltr'
-PWA_APP_LANG = 'en-US'
+
 # graphql schema
 GRAPHENE = {
     "SCHEMA": "backend.core.schema.schema",

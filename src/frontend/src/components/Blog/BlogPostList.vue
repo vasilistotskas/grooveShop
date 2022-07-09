@@ -12,6 +12,8 @@
     <!--      :authors="allAuthors"-->
     <!--      :tags="allTags"-->
     <!--    />-->
+
+    <InstagramFeed :count="8" :pagination="true" :caption="true" />
   </div>
 </template>
 
@@ -23,6 +25,7 @@ import TipSidebar from '@/components/Tip/TipSidebar.vue'
 import BlogPostCard from '@/components/Blog/BlogPostCard.vue'
 import { Options as Component, Vue } from 'vue-class-component'
 import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
+import InstagramFeed from '@/components/Utilities/InstagramFeed.vue'
 
 @Component({
   name: 'BlogPostList',
@@ -30,6 +33,7 @@ import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
     BlogTagsSidebar,
     TipSidebar,
     BlogPostCard,
+    InstagramFeed,
   },
   props: {
     posts: {

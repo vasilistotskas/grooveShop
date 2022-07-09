@@ -156,7 +156,6 @@ urlpatterns = [
     path('tinymce/', include('tinymce.urls')),
     # vue urls
     path('', include(front_urls)),
-    path('', include('pwa.urls'))
 ]
 
 urlpatterns += static(
