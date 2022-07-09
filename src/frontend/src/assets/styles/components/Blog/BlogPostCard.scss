@@ -6,6 +6,12 @@
     &:first-child {
       grid-row: 1;
       grid-column: 1/3;
+      .blog-post-card-body-actions {
+        position: absolute;
+        top: 85%;
+        right: 0;
+        padding-bottom: unset;
+      }
       .blog-post-card-body {
         position: absolute;
         display: grid;
@@ -47,7 +53,7 @@
     display: grid;
     gap: 1rem;
     background-color: var(--cp-palette-main-fourth);
-    padding: 1rem 2rem;
+    padding: 1rem 1.5rem;
     &-title {
       font-weight: 700;
       font-size: 20px;
@@ -56,7 +62,7 @@
       text-decoration: underline;
     }
     &-description {
-
+      font-weight: 300;
     }
     &-tags {
 
@@ -74,19 +80,37 @@
     }
     &-actions {
       display: grid;
-      grid-template-columns: auto auto auto;
+      grid-template-columns: 1fr 1fr 2fr;
+      gap: 1rem;
       align-items: center;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      padding-bottom: 1rem;
       &-like {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
         &-btn {
-
+          background: transparent;
+          border: unset;
+          font-size: 20px;
         }
       }
       &-comment {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
         &-count {
 
         }
       }
       &-share {
+        display: grid;
+        justify-content: end;
+        height: 100%;
+        width: 100%;
+        align-items: center;
         &-text {
           &:hover {
             cursor: pointer;

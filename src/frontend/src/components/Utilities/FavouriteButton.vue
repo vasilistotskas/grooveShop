@@ -1,7 +1,7 @@
 <template>
   <button :class="btnClass" data-mdb-ripple-color="dark" title="Favourite Actions" type="button" @click="favouriteHandle()">
-    <font-awesome-icon v-if="!isFavourite" :icon="icon" size="2x" />
-    <font-awesome-icon v-else :icon="icon" :style="{ color: 'rgba(200,60,60,0.79)' }" size="2x" />
+    <font-awesome-icon v-if="!isFavourite" :icon="icon" />
+    <font-awesome-icon v-else :icon="icon" :style="{ color: 'rgba(200,60,60,0.79)' }" />
   </button>
 </template>
 

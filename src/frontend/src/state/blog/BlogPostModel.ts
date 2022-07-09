@@ -16,6 +16,7 @@ export default class BlogPostModel extends EntityBase {
   likes!: Array<PostLikesModel>
   subtitle!: string
   title!: string
+  body!: string
   tags!: Array<BlogTagModel>
   category!: BlogCategoryModel
 

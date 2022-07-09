@@ -226,11 +226,23 @@ PWA_APP_START_URL = '/'
 PWA_APP_STATUS_BAR_COLOR = 'default'
 PWA_APP_ICONS = [
     {
+        'src': '/backend/static/favicon/favicon-16x16.png',
+        'sizes': '16x16'
+    },
+    {
+        'src': '/backend/static/favicon/favicon-32x32.png',
+        'sizes': '32x32'
+    },
+    {
         'src': '/backend/static/favicon/android-icon-192x192.png',
         'sizes': '192x192'
     }
 ]
 PWA_APP_ICONS_APPLE = [
+    {
+        'src': '/backend/static/favicon/apple-icon-152x152.png',
+        'sizes': '152x152'
+    },
     {
         'src': '/backend/static/favicon/apple-icon-180x180.png',
         'sizes': '180x180'

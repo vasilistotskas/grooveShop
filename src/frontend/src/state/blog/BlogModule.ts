@@ -154,6 +154,7 @@ export default class BlogModule extends AppBaseModule {
               mainImageAbsoluteUrl
               mainImageFilename
               numberOfLikes
+              body
               slug
               category {
                 id
