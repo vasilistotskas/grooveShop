@@ -318,7 +318,9 @@ body {
   top: 30%;
   z-index: 13;
   border: 1px solid var(--cp-palette-main-third);
-
+  @media screen and (max-width: map-get($grid-breakpoints, 'md'))  {
+    display: none;
+  }
   li {
     &:first-child {
       a {
@@ -687,4 +689,8 @@ body {
     min-height: 750px;
     display: grid;
   }
+}
+
+.v-hl-btn {
+  background: transparent;
 }

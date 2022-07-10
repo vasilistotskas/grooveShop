@@ -33,7 +33,7 @@
         </div>
 
         <div class="blog-post-card-body-actions-comment">
-          <font-awesome-icon :icon="commentIcon" />
+          <font-awesome-icon :style="{ color: 'rgba(200,60,60,0.79)' }" :icon="commentIcon" />
           <span class="blog-post-card-body-actions-comment-count">120</span>
         </div>
         <div class="blog-post-card-body-actions-share">

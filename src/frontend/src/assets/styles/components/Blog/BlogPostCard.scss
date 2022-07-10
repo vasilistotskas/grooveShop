@@ -1,3 +1,5 @@
+@import '@/assets/styles/base/variables';
+
 .blog-post-card {
   position: relative;
   &-container {
@@ -6,6 +8,10 @@
     &:first-child {
       grid-row: 1;
       grid-column: 1/3;
+      @media screen and (max-width: map-get($grid-breakpoints, 'md')) {
+        grid-row: unset;
+        grid-column: unset;
+      }
       .blog-post-card-body-actions {
         position: absolute;
         top: 85%;
@@ -95,14 +101,20 @@
           border: unset;
           font-size: 20px;
         }
+        &-count {
+          font-weight: 700;
+          color: var(--cp-palette-main-primary);
+        }
       }
       &-comment {
         display: flex;
         height: 100%;
         width: 100%;
         align-items: center;
+        gap: 0.75rem;
         &-count {
-
+          font-weight: 700;
+          color: var(--cp-palette-main-primary);
         }
       }
       &-share {
@@ -112,6 +124,8 @@
         width: 100%;
         align-items: center;
         &-text {
+          font-weight: 700;
+          color: var(--cp-palette-main-primary);
           &:hover {
             cursor: pointer;
           }

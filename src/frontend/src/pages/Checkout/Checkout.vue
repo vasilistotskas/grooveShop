@@ -412,7 +412,7 @@ export default class Checkout extends Vue {
         product: item.product.id,
         quantity: item.quantity,
         price: item.product.price * item.quantity,
-      }
+      } as never
       items.push(obj)
     }
     return items

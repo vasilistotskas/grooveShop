@@ -2,59 +2,14 @@
   <div class="home">
     <div class="container mt-9 mb-5">
       <div class="home-top-grid-content">
-        <HomePageMainSlider
-          v-if="homepageSlider[0] && Object.keys(homepageSlider[0]).length > 0"
-          :slider="homepageSlider[0]"
-          :grab-cursor="true"
-          :keyboard="true"
-          :mousewheel="false"
-          :navigation="!!(homepageSlider[0].video && Object.keys(homepageSlider[0].slides).length > 0)"
-          :pagination="{
-            clickable: true,
-            dynamicBullets: false,
-          }"
-          :style="mainSliderStyle"
-          :img-height="510"
-          :img-width="880"
-          class="grid-item-swipper"
-        />
+        <HomePageMainSlider v-if="homepageSlider[0] && Object.keys(homepageSlider[0]).length > 0" :img-height="760" :img-width="1200" :slider="homepageSlider[0]" class="grid-item-swipper" />
 
         <div class="grid-item-right">
           <div class="grid-item-content-one">
-            <HomePageMainSlider
-              v-if="homepageSlider[1] && Object.keys(homepageSlider[1]).length > 0"
-              :slider="homepageSlider[1]"
-              :grab-cursor="true"
-              :keyboard="true"
-              :mousewheel="false"
-              :navigation="!!(homepageSlider[1].video && Object.keys(homepageSlider[1].slides).length > 0)"
-              :pagination="{
-                clickable: true,
-                dynamicBullets: false,
-              }"
-              :style="mainSliderStyle"
-              :img-height="282"
-              :img-width="487"
-              class="grid-item-swipper"
-            />
+            <HomePageMainSlider v-if="homepageSlider[1] && Object.keys(homepageSlider[1]).length > 0" :img-height="400" :img-width="525" :slider="homepageSlider[1]" class="grid-item-swipper" />
           </div>
           <div class="grid-item-content-two">
-            <HomePageMainSlider
-              v-if="homepageSlider[2] && Object.keys(homepageSlider[2]).length > 0"
-              :slider="homepageSlider[2]"
-              :grab-cursor="true"
-              :keyboard="true"
-              :mousewheel="false"
-              :navigation="!!(homepageSlider[2].video && Object.keys(homepageSlider[2].slides).length > 0)"
-              :pagination="{
-                clickable: true,
-                dynamicBullets: false,
-              }"
-              :style="mainSliderStyle"
-              :img-height="282"
-              :img-width="487"
-              class="grid-item-swipper"
-            />
+            <HomePageMainSlider v-if="homepageSlider[2] && Object.keys(homepageSlider[2]).length > 0" :img-height="400" :img-width="525" :slider="homepageSlider[2]" class="grid-item-swipper" />
           </div>
         </div>
       </div>
@@ -116,7 +71,7 @@ import { faPhone } from '@fortawesome/free-solid-svg-icons/faPhone'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import { faComment } from '@fortawesome/free-solid-svg-icons/faComment'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
-import HomePageMainSlider from '@/components/Sliders/Swiper/HomePageMainSlider.vue'
+import HomePageMainSlider from '@/components/Sliders/VueHorizontal/HomePageMainSlider.vue'
 
 @Component({
   name: 'Home',

@@ -2,11 +2,13 @@
 import axios from 'axios'
 import store from '@/store'
 import { ref, onMounted } from 'vue'
+import VueHorizontal from 'vue-horizontal'
 
 const props = defineProps({
   count: Number,
   pagination: Boolean,
   caption: Boolean,
+  useSlider: Boolean,
 })
 const isLoading = ref(true)
 const hasError = ref(false)
@@ -63,7 +65,18 @@ const handlePaginationPrev = () => {
     <h1 v-if="isLoading">LOADING...</h1>
     <h1 v-else-if="hasError">Ooops, something went wrong.</h1>
     <div v-else class="instagram-gallery">
-      <div v-for="image in instagramData.data" :key="image.id" class="instagram-gallery-item">
+      <VueHorizontal responsive :displacement="0.7" snap="center" v-if="props.useSlider" class="instagram-gallery-slider horizontal">
+        <section v-for="image in instagramData.data" :key="image.id" class="instagram-gallery-item slider-item">
+          <a :href="image.permalink" :key="image.id" target="_blank" rel="noreferrer">
+            <img v-if="image.media_type === 'IMAGE' || image.media_type === 'CAROUSEL_ALBUM'" :src="image.media_url" :alt="image.caption" :key="image.id" class="instagram-gallery-image" />
+            <video v-else :key="image.id" class="instagram-gallery-image">
+              <source :src="image.media_url" type="video/mp4" />
+            </video>
+          </a>
+          <span v-if="showCaption" class="instagram-caption">{{ image.caption }}</span>
+        </section>
+      </VueHorizontal>
+      <div v-else v-for="image in instagramData.data" :key="image.id" class="instagram-gallery-item">
         <a :href="image.permalink" :key="image.id" target="_blank" rel="noreferrer">
           <img v-if="image.media_type === 'IMAGE' || image.media_type === 'CAROUSEL_ALBUM'" :src="image.media_url" :alt="image.caption" :key="image.id" class="instagram-gallery-image" />
           <video v-else :key="image.id" class="instagram-gallery-image">
@@ -85,31 +98,5 @@ const handlePaginationPrev = () => {
 </template>
 
 <style lang="scss" scoped>
-.instagram-wrapper {
-  max-width: 93.5rem;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-.instagram-gallery {
-  display: flex;
-  flex-wrap: wrap;
-  margin: -1rem -1rem;
-  padding-bottom: 3rem;
-}
-.instagram-gallery-item {
-  position: relative;
-  flex: 1 0 22rem;
-  margin: 1rem;
-  color: #fff;
-  cursor: pointer;
-}
-.instagram-gallery-image {
-  width: 100%;
-  height: 80%;
-  object-fit: cover;
-}
-.instagram-caption {
-  color: black;
-  margin-top: -3px;
-}
+@import '@/assets/styles/components/Utilities/InstagramFeed';
 </style>

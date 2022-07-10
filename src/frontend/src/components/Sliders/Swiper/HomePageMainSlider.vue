@@ -135,6 +135,4 @@ export default class HomePageMainSlider extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-@import '@/assets/styles/pages/Home';
-</style>
+<style lang="scss" scoped></style>

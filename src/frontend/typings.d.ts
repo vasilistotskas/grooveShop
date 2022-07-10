@@ -17,6 +17,8 @@ declare module 'swiper/vue' {
   export const SwiperSlide: DefineComponent<any, any, any>
 }
 
+declare module 'vue-horizontal'
+
 declare module '*.vue' {
   import { defineComponent } from 'vue'
   const component: ReturnType<typeof defineComponent>

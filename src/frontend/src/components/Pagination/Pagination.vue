@@ -109,9 +109,9 @@ export default class Pagination extends Vue {
 
     for (let i = this.startPage; i <= endPageNumber; i += 1) {
       range.push({
-        number: i,
-        isDisabled: this.currentPageNumber === i,
-      })
+        number: i as never,
+        isDisabled: (this.currentPageNumber === i) as never,
+      } as never)
     }
 
     return range
