@@ -12,7 +12,9 @@
 
 <script lang="ts">
 import store from '@/store'
+import { PropType } from 'vue'
 import BlogPostModel from '@/state/blog/BlogPostModel'
+import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import BlogPostCard from '@/components/Blog/BlogPostCard.vue'
 import { Options as Component, Vue } from 'vue-class-component'
 import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
@@ -34,7 +36,7 @@ import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
       default: true,
     },
     author: {
-      type: Object,
+      type: Object as PropType<BlogAuthorModel>,
       required: false,
     },
   },

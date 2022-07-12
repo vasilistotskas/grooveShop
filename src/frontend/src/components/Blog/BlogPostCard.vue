@@ -49,7 +49,9 @@
 
 <script lang="ts">
 import { PropType } from 'vue'
+import { helpers } from '@/helpers/main'
 import BlogPostModel from '@/state/blog/BlogPostModel'
+import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import BlogAuthorLink from '@/components/Blog/BlogAuthorLink.vue'
@@ -60,7 +62,6 @@ import { Vue, setup, Options as Component } from 'vue-class-component'
 import FavouriteButton from '@/components/Utilities/FavouriteButton.vue'
 import { faCommentDots } from '@fortawesome/free-solid-svg-icons/faCommentDots'
 import { ImageFitOptions, ImageFormatOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
-import { helpers } from '@/helpers/main'
 
 @Component({
   name: 'BlogPostCard',
@@ -83,7 +84,7 @@ import { helpers } from '@/helpers/main'
       default: true,
     },
     author: {
-      type: Object,
+      type: Object as PropType<BlogAuthorModel>,
       required: false,
     },
   },
@@ -94,7 +95,7 @@ export default class BlogPostCard extends Vue {
   ImagePositionOptions = ImagePositionOptions
   post = new BlogPostModel()
   showAuthor = false
-  author!: object
+  author!: BlogAuthorModel
   ImageTypeOptions = ImageTypeOptions
   commentIcon = faCommentDots
 

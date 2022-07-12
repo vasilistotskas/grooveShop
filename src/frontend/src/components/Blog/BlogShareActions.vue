@@ -212,9 +212,11 @@
 </template>
 
 <script setup lang="ts">
+import { PropType } from 'vue'
 import { forEach } from 'lodash'
 import { useRouter } from 'vue-router'
 import BlogTagModel from '@/state/blog/BlogTagModel'
+import BlogPostModel from '@/state/blog/BlogPostModel'
 import { MainRouteNames } from '@/routes/Enum/MainRouteNames'
 import { faViber } from '@fortawesome/free-brands-svg-icons/faViber'
 import { faSkype } from '@fortawesome/free-brands-svg-icons/faSkype'
@@ -248,7 +250,7 @@ const WhatsAppIcon = faWhatsapp
 
 const props = defineProps({
   post: {
-    type: Object,
+    type: Object as PropType<BlogPostModel>,
     default: () => Object,
   },
 })

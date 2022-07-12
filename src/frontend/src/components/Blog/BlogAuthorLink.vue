@@ -5,6 +5,7 @@
 </template>
 
 <script lang="ts">
+import { PropType } from 'vue'
 import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import { Options as Component, Vue } from 'vue-class-component'
 
@@ -12,7 +13,7 @@ import { Options as Component, Vue } from 'vue-class-component'
   name: 'BlogAuthorLink',
   props: {
     author: {
-      type: Object,
+      type: Object as PropType<BlogAuthorModel>,
       required: true,
     },
   },

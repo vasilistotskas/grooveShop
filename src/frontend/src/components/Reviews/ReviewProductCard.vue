@@ -61,6 +61,7 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
+import { PropType } from 'vue'
 import { constant, times } from 'lodash'
 import { onClickOutside } from '@vueuse/core'
 import { MainRouteNames } from '@/routes/Enum/MainRouteNames'
@@ -77,7 +78,7 @@ const starHalfSvg =
   name: 'ReviewProductCard',
   props: {
     review: {
-      type: Object,
+      type: Object as PropType<ProductReviewModel>,
       required: false,
     },
     userId: {

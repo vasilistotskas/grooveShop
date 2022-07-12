@@ -19,6 +19,7 @@
 
 <script lang="ts">
 import store from '@/store'
+import { PropType } from 'vue'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
 import { Options as Component, Vue } from 'vue-class-component'
@@ -31,7 +32,7 @@ import BlogCommentCard from '@/components/Blog/BlogCommentCard.vue'
   },
   props: {
     post: {
-      type: Object,
+      type: Object as PropType<BlogPostModel>,
       required: true,
     },
   },

@@ -70,12 +70,6 @@ let { validateFields } = useValidation({})
     FormSubmitButtons,
     FormValidationErrors,
   },
-  props: {
-    userData: {
-      type: Object,
-      required: true,
-    },
-  },
 })
 export default class UserPassword extends Vue {
   submitButtonText = 'Update'

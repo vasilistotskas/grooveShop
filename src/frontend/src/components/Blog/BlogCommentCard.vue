@@ -41,6 +41,7 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
+import { PropType } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
 import { MainRouteNames } from '@/routes/Enum/MainRouteNames'
@@ -52,7 +53,7 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
   name: 'BlogCommentCard',
   props: {
     comment: {
-      type: Object,
+      type: Object as PropType<BlogCommentModel>,
       required: false,
     },
     userId: {

@@ -35,6 +35,7 @@
 
 <script lang="ts">
 import store from '@/store'
+import { PropType } from 'vue'
 import CartItemModel from '@/state/cart/CartItemModel'
 import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
@@ -50,7 +51,7 @@ import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle'
   },
   props: {
     item: {
-      type: Object,
+      type: Object as PropType<CartItemModel>,
     },
   },
 })

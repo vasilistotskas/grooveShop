@@ -114,6 +114,7 @@
 
 <script lang="ts">
 import store from '@/store'
+import { PropType } from 'vue'
 import { cloneDeep } from 'lodash'
 import { exactly, min } from '@/components/Form/Utils'
 import RegionsModel from '@/state/country/RegionsModel'
@@ -140,7 +141,7 @@ let { validateFields } = useValidation({})
   },
   props: {
     userData: {
-      type: Object,
+      type: Object as PropType<UserProfileModel>,
       required: true,
     },
   },

@@ -28,6 +28,7 @@
 
 <script lang="ts">
 import store from '@/store'
+import { PropType } from 'vue'
 import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import Pagination from '@/components/Pagination/Pagination.vue'
@@ -49,7 +50,7 @@ import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/Pagination
   },
   props: {
     userData: {
-      type: Object,
+      type: Object as PropType<UserProfileModel>,
       required: true,
     },
   },

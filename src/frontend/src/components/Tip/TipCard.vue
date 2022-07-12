@@ -19,6 +19,7 @@
 </template>
 
 <script lang="ts">
+import { PropType } from 'vue'
 import { helpers } from '@/helpers/main'
 import TipModel from '@/state/tip/TipModel'
 import { TipKindEnum } from '@/state/tip/Enum/TipEnum'
@@ -33,7 +34,7 @@ import { faGlobe } from '@fortawesome/free-solid-svg-icons/faGlobe'
   },
   props: {
     tip: {
-      type: Object,
+      type: Object as PropType<TipModel>,
       required: true,
     },
   },
