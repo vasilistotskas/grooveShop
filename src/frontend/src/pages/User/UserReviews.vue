@@ -8,7 +8,7 @@
         <ReviewProductCard
           v-for="review in allPaginatedResults"
           :key="review.id"
-          :class="{'current-user-review-card': review.user_id === userId }"
+          :class="{ 'current-user-review-card': review.user_id === userId }"
           :review="review"
           :user-id="userId"
           class="product-review-main-card"
@@ -23,10 +23,7 @@
         :namespace="paginationNamespace"
       />
     </div>
-    <div
-      v-else
-      class="user_profile-no-data"
-    >
+    <div v-else class="user_profile-no-data">
       <h1>NO REVIEWS</h1>
     </div>
   </div>
@@ -34,59 +31,68 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options } from 'vue-class-component'
+import { PropType } from 'vue'
+import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
 import PaginationBase from '@/components/Pagination/PaginationBase'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
+import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import ReviewProductCard from '@/components/Reviews/ReviewProductCard.vue'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
-import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
-import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
+import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
-@Options({
+@Component({
   name: 'UserReviews',
   extends: PaginationBase,
   components: {
     ReviewProductCard,
-    Pagination
+    Pagination,
   },
   props: {
     userData: {
-      type: Object,
-      required: true
-    }
-  }
+      type: Object as PropType<UserProfileModel>,
+      required: true,
+    },
+  },
 })
-
-export default class UserReviews extends PaginationBase<ProductReviewModel> implements PaginatedInterface<ProductReviewModel> {
-
+export default class UserReviews
+  extends PaginationBase<ProductReviewModel>
+  implements PaginatedInterface<ProductReviewModel>
+{
   userData = new UserProfileModel()
   PaginationRoutesEnum = PaginationRoutesEnum
-  paginationNamespace = PaginationNamespaceDataEnum.USER_REVIEWS
+  paginationNamespace = PaginationNamespaceTypesEnum.USER_REVIEWS
 
   get userId(): number {
     return store.getters['user/getUserId']
   }
 
   async created(): Promise<void> {
-
     document.title = 'My Reviews'
 
     if (this.params.query) {
-      await store.commit('pagination/setCurrentQuery', { currentQuery: this.params.query, namespace: this.paginationNamespace })
+      await store.commit('pagination/setCurrentQuery', {
+        currentQuery: this.params.query,
+        namespace: this.paginationNamespace,
+      })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', { pageNumber: 1, namespace: this.paginationNamespace })
+    await store.commit('pagination/setCurrentPageNumber', {
+      pageNumber: 1,
+      namespace: this.paginationNamespace,
+    })
 
     if (this.params.page) {
-      await store.commit('pagination/setCurrentPageNumber', { pageNumber: Number(this.params.page), namespace: this.paginationNamespace })
+      await store.commit('pagination/setCurrentPageNumber', {
+        pageNumber: Number(this.params.page),
+        namespace: this.paginationNamespace,
+      })
     }
 
     await this.fetchPaginationData()
-
   }
 
   async unmounted(): Promise<void> {
@@ -94,25 +100,25 @@ export default class UserReviews extends PaginationBase<ProductReviewModel> impl
   }
 
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery = PaginationQueryParametersModel
-        .createPaginationQuery({
-          'pageNumber': this.currentPageNumber,
-          'endpointUrl': this.buildEndPointUrlForPaginatedResults(),
-          'method': ApiBaseMethods.GET
-        } )
+    const paginationQuery = PaginationModel.createPaginationQuery({
+      pageNumber: this.currentPageNumber,
+      endpointUrl: this.buildEndPointUrlForPaginatedResults(),
+      method: ApiBaseMethods.GET,
+    })
 
-    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
+    await store.dispatch('pagination/fetchPaginatedResults', {
+      params: paginationQuery,
+      namespace: this.paginationNamespace,
+    })
   }
 
   public buildEndPointUrlForPaginatedResults(): string {
     const userId = this.userData.id
-    return `reviews/user/${ userId }`
+    return `reviews/user/${userId}`
   }
-
 }
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/pages/User/UserReviews"
-
+@import '@/assets/styles/pages/User/UserReviews';
 </style>

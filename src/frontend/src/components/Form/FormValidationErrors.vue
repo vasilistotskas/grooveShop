@@ -1,12 +1,6 @@
 <template>
-  <div
-    v-if="errors.length > 0"
-    class="errors"
-  >
-    <p
-      v-for="(error, i) in errors"
-      :key="i"
-    >
+  <div v-if="errors.length > 0" class="errors">
+    <p v-for="(error, i) in errors" :key="i">
       {{ error }}
     </p>
   </div>
@@ -19,13 +13,12 @@ export default defineComponent({
   props: {
     errors: {
       type: Array,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 })
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Form/FormValidationErrors"
-
+@import '@/assets/styles/components/Form/FormValidationErrors';
 </style>

@@ -9,10 +9,7 @@
   >
     <div class="grid-account-password-fields">
       <div class="current_password">
-        <label
-          :for="formManager.form.current_password.$uid"
-          class="label"
-        >Current Password</label>
+        <label :for="formManager.form.current_password.$uid" class="label">Current Password</label>
         <FormBaseInput
           :id="formManager.form.current_password.$uid"
           v-model="formManager.form.current_password.$value"
@@ -24,14 +21,11 @@
         />
         <FormValidationErrors
           :errors="formManager.form.current_password.$errors"
-          class="validation-errros"
+          class="validation-errors"
         />
       </div>
       <div class="new_password">
-        <label
-          :for="formManager.form.new_password.$uid"
-          class="label"
-        >New Password</label>
+        <label :for="formManager.form.new_password.$uid" class="label">New Password</label>
         <FormBaseInput
           :id="formManager.form.new_password.$uid"
           v-model="formManager.form.new_password.$value"
@@ -43,14 +37,13 @@
         />
         <FormValidationErrors
           :errors="formManager.form.new_password.$errors"
-          class="validation-errros"
+          class="validation-errors"
         />
       </div>
       <div class="re_new_password">
-        <label
-          :for="formManager.form.re_new_password.$uid"
-          class="label"
-        >Retype New Password</label>
+        <label :for="formManager.form.re_new_password.$uid" class="label"
+          >Retype New Password</label
+        >
         <FormBaseInput
           :id="formManager.form.re_new_password.$uid"
           v-model="formManager.form.re_new_password.$value"
@@ -62,7 +55,7 @@
         />
         <FormValidationErrors
           :errors="formManager.form.re_new_password.$errors"
-          class="validation-errros"
+          class="validation-errors"
         />
       </div>
       <div class="button">
@@ -87,48 +80,34 @@
 </template>
 
 <script lang="ts">
-
 import store from '@/store'
-import { Options, Vue } from 'vue-class-component'
 import { equal, min } from '@/components/Form/Utils'
 import FormProvider from '@/components/Form/FormProvider.vue'
+import { Options as Component, Vue } from 'vue-class-component'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
+import UpdatePasswordApiData from '@/state/auth/Interface/UpdatePasswordApiData'
 
-let {
-  validateFields
-} = useValidation({})
+let { validateFields } = useValidation({})
 
-@Options({
+@Component({
   name: 'UserPassword',
   components: {
     FormProvider,
     FormBaseInput,
     FormSubmitButtons,
-    FormValidationErrors
+    FormValidationErrors,
   },
-  props: {
-    userData: {
-      type: Object,
-      required: true
-    }
-  }
 })
-
 export default class UserPassword extends Vue {
+  submitButtonText = 'Update'
 
-  submitButtonText: string = 'Update'
-
-  formManager = {
-    validateFields
-  } = useValidation({
+  formManager = ({ validateFields } = useValidation({
     current_password: {
       $value: '',
-      $rules: [
-        min(8)('Password has to be longer than 7 characters')
-      ]
+      $rules: [min(8)('Password has to be longer than 7 characters')],
     },
     new_password: {
       $value: '',
@@ -136,9 +115,9 @@ export default class UserPassword extends Vue {
         min(8)('Password has to be longer than 7 characters'),
         {
           key: 'pw',
-          rule: equal('Passwords do not match')
-        }
-      ]
+          rule: equal('Passwords do not match'),
+        },
+      ],
     },
     re_new_password: {
       $value: '',
@@ -146,19 +125,19 @@ export default class UserPassword extends Vue {
         min(8)('Password has to be longer than 7 characters'),
         {
           key: 'pw',
-          rule: equal('Passwords do not match')
-        }
-      ]
-    }
-  })
+          rule: equal('Passwords do not match'),
+        },
+      ],
+    },
+  }))
 
   handleSubmit = async () => {
     try {
-      const formData: any = await validateFields()
-      const apiData = {
+      const formData = (await validateFields()) as UpdatePasswordApiData
+      const apiData: UpdatePasswordApiData = {
         current_password: formData.current_password,
         new_password: formData.new_password,
-        re_new_password: formData.re_new_password
+        re_new_password: formData.re_new_password,
       }
 
       await store.dispatch('password/updateUserPassword', apiData)
@@ -172,12 +151,9 @@ export default class UserPassword extends Vue {
   clearAllAccountSessions(): void {
     store.dispatch('auth/clearAllAccountSessions')
   }
-
 }
-
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/User/UserPassword"
-
+@import '@/assets/styles/pages/User/UserPassword';
 </style>

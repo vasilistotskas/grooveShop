@@ -20,13 +20,12 @@ export default defineComponent({
   props: {
     spin: {
       type: Boolean,
-      default: true
-    }
-  }
+      default: true,
+    },
+  },
 })
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Form/FormLoadingIcon"
-
+@import '@/assets/styles/components/Form/FormLoadingIcon';
 </style>

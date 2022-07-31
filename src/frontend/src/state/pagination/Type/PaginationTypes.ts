@@ -1,8 +1,8 @@
-export type RM = {}
+export type TPaginatedModel<T> = Record<string, T>
 export type PaginationCount = number
 export type PaginationLink = {
-	next: URL,
-	previous: URL
+  next: URL
+  previous: URL
 }
-export type PaginationResults = Array<RM>
+export type PaginationResults<T> = Array<TPaginatedModel<T>>
 export type PaginationTotalPages = number

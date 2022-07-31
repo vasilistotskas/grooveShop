@@ -1,136 +1,105 @@
 import store from '@/store'
-import { forEach } from 'lodash'
 import api from '@/api/api.service'
-import { useToast } from 'vue-toastification'
+import { AxiosResponse } from 'axios'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import ProductFavouriteModel from '@/state/product/favourite/ProductFavouriteModel'
 
-const toast = useToast()
-
 @Module({ namespaced: true })
 export default class ProductFavouriteModule extends AppBaseModule {
+  favourites: Array<ProductFavouriteModel> = []
+  userFavourites: Array<ProductFavouriteModel> = []
 
-	favourites: Array<ProductFavouriteModel> = []
-	userFavourites: Array<ProductFavouriteModel> = []
+  get getFavouriteData(): Array<ProductFavouriteModel> {
+    return this.favourites
+  }
 
-	get getFavouriteData(): Array<ProductFavouriteModel> {
-		return this.favourites
-	}
+  get getUserFavouriteData(): Array<ProductFavouriteModel> {
+    return this.userFavourites
+  }
 
-	get getUserFavouriteData(): Array<ProductFavouriteModel> {
-		return this.userFavourites
-	}
+  get getIsCurrentProductInUserFavourites(): boolean {
+    const productId: number = store.getters['product/getProductId']
+    const favouriteProducts = this.context.getters['getFavouriteData']
+    const exists = favouriteProducts.filter(
+      (i: ProductFavouriteModel) => i.product_id === productId
+    )
+    return !!exists.length
+  }
 
-	get getIsCurrentProductInUserFavourites(): boolean {
-		const productId: number = store.getters['product/getProductId']
-		const favouriteProducts = this.context.getters['getFavouriteData']
-		const exists = favouriteProducts.filter((i: ProductFavouriteModel) => i.product_id === productId)
-		return !!exists.length
-	}
+  @Mutation
+  setFavourites(favourites: Array<ProductFavouriteModel>): void {
+    this.favourites = favourites
+  }
 
-	@Mutation
-	setFavourites(favourites: Array<ProductFavouriteModel>): void {
-		this.favourites = favourites
-	}
+  @Mutation
+  unsetFavourites(): void {
+    this.favourites = []
+  }
 
-	@Mutation
-	unsetFavourites(): void {
-		this.favourites = []
-	}
+  @Mutation
+  setUserFavourites(favourites: Array<ProductFavouriteModel>): void {
+    this.userFavourites = favourites
+  }
 
-	@Mutation
-	setUserFavourites(favourites: Array<ProductFavouriteModel>): void {
-		this.userFavourites = favourites
-	}
+  @Mutation
+  unsetUserFavourites(): void {
+    this.userFavourites = []
+  }
 
-	@Mutation
-	unsetUserFavourites(): void {
-		this.userFavourites = []
-	}
+  @Action
+  async toggleFavourite(product: ProductFavouriteModel): Promise<boolean> {
+    try {
+      if (!this.getIsCurrentProductInUserFavourites) {
+        return await this.context.dispatch('addProductToFavourites', product)
+      } else {
+        return await this.context.dispatch('removeProductFavourites', product)
+      }
+    } catch (error) {
+      console.log(error)
+    }
 
-	@Action
-	async toggleFavourite(product: ProductFavouriteModel): Promise<boolean> {
-		const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
-		if (IsAuthenticated) {
-			try {
-				if (!this.getIsCurrentProductInUserFavourites) {
-					return await this.context.dispatch('addProductToFavourites', product)
-				} else {
-					return await this.context.dispatch('removeProductFavourites', product)
-				}
-			} catch (error) {
-				console.log(error)
-			}
-		} else {
-			toast.error('You are not logged in')
-		}
+    return false
+  }
 
-		return false
-	}
+  @Action
+  fetchUserFavouritesFromRemote(userId: number): Promise<void> {
+    return api
+      .get(`favourites/${userId}`)
+      .then((response: AxiosResponse<Array<ProductFavouriteModel>>) => {
+        const data = response.data
+        this.context.commit('setFavourites', data)
+      })
+      .catch((e: Error) => {
+        console.log(e)
+      })
+  }
 
-	@Action
-	fetchUserFavouritesFromRemote(userId: number): Promise<void> {
-		return api.get(`favourites/${ userId }`)
-			.then((response: any) => {
-				const data = response.data
-				this.context.commit('setFavourites', data)
-			})
-			.catch((e: Error) => {
-				console.log(e)
-			})
-	}
+  @Action
+  async addProductToFavourites(): Promise<boolean> {
+    const productId: number = store.getters['product/getProductId']
+    const data = {
+      user_id: store.getters['user/getUserId'],
+      product_id: productId,
+    }
+    const userId: number = data.user_id
 
-	@Action
-	fetchUserFavouriteProductsFromRemote(userId: number): Promise<void> {
-		return api.get(`favourites/products/${ userId }`)
-			.then((response: any) => {
-				const data = response.data.results
-				const transformedData: any[] = []
-				forEach(data, function (value) {
-					transformedData.push(value.product_object)
-				})
-				this.context.commit('setUserFavourites', transformedData)
-			})
-			.catch((e: Error) => {
-				console.log(e)
-			})
-	}
+    await api.post(`favourites/${userId}/`, data)
 
-	@Action
-	async addProductToFavourites(): Promise<boolean> {
-		const productId: number = store.getters['product/getProductId']
-		const data = {
-			'user_id': store.getters['user/getUserId'],
-			'product_id': productId
-		}
-		const userId: number = data.user_id
+    await this.context.dispatch('fetchUserFavouritesFromRemote', userId)
 
-		try {
-			await api.post(`favourites/${ userId }/`, data)
-		} catch (error) {
-			throw error
-		}
+    return true
+  }
 
-		await this.context.dispatch('fetchUserFavouritesFromRemote', userId)
+  @Action
+  async removeProductFavourites(): Promise<boolean> {
+    const userId: number = store.getters['user/getUserId']
+    const productId: number = store.getters['product/getProductId']
 
-		return true
-	}
+    await api.delete(`favourites/delete/${userId}/${productId}`)
 
-	@Action
-	async removeProductFavourites(): Promise<boolean> {
-		const userId: number = store.getters['user/getUserId']
-		const productId: number = store.getters['product/getProductId']
+    await this.context.dispatch('fetchUserFavouritesFromRemote', userId)
 
-		try {
-			await api.delete(`favourites/delete/${ userId }/${ productId }`)
-		} catch (error) {
-			throw error
-		}
-
-		await this.context.dispatch('fetchUserFavouritesFromRemote', userId)
-
-		return false
-	}
-
+    return false
+  }
 }

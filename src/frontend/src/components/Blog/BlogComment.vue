@@ -3,22 +3,12 @@
     <form id="blogPostComment">
       <div class="blog-comment-container">
         <div class="blog-comment-header">
-          <h1 class="blog-comment-header-title">
-            Make a comment
-          </h1>
-          <font-awesome-icon
-            :icon="writeReviewIcon"
-            size="lg"
-          />
+          <h1 class="blog-comment-header-title">Make a comment</h1>
+          <font-awesome-icon :icon="writeReviewIcon" size="lg" />
         </div>
         <div class="blog-comment-body">
           <h2 class="blog-comment-body-title">
-            <label
-              class="blog-comment-body-label"
-              for="commentTextArea"
-            >
-              Your Comment
-            </label>
+            <label class="blog-comment-body-label" for="commentTextArea"> Your Comment </label>
           </h2>
           <div class="blog-comment-body-textarea">
             <textarea
@@ -32,11 +22,7 @@
           </div>
         </div>
         <div class="blog-comment-footer">
-          <button
-            class="blog-comment-footer-btn"
-            type="button"
-            @click="commentHandle()"
-          >
+          <button class="blog-comment-footer-btn" type="button" @click="commentHandle()">
             {{ reviewButtonText }}
           </button>
         </div>
@@ -49,20 +35,18 @@
 import store from '@/store'
 import { cloneDeep } from 'lodash'
 import { useToast } from 'vue-toastification'
-import { Options, Vue } from 'vue-class-component'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import { faPenSquare } from '@fortawesome/free-solid-svg-icons/faPenSquare'
 
 const toast = useToast()
 
-@Options({
-  name: 'BlogComment'
+@Component({
+  name: 'BlogComment',
 })
-
 export default class BlogComment extends Vue {
-
   writeReviewIcon = faPenSquare
-  comment: string = ''
+  comment = ''
 
   get isAuthenticated(): boolean {
     return store.getters['auth/isAuthenticated']
@@ -103,7 +87,7 @@ export default class BlogComment extends Vue {
   }
 
   public async commentModuleInitialize(): Promise<void> {
-    let IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
+    const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
 
     if (!IsAuthenticated) {
       return
@@ -112,13 +96,10 @@ export default class BlogComment extends Vue {
     await store.dispatch('blog/fetchCommentByUserToPost')
 
     this.comment = cloneDeep(this.commentByUserToPost.content)
-
   }
-
 }
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/components/Blog/BlogComment"
-
+@import '@/assets/styles/components/Blog/BlogComment';
 </style>

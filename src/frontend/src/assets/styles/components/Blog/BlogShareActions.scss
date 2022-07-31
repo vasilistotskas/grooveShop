@@ -1,0 +1,78 @@
+@import '@/assets/styles/base/variables';
+
+.blog-share-actions {
+  &-container {
+    display: grid;
+    grid-template-columns: repeat(13, 1fr);
+    gap: 3rem;
+    background-color: rgba(48, 54, 61, 0.7);
+    border-radius: 10px;
+    padding: 1.5rem 2rem 2rem;
+  }
+  &-network {
+    &-btn {
+      width: 100%;
+      font-size: 60px;
+      border: unset;
+      padding: 15px 25px;
+      text-align: center;
+      cursor: pointer;
+      outline: none;
+      color: #fff;
+      background-color: transparentize($color-palette-main-fourth, .5);
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 9px #999;
+      &:hover {
+        cursor: pointer;
+        background-color: transparentize($color-palette-main-fourth, .1);
+      }
+      &:active {
+        background-color: transparentize($color-palette-main-fourth, .1);
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+      }
+    }
+  }
+  &-icon {
+    &.facebook {
+      color: #4267B2;
+    }
+    &.email {
+      color: white;
+    }
+    &.linkedin {
+      color: #0A66C2;
+    }
+    &.messenger {
+      color: #00B2FF;
+    }
+    &.pinterest {
+      color: #E60023;
+    }
+    &.reddit {
+      color: #FF5700;
+    }
+    &.skype {
+      color: #00aff0;
+    }
+    &.sms {
+      color: white;
+    }
+    &.telegram {
+      color: #2AABEE;
+    }
+    &.tumblr {
+      color: #34526f;
+    }
+    &.twitter {
+      color: #1DA1F2;
+    }
+    &.viber {
+      color: #7360f2;
+    }
+    &.whatsapp {
+      color: #2db640;
+    }
+  }
+}

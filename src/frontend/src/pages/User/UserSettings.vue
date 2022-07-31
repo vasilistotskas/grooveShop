@@ -10,10 +10,7 @@
   >
     <div class="grid-account-setting-fields">
       <div class="first_name">
-        <label
-          :for="formManager.form.first_name.$uid"
-          class="label"
-        >First Name</label>
+        <label :for="formManager.form.first_name.$uid" class="label">First Name</label>
         <FormBaseInput
           :id="formManager.form.first_name.$uid"
           v-model="formManager.form.first_name.$value"
@@ -23,15 +20,12 @@
         />
         <FormValidationErrors
           :errors="formManager.form.first_name.$errors"
-          class="validation-errros"
+          class="validation-errors"
         />
       </div>
 
       <div class="last_name">
-        <label
-          :for="formManager.form.last_name.$uid"
-          class="label"
-        >Last Name</label>
+        <label :for="formManager.form.last_name.$uid" class="label">Last Name</label>
         <FormBaseInput
           :id="formManager.form.last_name.$uid"
           v-model="formManager.form.last_name.$value"
@@ -41,15 +35,12 @@
         />
         <FormValidationErrors
           :errors="formManager.form.last_name.$errors"
-          class="validation-errros"
+          class="validation-errors"
         />
       </div>
 
       <div class="phone">
-        <label
-          :for="formManager.form.phone.$uid"
-          class="label"
-        >Phone</label>
+        <label :for="formManager.form.phone.$uid" class="label">Phone</label>
         <FormBaseInput
           :id="formManager.form.phone.$uid"
           v-model="formManager.form.phone.$value"
@@ -57,17 +48,11 @@
           :placeholder="userProfile.phone"
           :validating="formManager.form.phone.$validating"
         />
-        <FormValidationErrors
-          :errors="formManager.form.phone.$errors"
-          class="validation-errros"
-        />
+        <FormValidationErrors :errors="formManager.form.phone.$errors" class="validation-errors" />
       </div>
 
       <div class="city">
-        <label
-          :for="formManager.form.city.$uid"
-          class="label"
-        >City</label>
+        <label :for="formManager.form.city.$uid" class="label">City</label>
         <FormBaseInput
           :id="formManager.form.city.$uid"
           v-model="formManager.form.city.$value"
@@ -75,17 +60,11 @@
           :placeholder="userProfile.city"
           :validating="formManager.form.city.$validating"
         />
-        <FormValidationErrors
-          :errors="formManager.form.city.$errors"
-          class="validation-errros"
-        />
+        <FormValidationErrors :errors="formManager.form.city.$errors" class="validation-errors" />
       </div>
 
       <div class="zipcode">
-        <label
-          :for="formManager.form.zipcode.$uid"
-          class="label"
-        >Zipcode</label>
+        <label :for="formManager.form.zipcode.$uid" class="label">Zipcode</label>
         <FormBaseInput
           :id="formManager.form.zipcode.$uid"
           v-model="formManager.form.zipcode.$value"
@@ -95,15 +74,12 @@
         />
         <FormValidationErrors
           :errors="formManager.form.zipcode.$errors"
-          class="validation-errros"
+          class="validation-errors"
         />
       </div>
 
       <div class="address">
-        <label
-          :for="formManager.form.address.$uid"
-          class="label"
-        >Address</label>
+        <label :for="formManager.form.address.$uid" class="label">Address</label>
         <FormBaseInput
           :id="formManager.form.address.$uid"
           v-model="formManager.form.address.$value"
@@ -113,15 +89,12 @@
         />
         <FormValidationErrors
           :errors="formManager.form.address.$errors"
-          class="validation-errros"
+          class="validation-errors"
         />
       </div>
 
       <div class="place">
-        <label
-          :for="formManager.form.place.$uid"
-          class="label"
-        >Place</label>
+        <label :for="formManager.form.place.$uid" class="label">Place</label>
         <FormBaseInput
           :id="formManager.form.place.$uid"
           v-model="formManager.form.place.$value"
@@ -129,17 +102,11 @@
           :placeholder="userProfile.place"
           :validating="formManager.form.place.$validating"
         />
-        <FormValidationErrors
-          :errors="formManager.form.place.$errors"
-          class="validation-errros"
-        />
+        <FormValidationErrors :errors="formManager.form.place.$errors" class="validation-errors" />
       </div>
 
       <div class="country">
-        <label
-          class="form-label"
-          for="inputCountry"
-        >Country</label>
+        <label class="form-label" for="inputCountry">Country</label>
         <select
           id="inputCountry"
           v-model="userProfile.country"
@@ -147,12 +114,7 @@
           name="country"
           @change="restRegions"
         >
-          <option
-            disabled
-            value="choose"
-          >
-            Choose...
-          </option>
+          <option disabled value="choose">Choose...</option>
           <option
             v-for="country in availableCountries"
             :key="country.alpha_2"
@@ -164,27 +126,10 @@
       </div>
 
       <div class="region">
-        <label
-          class="form-label"
-          for="inputRegion"
-        >Region</label>
-        <select
-          id="inputRegion"
-          v-model="userProfile.region"
-          class="form-select"
-          name="region"
-        >
-          <option
-            disabled
-            value="choose"
-          >
-            Choose...
-          </option>
-          <option
-            v-for="region in regionsBasedOnAlpha"
-            :key="region.alpha"
-            :value="region.alpha"
-          >
+        <label class="form-label" for="inputRegion">Region</label>
+        <select id="inputRegion" v-model="userProfile.region" class="form-select" name="region">
+          <option disabled value="choose">Choose...</option>
+          <option v-for="region in regionsBasedOnAlpha" :key="region.alpha" :value="region.alpha">
             {{ region.name }}
           </option>
         </select>
@@ -205,89 +150,80 @@
 
 <script lang="ts">
 import store from '@/store'
+import { PropType } from 'vue'
 import { cloneDeep } from 'lodash'
-import { min } from '@/components/Form/Utils'
-import { Options, Vue } from 'vue-class-component'
+import { exactly, min } from '@/components/Form/Utils'
 import RegionsModel from '@/state/country/RegionsModel'
 import CountryModel from '@/state/country/CountryModel'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
+import { Options as Component, Vue } from 'vue-class-component'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
+import { HTMLElementEvent } from '@/state/common/Types/HelpingTypes'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
+import UserProfileApiData from '@/state/user/Interface/UserProfileApiData'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 
-let {
-  validateFields
-} = useValidation({})
+let { validateFields } = useValidation({})
 
-@Options({
+@Component({
   name: 'UserSettings',
   components: {
     FormProvider,
     FormBaseInput,
     FormSubmitButtons,
-    FormValidationErrors
+    FormValidationErrors,
   },
   props: {
     userData: {
-      type: Object,
-      required: true
-    }
-  }
+      type: Object as PropType<UserProfileModel>,
+      required: true,
+    },
+  },
 })
-
 export default class UserSettings extends Vue {
-
   userProfile = new UserProfileModel()
   userData = new UserProfileModel()
-  submitButtonText: string = 'Update'
-  formManager = {
-    validateFields
-  } = useValidation({
+  submitButtonText = 'Update'
+  formManager = ({ validateFields } = useValidation({
     first_name: {
       $value: '',
-      $rules: [
-        min(2)('First Name has to be longer than 1 characters')
-      ]
+      $rules: [min(2)('First Name has to be longer than 1 characters')],
     },
     last_name: {
       $value: '',
-      $rules: [
-        min(2)('Last Name has to be longer than 1 characters')
-      ]
+      $rules: [min(2)('Last Name has to be longer than 1 characters')],
     },
     phone: {
       $value: '',
-      $rules: [
-        // exactly(10)("Phone number has to be 10 characters")
-      ]
+      $rules: [exactly(10)('Phone number has to be 10 characters')],
     },
     city: {
       $value: '',
       $rules: [
         // min(2)("City has to be longer than 1 characters")
-      ]
+      ],
     },
     zipcode: {
       $value: '',
       $rules: [
         // exactly(5)("Zipcode has to be 5 characters")
-      ]
+      ],
     },
     address: {
       $value: '',
       $rules: [
         // min(2)("City has to be longer than 1 characters")
-      ]
+      ],
     },
     place: {
       $value: '',
       $rules: [
         // min(2)("Place has to be longer than 1 characters")
-      ]
-    }
-  })
+      ],
+    },
+  }))
 
   get isAuthenticated(): boolean {
     return store.getters['auth/isAuthenticated']
@@ -307,16 +243,16 @@ export default class UserSettings extends Vue {
     this.userProfileInitialize()
   }
 
-  async restRegions(e: any): Promise<void> {
-    const countryAlpha2Key = e.target.value
+  async restRegions(e: HTMLElementEvent<HTMLTextAreaElement>): Promise<void> {
+    const countryAlpha2Key = e.target?.value
     await store.dispatch('country/findRegionsBasedOnAlphaFromInput', countryAlpha2Key)
     this.userProfile.region = 'choose'
   }
 
   handleSubmit = async () => {
     try {
-      const formData: any = await validateFields()
-      const apiData = {
+      const formData = (await validateFields()) as UserProfileModel
+      const apiData: UserProfileApiData = {
         user_id: 1,
         first_name: formData.first_name,
         last_name: formData.last_name,
@@ -326,11 +262,10 @@ export default class UserSettings extends Vue {
         zipcode: formData.zipcode,
         address: formData.address,
         country: this.userProfile.country,
-        region: this.userProfile.region
+        region: this.userProfile.region,
       }
 
       await store.dispatch('user/updateUserProfile', apiData)
-
     } catch (e) {
       if (e instanceof ValidationError) {
         console.log(e.message)
@@ -348,7 +283,9 @@ export default class UserSettings extends Vue {
         this.formManager.form.last_name.$value = cloneDeep(this.userData.last_name)
       }
       if (this.userProfile.phone !== null) {
-        this.formManager.form.phone.$value = String(cloneDeep(this.userData.phone) as unknown as string)
+        this.formManager.form.phone.$value = String(
+          cloneDeep(this.userData.phone) as unknown as string
+        )
       }
       if (this.userProfile.place !== null) {
         this.formManager.form.place.$value = cloneDeep(this.userData.place)
@@ -357,18 +294,18 @@ export default class UserSettings extends Vue {
         this.formManager.form.city.$value = cloneDeep(this.userData.city)
       }
       if (this.userProfile.zipcode !== null) {
-        this.formManager.form.zipcode.$value = String(cloneDeep(this.userData.zipcode) as unknown as string)
+        this.formManager.form.zipcode.$value = String(
+          cloneDeep(this.userData.zipcode) as unknown as string
+        )
       }
       if (this.userProfile.address !== null) {
         this.formManager.form.address.$value = cloneDeep(this.userData.address)
       }
     }
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/User/UserSettings"
-
+@import '@/assets/styles/pages/User/UserSettings';
 </style>

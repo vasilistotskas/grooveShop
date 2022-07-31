@@ -1,3 +1,5 @@
+@import '@/assets/styles/base/variables';
+
 :root {
   // DARK
   --cp-palette-main-dark-primary: #{$color-palette-main-primary-light};
@@ -209,38 +211,44 @@ body {
 }
 
 .container {
-  @media screen and (min-width: 1400px) {
-    max-width: 1320px;
+  @media (min-width: map-get($grid-breakpoints, 'sm')) {
+    max-width: 540px;
   }
-  @media sceen and (min-width: 1200px) {
-    max-width: 1140px;
-  }
-  @media sceen and (min-width: 992px) {
-    max-width: 960px;
-  }
-  @media sceen and (min-width: 768px) {
+  @media (min-width: map-get($grid-breakpoints, 'md')) {
     max-width: 720px;
   }
-  @media sceen and (min-width: 576px) {
-    max-width: 540px;
+  @media (min-width: map-get($grid-breakpoints, 'lg')) {
+    max-width: 960px;
+  }
+  @media (min-width: map-get($grid-breakpoints, 'xl')) {
+    max-width: 1140px;
+  }
+  @media screen and (min-width: map-get($grid-breakpoints, 'xlplus')) {
+    max-width: 1320px;
+  }
+  @media screen and (min-width: map-get($grid-breakpoints, 'xxl')) {
+    max-width: 1600px;
+  }
+  @media screen and (min-width: map-get($grid-breakpoints, 'xxxl')) {
+    max-width: 1800px;
   }
 }
 
 .container-small {
-  @media screen and (min-width: 1400px) {
-    max-width: 1140px;
+  @media (min-width: map-get($grid-breakpoints, 'sm')) {
+    max-width: 540px;
   }
-  @media sceen and (min-width: 1200px) {
-    max-width: 1140px;
-  }
-  @media sceen and (min-width: 992px) {
-    max-width: 960px;
-  }
-  @media sceen and (min-width: 768px) {
+  @media (min-width: map-get($grid-breakpoints, 'md')) {
     max-width: 720px;
   }
-  @media sceen and (min-width: 576px) {
-    max-width: 540px;
+  @media (min-width: map-get($grid-breakpoints, 'lg')) {
+    max-width: 960px;
+  }
+  @media (min-width: map-get($grid-breakpoints, 'xl')) {
+    max-width: 1140px;
+  }
+  @media screen and (min-width: map-get($grid-breakpoints, 'xlplus')) {
+    max-width: 1320px;
   }
 }
 
@@ -310,7 +318,9 @@ body {
   top: 30%;
   z-index: 13;
   border: 1px solid var(--cp-palette-main-third);
-
+  @media screen and (max-width: map-get($grid-breakpoints, 'md'))  {
+    display: none;
+  }
   li {
     &:first-child {
       a {
@@ -675,8 +685,12 @@ body {
 }
 
 .main-section {
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: map-get($grid-breakpoints, 'xl')) {
     min-height: 750px;
     display: grid;
   }
+}
+
+.v-hl-btn {
+  background: transparent;
 }

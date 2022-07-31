@@ -1,4 +1,4 @@
 export enum HtmlImageLoadingOptions {
-	eager = 'eager',
-	lazy = 'lazy'
+  eager = 'eager',
+  lazy = 'lazy',
 }

@@ -1,13 +1,10 @@
 <template>
-  <div :class="`cp-utilities-generic_modal-wrapper ${isModalCurrentlyOpen ? 'open' : 'closed'}`">
-    <div
-      class="cp-utilities-generic_modal-overlay"
-      @click="closeModal"
-    >
-      <svg
-        class="cp-utilities-generic_modal-overlay-static"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+  <div
+    :class="`cp-utilities-generic_modal-wrapper ${isModalCurrentlyOpen ? 'open' : 'closed'}`"
+    :ref="getMyId"
+  >
+    <div class="cp-utilities-generic_modal-overlay" @click="closeModal">
+      <svg class="cp-utilities-generic_modal-overlay-static" xmlns="http://www.w3.org/2000/svg">
         <filter :id="getMyId">
           <feTurbulence
             type="fractalNoise"
@@ -16,11 +13,7 @@
             stitchTiles="stitch"
           />
         </filter>
-        <rect
-          width="100%"
-          height="100%"
-          :filter="`url(#${getMyId})`"
-        />
+        <rect width="100%" height="100%" :filter="`url(#${getMyId})`" />
       </svg>
       <button
         :style="`color: ${closeBtnColor}`"
@@ -28,10 +21,7 @@
         aria-label="Close"
         @click="closeModal"
       >
-        <font-awesome-icon
-          :icon="getExitModalIcon"
-          size="2x"
-        />
+        <font-awesome-icon :icon="getExitModalIcon" size="2x" />
       </button>
     </div>
     <div class="cp-utilities-generic_modal">
@@ -49,17 +39,16 @@
 </template>
 
 <script lang="ts">
-import { Options } from 'vue-class-component'
+import { Options as Component } from 'vue-class-component'
 import GenericModalModel from '@/components/Utilities/Model/GenericModalModel'
 
-@Options({
+@Component({
   name: 'GenericModal',
-  extends: GenericModalModel
+  extends: GenericModalModel,
 })
 export default class GenericModal extends GenericModalModel {}
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Utilities/GenericModal"
-
+@import '@/assets/styles/components/Utilities/GenericModal';
 </style>

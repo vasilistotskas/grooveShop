@@ -11,20 +11,9 @@
         :src="profileImageFilename"
       />
       <nav class="user-account-grid-navbar">
-        <div
-          id="navbarNavAccount"
-          class="user-account-grid-navbar-paths"
-        >
-          <RouterLink
-            :to="{ name: 'Orders' }"
-            aria-label="Orders"
-            class="nav-link"
-            title="Orders"
-          >
-            <font-awesome-icon
-              :icon="truckIcon"
-              size="1x"
-            />
+        <div id="navbarNavAccount" class="user-account-grid-navbar-paths">
+          <RouterLink :to="{ name: 'Orders' }" aria-label="Orders" class="nav-link" title="Orders">
+            <font-awesome-icon :icon="truckIcon" size="1x" />
             <span>Orders</span>
           </RouterLink>
           <RouterLink
@@ -33,10 +22,7 @@
             class="nav-link"
             title="Favourites"
           >
-            <font-awesome-icon
-              :icon="heartIcon"
-              size="1x"
-            />
+            <font-awesome-icon :icon="heartIcon" size="1x" />
             <span>Favourites</span>
           </RouterLink>
           <RouterLink
@@ -45,10 +31,7 @@
             class="nav-link"
             title="Reviews"
           >
-            <font-awesome-icon
-              :icon="starIcon"
-              size="1x"
-            />
+            <font-awesome-icon :icon="starIcon" size="1x" />
             <span>Reviews</span>
           </RouterLink>
           <RouterLink
@@ -57,10 +40,7 @@
             class="nav-link"
             title="Settings"
           >
-            <font-awesome-icon
-              :icon="cogsIcon"
-              size="1x"
-            />
+            <font-awesome-icon :icon="cogsIcon" size="1x" />
             <span>Settings</span>
           </RouterLink>
           <RouterLink
@@ -69,18 +49,11 @@
             class="nav-link"
             title="Password"
           >
-            <font-awesome-icon
-              :icon="lockIcon"
-              size="1x"
-            />
+            <font-awesome-icon :icon="lockIcon" size="1x" />
             <span>Password</span>
           </RouterLink>
         </div>
-        <button
-          class="btn btn-outline-primary-two"
-          title="Log Out"
-          @click="logout()"
-        >
+        <button class="btn btn-outline-primary-two" title="Log Out" @click="logout()">
           Log out
         </button>
       </nav>
@@ -116,10 +89,7 @@
         </div>
       </div>
 
-      <router-view
-        :key="$route.path"
-        :user-data="userData"
-      />
+      <router-view :key="$route.path" :user-data="userData" />
     </div>
   </div>
 </template>
@@ -127,8 +97,8 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
-import { Options, Vue } from 'vue-class-component'
 import { MainRouteNames } from '@/routes/Enum/MainRouteNames'
+import { Options as Component, Vue } from 'vue-class-component'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
 import { faCogs } from '@fortawesome/free-solid-svg-icons/faCogs'
@@ -139,17 +109,16 @@ import { faTruck } from '@fortawesome/free-solid-svg-icons/faTruck'
 import UserProfileImage from '@/components/User/UserProfileImage.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
-@Options({
+@Component({
   name: 'UserAccount',
   components: {
     UserProfileImage,
-    Breadcrumbs
-  }
+    Breadcrumbs,
+  },
 })
-
 export default class UserAccount extends Vue {
   MainRouteNames = MainRouteNames
-  profileImageFilename: string = ''
+  profileImageFilename = ''
   cogsIcon = faCogs
   starIcon = faStar
   truckIcon = faTruck
@@ -157,8 +126,9 @@ export default class UserAccount extends Vue {
   lockIcon = faLock
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
-    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
+      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    return currentRouteMetaBreadcrumb()
   }
 
   get isAuthenticated(): boolean {
@@ -169,7 +139,7 @@ export default class UserAccount extends Vue {
     if (this.isAuthenticated) {
       return store.getters['user/getUserData']
     }
-    return new UserProfileModel
+    return new UserProfileModel()
   }
 
   get fullname(): string {
@@ -190,10 +160,10 @@ export default class UserAccount extends Vue {
   created(): void {
     document.title = 'My Account'
     this.$watch(
-        () => this.userData,
-        (image: UserProfileModel) => {
-          this.profileImageFilename = image.main_image_filename
-        }
+      () => this.userData,
+      (image: UserProfileModel) => {
+        this.profileImageFilename = image.main_image_filename
+      }
     )
   }
 
@@ -211,11 +181,9 @@ export default class UserAccount extends Vue {
     store.commit('user/unsetUserData')
     router.push('/')
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/User/UserAccount"
-
+@import '@/assets/styles/pages/User/UserAccount';
 </style>

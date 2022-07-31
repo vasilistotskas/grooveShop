@@ -47,6 +47,11 @@ ALLOWED_HOSTS.extend(
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:8010']
 
+# Graphql force_text warning (w8ing for version 3)
+import django
+from django.utils.encoding import force_str
+django.utils.encoding.force_text = force_str
+
 # Application definition
 DJANGO_APPS = [
     'django.contrib.admin',
@@ -64,7 +69,8 @@ PROJECT_APPS = [
     'backend.search',
     'backend.slider',
     'backend.blog',
-    'backend.seo'
+    'backend.seo',
+    'backend.tip'
 ]
 THIRD_PARTY_APPS = [
     'rest_framework',
@@ -74,7 +80,7 @@ THIRD_PARTY_APPS = [
     'djoser',
     'mptt',
     'tinymce',
-    'django_filters'
+    'django_filters',
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
@@ -207,9 +213,10 @@ STATICFILES_DIRS = (
     BASE_DIR.joinpath('files'),
 )
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # graphql schema
 GRAPHENE = {
-    "SCHEMA": "backend.blog.schema.schema",
+    "SCHEMA": "backend.core.schema.schema",
 }
 
 # Tinymce admin panel editor config

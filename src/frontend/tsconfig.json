@@ -11,7 +11,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "outDir": "build",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "strictFunctionTypes": false,
     "downlevelIteration": true,
     "resolveJsonModule": true,

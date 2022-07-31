@@ -6,28 +6,24 @@
     <!--          <span style="text-decoration: underline;">Here</span>!</a>-->
     <!--      </p>-->
     <!--    </div>-->
-    <Navbar
-      :cart-total-length="cartTotalLength"
-      :pre-head-hidden="!showPreHeader"
-    />
+    <Navbar :cart-total-length="cartTotalLength" :pre-head-hidden="!showPreHeader" />
   </header>
 </template>
 
 <script lang="ts">
 import store from '@/store'
-import { Options, Vue } from 'vue-class-component'
 import Navbar from '@/components/Navbar/Navbar.vue'
+import { Options as Component, Vue } from 'vue-class-component'
 
-@Options({
+@Component({
   name: 'Header',
   components: {
-    Navbar
-  }
+    Navbar,
+  },
 })
 export default class Header extends Vue {
-
-  showPreHeader: boolean = true
-  lastScrollPosition: number = 0
+  showPreHeader = true
+  lastScrollPosition = 0
 
   get cartTotalLength(): number {
     return store.getters['cart/getCartTotalLength']
@@ -54,12 +50,9 @@ export default class Header extends Vue {
     this.showPreHeader = currentScrollPosition < this.lastScrollPosition
     this.lastScrollPosition = currentScrollPosition
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Main/Header"
-
+@import '@/assets/styles/components/Main/Header';
 </style>
-

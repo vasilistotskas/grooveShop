@@ -86,10 +86,6 @@
   grid-template-columns: 18% 15% 13% 34% 20%;
   grid-column-gap: 0;
   grid-row-gap: 0;
-  @media screen and (min-width: 1400px) {
-    max-width: 1330px;
-  }
-
 }
 
 .logo-header {
@@ -305,7 +301,7 @@
 
   .toggle-dark-mode-part {
     position: absolute;
-    right: -75px;
+    right: -45px;
   }
 
   .cart-total-length {

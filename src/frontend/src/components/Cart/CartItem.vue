@@ -1,11 +1,7 @@
 <template>
   <div class="grid-container-cart">
     <div class="grid-container-cart-item-one">
-      <RouterLink
-        :title="item.product.name"
-        :to="productPath"
-        aria-label="Product"
-      >
+      <RouterLink :title="item.product.name" :to="productPath" aria-label="Product">
         <GrooveImage
           :alt="item.product.name"
           :file-name="item.product.main_image_filename"
@@ -18,9 +14,7 @@
         <span>{{ item.product.name }}</span>
       </RouterLink>
     </div>
-    <div class="grid-container-cart-item-two">
-      ${{ item.product.price }}
-    </div>
+    <div class="grid-container-cart-item-two">${{ item.product.price }}</div>
     <div class="grid-container-cart-item-three">
       <a
         :title="`Decrease Quantity of ${item.product.name}`"
@@ -29,10 +23,7 @@
         type="button"
         @click="decrementQuantity(item)"
       >
-        <font-awesome-icon
-          :icon="minusIcon"
-          size="lg"
-        />
+        <font-awesome-icon :icon="minusIcon" size="lg" />
       </a>
       {{ item.quantity }}
       <a
@@ -42,18 +33,13 @@
         type="button"
         @click="incrementQuantity(item)"
       >
-        <font-awesome-icon
-          :icon="plusIcon"
-          size="lg"
-        />
+        <font-awesome-icon :icon="plusIcon" size="lg" />
       </a>
     </div>
-    <div class="grid-container-cart-item-four">
-      ${{ itemTotal.toFixed(2) }}
-    </div>
+    <div class="grid-container-cart-item-four">${{ itemTotal.toFixed(2) }}</div>
     <div class="grid-container-cart-item-five">
       <button
-        :title="`Remove from cart ${ item.product.name }`"
+        :title="`Remove from cart ${item.product.name}`"
         class="btn-outline-primary-main"
         type="button"
         @click="removeFromCart(item)"
@@ -66,28 +52,27 @@
 
 <script lang="ts">
 import store from '@/store'
-import { Options, Vue } from 'vue-class-component'
+import { PropType } from 'vue'
 import CartItemModel from '@/state/cart/CartItemModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle'
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle'
 
-@Options({
+@Component({
   name: 'CartItem',
   components: {
-    GrooveImage
+    GrooveImage,
   },
   props: {
     item: {
-      type: Object
-    }
-  }
+      type: Object as PropType<CartItemModel>,
+    },
+  },
 })
-
 export default class CartItem extends Vue {
-
   item = new CartItemModel()
 
   trashIcon = faTrash
@@ -127,6 +112,5 @@ export default class CartItem extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Cart/CartItem"
-
+@import '@/assets/styles/components/Cart/CartItem';
 </style>

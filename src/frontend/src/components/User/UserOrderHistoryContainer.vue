@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="order && Object.keys(order).length > 0"
-    class="card-body card-body-order-history"
-  >
+  <div v-if="order && Object.keys(order).length > 0" class="card-body card-body-order-history">
     <div class="order-history-grid-head">
       <span />
       <span>Product</span>
@@ -23,39 +20,35 @@
 
 <script lang="ts">
 import { forEach } from 'lodash'
-import { Options, Vue } from 'vue-class-component'
 import UserOrderModel from '@/state/user/order/UserOrderModel'
+import OrderItemModel from '@/state/user/order/OrderItemModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import UserOrderHistoryCard from '@/components/User/UserOrderHistoryCard.vue'
 
-@Options({
+@Component({
   name: 'UserOrderHistoryContainer',
   components: {
     Pagination,
-    UserOrderHistoryCard
+    UserOrderHistoryCard,
   },
   props: {
-    order: Object
-  }
+    order: Object,
+  },
 })
-
-export default class UserOrderHistoryContainer extends Vue  {
-
+export default class UserOrderHistoryContainer extends Vue {
   order = new UserOrderModel()
 
   get orderTotal(): number {
     let total = 0
-    forEach(this.order.items, (item : any) => {
+    forEach(this.order.items, (item: OrderItemModel) => {
       total += item.quantity * item.product.price
     })
     return total
   }
-
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/User/UserOrderHistory"
-
+@import '@/assets/styles/pages/User/UserOrderHistory';
 </style>

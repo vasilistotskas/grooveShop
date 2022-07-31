@@ -40,6 +40,9 @@ class TagType(DjangoObjectType):
 
 
 class CategoryType(DjangoObjectType):
+    main_image_absolute_url = graphene.String(source='main_image_absolute_url')
+    main_image_filename = graphene.String(source='main_image_filename')
+
     class Meta:
         model = Category
 
@@ -251,6 +254,3 @@ class Mutation(graphene.ObjectType):
     create_comment = CommentCreateMutation.Field()
     update_comment = CommentUpdateMutation.Field()
     delete_comment = CommentDeleteMutation.Field()
-
-
-schema = graphene.Schema(query=Query, mutation=Mutation)

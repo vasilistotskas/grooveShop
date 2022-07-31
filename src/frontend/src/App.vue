@@ -1,8 +1,5 @@
 <template>
-  <Loader
-    v-show="isLoading"
-    id="mainLoader"
-  />
+  <Loader v-show="isLoading" id="mainLoader" />
   <div id="wrapper">
     <Header />
 
@@ -16,31 +13,30 @@
   </div>
 </template>
 
-
 <script lang="ts">
 import store from '@/store'
 import _, { LoDashStatic } from 'lodash'
 import packageMeta from '@/../package.json'
 import Footer from '@/components/Main/Footer.vue'
-import { Options, Vue } from 'vue-class-component'
 import Header from '@/components/Main/Header.vue'
 import Loader from '@/components/Main/Loader.vue'
+import CartItemModel from '@/state/cart/CartItemModel'
 import CountryModel from '@/state/country/CountryModel'
 import RegionsModel from '@/state/country/RegionsModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import SocialSidebar from '@/components/Main/SocialSidebar.vue'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
 
-@Options({
+@Component({
   name: 'App',
   components: {
     Header,
     Footer,
     SocialSidebar,
-    Loader
-  }
+    Loader,
+  },
 })
 export default class App extends Vue {
-
   get lodash(): LoDashStatic {
     return _
   }
@@ -65,7 +61,7 @@ export default class App extends Vue {
     if (this.isAuthenticated) {
       return store.getters['user/getUserData']
     }
-    return new UserProfileModel
+    return new UserProfileModel()
   }
 
   get availableCountries(): CountryModel {
@@ -76,7 +72,7 @@ export default class App extends Vue {
     return store.getters['country/getRegionsBasedOnAlpha']
   }
 
-  get cartData(): {} {
+  get cartData(): Array<CartItemModel> {
     return store.getters['cart/getCart']
   }
 
@@ -85,7 +81,7 @@ export default class App extends Vue {
       this.initializeAuth(),
       this.initializeCart(),
       store.dispatch('category/fetchCategoriesTreeFromRemote'),
-      store.dispatch('country/fetchCountriesFromRemote')
+      store.dispatch('country/fetchCountriesFromRemote'),
     ])
 
     if (this.isAuthenticated) {
@@ -108,12 +104,13 @@ export default class App extends Vue {
     store.commit('cart/initializeCart')
     store.dispatch('cart/cartTotalPriceForPayWayAction')
   }
-
-
 }
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/base/_commons"
-
+@import '@/assets/styles/base/commons';
+@import '@/assets/styles/base/form_colors';
+@import '@/assets/styles/base/helpers';
+@import '@/assets/styles/base/mixins';
+@import '@/assets/styles/base/typography';
 </style>

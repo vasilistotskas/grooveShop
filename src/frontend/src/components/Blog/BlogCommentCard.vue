@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="comment && Object.keys(comment).length > 0" 
-    class="blog-comments-card-container"
-  >
+  <div v-if="comment && Object.keys(comment).length > 0" class="blog-comments-card-container">
     <div
       class="blog-comments-card-wrapper"
       :style="{ backgroundImage: commentBackgroundImage(comment) }"
@@ -21,11 +18,7 @@
       <div class="blog-comments-card-date">
         <span class="blog-comments-card-date-created">At : {{ comment.createdAt }} </span>
         <span class="blog-comments-card-date-title">
-          <font-awesome-icon
-            :icon="checkCircleIcon"
-            :style="{ color: '#53e24aeb' }"
-            size="sm"
-          />
+          <font-awesome-icon :icon="checkCircleIcon" :style="{ color: '#53e24aeb' }" size="sm" />
           Verified Comment
         </span>
       </div>
@@ -35,10 +28,7 @@
         <span> {{ comment.content }} </span>
       </div>
     </div>
-    <div
-      v-if="comment.user.id === userId"
-      class="blog-comments-card-actions"
-    >
+    <div v-if="comment.user.id === userId" class="blog-comments-card-actions">
       <a
         :title="`Comment Settings of ${comment.post.title}`"
         class="blog-comments-card-actions-settings"
@@ -65,7 +55,8 @@
               data-method="delete"
               rel="nofollow"
               @click="deleteComment(comment.id)"
-            >Delete</a>
+              >Delete</a
+            >
           </div>
         </div>
       </div>
@@ -76,38 +67,38 @@
 <script lang="ts">
 import store from '@/store'
 import router from '@/routes'
+import { PropType } from 'vue'
 import { onClickOutside } from '@vueuse/core'
-import { Options, Vue } from 'vue-class-component'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
 import { MainRouteNames } from '@/routes/Enum/MainRouteNames'
+import { Options as Component, Vue } from 'vue-class-component'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
 
-@Options({
+@Component({
   name: 'BlogCommentCard',
   props: {
     comment: {
-      type: Object,
-      required: false
+      type: Object as PropType<BlogCommentModel>,
+      required: false,
     },
     userId: {
       type: Number,
-      required: false
+      required: false,
     },
     class: {
       type: String,
-      required: false
-    }
-  }
+      required: false,
+    },
+  },
 })
-
 export default class BlogCommentCard extends Vue {
   MainRouteNames = MainRouteNames
   $refs!: {
-    userCommentActionTarget: HTMLElement;
+    userCommentActionTarget: HTMLElement
   }
   comment = new BlogCommentModel()
-  userId: number = 0
+  userId = 0
   commentActionsOpen = true
 
   checkCircleIcon = faCheckCircle
@@ -126,7 +117,7 @@ export default class BlogCommentCard extends Vue {
     if (this.isAuthenticated) {
       return store.getters['user/getUserData']
     }
-    return new UserProfileModel
+    return new UserProfileModel()
   }
 
   public openCommentActions() {
@@ -140,24 +131,37 @@ export default class BlogCommentCard extends Vue {
   }
 
   public commentBackgroundImage(comment: BlogCommentModel): string {
-
-    const imageNameFileTypeRemove = comment.post.mainImageFilename.substring(0, comment.post.mainImageFilename.lastIndexOf('.')) || comment.post.mainImageFilename
+    const imageNameFileTypeRemove =
+      comment.post.mainImageFilename.substring(
+        0,
+        comment.post.mainImageFilename.lastIndexOf('.')
+      ) || comment.post.mainImageFilename
 
     if (router.currentRoute.value.name === MainRouteNames.POST) {
       return 'url(' + comment.userProfile.mainImageAbsoluteUrl + ')'
     }
 
     if (router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT_BLOG_COMMENTS) {
-      return 'url(' + 'http://localhost:8010' + '/mediastream/media/uploads/' + 'blog' + '/' + imageNameFileTypeRemove + '/' + '100' + '/' + '100' + ')'
+      return (
+        'url(' +
+        'http://localhost:8010' +
+        '/mediastream/media/uploads/' +
+        'blog' +
+        '/' +
+        imageNameFileTypeRemove +
+        '/' +
+        '100' +
+        '/' +
+        '100' +
+        ')'
+      )
     }
 
     return ''
   }
-
 }
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/components/Blog/BlogCommentCard"
-
+@import '@/assets/styles/components/Blog/BlogCommentCard';
 </style>

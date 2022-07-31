@@ -5,6 +5,7 @@ REM createordersfaker.bat
 REM createblogfaker.bat
 
 docker-compose run backend sh -c "python manage.py makemigrations --noinput"
+docker-compose run backend sh -c "python manage.py migrate"
 docker-compose run backend sh -c "python manage.py populate_users"
 docker-compose run backend sh -c "python manage.py populate_products"
 docker-compose run backend sh -c "python manage.py populate_orders"
@@ -27,3 +28,8 @@ docker exec -it a0d879e07554 bash
 
 REM NAMED DOCKER YML FILES RUN
 docker-compose -f docker-compose-dev.yml up --build
+
+REM FOR VIRTUAL ENV
+pip install virtualenv
+virtualenv env
+env\scripts\activate
