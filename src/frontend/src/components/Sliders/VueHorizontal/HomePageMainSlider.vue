@@ -1,10 +1,20 @@
 <template>
   <div @mousedown.left="onMouseDown">
-    <VueHorizontal v-if="slider && Object.keys(slider).length > 0" responsive class="home-page-main-slider-vue_horizontal horizontal" ref="horizontal" @scroll="onScroll">
+    <VueHorizontal
+      v-if="slider && Object.keys(slider).length > 0"
+      responsive
+      class="home-page-main-slider-vue_horizontal horizontal"
+      ref="horizontal"
+      @scroll="onScroll"
+    >
       <section v-if="slider.video" :key="slider.id" class="instagram-gallery-image">
         <video width="1200" height="755" ref="mainSliderVideoRef" />
       </section>
-      <section v-for="slide in slider.slides" :key="slide.id" class="instagram-gallery-item slider-item">
+      <section
+        v-for="slide in slider.slides"
+        :key="slide.id"
+        class="instagram-gallery-item slider-item"
+      >
         <GrooveImage
           :alt="slide.title ? slide.title : 'no-alt'"
           :file-name="slide.main_image_filename"
@@ -28,7 +38,11 @@ import VueHorizontal from 'vue-horizontal'
 import SliderModel from '@/state/slider/SliderModel'
 import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
-import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import {
+  ImageFitOptions,
+  ImagePositionOptions,
+  ImageTypeOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Component({
   name: 'HomePageMainSlider',

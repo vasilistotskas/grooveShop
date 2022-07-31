@@ -25,7 +25,8 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 })
 export default class CheckoutSuccess extends Vue {
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
+      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
     return currentRouteMetaBreadcrumb()
   }
 

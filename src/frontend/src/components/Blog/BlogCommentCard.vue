@@ -1,9 +1,17 @@
 <template>
   <div v-if="comment && Object.keys(comment).length > 0" class="blog-comments-card-container">
-    <div class="blog-comments-card-wrapper" :style="{ backgroundImage: commentBackgroundImage(comment) }" />
+    <div
+      class="blog-comments-card-wrapper"
+      :style="{ backgroundImage: commentBackgroundImage(comment) }"
+    />
     <div class="blog-comments-card-head">
       <div class="blog-comments-card-name">
-        <RouterLink :title="comment.post.slug" :to="`/post/${comment.post.slug}`" aria-label="Blog Post" class="blog-comments-card-link">
+        <RouterLink
+          :title="comment.post.slug"
+          :to="`/post/${comment.post.slug}`"
+          aria-label="Blog Post"
+          class="blog-comments-card-link"
+        >
           <span class="blog-comments-card-name-title"> {{ comment.post.title }}</span>
         </RouterLink>
       </div>
@@ -21,16 +29,34 @@
       </div>
     </div>
     <div v-if="comment.user.id === userId" class="blog-comments-card-actions">
-      <a :title="`Comment Settings of ${comment.post.title}`" class="blog-comments-card-actions-settings" @click="openCommentActions" />
-      <div v-if="commentActionsOpen" ref="userCommentActionTarget" class="blog-comments-card-actions-menu">
+      <a
+        :title="`Comment Settings of ${comment.post.title}`"
+        class="blog-comments-card-actions-settings"
+        @click="openCommentActions"
+      />
+      <div
+        v-if="commentActionsOpen"
+        ref="userCommentActionTarget"
+        class="blog-comments-card-actions-menu"
+      >
         <div class="blog-comments-card-actions-controls">
           <div class="blog-comments-card-actions-edit">
-            <RouterLink :title="comment.post.slug" :to="`/post/${comment.post.slug}`" aria-label="Blog Post">
+            <RouterLink
+              :title="comment.post.slug"
+              :to="`/post/${comment.post.slug}`"
+              aria-label="Blog Post"
+            >
               <span>Update</span>
             </RouterLink>
           </div>
           <div class="blog-comments-card-actions-delete">
-            <a :title="`Delete Comment of ${comment.post.title}`" data-method="delete" rel="nofollow" @click="deleteComment(comment.id)">Delete</a>
+            <a
+              :title="`Delete Comment of ${comment.post.title}`"
+              data-method="delete"
+              rel="nofollow"
+              @click="deleteComment(comment.id)"
+              >Delete</a
+            >
           </div>
         </div>
       </div>
@@ -105,14 +131,30 @@ export default class BlogCommentCard extends Vue {
   }
 
   public commentBackgroundImage(comment: BlogCommentModel): string {
-    const imageNameFileTypeRemove = comment.post.mainImageFilename.substring(0, comment.post.mainImageFilename.lastIndexOf('.')) || comment.post.mainImageFilename
+    const imageNameFileTypeRemove =
+      comment.post.mainImageFilename.substring(
+        0,
+        comment.post.mainImageFilename.lastIndexOf('.')
+      ) || comment.post.mainImageFilename
 
     if (router.currentRoute.value.name === MainRouteNames.POST) {
       return 'url(' + comment.userProfile.mainImageAbsoluteUrl + ')'
     }
 
     if (router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT_BLOG_COMMENTS) {
-      return 'url(' + 'http://localhost:8010' + '/mediastream/media/uploads/' + 'blog' + '/' + imageNameFileTypeRemove + '/' + '100' + '/' + '100' + ')'
+      return (
+        'url(' +
+        'http://localhost:8010' +
+        '/mediastream/media/uploads/' +
+        'blog' +
+        '/' +
+        imageNameFileTypeRemove +
+        '/' +
+        '100' +
+        '/' +
+        '100' +
+        ')'
+      )
     }
 
     return ''

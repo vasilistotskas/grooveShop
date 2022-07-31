@@ -25,7 +25,9 @@ export default class ProductModule extends AppBaseModule {
   }
 
   get addToCartButtonText(): string {
-    return this.product.active === 'False' || this.product.stock <= 0 ? 'Out Of Stock' : 'Add To Cart'
+    return this.product.active === 'False' || this.product.stock <= 0
+      ? 'Out Of Stock'
+      : 'Add To Cart'
   }
 
   @Mutation

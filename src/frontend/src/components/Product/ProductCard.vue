@@ -43,9 +43,15 @@
             </span>
           </div>
           <div class="card-footer">
-            <a :class="{ disabled: disabled }" :title="`Add to cart - ${product.name}`" class="btn-outline-primary-one btn-product-card" href="#" type="button" @click.prevent="addToCart()">{{
-              addToCartButtonText
-            }}</a>
+            <a
+              :class="{ disabled: disabled }"
+              :title="`Add to cart - ${product.name}`"
+              class="btn-outline-primary-one btn-product-card"
+              href="#"
+              type="button"
+              @click.prevent="addToCart()"
+              >{{ addToCartButtonText }}</a
+            >
           </div>
         </div>
       </div>
@@ -91,7 +97,9 @@ export default class ProductCard extends Vue {
   }
 
   get addToCartButtonText(): string {
-    return this.product.active === 'False' || this.product.stock <= 0 ? 'Out Of Stock' : 'Add To Cart'
+    return this.product.active === 'False' || this.product.stock <= 0
+      ? 'Out Of Stock'
+      : 'Add To Cart'
   }
 
   public addToCart(): void {

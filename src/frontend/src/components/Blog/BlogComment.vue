@@ -11,7 +11,14 @@
             <label class="blog-comment-body-label" for="commentTextArea"> Your Comment </label>
           </h2>
           <div class="blog-comment-body-textarea">
-            <textarea id="commentTextArea" v-model="comment" class="blog-comment-body-textarea-content" maxlength="10000" placeholder="Share your experience..." rows="6" />
+            <textarea
+              id="commentTextArea"
+              v-model="comment"
+              class="blog-comment-body-textarea-content"
+              maxlength="10000"
+              placeholder="Share your experience..."
+              rows="6"
+            />
           </div>
         </div>
         <div class="blog-comment-footer">

@@ -10,7 +10,12 @@
         <span class="breadcrumb__seperator">/</span>
       </li>
       <li v-for="breadcrumb in breadCrumbPath" :key="breadcrumb.id" class="breadcrumb__item">
-        <RouterLink :title="breadcrumb.name" :to="'/' + breadcrumb.to.full_path" aria-label="Blog" class="btn-w-effect">
+        <RouterLink
+          :title="breadcrumb.name"
+          :to="'/' + breadcrumb.to.full_path"
+          aria-label="Blog"
+          class="btn-w-effect"
+        >
           <span class="breadcrumb__inner">
             <span class="breadcrumb__title">{{ breadcrumb.name }}</span>
           </span>

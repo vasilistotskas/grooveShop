@@ -4,7 +4,12 @@
       <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
       <div class="card login-card">
         <div class="card-body card-body-border-top">
-          <FormProvider :errors="formManager.errors" :form="formManager.form" title="Log In" @submit="handleSubmit()">
+          <FormProvider
+            :errors="formManager.errors"
+            :form="formManager.form"
+            title="Log In"
+            @submit="handleSubmit()"
+          >
             <div class="container">
               <div class="email mb-3">
                 <label :for="formManager.form.email.$uid" class="label mb-2">Email</label>
@@ -19,7 +24,10 @@
                   autocomplete="username"
                   @blur="formManager.form.email.onBlur"
                 />
-                <FormValidationErrors :errors="formManager.form.email.$errors" class="validation-errros" />
+                <FormValidationErrors
+                  :errors="formManager.form.email.$errors"
+                  class="validation-errors"
+                />
               </div>
               <div class="password mb-4">
                 <label :for="formManager.form.password.$uid" class="label mb-2">Password</label>
@@ -35,7 +43,12 @@
                 />
                 <FormValidationErrors :errors="formManager.form.password.$errors" />
               </div>
-              <FormSubmitButtons :submitting="formManager.submitting" class="buttons mt-3 mb-3" gap="2rem" @reset="formManager.resetFields()" />
+              <FormSubmitButtons
+                :submitting="formManager.submitting"
+                class="buttons mt-3 mb-3"
+                gap="2rem"
+                @reset="formManager.resetFields()"
+              />
             </div>
 
             <!-- 2 column grid layout for inline styling -->
@@ -43,13 +56,21 @@
               <div class="grid-item-one">
                 <!-- Checkbox -->
                 <div class="form-check">
-                  <input id="form2Example3" checked class="form-check-input form-check-input-main" type="checkbox" value="" />
+                  <input
+                    id="form2Example3"
+                    checked
+                    class="form-check-input form-check-input-main"
+                    type="checkbox"
+                    value=""
+                  />
                   <label class="form-check-label" for="form2Example3"> Remember me </label>
                 </div>
               </div>
               <div class="grid-item-two">
                 <!-- Simple link -->
-                <RouterLink title="Password Reset" to="/password_reset"> Forgot password? </RouterLink>
+                <RouterLink title="Password Reset" to="/password_reset">
+                  Forgot password?
+                </RouterLink>
               </div>
             </div>
           </FormProvider>
@@ -65,12 +86,22 @@
 
           <div class="login-grid-part-socials mb-3">
             <!-- Facebook -->
-            <a class="btn btn-outline-primary btn-floating mx-1" href="#!" role="button" title="Sign Up with Facebook">
+            <a
+              class="btn btn-outline-primary btn-floating mx-1"
+              href="#!"
+              role="button"
+              title="Sign Up with Facebook"
+            >
               <font-awesome-icon :icon="facebookIcon" :style="{ color: '#4267B2' }" size="lg" />
             </a>
 
             <!-- Google -->
-            <a class="btn btn-outline-primary btn-floating mx-1" href="#!" role="button" title="Sign Up with Google">
+            <a
+              class="btn btn-outline-primary btn-floating mx-1"
+              href="#!"
+              role="button"
+              title="Sign Up with Google"
+            >
               <font-awesome-icon :icon="googleIcon" :style="{ color: '#DB4437' }" size="lg" />
             </a>
           </div>
@@ -129,7 +160,8 @@ export default class LogIn extends Vue {
   facebookIcon = faFacebook
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
+      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
     return currentRouteMetaBreadcrumb()
   }
 

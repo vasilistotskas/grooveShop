@@ -1,18 +1,37 @@
 <template>
   <div v-if="item && Object.keys(item).length > 0" class="checkout-product-card-container">
     <div class="checkout-grid-head-part-two-product-image">
-      <RouterLink :title="item.product.name" :to="'/product' + item.product.absolute_url" aria-label="Product">
+      <RouterLink
+        :title="item.product.name"
+        :to="'/product' + item.product.absolute_url"
+        aria-label="Product"
+      >
         <span>
-          <GrooveImage :alt="item.product.name" :file-name="item.product.main_image_filename" :use-media-stream="true" :img-type="ImageTypeOptions.PRODUCTS" :img-width="100" :img-height="100" />
+          <GrooveImage
+            :alt="item.product.name"
+            :file-name="item.product.main_image_filename"
+            :use-media-stream="true"
+            :img-type="ImageTypeOptions.PRODUCTS"
+            :img-width="100"
+            :img-height="100"
+          />
         </span>
       </RouterLink>
     </div>
     <div class="checkout-grid-head-part-two-product-info">
-      <RouterLink :title="item.product.name" :to="'/product' + item.product.absolute_url" aria-label="Product">
+      <RouterLink
+        :title="item.product.name"
+        :to="'/product' + item.product.absolute_url"
+        aria-label="Product"
+      >
         <span class="checkout-grid-head-part-two-product-info-name">{{ item.product.name }}</span>
       </RouterLink>
-      <span class="checkout-grid-head-part-two-product-info-price">Item Price: ${{ item.product.price }}</span>
-      <span class="checkout-grid-head-part-two-product-info-quantity">Qty: {{ item.quantity }}</span>
+      <span class="checkout-grid-head-part-two-product-info-price"
+        >Item Price: ${{ item.product.price }}</span
+      >
+      <span class="checkout-grid-head-part-two-product-info-quantity"
+        >Qty: {{ item.quantity }}</span
+      >
     </div>
     <div class="checkout-grid-head-part-two-product-total">
       <span>${{ itemTotal(item).toFixed(2) }}</span>

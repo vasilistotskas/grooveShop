@@ -129,7 +129,9 @@ export default class PasswordModule extends AppBaseModule {
       })
       .catch((e: Error) => {
         this.context.commit('passwordChangeFailure')
-        router.push('/user-account/password').then(() => toast.error('Current Password is not correct'))
+        router
+          .push('/user-account/password')
+          .then(() => toast.error('Current Password is not correct'))
         console.log(e)
       })
   }

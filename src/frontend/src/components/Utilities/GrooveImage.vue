@@ -2,13 +2,33 @@
   <img
     v-if="useMediaStream"
     :alt="alt"
-    :src="mediaStreamImage(pathType, imgType, fileName, imgWidth, imgHeight, imgFit, imgPosition, imgTrimThreshold, imgFormat)"
+    :src="
+      mediaStreamImage(
+        pathType,
+        imgType,
+        fileName,
+        imgWidth,
+        imgHeight,
+        imgFit,
+        imgPosition,
+        imgTrimThreshold,
+        imgFormat
+      )
+    "
     :class="imgClass"
     :height="imgHeight"
     :width="imgWidth"
     :loading="loading"
   />
-  <img v-else :alt="alt" :src="source" :class="imgClass" :height="imgHeight" :width="imgWidth" :loading="loading" />
+  <img
+    v-else
+    :alt="alt"
+    :src="source"
+    :class="imgClass"
+    :height="imgHeight"
+    :width="imgWidth"
+    :loading="loading"
+  />
 </template>
 
 <script lang="ts">
@@ -16,7 +36,13 @@ import { Options as Component, Vue } from 'vue-class-component'
 import ImageUrlModel from '@/helpers/MediaStream/ImageUrlModel'
 import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
 import { HtmlImageLoadingOptions } from '@/components/Sliders/Enums/SliderEnum'
-import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions, ImageFormatOptions, ImagePathOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import {
+  ImageFitOptions,
+  ImagePositionOptions,
+  ImageTypeOptions,
+  ImageFormatOptions,
+  ImagePathOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Component({
   name: 'GrooveImage',

@@ -155,7 +155,10 @@ export default class PaginationModule extends AppBaseModule {
   }
 
   @Action
-  async fetchPaginatedResults<T>(data: { params: PaginationModel; namespace: PaginationNamespaceTypesEnum }): Promise<void> {
+  async fetchPaginatedResults<T>(data: {
+    params: PaginationModel
+    namespace: PaginationNamespaceTypesEnum
+  }): Promise<void> {
     await store.commit('app/setLoading', true)
     const baseUrl = '/api/v1'
 
@@ -166,7 +169,10 @@ export default class PaginationModule extends AppBaseModule {
     } else if (!data.params.queryParams) {
       ApiUrl = `${baseUrl}/${data.params.endpointUrl}/?p=${data.params.pageNumber}`
     } else {
-      const queryStringBuild = await this.context.dispatch('buildPaginationQueryString', data.params.queryParams)
+      const queryStringBuild = await this.context.dispatch(
+        'buildPaginationQueryString',
+        data.params.queryParams
+      )
       ApiUrl = `${baseUrl}/${data.params.endpointUrl}?p=${data.params.pageNumber}&${queryStringBuild}`
     }
 
@@ -186,21 +192,39 @@ export default class PaginationModule extends AppBaseModule {
         const totalPages = response.data.total_pages
 
         if (nextPageUrl) {
-          this.context.commit('setShowNextButton', { showNextButton: true, namespace: data.namespace })
+          this.context.commit('setShowNextButton', {
+            showNextButton: true,
+            namespace: data.namespace,
+          })
         } else {
-          this.context.commit('setShowNextButton', { showNextButton: false, namespace: data.namespace })
+          this.context.commit('setShowNextButton', {
+            showNextButton: false,
+            namespace: data.namespace,
+          })
         }
 
         if (previousPageUrl) {
-          this.context.commit('setShowPreviousButton', { showPreviousButton: true, namespace: data.namespace })
+          this.context.commit('setShowPreviousButton', {
+            showPreviousButton: true,
+            namespace: data.namespace,
+          })
         } else {
-          this.context.commit('setShowPreviousButton', { showPreviousButton: false, namespace: data.namespace })
+          this.context.commit('setShowPreviousButton', {
+            showPreviousButton: false,
+            namespace: data.namespace,
+          })
         }
 
         this.context.commit('setResults', { results: results, namespace: data.namespace })
         this.context.commit('setCount', { count: count, namespace: data.namespace })
-        this.context.commit('setNextPageUrl', { nextPageUrl: nextPageUrl, namespace: data.namespace })
-        this.context.commit('setPreviousPageUrl', { previousPageUrl: previousPageUrl, namespace: data.namespace })
+        this.context.commit('setNextPageUrl', {
+          nextPageUrl: nextPageUrl,
+          namespace: data.namespace,
+        })
+        this.context.commit('setPreviousPageUrl', {
+          previousPageUrl: previousPageUrl,
+          namespace: data.namespace,
+        })
         this.context.commit('setTotalPages', { totalPages: totalPages, namespace: data.namespace })
       })
       .catch((e: Error) => {

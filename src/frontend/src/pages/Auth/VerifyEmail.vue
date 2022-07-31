@@ -16,8 +16,13 @@
       </RouterLink>
     </template>
     <template v-else-if="reActivationMailSent">
-      <span class="re-activation-text mb-3">A new activation link has been sent to your email.</span>
-      <span class="re-activation-problem">If the activation email still does not appear in the inbox or in the spam mails contact us.</span>
+      <span class="re-activation-text mb-3"
+        >A new activation link has been sent to your email.</span
+      >
+      <span class="re-activation-problem"
+        >If the activation email still does not appear in the inbox or in the spam mails contact
+        us.</span
+      >
     </template>
   </div>
 </template>
@@ -38,7 +43,8 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 })
 export default class VerifyEmail extends Vue {
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
+      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
     return currentRouteMetaBreadcrumb()
   }
 
@@ -84,7 +90,11 @@ export default class VerifyEmail extends Vue {
     }
   }
 
-  beforeRouteLeave(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
+  beforeRouteLeave(
+    to: RouteLocationNormalized,
+    from: RouteLocationNormalized,
+    next: NavigationGuardNext
+  ) {
     this.clearActivationStatus()
     next()
   }

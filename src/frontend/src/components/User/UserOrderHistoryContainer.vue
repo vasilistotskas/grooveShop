@@ -7,7 +7,14 @@
       <span>Quantity</span>
       <span>Total</span>
     </div>
-    <UserOrderHistoryCard v-for="item in order.items" :key="item.product.id" :product="item.product" :order-total="orderTotal" :quantity="item.quantity" class="order-history-grid-body" />
+    <UserOrderHistoryCard
+      v-for="item in order.items"
+      :key="item.product.id"
+      :product="item.product"
+      :order-total="orderTotal"
+      :quantity="item.quantity"
+      class="order-history-grid-body"
+    />
   </div>
 </template>
 

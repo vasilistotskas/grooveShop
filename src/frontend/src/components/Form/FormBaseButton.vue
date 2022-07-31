@@ -1,5 +1,9 @@
 <template>
-  <button :class="['button buttonEffect', type, { disabled }]" :disabled="disabled" :type="htmlType">
+  <button
+    :class="['button buttonEffect', type, { disabled }]"
+    :disabled="disabled"
+    :type="htmlType"
+  >
     <slot />
   </button>
 </template>

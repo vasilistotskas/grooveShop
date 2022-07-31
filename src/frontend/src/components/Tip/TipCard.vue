@@ -1,8 +1,19 @@
 <template>
-  <div v-if="tip && Object.keys(tip).length > 0" class="tip-card-container" :style="{ background: tipBackground(tip.kind) }">
+  <div
+    v-if="tip && Object.keys(tip).length > 0"
+    class="tip-card-container"
+    :style="{ background: tipBackground(tip.kind) }"
+  >
     <div class="tip-card-wrapper">
       <div class="tip-card-icon">
-        <GrooveImage :alt="tip.title" :src="tip.mainImageAbsoluteUrl" :use-media-stream="false" :img-height="36" :img-width="36" :class="'tip-card-icon-image'" />
+        <GrooveImage
+          :alt="tip.title"
+          :src="tip.mainImageAbsoluteUrl"
+          :use-media-stream="false"
+          :img-height="36"
+          :img-width="36"
+          :class="'tip-card-icon-image'"
+        />
       </div>
       <h4 class="tip-card-title">
         {{ tip.title }}

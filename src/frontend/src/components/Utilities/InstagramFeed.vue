@@ -65,10 +65,26 @@ const handlePaginationPrev = () => {
     <h1 v-if="isLoading">LOADING...</h1>
     <h1 v-else-if="hasError">Ooops, something went wrong.</h1>
     <div v-else class="instagram-gallery">
-      <VueHorizontal responsive :displacement="0.7" snap="center" v-if="props.useSlider" class="instagram-gallery-slider horizontal">
-        <section v-for="image in instagramData.data" :key="image.id" class="instagram-gallery-item slider-item">
+      <VueHorizontal
+        responsive
+        :displacement="0.7"
+        snap="center"
+        v-if="props.useSlider"
+        class="instagram-gallery-slider horizontal"
+      >
+        <section
+          v-for="image in instagramData.data"
+          :key="image.id"
+          class="instagram-gallery-item slider-item"
+        >
           <a :href="image.permalink" :key="image.id" target="_blank" rel="noreferrer">
-            <img v-if="image.media_type === 'IMAGE' || image.media_type === 'CAROUSEL_ALBUM'" :src="image.media_url" :alt="image.caption" :key="image.id" class="instagram-gallery-image" />
+            <img
+              v-if="image.media_type === 'IMAGE' || image.media_type === 'CAROUSEL_ALBUM'"
+              :src="image.media_url"
+              :alt="image.caption"
+              :key="image.id"
+              class="instagram-gallery-image"
+            />
             <video v-else :key="image.id" class="instagram-gallery-image">
               <source :src="image.media_url" type="video/mp4" />
             </video>
@@ -76,9 +92,20 @@ const handlePaginationPrev = () => {
           <span v-if="showCaption" class="instagram-caption">{{ image.caption }}</span>
         </section>
       </VueHorizontal>
-      <div v-else v-for="image in instagramData.data" :key="image.id" class="instagram-gallery-item">
+      <div
+        v-else
+        v-for="image in instagramData.data"
+        :key="image.id"
+        class="instagram-gallery-item"
+      >
         <a :href="image.permalink" :key="image.id" target="_blank" rel="noreferrer">
-          <img v-if="image.media_type === 'IMAGE' || image.media_type === 'CAROUSEL_ALBUM'" :src="image.media_url" :alt="image.caption" :key="image.id" class="instagram-gallery-image" />
+          <img
+            v-if="image.media_type === 'IMAGE' || image.media_type === 'CAROUSEL_ALBUM'"
+            :src="image.media_url"
+            :alt="image.caption"
+            :key="image.id"
+            class="instagram-gallery-image"
+          />
           <video v-else :key="image.id" class="instagram-gallery-image">
             <source :src="image.media_url" type="video/mp4" />
           </video>

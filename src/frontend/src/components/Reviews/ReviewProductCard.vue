@@ -1,9 +1,16 @@
 <template>
   <div v-if="review && Object.keys(review).length > 0">
-    <div :style="{ backgroundImage: reviewBackgroundImage(review) }" class="user-review-product-image" />
+    <div
+      :style="{ backgroundImage: reviewBackgroundImage(review) }"
+      class="user-review-product-image"
+    />
     <div class="user-review-product-head">
       <div class="user-review-product-name">
-        <RouterLink :title="review.product.name" :to="'/product' + review.product.absolute_url" aria-label="Product">
+        <RouterLink
+          :title="review.product.name"
+          :to="'/product' + review.product.absolute_url"
+          aria-label="Product"
+        >
           <span> {{ review.product.name }}</span>
         </RouterLink>
       </div>
@@ -41,16 +48,30 @@
       </div>
     </div>
     <div v-if="review.user_id === userId" class="user-review-product-actions">
-      <a :title="`Review Settings of ${review.product.name}`" class="user-review-product-settings" @click="openReviewActions" />
+      <a
+        :title="`Review Settings of ${review.product.name}`"
+        class="user-review-product-settings"
+        @click="openReviewActions"
+      />
       <div v-if="reviewActionsOpen" ref="userReviewsActionTarget" class="user-review-actions-menu">
         <div class="user-review-actions-controls">
           <div class="user-review-actions-edit">
-            <RouterLink :title="review.product.name" :to="'/product' + review.product.absolute_url" aria-label="Product">
+            <RouterLink
+              :title="review.product.name"
+              :to="'/product' + review.product.absolute_url"
+              aria-label="Product"
+            >
               <span>Update</span>
             </RouterLink>
           </div>
           <div class="user-review-actions-delete">
-            <a :title="`Delete Review of ${review.product.name}`" data-method="delete" rel="nofollow" @click="deleteReview(review.user_id, review.product_id)">Delete</a>
+            <a
+              :title="`Delete Review of ${review.product.name}`"
+              data-method="delete"
+              rel="nofollow"
+              @click="deleteReview(review.user_id, review.product_id)"
+              >Delete</a
+            >
           </div>
         </div>
       </div>
@@ -113,14 +134,30 @@ export default class ReviewProductCard extends Vue {
   }
 
   public reviewBackgroundImage(review: ProductReviewModel): string {
-    const imageNameFileTypeRemove = review.product.main_image_filename.substring(0, review.product.main_image_filename.lastIndexOf('.')) || review.product.main_image_filename
+    const imageNameFileTypeRemove =
+      review.product.main_image_filename.substring(
+        0,
+        review.product.main_image_filename.lastIndexOf('.')
+      ) || review.product.main_image_filename
 
     if (router.currentRoute.value.name === MainRouteNames.PRODUCT) {
       return 'url(' + review.userprofile.main_image_absolute_url + ')'
     }
 
     if (router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT_REVIEWS) {
-      return 'url(' + 'http://localhost:8010' + '/mediastream/media/uploads/' + 'products' + '/' + imageNameFileTypeRemove + '/' + '100' + '/' + '100' + ')'
+      return (
+        'url(' +
+        'http://localhost:8010' +
+        '/mediastream/media/uploads/' +
+        'products' +
+        '/' +
+        imageNameFileTypeRemove +
+        '/' +
+        '100' +
+        '/' +
+        '100' +
+        ')'
+      )
     }
 
     return ''

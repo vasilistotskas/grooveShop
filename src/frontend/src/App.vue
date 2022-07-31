@@ -77,7 +77,12 @@ export default class App extends Vue {
   }
 
   async created(): Promise<void> {
-    await Promise.all([this.initializeAuth(), this.initializeCart(), store.dispatch('category/fetchCategoriesTreeFromRemote'), store.dispatch('country/fetchCountriesFromRemote')])
+    await Promise.all([
+      this.initializeAuth(),
+      this.initializeCart(),
+      store.dispatch('category/fetchCategoriesTreeFromRemote'),
+      store.dispatch('country/fetchCountriesFromRemote'),
+    ])
 
     if (this.isAuthenticated) {
       await store.dispatch('user/fetchUserDataFromRemote')

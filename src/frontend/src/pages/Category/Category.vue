@@ -27,7 +27,12 @@
         />
 
         <div class="product-listing-grid mt-3 mb-3">
-          <ProductCard v-for="product in allPaginatedResults" :key="product.id" :product="product" class="col-sm-3" />
+          <ProductCard
+            v-for="product in allPaginatedResults"
+            :key="product.id"
+            :product="product"
+            class="col-sm-3"
+          />
         </div>
       </div>
     </div>
@@ -52,7 +57,11 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
-import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import {
+  ImageFitOptions,
+  ImagePositionOptions,
+  ImageTypeOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Component({
   name: 'Category',
@@ -67,7 +76,10 @@ import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpe
     category_slug: String,
   },
 })
-export default class Category extends PaginationBase<ProductModel> implements PaginatedInterface<ProductModel> {
+export default class Category
+  extends PaginationBase<ProductModel>
+  implements PaginatedInterface<ProductModel>
+{
   formEl = document.getElementById('burgerButton') as HTMLFormElement
   ImageTypeOptions = ImageTypeOptions
   ImageFitOptions = ImageFitOptions
@@ -77,7 +89,8 @@ export default class Category extends PaginationBase<ProductModel> implements Pa
   PaginationRoutesEnum = PaginationRoutesEnum
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router
+      .currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
@@ -97,24 +110,39 @@ export default class Category extends PaginationBase<ProductModel> implements Pa
         if (to.path !== from.path && to.name === 'Category') {
           store.commit('pagination/unsetResults', this.paginationNamespace)
           this.formEl.classList.toggle('opened')
-          this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)
+          this.formEl.setAttribute(
+            'aria-expanded',
+            this.formEl.classList.contains('opened') as unknown as string
+          )
           store.commit('app/setNavbarMenuHidden', true)
         }
       }
     )
 
     this.formEl.classList.remove('opened')
-    this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)
+    this.formEl.setAttribute(
+      'aria-expanded',
+      this.formEl.classList.contains('opened') as unknown as string
+    )
     store.commit('app/setNavbarMenuHidden', true)
 
     if (this.params.query) {
-      await store.commit('pagination/setCurrentQuery', { currentQuery: this.params.query, namespace: this.paginationNamespace })
+      await store.commit('pagination/setCurrentQuery', {
+        currentQuery: this.params.query,
+        namespace: this.paginationNamespace,
+      })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', { pageNumber: 1, namespace: this.paginationNamespace })
+    await store.commit('pagination/setCurrentPageNumber', {
+      pageNumber: 1,
+      namespace: this.paginationNamespace,
+    })
 
     if (this.params.page) {
-      await store.commit('pagination/setCurrentPageNumber', { pageNumber: Number(this.params.page), namespace: this.paginationNamespace })
+      await store.commit('pagination/setCurrentPageNumber', {
+        pageNumber: Number(this.params.page),
+        namespace: this.paginationNamespace,
+      })
     }
 
     await this.fetchCategory()
@@ -124,7 +152,10 @@ export default class Category extends PaginationBase<ProductModel> implements Pa
   unmounted(): void {
     store.commit('pagination/unsetResults', this.paginationNamespace)
     this.formEl.classList.remove('opened')
-    this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)
+    this.formEl.setAttribute(
+      'aria-expanded',
+      this.formEl.classList.contains('opened') as unknown as string
+    )
   }
 
   public fetchCategory(): void {
@@ -139,7 +170,10 @@ export default class Category extends PaginationBase<ProductModel> implements Pa
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
+    await store.dispatch('pagination/fetchPaginatedResults', {
+      params: paginationQuery,
+      namespace: this.paginationNamespace,
+    })
   }
 
   public buildEndPointUrlForPaginatedResults(): string {

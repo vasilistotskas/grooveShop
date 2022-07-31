@@ -1,5 +1,8 @@
 <template>
-  <div :class="[attrsClassName, { 'textarea-group-w-addon': textareaWithAddOn }]" class="_container">
+  <div
+    :class="[attrsClassName, { 'textarea-group-w-addon': textareaWithAddOn }]"
+    class="_container"
+  >
     <span v-if="textareaWithAddOn" class="textarea-group-addon">
       <font-awesome-icon :icon="textareaWithAddOnIcon" size="lg" />
     </span>
@@ -12,7 +15,11 @@
       :maxlength="maxlength"
       :rows="rows"
     />
-    <FormLoadingIcon v-if="validating" :class="{ '_loading-icon-error': hasError }" class="_loading-icon" />
+    <FormLoadingIcon
+      v-if="validating"
+      :class="{ '_loading-icon-error': hasError }"
+      class="_loading-icon"
+    />
   </div>
 </template>
 

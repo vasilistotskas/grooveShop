@@ -4,7 +4,12 @@
       <div class="grid-header container">
         <div class="logo-header">
           <h1>
-            <RouterLink aria-label="DeepWeb.gr - Home Page" class="navbar-brand" title="DeepWeb.gr - Home Page" to="/">
+            <RouterLink
+              aria-label="DeepWeb.gr - Home Page"
+              class="navbar-brand"
+              title="DeepWeb.gr - Home Page"
+              to="/"
+            >
               <GrooveImage
                 :alt="'Website Logo'"
                 :file-name="'websiteLogo'"
@@ -21,10 +26,23 @@
           </h1>
         </div>
 
-        <div :class="{ wrapper: Object.keys(categoriesTreeData).length === 0 }" class="navbar-categories-loading">
-          <div :class="{ 'content wrapper-cell': Object.keys(categoriesTreeData).length === 0 }" class="products-header" @click="menuToggle">
+        <div
+          :class="{ wrapper: Object.keys(categoriesTreeData).length === 0 }"
+          class="navbar-categories-loading"
+        >
+          <div
+            :class="{ 'content wrapper-cell': Object.keys(categoriesTreeData).length === 0 }"
+            class="products-header"
+            @click="menuToggle"
+          >
             <div ref="navbarProductsButton" class="products-a btn">
-              <button id="burgerButton" ref="mainToggleButton" aria-label="Main Menu" class="menu" title="Toggle Menu">
+              <button
+                id="burgerButton"
+                ref="mainToggleButton"
+                aria-label="Main Menu"
+                class="menu"
+                title="Toggle Menu"
+              >
                 <svg height="65" viewBox="0 0 100 100" width="65">
                   <path
                     class="line line-one"
@@ -55,17 +73,45 @@
         </div>
         <div class="search-header">
           <div class="search-buttons-container">
-            <input v-model="searchQuery.query" aria-label="Search" class="form-control search-form-control me-2" name="query" placeholder="Search" type="search" @keyup.enter="fetchPaginationData" />
-            <button aria-label="search" class="btn-outline-primary-main" title="Search" type="submit" @click="fetchPaginationData">
+            <input
+              v-model="searchQuery.query"
+              aria-label="Search"
+              class="form-control search-form-control me-2"
+              name="query"
+              placeholder="Search"
+              type="search"
+              @keyup.enter="fetchPaginationData"
+            />
+            <button
+              aria-label="search"
+              class="btn-outline-primary-main"
+              title="Search"
+              type="submit"
+              @click="fetchPaginationData"
+            >
               <font-awesome-icon :icon="searchIcon" :style="{ color: '#3b3b3b' }" size="lg" />
             </button>
           </div>
         </div>
         <ul class="navigation-header">
           <li class="navigation-header-part">
-            <RouterLink v-if="isAuthenticated" :to="{ name: 'Favourites' }" aria-label="Favourites" title="Favourites">
-              <font-awesome-icon v-if="isMobile" :icon="heartIcon" :style="{ color: 'rgba(200,60,60,0.79)' }" />
-              <font-awesome-icon v-else :icon="heartIcon" :style="{ color: 'rgba(200,60,60,0.79)' }" size="2x" />
+            <RouterLink
+              v-if="isAuthenticated"
+              :to="{ name: 'Favourites' }"
+              aria-label="Favourites"
+              title="Favourites"
+            >
+              <font-awesome-icon
+                v-if="isMobile"
+                :icon="heartIcon"
+                :style="{ color: 'rgba(200,60,60,0.79)' }"
+              />
+              <font-awesome-icon
+                v-else
+                :icon="heartIcon"
+                :style="{ color: 'rgba(200,60,60,0.79)' }"
+                size="2x"
+              />
             </RouterLink>
             <RouterLink v-else aria-label="Log In" title="Log In" to="/log-in">
               <font-awesome-icon v-if="isMobile" :icon="heartIcon" />
@@ -73,9 +119,23 @@
             </RouterLink>
           </li>
           <li class="navigation-header-part">
-            <RouterLink v-if="isAuthenticated" aria-label="My Account" title="My Account" to="/user-account">
-              <font-awesome-icon v-if="isMobile" :icon="userIcon" :style="{ color: 'rgba(200,60,60,0.79)' }" />
-              <font-awesome-icon v-else :icon="userIcon" :style="{ color: 'rgba(200,60,60,0.79)' }" size="2x" />
+            <RouterLink
+              v-if="isAuthenticated"
+              aria-label="My Account"
+              title="My Account"
+              to="/user-account"
+            >
+              <font-awesome-icon
+                v-if="isMobile"
+                :icon="userIcon"
+                :style="{ color: 'rgba(200,60,60,0.79)' }"
+              />
+              <font-awesome-icon
+                v-else
+                :icon="userIcon"
+                :style="{ color: 'rgba(200,60,60,0.79)' }"
+                size="2x"
+              />
             </RouterLink>
             <RouterLink v-else aria-label="Log In" title="Log In" to="/log-in">
               <font-awesome-icon v-if="isMobile" :icon="userIcon" />
@@ -123,7 +183,12 @@ import ThemeModeSwitcher from '@/components/Utilities/ThemeModeSwitcher.vue'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
-import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import {
+  ImagePathOptions,
+  ImageFormatOptions,
+  ImageFitOptions,
+  ImagePositionOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Component({
   name: 'Navbar',
@@ -137,7 +202,10 @@ import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOpt
     preHeadHidden: Boolean,
   },
 })
-export default class Navbar extends PaginationBase<ProductModel> implements PaginatedInterface<ProductModel> {
+export default class Navbar
+  extends PaginationBase<ProductModel>
+  implements PaginatedInterface<ProductModel>
+{
   paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
 
   searchQuery = {
@@ -180,14 +248,20 @@ export default class Navbar extends PaginationBase<ProductModel> implements Pagi
 
   public menuToggle(): void {
     this.$refs.mainToggleButton.classList.toggle('opened')
-    this.$refs.mainToggleButton.setAttribute('aria-expanded', this.$refs.mainToggleButton.classList.contains('opened') as unknown as string)
+    this.$refs.mainToggleButton.setAttribute(
+      'aria-expanded',
+      this.$refs.mainToggleButton.classList.contains('opened') as unknown as string
+    )
 
     store.commit('app/setNavbarMenuHidden', !this.navbarMenuHidden)
   }
 
   async fetchPaginationData(): Promise<void> {
     await store.commit('pagination/unsetResults', this.paginationNamespace)
-    await store.commit('pagination/setCurrentQuery', { currentQuery: this.searchQuery, namespace: this.paginationNamespace })
+    await store.commit('pagination/setCurrentQuery', {
+      currentQuery: this.searchQuery,
+      namespace: this.paginationNamespace,
+    })
 
     const paginationQuery = PaginationModel.createPaginationQuery({
       pageNumber: this.currentPageNumber,
@@ -196,7 +270,10 @@ export default class Navbar extends PaginationBase<ProductModel> implements Pagi
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
+    await store.dispatch('pagination/fetchPaginatedResults', {
+      params: paginationQuery,
+      namespace: this.paginationNamespace,
+    })
 
     await router.push({
       path: '/search',

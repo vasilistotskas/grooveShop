@@ -7,7 +7,9 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header mb-3">
-              <h5 id="exampleModalLabel" class="modal-title">Write a review for product <strong>Adidas Shoes</strong></h5>
+              <h5 id="exampleModalLabel" class="modal-title">
+                Write a review for product <strong>Adidas Shoes</strong>
+              </h5>
               <font-awesome-icon :icon="writeReviewIcon" size="lg" />
             </div>
             <div class="modal-body">
@@ -61,7 +63,14 @@
               <div class="col-12 review-modal-comment">
                 <div class="form-group">
                   <p>
-                    <textarea id="reviewTextArea" v-model="comment" class="form-control" maxlength="10000" placeholder="Share your experience..." rows="6" />
+                    <textarea
+                      id="reviewTextArea"
+                      v-model="comment"
+                      class="form-control"
+                      maxlength="10000"
+                      placeholder="Share your experience..."
+                      rows="6"
+                    />
                   </p>
                 </div>
               </div>
@@ -174,11 +183,17 @@ export default class ProductReview extends Vue {
       },
     ]
 
-    if (this.liveReviewCountRatio < 0.01 || (null === this.newSelectionRatio && (null === this.reviewCount || '0' === this.review))) {
+    if (
+      this.liveReviewCountRatio < 0.01 ||
+      (null === this.newSelectionRatio && (null === this.reviewCount || '0' === this.review))
+    ) {
       return ''
     }
 
-    const matches = filter(breakpoints, (breakpoint) => breakpoint.threshold - 0.1 <= this.liveReviewCountRatio)
+    const matches = filter(
+      breakpoints,
+      (breakpoint) => breakpoint.threshold - 0.1 <= this.liveReviewCountRatio
+    )
 
     if (undefined !== last(matches)) {
       return last(matches)?.value

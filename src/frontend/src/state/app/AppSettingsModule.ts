@@ -23,7 +23,10 @@ export default class AppSettingsModule extends AppBaseModule {
   @Action
   async toggleLocalization(): Promise<AppSettingsLocalizationOption> {
     const currentLocalization = this.context.getters['getSettings'].localization
-    const nextLocalization = currentLocalization === AppSettingsLocalizationOption.English ? AppSettingsLocalizationOption.Greek : AppSettingsLocalizationOption.English
+    const nextLocalization =
+      currentLocalization === AppSettingsLocalizationOption.English
+        ? AppSettingsLocalizationOption.Greek
+        : AppSettingsLocalizationOption.English
     await this.context.dispatch('updateSetting', { key: 'localization', value: nextLocalization })
     return nextLocalization
   }
@@ -31,7 +34,10 @@ export default class AppSettingsModule extends AppBaseModule {
   @Action
   async toggleThemeMode(): Promise<AppSettingsThemeModeOption> {
     const currentThemeMode = this.context.getters['getSettings'].themeMode
-    const nextThemeMode = currentThemeMode === AppSettingsThemeModeOption.light ? AppSettingsThemeModeOption.dark : AppSettingsThemeModeOption.light
+    const nextThemeMode =
+      currentThemeMode === AppSettingsThemeModeOption.light
+        ? AppSettingsThemeModeOption.dark
+        : AppSettingsThemeModeOption.light
     await this.context.dispatch('updateSetting', { key: 'themeMode', value: nextThemeMode })
 
     localStorage.setItem('themeModeFromLocalStorage', nextThemeMode)
@@ -40,10 +46,15 @@ export default class AppSettingsModule extends AppBaseModule {
   }
 
   @Action
-  async toggleThemeModeFromPreference(themeModePreference: AppSettingsThemeModeOption): Promise<AppSettingsThemeModeOption> {
+  async toggleThemeModeFromPreference(
+    themeModePreference: AppSettingsThemeModeOption
+  ): Promise<AppSettingsThemeModeOption> {
     const themeModeFromPreference = themeModePreference
 
-    await this.context.dispatch('updateSetting', { key: 'themeMode', value: themeModeFromPreference })
+    await this.context.dispatch('updateSetting', {
+      key: 'themeMode',
+      value: themeModeFromPreference,
+    })
     return themeModeFromPreference
   }
 

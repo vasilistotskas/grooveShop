@@ -1,7 +1,13 @@
 import { map } from 'lodash'
 import store from '@/store'
 import { useToast } from 'vue-toastification'
-import { _RouteRecordBase, NavigationGuardNext, RouteLocationNormalized, RouteRecord, RouteRecordNormalized } from 'vue-router'
+import {
+  _RouteRecordBase,
+  NavigationGuardNext,
+  RouteLocationNormalized,
+  RouteRecord,
+  RouteRecordNormalized,
+} from 'vue-router'
 
 const toast = useToast()
 
@@ -20,9 +26,16 @@ export class RouteModel {
     return new RouteModel(routes)
   }
 
-  static routeBeforeEach(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext): void {
+  static routeBeforeEach(
+    to: RouteLocationNormalized,
+    from: RouteLocationNormalized,
+    next: NavigationGuardNext
+  ): void {
     store.dispatch('auth/initialize').then(() => {
-      if (to.matched.some((record) => record.meta.requireLogin) && !store.getters['auth/isAuthenticated']) {
+      if (
+        to.matched.some((record) => record.meta.requireLogin) &&
+        !store.getters['auth/isAuthenticated']
+      ) {
         toast.error('You are not logged in')
         next({ name: 'LogIn', query: { to: to.path } })
       } else {

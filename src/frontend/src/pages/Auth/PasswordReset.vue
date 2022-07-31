@@ -16,18 +16,38 @@
                 <span class="input-group-addon">
                   <font-awesome-icon :icon="envelopeIcon" />
                 </span>
-                <input id="email" v-model="email" class="form-control" name="email" placeholder="email" type="email" />
+                <input
+                  id="email"
+                  v-model="email"
+                  class="form-control"
+                  name="email"
+                  placeholder="email"
+                  type="email"
+                />
               </div>
             </div>
           </form>
-          <button class="btn btn-outline-primary-two" title="Send Password Reset Email" @click="sendResetEmail(email)">send email</button>
-          <span v-show="emailError" class="error"> A error occured while processing your request. </span>
+          <button
+            class="btn btn-outline-primary-two"
+            title="Send Password Reset Email"
+            @click="sendResetEmail(email)"
+          >
+            send email
+          </button>
+          <span v-show="emailError" class="error">
+            A error occured while processing your request.
+          </span>
         </template>
         <template v-else>
           <div class="password-reset-message">
-            <span>Check your inbox for a link to reset your password. If an email doesn't appear within a few minutes, check your spam folder.</span>
+            <span
+              >Check your inbox for a link to reset your password. If an email doesn't appear within
+              a few minutes, check your spam folder.</span
+            >
           </div>
-          <RouterLink aria-label="Log In" title="Log In" to="/log-in"> return to login page </RouterLink>
+          <RouterLink aria-label="Log In" title="Log In" to="/log-in">
+            return to login page
+          </RouterLink>
         </template>
       </div>
     </div>
@@ -56,7 +76,8 @@ export default class PasswordReset extends Vue {
   envelopeIcon = faEnvelope
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
+      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
     return currentRouteMetaBreadcrumb()
   }
 

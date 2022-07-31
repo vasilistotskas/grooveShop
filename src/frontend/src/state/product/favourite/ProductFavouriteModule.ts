@@ -21,7 +21,9 @@ export default class ProductFavouriteModule extends AppBaseModule {
   get getIsCurrentProductInUserFavourites(): boolean {
     const productId: number = store.getters['product/getProductId']
     const favouriteProducts = this.context.getters['getFavouriteData']
-    const exists = favouriteProducts.filter((i: ProductFavouriteModel) => i.product_id === productId)
+    const exists = favouriteProducts.filter(
+      (i: ProductFavouriteModel) => i.product_id === productId
+    )
     return !!exists.length
   }
 

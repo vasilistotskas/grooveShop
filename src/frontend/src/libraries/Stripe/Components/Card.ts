@@ -22,7 +22,10 @@ export default class StripeCardComponents extends AppBaseModule {
   cardExpiryEl!: any
   cardCvcEl!: any
   resultToken!: string
-  card!: Record<string, string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]>
+  card!: Record<
+    string,
+    string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]
+  >
   cardIsCompleted!: boolean
   cardError!: string
 

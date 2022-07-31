@@ -16,17 +16,34 @@
     </div>
     <div class="grid-container-cart-item-two">${{ item.product.price }}</div>
     <div class="grid-container-cart-item-three">
-      <a :title="`Decrease Quantity of ${item.product.name}`" class="btn-outline-primary-main" data-mdb-ripple-color="dark" type="button" @click="decrementQuantity(item)">
+      <a
+        :title="`Decrease Quantity of ${item.product.name}`"
+        class="btn-outline-primary-main"
+        data-mdb-ripple-color="dark"
+        type="button"
+        @click="decrementQuantity(item)"
+      >
         <font-awesome-icon :icon="minusIcon" size="lg" />
       </a>
       {{ item.quantity }}
-      <a :title="`Increase Quantity of ${item.product.name}`" class="btn-outline-primary-main" data-mdb-ripple-color="dark" type="button" @click="incrementQuantity(item)">
+      <a
+        :title="`Increase Quantity of ${item.product.name}`"
+        class="btn-outline-primary-main"
+        data-mdb-ripple-color="dark"
+        type="button"
+        @click="incrementQuantity(item)"
+      >
         <font-awesome-icon :icon="plusIcon" size="lg" />
       </a>
     </div>
     <div class="grid-container-cart-item-four">${{ itemTotal.toFixed(2) }}</div>
     <div class="grid-container-cart-item-five">
-      <button :title="`Remove from cart ${item.product.name}`" class="btn-outline-primary-main" type="button" @click="removeFromCart(item)">
+      <button
+        :title="`Remove from cart ${item.product.name}`"
+        class="btn-outline-primary-main"
+        type="button"
+        @click="removeFromCart(item)"
+      >
         <font-awesome-icon :icon="trashIcon" />
       </button>
     </div>

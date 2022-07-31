@@ -1,5 +1,9 @@
 <template>
-  <RouterLink :title="author.user.email" :to="`/author/${author.user.email}`" aria-label="Blog Author">
+  <RouterLink
+    :title="author.user.email"
+    :to="`/author/${author.user.email}`"
+    aria-label="Blog Author"
+  >
     {{ displayName }}
   </RouterLink>
 </template>
@@ -22,7 +26,12 @@ export default class BlogAuthorLink extends Vue {
   author = new BlogAuthorModel()
 
   get displayName(): string {
-    return (this.author.user?.firstName && this.author.user?.lastName && `${this.author.user?.firstName} ${this.author.user?.lastName}`) || `${this.author.user?.email}`
+    return (
+      (this.author.user?.firstName &&
+        this.author.user?.lastName &&
+        `${this.author.user?.firstName} ${this.author.user?.lastName}`) ||
+      `${this.author.user?.email}`
+    )
   }
 }
 </script>

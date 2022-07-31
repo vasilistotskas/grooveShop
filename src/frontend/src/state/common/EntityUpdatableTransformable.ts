@@ -5,8 +5,16 @@ import EntityUpdatableItemFieldType from '@/state/common/EntityUpdatableItemFiel
 import EntityUpdatableInputTextOption from '@/state/common/EntityUpdatableInputTextOption'
 import { first, get, includes, isBoolean, isEmpty, isString, isUndefined, set } from 'lodash'
 
-export default abstract class EntityUpdatableTransformable<DEST, SOURCE extends EntityBase> extends EntityBaseTransformable<DEST, SOURCE> {
-  setupInputFieldText(destField: keyof DEST, sourceField: keyof SOURCE, from: Partial<SOURCE>, supportedActions?: Array<EntityUpdatableInputTextOption>): void {
+export default abstract class EntityUpdatableTransformable<
+  DEST,
+  SOURCE extends EntityBase
+> extends EntityBaseTransformable<DEST, SOURCE> {
+  setupInputFieldText(
+    destField: keyof DEST,
+    sourceField: keyof SOURCE,
+    from: Partial<SOURCE>,
+    supportedActions?: Array<EntityUpdatableInputTextOption>
+  ): void {
     let finalValue = ''
     const fieldValue = get(from, sourceField)
     if (!isUndefined(fieldValue) && isString(fieldValue)) finalValue = fieldValue
@@ -24,7 +32,11 @@ export default abstract class EntityUpdatableTransformable<DEST, SOURCE extends 
     )
   }
 
-  setupInputFieldNumber(destField: keyof DEST, sourceField: keyof SOURCE, from: Partial<SOURCE>): void {
+  setupInputFieldNumber(
+    destField: keyof DEST,
+    sourceField: keyof SOURCE,
+    from: Partial<SOURCE>
+  ): void {
     let finalValue = 0
     const fieldValue = get(from, sourceField)
     if (!isUndefined(fieldValue)) finalValue = Number(fieldValue)
@@ -39,7 +51,11 @@ export default abstract class EntityUpdatableTransformable<DEST, SOURCE extends 
     )
   }
 
-  setupInputFieldVueEditor(destField: keyof DEST, sourceField: keyof SOURCE, from: Partial<SOURCE>): void {
+  setupInputFieldVueEditor(
+    destField: keyof DEST,
+    sourceField: keyof SOURCE,
+    from: Partial<SOURCE>
+  ): void {
     let finalValue = ''
     const fieldValue = get(from, sourceField)
     if (!isUndefined(fieldValue) && isString(fieldValue)) finalValue = fieldValue
@@ -54,7 +70,11 @@ export default abstract class EntityUpdatableTransformable<DEST, SOURCE extends 
     )
   }
 
-  setupInputFieldVuePrismEditor(destField: keyof DEST, sourceField: keyof SOURCE, from: Partial<SOURCE>): void {
+  setupInputFieldVuePrismEditor(
+    destField: keyof DEST,
+    sourceField: keyof SOURCE,
+    from: Partial<SOURCE>
+  ): void {
     let finalValue = ''
     const fieldValue = get(from, sourceField)
     if (!isUndefined(fieldValue) && isString(fieldValue)) finalValue = fieldValue
@@ -69,7 +89,11 @@ export default abstract class EntityUpdatableTransformable<DEST, SOURCE extends 
     )
   }
 
-  setupInputFieldCheckbox(destField: keyof DEST, sourceField: keyof SOURCE, from: Partial<SOURCE>): void {
+  setupInputFieldCheckbox(
+    destField: keyof DEST,
+    sourceField: keyof SOURCE,
+    from: Partial<SOURCE>
+  ): void {
     let finalValue = false
     const fieldValue = get(from, sourceField)
     if (!isUndefined(fieldValue) && isBoolean(fieldValue)) finalValue = fieldValue
@@ -84,7 +108,13 @@ export default abstract class EntityUpdatableTransformable<DEST, SOURCE extends 
     )
   }
 
-  setupInputFieldSimpleDropdownBoolean(destField: keyof DEST, sourceField: keyof SOURCE, from: Partial<SOURCE>, prefix = '', firstEntryDisplayMessage?: string): void {
+  setupInputFieldSimpleDropdownBoolean(
+    destField: keyof DEST,
+    sourceField: keyof SOURCE,
+    from: Partial<SOURCE>,
+    prefix = '',
+    firstEntryDisplayMessage?: string
+  ): void {
     let finalValue: string | boolean = get(from, sourceField) as unknown as boolean
     const finalOptions: Record<string, boolean | string> = {}
     if (!isUndefined(firstEntryDisplayMessage) && isString(firstEntryDisplayMessage)) {
@@ -154,7 +184,12 @@ export default abstract class EntityUpdatableTransformable<DEST, SOURCE extends 
     )
   }
 
-  setupInputFieldSimpleRadio(destField: keyof DEST, sourceField: keyof SOURCE, from: Partial<SOURCE>, options: Record<string, never>): void {
+  setupInputFieldSimpleRadio(
+    destField: keyof DEST,
+    sourceField: keyof SOURCE,
+    from: Partial<SOURCE>,
+    options: Record<string, never>
+  ): void {
     let finalValue = ''
     const fieldValue = get(from, sourceField)
     if (!isUndefined(fieldValue) && isString(fieldValue)) finalValue = fieldValue

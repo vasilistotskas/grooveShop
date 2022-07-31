@@ -3,8 +3,18 @@
     <span v-if="inputWithAddOn" class="input-group-addon">
       <font-awesome-icon :icon="inputWithAddOnIcon" size="lg" />
     </span>
-    <input v-model="value" v-bind="attrsRest" :class="['_input', { '_input-error': hasError, 'form-control': inputWithAddOn }]" :disabled="disabled" :placeholder="placeholder" />
-    <FormLoadingIcon v-if="validating" :class="{ '_loading-icon-error': hasError }" class="_loading-icon" />
+    <input
+      v-model="value"
+      v-bind="attrsRest"
+      :class="['_input', { '_input-error': hasError, 'form-control': inputWithAddOn }]"
+      :disabled="disabled"
+      :placeholder="placeholder"
+    />
+    <FormLoadingIcon
+      v-if="validating"
+      :class="{ '_loading-icon-error': hasError }"
+      class="_loading-icon"
+    />
   </div>
 </template>
 

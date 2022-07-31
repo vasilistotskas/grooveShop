@@ -13,7 +13,9 @@
       </span>
       <span class="checkout-product-container-extra_costs-pay_way">
         <span class="checkout-product-container-extra_costs-pay_way-title">Payment costs</span>
-        <span class="checkout-product-container-extra_costs-pay_way-price">{{ payWayExtraCost() }}</span>
+        <span class="checkout-product-container-extra_costs-pay_way-price">{{
+          payWayExtraCost()
+        }}</span>
       </span>
     </div>
     <div class="checkout-grid-head-part-three">

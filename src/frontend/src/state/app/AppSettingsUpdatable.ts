@@ -5,7 +5,10 @@ import AppSettingsThemeModeOption from '@/state/app/AppSettingsThemeModeOption'
 import AppSettingsLocalizationOption from '@/state/app/AppSettingsLocalizationOption'
 import EntityUpdatableItemFieldType from '@/state/common/EntityUpdatableItemFieldType'
 
-export default class AppSettingsUpdatable extends EntityUpdatable<AppSettingsUpdatable, AppSettings> {
+export default class AppSettingsUpdatable extends EntityUpdatable<
+  AppSettingsUpdatable,
+  AppSettings
+> {
   themeMode!: EntityUpdatableItemFieldType<AppSettingsThemeModeOption, EntityUpdatableTypes>
   localization!: EntityUpdatableItemFieldType<AppSettingsLocalizationOption, EntityUpdatableTypes>
 
@@ -21,7 +24,19 @@ export default class AppSettingsUpdatable extends EntityUpdatable<AppSettingsUpd
   }
 
   public async transformFromEntityBase(entity: Partial<AppSettings>): Promise<void> {
-    this.setupInputFieldSimpleDropdown('themeMode', 'themeMode', entity, AppSettingsThemeModeOption as unknown as Record<string, never>, 'update.dynamic.themeMode')
-    this.setupInputFieldSimpleDropdown('localization', 'localization', entity, AppSettingsLocalizationOption as unknown as Record<string, never>, 'update.dynamic.localization')
+    this.setupInputFieldSimpleDropdown(
+      'themeMode',
+      'themeMode',
+      entity,
+      AppSettingsThemeModeOption as unknown as Record<string, never>,
+      'update.dynamic.themeMode'
+    )
+    this.setupInputFieldSimpleDropdown(
+      'localization',
+      'localization',
+      entity,
+      AppSettingsLocalizationOption as unknown as Record<string, never>,
+      'update.dynamic.localization'
+    )
   }
 }

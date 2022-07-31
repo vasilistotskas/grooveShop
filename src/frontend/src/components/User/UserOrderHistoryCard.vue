@@ -1,5 +1,10 @@
 <template>
-  <RouterLink v-if="product && Object.keys(product).length > 0" :title="product.name" :to="'/product' + product.absolute_url" aria-label="Product">
+  <RouterLink
+    v-if="product && Object.keys(product).length > 0"
+    :title="product.name"
+    :to="'/product' + product.absolute_url"
+    aria-label="Product"
+  >
     <span>
       <GrooveImage
         :alt="product.name"

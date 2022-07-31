@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0" class="container">
+    <div
+      v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0"
+      class="container"
+    >
       <div class="user-reviews-grid mb-4">
         <ReviewProductCard
           v-for="review in allPaginatedResults"
@@ -55,7 +58,10 @@ import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/Pagination
     },
   },
 })
-export default class UserReviews extends PaginationBase<ProductReviewModel> implements PaginatedInterface<ProductReviewModel> {
+export default class UserReviews
+  extends PaginationBase<ProductReviewModel>
+  implements PaginatedInterface<ProductReviewModel>
+{
   userData = new UserProfileModel()
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.USER_REVIEWS
@@ -68,13 +74,22 @@ export default class UserReviews extends PaginationBase<ProductReviewModel> impl
     document.title = 'My Reviews'
 
     if (this.params.query) {
-      await store.commit('pagination/setCurrentQuery', { currentQuery: this.params.query, namespace: this.paginationNamespace })
+      await store.commit('pagination/setCurrentQuery', {
+        currentQuery: this.params.query,
+        namespace: this.paginationNamespace,
+      })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', { pageNumber: 1, namespace: this.paginationNamespace })
+    await store.commit('pagination/setCurrentPageNumber', {
+      pageNumber: 1,
+      namespace: this.paginationNamespace,
+    })
 
     if (this.params.page) {
-      await store.commit('pagination/setCurrentPageNumber', { pageNumber: Number(this.params.page), namespace: this.paginationNamespace })
+      await store.commit('pagination/setCurrentPageNumber', {
+        pageNumber: Number(this.params.page),
+        namespace: this.paginationNamespace,
+      })
     }
 
     await this.fetchPaginationData()
@@ -91,7 +106,10 @@ export default class UserReviews extends PaginationBase<ProductReviewModel> impl
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
+    await store.dispatch('pagination/fetchPaginatedResults', {
+      params: paginationQuery,
+      namespace: this.paginationNamespace,
+    })
   }
 
   public buildEndPointUrlForPaginatedResults(): string {

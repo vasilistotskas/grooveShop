@@ -7,7 +7,13 @@ import { inject } from 'vue'
 import * as Lottie from 'lottie-web'
 import { Emitter, EventType } from 'mitt'
 import { Options as Component, Vue } from 'vue-class-component'
-import { AnimationConfigWithData, AnimationConfigWithPath, AnimationItem, LottiePlayer, RendererType } from 'lottie-web'
+import {
+  AnimationConfigWithData,
+  AnimationConfigWithPath,
+  AnimationItem,
+  LottiePlayer,
+  RendererType,
+} from 'lottie-web'
 
 @Component({
   name: 'LottiePlayerMain',
@@ -62,13 +68,14 @@ export default class LottiePlayerMain extends Vue {
   }
 
   init() {
-    const settings: AnimationConfigWithPath<RendererType> | AnimationConfigWithData<RendererType> = {
-      container: this.$refs.animation as Element,
-      renderer: this.renderer,
-      loop: this.loop,
-      autoplay: this.autoPlay,
-      animationData: this.animationData,
-    }
+    const settings: AnimationConfigWithPath<RendererType> | AnimationConfigWithData<RendererType> =
+      {
+        container: this.$refs.animation as Element,
+        renderer: this.renderer,
+        loop: this.loop,
+        autoplay: this.autoPlay,
+        animationData: this.animationData,
+      }
     this.anim = this.getLottieInstance.loadAnimation(settings)
     this.anim.addEventListener('loopComplete', () => {
       this.$emit('loopComplete', this.anim)

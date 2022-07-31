@@ -3,8 +3,20 @@
     <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div v-if="product && Object.keys(product).length > 0" class="product-page-grid-container mb-5">
       <div class="product-page-grid-image">
-        <figure v-for="image in product.images" :key="image.id" :class="{ 'image-main': image.is_main }" class="image">
-          <GrooveImage :alt="product.name" :file-name="image.product_image_filename" :use-media-stream="true" :img-type="ImageTypeOptions.PRODUCTS" :img-width="330" :img-height="420" />
+        <figure
+          v-for="image in product.images"
+          :key="image.id"
+          :class="{ 'image-main': image.is_main }"
+          class="image"
+        >
+          <GrooveImage
+            :alt="product.name"
+            :file-name="image.product_image_filename"
+            :use-media-stream="true"
+            :img-type="ImageTypeOptions.PRODUCTS"
+            :img-width="330"
+            :img-height="420"
+          />
         </figure>
       </div>
       <div class="product-page-grid-right">
@@ -42,7 +54,11 @@
               <span>Immediately available</span>
             </div>
             <div v-else class="product-page-information-availability unavailable">
-              <font-awesome-icon :icon="warningTriangleIcon" :style="{ color: '#FD0002e0' }" size="lg" />
+              <font-awesome-icon
+                :icon="warningTriangleIcon"
+                :style="{ color: '#FD0002e0' }"
+                size="lg"
+              />
               <span>Out of stock</span>
             </div>
             <div class="product-page-information-delivery">
@@ -53,11 +69,26 @@
 
           <div class="product-page-grid-buttons">
             <input v-model="quantity" class="input" min="1" type="number" />
-            <button :class="{ disabled: disabled }" :title="`Add to cart ${product.name}`" class="btn-outline-primary-one addToCartButton" type="button" @click="addToCart()">
-              <font-awesome-icon :icon="shoppingBagIcon" :style="{ color: '#53e24aeb' }" size="lg" />
+            <button
+              :class="{ disabled: disabled }"
+              :title="`Add to cart ${product.name}`"
+              class="btn-outline-primary-one addToCartButton"
+              type="button"
+              @click="addToCart()"
+            >
+              <font-awesome-icon
+                :icon="shoppingBagIcon"
+                :style="{ color: '#53e24aeb' }"
+                size="lg"
+              />
               <span>{{ addToCartButtonText }}</span>
             </button>
-            <FavouriteButton :model="product" :getter-type="'product/favourite/getIsCurrentProductInUserFavourites'" :dispatch-type="'product/favourite/toggleFavourite'" :use-store="true" />
+            <FavouriteButton
+              :model="product"
+              :getter-type="'product/favourite/getIsCurrentProductInUserFavourites'"
+              :dispatch-type="'product/favourite/toggleFavourite'"
+              :use-store="true"
+            />
           </div>
         </div>
         <div class="product-page-grid-info-part-two">
@@ -129,7 +160,8 @@ export default class Product extends Vue {
   ImageTypeOptions = ImageTypeOptions
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router
+      .currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 

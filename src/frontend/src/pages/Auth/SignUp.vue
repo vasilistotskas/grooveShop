@@ -6,7 +6,12 @@
       <template v-else-if="!registrationCompleted">
         <div class="card sign-up-card">
           <div class="card-body card-body-border-top">
-            <FormProvider :errors="formManager.errors" :form="formManager.form" title="Register" @submit="handleSubmit()">
+            <FormProvider
+              :errors="formManager.errors"
+              :form="formManager.form"
+              title="Register"
+              @submit="handleSubmit()"
+            >
               <div class="container">
                 <div class="email mb-3">
                   <label :for="formManager.form.email.$uid" class="label mb-2">Email</label>
@@ -21,7 +26,10 @@
                     autocomplete="username"
                     @blur="formManager.form.email.onBlur"
                   />
-                  <FormValidationErrors :errors="formManager.form.email.$errors" class="validation-errros" />
+                  <FormValidationErrors
+                    :errors="formManager.form.email.$errors"
+                    class="validation-errors"
+                  />
                 </div>
                 <div class="password mb-3">
                   <label :for="formManager.form.password.$uid" class="label mb-2">Password</label>
@@ -39,7 +47,9 @@
                 </div>
 
                 <div class="confirm-password mb-4">
-                  <label :for="formManager.form.confirmPassword.$uid" class="label mb-2"> Confirm Password </label>
+                  <label :for="formManager.form.confirmPassword.$uid" class="label mb-2">
+                    Confirm Password
+                  </label>
                   <FormBaseInput
                     :id="formManager.form.confirmPassword.$uid"
                     v-model="formManager.form.confirmPassword.$value"
@@ -52,12 +62,21 @@
                   />
                   <FormValidationErrors :errors="formManager.form.confirmPassword.$errors" />
                 </div>
-                <span v-show="registrationError" class="error"> An error occured while processing your request. </span>
-                <FormSubmitButtons :submitting="formManager.submitting" class="buttons" gap="2rem" @reset="formManager.resetFields()" />
+                <span v-show="registrationError" class="error">
+                  An error occured while processing your request.
+                </span>
+                <FormSubmitButtons
+                  :submitting="formManager.submitting"
+                  class="buttons"
+                  gap="2rem"
+                  @reset="formManager.resetFields()"
+                />
               </div>
               <p class="register-login-field mt-4 mb-4">
                 Or
-                <RouterLink aria-label="Log In" title="Log In" to="/log-in"> click here </RouterLink>
+                <RouterLink aria-label="Log In" title="Log In" to="/log-in">
+                  click here
+                </RouterLink>
                 to log in!
               </p>
             </FormProvider>
@@ -67,10 +86,14 @@
       <template v-else>
         <div class="registration-complete-message container mt-5">
           <div class="registration-complete-message-content">
-            <span> Registration complete. You should receive an email shortly with instructions on how to activate your account. </span>
+            <span>
+              Registration complete. You should receive an email shortly with instructions on how to
+              activate your account.
+            </span>
             <p class="mt-3">
               If you cant find email check your spam folder , if its not there click
-              <span class="registration-resend-action" @click="activationEmailResend">Here</span> to receive new activation email.
+              <span class="registration-resend-action" @click="activationEmailResend">Here</span> to
+              receive new activation email.
             </p>
           </div>
         </div>
@@ -144,7 +167,8 @@ export default class Register extends Vue {
   keyIcon = faKey
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
+      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
     return currentRouteMetaBreadcrumb()
   }
 
@@ -202,7 +226,11 @@ export default class Register extends Vue {
     }
   }
 
-  beforeRouteLeave(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
+  beforeRouteLeave(
+    to: RouteLocationNormalized,
+    from: RouteLocationNormalized,
+    next: NavigationGuardNext
+  ) {
     this.clearRegistrationStatus()
     next()
   }

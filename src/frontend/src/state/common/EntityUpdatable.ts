@@ -2,7 +2,10 @@ import EntityBase from '@/state/common/EntityBase'
 import EntityUpdatableTransformable from '@/state/common/EntityUpdatableTransformable'
 import EntityUpdatableItemFieldValueReference from '@/state/common/EntityUpdatableItemFieldValueReference'
 
-export default abstract class EntityUpdatable<U extends EntityUpdatable<U, B>, B extends EntityBase> extends EntityUpdatableTransformable<U, B> {
+export default abstract class EntityUpdatable<
+  U extends EntityUpdatable<U, B>,
+  B extends EntityBase
+> extends EntityUpdatableTransformable<U, B> {
   _meta!: Record<string, never>
 
   public constructor(data?: Partial<EntityUpdatable<U, B>>) {

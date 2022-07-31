@@ -1,5 +1,8 @@
 <template>
-  <div v-if="(tags || authors) && (Object.keys(tags).length > 0 || Object.keys(authors).length)" class="grid-blog-siderbar">
+  <div
+    v-if="(tags || authors) && (Object.keys(tags).length > 0 || Object.keys(authors).length)"
+    class="grid-blog-siderbar"
+  >
     <div v-if="tags && Object.keys(tags).length > 0" class="grid-blog-siderbar-tags">
       <span class="sidebar-blog-title tags">Tags:</span>
       <span v-for="tag in tags" :key="tag.id">
@@ -12,7 +15,11 @@
     <div v-if="authors && Object.keys(authors).length > 0" class="grid-blog-siderbar-authors">
       <span class="sidebar-blog-title authors">Authors:</span>
       <span v-for="author in authors" :key="author.id">
-        <RouterLink :title="author.user.email" :to="`/author/${author.user.email}`" aria-label="Blog Author">
+        <RouterLink
+          :title="author.user.email"
+          :to="`/author/${author.user.email}`"
+          aria-label="Blog Author"
+        >
           <font-awesome-icon :icon="authorIcon" />
           {{ displayName(author) }}
         </RouterLink>
@@ -43,7 +50,12 @@ export default class BlogTagsSidebar extends Vue {
   authorIcon = faUserTag
 
   public displayName(author: BlogAuthorModel): string {
-    return (author.user?.firstName && author.user?.lastName && `${author.user?.firstName} ${author.user?.lastName}`) || `${author.user?.email}`
+    return (
+      (author.user?.firstName &&
+        author.user?.lastName &&
+        `${author.user?.firstName} ${author.user?.lastName}`) ||
+      `${author.user?.email}`
+    )
   }
 }
 </script>

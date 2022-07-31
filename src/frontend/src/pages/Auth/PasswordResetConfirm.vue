@@ -9,7 +9,14 @@
         <h1>Reset Password Confirm</h1>
         <template v-if="resetLoading"> loading... </template>
         <template v-else-if="!resetCompleted">
-          <FormProvider id="userPasswordForm" :errors="formManager.errors" :form="formManager.form" name="userPasswordForm" title="" @submit="handleSubmit()">
+          <FormProvider
+            id="userPasswordForm"
+            :errors="formManager.errors"
+            :form="formManager.form"
+            name="userPasswordForm"
+            title=""
+            @submit="handleSubmit()"
+          >
             <div class="grid-account-password-fields">
               <div class="new_password">
                 <label :for="formManager.form.password1.$uid" class="label">New Password</label>
@@ -23,10 +30,15 @@
                   :input-with-add-on-icon="lockIcon"
                   type="password"
                 />
-                <FormValidationErrors :errors="formManager.form.password1.$errors" class="validation-errros" />
+                <FormValidationErrors
+                  :errors="formManager.form.password1.$errors"
+                  class="validation-errors"
+                />
               </div>
               <div class="re_new_password">
-                <label :for="formManager.form.password2.$uid" class="label">Retype New Password</label>
+                <label :for="formManager.form.password2.$uid" class="label"
+                  >Retype New Password</label
+                >
                 <FormBaseInput
                   :id="formManager.form.password2.$uid"
                   v-model="formManager.form.password2.$value"
@@ -37,19 +49,32 @@
                   :input-with-add-on-icon="lockIcon"
                   type="password"
                 />
-                <FormValidationErrors :errors="formManager.form.password2.$errors" class="validation-errros" />
+                <FormValidationErrors
+                  :errors="formManager.form.password2.$errors"
+                  class="validation-errors"
+                />
               </div>
               <div class="button">
-                <FormSubmitButtons :submit-text="submitButtonText" :submitting="formManager.submitting" class="buttons float-end" gap="2rem" @reset="formManager.resetFields()" />
+                <FormSubmitButtons
+                  :submit-text="submitButtonText"
+                  :submitting="formManager.submitting"
+                  class="buttons float-end"
+                  gap="2rem"
+                  @reset="formManager.resetFields()"
+                />
               </div>
             </div>
           </FormProvider>
 
-          <span v-show="resetError" class="error"> A error occured while processing your request. </span>
+          <span v-show="resetError" class="error">
+            A error occured while processing your request.
+          </span>
         </template>
         <template v-else>
           <span>Your password has been reset.</span>
-          <RouterLink aria-label="Log In" title="Log In" to="/log-in"> return to login page </RouterLink>
+          <RouterLink aria-label="Log In" title="Log In" to="/log-in">
+            return to login page
+          </RouterLink>
         </template>
       </div>
     </div>
@@ -119,7 +144,8 @@ export default class PasswordRestConfirm extends Vue {
   }))
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
+      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
     return currentRouteMetaBreadcrumb()
   }
 

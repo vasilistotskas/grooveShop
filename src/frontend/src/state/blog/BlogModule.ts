@@ -518,7 +518,10 @@ export default class BlogModule extends AppBaseModule {
 
       const fetchedComments = comments.data.commentsByPost
 
-      const commentsMergedWithUserProfile: Array<BlogCommentModel> = await this.context.dispatch('getCommentsMergedWithUserProfile', fetchedComments)
+      const commentsMergedWithUserProfile: Array<BlogCommentModel> = await this.context.dispatch(
+        'getCommentsMergedWithUserProfile',
+        fetchedComments
+      )
 
       this.context.commit('setCommentsByPost', commentsMergedWithUserProfile)
 
@@ -529,12 +532,17 @@ export default class BlogModule extends AppBaseModule {
   }
 
   @Action
-  async getCommentsMergedWithUserProfile(fetchedComments: Array<BlogCommentModel>): Promise<Array<BlogCommentModel>> {
+  async getCommentsMergedWithUserProfile(
+    fetchedComments: Array<BlogCommentModel>
+  ): Promise<Array<BlogCommentModel>> {
     const commentsMergedWithUserProfile: Array<BlogCommentModel> = []
 
     for (const comment of fetchedComments) {
       const userProfile = {
-        userProfile: await this.context.dispatch('fetchUserProfileByUserId', Number(comment.user.id)),
+        userProfile: await this.context.dispatch(
+          'fetchUserProfileByUserId',
+          Number(comment.user.id)
+        ),
       }
 
       const dataMerged = { ...comment, ...userProfile }
@@ -547,7 +555,10 @@ export default class BlogModule extends AppBaseModule {
   @Action
   async getCommentMergedWithUserProfile(commentData: BlogCommentModel): Promise<BlogCommentModel> {
     const userProfile = {
-      userProfile: await this.context.dispatch('fetchUserProfileByUserId', Number(commentData.user.id)),
+      userProfile: await this.context.dispatch(
+        'fetchUserProfileByUserId',
+        Number(commentData.user.id)
+      ),
     }
     return { ...commentData, ...userProfile }
   }

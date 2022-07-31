@@ -97,7 +97,9 @@ export default class AuthModule extends AppBaseModule {
       })
       .catch(() => {
         this.context.commit('logInFailure')
-        toast.error('Please enter a valid username and password. Note that both fields may be case-sensitive.')
+        toast.error(
+          'Please enter a valid username and password. Note that both fields may be case-sensitive.'
+        )
       })
   }
 

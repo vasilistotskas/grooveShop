@@ -11,7 +11,13 @@
           class="blog-comment-card"
         />
 
-        <BlogCommentCard v-for="comment in allBlogPostComments" :key="comment.id" :comment="comment" :user-id="userId" class="blog-comment-card" />
+        <BlogCommentCard
+          v-for="comment in allBlogPostComments"
+          :key="comment.id"
+          :comment="comment"
+          :user-id="userId"
+          class="blog-comment-card"
+        />
       </div>
     </div>
   </div>
@@ -53,7 +59,10 @@ export default class BlogComments extends Vue {
   }
 
   get shouldCommentsAppear(): boolean {
-    return (this.allBlogPostComments && Object.keys(this.allBlogPostComments).length > 0) || (this.commentByUserToPost && Object.keys(this.commentByUserToPost).length > 0)
+    return (
+      (this.allBlogPostComments && Object.keys(this.allBlogPostComments).length > 0) ||
+      (this.commentByUserToPost && Object.keys(this.commentByUserToPost).length > 0)
+    )
   }
 }
 </script>

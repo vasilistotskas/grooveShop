@@ -75,7 +75,9 @@ export default async function initStripeComponent(
 
   try {
     const stripeInstance = (window as any).Stripe(stripeKey)
-    const stripeEl = stripeInstance.elements().create(element, { ...COMPONENT_OPTIONS, ...ELEMENT_CONFIG[element] })
+    const stripeEl = stripeInstance
+      .elements()
+      .create(element, { ...COMPONENT_OPTIONS, ...ELEMENT_CONFIG[element] })
     stripeEl.mount(selector)
     stripeEl.on('change', cbOnChange)
 

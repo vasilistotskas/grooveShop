@@ -1,4 +1,10 @@
-import { ImageFitOptions, ImageFormatOptions, ImagePositionOptions, ImagePathOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import {
+  ImageFitOptions,
+  ImageFormatOptions,
+  ImagePositionOptions,
+  ImagePathOptions,
+  ImageTypeOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
 
 export default interface ImageUrlInterface {
   pathType: ImagePathOptions

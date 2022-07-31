@@ -36,7 +36,11 @@ import SliderModel from '@/state/slider/SliderModel'
 import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import SwiperCore, { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper'
-import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import {
+  ImageFitOptions,
+  ImagePositionOptions,
+  ImageTypeOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
 
 SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard])
 

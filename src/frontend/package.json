@@ -16,6 +16,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.1",
     "@popperjs/core": "^2.11.5",
     "@stripe/stripe-js": "^1.32.0",
+    "@vee-validate/zod": "^4.6.0",
     "@vue/apollo-option": "^4.0.0-alpha.18",
     "@vue/cli-plugin-eslint": "^5.0.3",
     "@vueuse/core": "^8.8.1",
@@ -31,6 +32,7 @@
     "swiper": "^8.3.0",
     "universal-cookie": "^4.0.4",
     "uuid": "^8.3.2",
+    "vee-validate": "^4.6.0",
     "vue": "^3.2.37",
     "vue-class-component": "^8.0.0-rc.1",
     "vue-horizontal": "^1.0.2",
@@ -41,7 +43,8 @@
     "vue-toastification": "^2.0.0-rc.5",
     "vue3-form-validation": "^5.1.0",
     "vuex": "^4.0.2",
-    "workbox-webpack-plugin": "^6.5.3"
+    "workbox-webpack-plugin": "^6.5.3",
+    "zod": "^3.17.3"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",

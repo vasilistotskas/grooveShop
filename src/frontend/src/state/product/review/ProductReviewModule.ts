@@ -93,7 +93,12 @@ export default class ProductReviewModule extends AppBaseModule {
         method: ApiBaseMethods.GET,
       })
 
-      store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.namespace }).then(() => toast.error('Your review has been deleted'))
+      store
+        .dispatch('pagination/fetchPaginatedResults', {
+          params: paginationQuery,
+          namespace: this.namespace,
+        })
+        .then(() => toast.error('Your review has been deleted'))
     }
 
     if (router.currentRoute.value.name === 'Reviews') {
@@ -106,7 +111,12 @@ export default class ProductReviewModule extends AppBaseModule {
         method: ApiBaseMethods.GET,
       })
 
-      store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.namespace }).then(() => toast.error('Your review has been deleted'))
+      store
+        .dispatch('pagination/fetchPaginatedResults', {
+          params: paginationQuery,
+          namespace: this.namespace,
+        })
+        .then(() => toast.error('Your review has been deleted'))
     }
   }
 

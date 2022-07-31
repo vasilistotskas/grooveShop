@@ -1,7 +1,10 @@
 <template>
   <h1>You are offline</h1>
 
-  <p>The page will automatically reload once the connection is re-established. Click the button below to try reloading manually.</p>
+  <p>
+    The page will automatically reload once the connection is re-established. Click the button below
+    to try reloading manually.
+  </p>
   <button type="button">⤾ Reload</button>
 </template>
 

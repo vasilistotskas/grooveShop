@@ -2,14 +2,32 @@
   <div class="home">
     <div class="container mt-9 mb-5">
       <div class="home-top-grid-content">
-        <HomePageMainSlider v-if="homepageSlider[0] && Object.keys(homepageSlider[0]).length > 0" :img-height="760" :img-width="1200" :slider="homepageSlider[0]" class="grid-item-swipper" />
+        <HomePageMainSlider
+          v-if="homepageSlider[0] && Object.keys(homepageSlider[0]).length > 0"
+          :img-height="760"
+          :img-width="1200"
+          :slider="homepageSlider[0]"
+          class="grid-item-swipper"
+        />
 
         <div class="grid-item-right">
           <div class="grid-item-content-one">
-            <HomePageMainSlider v-if="homepageSlider[1] && Object.keys(homepageSlider[1]).length > 0" :img-height="400" :img-width="525" :slider="homepageSlider[1]" class="grid-item-swipper" />
+            <HomePageMainSlider
+              v-if="homepageSlider[1] && Object.keys(homepageSlider[1]).length > 0"
+              :img-height="400"
+              :img-width="525"
+              :slider="homepageSlider[1]"
+              class="grid-item-swipper"
+            />
           </div>
           <div class="grid-item-content-two">
-            <HomePageMainSlider v-if="homepageSlider[2] && Object.keys(homepageSlider[2]).length > 0" :img-height="400" :img-width="525" :slider="homepageSlider[2]" class="grid-item-swipper" />
+            <HomePageMainSlider
+              v-if="homepageSlider[2] && Object.keys(homepageSlider[2]).length > 0"
+              :img-height="400"
+              :img-width="525"
+              :slider="homepageSlider[2]"
+              class="grid-item-swipper"
+            />
           </div>
         </div>
       </div>
@@ -52,7 +70,12 @@
           </h2>
         </div>
         <div class="grid-content-six">
-          <ProductCard v-for="product in LatestProducts" :key="product.id" :product="product" class="grid-item" />
+          <ProductCard
+            v-for="product in LatestProducts"
+            :key="product.id"
+            :product="product"
+            class="grid-item"
+          />
         </div>
       </div>
     </div>
@@ -112,7 +135,10 @@ export default class Home extends Vue {
   }
 
   async beforeCreate(): Promise<void> {
-    await Promise.all([store.dispatch('product/fetchLatestProductsFromRemote'), store.dispatch('slider/fetchSlidersFromRemote')])
+    await Promise.all([
+      store.dispatch('product/fetchLatestProductsFromRemote'),
+      store.dispatch('slider/fetchSlidersFromRemote'),
+    ])
   }
 }
 </script>

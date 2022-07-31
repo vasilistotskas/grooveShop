@@ -1,6 +1,10 @@
 <template>
   <div class="navbar-main-collapse-menu">
-    <div ref="headerNavbarMenu" :class="{ wrapper: Object.keys(categories).length === 0 }" class="container navbar-menu-grid-container">
+    <div
+      ref="headerNavbarMenu"
+      :class="{ wrapper: Object.keys(categories).length === 0 }"
+      class="container navbar-menu-grid-container"
+    >
       <ul v-if="categories && Object.keys(categories).length > 0" class="navbar-menu-grid-head">
         <li v-for="(category, key) in categories" :key="category.id">
           <h3>
@@ -20,7 +24,11 @@
             >
               <GrooveImage
                 :alt="category.name"
-                :file-name="categoryBoxHovered === key ? category.category_menu_image_two_filename : category.category_menu_image_two_filename"
+                :file-name="
+                  categoryBoxHovered === key
+                    ? category.category_menu_image_two_filename
+                    : category.category_menu_image_two_filename
+                "
                 :use-media-stream="true"
                 :img-type="ImageTypeOptions.CATEGORIES"
                 :img-width="80"
@@ -86,7 +94,10 @@ export default class NavbarCategories extends Vue {
 
   public menuOpenHandle(): void {
     this.mainToggleButton.classList.toggle('opened')
-    this.mainToggleButton.setAttribute('aria-expanded', this.mainToggleButton.classList.contains('opened') as unknown as string)
+    this.mainToggleButton.setAttribute(
+      'aria-expanded',
+      this.mainToggleButton.classList.contains('opened') as unknown as string
+    )
     store.commit('app/setNavbarMenuHidden', true)
   }
 }

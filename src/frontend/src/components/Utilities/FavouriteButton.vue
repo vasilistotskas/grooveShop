@@ -1,5 +1,11 @@
 <template>
-  <button :class="btnClass" data-mdb-ripple-color="dark" title="Favourite Actions" type="button" @click="favouriteHandle()">
+  <button
+    :class="btnClass"
+    data-mdb-ripple-color="dark"
+    title="Favourite Actions"
+    type="button"
+    @click="favouriteHandle()"
+  >
     <font-awesome-icon v-if="!isFavourite" :icon="icon" />
     <font-awesome-icon v-else :icon="icon" :style="{ color: 'rgba(200,60,60,0.79)' }" />
   </button>
@@ -49,7 +55,10 @@ const toast = useToast()
     },
   },
 })
-export default class FavouriteButton extends Vue implements FavouriteButtonInterface<Record<string, never>> {
+export default class FavouriteButton
+  extends Vue
+  implements FavouriteButtonInterface<Record<string, never>>
+{
   model!: Record<string, never>
   getterType!: string
   dispatchType!: string

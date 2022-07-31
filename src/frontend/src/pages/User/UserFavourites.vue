@@ -1,7 +1,12 @@
 <template>
   <div v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0" class="container">
     <div class="product-listing-grid mb-4">
-      <ProductCard v-for="product in allPaginatedResults" :key="product.id" :product="product.product_object" class="grid-item" />
+      <ProductCard
+        v-for="product in allPaginatedResults"
+        :key="product.id"
+        :product="product.product_object"
+        class="grid-item"
+      />
     </div>
     <Pagination
       v-if="Object.keys(allPaginatedResults).length !== 0"
@@ -45,7 +50,10 @@ import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/Pagination
     Pagination,
   },
 })
-export default class UserFavourites extends PaginationBase<UserProfileModel> implements PaginatedInterface<UserProfileModel> {
+export default class UserFavourites
+  extends PaginationBase<UserProfileModel>
+  implements PaginatedInterface<UserProfileModel>
+{
   userData = new UserProfileModel()
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.USER_FAVOURITES
@@ -54,13 +62,22 @@ export default class UserFavourites extends PaginationBase<UserProfileModel> imp
     document.title = 'My Favourites'
 
     if (this.params.query) {
-      await store.commit('pagination/setCurrentQuery', { currentQuery: this.params.query, namespace: this.paginationNamespace })
+      await store.commit('pagination/setCurrentQuery', {
+        currentQuery: this.params.query,
+        namespace: this.paginationNamespace,
+      })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', { pageNumber: 1, namespace: this.paginationNamespace })
+    await store.commit('pagination/setCurrentPageNumber', {
+      pageNumber: 1,
+      namespace: this.paginationNamespace,
+    })
 
     if (this.params.page) {
-      await store.commit('pagination/setCurrentPageNumber', { pageNumber: Number(this.params.page), namespace: this.paginationNamespace })
+      await store.commit('pagination/setCurrentPageNumber', {
+        pageNumber: Number(this.params.page),
+        namespace: this.paginationNamespace,
+      })
     }
 
     await this.fetchPaginationData()
@@ -77,7 +94,10 @@ export default class UserFavourites extends PaginationBase<UserProfileModel> imp
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
+    await store.dispatch('pagination/fetchPaginatedResults', {
+      params: paginationQuery,
+      namespace: this.paginationNamespace,
+    })
   }
 
   public buildEndPointUrlForPaginatedResults(): string {

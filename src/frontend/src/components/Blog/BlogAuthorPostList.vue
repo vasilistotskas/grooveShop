@@ -1,7 +1,13 @@
 <template>
   <div class="blog-main-content">
     <div v-if="posts && Object.keys(posts).length > 0" class="grid-post-list">
-      <BlogPostCard v-for="post in posts" :key="post.title" :post="post" :author="author" class="cardSpecialEffect" />
+      <BlogPostCard
+        v-for="post in posts"
+        :key="post.title"
+        :post="post"
+        :author="author"
+        class="cardSpecialEffect"
+      />
     </div>
     <div v-else>
       <span>No Posts Found</span>
@@ -55,7 +61,11 @@ export default class BlogAuthorPostList extends Vue {
   }
 
   async mounted(): Promise<void> {
-    await Promise.all([store.dispatch('blog/fetchAllTagsFromRemote'), store.dispatch('blog/fetchAllAuthorsFromRemote'), store.dispatch('blog/fetchAllCategoriesFromRemote')])
+    await Promise.all([
+      store.dispatch('blog/fetchAllTagsFromRemote'),
+      store.dispatch('blog/fetchAllAuthorsFromRemote'),
+      store.dispatch('blog/fetchAllCategoriesFromRemote'),
+    ])
   }
 }
 </script>

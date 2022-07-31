@@ -1,5 +1,8 @@
 <template>
-  <div v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0" class="user-order-history">
+  <div
+    v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0"
+    class="user-order-history"
+  >
     <div v-for="order in allPaginatedResults" :key="order.id" class="mb-4" :order="order">
       <h3 class="is-size-4 mb-3">Order #{{ order.id }}</h3>
       <div class="box">
@@ -43,7 +46,10 @@ import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/Pagination
     UserOrderHistoryContainer,
   },
 })
-export default class UserOrderHistory extends PaginationBase<UserOrderModel> implements PaginatedInterface<UserOrderModel> {
+export default class UserOrderHistory
+  extends PaginationBase<UserOrderModel>
+  implements PaginatedInterface<UserOrderModel>
+{
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.USER_ORDER_HISTORY
 
@@ -51,13 +57,22 @@ export default class UserOrderHistory extends PaginationBase<UserOrderModel> imp
     document.title = 'My Orders'
 
     if (this.params.query) {
-      await store.commit('pagination/setCurrentQuery', { currentQuery: this.params.query, namespace: this.paginationNamespace })
+      await store.commit('pagination/setCurrentQuery', {
+        currentQuery: this.params.query,
+        namespace: this.paginationNamespace,
+      })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', { pageNumber: 1, namespace: this.paginationNamespace })
+    await store.commit('pagination/setCurrentPageNumber', {
+      pageNumber: 1,
+      namespace: this.paginationNamespace,
+    })
 
     if (this.params.page) {
-      await store.commit('pagination/setCurrentPageNumber', { pageNumber: Number(this.params.page), namespace: this.paginationNamespace })
+      await store.commit('pagination/setCurrentPageNumber', {
+        pageNumber: Number(this.params.page),
+        namespace: this.paginationNamespace,
+      })
     }
 
     await this.fetchPaginationData()
@@ -74,7 +89,10 @@ export default class UserOrderHistory extends PaginationBase<UserOrderModel> imp
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
+    await store.dispatch('pagination/fetchPaginatedResults', {
+      params: paginationQuery,
+      namespace: this.paginationNamespace,
+    })
   }
 }
 </script>

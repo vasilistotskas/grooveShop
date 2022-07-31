@@ -1,5 +1,13 @@
 <template>
-  <FormProvider v-if="userData && Object.keys(userData).length > 0" id="userProfileForm" :errors="formManager.errors" :form="formManager.form" name="userProfileForm" title="" @submit="handleSubmit()">
+  <FormProvider
+    v-if="userData && Object.keys(userData).length > 0"
+    id="userProfileForm"
+    :errors="formManager.errors"
+    :form="formManager.form"
+    name="userProfileForm"
+    title=""
+    @submit="handleSubmit()"
+  >
     <div class="grid-account-setting-fields">
       <div class="first_name">
         <label :for="formManager.form.first_name.$uid" class="label">First Name</label>
@@ -10,7 +18,10 @@
           :placeholder="userProfile.first_name"
           :validating="formManager.form.first_name.$validating"
         />
-        <FormValidationErrors :errors="formManager.form.first_name.$errors" class="validation-errros" />
+        <FormValidationErrors
+          :errors="formManager.form.first_name.$errors"
+          class="validation-errors"
+        />
       </div>
 
       <div class="last_name">
@@ -22,7 +33,10 @@
           :placeholder="userProfile.last_name"
           :validating="formManager.form.last_name.$validating"
         />
-        <FormValidationErrors :errors="formManager.form.last_name.$errors" class="validation-errros" />
+        <FormValidationErrors
+          :errors="formManager.form.last_name.$errors"
+          class="validation-errors"
+        />
       </div>
 
       <div class="phone">
@@ -34,7 +48,7 @@
           :placeholder="userProfile.phone"
           :validating="formManager.form.phone.$validating"
         />
-        <FormValidationErrors :errors="formManager.form.phone.$errors" class="validation-errros" />
+        <FormValidationErrors :errors="formManager.form.phone.$errors" class="validation-errors" />
       </div>
 
       <div class="city">
@@ -46,7 +60,7 @@
           :placeholder="userProfile.city"
           :validating="formManager.form.city.$validating"
         />
-        <FormValidationErrors :errors="formManager.form.city.$errors" class="validation-errros" />
+        <FormValidationErrors :errors="formManager.form.city.$errors" class="validation-errors" />
       </div>
 
       <div class="zipcode">
@@ -58,7 +72,10 @@
           :placeholder="userProfile.zipcode"
           :validating="formManager.form.zipcode.$validating"
         />
-        <FormValidationErrors :errors="formManager.form.zipcode.$errors" class="validation-errros" />
+        <FormValidationErrors
+          :errors="formManager.form.zipcode.$errors"
+          class="validation-errors"
+        />
       </div>
 
       <div class="address">
@@ -70,7 +87,10 @@
           :placeholder="userProfile.address"
           :validating="formManager.form.address.$validating"
         />
-        <FormValidationErrors :errors="formManager.form.address.$errors" class="validation-errros" />
+        <FormValidationErrors
+          :errors="formManager.form.address.$errors"
+          class="validation-errors"
+        />
       </div>
 
       <div class="place">
@@ -82,14 +102,24 @@
           :placeholder="userProfile.place"
           :validating="formManager.form.place.$validating"
         />
-        <FormValidationErrors :errors="formManager.form.place.$errors" class="validation-errros" />
+        <FormValidationErrors :errors="formManager.form.place.$errors" class="validation-errors" />
       </div>
 
       <div class="country">
         <label class="form-label" for="inputCountry">Country</label>
-        <select id="inputCountry" v-model="userProfile.country" class="form-select" name="country" @change="restRegions">
+        <select
+          id="inputCountry"
+          v-model="userProfile.country"
+          class="form-select"
+          name="country"
+          @change="restRegions"
+        >
           <option disabled value="choose">Choose...</option>
-          <option v-for="country in availableCountries" :key="country.alpha_2" :value="country.alpha_2">
+          <option
+            v-for="country in availableCountries"
+            :key="country.alpha_2"
+            :value="country.alpha_2"
+          >
             {{ country.name }}
           </option>
         </select>
@@ -106,7 +136,13 @@
       </div>
 
       <div class="button">
-        <FormSubmitButtons :submit-text="submitButtonText" :submitting="formManager.submitting" class="buttons float-end" gap="2rem" @reset="formManager.resetFields()" />
+        <FormSubmitButtons
+          :submit-text="submitButtonText"
+          :submitting="formManager.submitting"
+          class="buttons float-end"
+          gap="2rem"
+          @reset="formManager.resetFields()"
+        />
       </div>
     </div>
   </FormProvider>
@@ -247,7 +283,9 @@ export default class UserSettings extends Vue {
         this.formManager.form.last_name.$value = cloneDeep(this.userData.last_name)
       }
       if (this.userProfile.phone !== null) {
-        this.formManager.form.phone.$value = String(cloneDeep(this.userData.phone) as unknown as string)
+        this.formManager.form.phone.$value = String(
+          cloneDeep(this.userData.phone) as unknown as string
+        )
       }
       if (this.userProfile.place !== null) {
         this.formManager.form.place.$value = cloneDeep(this.userData.place)
@@ -256,7 +294,9 @@ export default class UserSettings extends Vue {
         this.formManager.form.city.$value = cloneDeep(this.userData.city)
       }
       if (this.userProfile.zipcode !== null) {
-        this.formManager.form.zipcode.$value = String(cloneDeep(this.userData.zipcode) as unknown as string)
+        this.formManager.form.zipcode.$value = String(
+          cloneDeep(this.userData.zipcode) as unknown as string
+        )
       }
       if (this.userProfile.address !== null) {
         this.formManager.form.address.$value = cloneDeep(this.userData.address)

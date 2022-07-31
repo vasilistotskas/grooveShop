@@ -8,11 +8,24 @@
             <span class="input-group-addon">
               <font-awesome-icon :icon="envelopeIcon" />
             </span>
-            <input id="email" v-model="email" class="form-control" name="email" placeholder="email" type="email" />
+            <input
+              id="email"
+              v-model="email"
+              class="form-control"
+              name="email"
+              placeholder="email"
+              type="email"
+            />
           </div>
         </div>
       </form>
-      <button class="btn btn-outline-primary-two" title="Activation Email Resend" @click="activationEmailResend(email)">send email</button>
+      <button
+        class="btn btn-outline-primary-two"
+        title="Activation Email Resend"
+        @click="activationEmailResend(email)"
+      >
+        send email
+      </button>
     </div>
   </div>
 </template>

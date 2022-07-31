@@ -6,14 +6,18 @@
     <form :class="formClass" class="_form" @submit.prevent="$emit('submit')">
       <slot />
     </form>
-    <!--    <PreFormData :form="form" :errors="errors" />-->
+    <PreFormData :form="form" :errors="errors" />
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import PreFormData from '@/components/Form/PreFormData'
 
 export default defineComponent({
+  components: {
+    PreFormData,
+  },
   props: {
     title: {
       type: String,

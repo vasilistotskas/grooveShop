@@ -24,7 +24,15 @@
           >, {{ cartTotalLength }} items
         </div>
         <div class="grid-container-child-two">
-          <RouterLink aria-label="Checkout" class="btn-outline-primary-one" title="Checkout" to="/cart/checkout" type="button"> Proceed to checkout </RouterLink>
+          <RouterLink
+            aria-label="Checkout"
+            class="btn-outline-primary-one"
+            title="Checkout"
+            to="/cart/checkout"
+            type="button"
+          >
+            Proceed to checkout
+          </RouterLink>
         </div>
       </div>
     </div>
@@ -49,7 +57,8 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 })
 export default class Cart extends Vue {
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
+      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
     return currentRouteMetaBreadcrumb()
   }
 

@@ -2,11 +2,22 @@
   <div v-if="authorByEmail" class="container mt-7 mb-5">
     <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <h2>{{ displayName }}</h2>
-    <a :href="authorByEmail.website" :title="`Visit Website of ${displayName}`" rel="noopener noreferrer" target="_blank">Website</a>
+    <a
+      :href="authorByEmail.website"
+      :title="`Visit Website of ${displayName}`"
+      rel="noopener noreferrer"
+      target="_blank"
+      >Website</a
+    >
     <p>{{ authorByEmail.bio }}</p>
 
     <h3>Posts by {{ displayName }}</h3>
-    <BlogAuthorPostList v-if="authorPostSet" :posts="authorPostSet" :show-author="false" :author="authorByEmail" />
+    <BlogAuthorPostList
+      v-if="authorPostSet"
+      :posts="authorPostSet"
+      :show-author="false"
+      :author="authorByEmail"
+    />
   </div>
 </template>
 
@@ -30,7 +41,8 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 })
 export default class BlogAuthor extends Vue {
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router
+      .currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
@@ -44,7 +56,10 @@ export default class BlogAuthor extends Vue {
 
   get displayName(): string {
     return (
-      (this.authorByEmail.user?.firstName && this.authorByEmail.user?.lastName && `${this.authorByEmail.user?.firstName} ${this.authorByEmail.user?.lastName}`) || `${this.authorByEmail.user?.email}`
+      (this.authorByEmail.user?.firstName &&
+        this.authorByEmail.user?.lastName &&
+        `${this.authorByEmail.user?.firstName} ${this.authorByEmail.user?.lastName}`) ||
+      `${this.authorByEmail.user?.email}`
     )
   }
 

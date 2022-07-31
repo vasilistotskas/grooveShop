@@ -1,8 +1,19 @@
 <template>
   <div v-if="src" class="profile-image-grid-container">
-    <form id="uploadImageForm" class="profile-image-grid-form" enctype="multipart/form-data" name="uploadImageForm" title="Change Profile Picture">
+    <form
+      id="uploadImageForm"
+      class="profile-image-grid-form"
+      enctype="multipart/form-data"
+      name="uploadImageForm"
+      title="Change Profile Picture"
+    >
       <div class="profile-image-grid-content">
-        <div :class="{ hovering: profileImageHovering }" class="profile-image-part" @mouseout="profileImageHovering = false" @mouseover="profileImageHovering = true">
+        <div
+          :class="{ hovering: profileImageHovering }"
+          class="profile-image-part"
+          @mouseout="profileImageHovering = false"
+          @mouseover="profileImageHovering = true"
+        >
           <GrooveImage
             :alt="'User Image'"
             :img-class="'rounded-circle img-fluid'"
@@ -20,7 +31,12 @@
           </label>
         </div>
         <div class="profile-fullname-part">
-          <RouterLink :to="{ name: 'UserAccount' }" aria-label="MyAccount" class="btn-w-effect" title="My Account">
+          <RouterLink
+            :to="{ name: 'UserAccount' }"
+            aria-label="MyAccount"
+            class="btn-w-effect"
+            title="My Account"
+          >
             <h5>{{ fullname }}</h5>
           </RouterLink>
         </div>
@@ -34,7 +50,13 @@ import store from '@/store'
 import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
-import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import {
+  ImagePathOptions,
+  ImageFormatOptions,
+  ImageFitOptions,
+  ImagePositionOptions,
+  ImageTypeOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Component({
   name: 'UserProfileImage',

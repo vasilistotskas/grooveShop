@@ -15,13 +15,23 @@
               <label class="form-label mt-2" for="form5Example21">Email address</label>
             </div>
             <div class="grid-item-three">
-              <button class="btn-outline-primary-one mb-4" title="Subscribe to Newsletter" type="submit">Subscribe</button>
+              <button
+                class="btn-outline-primary-one mb-4"
+                title="Subscribe to Newsletter"
+                type="submit"
+              >
+                Subscribe
+              </button>
             </div>
           </div>
         </form>
         <div class="footer-safe-payments">
           <span class="footer-safe-payments-text">Safe Payments</span>
-          <LottiePlayerMain class="footer-safe-payments-lottie" :animation-data="getSafeShieldAnim" :loop="false" />
+          <LottiePlayerMain
+            class="footer-safe-payments-lottie"
+            :animation-data="getSafeShieldAnim"
+            :loop="false"
+          />
         </div>
       </section>
 

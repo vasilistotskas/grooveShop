@@ -17,7 +17,9 @@ export default class PaginationBase<TPaginatedModel> extends Vue {
   }
 
   get allPaginatedResults(): Array<TPaginatedModel> {
-    return <Array<TPaginatedModel>>store.getters['pagination/getResultData'](this.paginationNamespace)
+    return <Array<TPaginatedModel>>(
+      store.getters['pagination/getResultData'](this.paginationNamespace)
+    )
   }
 
   get allPaginatedResultsCount(): number {
@@ -37,7 +39,9 @@ export default class PaginationBase<TPaginatedModel> extends Vue {
   }
 
   get currentPageNumber(): number {
-    const storedPageNumber = store.getters['pagination/getCurrentPageNumber'](this.paginationNamespace)
+    const storedPageNumber = store.getters['pagination/getCurrentPageNumber'](
+      this.paginationNamespace
+    )
     if (storedPageNumber) {
       return store.getters['pagination/getCurrentPageNumber'](this.paginationNamespace)
     }

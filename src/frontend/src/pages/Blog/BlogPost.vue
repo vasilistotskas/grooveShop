@@ -2,7 +2,14 @@
   <div v-if="postBySlug && Object.keys(postBySlug).length > 0" class="container mt-7 mb-5">
     <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
     <div class="card mb-3">
-      <GrooveImage :alt="postBySlug.title" :file-name="postBySlug.mainImageFilename" :use-media-stream="true" :img-type="ImageTypeOptions.BLOG" :img-width="300" :img-height="550" />
+      <GrooveImage
+        :alt="postBySlug.title"
+        :file-name="postBySlug.mainImageFilename"
+        :use-media-stream="true"
+        :img-type="ImageTypeOptions.BLOG"
+        :img-width="300"
+        :img-height="550"
+      />
       <div class="card-body">
         <span class="card-title">{{ postBySlug.title }}: {{ postBySlug.subtitle }}</span>
         By
@@ -16,12 +23,19 @@
         </p>
         <ul>
           <li v-for="tag in postBySlug.tags" :key="tag.name" class="post__tags">
-            <RouterLink :title="tag.name" :to="`/tag/${tag.name}`" aria-label="Blog Tag"> #{{ tag.name }} </RouterLink>
+            <RouterLink :title="tag.name" :to="`/tag/${tag.name}`" aria-label="Blog Tag">
+              #{{ tag.name }}
+            </RouterLink>
           </li>
         </ul>
       </div>
       <div class="favourite-button-content">
-        <FavouriteButton :model="postBySlug" :getter-type="'blog/getIsCurrentPostInUserFavourites'" :dispatch-type="'blog/toggleFavourite'" :use-store="true" />
+        <FavouriteButton
+          :model="postBySlug"
+          :getter-type="'blog/getIsCurrentPostInUserFavourites'"
+          :dispatch-type="'blog/toggleFavourite'"
+          :use-store="true"
+        />
       </div>
     </div>
     <BlogComment />
@@ -43,7 +57,11 @@ import BlogAuthorLink from '@/components/Blog/BlogAuthorLink.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import FavouriteButton from '@/components/Utilities/FavouriteButton.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
-import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import {
+  ImageFitOptions,
+  ImagePositionOptions,
+  ImageTypeOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Component({
   name: 'BlogPost',
@@ -68,7 +86,8 @@ export default class BlogPost extends Vue {
   ImagePositionOptions = ImagePositionOptions
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router.currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router
+      .currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 

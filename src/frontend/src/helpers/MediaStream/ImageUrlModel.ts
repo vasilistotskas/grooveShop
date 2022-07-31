@@ -1,6 +1,11 @@
 import session from '@/api/session'
 import ImageUrlInterface from '@/helpers/MediaStream/ImageUrlInterface'
-import { ImageFitOptions, ImageFormatOptions, ImagePathOptions, ImagePositionOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import {
+  ImageFitOptions,
+  ImageFormatOptions,
+  ImagePathOptions,
+  ImagePositionOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
 
 export default class ImageUrlModel {
   private static mediaStreamPath = ''
@@ -84,11 +89,29 @@ export default class ImageUrlModel {
       format = this.format as string
     }
 
-    return this.mediaStreamPath + this.imageType + '/' + this.buildImageNameFileTypeRemove() + '/' + this.width + '/' + this.height + '/' + fit + position + trimThreshold + '/' + format
+    return (
+      this.mediaStreamPath +
+      this.imageType +
+      '/' +
+      this.buildImageNameFileTypeRemove() +
+      '/' +
+      this.width +
+      '/' +
+      this.height +
+      '/' +
+      fit +
+      position +
+      trimThreshold +
+      '/' +
+      format
+    )
   }
 
   private static buildImageNameFileTypeRemove(): string {
-    return ImageUrlModel.fileName.substring(0, ImageUrlModel.fileName.lastIndexOf('.')) || ImageUrlModel.fileName
+    return (
+      ImageUrlModel.fileName.substring(0, ImageUrlModel.fileName.lastIndexOf('.')) ||
+      ImageUrlModel.fileName
+    )
   }
 
   public async buildMediaStreamImageUrl(): Promise<string> {

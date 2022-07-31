@@ -73,7 +73,12 @@ export default class UserModule extends AppBaseModule {
   }
 
   @Action
-  async updateUserProfile(data: Record<string, string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]>): Promise<void> {
+  async updateUserProfile(
+    data: Record<
+      string,
+      string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]
+    >
+  ): Promise<void> {
     const user_id = await this.context.getters['getUserId']
 
     const response = await api

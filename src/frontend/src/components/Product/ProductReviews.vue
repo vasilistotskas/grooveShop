@@ -99,7 +99,10 @@ const starHalfSvg =
     },
   },
 })
-export default class ProductReviews extends PaginationBase<ProductReviewModel> implements PaginatedInterface<ProductReviewModel> {
+export default class ProductReviews
+  extends PaginationBase<ProductReviewModel>
+  implements PaginatedInterface<ProductReviewModel>
+{
   product = new ProductModel()
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.PRODUCT_PAGE_REVIEWS
@@ -121,7 +124,10 @@ export default class ProductReviews extends PaginationBase<ProductReviewModel> i
   }
 
   get shouldReviewsAppear(): boolean {
-    return (this.allPaginatedResults && Object.keys(this.allPaginatedResults).length > 0) || (this.userToProductReview && Object.keys(this.userToProductReview).length > 0)
+    return (
+      (this.allPaginatedResults && Object.keys(this.allPaginatedResults).length > 0) ||
+      (this.userToProductReview && Object.keys(this.userToProductReview).length > 0)
+    )
   }
 
   async created(): Promise<void> {
@@ -143,7 +149,10 @@ export default class ProductReviews extends PaginationBase<ProductReviewModel> i
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
+    await store.dispatch('pagination/fetchPaginatedResults', {
+      params: paginationQuery,
+      namespace: this.paginationNamespace,
+    })
   }
 
   public buildEndPointUrlForPaginatedResults(): string {

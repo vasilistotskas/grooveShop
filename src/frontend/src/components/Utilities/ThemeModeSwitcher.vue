@@ -1,6 +1,12 @@
 <template>
   <li class="navigation-header-part toggle-dark-mode-part">
-    <button :aria-label="'Toggle Dark Mode'" :title="'Toggle Dark Mode'" rel="nofollow" class="toggle-dark-mode-button" @click="toggleThemeMode()">
+    <button
+      :aria-label="'Toggle Dark Mode'"
+      :title="'Toggle Dark Mode'"
+      rel="nofollow"
+      class="toggle-dark-mode-button"
+      @click="toggleThemeMode()"
+    >
       <font-awesome-icon :icon="themeIconClass" size="lg" />
     </button>
   </li>
@@ -27,7 +33,9 @@ export default class ThemeModeSwitcher extends Vue {
   }
 
   get themeModeFromLocalStorage(): AppSettingsThemeModeOption {
-    const themeModeFromLocalStorage = localStorage.getItem('themeModeFromLocalStorage') as AppSettingsThemeModeOption
+    const themeModeFromLocalStorage = localStorage.getItem(
+      'themeModeFromLocalStorage'
+    ) as AppSettingsThemeModeOption
 
     if (null === themeModeFromLocalStorage) {
       return AppSettingsThemeModeOption.no_theme
@@ -48,7 +56,9 @@ export default class ThemeModeSwitcher extends Vue {
 
   async created(): Promise<void> {
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      this.themeModeFromPreference = e.matches ? AppSettingsThemeModeOption.dark : AppSettingsThemeModeOption.light
+      this.themeModeFromPreference = e.matches
+        ? AppSettingsThemeModeOption.dark
+        : AppSettingsThemeModeOption.light
     })
 
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -60,7 +70,10 @@ export default class ThemeModeSwitcher extends Vue {
     this.updateThemeModeFromPreference()
   }
 
-  private static switchThemeModeFromTo(from: AppSettingsThemeModeOption, to: AppSettingsThemeModeOption): void {
+  private static switchThemeModeFromTo(
+    from: AppSettingsThemeModeOption,
+    to: AppSettingsThemeModeOption
+  ): void {
     const bodyElement = document.body
     bodyElement.classList.remove(from)
     bodyElement.classList.add(to)
@@ -73,12 +86,16 @@ export default class ThemeModeSwitcher extends Vue {
   }
 
   private updateThemeModeFromLocalStorage(): void {
-    store.dispatch('settings/toggleThemeModeFromPreference', this.themeModeFromLocalStorage).then((themeMode) => this.updateThemeMode(themeMode))
+    store
+      .dispatch('settings/toggleThemeModeFromPreference', this.themeModeFromLocalStorage)
+      .then((themeMode) => this.updateThemeMode(themeMode))
   }
 
   private updateThemeModeFromPreference(): void {
     if (AppSettingsThemeModeOption.no_theme === this.themeModeFromLocalStorage) {
-      store.dispatch('settings/toggleThemeModeFromPreference', this.themeModeFromPreference).then((themeMode) => this.updateThemeMode(themeMode))
+      store
+        .dispatch('settings/toggleThemeModeFromPreference', this.themeModeFromPreference)
+        .then((themeMode) => this.updateThemeMode(themeMode))
     } else {
       this.updateThemeModeFromLocalStorage()
     }
@@ -88,18 +105,26 @@ export default class ThemeModeSwitcher extends Vue {
     store.dispatch('settings/toggleThemeMode').then((themeMode) => this.updateThemeMode(themeMode))
   }
 
-  private updateThemeMode(themeMode: AppSettingsThemeModeOption = AppSettingsThemeModeOption.no_theme): void {
+  private updateThemeMode(
+    themeMode: AppSettingsThemeModeOption = AppSettingsThemeModeOption.no_theme
+  ): void {
     if (AppSettingsThemeModeOption.no_theme === themeMode) {
       themeMode = this.getThemeMode
     }
 
     switch (themeMode) {
       case AppSettingsThemeModeOption.dark:
-        ThemeModeSwitcher.switchThemeModeFromTo(AppSettingsThemeModeOption.light, AppSettingsThemeModeOption.dark)
+        ThemeModeSwitcher.switchThemeModeFromTo(
+          AppSettingsThemeModeOption.light,
+          AppSettingsThemeModeOption.dark
+        )
         break
       case AppSettingsThemeModeOption.light:
       default:
-        ThemeModeSwitcher.switchThemeModeFromTo(AppSettingsThemeModeOption.dark, AppSettingsThemeModeOption.light)
+        ThemeModeSwitcher.switchThemeModeFromTo(
+          AppSettingsThemeModeOption.dark,
+          AppSettingsThemeModeOption.light
+        )
         break
     }
   }

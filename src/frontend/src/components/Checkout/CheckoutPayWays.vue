@@ -59,7 +59,9 @@ export default defineComponent({
     const selectedPayWay = store.getters['pay_way/getSelectedPayWayName']
     const getSelectedPayWayName = () => store.getters['pay_way/getSelectedPayWayName']
 
-    const validPayWays: Array<PayWayModel> = await store.dispatch('pay_way/fetchActivePayWaysFromRemote')
+    const validPayWays: Array<PayWayModel> = await store.dispatch(
+      'pay_way/fetchActivePayWaysFromRemote'
+    )
     const getPayWayLottie = (payWayName: PayWayModel['name']): object => {
       switch (payWayName) {
         case PayWaysEnum.CREDIT_CARD: {

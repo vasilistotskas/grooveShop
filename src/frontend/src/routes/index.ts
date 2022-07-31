@@ -12,7 +12,17 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes: [...routes, ...authRoutes, ...userRoutes, ...cartRoutes, ...blogRoutes, ...searchRoutes, ...productRoutes, ...checkoutRoutes, ...categoryRoutes],
+  routes: [
+    ...routes,
+    ...authRoutes,
+    ...userRoutes,
+    ...cartRoutes,
+    ...blogRoutes,
+    ...searchRoutes,
+    ...productRoutes,
+    ...checkoutRoutes,
+    ...categoryRoutes,
+  ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
