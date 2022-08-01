@@ -21,11 +21,12 @@ from django.http import HttpResponse
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.middleware.csrf import get_token
-from graphene_django.views import GraphQLView
-from django.views.generic.base import TemplateView
 from django.views.decorators.http import require_GET
 from django.views.decorators.csrf import csrf_exempt
+from strawberry.django.views import AsyncGraphQLView, GraphQLView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
+from backend.core.schema import schema
 
 
 class IndexView(View):
@@ -151,11 +152,14 @@ urlpatterns = [
     path('api/v1/djoser/', include('djoser.urls')),
     path('api/v1/djoser/', include('djoser.urls.authtoken')),
     # graphql
-    path('graphql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    path('graphql/async', AsyncGraphQLView.as_view(schema=schema)),
+    path('graphql', csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
     # admin html editor
     path('tinymce/', include('tinymce.urls')),
     # vue urls
     path('', include(front_urls)),
+    # debug toolbar
+    path('__debug__/', include('debug_toolbar.urls'))
 ]
 
 urlpatterns += static(

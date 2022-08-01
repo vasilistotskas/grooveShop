@@ -2,7 +2,7 @@ from faker import Faker
 from random import randrange
 from django.conf import settings
 from django.core.management import BaseCommand
-from backend.blog.models import Profile, Tag, Post
+from backend.blog.models import Author, Tag, Post
 
 User = settings.AUTH_USER_MODEL
 
@@ -15,7 +15,7 @@ class Command(BaseCommand):
         website = faker.text(20)
         bio = faker.text(50)
 
-        profile, created = Profile.objects.get_or_create(
+        author, created = Author.objects.get_or_create(
             defaults={'user_id': user_id, 'website': website, 'bio': bio}
         )
 
@@ -33,7 +33,7 @@ class Command(BaseCommand):
                 meta_description=faker.text(10),
                 published=True,
                 image='uploads/slides/WallpaperDog-10724660.jpg',
-                author=Profile.objects.get(id=profile.id),
+                author=Author.objects.get(id=author.id),
             )
 
         self.stdout.write(self.style.SUCCESS('Success'))

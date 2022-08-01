@@ -307,8 +307,8 @@ export default class BlogModule extends AppBaseModule {
     try {
       const post = await clientApollo.query({
         query: gql`
-          query ($slug: String!) {
-            postBySlug(slug: $slug) {
+          query {
+            postBySlug(slug: "${router.currentRoute.value.params.slug}") {
               id
               title
               subtitle
@@ -339,9 +339,6 @@ export default class BlogModule extends AppBaseModule {
             }
           }
         `,
-        variables: {
-          slug: router.currentRoute.value.params.slug,
-        },
         fetchPolicy: 'no-cache',
       })
       const data = post.data.postBySlug
@@ -426,9 +423,8 @@ export default class BlogModule extends AppBaseModule {
     try {
       const comments = await clientApollo.query({
         query: gql`
-          query ($userEmail: String!) {
-            commentsByUser(userEmail: $userEmail) {
-              id
+          query {
+            commentsByUser(filters: { userEmail: "${store.getters['user/getUserEmail']}" }) {
               content
               createdAt
               isApproved
@@ -460,9 +456,6 @@ export default class BlogModule extends AppBaseModule {
             }
           }
         `,
-        variables: {
-          userEmail: store.getters['user/getUserEmail'],
-        },
       })
       const data = comments.data.commentsByUser
       this.context.commit('setCommentsByUser', data)
@@ -477,8 +470,10 @@ export default class BlogModule extends AppBaseModule {
     try {
       const comments = await clientApollo.query({
         query: gql`
-          query ($postId: Int!) {
-            commentsByPost(postId: $postId) {
+          query {
+            commentsByPost(filters: {
+              postId: ${Number(this.context.getters['getPostBySlug'].id)}
+            }) {
               id
               content
               createdAt
@@ -568,44 +563,15 @@ export default class BlogModule extends AppBaseModule {
     try {
       const comment = await clientApollo.query({
         query: gql`
-          query ($postId: Int!, $userEmail: String!) {
-            commentByUserToPost(postId: $postId, userEmail: $userEmail) {
+          query {
+            commentByUserToPost(postId: ${Number(
+              this.context.getters['getPostBySlug'].id
+            )}, userEmail: ${store.getters['user/getUserId']}) {
               id
               content
-              createdAt
-              isApproved
-              numberOfLikes
-              user {
-                id
-                firstName
-                lastName
-                email
-              }
-              post {
-                id
-                title
-                subtitle
-                publishDate
-                published
-                metaDescription
-                mainImageAbsoluteUrl
-                mainImageFilename
-                slug
-                numberOfLikes
-                category {
-                  id
-                }
-                tags {
-                  name
-                }
-              }
             }
           }
         `,
-        variables: {
-          postId: Number(this.context.getters['getPostBySlug'].id),
-          userEmail: store.getters['user/getUserData'].email,
-        },
       })
 
       const commentData = comment.data.commentByUserToPost

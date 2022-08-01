@@ -28,7 +28,12 @@ export default class TipModule extends AppBaseModule {
               title
               content
               kind
-              icon
+              icon {
+                name
+                path
+                size
+                url
+              }
               url
               createdAt
               active

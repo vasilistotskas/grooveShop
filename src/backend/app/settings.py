@@ -47,10 +47,20 @@ ALLOWED_HOSTS.extend(
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:8010']
 
-# Graphql force_text warning (w8ing for version 3)
-import django
-from django.utils.encoding import force_str
-django.utils.encoding.force_text = force_str
+INTERNAL_IPS = [
+    "127.0.0.1",
+    "http://localhost:8010",
+    "http://localhost:8010/",
+    "http://localhost:8001/",
+    "http://localhost:8001/",
+]
+
+
+if DEBUG:
+    import socket  # only if you haven't already imported this
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
+
 
 # Application definition
 DJANGO_APPS = [
@@ -76,11 +86,12 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'graphene_django',
     'djoser',
     'mptt',
     'tinymce',
     'django_filters',
+    'strawberry.django',
+    'debug_toolbar'
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
@@ -94,6 +105,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'strawberry_django_plus.middlewares.debug_toolbar.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.app.urls'
