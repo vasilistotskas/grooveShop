@@ -1,6 +1,5 @@
-from strawberry_django_plus import gql
-
 from backend.blog.models import Tag
+from strawberry_django_plus import gql
 
 
 @gql.django.type(Tag)

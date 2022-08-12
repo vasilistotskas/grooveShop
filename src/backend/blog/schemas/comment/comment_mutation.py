@@ -1,8 +1,8 @@
 from strawberry_django_plus import gql
 from django.contrib.auth import get_user_model
-from backend.blog.schemas.type.comment_type import CommentType
-from backend.blog.schemas.filter.comment_filter import UpdateCommentLikesFilter, UpdateCommentFilter
-from backend.blog.schemas.input.comment_input import UpdateCommentLikesInputPartial, \
+from backend.blog.schemas.comment.comment_type import CommentType
+from backend.blog.schemas.comment.comment_filter import UpdateCommentLikesFilter, UpdateCommentFilter
+from backend.blog.schemas.comment.comment_input import UpdateCommentLikesInputPartial, \
     CreateCommentInput, \
     UpdateCommentInputPartial
 

@@ -1,4 +1,4 @@
-Django==4.0.6
+Django==4.1
 psycopg2-binary==2.9.3
 djangorestframework==3.13.1
 django-cors-headers==3.13.0
@@ -8,7 +8,7 @@ stripe==3.5.0
 django-admin-thumbnails==0.2.6
 django-mptt==0.13.4
 django-js-asset==2.0.0
-strawberry-django-plus==1.21.0
+strawberry-django-plus==1.22.0
 django-redis==5.2.0
 celery==5.2.7
 Faker==13.15.1

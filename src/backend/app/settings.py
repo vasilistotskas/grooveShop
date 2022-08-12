@@ -224,7 +224,7 @@ STATICFILES_DIRS = (
     BASE_DIR.joinpath('frontend', 'dist'),
     BASE_DIR.joinpath('files'),
 )
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # graphql schema
 GRAPHENE = {

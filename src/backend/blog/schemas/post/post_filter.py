@@ -7,18 +7,6 @@ User = get_user_model()
 
 
 @strawberry.django.filters.filter(Post)
-class PostBySlugFilter:
-    slug: str
-
-    def filter(self, queryset):
-        return (
-            Post.objects.prefetch_related("tags")
-            .select_related("author")
-            .get(slug=self.slug)
-        )
-
-
-@strawberry.django.filters.filter(Post)
 class PostsByAuthorFilter:
     email: str
 

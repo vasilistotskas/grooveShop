@@ -2,8 +2,8 @@ from typing import List
 from backend.app import settings
 from strawberry_django_plus import gql
 from backend.blog.models import Comment
-from backend.blog.schemas.type.post_type import PostType
-from backend.user.schemas.type.user_account_type import UserAccountType
+from backend.blog.schemas.post.post_type import PostType
+from backend.user.schemas.user.user_account_type import UserAccountType
 
 User = settings.AUTH_USER_MODEL
 

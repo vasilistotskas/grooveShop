@@ -1,8 +1,7 @@
-import strawberry
 from typing import List
 from strawberry_django_plus import gql
-from backend.blog.schemas.type.author_type import AuthorType
-from backend.blog.schemas.filter.author_filter import AuthorByEmailFilter
+from backend.blog.schemas.author.author_type import AuthorType
+from backend.blog.schemas.author.author_filter import AuthorByEmailFilter
 
 
 @gql.type

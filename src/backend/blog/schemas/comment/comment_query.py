@@ -1,8 +1,8 @@
 from typing import List, Optional
 from strawberry_django_plus import gql
 from backend.blog.models import Comment
-from backend.blog.schemas.type.comment_type import CommentType
-from backend.blog.schemas.filter.comment_filter import CommentsByUserFilter, CommentsByPostFilter
+from backend.blog.schemas.comment.comment_type import CommentType
+from backend.blog.schemas.comment.comment_filter import CommentsByUserFilter, CommentsByPostFilter
 
 
 @gql.type

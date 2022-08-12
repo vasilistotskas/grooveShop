@@ -4,10 +4,10 @@ from django.conf import settings
 from backend.app import settings
 from backend.blog.models import Post
 from strawberry_django_plus import gql
-from backend.blog.schemas.type.tag_type import TagType
-from backend.blog.schemas.type.author_type import AuthorType
-from backend.blog.schemas.type.category_type import CategoryType
-from backend.user.schemas.type.user_account_type import UserAccountType
+from backend.blog.schemas.tag.tag_type import TagType
+from backend.blog.schemas.author.author_type import AuthorType
+from backend.blog.schemas.category.category_type import CategoryType
+from backend.user.schemas.user.user_account_type import UserAccountType
 
 User = settings.AUTH_USER_MODEL
 

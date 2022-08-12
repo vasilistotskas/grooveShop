@@ -1,7 +1,6 @@
-import strawberry
 from typing import List
 from strawberry_django_plus import gql
-from backend.blog.schemas.type.category_type import CategoryType
+from backend.blog.schemas.category.category_type import CategoryType
 
 
 @gql.type
