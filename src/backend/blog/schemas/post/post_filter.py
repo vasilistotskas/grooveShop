@@ -7,30 +7,6 @@ User = get_user_model()
 
 
 @strawberry.django.filters.filter(Post)
-class PostsByAuthorFilter:
-    email: str
-
-    def filter(self, queryset):
-        return (
-            Post.objects.prefetch_related("tags")
-            .select_related("author")
-            .filter(author__user__email=self.email)
-        )
-
-
-@strawberry.django.filters.filter(Post)
-class PostsByAuthorTag:
-    tag: str
-
-    def filter(self, queryset):
-        return (
-            Post.objects.prefetch_related("tags")
-            .select_related("author")
-            .filter(tags__name__iexact=self.tag)
-        )
-
-
-@strawberry.django.filters.filter(Post)
 class UpdatePostLikesFilter:
     id: gql.ID
     user_id: gql.ID

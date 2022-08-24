@@ -4,5 +4,5 @@ from strawberry_django_plus import gql
 
 
 @strawberry.django.filters.filter(models.Author)
-class AuthorByEmailFilter:
+class AuthorByIdFilter:
     id: gql.ID

@@ -8,39 +8,6 @@ User = get_user_model()
 
 
 @strawberry.django.filters.filter(Comment)
-class CommentsByUserFilter:
-    user_email: str
-
-    def filter(self, queryset):
-        return Comment.objects.select_related("user").filter(
-            user__email=self.user_email
-        )
-
-
-@strawberry.django.filters.filter(Comment)
-class CommentsByPostFilter:
-    post_id: gql.ID
-
-    def filter(self, queryset):
-
-        return Comment.objects.select_related("post").filter(
-            post__id=self.post_id
-        )
-
-
-@strawberry.django.filters.filter(Comment)
-class CommentByUserToPostFilter:
-    post_id: gql.ID
-    user_email: str
-
-    def filter(self, queryset):
-        return Comment.objects.select_related("post").filter(
-            post__id=self.post_id,
-            user__email=self.user_email
-        ).first()
-
-
-@strawberry.django.filters.filter(Comment)
 class UpdateCommentLikesFilter:
     id: gql.ID
     user_id: gql.ID

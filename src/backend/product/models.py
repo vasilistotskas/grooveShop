@@ -9,10 +9,10 @@ from mptt.models import MPTTModel
 from tinymce.models import HTMLField
 from mptt.fields import TreeForeignKey
 from backend.seo.models import SeoModel
+from django.db.models import Avg, Count
 from django.utils.html import format_html
 from backend.core.models import SortableModel
 from django.utils.safestring import mark_safe
-from django.db.models import Avg, Count, CharField
 from backend.helpers.image_resize import make_thumbnail
 
 User = settings.AUTH_USER_MODEL
@@ -207,8 +207,8 @@ class Product(SeoModel):
 
     def main_image_filename(self) -> str:
         try:
-            test = ProductImages.objects.get(product_id=self.id, is_main=True)
-            return os.path.basename(test.image.name)
+            product_image = ProductImages.objects.get(product_id=self.id, is_main=True)
+            return os.path.basename(product_image.image.name)
         except:
             return ""
 
