@@ -1,9 +1,9 @@
 import { LocationQuery } from 'vue-router'
-import PaginatedQueryParams from '@/state/pagination/Interface/PaginatedQueryParams'
 import {
   PaginationCount,
   PaginationLink,
   PaginationTotalPages,
+  QueryParamsType,
 } from '@/state/pagination/Type/PaginationTypes'
 
 export default interface PaginatedInterface<TPaginatedModel> {
@@ -16,7 +16,7 @@ export default interface PaginatedInterface<TPaginatedModel> {
   readonly allPaginatedResultsPreviousPageUrl: PaginationLink['previous']
   readonly allPaginatedResultsTotalPages: PaginationTotalPages
   readonly currentPageNumber: number
-  readonly currentPageQuery?: Partial<PaginatedQueryParams>
+  readonly currentPageQuery?: QueryParamsType
 
   fetchPaginationData(): Promise<void> | undefined
 }

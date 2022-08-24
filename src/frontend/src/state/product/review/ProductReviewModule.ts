@@ -1,20 +1,34 @@
-import store from '@/store'
 import router from '@/routes'
+import store from '@/dynamicStore'
 import api from '@/api/api.service'
 import { AxiosResponse } from 'axios'
 import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
-import { Action, Module, Mutation } from 'vuex-module-decorators'
+import { Action, getModule, Module, Mutation } from 'vuex-module-decorators'
 import PaginatedModel from '@/state/pagination/Model/PaginatedModel'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
+import UserModule from '@/state/user/data/UserModule'
+import AuthModule from '@/state/auth/auth/AuthModule'
+import PaginationModule from '@/state/pagination/PaginationModule'
+import ProductModule from '@/state/product/ProductModule'
 
 const toast = useToast()
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'productReview',
+})
 export default class ProductReviewModule extends AppBaseModule {
+  userModule = getModule(UserModule)
+  authModule = getModule(AuthModule)
+  paginationModule = getModule(PaginationModule)
+  productModule = getModule(ProductModule)
   namespace = PaginationNamespaceTypesEnum.USER_REVIEWS
   productReviews: Array<ProductReviewModel> = []
   productReviewsAverage = 0
@@ -49,7 +63,7 @@ export default class ProductReviewModule extends AppBaseModule {
 
   @Mutation
   setProductReviews(productReviews: Array<ProductReviewModel>): void {
-    const user_id: number = store.getters['user/getUserId']
+    const user_id = this.userModule.getUserId
 
     productReviews.forEach(function (item, i) {
       if (item.user_id === user_id) {
@@ -84,11 +98,11 @@ export default class ProductReviewModule extends AppBaseModule {
   @Mutation
   removeUserToProductReview<T>(data: Record<string, T>): void {
     if (router.currentRoute.value.name === 'Product') {
-      const paginationQuery: PaginationModel = PaginationModel.createPaginationQuery({
+      const paginationQuery = PaginationModel.createPaginationModel({
         endpointUrl: `reviews/product/${data.product_id}`,
         queryParams: {
-          page: store.getters['pagination/getCurrentPageNumber'](this.namespace),
-          query: store.getters['pagination/getCurrentQuery'](this.namespace),
+          page: this.paginationModule.getCurrentPageNumber(this.namespace),
+          query: this.paginationModule.getCurrentQuery(this.namespace),
         },
         method: ApiBaseMethods.GET,
       })
@@ -102,7 +116,7 @@ export default class ProductReviewModule extends AppBaseModule {
     }
 
     if (router.currentRoute.value.name === 'Reviews') {
-      const paginationQuery: PaginationModel = PaginationModel.createPaginationQuery({
+      const paginationQuery: PaginationModel = PaginationModel.createPaginationModel({
         endpointUrl: `reviews/user/${data.user_id}`,
         queryParams: {
           page: store.getters['pagination/getCurrentPageNumber'](this.namespace),

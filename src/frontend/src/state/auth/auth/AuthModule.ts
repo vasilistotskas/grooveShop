@@ -1,5 +1,5 @@
-import store from '@/store'
 import router from '@/routes'
+import store from '@/dynamicStore'
 import api from '@/api/api.service'
 import session from '@/api/session'
 import { AxiosResponse } from 'axios'
@@ -10,7 +10,13 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 const toast = useToast()
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'auth',
+})
 export default class AuthModule extends AppBaseModule {
   TOKEN_STORAGE_KEY = 'TOKEN_STORAGE_KEY'
   isProduction = process.env.NODE_ENV === 'production'

@@ -88,11 +88,14 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
+import { getModule } from 'vuex-module-decorators'
 import { RouteLocationNormalized } from 'vue-router'
+import AuthModule from '@/state/auth/auth/AuthModule'
+import ProductModule from '@/state/product/ProductModule'
 import { Options as Component, Vue } from 'vue-class-component'
 import { first, last, filter, times, constant, cloneDeep } from 'lodash'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
+import ProductReviewModule from '@/state/product/review/ProductReviewModule'
 import { faPenSquare } from '@fortawesome/free-solid-svg-icons/faPenSquare'
 
 const starSvg =
@@ -104,6 +107,9 @@ const starHalfSvg =
   name: 'ProductReview',
 })
 export default class ProductReview extends Vue {
+  productReviewModule = getModule(ProductReviewModule)
+  authModule = getModule(AuthModule)
+  productModule = getModule(ProductModule)
   $refs!: {
     ratingBoard: HTMLElement
   }
@@ -218,11 +224,11 @@ export default class ProductReview extends Vue {
   }
 
   get userHasAlreadyReviewedProduct(): boolean {
-    return store.getters['product/review/getUserHasAlreadyReviewedProduct']
+    return this.productReviewModule.getUserHasAlreadyReviewedProduct
   }
 
   get userToProductReview(): ProductReviewModel {
-    return store.getters['product/review/getUserToProductReview']
+    return this.productReviewModule.getUserToProductReview
   }
 
   created() {
@@ -243,8 +249,8 @@ export default class ProductReview extends Vue {
     this.$watch(
       () => this.$route,
       () => {
-        store.commit('product/review/unsetUserToProductReview')
-        store.commit('product/review/unsetProductReviews')
+        this.productReviewModule.unsetUserToProductReview()
+        this.productReviewModule.unsetProductReviews()
       }
     )
   }
@@ -297,15 +303,15 @@ export default class ProductReview extends Vue {
       data.append('rate', this.rate as unknown as string)
     }
 
-    await store.dispatch('product/review/toggleReview', data)
+    await this.productReviewModule.toggleReview(data)
   }
 
   public async reviewModuleInitialize(): Promise<void> {
-    await store.dispatch('product/fetchProductFromRemote')
-    const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
+    await this.productModule.fetchProductFromRemote()
+    const IsAuthenticated: boolean = this.authModule.isAuthenticated
 
     if (IsAuthenticated) {
-      await store.dispatch('product/review/fetchUserToProductReviewFromRemote')
+      await this.productReviewModule.fetchUserToProductReviewFromRemote()
 
       this.comment = cloneDeep(this.userToProductReview.comment)
       this.rate = cloneDeep(this.userToProductReview.rate)

@@ -30,12 +30,14 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { PropType } from 'vue'
+import { getModule } from 'vuex-module-decorators'
+import UserModule from '@/state/user/data/UserModule'
 import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
+import PaginationModule from '@/state/pagination/PaginationModule'
 import PaginationBase from '@/components/Pagination/PaginationBase'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
@@ -62,31 +64,32 @@ export default class UserReviews
   extends PaginationBase<ProductReviewModel>
   implements PaginatedInterface<ProductReviewModel>
 {
+  userModule = getModule(UserModule)
+  paginationModule = getModule(PaginationModule)
   userData = new UserProfileModel()
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.USER_REVIEWS
 
-  get userId(): number {
-    return store.getters['user/getUserId']
+  get userId(): number | undefined {
+    return this.userModule.getUserId
   }
 
   async created(): Promise<void> {
     document.title = 'My Reviews'
 
     if (this.params.query) {
-      await store.commit('pagination/setCurrentQuery', {
+      await this.paginationModule.setCurrentQuery({
         currentQuery: this.params.query,
         namespace: this.paginationNamespace,
       })
     }
-
-    await store.commit('pagination/setCurrentPageNumber', {
+    await this.paginationModule.setCurrentPageNumber({
       pageNumber: 1,
       namespace: this.paginationNamespace,
     })
 
     if (this.params.page) {
-      await store.commit('pagination/setCurrentPageNumber', {
+      await this.paginationModule.setCurrentPageNumber({
         pageNumber: Number(this.params.page),
         namespace: this.paginationNamespace,
       })
@@ -96,17 +99,17 @@ export default class UserReviews
   }
 
   async unmounted(): Promise<void> {
-    store.commit('pagination/unsetResults', this.paginationNamespace)
+    await this.paginationModule.unsetResults(this.paginationNamespace)
   }
 
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery = PaginationModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: this.buildEndPointUrlForPaginatedResults(),
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', {
+    await this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.paginationNamespace,
     })

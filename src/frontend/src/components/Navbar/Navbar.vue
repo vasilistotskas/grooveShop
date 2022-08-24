@@ -165,15 +165,25 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
+import {
+  ImagePathOptions,
+  ImageFormatOptions,
+  ImageFitOptions,
+  ImagePositionOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
 import router from '@/routes'
+import AppModule from '@/state/app/AppModule'
+import { getModule } from 'vuex-module-decorators'
+import AuthModule from '@/state/auth/auth/AuthModule'
 import ProductModel from '@/state/product/ProductModel'
 import { Options as Component } from 'vue-class-component'
 import CategoryModel from '@/state/category/CategoryModel'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
+import CategoryModule from '@/state/category/CategoryModule'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
+import PaginationModule from '@/state/pagination/PaginationModule'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import PaginationBase from '@/components/Pagination/PaginationBase'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
@@ -183,12 +193,6 @@ import ThemeModeSwitcher from '@/components/Utilities/ThemeModeSwitcher.vue'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
-import {
-  ImagePathOptions,
-  ImageFormatOptions,
-  ImageFitOptions,
-  ImagePositionOptions,
-} from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Component({
   name: 'Navbar',
@@ -206,6 +210,10 @@ export default class Navbar
   extends PaginationBase<ProductModel>
   implements PaginatedInterface<ProductModel>
 {
+  appModule = getModule(AppModule)
+  paginationModule = getModule(PaginationModule)
+  authModule = getModule(AuthModule)
+  categoryModule = getModule(CategoryModule)
   paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
 
   searchQuery = {
@@ -231,19 +239,19 @@ export default class Navbar
   }
 
   get navbarMenuHidden(): boolean {
-    return store.getters['app/getNavbarMenuHidden']
+    return this.appModule.getNavbarMenuHidden
   }
 
   get isMobile(): boolean {
-    return store.getters['app/isMobile']
+    return this.appModule.isMobile
   }
 
   get categoriesTreeData(): Array<CategoryModel> {
-    return store.getters['category/getCategoriesTree']
+    return this.categoryModule.getCategoriesTree
   }
 
   get isAuthenticated(): boolean {
-    return store.getters['auth/isAuthenticated']
+    return this.authModule.isAuthenticated
   }
 
   public menuToggle(): void {
@@ -253,24 +261,24 @@ export default class Navbar
       this.$refs.mainToggleButton.classList.contains('opened') as unknown as string
     )
 
-    store.commit('app/setNavbarMenuHidden', !this.navbarMenuHidden)
+    this.appModule.setNavbarMenuHidden(!this.navbarMenuHidden)
   }
 
   async fetchPaginationData(): Promise<void> {
-    await store.commit('pagination/unsetResults', this.paginationNamespace)
-    await store.commit('pagination/setCurrentQuery', {
+    await this.paginationModule.unsetResults(this.paginationNamespace)
+    await this.paginationModule.setCurrentQuery({
       currentQuery: this.searchQuery,
       namespace: this.paginationNamespace,
     })
 
-    const paginationQuery = PaginationModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: `search-product`,
       queryParams: this.searchQuery,
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', {
+    await this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.paginationNamespace,
     })

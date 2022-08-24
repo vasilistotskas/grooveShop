@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import axios from 'axios'
-import store from '@/store'
 import { ref, onMounted } from 'vue'
 import VueHorizontal from 'vue-horizontal'
+import AppModule from '@/state/app/AppModule'
+import { getModule } from 'vuex-module-decorators'
 
+const appModule = getModule(AppModule)
 const props = defineProps({
   count: Number,
   pagination: Boolean,
@@ -17,7 +19,7 @@ const usePagination = ref(false)
 const showCaption = ref(false)
 const paginationNextUrl = ref('')
 const paginationPrevUrl = ref('')
-const accessToken = store.getters['app/getInstagramApiToken']
+const accessToken = appModule.getInstagramApiToken
 const fetchInstaData = (url: string) => {
   axios
     .get(url)

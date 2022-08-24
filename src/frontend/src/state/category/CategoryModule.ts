@@ -1,20 +1,27 @@
 import { map } from 'lodash'
+import store from '@/dynamicStore'
 import api from '@/api/api.service'
+import { AxiosResponse } from 'axios'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import CategoryModel from '@/state/category/CategoryModel'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import { AxiosResponse } from 'axios'
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'category',
+})
 export default class CategoryModule extends AppBaseModule {
   category = new CategoryModel()
-  categoriesTree = new CategoryModel()
+  categoriesTree: Array<CategoryModel> = []
 
   get getCategory(): CategoryModel {
     return this.category
   }
 
-  get getCategoriesTree(): CategoryModel {
+  get getCategoriesTree(): Array<CategoryModel> {
     return this.categoriesTree
   }
 
@@ -24,7 +31,7 @@ export default class CategoryModule extends AppBaseModule {
   }
 
   @Mutation
-  setCategoriesTree(categories: CategoryModel): void {
+  setCategoriesTree(categories: Array<CategoryModel>): void {
     this.categoriesTree = categories
   }
 

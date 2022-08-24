@@ -31,7 +31,8 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
+import { getModule } from 'vuex-module-decorators'
+import SignUpModule from '@/state/auth/signup/SignUpModule'
 import { Options as Component, Vue } from 'vue-class-component'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 
@@ -45,13 +46,14 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
   },
 })
 export default class VerifyEmailResendInput extends Vue {
+  signupModule = getModule(SignUpModule)
   activationEmailAtLocalStorage = false
   email = ''
   envelopeIcon = faEnvelope
 
   async activationEmailResend(email: string): Promise<void> {
     let finalEmail = ''
-    const emailFromLocalStorage = store.getters['signup/getRegistrationEmail']
+    const emailFromLocalStorage = this.signupModule.getRegistrationEmail
     if (emailFromLocalStorage) {
       finalEmail = emailFromLocalStorage
       this.activationEmailAtLocalStorage = true
@@ -59,7 +61,7 @@ export default class VerifyEmailResendInput extends Vue {
       finalEmail = email
     }
 
-    await store.dispatch('signup/activationEmailResend', finalEmail)
+    await this.signupModule.activationEmailResend(finalEmail)
   }
 }
 </script>

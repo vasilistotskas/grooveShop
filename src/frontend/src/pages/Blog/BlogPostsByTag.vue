@@ -7,9 +7,10 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
 import { RouteParams } from 'vue-router'
+import BlogModule from '@/state/blog/BlogModule'
+import { getModule } from 'vuex-module-decorators'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import BlogPostList from '@/components/Blog/BlogPostList.vue'
 import { Options as Component, Vue } from 'vue-class-component'
@@ -24,6 +25,8 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
   },
 })
 export default class BlogPostsByTag extends Vue {
+  blogModule = getModule(BlogModule)
+
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router
       .currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
@@ -31,15 +34,15 @@ export default class BlogPostsByTag extends Vue {
   }
 
   get postsByTag(): Array<BlogPostModel> {
-    return store.getters['blog/getPostsByTag']
+    return this.blogModule.getPostsByTag
   }
 
   async created(): Promise<void> {
-    await store.dispatch('blog/fetchPostsByTagFromRemote')
+    await this.blogModule.fetchPostsByTagFromRemote()
   }
 
   async updated(): Promise<void> {
-    await store.dispatch('blog/fetchPostsByTagFromRemote')
+    await this.blogModule.fetchPostsByTagFromRemote()
   }
 }
 </script>

@@ -16,10 +16,15 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
+import { PropType } from 'vue'
 import TipModel from '@/state/tip/TipModel'
+import TipModule from '@/state/tip/TipModule'
+import BlogModule from '@/state/blog/BlogModule'
+import { getModule } from 'vuex-module-decorators'
+import BlogTagModel from '@/state/blog/BlogTagModel'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import TipSidebar from '@/components/Tip/TipSidebar.vue'
+import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import BlogPostCard from '@/components/Blog/BlogPostCard.vue'
 import { Options as Component, Vue } from 'vue-class-component'
 import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
@@ -33,7 +38,7 @@ import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
   },
   props: {
     posts: {
-      type: Array,
+      type: Array as PropType<Array<BlogPostModel>>,
       required: true,
     },
     showAuthor: {
@@ -44,27 +49,29 @@ import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
   },
 })
 export default class BlogPostList extends Vue {
+  blogModule = getModule(BlogModule)
+  tipModule = getModule(TipModule)
   showAuthor = false
   posts: Array<BlogPostModel> = []
 
-  get allTags(): Array<BlogPostModel> {
-    return store.getters['blog/getAllTags']
+  get allTags(): Array<BlogTagModel> {
+    return this.blogModule.getAllTags
   }
 
-  get allAuthors(): Array<BlogPostModel> {
-    return store.getters['blog/getAllAuthors']
+  get allAuthors(): Array<BlogAuthorModel> {
+    return this.blogModule.getAllAuthors
   }
 
   get allTips(): Array<TipModel> {
-    return store.getters['tip/getAllTips']
+    return this.tipModule.getAllTips
   }
 
   async mounted(): Promise<void> {
     await Promise.all([
-      store.dispatch('blog/fetchAllTagsFromRemote'),
-      store.dispatch('blog/fetchAllAuthorsFromRemote'),
-      store.dispatch('blog/fetchAllCategoriesFromRemote'),
-      store.dispatch('tip/fetchAllTipsFromRemote'),
+      this.blogModule.fetchAllTagsFromRemote(),
+      this.blogModule.fetchAllAuthorsFromRemote(),
+      this.blogModule.fetchAllCategoriesFromRemote(),
+      this.tipModule.fetchAllTipsFromRemote(),
     ])
   }
 }

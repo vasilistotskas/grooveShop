@@ -80,14 +80,15 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
 import { PropType } from 'vue'
 import { constant, times } from 'lodash'
 import { onClickOutside } from '@vueuse/core'
+import { getModule } from 'vuex-module-decorators'
 import { MainRouteNames } from '@/routes/Enum/MainRouteNames'
 import { Options as Component, Vue } from 'vue-class-component'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
+import ProductReviewModule from '@/state/product/review/ProductReviewModule'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
 
 const starSvg =
@@ -109,6 +110,7 @@ const starHalfSvg =
   },
 })
 export default class ReviewProductCard extends Vue {
+  productReviewModule = getModule(ProductReviewModule)
   MainRouteNames = MainRouteNames
   $refs!: {
     userReviewsActionTarget: HTMLElement
@@ -180,7 +182,7 @@ export default class ReviewProductCard extends Vue {
     }
 
     if (confirm('Are you sure you want to delete your rating?')) {
-      await store.dispatch('product/review/deleteCurrentProductReview', data)
+      await this.productReviewModule.deleteCurrentProductReview(data)
     }
   }
 }

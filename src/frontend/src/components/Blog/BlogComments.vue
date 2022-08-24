@@ -24,8 +24,10 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { PropType } from 'vue'
+import BlogModule from '@/state/blog/BlogModule'
+import { getModule } from 'vuex-module-decorators'
+import UserModule from '@/state/user/data/UserModule'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
 import { Options as Component, Vue } from 'vue-class-component'
@@ -44,18 +46,20 @@ import BlogCommentCard from '@/components/Blog/BlogCommentCard.vue'
   },
 })
 export default class BlogComments extends Vue {
+  userModule = getModule(UserModule)
+  blogModule = getModule(BlogModule)
   post!: BlogPostModel
 
-  get userId(): number {
-    return store.getters['user/getUserId']
+  get userId(): number | undefined {
+    return this.userModule.getUserId
   }
 
-  get allBlogPostComments(): Array<BlogPostModel> {
-    return store.getters['blog/getCommentsByPost']
+  get allBlogPostComments(): Array<BlogCommentModel> {
+    return this.blogModule.getCommentsByPost
   }
 
   get commentByUserToPost(): BlogCommentModel {
-    return store.getters['blog/getCommentByUserToPost']
+    return this.blogModule.getCommentByUserToPost
   }
 
   get shouldCommentsAppear(): boolean {

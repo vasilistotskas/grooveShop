@@ -1,10 +1,17 @@
+import store from '@/dynamicStore'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import initStripeComponent from '@/libraries/Stripe/Stripe'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import { StripeElement } from '@/libraries/Stripe/StripeElement'
 
-@Module({ namespaced: true })
-export default class StripeCardComponents extends AppBaseModule {
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'stripeIban',
+})
+export default class StripeIbanModule extends AppBaseModule {
   stripeKey = 'pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3'
   ibanError!: any
   ibanIsCompleted!: any

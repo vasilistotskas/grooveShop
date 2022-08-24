@@ -80,11 +80,13 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
+import { getModule } from 'vuex-module-decorators'
+import AuthModule from '@/state/auth/auth/AuthModule'
 import { equal, min } from '@/components/Form/Utils'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import { Options as Component, Vue } from 'vue-class-component'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
+import PasswordModule from '@/state/auth/password/PasswordModule'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
@@ -102,6 +104,9 @@ let { validateFields } = useValidation({})
   },
 })
 export default class UserPassword extends Vue {
+  authModule = getModule(AuthModule)
+  passwordModule = getModule(PasswordModule)
+
   submitButtonText = 'Update'
 
   formManager = ({ validateFields } = useValidation({
@@ -140,7 +145,7 @@ export default class UserPassword extends Vue {
         re_new_password: formData.re_new_password,
       }
 
-      await store.dispatch('password/updateUserPassword', apiData)
+      await this.passwordModule.updateUserPassword(apiData)
     } catch (e) {
       if (e instanceof ValidationError) {
         console.log(e.message)
@@ -149,7 +154,7 @@ export default class UserPassword extends Vue {
   }
 
   clearAllAccountSessions(): void {
-    store.dispatch('auth/clearAllAccountSessions')
+    this.authModule.clearAllAccountSessions()
   }
 }
 </script>

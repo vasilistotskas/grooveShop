@@ -1,5 +1,5 @@
 import { map } from 'lodash'
-import store from '@/store'
+import store from '@/dynamicStore'
 import { useToast } from 'vue-toastification'
 import {
   _RouteRecordBase,

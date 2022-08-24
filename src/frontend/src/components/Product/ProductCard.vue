@@ -60,9 +60,10 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { constant, times } from 'lodash'
 import { helpers } from '@/helpers/main'
+import CartModule from '@/state/cart/CartModule'
+import { getModule } from 'vuex-module-decorators'
 import ProductModel from '@/state/product/ProductModel'
 import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
@@ -83,6 +84,7 @@ const starHalfSvg =
   },
 })
 export default class ProductCard extends Vue {
+  cartModule = getModule(CartModule)
   quantity = 1
   product = new ProductModel()
 
@@ -112,7 +114,7 @@ export default class ProductCard extends Vue {
       quantity: this.quantity,
     }
 
-    store.commit('cart/addToCart', item)
+    this.cartModule.addToCart(item)
   }
 
   public contentShorten(productName: string): string {

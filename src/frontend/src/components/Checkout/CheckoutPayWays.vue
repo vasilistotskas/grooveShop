@@ -28,10 +28,12 @@
 </template>
 
 <script lang="ts">
-import { useStore } from 'vuex'
 import { Emitter, EventType } from 'mitt'
 import { defineComponent, inject } from 'vue'
+import CartModule from '@/state/cart/CartModule'
+import { getModule } from 'vuex-module-decorators'
 import PayWayModel from '@/state/payway/PayWayModel'
+import PayWayModule from '@/state/payway/PayWayModule'
 import { PayWaysEnum } from '@/state/payway/Enum/PayWaysEnum'
 import * as credit_card_lottie from '@/assets/lotties/credit_card.json'
 import LottiePlayerMain from '@/components/Utilities/LottiePlayerMain.vue'
@@ -53,15 +55,16 @@ export default defineComponent({
     },
   },
   async setup(props) {
-    const store = useStore()
+    const payWayModule = getModule(PayWayModule)
+    const cartModule = getModule(CartModule)
+
     const emitter: Emitter<Record<EventType, unknown>> | undefined = inject('emitter')
 
-    const selectedPayWay = store.getters['pay_way/getSelectedPayWayName']
-    const getSelectedPayWayName = () => store.getters['pay_way/getSelectedPayWayName']
+    const selectedPayWay = payWayModule.getSelectedPayWayName
+    const getSelectedPayWayName = () => payWayModule.getSelectedPayWayName
 
-    const validPayWays: Array<PayWayModel> = await store.dispatch(
-      'pay_way/fetchActivePayWaysFromRemote'
-    )
+    const validPayWays: void | Array<PayWayModel> =
+      await payWayModule.fetchActivePayWaysFromRemote()
     const getPayWayLottie = (payWayName: PayWayModel['name']): object => {
       switch (payWayName) {
         case PayWaysEnum.CREDIT_CARD: {
@@ -76,8 +79,8 @@ export default defineComponent({
       }
     }
     const setSelectedPayWay = async (selectedPayWay: PayWayModel): Promise<void> => {
-      await store.dispatch('cart/cartTotalPriceForPayWayAction', selectedPayWay)
-      store.commit('pay_way/setSelectedPayWay', selectedPayWay)
+      await cartModule.cartTotalPriceForPayWayAction(selectedPayWay)
+      payWayModule.setSelectedPayWay(selectedPayWay)
     }
     const managePayWayClick = async (selectedPayWay: PayWayModel): Promise<void> => {
       if (selectedPayWay.name === PayWaysEnum.CREDIT_CARD) {

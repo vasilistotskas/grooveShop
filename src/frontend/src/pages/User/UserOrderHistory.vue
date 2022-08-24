@@ -26,11 +26,12 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
+import { getModule } from 'vuex-module-decorators'
 import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import UserOrderModel from '@/state/user/order/UserOrderModel'
 import Pagination from '@/components/Pagination/Pagination.vue'
+import PaginationModule from '@/state/pagination/PaginationModule'
 import PaginationBase from '@/components/Pagination/PaginationBase'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
@@ -50,6 +51,7 @@ export default class UserOrderHistory
   extends PaginationBase<UserOrderModel>
   implements PaginatedInterface<UserOrderModel>
 {
+  paginationModule = getModule(PaginationModule)
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.USER_ORDER_HISTORY
 
@@ -57,19 +59,19 @@ export default class UserOrderHistory
     document.title = 'My Orders'
 
     if (this.params.query) {
-      await store.commit('pagination/setCurrentQuery', {
+      await this.paginationModule.setCurrentQuery({
         currentQuery: this.params.query,
         namespace: this.paginationNamespace,
       })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', {
+    await this.paginationModule.setCurrentPageNumber({
       pageNumber: 1,
       namespace: this.paginationNamespace,
     })
 
     if (this.params.page) {
-      await store.commit('pagination/setCurrentPageNumber', {
+      await this.paginationModule.setCurrentPageNumber({
         pageNumber: Number(this.params.page),
         namespace: this.paginationNamespace,
       })
@@ -79,17 +81,17 @@ export default class UserOrderHistory
   }
 
   async unmounted(): Promise<void> {
-    store.commit('pagination/unsetResults', this.paginationNamespace)
+    this.paginationModule.unsetResults(this.paginationNamespace)
   }
 
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery = PaginationModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: `orders`,
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', {
+    await this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.paginationNamespace,
     })

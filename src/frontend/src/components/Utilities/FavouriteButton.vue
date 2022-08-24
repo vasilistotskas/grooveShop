@@ -12,9 +12,11 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { some } from 'lodash'
 import { useToast } from 'vue-toastification'
+import UserModule from '@/state/user/data/UserModule'
+import AuthModule from '@/state/auth/auth/AuthModule'
+import { getModule, VuexModule } from 'vuex-module-decorators'
 import { Options as Component, Vue } from 'vue-class-component'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import FavouriteButtonInterface from '@/components/Utilities/Interface/FavouriteButtonInterface'
@@ -25,6 +27,10 @@ const toast = useToast()
   name: 'FavouriteButton',
   props: {
     model: {
+      type: Object,
+      required: true,
+    },
+    module: {
       type: Object,
       required: true,
     },
@@ -57,9 +63,12 @@ const toast = useToast()
 })
 export default class FavouriteButton
   extends Vue
-  implements FavouriteButtonInterface<Record<string, never>>
+  implements FavouriteButtonInterface<VuexModule<ThisType<any>, any>>
 {
+  userModule = getModule(UserModule)
+  authModule = getModule(AuthModule)
   model!: Record<string, never>
+  module!: any
   getterType!: string
   dispatchType!: string
   isFavourite = false
@@ -71,23 +80,27 @@ export default class FavouriteButton
     this.isFavourite = this.getIsFavourite
   }
 
+  get getModule() {
+    return this.module
+  }
+
   get getIsFavourite(): boolean {
     if (this.useStore) {
-      return store.getters[this.getterType]
+      return this.getModule[this.getterType]
     }
     const likes = this.model.likes
-    const userEmail = store.getters['user/getUserData'].email
+    const userEmail = this.userModule.getUserData.email
 
     return some(likes, { email: userEmail })
   }
 
   async favouriteHandle(): Promise<void> {
-    const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
+    const IsAuthenticated: boolean = this.authModule.isAuthenticated
     if (!IsAuthenticated) {
       toast.error('You are not logged in')
       return
     }
-    await store.dispatch(this.dispatchType, this.model).then((isFavourite: boolean) => {
+    await this.getModule[this.dispatchType](this.model).then((isFavourite: boolean) => {
       this.isFavourite = isFavourite
     })
     this.isFavourite ? toast.success('Added to Favourites') : toast.info('Removed From Favourites')

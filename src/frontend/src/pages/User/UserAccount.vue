@@ -95,8 +95,10 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
+import { getModule } from 'vuex-module-decorators'
+import AuthModule from '@/state/auth/auth/AuthModule'
+import UserModule from '@/state/user/data/UserModule'
 import { MainRouteNames } from '@/routes/Enum/MainRouteNames'
 import { Options as Component, Vue } from 'vue-class-component'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
@@ -117,6 +119,8 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
   },
 })
 export default class UserAccount extends Vue {
+  authModule = getModule(AuthModule)
+  userModule = getModule(UserModule)
   MainRouteNames = MainRouteNames
   profileImageFilename = ''
   cogsIcon = faCogs
@@ -132,12 +136,12 @@ export default class UserAccount extends Vue {
   }
 
   get isAuthenticated(): boolean {
-    return store.getters['auth/isAuthenticated']
+    return this.authModule.isAuthenticated
   }
 
   get userData(): UserProfileModel {
     if (this.isAuthenticated) {
-      return store.getters['user/getUserData']
+      return this.userModule.getUserData
     }
     return new UserProfileModel()
   }
@@ -178,7 +182,7 @@ export default class UserAccount extends Vue {
   }
 
   public logout(): void {
-    store.commit('user/unsetUserData')
+    this.userModule.unsetUserData()
     router.push('/')
   }
 }

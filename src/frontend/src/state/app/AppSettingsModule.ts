@@ -1,5 +1,6 @@
 import { useI18n } from 'vue-i18n'
 import { cloneDeep } from 'lodash'
+import store from '@/dynamicStore'
 import AppSettings from '@/state/app/AppSettings'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
@@ -7,7 +8,13 @@ import AppSettingsUpdatable from '@/state/app/AppSettingsUpdatable'
 import AppSettingsThemeModeOption from '@/state/app/AppSettingsThemeModeOption'
 import AppSettingsLocalizationOption from '@/state/app/AppSettingsLocalizationOption'
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'settings',
+})
 export default class AppSettingsModule extends AppBaseModule {
   settings = new AppSettings()
   settingsUpdatable!: AppSettingsUpdatable

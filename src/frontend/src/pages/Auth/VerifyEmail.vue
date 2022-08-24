@@ -28,8 +28,10 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
+import { getModule } from 'vuex-module-decorators'
+import AuthModule from '@/state/auth/auth/AuthModule'
+import SignUpModule from '@/state/auth/signup/SignUpModule'
 import { Options as Component, Vue } from 'vue-class-component'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
@@ -42,6 +44,9 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
   },
 })
 export default class VerifyEmail extends Vue {
+  authModule = getModule(AuthModule)
+  signupModule = getModule(SignUpModule)
+
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
       .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
@@ -49,23 +54,23 @@ export default class VerifyEmail extends Vue {
   }
 
   get isAuthenticated(): boolean {
-    return store.getters['auth/isAuthenticated']
+    return this.authModule.isAuthenticated
   }
 
   get activationCompleted(): boolean {
-    return store.getters['signup/getActivationCompleted']
+    return this.signupModule.getActivationCompleted
   }
 
   get activationError(): boolean {
-    return store.getters['signup/getActivationError']
+    return this.signupModule.getActivationError
   }
 
   get activationLoading(): boolean {
-    return store.getters['signup/getActivationLoading']
+    return this.signupModule.getActivationLoading
   }
 
   get reActivationMailSent(): boolean {
-    return store.getters['signup/getReActivationMailSent']
+    return this.signupModule.getReActivationMailSent
   }
 
   created(): void {
@@ -73,18 +78,18 @@ export default class VerifyEmail extends Vue {
   }
 
   async activateAccount(): Promise<void> {
-    await store.dispatch('signup/activateAccount')
+    await this.signupModule.activateAccount()
   }
 
   async clearActivationStatus(): Promise<void> {
-    await store.dispatch('signup/clearActivationStatus')
+    await this.signupModule.clearActivationStatus()
   }
 
   async activationEmailResend(): Promise<void> {
     const email = localStorage.getItem('registrationEmail')
 
     if (email) {
-      await store.dispatch('signup/activationEmailResend', email)
+      await this.signupModule.activationEmailResend(email)
     } else {
       await router.push('/accounts/activate/verify_mail_resend')
     }

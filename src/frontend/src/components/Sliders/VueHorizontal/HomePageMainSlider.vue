@@ -32,17 +32,18 @@
 </template>
 
 <script lang="ts">
-import 'swiper/css'
-import store from '@/store'
-import VueHorizontal from 'vue-horizontal'
-import SliderModel from '@/state/slider/SliderModel'
-import { Options as Component, Vue } from 'vue-class-component'
-import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import {
   ImageFitOptions,
   ImagePositionOptions,
   ImageTypeOptions,
 } from '@/helpers/MediaStream/ImageUrlEnum'
+import 'swiper/css'
+import VueHorizontal from 'vue-horizontal'
+import AppModule from '@/state/app/AppModule'
+import { getModule } from 'vuex-module-decorators'
+import SliderModel from '@/state/slider/SliderModel'
+import { Options as Component, Vue } from 'vue-class-component'
+import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 
 @Component({
   name: 'HomePageMainSlider',
@@ -66,6 +67,7 @@ import {
   },
 })
 export default class HomePageMainSlider extends Vue {
+  appModule = getModule(AppModule)
   $refs!: {
     mainSliderVideoRef: HTMLVideoElement
     horizontal: any
@@ -84,7 +86,7 @@ export default class HomePageMainSlider extends Vue {
   originLeft = 0
 
   get axiosBaseUrl(): string | undefined {
-    return store.getters['app/axiosBaseUrl']
+    return this.appModule.axiosBaseUrl
   }
 
   mounted(): void {

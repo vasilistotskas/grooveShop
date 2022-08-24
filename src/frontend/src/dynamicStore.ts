@@ -1,17 +1,13 @@
-/**
- * @deprecated The file is deprecated
- */
-
-import AppModule from '@/state/app/AppModule'
+import Vuex from 'vuex'
 import TipModule from '@/state/tip/TipModule'
+import AppModule from '@/state/app/AppModule'
 import CartModule from '@/state/cart/CartModule'
 import BlogModule from '@/state/blog/BlogModule'
 import UserModule from '@/state/user/data/UserModule'
 import AuthModule from '@/state/auth/auth/AuthModule'
-import PayWayModule from '@/state/payway/PayWayModule'
-import SliderModule from '@/state/slider/SliderModule'
 import SearchModule from '@/state/search/SearchModule'
-import AppBaseModule from '@/state/common/AppBaseModule'
+import SliderModule from '@/state/slider/SliderModule'
+import PayWayModule from '@/state/payway/PayWayModule'
 import ProductModule from '@/state/product/ProductModule'
 import CountryModule from '@/state/country/CountryModule'
 import SignUpModule from '@/state/auth/signup/SignUpModule'
@@ -24,27 +20,31 @@ import StripeIbanModule from '@/libraries/Stripe/Components/StripeIbanModule'
 import StripeCardModule from '@/libraries/Stripe/Components/StripeCardModule'
 import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 
-const stateDirectory = <Record<string, typeof AppBaseModule>>{
-  app: AppModule,
-  settings: AppSettingsModule,
-  category: CategoryModule,
-  product: ProductModule,
-  'product.favourite': ProductFavouriteModule,
-  'product.review': ProductReviewModule,
-  user: UserModule,
-  cart: CartModule,
-  search: SearchModule,
-  pagination: PaginationModule,
-  country: CountryModule,
-  slider: SliderModule,
-  stripeIban: StripeIbanModule,
-  stripeCard: StripeCardModule,
-  auth: AuthModule,
-  password: PasswordModule,
-  signup: SignUpModule,
-  blog: BlogModule,
-  pay_way: PayWayModule,
-  tip: TipModule,
+interface DynamicStoreType {
+  app: AppModule
+  settings: AppSettingsModule
+  category: CategoryModule
+  product: ProductModule
+  productFavourite: ProductFavouriteModule
+  productReview: ProductReviewModule
+  user: UserModule
+  cart: CartModule
+  search: SearchModule
+  pagination: PaginationModule
+  country: CountryModule
+  slider: SliderModule
+  stripeIban: StripeIbanModule
+  stripeCard: StripeCardModule
+  auth: AuthModule
+  password: PasswordModule
+  signup: SignUpModule
+  blog: BlogModule
+  payWay: PayWayModule
+  tip: TipModule
 }
+// Declare empty store first
+const store = new Vuex.Store<DynamicStoreType>({
+  strict: true,
+})
 
-export default stateDirectory
+export default store

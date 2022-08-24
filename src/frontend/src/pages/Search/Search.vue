@@ -30,13 +30,14 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
+import { getModule } from 'vuex-module-decorators'
 import ProductModel from '@/state/product/ProductModel'
 import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
+import PaginationModule from '@/state/pagination/PaginationModule'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import PaginationBase from '@/components/Pagination/PaginationBase'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
@@ -58,6 +59,7 @@ export default class Search
   extends PaginationBase<ProductModel>
   implements PaginatedInterface<ProductModel>
 {
+  paginationModule = getModule(PaginationModule)
   query: string | null = ''
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
@@ -72,19 +74,19 @@ export default class Search
     document.title = 'Search'
 
     if (this.params.query) {
-      store.commit('pagination/setCurrentQuery', {
+      await this.paginationModule.setCurrentQuery({
         currentQuery: this.params,
         namespace: this.paginationNamespace,
       })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', {
+    await this.paginationModule.setCurrentPageNumber({
       pageNumber: 1,
       namespace: this.paginationNamespace,
     })
 
     if (this.params.page) {
-      store.commit('pagination/setCurrentPageNumber', {
+      await this.paginationModule.setCurrentPageNumber({
         pageNumber: Number(this.params.page),
         namespace: this.paginationNamespace,
       })
@@ -94,18 +96,18 @@ export default class Search
   }
 
   async unmounted(): Promise<void> {
-    store.commit('pagination/unsetResults', this.paginationNamespace)
+    await this.paginationModule.unsetResults(this.paginationNamespace)
   }
 
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery = PaginationModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: `search-product`,
       queryParams: this.currentPageQuery,
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', {
+    await this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.paginationNamespace,
     })

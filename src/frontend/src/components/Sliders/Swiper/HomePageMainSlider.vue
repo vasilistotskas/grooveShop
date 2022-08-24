@@ -29,18 +29,19 @@
 </template>
 
 <script lang="ts">
-import 'swiper/css'
-import store from '@/store'
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import SliderModel from '@/state/slider/SliderModel'
-import { Options as Component, Vue } from 'vue-class-component'
-import GrooveImage from '@/components/Utilities/GrooveImage.vue'
-import SwiperCore, { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper'
 import {
   ImageFitOptions,
   ImagePositionOptions,
   ImageTypeOptions,
 } from '@/helpers/MediaStream/ImageUrlEnum'
+import 'swiper/css'
+import AppModule from '@/state/app/AppModule'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { getModule } from 'vuex-module-decorators'
+import SliderModel from '@/state/slider/SliderModel'
+import { Options as Component, Vue } from 'vue-class-component'
+import GrooveImage from '@/components/Utilities/GrooveImage.vue'
+import SwiperCore, { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper'
 
 SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard])
 
@@ -95,6 +96,7 @@ SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard])
   },
 })
 export default class HomePageMainSlider extends Vue {
+  appModule = getModule(AppModule)
   $refs!: {
     mainSliderVideoRef: HTMLVideoElement
   }
@@ -114,7 +116,7 @@ export default class HomePageMainSlider extends Vue {
   ImagePositionOptions = ImagePositionOptions
 
   get axiosBaseUrl(): string | undefined {
-    return store.getters['app/axiosBaseUrl']
+    return this.appModule.axiosBaseUrl
   }
 
   mounted(): void {

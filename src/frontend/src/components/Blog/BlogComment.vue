@@ -32,9 +32,11 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { cloneDeep } from 'lodash'
 import { useToast } from 'vue-toastification'
+import BlogModule from '@/state/blog/BlogModule'
+import { getModule } from 'vuex-module-decorators'
+import AuthModule from '@/state/auth/auth/AuthModule'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
 import { Options as Component, Vue } from 'vue-class-component'
 import { faPenSquare } from '@fortawesome/free-solid-svg-icons/faPenSquare'
@@ -45,11 +47,13 @@ const toast = useToast()
   name: 'BlogComment',
 })
 export default class BlogComment extends Vue {
+  blogModule = getModule(BlogModule)
+  authModule = getModule(AuthModule)
   writeReviewIcon = faPenSquare
   comment = ''
 
   get isAuthenticated(): boolean {
-    return store.getters['auth/isAuthenticated']
+    return this.authModule.isAuthenticated
   }
 
   get reviewButtonText(): string {
@@ -57,11 +61,11 @@ export default class BlogComment extends Vue {
   }
 
   get userCommentToPostEmpty(): boolean {
-    return store.getters['blog/getUserCommentToPostEmpty']
+    return this.blogModule.getUserCommentToPostEmpty
   }
 
   get commentByUserToPost(): BlogCommentModel {
-    return store.getters['blog/getCommentByUserToPost']
+    return this.blogModule.getCommentByUserToPost
   }
 
   async mounted(): Promise<void> {
@@ -78,22 +82,20 @@ export default class BlogComment extends Vue {
     }
 
     if (!this.userCommentToPostEmpty) {
-      await store.dispatch('blog/updateCommentToPost', this.comment)
+      await this.blogModule.updateCommentToPost(this.comment)
       return toast.success('Your comment has been updated')
     } else {
-      await store.dispatch('blog/createCommentToPost', this.comment)
+      await this.blogModule.createCommentToPost(this.comment)
       return toast.success('Your comment has been created')
     }
   }
 
   public async commentModuleInitialize(): Promise<void> {
-    const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
-
-    if (!IsAuthenticated) {
+    if (this.isAuthenticated) {
       return
     }
 
-    await store.dispatch('blog/fetchCommentByUserToPost')
+    await this.blogModule.fetchCommentByUserToPost()
 
     this.comment = cloneDeep(this.commentByUserToPost.content)
   }

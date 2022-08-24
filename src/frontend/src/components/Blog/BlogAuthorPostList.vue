@@ -17,8 +17,10 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { PropType } from 'vue'
+import BlogModule from '@/state/blog/BlogModule'
+import { getModule } from 'vuex-module-decorators'
+import BlogTagModel from '@/state/blog/BlogTagModel'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import BlogPostCard from '@/components/Blog/BlogPostCard.vue'
@@ -33,7 +35,7 @@ import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
   },
   props: {
     posts: {
-      type: Array,
+      type: Array as PropType<Array<BlogPostModel>>,
       required: true,
     },
     showAuthor: {
@@ -48,23 +50,24 @@ import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
   },
 })
 export default class BlogAuthorPostList extends Vue {
+  blogModule = getModule(BlogModule)
   showAuthor = false
   posts: Array<BlogPostModel> = []
   author!: object
 
-  get allTags(): Array<BlogPostModel> {
-    return store.getters['blog/getAllTags']
+  get allTags(): Array<BlogTagModel> {
+    return this.blogModule.getAllTags
   }
 
-  get allAuthors(): Array<BlogPostModel> {
-    return store.getters['blog/getAllAuthors']
+  get allAuthors(): Array<BlogAuthorModel> {
+    return this.blogModule.getAllAuthors
   }
 
   async mounted(): Promise<void> {
     await Promise.all([
-      store.dispatch('blog/fetchAllTagsFromRemote'),
-      store.dispatch('blog/fetchAllAuthorsFromRemote'),
-      store.dispatch('blog/fetchAllCategoriesFromRemote'),
+      this.blogModule.fetchAllTagsFromRemote(),
+      this.blogModule.fetchAllAuthorsFromRemote(),
+      this.blogModule.fetchAllCategoriesFromRemote(),
     ])
   }
 }

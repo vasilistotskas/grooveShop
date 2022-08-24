@@ -51,8 +51,10 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { PropType } from 'vue'
+import AppModule from '@/state/app/AppModule'
+import CartModule from '@/state/cart/CartModule'
+import { getModule } from 'vuex-module-decorators'
 import CartItemModel from '@/state/cart/CartItemModel'
 import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
@@ -73,6 +75,8 @@ import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle'
   },
 })
 export default class CartItem extends Vue {
+  appModule = getModule(AppModule)
+  cartModule = getModule(CartModule)
   item = new CartItemModel()
 
   trashIcon = faTrash
@@ -82,7 +86,7 @@ export default class CartItem extends Vue {
   ImageTypeOptions = ImageTypeOptions
 
   get isMobile(): boolean {
-    return store.getters['app/isMobile']
+    return this.appModule.isMobile
   }
 
   get itemTotal(): number {
@@ -94,19 +98,15 @@ export default class CartItem extends Vue {
   }
 
   public decrementQuantity(item: CartItemModel): void {
-    store.commit('cart/decrementQuantity', item)
+    this.cartModule.decrementQuantity(item)
   }
 
   public incrementQuantity(item: CartItemModel): void {
-    store.commit('cart/incrementQuantity', item)
-  }
-
-  public updateCart(): void {
-    store.commit('cart/updateCart')
+    this.cartModule.incrementQuantity(item)
   }
 
   public removeFromCart(item: CartItemModel): void {
-    store.commit('cart/removeFromCart', item)
+    this.cartModule.removeFromCart(item)
   }
 }
 </script>

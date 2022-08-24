@@ -11,7 +11,8 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
+import CartModule from '@/state/cart/CartModule'
+import { getModule } from 'vuex-module-decorators'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import { Options as Component, Vue } from 'vue-class-component'
 
@@ -22,11 +23,12 @@ import { Options as Component, Vue } from 'vue-class-component'
   },
 })
 export default class Header extends Vue {
+  cartModule = getModule(CartModule)
   showPreHeader = true
   lastScrollPosition = 0
 
   get cartTotalLength(): number {
-    return store.getters['cart/getCartTotalLength']
+    return this.cartModule.getCartTotalLength
   }
 
   mounted(): void {

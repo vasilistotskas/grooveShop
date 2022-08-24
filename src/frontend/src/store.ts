@@ -1,3 +1,7 @@
+/**
+ * @deprecated The file is deprecated
+ */
+
 import { createStore } from 'vuex'
 import appStateModules from '@/state'
 import { config } from 'vuex-module-decorators'
@@ -27,4 +31,4 @@ const store = createStore({
   plugins: [],
 })
 
-export default store
+// export default store

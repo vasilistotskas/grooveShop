@@ -63,13 +63,14 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
 import { LocationQueryValue } from 'vue-router'
+import { getModule } from 'vuex-module-decorators'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import { Options as Component, Vue } from 'vue-class-component'
+import PaginationModule from '@/state/pagination/PaginationModule'
+import { QueryParamsType } from '@/state/pagination/Type/PaginationTypes'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
-import PaginatedQueryParams from '@/state/pagination/Interface/PaginatedQueryParams'
 import PaginationPageInterface from '@/state/pagination/Interface/PaginationPageInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
@@ -106,6 +107,7 @@ import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/Pagination
   },
 })
 export default class Pagination extends Vue {
+  paginationModule = getModule(PaginationModule)
   query?: Record<string, string | LocationQueryValue[] | number>
   uri = window.location.search.substring(1)
   params = router.currentRoute.value.query
@@ -114,7 +116,7 @@ export default class Pagination extends Vue {
   route!: string
   endpointUrl!: string
   routerReplace!: boolean
-  namespace!: typeof PaginationNamespaceTypesEnum
+  namespace!: PaginationNamespaceTypesEnum
 
   get startPage(): number {
     if (this.currentPageNumber === 1) {
@@ -162,11 +164,11 @@ export default class Pagination extends Vue {
   }
 
   get currentPageNumber(): number {
-    return store.getters['pagination/getCurrentPageNumber'](this.namespace)
+    return this.paginationModule.getCurrentPageNumber(this.namespace)
   }
 
-  get currentPageQuery(): Partial<PaginatedQueryParams> {
-    return store.getters['pagination/getCurrentQuery'](this.namespace)
+  get currentPageQuery(): QueryParamsType {
+    return this.paginationModule.getCurrentQuery(this.namespace)
   }
 
   async mounted(): Promise<void> {
@@ -182,19 +184,19 @@ export default class Pagination extends Vue {
   }
 
   async onClickNextPage(): Promise<void> {
-    await store.commit('pagination/setCurrentPageNumber', {
+    await this.paginationModule.setCurrentPageNumber({
       pageNumber: this.currentPageNumber + 1,
       namespace: this.namespace,
     })
 
-    const paginationQuery = PaginationModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: `${this.endpointUrl}`,
       queryParams: this.currentPageQuery,
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', {
+    await this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.namespace,
     })
@@ -203,19 +205,19 @@ export default class Pagination extends Vue {
   }
 
   async onClickPreviousPage(): Promise<void> {
-    await store.commit('pagination/setCurrentPageNumber', {
+    await this.paginationModule.setCurrentPageNumber({
       pageNumber: this.currentPageNumber - 1,
       namespace: this.namespace,
     })
 
-    const paginationQuery = PaginationModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: `${this.endpointUrl}`,
       queryParams: this.currentPageQuery,
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', {
+    await this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.namespace,
     })
@@ -224,19 +226,19 @@ export default class Pagination extends Vue {
   }
 
   async onClickPage(pageNumber: number) {
-    await store.commit('pagination/setCurrentPageNumber', {
+    await this.paginationModule.setCurrentPageNumber({
       pageNumber: pageNumber,
       namespace: this.namespace,
     })
 
-    const paginationQuery = PaginationModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: pageNumber,
       endpointUrl: `${this.endpointUrl}`,
       queryParams: this.currentPageQuery,
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', {
+    await this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.namespace,
     })
@@ -245,19 +247,19 @@ export default class Pagination extends Vue {
   }
 
   async onClickFirstPage(): Promise<void> {
-    await store.commit('pagination/setCurrentPageNumber', {
+    await this.paginationModule.setCurrentPageNumber({
       pageNumber: 1,
       namespace: this.namespace,
     })
 
-    const paginationQuery = PaginationModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: `${this.endpointUrl}`,
       queryParams: this.currentPageQuery,
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', {
+    await this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.namespace,
     })
@@ -266,19 +268,19 @@ export default class Pagination extends Vue {
   }
 
   async onClickLastPage(): Promise<void> {
-    await store.commit('pagination/setCurrentPageNumber', {
+    await this.paginationModule.setCurrentPageNumber({
       pageNumber: this.totalPages,
       namespace: this.namespace,
     })
 
-    const paginationQuery = PaginationModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.totalPages,
       endpointUrl: `${this.endpointUrl}`,
       queryParams: this.currentPageQuery,
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', {
+    await this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.namespace,
     })

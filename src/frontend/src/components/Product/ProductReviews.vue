@@ -66,16 +66,19 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { constant, times } from 'lodash'
+import { getModule } from 'vuex-module-decorators'
+import UserModule from '@/state/user/data/UserModule'
 import ProductModel from '@/state/product/ProductModel'
 import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import Pagination from '@/components/Pagination/Pagination.vue'
+import PaginationModule from '@/state/pagination/PaginationModule'
 import PaginationBase from '@/components/Pagination/PaginationBase'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import ReviewProductCard from '@/components/Reviews/ReviewProductCard.vue'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
+import ProductReviewModule from '@/state/product/review/ProductReviewModule'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
@@ -103,24 +106,27 @@ export default class ProductReviews
   extends PaginationBase<ProductReviewModel>
   implements PaginatedInterface<ProductReviewModel>
 {
+  productReviewModule = getModule(ProductReviewModule)
+  userModule = getModule(UserModule)
+  paginationModule = getModule(PaginationModule)
   product = new ProductModel()
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.PRODUCT_PAGE_REVIEWS
 
-  get userId(): number {
-    return store.getters['user/getUserId']
+  get userId(): number | undefined {
+    return this.userModule.getUserId
   }
 
   get userToProductReview(): ProductReviewModel {
-    return store.getters['product/review/getUserToProductReview']
+    return this.productReviewModule.getUserToProductReview
   }
 
   get productReviewsAverage(): number {
-    return store.getters['product/review/getProductReviewsAverage']
+    return this.productReviewModule.getProductReviewsAverage
   }
 
   get productReviewsCounter(): number {
-    return store.getters['product/review/getProductReviewsCounter']
+    return this.productReviewModule.getProductReviewsCounter
   }
 
   get shouldReviewsAppear(): boolean {
@@ -131,25 +137,23 @@ export default class ProductReviews
   }
 
   async created(): Promise<void> {
-    await Promise.all([
-      this.fetchPaginationData(),
-      store.commit('product/review/setProductReviewsAverage', this.product.review_average),
-      store.commit('product/review/setProductReviewsCounter', this.product.review_counter),
-    ])
+    await this.fetchPaginationData()
+    this.productReviewModule.setProductReviewsAverage(this.product.review_average)
+    this.productReviewModule.setProductReviewsCounter(this.product.review_counter)
   }
 
   async unmounted(): Promise<void> {
-    store.commit('pagination/unsetResults', this.paginationNamespace)
+    await this.paginationModule.unsetResults(this.paginationNamespace)
   }
 
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery = PaginationModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: this.buildEndPointUrlForPaginatedResults(),
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', {
+    await this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.paginationNamespace,
     })

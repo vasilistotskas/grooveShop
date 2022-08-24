@@ -36,8 +36,9 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
+import { getModule } from 'vuex-module-decorators'
 import PayWayModel from '@/state/payway/PayWayModel'
+import PayWayModule from '@/state/payway/PayWayModule'
 import { Options as Component } from 'vue-class-component'
 import GenericModalModel from '@/components/Utilities/Model/GenericModalModel'
 
@@ -46,8 +47,9 @@ import GenericModalModel from '@/components/Utilities/Model/GenericModalModel'
   extends: GenericModalModel,
 })
 export default class CheckoutStripeModal extends GenericModalModel {
+  payWayModule = getModule(PayWayModule)
   closeModal(): void {
-    store.commit('pay_way/setSelectedPayWay', new PayWayModel())
+    this.payWayModule.setSelectedPayWay(new PayWayModel())
     this.isModalCurrentlyOpen = false
   }
 }

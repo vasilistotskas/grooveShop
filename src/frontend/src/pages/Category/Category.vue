@@ -40,16 +40,24 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
+import {
+  ImageFitOptions,
+  ImagePositionOptions,
+  ImageTypeOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
 import router from '@/routes'
+import AppModule from '@/state/app/AppModule'
+import { getModule } from 'vuex-module-decorators'
 import ProductModel from '@/state/product/ProductModel'
 import { Options as Component } from 'vue-class-component'
 import CategoryModel from '@/state/category/CategoryModel'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
+import CategoryModule from '@/state/category/CategoryModule'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { RouteLocationNormalized, RouteParams } from 'vue-router'
+import PaginationModule from '@/state/pagination/PaginationModule'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import PaginationBase from '@/components/Pagination/PaginationBase'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
@@ -57,11 +65,6 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
-import {
-  ImageFitOptions,
-  ImagePositionOptions,
-  ImageTypeOptions,
-} from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Component({
   name: 'Category',
@@ -80,6 +83,9 @@ export default class Category
   extends PaginationBase<ProductModel>
   implements PaginatedInterface<ProductModel>
 {
+  categoryModule = getModule(CategoryModule)
+  appModule = getModule(AppModule)
+  paginationModule = getModule(PaginationModule)
   formEl = document.getElementById('burgerButton') as HTMLFormElement
   ImageTypeOptions = ImageTypeOptions
   ImageFitOptions = ImageFitOptions
@@ -95,7 +101,7 @@ export default class Category
   }
 
   get category(): CategoryModel {
-    return store.getters['category/getCategory']
+    return this.categoryModule.getCategory
   }
 
   async created(): Promise<void> {
@@ -108,13 +114,13 @@ export default class Category
           this.fetchPaginationData()
         }
         if (to.path !== from.path && to.name === 'Category') {
-          store.commit('pagination/unsetResults', this.paginationNamespace)
+          this.paginationModule.unsetResults(this.paginationNamespace)
           this.formEl.classList.toggle('opened')
           this.formEl.setAttribute(
             'aria-expanded',
             this.formEl.classList.contains('opened') as unknown as string
           )
-          store.commit('app/setNavbarMenuHidden', true)
+          this.appModule.setNavbarMenuHidden(true)
         }
       }
     )
@@ -124,22 +130,22 @@ export default class Category
       'aria-expanded',
       this.formEl.classList.contains('opened') as unknown as string
     )
-    store.commit('app/setNavbarMenuHidden', true)
+    this.appModule.setNavbarMenuHidden(true)
 
     if (this.params.query) {
-      await store.commit('pagination/setCurrentQuery', {
+      await this.paginationModule.setCurrentQuery({
         currentQuery: this.params.query,
         namespace: this.paginationNamespace,
       })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', {
+    await this.paginationModule.setCurrentPageNumber({
       pageNumber: 1,
       namespace: this.paginationNamespace,
     })
 
     if (this.params.page) {
-      await store.commit('pagination/setCurrentPageNumber', {
+      await this.paginationModule.setCurrentPageNumber({
         pageNumber: Number(this.params.page),
         namespace: this.paginationNamespace,
       })
@@ -150,7 +156,7 @@ export default class Category
   }
 
   unmounted(): void {
-    store.commit('pagination/unsetResults', this.paginationNamespace)
+    this.paginationModule.unsetResults(this.paginationNamespace)
     this.formEl.classList.remove('opened')
     this.formEl.setAttribute(
       'aria-expanded',
@@ -160,17 +166,17 @@ export default class Category
 
   public fetchCategory(): void {
     const categoryId = this.$route.params.category_slug
-    store.dispatch('category/fetchCategoryFromRemote', categoryId)
+    this.categoryModule.fetchCategoryFromRemote(categoryId as string)
   }
 
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery = PaginationModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: this.buildEndPointUrlForPaginatedResults(),
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', {
+    await this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.paginationNamespace,
     })

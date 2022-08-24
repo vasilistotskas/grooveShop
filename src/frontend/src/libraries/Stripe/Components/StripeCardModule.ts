@@ -1,10 +1,17 @@
+import store from '@/dynamicStore'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import initStripeComponent from '@/libraries/Stripe/Stripe'
-import { Action, Module, Mutation } from 'vuex-module-decorators'
 import { StripeElement } from '@/libraries/Stripe/StripeElement'
+import { Action, Module, Mutation } from 'vuex-module-decorators'
 
-@Module({ namespaced: true })
-export default class StripeCardComponents extends AppBaseModule {
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'stripeCard',
+})
+export default class StripeCardModule extends AppBaseModule {
   stripeKey = 'pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3'
   element!: StripeElement
   selector!: string
@@ -29,7 +36,7 @@ export default class StripeCardComponents extends AppBaseModule {
   cardIsCompleted!: boolean
   cardError!: string
 
-  get getResultToken(): string {
+  get getResultToken(): any {
     return this.resultToken
   }
 

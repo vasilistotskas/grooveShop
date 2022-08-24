@@ -1,4 +1,4 @@
-import store from '@/store'
+import store from '@/dynamicStore'
 import session from '@/api/session'
 import { AxiosResponse } from 'axios'
 import AppBaseModule from '@/state/common/AppBaseModule'
@@ -6,13 +6,23 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 import PaginatedModel from '@/state/pagination/Model/PaginatedModel'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import NamespacedResults from '@/state/common/Interface/NamespacedResults'
-import PaginatedQueryParams from '@/state/pagination/Interface/PaginatedQueryParams'
 import PaginatedDataInterface from '@/state/pagination/Interface/PaginatedDataInterface'
 import PaginationNamespaceDirectory from '@/state/pagination/PaginationNamespaceDirectory'
 import PaginationDataInterface from '@/state/pagination/Interface/PaginationDataInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
+import {
+  CurrentPageNumberType,
+  CurrentQueryType,
+  QueryParamsType,
+} from '@/state/pagination/Type/PaginationTypes'
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'pagination',
+})
 export default class PaginationModule extends AppBaseModule {
   namespaceData: PaginationDataInterface = PaginationNamespaceDirectory()
 
@@ -118,13 +128,12 @@ export default class PaginationModule extends AppBaseModule {
   }
 
   @Mutation
-  setCurrentPageNumber(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].current_page_number = data.pageNumber
+  setCurrentPageNumber({ namespace, pageNumber }: CurrentPageNumberType): void {
+    this.namespaceData[namespace].current_page_number = pageNumber
   }
 
-  @Mutation
-  setCurrentQuery(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].current_query = data.currentQuery
+  setCurrentQuery({ namespace, currentQuery }: CurrentQueryType): void {
+    this.namespaceData[namespace].current_query = currentQuery
   }
 
   @Mutation
@@ -138,7 +147,7 @@ export default class PaginationModule extends AppBaseModule {
   }
 
   @Action
-  buildPaginationQueryString(queryParams: Partial<PaginatedQueryParams>): string {
+  buildPaginationQueryString(queryParams: QueryParamsType): string {
     let finalQueryString = ''
 
     let i = 0

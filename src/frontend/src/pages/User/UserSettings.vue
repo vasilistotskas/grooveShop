@@ -149,12 +149,15 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { PropType } from 'vue'
 import { cloneDeep } from 'lodash'
+import { getModule } from 'vuex-module-decorators'
+import AuthModule from '@/state/auth/auth/AuthModule'
+import UserModule from '@/state/user/data/UserModule'
 import { exactly, min } from '@/components/Form/Utils'
 import RegionsModel from '@/state/country/RegionsModel'
 import CountryModel from '@/state/country/CountryModel'
+import CountryModule from '@/state/country/CountryModule'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import { Options as Component, Vue } from 'vue-class-component'
@@ -183,6 +186,9 @@ let { validateFields } = useValidation({})
   },
 })
 export default class UserSettings extends Vue {
+  authModule = getModule(AuthModule)
+  countryModule = getModule(CountryModule)
+  userModule = getModule(UserModule)
   userProfile = new UserProfileModel()
   userData = new UserProfileModel()
   submitButtonText = 'Update'
@@ -226,15 +232,15 @@ export default class UserSettings extends Vue {
   }))
 
   get isAuthenticated(): boolean {
-    return store.getters['auth/isAuthenticated']
+    return this.authModule.isAuthenticated
   }
 
   get availableCountries(): Array<CountryModel> {
-    return store.getters['country/getCountries']
+    return this.countryModule.getCountries
   }
 
-  get regionsBasedOnAlpha(): RegionsModel {
-    return store.getters['country/getRegionsBasedOnAlpha']
+  get regionsBasedOnAlpha(): Array<RegionsModel> {
+    return this.countryModule.getRegionsBasedOnAlpha
   }
 
   async mounted(): Promise<void> {
@@ -245,7 +251,7 @@ export default class UserSettings extends Vue {
 
   async restRegions(e: HTMLElementEvent<HTMLTextAreaElement>): Promise<void> {
     const countryAlpha2Key = e.target?.value
-    await store.dispatch('country/findRegionsBasedOnAlphaFromInput', countryAlpha2Key)
+    await this.countryModule.findRegionsBasedOnAlphaFromInput(countryAlpha2Key)
     this.userProfile.region = 'choose'
   }
 
@@ -265,7 +271,7 @@ export default class UserSettings extends Vue {
         region: this.userProfile.region,
       }
 
-      await store.dispatch('user/updateUserProfile', apiData)
+      await this.userModule.updateUserProfile(apiData as unknown as FormData)
     } catch (e) {
       if (e instanceof ValidationError) {
         console.log(e.message)

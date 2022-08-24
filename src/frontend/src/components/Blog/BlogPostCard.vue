@@ -27,13 +27,18 @@
             class="blog-post-card-body-description"
             v-html="myContext.contentShorten(post.body)"
           ></p>
-          <!--          <ul class="blog-post-card-body-tags" v-if="post.tags.length > 0">-->
-          <!--            <li v-for="tag in post.tags" :key="tag.name" class="blog-post-card-body-tag">-->
-          <!--              <RouterLink :title="tag.name" :to="`/tag/${tag.name}`" class="blog-post-card-body-tag-link" aria-label="Blog Tag">-->
-          <!--                <span class="blog-post-card-body-tag-name"> #{{ tag.name }} </span>-->
-          <!--              </RouterLink>-->
-          <!--            </li>-->
-          <!--          </ul>-->
+          <ul class="blog-post-card-body-tags" v-if="post.tags.length > 0">
+            <li v-for="tag in post.tags" :key="tag.name" class="blog-post-card-body-tag">
+              <RouterLink
+                :title="tag.name"
+                :to="`/tag/${tag.name}`"
+                class="blog-post-card-body-tag-link"
+                aria-label="Blog Tag"
+              >
+                <span class="blog-post-card-body-tag-name"> #{{ tag.name }} </span>
+              </RouterLink>
+            </li>
+          </ul>
         </div>
       </RouterLink>
       <div class="blog-post-card-body-actions">
@@ -82,7 +87,6 @@ import FavouriteButton from '@/components/Utilities/FavouriteButton.vue'
 import { faCommentDots } from '@fortawesome/free-solid-svg-icons/faCommentDots'
 import {
   ImageFitOptions,
-  ImageFormatOptions,
   ImagePositionOptions,
   ImageTypeOptions,
 } from '@/helpers/MediaStream/ImageUrlEnum'
@@ -114,7 +118,6 @@ import {
   },
 })
 export default class BlogPostCard extends Vue {
-  ImageFormatOptions = ImageFormatOptions
   ImageFitOptions = ImageFitOptions
   ImagePositionOptions = ImagePositionOptions
   post = new BlogPostModel()

@@ -82,12 +82,13 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
+import { getModule } from 'vuex-module-decorators'
 import { equal, min } from '@/components/Form/Utils'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import { Options as Component, Vue } from 'vue-class-component'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
+import PasswordModule from '@/state/auth/password/PasswordModule'
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
@@ -109,6 +110,7 @@ let { validateFields } = useValidation({} as ResetPasswordApiData)
   },
 })
 export default class PasswordRestConfirm extends Vue {
+  passwordModule = getModule(PasswordModule)
   submitButtonText = 'Reset password'
 
   inputs = {
@@ -150,15 +152,15 @@ export default class PasswordRestConfirm extends Vue {
   }
 
   get resetCompleted(): boolean {
-    return store.getters['password/getResetCompleted']
+    return this.passwordModule.getResetCompleted
   }
 
   get resetError(): boolean {
-    return store.getters['password/getResetError']
+    return this.passwordModule.getResetError
   }
 
   get resetLoading(): boolean {
-    return store.getters['password/getResetLoading']
+    return this.passwordModule.getResetLoading
   }
 
   mounted(): void {
@@ -177,7 +179,7 @@ export default class PasswordRestConfirm extends Vue {
         token: this.inputs.token,
       }
 
-      await store.dispatch('password/resetPasswordConfirm', apiData)
+      await this.passwordModule.resetPasswordConfirm(apiData)
     } catch (e) {
       if (e instanceof ValidationError) {
         console.log(e.message)
@@ -186,7 +188,7 @@ export default class PasswordRestConfirm extends Vue {
   }
 
   async clearResetStatus(): Promise<void> {
-    await store.dispatch('password/clearResetStatus')
+    await this.passwordModule.clearResetStatus()
   }
 }
 </script>

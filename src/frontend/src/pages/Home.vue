@@ -84,11 +84,14 @@
 
 <script lang="ts">
 import 'swiper/css'
-import store from '@/store'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
+import AppModule from '@/state/app/AppModule'
+import { getModule } from 'vuex-module-decorators'
 import SliderModel from '@/state/slider/SliderModel'
+import SliderModule from '@/state/slider/SliderModule'
 import ProductModel from '@/state/product/ProductModel'
+import ProductModule from '@/state/product/ProductModule'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import { faPhone } from '@fortawesome/free-solid-svg-icons/faPhone'
 import { Options as Component, setup, Vue } from 'vue-class-component'
@@ -104,6 +107,10 @@ import HomePageMainSlider from '@/components/Sliders/VueHorizontal/HomePageMainS
   },
 })
 export default class Home extends Vue {
+  appModule = getModule(AppModule)
+  productModule = getModule(ProductModule)
+  sliderModule = getModule(SliderModule)
+
   meta = setup(() =>
     useMeta(
       computed(() => ({
@@ -123,21 +130,21 @@ export default class Home extends Vue {
   commentIcon = faComment
 
   get isMobile(): boolean {
-    return store.getters['app/isMobile']
+    return this.appModule.isMobile
   }
 
   get LatestProducts(): Array<ProductModel> {
-    return store.getters['product/getLatestProductData']
+    return this.productModule.getLatestProductData
   }
 
   get homepageSlider(): Array<SliderModel> {
-    return store.getters['slider/getSlidersData']
+    return this.sliderModule.getSlidersData
   }
 
   async beforeCreate(): Promise<void> {
     await Promise.all([
-      store.dispatch('product/fetchLatestProductsFromRemote'),
-      store.dispatch('slider/fetchSlidersFromRemote'),
+      this.productModule.fetchLatestProductsFromRemote(),
+      this.sliderModule.fetchSlidersFromRemote,
     ])
   }
 }

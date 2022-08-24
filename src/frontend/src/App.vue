@@ -14,18 +14,21 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import _, { LoDashStatic } from 'lodash'
 import packageMeta from '@/../package.json'
+import AppModule from '@/state/app/AppModule'
+import CartModule from '@/state/cart/CartModule'
+import BlogModule from '@/state/blog/BlogModule'
 import Footer from '@/components/Main/Footer.vue'
 import Header from '@/components/Main/Header.vue'
 import Loader from '@/components/Main/Loader.vue'
-import CartItemModel from '@/state/cart/CartItemModel'
-import CountryModel from '@/state/country/CountryModel'
-import RegionsModel from '@/state/country/RegionsModel'
+import { getModule } from 'vuex-module-decorators'
+import AuthModule from '@/state/auth/auth/AuthModule'
+import UserModule from '@/state/user/data/UserModule'
+import CountryModule from '@/state/country/CountryModule'
+import CategoryModule from '@/state/category/CategoryModule'
 import { Options as Component, Vue } from 'vue-class-component'
 import SocialSidebar from '@/components/Main/SocialSidebar.vue'
-import UserProfileModel from '@/state/user/data/UserProfileModel'
 
 @Component({
   name: 'App',
@@ -37,6 +40,14 @@ import UserProfileModel from '@/state/user/data/UserProfileModel'
   },
 })
 export default class App extends Vue {
+  appModule = getModule(AppModule)
+  authModule = getModule(AuthModule)
+  cartModule = getModule(CartModule)
+  categoryModule = getModule(CategoryModule)
+  countryModule = getModule(CountryModule)
+  userModule = getModule(UserModule)
+  blogModule = getModule(BlogModule)
+
   get lodash(): LoDashStatic {
     return _
   }
@@ -46,63 +57,32 @@ export default class App extends Vue {
   }
 
   get isLoading(): boolean {
-    return store.getters['app/getLoading']
+    return this.appModule.getLoading
   }
 
   get isAuthenticated(): boolean {
-    return store.getters['auth/isAuthenticated']
-  }
-
-  get cartTotalLength(): number {
-    return store.getters['cart/getCartTotalLength']
-  }
-
-  get userData(): UserProfileModel {
-    if (this.isAuthenticated) {
-      return store.getters['user/getUserData']
-    }
-    return new UserProfileModel()
-  }
-
-  get availableCountries(): CountryModel {
-    return store.getters['country/getCountries']
-  }
-
-  get regionsBasedOnAlpha(): RegionsModel {
-    return store.getters['country/getRegionsBasedOnAlpha']
-  }
-
-  get cartData(): Array<CartItemModel> {
-    return store.getters['cart/getCart']
+    return this.authModule.isAuthenticated
   }
 
   async created(): Promise<void> {
     await Promise.all([
-      this.initializeAuth(),
-      this.initializeCart(),
-      store.dispatch('category/fetchCategoriesTreeFromRemote'),
-      store.dispatch('country/fetchCountriesFromRemote'),
+      this.authModule.initialize(),
+      this.cartModule.initializeCart(),
+      this.cartModule.cartTotalPriceForPayWayAction(),
+      this.categoryModule.fetchCategoriesTreeFromRemote(),
+      this.countryModule.fetchCountriesFromRemote(),
     ])
 
     if (this.isAuthenticated) {
-      await store.dispatch('user/fetchUserDataFromRemote')
-      await store.dispatch('blog/fetchCommentsByUser')
+      await this.userModule.fetchUserDataFromRemote()
+      await this.blogModule.fetchCommentsByUser()
     }
   }
 
   mounted(): void {
     window.addEventListener('resize', () => {
-      store.commit('app/setWindowWidth', window.innerWidth)
+      this.appModule.setWindowWidth(window.innerWidth)
     })
-  }
-
-  public initializeAuth(): void {
-    store.dispatch('auth/initialize')
-  }
-
-  public initializeCart(): void {
-    store.commit('cart/initializeCart')
-    store.dispatch('cart/cartTotalPriceForPayWayAction')
   }
 }
 </script>

@@ -1,3 +1,7 @@
+/**
+ * @deprecated The file is deprecated
+ */
+
 import { camelCase, first, values } from 'lodash'
 
 const modulesCache: Record<string, any> = []

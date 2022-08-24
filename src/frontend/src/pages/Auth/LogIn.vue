@@ -112,10 +112,12 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
 import session from '@/api/session'
+import { getModule } from 'vuex-module-decorators'
 import { required } from '@/components/Form/Utils'
+import UserModule from '@/state/user/data/UserModule'
+import AuthModule from '@/state/auth/auth/AuthModule'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import LogInApiData from '@/state/auth/Interface/LogInApiData'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
@@ -143,6 +145,8 @@ let { validateFields } = useValidation({})
   },
 })
 export default class LogIn extends Vue {
+  userModule = getModule(UserModule)
+  authModule = getModule(AuthModule)
   formManager = ({ validateFields } = useValidation({
     email: {
       $value: '',
@@ -179,10 +183,10 @@ export default class LogIn extends Vue {
         email: formData.email,
         password: formData.password,
       }
-      await store
-        .dispatch('auth/login', apiData)
+      await this.authModule
+        .login(apiData)
         .then(() => {
-          store.dispatch('user/fetchUserDataFromRemote')
+          this.userModule.fetchUserDataFromRemote()
         })
         .catch((error: Error) => {
           console.log(error)

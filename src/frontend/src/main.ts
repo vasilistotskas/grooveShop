@@ -1,7 +1,6 @@
 import mitt from 'mitt'
 import axios from 'axios'
 import App from '@/App.vue'
-import store from './store'
 import router from '@/routes'
 import { createApp } from 'vue'
 import { i18n } from '@/locales'
@@ -40,7 +39,6 @@ const emitter = mitt()
 const metaManager = createMetaManager()
 
 createApp(App)
-  .use(store)
   .use(router, axios)
   .use(metaManager)
   .use(metaPlugin)

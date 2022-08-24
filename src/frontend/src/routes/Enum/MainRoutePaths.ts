@@ -21,7 +21,7 @@ export enum MainRoutePaths {
   PRODUCT = '/product/:category_slug/:product_slug',
   CATEGORY = '/category/:category_slug',
   BLOG = '/blog',
-  AUTHOR = '/author/:email',
+  AUTHOR = '/author/:id',
   POST = '/post/:slug',
   POSTS_BY_TAG = '/tag/:tag',
   PAGE_NOT_FOUND = '/errors/error_404',
