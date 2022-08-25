@@ -4,15 +4,14 @@ import store from '@/dynamicStore'
 import { isEmpty, some } from 'lodash'
 import { ApolloQueryResult } from '@apollo/client'
 import BlogTagModel from '@/state/blog/BlogTagModel'
-import UserModule from '@/state/user/data/UserModule'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import { clientApollo } from '../../../apollo.provider'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
 import BlogCategoryModel from '@/state/blog/BlogCategoryModel'
+import { Action, Module, Mutation } from 'vuex-module-decorators'
 import UserProfileModelGql from '@/state/user/data/UserProfileModelGql'
-import { Action, getModule, Module, Mutation } from 'vuex-module-decorators'
 
 @Module({
   dynamic: true,
@@ -32,7 +31,6 @@ export default class BlogModule extends AppBaseModule {
   commentsByUser: Array<BlogCommentModel> = []
   commentsByPost: Array<BlogCommentModel> = []
   commentByUserToPost = new BlogCommentModel()
-  userModule = getModule(UserModule)
 
   get getAllPosts(): Array<BlogPostModel> {
     return this.allPosts
@@ -85,7 +83,7 @@ export default class BlogModule extends AppBaseModule {
 
   get getIsCurrentPostInUserFavourites(): boolean {
     const postLikes = this.context.getters['getPostBySlug'].likes
-    const userEmail = this.userModule.getUserData.email
+    const userEmail = store.getters['user/getUserData'].email
     return some(postLikes, { email: userEmail })
   }
 
@@ -423,7 +421,7 @@ export default class BlogModule extends AppBaseModule {
       const comments = await clientApollo.query({
         query: gql`
           query {
-            commentsByUser(userEmail: "${this.userModule.getUserEmail}") {
+            commentsByUser(userEmail: "${store.getters['user/getUserData'].email}") {
               content
               createdAt
               isApproved
@@ -565,7 +563,7 @@ export default class BlogModule extends AppBaseModule {
           query {
             commentByUserToPost(postId: ${Number(
               this.context.getters['getPostBySlug'].id
-            )}, userEmail: ${this.userModule.getUserId}) {
+            )}, userEmail: ${store.getters['user/getUserData'].email}) {
               id
               content
             }
@@ -619,7 +617,7 @@ export default class BlogModule extends AppBaseModule {
         `,
         variables: {
           postId: Number(this.context.getters['getPostBySlug'].id),
-          userEmail: String(this.userModule.getUserData.email),
+          userEmail: String(store.getters['user/getUserData'].email),
           content: String(content),
         },
       })
@@ -730,7 +728,7 @@ export default class BlogModule extends AppBaseModule {
         `,
         variables: {
           id: Number(this.context.getters['getCommentByUserToPost'].id),
-          userId: this.userModule.getUserId,
+          userId: store.getters['user/getUserId'],
         },
       })
       return comment.data.updateCommentLikes
@@ -755,7 +753,7 @@ export default class BlogModule extends AppBaseModule {
         `,
         variables: {
           id: Number(postId),
-          userId: this.userModule.getUserId,
+          userId: store.getters['user/getUserId'],
         },
       })
       return post.data.updatePostLikes.liked

@@ -3,12 +3,8 @@ import api from '@/api/api.service'
 import { AxiosResponse } from 'axios'
 import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/state/common/AppBaseModule'
-import { Action, getModule, Module, Mutation } from 'vuex-module-decorators'
+import { Action, Module, Mutation } from 'vuex-module-decorators'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
-import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
-import AuthModule from '@/state/auth/auth/AuthModule'
-import CountryModule from '@/state/country/CountryModule'
-import ProductReviewModule from '@/state/product/review/ProductReviewModule'
 
 const toast = useToast()
 
@@ -20,10 +16,6 @@ const toast = useToast()
   name: 'user',
 })
 export default class UserModule extends AppBaseModule {
-  productFavouriteModule = getModule(ProductFavouriteModule)
-  productReviewModule = getModule(ProductReviewModule)
-  authModule = getModule(AuthModule)
-  countryModule = getModule(CountryModule)
   user_id!: number | undefined
   user_email!: string | undefined
   data = new UserProfileModel()
@@ -60,12 +52,12 @@ export default class UserModule extends AppBaseModule {
     this.data = new UserProfileModel()
     this.user_id = undefined
 
-    this.authModule.logout().then(() => {
-      this.productFavouriteModule.unsetFavourites()
-      this.productFavouriteModule.unsetUserFavourites()
-      this.productReviewModule.unsetUserToProductReview()
-      this.productReviewModule.unsetUserReviews()
-      this.countryModule.unsetUserCountryData()
+    store.dispatch('auth/logout').then(() => {
+      store.commit('product/favourite/unsetFavourites')
+      store.commit('product/favourite/unsetUserFavourites')
+      store.commit('product/review/unsetUserToProductReview')
+      store.commit('product/review/unsetUserReviews')
+      store.commit('country/unsetUserCountryData')
     })
   }
 
@@ -78,8 +70,11 @@ export default class UserModule extends AppBaseModule {
         this.context.commit('setUserData', data[0])
         this.context.commit('setUserId', data[0].id)
         this.context.commit('setUserEmail', data[0].email)
-        await this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer()
-        await this.productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
+        await store.dispatch('country/findRegionsBasedOnAlphaForLoggedCustomer')
+        await store.dispatch(
+          'product/favourite/fetchUserFavouritesFromRemote',
+          response.data[0].user
+        )
       })
       .catch((e: Error) => {
         console.log(e)
