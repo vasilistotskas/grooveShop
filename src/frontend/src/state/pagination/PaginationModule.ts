@@ -40,49 +40,49 @@ export default class PaginationModule extends AppBaseModule {
 
   get getResultCountData() {
     return (namespace: PaginationNamespaceTypesEnum) => {
-      return this.namespaceData[namespace].results_count
+      return this.namespaceData[namespace].resultsCount
     }
   }
 
   get getResultNextPageUrl() {
     return (namespace: PaginationNamespaceTypesEnum) => {
-      return this.namespaceData[namespace].results_next_page
+      return this.namespaceData[namespace].resultsNextPage
     }
   }
 
   get getResultPreviousPageUrl() {
     return (namespace: PaginationNamespaceTypesEnum) => {
-      return this.namespaceData[namespace].results_previous_page
+      return this.namespaceData[namespace].resultsPreviousPages
     }
   }
 
   get getResultTotalPages() {
     return (namespace: PaginationNamespaceTypesEnum) => {
-      return this.namespaceData[namespace].results_total_pages
+      return this.namespaceData[namespace].resultsTotalPages
     }
   }
 
   get getCurrentPageNumber() {
     return (namespace: PaginationNamespaceTypesEnum) => {
-      return this.namespaceData[namespace].current_page_number
+      return this.namespaceData[namespace].currentPageNumber
     }
   }
 
   get getCurrentQuery() {
     return (namespace: PaginationNamespaceTypesEnum) => {
-      return this.namespaceData[namespace].current_query
+      return this.namespaceData[namespace].currentQuery
     }
   }
 
   get getShowNextButton() {
     return (namespace: PaginationNamespaceTypesEnum) => {
-      return this.namespaceData[namespace].show_next_button
+      return this.namespaceData[namespace].showNextButton
     }
   }
 
   get getShowPreviousButton() {
     return (namespace: PaginationNamespaceTypesEnum) => {
-      return this.namespaceData[namespace].show_previous_button
+      return this.namespaceData[namespace].showPreviousButton
     }
   }
 
@@ -94,56 +94,56 @@ export default class PaginationModule extends AppBaseModule {
   @Mutation
   unsetResults(namespace: PaginationNamespaceTypesEnum): void {
     this.namespaceData[namespace].results = []
-    this.namespaceData[namespace].results_count = 0
+    this.namespaceData[namespace].resultsCount = 0
 
-    this.namespaceData[namespace].results_next_page = ''
-    this.namespaceData[namespace].results_previous_page = ''
-    this.namespaceData[namespace].results_total_pages = 0
+    this.namespaceData[namespace].resultsNextPage = ''
+    this.namespaceData[namespace].resultsPreviousPages = ''
+    this.namespaceData[namespace].resultsTotalPages = 0
 
-    this.namespaceData[namespace].current_page_number = 1
-    this.namespaceData[namespace].current_query = ''
+    this.namespaceData[namespace].currentPageNumber = 1
+    this.namespaceData[namespace].currentQuery = ''
 
-    this.namespaceData[namespace].show_next_button = false
-    this.namespaceData[namespace].show_previous_button = false
+    this.namespaceData[namespace].showNextButton = false
+    this.namespaceData[namespace].showPreviousButton = false
   }
 
   @Mutation
   setCount(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].results_count = data.count
+    this.namespaceData[data.namespace].resultsCount = data.count
   }
 
   @Mutation
   setNextPageUrl(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].results_next_page = data.nextPageUrl
+    this.namespaceData[data.namespace].resultsNextPage = data.nextPageUrl
   }
 
   @Mutation
   setPreviousPageUrl(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].results_previous_page = data.previousPageUrl
+    this.namespaceData[data.namespace].resultsPreviousPages = data.previousPageUrl
   }
 
   @Mutation
   setTotalPages(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].results_total_pages = data.totalPages
+    this.namespaceData[data.namespace].resultsTotalPages = data.totalPages
   }
 
   @Mutation
   setCurrentPageNumber({ namespace, pageNumber }: CurrentPageNumberType): void {
-    this.namespaceData[namespace].current_page_number = pageNumber
+    this.namespaceData[namespace].currentPageNumber = pageNumber
   }
 
-  setCurrentQuery({ namespace, currentQuery }: CurrentQueryType): void {
-    this.namespaceData[namespace].current_query = currentQuery
+  setCurrentQuery({ namespace, queryParams }: CurrentQueryType): void {
+    this.namespaceData[namespace].currentQuery = queryParams
   }
 
   @Mutation
   setShowNextButton(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].show_next_button = data.showNextButton
+    this.namespaceData[data.namespace].showNextButton = data.showNextButton
   }
 
   @Mutation
   setShowPreviousButton(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].show_previous_button = data.showPreviousButton
+    this.namespaceData[data.namespace].showPreviousButton = data.showPreviousButton
   }
 
   @Action

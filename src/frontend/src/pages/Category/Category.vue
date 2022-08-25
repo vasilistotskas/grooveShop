@@ -134,7 +134,7 @@ export default class Category
 
     if (this.params.query) {
       await this.paginationModule.setCurrentQuery({
-        currentQuery: this.params.query,
+        queryParams: this.params.query,
         namespace: this.paginationNamespace,
       })
     }

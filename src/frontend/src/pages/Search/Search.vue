@@ -75,7 +75,7 @@ export default class Search
 
     if (this.params.query) {
       await this.paginationModule.setCurrentQuery({
-        currentQuery: this.params,
+        queryParams: this.params,
         namespace: this.paginationNamespace,
       })
     }

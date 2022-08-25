@@ -267,7 +267,7 @@ export default class Navbar
   async fetchPaginationData(): Promise<void> {
     await this.paginationModule.unsetResults(this.paginationNamespace)
     await this.paginationModule.setCurrentQuery({
-      currentQuery: this.searchQuery,
+      queryParams: this.searchQuery,
       namespace: this.paginationNamespace,
     })
 

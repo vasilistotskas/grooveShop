@@ -17,5 +17,5 @@ export type QueryParamsType =
   | Record<string, string | LocationQuery | LocationQueryValue[] | { query: string } | number>
 export type CurrentQueryType = {
   namespace: string
-  currentQuery: QueryParamsType
+  queryParams: QueryParamsType
 }

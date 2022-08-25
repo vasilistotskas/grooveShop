@@ -79,7 +79,7 @@ export default class UserReviews
 
     if (this.params.query) {
       await this.paginationModule.setCurrentQuery({
-        currentQuery: this.params.query,
+        queryParams: this.params.query,
         namespace: this.paginationNamespace,
       })
     }

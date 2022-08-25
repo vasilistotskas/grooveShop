@@ -30,7 +30,7 @@ export default class PaginationBase<TPaginatedModel> extends Vue {
     return store.getters['pagination/getResultNextPageUrl'](this.paginationNamespace)
   }
 
-  get allPaginatedResultsPreviousPageUrl(): URL {
+  get allPaginatedresultsPreviousPagesUrl(): URL {
     return store.getters['pagination/getResultPreviousPageUrl'](this.paginationNamespace)
   }
 

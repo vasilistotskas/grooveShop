@@ -13,7 +13,7 @@ export default interface PaginatedInterface<TPaginatedModel> {
   readonly allPaginatedResults: Array<TPaginatedModel>
   readonly allPaginatedResultsCount: PaginationCount
   readonly allPaginatedResultsNextPageUrl: PaginationLink['next']
-  readonly allPaginatedResultsPreviousPageUrl: PaginationLink['previous']
+  readonly allPaginatedresultsPreviousPagesUrl: PaginationLink['previous']
   readonly allPaginatedResultsTotalPages: PaginationTotalPages
   readonly currentPageNumber: number
   readonly currentPageQuery?: QueryParamsType
