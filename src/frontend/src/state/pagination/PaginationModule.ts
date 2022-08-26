@@ -1,3 +1,15 @@
+import {
+  CountType,
+  CurrentPageNumberType,
+  CurrentQueryType,
+  NextPageUrlType,
+  PaginationResultsType,
+  PreviousPageUrlType,
+  QueryParamsType,
+  ShowNextButtonType,
+  ShowPreviousButtonType,
+  TotalPagesType,
+} from '@/state/pagination/Type/PaginationTypes'
 import store from '@/dynamicStore'
 import session from '@/api/session'
 import { AxiosResponse } from 'axios'
@@ -5,16 +17,9 @@ import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import PaginatedModel from '@/state/pagination/Model/PaginatedModel'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
-import NamespacedResults from '@/state/common/Interface/NamespacedResults'
-import PaginatedDataInterface from '@/state/pagination/Interface/PaginatedDataInterface'
 import PaginationNamespaceDirectory from '@/state/pagination/PaginationNamespaceDirectory'
 import PaginationDataInterface from '@/state/pagination/Interface/PaginationDataInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
-import {
-  CurrentPageNumberType,
-  CurrentQueryType,
-  QueryParamsType,
-} from '@/state/pagination/Type/PaginationTypes'
 
 @Module({
   dynamic: true,
@@ -23,8 +28,8 @@ import {
   stateFactory: true,
   name: 'pagination',
 })
-export default class PaginationModule extends AppBaseModule {
-  namespaceData: PaginationDataInterface = PaginationNamespaceDirectory()
+export default class PaginationModule<TPaginatedModel> extends AppBaseModule {
+  namespaceData: PaginationDataInterface<TPaginatedModel> = PaginationNamespaceDirectory()
 
   alternativeToken = ''
 
@@ -87,8 +92,8 @@ export default class PaginationModule extends AppBaseModule {
   }
 
   @Mutation
-  setResults(data: NamespacedResults): void {
-    this.namespaceData[data.namespace].results = data.results
+  setResults({ namespace, results }: PaginationResultsType<TPaginatedModel>): void {
+    this.namespaceData[namespace].results = results
   }
 
   @Mutation
@@ -108,23 +113,23 @@ export default class PaginationModule extends AppBaseModule {
   }
 
   @Mutation
-  setCount(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].resultsCount = data.count
+  setCount({ namespace, count }: CountType): void {
+    this.namespaceData[namespace].resultsCount = count
   }
 
   @Mutation
-  setNextPageUrl(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].resultsNextPage = data.nextPageUrl
+  setNextPageUrl({ namespace, nextPageUrl }: NextPageUrlType): void {
+    this.namespaceData[namespace].resultsNextPage = nextPageUrl
   }
 
   @Mutation
-  setPreviousPageUrl(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].resultsPreviousPages = data.previousPageUrl
+  setPreviousPageUrl({ namespace, previousPageUrl }: PreviousPageUrlType): void {
+    this.namespaceData[namespace].resultsPreviousPages = previousPageUrl
   }
 
   @Mutation
-  setTotalPages(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].resultsTotalPages = data.totalPages
+  setTotalPages({ namespace, totalPages }: TotalPagesType): void {
+    this.namespaceData[namespace].resultsTotalPages = totalPages
   }
 
   @Mutation
@@ -132,18 +137,19 @@ export default class PaginationModule extends AppBaseModule {
     this.namespaceData[namespace].currentPageNumber = pageNumber
   }
 
+  @Mutation
   setCurrentQuery({ namespace, queryParams }: CurrentQueryType): void {
     this.namespaceData[namespace].currentQuery = queryParams
   }
 
   @Mutation
-  setShowNextButton(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].showNextButton = data.showNextButton
+  setShowNextButton({ namespace, showNextButton }: ShowNextButtonType): void {
+    this.namespaceData[namespace].showNextButton = showNextButton
   }
 
   @Mutation
-  setShowPreviousButton(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].showPreviousButton = data.showPreviousButton
+  setShowPreviousButton({ namespace, showPreviousButton }: ShowPreviousButtonType): void {
+    this.namespaceData[namespace].showPreviousButton = showPreviousButton
   }
 
   @Action
@@ -164,13 +170,11 @@ export default class PaginationModule extends AppBaseModule {
   }
 
   @Action
-  async fetchPaginatedResults<T>(data: {
+  async buildPaginatedApiUrl(data: {
     params: PaginationModel
     namespace: PaginationNamespaceTypesEnum
-  }): Promise<void> {
-    await store.commit('app/setLoading', true)
+  }): Promise<string> {
     const baseUrl = '/api/v1'
-
     let ApiUrl = ''
 
     if (!data.params.queryParams && !data.params.pageNumber) {
@@ -184,6 +188,17 @@ export default class PaginationModule extends AppBaseModule {
       )
       ApiUrl = `${baseUrl}/${data.params.endpointUrl}?p=${data.params.pageNumber}&${queryStringBuild}`
     }
+    return ApiUrl
+  }
+
+  @Action
+  async fetchPaginatedResults<T>(data: {
+    params: PaginationModel
+    namespace: PaginationNamespaceTypesEnum
+  }): Promise<void> {
+    await store.commit('app/setLoading', true)
+
+    const ApiUrl = await this.context.dispatch('buildPaginatedApiUrl', data)
 
     session({
       url: ApiUrl,

@@ -31,15 +31,15 @@ import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
 import PaginationModule from '@/state/pagination/PaginationModule'
-import PaginationBase from '@/components/Pagination/PaginationBase'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
-import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
+import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
   name: 'UserFavourites',
-  extends: PaginationBase,
+  extends: PaginatedComponent,
   props: {
     userData: {
       type: Object as PropType<UserProfileModel>,
@@ -52,10 +52,10 @@ import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/Pagination
   },
 })
 export default class UserFavourites
-  extends PaginationBase<UserProfileModel>
-  implements PaginatedInterface<UserProfileModel>
+  extends PaginatedComponent<UserProfileModel>
+  implements PaginatedComponentInterface<UserProfileModel>
 {
-  paginationModule = getModule(PaginationModule)
+  paginationModule = getModule<PaginationModule<UserProfileModel>>(PaginationModule)
   userData = new UserProfileModel()
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.USER_FAVOURITES

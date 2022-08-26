@@ -4,6 +4,7 @@ import App from '@/App.vue'
 import router from '@/routes'
 import { createApp } from 'vue'
 import { i18n } from '@/locales'
+import store from '@/dynamicStore'
 import 'vue-toastification/dist/index.css'
 import VueSocialSharing from 'vue-social-sharing'
 import * as apolloProvider from '../apollo.provider'
@@ -39,6 +40,7 @@ const emitter = mitt()
 const metaManager = createMetaManager()
 
 createApp(App)
+  .use(store)
   .use(router, axios)
   .use(metaManager)
   .use(metaPlugin)

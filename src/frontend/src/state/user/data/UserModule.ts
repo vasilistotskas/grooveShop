@@ -53,10 +53,10 @@ export default class UserModule extends AppBaseModule {
     this.user_id = undefined
 
     store.dispatch('auth/logout').then(() => {
-      store.commit('product/favourite/unsetFavourites')
-      store.commit('product/favourite/unsetUserFavourites')
-      store.commit('product/review/unsetUserToProductReview')
-      store.commit('product/review/unsetUserReviews')
+      store.commit('productFavourite/unsetFavourites')
+      store.commit('productFavourite/unsetUserFavourites')
+      store.commit('productReview/unsetUserToProductReview')
+      store.commit('productReview/unsetUserReviews')
       store.commit('country/unsetUserCountryData')
     })
   }
@@ -72,7 +72,7 @@ export default class UserModule extends AppBaseModule {
         this.context.commit('setUserEmail', data[0].email)
         await store.dispatch('country/findRegionsBasedOnAlphaForLoggedCustomer')
         await store.dispatch(
-          'product/favourite/fetchUserFavouritesFromRemote',
+          'productFavourite/fetchUserFavouritesFromRemote',
           response.data[0].user
         )
       })

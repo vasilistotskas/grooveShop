@@ -85,8 +85,9 @@
             </button>
             <FavouriteButton
               :model="product"
-              :getter-type="'product/favourite/getIsCurrentProductInUserFavourites'"
-              :dispatch-type="'product/favourite/toggleFavourite'"
+              :module="productFavouriteModule"
+              :getter-type="'getIsCurrentProductInUserFavourites'"
+              :dispatch-type="'toggleFavourite'"
               :use-store="true"
             />
           </div>
@@ -123,6 +124,7 @@ import FavouriteButton from '@/components/Utilities/FavouriteButton.vue'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import { faShippingFast } from '@fortawesome/free-solid-svg-icons/faShippingFast'
+import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
 
 @Component({
@@ -147,6 +149,7 @@ export default class Product extends Vue {
   appModule = getModule(AppModule)
   productModule = getModule(ProductModule)
   cartModule = getModule(CartModule)
+  productFavouriteModule = getModule(ProductFavouriteModule)
 
   meta = setup(() =>
     useMeta(

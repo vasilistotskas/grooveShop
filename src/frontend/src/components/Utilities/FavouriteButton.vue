@@ -14,6 +14,7 @@
 <script lang="ts">
 import { some } from 'lodash'
 import { useToast } from 'vue-toastification'
+import { DynamicStoreType } from '@/dynamicStore'
 import UserModule from '@/state/user/data/UserModule'
 import AuthModule from '@/state/auth/auth/AuthModule'
 import { getModule, VuexModule } from 'vuex-module-decorators'
@@ -63,12 +64,12 @@ const toast = useToast()
 })
 export default class FavouriteButton
   extends Vue
-  implements FavouriteButtonInterface<VuexModule<ThisType<any>, any>>
+  implements FavouriteButtonInterface<VuexModule<DynamicStoreType>>
 {
   userModule = getModule(UserModule)
   authModule = getModule(AuthModule)
   model!: Record<string, never>
-  module!: any
+  module!: VuexModule<VuexModule<DynamicStoreType, any>, any>
   getterType!: string
   dispatchType!: string
   isFavourite = false
@@ -80,13 +81,9 @@ export default class FavouriteButton
     this.isFavourite = this.getIsFavourite
   }
 
-  get getModule() {
-    return this.module
-  }
-
   get getIsFavourite(): boolean {
     if (this.useStore) {
-      return this.getModule[this.getterType]
+      return this.module[this.getterType]
     }
     const likes = this.model.likes
     const userEmail = this.userModule.getUserData.email
@@ -100,7 +97,7 @@ export default class FavouriteButton
       toast.error('You are not logged in')
       return
     }
-    await this.getModule[this.dispatchType](this.model).then((isFavourite: boolean) => {
+    await this.module[this.dispatchType](this.model).then((isFavourite: boolean) => {
       this.isFavourite = isFavourite
     })
     this.isFavourite ? toast.success('Added to Favourites') : toast.info('Removed From Favourites')

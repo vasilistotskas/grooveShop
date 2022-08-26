@@ -185,13 +185,13 @@ import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import PaginationModule from '@/state/pagination/PaginationModule'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
-import PaginationBase from '@/components/Pagination/PaginationBase'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
 import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
 import ThemeModeSwitcher from '@/components/Utilities/ThemeModeSwitcher.vue'
-import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart'
+import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
@@ -207,11 +207,11 @@ import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/Pagination
   },
 })
 export default class Navbar
-  extends PaginationBase<ProductModel>
-  implements PaginatedInterface<ProductModel>
+  extends PaginatedComponent<ProductModel>
+  implements PaginatedComponentInterface<ProductModel>
 {
   appModule = getModule(AppModule)
-  paginationModule = getModule(PaginationModule)
+  paginationModule = getModule<PaginationModule<ProductModel>>(PaginationModule)
   authModule = getModule(AuthModule)
   categoryModule = getModule(CategoryModule)
   paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS

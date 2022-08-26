@@ -32,8 +32,9 @@
       <div class="favourite-button-content">
         <FavouriteButton
           :model="postBySlug"
-          :getter-type="'blog/getIsCurrentPostInUserFavourites'"
-          :dispatch-type="'blog/toggleFavourite'"
+          :module="blogModule"
+          :getter-type="'getIsCurrentPostInUserFavourites'"
+          :dispatch-type="'toggleFavourite'"
           :use-store="true"
         />
       </div>
@@ -44,13 +45,13 @@
 </template>
 
 <script lang="ts">
-import router from '@/routes'
-import { RouteParams } from 'vue-router'
 import {
   ImageFitOptions,
   ImagePositionOptions,
   ImageTypeOptions,
 } from '@/helpers/MediaStream/ImageUrlEnum'
+import router from '@/routes'
+import { RouteParams } from 'vue-router'
 import BlogModule from '@/state/blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/state/auth/auth/AuthModule'

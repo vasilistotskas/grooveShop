@@ -2,18 +2,19 @@ import { LocationQuery } from 'vue-router'
 import {
   PaginationCount,
   PaginationLink,
+  PaginationResults,
   PaginationTotalPages,
   QueryParamsType,
 } from '@/state/pagination/Type/PaginationTypes'
 
-export default interface PaginatedInterface<TPaginatedModel> {
+export default interface PaginatedComponentInterface<TPaginatedModel> {
   readonly uri: typeof window.location.search
   readonly params: LocationQuery
 
-  readonly allPaginatedResults: Array<TPaginatedModel>
+  readonly allPaginatedResults: PaginationResults<TPaginatedModel>
   readonly allPaginatedResultsCount: PaginationCount
   readonly allPaginatedResultsNextPageUrl: PaginationLink['next']
-  readonly allPaginatedresultsPreviousPagesUrl: PaginationLink['previous']
+  readonly allPaginatedResultsPreviousPagesUrl: PaginationLink['previous']
   readonly allPaginatedResultsTotalPages: PaginationTotalPages
   readonly currentPageNumber: number
   readonly currentPageQuery?: QueryParamsType

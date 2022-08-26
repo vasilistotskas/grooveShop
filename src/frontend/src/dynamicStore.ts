@@ -20,7 +20,7 @@ import StripeIbanModule from '@/libraries/Stripe/Components/StripeIbanModule'
 import StripeCardModule from '@/libraries/Stripe/Components/StripeCardModule'
 import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 
-interface DynamicStoreType {
+export interface DynamicStoreType {
   app: AppModule
   settings: AppSettingsModule
   category: CategoryModule
@@ -30,7 +30,7 @@ interface DynamicStoreType {
   user: UserModule
   cart: CartModule
   search: SearchModule
-  pagination: PaginationModule
+  pagination: PaginationModule<unknown>
   country: CountryModule
   slider: SliderModule
   stripeIban: StripeIbanModule

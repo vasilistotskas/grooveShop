@@ -32,26 +32,26 @@ import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import UserOrderModel from '@/state/user/order/UserOrderModel'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import PaginationModule from '@/state/pagination/PaginationModule'
-import PaginationBase from '@/components/Pagination/PaginationBase'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
-import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import UserOrderHistoryContainer from '@/components/User/UserOrderHistoryContainer.vue'
+import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
   name: 'UserOrderHistory',
-  extends: PaginationBase,
+  extends: PaginatedComponent,
   components: {
     Pagination,
     UserOrderHistoryContainer,
   },
 })
 export default class UserOrderHistory
-  extends PaginationBase<UserOrderModel>
-  implements PaginatedInterface<UserOrderModel>
+  extends PaginatedComponent<UserOrderModel>
+  implements PaginatedComponentInterface<UserOrderModel>
 {
-  paginationModule = getModule(PaginationModule)
+  paginationModule = getModule<PaginationModule<UserOrderModel>>(PaginationModule)
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.USER_ORDER_HISTORY
 

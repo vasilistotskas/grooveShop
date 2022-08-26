@@ -46,7 +46,8 @@
           <FavouriteButton
             btn-class="blog-post-card-body-actions-like-btn"
             :model="post"
-            :dispatch-type="'blog/toggleFavourite'"
+            :module="blogModule"
+            :dispatch-type="'toggleFavourite'"
           />
           <span class="blog-post-card-body-actions-like-count">609</span>
         </div>
@@ -72,8 +73,15 @@
 </template>
 
 <script lang="ts">
+import {
+  ImageFitOptions,
+  ImagePositionOptions,
+  ImageTypeOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
 import { PropType } from 'vue'
 import { helpers } from '@/helpers/main'
+import BlogModule from '@/state/blog/BlogModule'
+import { getModule } from 'vuex-module-decorators'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions
@@ -85,11 +93,6 @@ import BlogShareActions from '@/components/Blog/BlogShareActions.vue'
 import { Vue, setup, Options as Component } from 'vue-class-component'
 import FavouriteButton from '@/components/Utilities/FavouriteButton.vue'
 import { faCommentDots } from '@fortawesome/free-solid-svg-icons/faCommentDots'
-import {
-  ImageFitOptions,
-  ImagePositionOptions,
-  ImageTypeOptions,
-} from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Component({
   name: 'BlogPostCard',
@@ -118,6 +121,7 @@ import {
   },
 })
 export default class BlogPostCard extends Vue {
+  blogModule = getModule(BlogModule)
   ImageFitOptions = ImageFitOptions
   ImagePositionOptions = ImagePositionOptions
   post = new BlogPostModel()

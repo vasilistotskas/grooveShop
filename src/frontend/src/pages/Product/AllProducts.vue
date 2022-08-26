@@ -39,16 +39,16 @@ import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import PaginationModule from '@/state/pagination/PaginationModule'
-import PaginationBase from '@/components/Pagination/PaginationBase'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
-import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
+import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
   name: 'AllProducts',
-  extends: PaginationBase,
+  extends: PaginatedComponent,
   components: {
     ProductCard,
     Pagination,
@@ -56,10 +56,10 @@ import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/Pagination
   },
 })
 export default class AllProducts
-  extends PaginationBase<ProductModel>
-  implements PaginatedInterface<ProductModel>
+  extends PaginatedComponent<ProductModel>
+  implements PaginatedComponentInterface<ProductModel>
 {
-  paginationModule = getModule(PaginationModule)
+  paginationModule = getModule<PaginationModule<ProductModel>>(PaginationModule)
   paginationNamespace = PaginationNamespaceTypesEnum.ALL_PRODUCTS
   PaginationRoutesEnum = PaginationRoutesEnum
 

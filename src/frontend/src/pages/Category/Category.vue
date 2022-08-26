@@ -59,16 +59,16 @@ import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { RouteLocationNormalized, RouteParams } from 'vue-router'
 import PaginationModule from '@/state/pagination/PaginationModule'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import PaginationBase from '@/components/Pagination/PaginationBase'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
-import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
+import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
   name: 'Category',
-  extends: PaginationBase,
+  extends: PaginatedComponent,
   components: {
     ProductCard,
     Breadcrumbs,
@@ -80,12 +80,12 @@ import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/Pagination
   },
 })
 export default class Category
-  extends PaginationBase<ProductModel>
-  implements PaginatedInterface<ProductModel>
+  extends PaginatedComponent<ProductModel>
+  implements PaginatedComponentInterface<ProductModel>
 {
   categoryModule = getModule(CategoryModule)
   appModule = getModule(AppModule)
-  paginationModule = getModule(PaginationModule)
+  paginationModule = getModule<PaginationModule<ProductModel>>(PaginationModule)
   formEl = document.getElementById('burgerButton') as HTMLFormElement
   ImageTypeOptions = ImageTypeOptions
   ImageFitOptions = ImageFitOptions

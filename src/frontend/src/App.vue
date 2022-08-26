@@ -29,6 +29,8 @@ import CountryModule from '@/state/country/CountryModule'
 import CategoryModule from '@/state/category/CategoryModule'
 import { Options as Component, Vue } from 'vue-class-component'
 import SocialSidebar from '@/components/Main/SocialSidebar.vue'
+import ProductReviewModule from '@/state/product/review/ProductReviewModule'
+import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 
 @Component({
   name: 'App',
@@ -47,6 +49,8 @@ export default class App extends Vue {
   countryModule = getModule(CountryModule)
   userModule = getModule(UserModule)
   blogModule = getModule(BlogModule)
+  productFavouriteModule = getModule(ProductFavouriteModule)
+  productReviewModule = getModule(ProductReviewModule)
 
   get lodash(): LoDashStatic {
     return _

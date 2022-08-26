@@ -74,13 +74,13 @@ import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import PaginationModule from '@/state/pagination/PaginationModule'
-import PaginationBase from '@/components/Pagination/PaginationBase'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import ReviewProductCard from '@/components/Reviews/ReviewProductCard.vue'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
 import ProductReviewModule from '@/state/product/review/ProductReviewModule'
-import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
+import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 const starSvg =
@@ -90,7 +90,7 @@ const starHalfSvg =
 
 @Component({
   name: 'ProductReviews',
-  extends: PaginationBase,
+  extends: PaginatedComponent,
   components: {
     ReviewProductCard,
     Pagination,
@@ -103,12 +103,12 @@ const starHalfSvg =
   },
 })
 export default class ProductReviews
-  extends PaginationBase<ProductReviewModel>
-  implements PaginatedInterface<ProductReviewModel>
+  extends PaginatedComponent<ProductReviewModel>
+  implements PaginatedComponentInterface<ProductReviewModel>
 {
   productReviewModule = getModule(ProductReviewModule)
   userModule = getModule(UserModule)
-  paginationModule = getModule(PaginationModule)
+  paginationModule = getModule<PaginationModule<ProductReviewModel>>(PaginationModule)
   product = new ProductModel()
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.PRODUCT_PAGE_REVIEWS
