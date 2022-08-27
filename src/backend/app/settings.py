@@ -45,14 +45,43 @@ ALLOWED_HOSTS.extend(
     )
 )
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:8010']
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8010',
+    "http://localhost:8001",
+    'http://localhost:4433',
+    'http://localhost:4434',
+    'http://localhost:4455',
+    'http://localhost:3000',
+    'http://localhost:4436',
+    'http://localhost:4437',
+
+    'http://127.0.0.1:4433',
+    'http://127.0.0.1:4434',
+    'http://127.0.0.1:4455',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:4436',
+    'http://127.0.0.1:4437',
+    'https://gifted-driscoll-f20cnbrhvw.projects.oryapis.com/sessions/whoami'
+]
 
 INTERNAL_IPS = [
     "127.0.0.1",
     "http://localhost:8010",
-    "http://localhost:8010/",
-    "http://localhost:8001/",
-    "http://localhost:8001/",
+    "http://localhost:8001",
+    'http://localhost:4433',
+    'http://localhost:4434',
+    'http://localhost:4455',
+    'http://localhost:3000',
+    'http://localhost:4436',
+    'http://localhost:4437',
+
+    'http://127.0.0.1:4433',
+    'http://127.0.0.1:4434',
+    'http://127.0.0.1:4455',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:4436',
+    'http://127.0.0.1:4437',
+    'https://gifted-driscoll-f20cnbrhvw.projects.oryapis.com/sessions/whoami'
 ]
 
 
@@ -91,9 +120,17 @@ THIRD_PARTY_APPS = [
     'tinymce',
     'django_filters',
     'strawberry.django',
-    'debug_toolbar'
+    'debug_toolbar',
+    'django_ory_auth'
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
+
+AUTHENTICATION_BACKENDS = [
+    "django_ory_auth.backend.OryBackend",
+]
+
+ORY_SDK_URL=env("https://gifted-driscoll-f20cnbrhvw.projects.oryapis.com", default='http://127.0.0.1:4433')
+ORY_UI_URL=env("https://gifted-driscoll-f20cnbrhvw.projects.oryapis.com", default='http://127.0.0.1:4455')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -137,6 +174,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django_ory_auth.context.processor',
             ],
         },
     },

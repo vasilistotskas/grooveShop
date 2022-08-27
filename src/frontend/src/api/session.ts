@@ -12,6 +12,7 @@ const session = axios.create({
   xsrfHeaderName: CSRF_HEADER_NAME,
 })
 
+console.log(cookies.getAll())
 session.defaults.headers.put['Content-Type'] = 'application/json'
 session.defaults.headers.put['X-CSRFToken'] = cookies.get('csrftoken')
 export default session

@@ -94,6 +94,21 @@ const authRoutes: Array<RouteRecordRaw> = [
       ],
     },
   },
+  {
+    path: '/test_login',
+    name: '/test_login',
+    component: () => import('@/pages/TestLogin.vue'),
+    meta: {
+      breadcrumb: (): Array<BreadcrumbItemInterface> => [
+        {
+          name: 'test_login',
+          to: {
+            full_path: 'test_login',
+          },
+        },
+      ],
+    },
+  },
 ]
 
 export default authRoutes

@@ -114,6 +114,7 @@ front_urls = [
     path('robots.txt', robots_txt),
     path('offline/', OfflineView.as_view(), name='offline'),
     path('log-in', IndexView.as_view(), name='index'),
+    path('test_login', IndexView.as_view(), name='index'),
     path('sign-up', IndexView.as_view(), name='index'),
     path('accounts/activate/<uid>/<token>', IndexView.as_view(), name='index'),
     path('accounts/activate/verify_mail_resend', IndexView.as_view(), name='index'),
