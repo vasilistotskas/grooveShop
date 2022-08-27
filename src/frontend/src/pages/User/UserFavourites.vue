@@ -85,10 +85,6 @@ export default class UserFavourites
     await this.fetchPaginationData()
   }
 
-  async unmounted(): Promise<void> {
-    await this.paginationModule.unsetResults(this.paginationNamespace)
-  }
-
   async fetchPaginationData(): Promise<void> {
     const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,

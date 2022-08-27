@@ -89,7 +89,7 @@
         </div>
       </div>
 
-      <router-view :key="$route.path" :user-data="userData" />
+      <RouterView :key="$route.path" :route="$route" :user-data="userData" />
     </div>
   </div>
 </template>

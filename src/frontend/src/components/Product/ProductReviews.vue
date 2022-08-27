@@ -142,10 +142,6 @@ export default class ProductReviews
     this.productReviewModule.setProductReviewsCounter(this.product.review_counter)
   }
 
-  async unmounted(): Promise<void> {
-    await this.paginationModule.unsetResults(this.paginationNamespace)
-  }
-
   async fetchPaginationData(): Promise<void> {
     const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,

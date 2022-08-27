@@ -3,7 +3,7 @@
     v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0"
     class="user-order-history"
   >
-    <div v-for="order in allPaginatedResults" :key="order.id" class="mb-4" :order="order">
+    <div v-for="order in allPaginatedResults" :key="order.id" class="mb-4">
       <h3 class="is-size-4 mb-3">Order #{{ order.id }}</h3>
       <div class="box">
         <div class="card">
@@ -78,10 +78,6 @@ export default class UserOrderHistory
     }
 
     await this.fetchPaginationData()
-  }
-
-  async unmounted(): Promise<void> {
-    this.paginationModule.unsetResults(this.paginationNamespace)
   }
 
   async fetchPaginationData(): Promise<void> {

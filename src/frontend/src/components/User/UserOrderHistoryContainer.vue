@@ -1,5 +1,6 @@
 <template>
   <div v-if="order && Object.keys(order).length > 0" class="card-body card-body-order-history">
+    <h3 class="is-size-4 mb-3">Order #{{ order.id }}</h3>
     <div class="order-history-grid-head">
       <span />
       <span>Product</span>
