@@ -9,7 +9,7 @@
 
         <Pagination
           v-if="Object.keys(allPaginatedResults).length !== 0"
-          :endpoint-url="'products/all'"
+          :endpoint-url="MainRoutePaths.ALL_PRODUCTS"
           :max-visible-buttons="3"
           :route="PaginationRoutesEnum.ALL_PRODUCTS"
           :total-pages="allPaginatedResultsTotalPages"
@@ -35,12 +35,13 @@ import { getModule } from 'vuex-module-decorators'
 import ProductModel from '@/state/product/ProductModel'
 import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
+import { MainRoutePaths } from '@/routes/Enum/MainRoutePaths'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import PaginationModule from '@/state/pagination/PaginationModule'
-import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
@@ -62,6 +63,7 @@ export default class AllProducts
   paginationModule = getModule<PaginationModule<ProductModel>>(PaginationModule)
   paginationNamespace = PaginationNamespaceTypesEnum.ALL_PRODUCTS
   PaginationRoutesEnum = PaginationRoutesEnum
+  MainRoutePaths = MainRoutePaths
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
