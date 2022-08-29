@@ -97,7 +97,7 @@ export default {
     // highlight-start
     // Fetch the session directly from Ory
 
-    const cookie = cookies.get('csrftoken')
+    const cookie = cookies.get('ory_kratos_session')
     console.log('cookie', cookie)
 
     // Make a request and include the cookie in X-Session-Cookie
