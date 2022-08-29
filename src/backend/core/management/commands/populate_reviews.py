@@ -1,5 +1,7 @@
+import datetime
 from faker import Faker
 from random import randrange
+from django.utils import timezone
 from backend.product.models import Review
 from django.core.management import BaseCommand
 
@@ -18,7 +20,7 @@ class Command(BaseCommand):
                 comment=faker.text(50),
                 rate=rate,
                 status='True',
-                created_at=faker.date_time(),
-                updated_at=faker.date_time()
+                created_at=datetime.datetime.now(tz=timezone.utc),
+                updated_at=datetime.datetime.now(tz=timezone.utc)
             )
         self.stdout.write(self.style.SUCCESS('Success'))

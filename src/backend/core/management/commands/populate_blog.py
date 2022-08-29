@@ -43,6 +43,20 @@ class Command(BaseCommand):
             )
             intermediate_category.save()
 
+            for _ in range(5):
+                name = faker.name()
+                Post.objects.create(
+                    title=name,
+                    subtitle=faker.text(20),
+                    slug=slugify(name),
+                    body=faker.text(100),
+                    meta_description=faker.text(10),
+                    published=True,
+                    author=Author.objects.get(id=author.id),
+                    image=img,
+                    category_id=intermediate_category.id
+                )
+
         try:
             beginner_category = Category.objects.get(
                 slug='beginner',
@@ -54,6 +68,20 @@ class Command(BaseCommand):
                 description=faker.text(100),
             )
             beginner_category.save()
+
+            for _ in range(5):
+                name = faker.name()
+                Post.objects.create(
+                    title=name,
+                    subtitle=faker.text(20),
+                    slug=slugify(name),
+                    body=faker.text(100),
+                    meta_description=faker.text(10),
+                    published=True,
+                    author=Author.objects.get(id=author.id),
+                    image=img,
+                    category_id=beginner_category.id
+                )
 
         try:
             master_category = Category.objects.get(
@@ -67,24 +95,24 @@ class Command(BaseCommand):
             )
             master_category.save()
 
+            for _ in range(5):
+                name = faker.name()
+                Post.objects.create(
+                    title=name,
+                    subtitle=faker.text(20),
+                    slug=slugify(name),
+                    body=faker.text(100),
+                    meta_description=faker.text(10),
+                    published=True,
+                    author=Author.objects.get(id=author.id),
+                    image=img,
+                    category_id=beginner_category.id,
+                )
+
 
         for _ in range(2):
             Tag.objects.create(
                 name=faker.name(),
-            )
-
-        for _ in range(10):
-            name = faker.name()
-            Post.objects.create(
-                title=name,
-                subtitle=faker.text(20),
-                slug=slugify(name),
-                body=faker.text(100),
-                meta_description=faker.text(10),
-                published=True,
-                author=Author.objects.get(id=author.id),
-                image=img,
-                category_id=random.randint(0, 3)
             )
 
         self.stdout.write(self.style.SUCCESS('Success'))

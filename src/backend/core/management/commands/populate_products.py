@@ -36,31 +36,36 @@ class Command(BaseCommand):
 
             for _ in range(200):
                 product_price = randrange(20, 300)
-                name = faker.text(10) + str(i)
-                product = Product.objects.create(
-                    category_id=category.id,
-                    name=name,
-                    slug=slugify(name),
-                    description=faker.text(10),
-                    price=product_price,
-                    active='True',
-                    stock=100,
-                    date_added=faker.date_time(),
-                    vat_id=1
-                )
-                i = i + 1
-
-                product_images = ProductImages.objects.create(
-                    title=faker.text(5),
-                    product_id=product.id,
-                    image=img,
-                    is_main=True
-                )
-
-                for _ in range(2):
-                    favourite = Favourite.objects.get_or_create(
-                        user_id=user_id,
-                        product_id=product.id
+                name = faker.text(20) + str(i)
+                try:
+                    product = Product.objects.get(
+                        name=name,
                     )
+                except Product.DoesNotExist:
+                    product = Product.objects.create(
+                        category_id=category.id,
+                        name=name,
+                        slug=slugify(name),
+                        description=faker.text(10),
+                        price=product_price,
+                        active='True',
+                        stock=100,
+                        date_added=faker.date_time(),
+                        vat_id=1
+                    )
+                    i = i + 1
+
+                    product_images = ProductImages.objects.create(
+                        title=faker.text(5),
+                        product_id=product.id,
+                        image=img,
+                        is_main=True
+                    )
+
+                    for _ in range(2):
+                        favourite = Favourite.objects.get_or_create(
+                            user_id=user_id,
+                            product_id=product.id
+                        )
 
         self.stdout.write(self.style.SUCCESS('Success'))
