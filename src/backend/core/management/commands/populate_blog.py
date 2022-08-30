@@ -1,5 +1,4 @@
 import os
-import random
 from faker import Faker
 from random import randrange
 from django.conf import settings
@@ -14,6 +13,23 @@ User = settings.AUTH_USER_MODEL
 
 
 class Command(BaseCommand):
+    @staticmethod
+    def create_posts(author_id, img, category_id):
+        faker = Faker()
+        for _ in range(5):
+            name = faker.name()
+            Post.objects.create(
+                title=name,
+                subtitle=faker.text(20),
+                slug=slugify(name),
+                body=faker.text(100),
+                meta_description=faker.text(10),
+                published=True,
+                author=Author.objects.get(id=author_id),
+                image=img,
+                category_id=category_id
+            )
+
     def handle(self, *args, **options):
         faker = Faker()
 
@@ -35,6 +51,7 @@ class Command(BaseCommand):
             intermediate_category = Category.objects.get(
                 slug='intermediate',
             )
+            self.create_posts(author.id, img, intermediate_category.id)
         except Category.DoesNotExist:
             intermediate_category = Category(
                 name='Intermediate',
@@ -42,25 +59,13 @@ class Command(BaseCommand):
                 description=faker.text(100),
             )
             intermediate_category.save()
-
-            for _ in range(5):
-                name = faker.name()
-                Post.objects.create(
-                    title=name,
-                    subtitle=faker.text(20),
-                    slug=slugify(name),
-                    body=faker.text(100),
-                    meta_description=faker.text(10),
-                    published=True,
-                    author=Author.objects.get(id=author.id),
-                    image=img,
-                    category_id=intermediate_category.id
-                )
+            self.create_posts(author.id, img, intermediate_category.id)
 
         try:
             beginner_category = Category.objects.get(
                 slug='beginner',
             )
+            self.create_posts(author.id, img, beginner_category.id)
         except Category.DoesNotExist:
             beginner_category = Category(
                 name='Beginner',
@@ -68,25 +73,13 @@ class Command(BaseCommand):
                 description=faker.text(100),
             )
             beginner_category.save()
-
-            for _ in range(5):
-                name = faker.name()
-                Post.objects.create(
-                    title=name,
-                    subtitle=faker.text(20),
-                    slug=slugify(name),
-                    body=faker.text(100),
-                    meta_description=faker.text(10),
-                    published=True,
-                    author=Author.objects.get(id=author.id),
-                    image=img,
-                    category_id=beginner_category.id
-                )
+            self.create_posts(author.id, img, beginner_category.id)
 
         try:
             master_category = Category.objects.get(
                 slug='master',
             )
+            self.create_posts(author.id, img, master_category.id)
         except Category.DoesNotExist:
             master_category = Category(
                 name='Master',
@@ -94,21 +87,7 @@ class Command(BaseCommand):
                 description=faker.text(100),
             )
             master_category.save()
-
-            for _ in range(5):
-                name = faker.name()
-                Post.objects.create(
-                    title=name,
-                    subtitle=faker.text(20),
-                    slug=slugify(name),
-                    body=faker.text(100),
-                    meta_description=faker.text(10),
-                    published=True,
-                    author=Author.objects.get(id=author.id),
-                    image=img,
-                    category_id=beginner_category.id,
-                )
-
+            self.create_posts(author.id, img, master_category.id)
 
         for _ in range(2):
             Tag.objects.create(
