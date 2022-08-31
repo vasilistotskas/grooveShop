@@ -83,14 +83,17 @@
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/state/auth/auth/AuthModule'
 import { equal, min } from '@/components/Form/Utils'
+import CountryModule from '@/state/country/CountryModule'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import { Options as Component, Vue } from 'vue-class-component'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import PasswordModule from '@/state/auth/password/PasswordModule'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
+import ProductReviewModule from '@/state/product/review/ProductReviewModule'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 import UpdatePasswordApiData from '@/state/auth/Interface/UpdatePasswordApiData'
+import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 
 let { validateFields } = useValidation({})
 
@@ -106,6 +109,9 @@ let { validateFields } = useValidation({})
 export default class UserPassword extends Vue {
   authModule = getModule(AuthModule)
   passwordModule = getModule(PasswordModule)
+  productFavouriteModule = getModule(ProductFavouriteModule)
+  productReviewModule = getModule(ProductReviewModule)
+  countryModule = getModule(CountryModule)
 
   submitButtonText = 'Update'
 
@@ -153,8 +159,13 @@ export default class UserPassword extends Vue {
     }
   }
 
-  clearAllAccountSessions(): void {
-    this.authModule.clearAllAccountSessions()
+  async clearAllAccountSessions(): Promise<void> {
+    await this.authModule.clearAllAccountSessions()
+    this.productFavouriteModule.unsetFavourites()
+    this.productFavouriteModule.unsetUserFavourites()
+    this.productReviewModule.unsetUserToProductReview()
+    this.productReviewModule.unsetUserReviews()
+    this.countryModule.unsetUserCountryData()
   }
 }
 </script>

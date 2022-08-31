@@ -34,6 +34,7 @@
           :model="postBySlug"
           :module="blogModule"
           :getter-type="'getIsCurrentPostInUserFavourites'"
+          :getter-params="[userEmail]"
           :dispatch-type="'toggleFavourite'"
           :use-store="true"
         />
@@ -55,6 +56,7 @@ import { RouteParams } from 'vue-router'
 import BlogModule from '@/state/blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/state/auth/auth/AuthModule'
+import UserModule from '@/state/user/data/UserModule'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions
 import BlogComment from '@/components/Blog/BlogComment.vue'
@@ -86,6 +88,7 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 export default class BlogPost extends Vue {
   blogModule = getModule(BlogModule)
   authModule = getModule(AuthModule)
+  userModule = getModule(UserModule)
   ImageTypeOptions = ImageTypeOptions
   ImageFitOptions = ImageFitOptions
   ImagePositionOptions = ImagePositionOptions
@@ -102,6 +105,10 @@ export default class BlogPost extends Vue {
 
   get isAuthenticated(): boolean {
     return this.authModule.isAuthenticated
+  }
+
+  get userEmail(): string {
+    return this.userModule.getUserData.email
   }
 
   async created(): Promise<void> {

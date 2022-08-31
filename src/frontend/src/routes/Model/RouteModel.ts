@@ -1,6 +1,3 @@
-import { map } from 'lodash'
-import store from '@/dynamicStore'
-import { useToast } from 'vue-toastification'
 import {
   _RouteRecordBase,
   NavigationGuardNext,
@@ -8,14 +5,21 @@ import {
   RouteRecord,
   RouteRecordNormalized,
 } from 'vue-router'
+import { map } from 'lodash'
+import { useToast } from 'vue-toastification'
+import CartModule from '@/state/cart/CartModule'
+import { getModule } from 'vuex-module-decorators'
+import AuthModule from '@/state/auth/auth/AuthModule'
 
 const toast = useToast()
 
 export class RouteModel {
   routeNames: Array<_RouteRecordBase['name']> = []
   routePaths: Array<_RouteRecordBase['path']> = []
+  authModule = getModule(AuthModule)
+  cartModule = getModule(CartModule)
 
-  constructor(routes: RouteRecordNormalized[]) {
+  constructor(routes?: RouteRecordNormalized[]) {
     map(routes, (route: RouteRecord) => {
       this.routeNames.push(route.name)
       this.routePaths.push(route.path)
@@ -26,15 +30,15 @@ export class RouteModel {
     return new RouteModel(routes)
   }
 
-  static routeBeforeEach(
+  routeBeforeEach(
     to: RouteLocationNormalized,
     from: RouteLocationNormalized,
     next: NavigationGuardNext
   ): void {
-    store.dispatch('auth/initialize').then(() => {
+    this.authModule.initialize().then(() => {
       if (
         to.matched.some((record) => record.meta.requireLogin) &&
-        !store.getters['auth/isAuthenticated']
+        !this.authModule.isAuthenticated
       ) {
         toast.error('You are not logged in')
         next({ name: 'LogIn', query: { to: to.path } })
@@ -42,7 +46,7 @@ export class RouteModel {
         next()
       }
     })
-    if (to.name === 'Checkout' && !store.getters['cart/getCartTotalLength']) {
+    if (to.name === 'Checkout' && !this.cartModule.getCartTotalLength) {
       toast.error('Your Cart is Empty...')
       next({ name: 'Cart', query: { to: to.path } })
     }

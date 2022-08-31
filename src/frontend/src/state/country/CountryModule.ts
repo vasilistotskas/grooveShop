@@ -28,12 +28,13 @@ export default class CountryModule extends AppBaseModule {
     return this.regionsBasedOnAlpha
   }
 
-  get getSelectedCountry(): CountryModel {
-    const isAuthenticated: boolean = store.getters['auth/isAuthenticated']
-    if (isAuthenticated) {
-      return <CountryModel>this.selectedCountry
+  get getSelectedCountry(): (isAuthenticated: boolean) => CountryModel {
+    return (isAuthenticated: boolean) => {
+      if (isAuthenticated) {
+        return <CountryModel>this.selectedCountry
+      }
+      return new CountryModel()
     }
-    return new CountryModel()
   }
 
   @Mutation
@@ -71,9 +72,9 @@ export default class CountryModule extends AppBaseModule {
   }
 
   @Action
-  async findRegionsBasedOnAlphaForLoggedCustomer(): Promise<void> {
-    const UserProfileModel: UserProfileModel = store.getters['user/getUserData']
-
+  async findRegionsBasedOnAlphaForLoggedCustomer(
+    UserProfileModel: UserProfileModel
+  ): Promise<void> {
     if (UserProfileModel.country) {
       const countries = this.context.getters['getCountries']
       const result = countries.find((country: CountryModel) => {

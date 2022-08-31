@@ -41,13 +41,14 @@ class Query:
             next_cursor = None
 
         has_previous_page = current_page_number > 1
+        has_next_page = len(filtered_data) > limit
 
         sliced_posts = cast(List[PostType], sliced_posts)
         return PaginatedResponse(
             collection=sliced_posts,
             page_meta=PageMeta(
                 has_previous_page=has_previous_page,
-                has_next_page=len(filtered_data) > limit,
+                has_next_page=has_next_page,
                 count=posts_count,
                 total_pages=total_pages,
                 next_cursor=next_cursor,

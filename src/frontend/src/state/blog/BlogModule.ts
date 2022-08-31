@@ -81,10 +81,11 @@ export default class BlogModule extends AppBaseModule {
     return isEmpty(commentByUserToPost)
   }
 
-  get getIsCurrentPostInUserFavourites(): boolean {
-    const postLikes = this.context.getters['getPostBySlug'].likes
-    const userEmail = store.getters['user/getUserData'].email
-    return some(postLikes, { email: userEmail })
+  get getIsCurrentPostInUserFavourites(): (userEmail: string) => boolean {
+    return (userEmail: string) => {
+      const postLikes = this.context.getters['getPostBySlug'].likes
+      return some(postLikes, { email: userEmail })
+    }
   }
 
   @Mutation

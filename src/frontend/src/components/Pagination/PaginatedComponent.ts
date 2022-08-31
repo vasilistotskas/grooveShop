@@ -3,12 +3,16 @@ import { getModule } from 'vuex-module-decorators'
 import { Options as Component, Vue } from 'vue-class-component'
 import PaginationModule from '@/state/pagination/PaginationModule'
 import { PaginationResults, QueryParamsType } from '@/state/pagination/Type/PaginationTypes'
+import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
   name: 'PaginatedComponent',
 })
-export default class PaginatedComponent<TPaginatedModel> extends Vue {
+export default class PaginatedComponent<TPaginatedModel>
+  extends Vue
+  implements PaginatedComponentInterface<TPaginatedModel>
+{
   paginationModule = getModule<PaginationModule<TPaginatedModel>>(PaginationModule)
   protected paginationNamespace!: PaginationNamespaceTypesEnum
 
@@ -45,5 +49,9 @@ export default class PaginatedComponent<TPaginatedModel> extends Vue {
       return this.paginationModule.getCurrentPageNumber(this.paginationNamespace)
     }
     return 1
+  }
+
+  fetchPaginationData(): Promise<void> | undefined {
+    return
   }
 }

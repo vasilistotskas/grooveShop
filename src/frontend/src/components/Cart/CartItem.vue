@@ -85,10 +85,6 @@ export default class CartItem extends Vue {
 
   ImageTypeOptions = ImageTypeOptions
 
-  get isMobile(): boolean {
-    return this.appModule.isMobile
-  }
-
   get itemTotal(): number {
     return this.item.quantity * this.item.product.price
   }

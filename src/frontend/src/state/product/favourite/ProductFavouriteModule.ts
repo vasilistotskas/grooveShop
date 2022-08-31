@@ -24,13 +24,14 @@ export default class ProductFavouriteModule extends AppBaseModule {
     return this.userFavourites
   }
 
-  get getIsCurrentProductInUserFavourites(): boolean {
-    const productId: number = store.getters['product/getProductId']
-    const favouriteProducts = this.context.getters['getFavouriteData']
-    const exists = favouriteProducts.filter(
-      (i: ProductFavouriteModel) => i.product_id === productId
-    )
-    return !!exists.length
+  get getIsCurrentProductInUserFavourites(): (data: { productId: number }) => boolean {
+    return (data: { productId: number }) => {
+      const favouriteProducts = this.context.getters['getFavouriteData']
+      const exists = favouriteProducts.filter(
+        (i: ProductFavouriteModel) => i.product_id === data.productId
+      )
+      return !!exists.length
+    }
   }
 
   @Mutation
@@ -54,12 +55,12 @@ export default class ProductFavouriteModule extends AppBaseModule {
   }
 
   @Action
-  async toggleFavourite(product: ProductFavouriteModel): Promise<boolean> {
+  async toggleFavourite(data: { productId: number; userId: number }): Promise<boolean> {
     try {
-      if (!this.getIsCurrentProductInUserFavourites) {
-        return await this.context.dispatch('addProductToFavourites', product)
+      if (!this.getIsCurrentProductInUserFavourites({ productId: data.productId })) {
+        return await this.context.dispatch('addProductToFavourites', data)
       } else {
-        return await this.context.dispatch('removeProductFavourites', product)
+        return await this.context.dispatch('removeProductFavourites', data)
       }
     } catch (error) {
       console.log(error)
@@ -82,15 +83,16 @@ export default class ProductFavouriteModule extends AppBaseModule {
   }
 
   @Action
-  async addProductToFavourites(): Promise<boolean> {
-    const productId: number = store.getters['product/getProductId']
-    const data = {
-      user_id: store.getters['user/getUserId'],
+  async addProductToFavourites(data: { productId: number; userId: number }): Promise<boolean> {
+    const productId: number = data.productId
+    const userId = data.userId
+
+    const payload = {
+      user_id: userId,
       product_id: productId,
     }
-    const userId: number = data.user_id
 
-    await api.post(`favourites/${userId}/`, data)
+    await api.post(`favourites/${userId}/`, payload)
 
     await this.context.dispatch('fetchUserFavouritesFromRemote', userId)
 
@@ -98,9 +100,9 @@ export default class ProductFavouriteModule extends AppBaseModule {
   }
 
   @Action
-  async removeProductFavourites(): Promise<boolean> {
-    const userId: number = store.getters['user/getUserId']
-    const productId: number = store.getters['product/getProductId']
+  async removeProductFavourites(data: { productId: number; userId: number }): Promise<boolean> {
+    const userId: number = data.userId
+    const productId: number = data.productId
 
     await api.delete(`favourites/delete/${userId}/${productId}`)
 

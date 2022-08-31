@@ -51,18 +51,10 @@ export default class UserModule extends AppBaseModule {
   unsetUserData(): void {
     this.data = new UserProfileModel()
     this.user_id = undefined
-
-    store.dispatch('auth/logout').then(() => {
-      store.commit('productFavourite/unsetFavourites')
-      store.commit('productFavourite/unsetUserFavourites')
-      store.commit('productReview/unsetUserToProductReview')
-      store.commit('productReview/unsetUserReviews')
-      store.commit('country/unsetUserCountryData')
-    })
   }
 
   @Action
-  fetchUserDataFromRemote(): Promise<void> {
+  fetchUserDataFromRemote(): Promise<AxiosResponse<Array<UserProfileModel>> | void> {
     return api
       .get('userprofile/data')
       .then(async (response: AxiosResponse<Array<UserProfileModel>>) => {
@@ -70,11 +62,7 @@ export default class UserModule extends AppBaseModule {
         this.context.commit('setUserData', data[0])
         this.context.commit('setUserId', data[0].id)
         this.context.commit('setUserEmail', data[0].email)
-        await store.dispatch('country/findRegionsBasedOnAlphaForLoggedCustomer')
-        await store.dispatch(
-          'productFavourite/fetchUserFavouritesFromRemote',
-          response.data[0].user
-        )
+        return response
       })
       .catch((e: Error) => {
         console.log(e)

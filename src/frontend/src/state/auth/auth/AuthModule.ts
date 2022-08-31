@@ -157,11 +157,6 @@ export default class AuthModule extends AppBaseModule {
       .then(() => {
         this.context.commit('afterLogOut')
         this.context.commit('removeToken')
-        store.commit('productFavourite/unsetFavourites')
-        store.commit('productFavourite/unsetUserFavourites')
-        store.commit('productReview/unsetUserToProductReview')
-        store.commit('productReview/unsetUserReviews')
-        store.commit('country/unsetUserCountryData')
         toast.success('Logged Out')
       })
       .catch((e: Error) => {

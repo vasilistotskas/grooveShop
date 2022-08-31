@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { some } from 'lodash'
+import { isEmpty, some } from 'lodash'
 import { useToast } from 'vue-toastification'
 import { DynamicStoreType } from '@/dynamicStore'
 import UserModule from '@/state/user/data/UserModule'
@@ -40,10 +40,20 @@ const toast = useToast()
       required: false,
       default: '',
     },
+    getterParams: {
+      type: Object,
+      required: false,
+      default: {},
+    },
     dispatchType: {
       type: String,
       required: false,
       default: '',
+    },
+    dispatchParams: {
+      type: Object,
+      required: false,
+      default: {},
     },
     icon: {
       type: Object,
@@ -71,11 +81,17 @@ export default class FavouriteButton
   model!: Record<string, never>
   module!: VuexModule<VuexModule<DynamicStoreType, any>, any>
   getterType!: string
+  getterParams!: Record<string, unknown>
+  dispatchParams!: Record<string, unknown>
   dispatchType!: string
   isFavourite = false
   icon = faHeart
   useStore!: boolean
   btnClass!: string
+
+  updated(): void {
+    this.isFavourite = this.getIsFavourite
+  }
 
   mounted(): void {
     this.isFavourite = this.getIsFavourite
@@ -83,6 +99,9 @@ export default class FavouriteButton
 
   get getIsFavourite(): boolean {
     if (this.useStore) {
+      if (this.getterParams && !isEmpty(this.getterParams)) {
+        return this.module[this.getterType](this.getterParams)
+      }
       return this.module[this.getterType]
     }
     const likes = this.model.likes
@@ -97,7 +116,13 @@ export default class FavouriteButton
       toast.error('You are not logged in')
       return
     }
-    await this.module[this.dispatchType](this.model).then((isFavourite: boolean) => {
+    let dispatchPayload = {}
+    if (this.getterParams && !isEmpty(this.getterParams)) {
+      dispatchPayload = this.dispatchParams
+    } else {
+      dispatchPayload = this.model
+    }
+    await this.module[this.dispatchType](dispatchPayload).then((isFavourite: boolean) => {
       this.isFavourite = isFavourite
     })
     this.isFavourite ? toast.success('Added to Favourites') : toast.info('Removed From Favourites')

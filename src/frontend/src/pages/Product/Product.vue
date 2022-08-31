@@ -87,7 +87,9 @@
               :model="product"
               :module="productFavouriteModule"
               :getter-type="'getIsCurrentProductInUserFavourites'"
+              :getter-params="{ productId: product.id }"
               :dispatch-type="'toggleFavourite'"
+              :dispatch-params="{ productId: product.id, userId: userId }"
               :use-store="true"
             />
           </div>
@@ -111,6 +113,7 @@ import { computed } from '@vue/runtime-core'
 import AppModule from '@/state/app/AppModule'
 import CartModule from '@/state/cart/CartModule'
 import { getModule } from 'vuex-module-decorators'
+import UserModule from '@/state/user/data/UserModule'
 import ProductModel from '@/state/product/ProductModel'
 import ProductModule from '@/state/product/ProductModule'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
@@ -147,6 +150,7 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExcla
 })
 export default class Product extends Vue {
   appModule = getModule(AppModule)
+  userModule = getModule(UserModule)
   productModule = getModule(ProductModule)
   cartModule = getModule(CartModule)
   productFavouriteModule = getModule(ProductFavouriteModule)
@@ -177,6 +181,10 @@ export default class Product extends Vue {
 
   get product(): ProductModel {
     return this.productModule.getProductData
+  }
+
+  get userId(): number | undefined {
+    return this.userModule.getUserId
   }
 
   get addToCartButtonText(): string {

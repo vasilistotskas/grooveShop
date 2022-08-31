@@ -18,21 +18,21 @@
             <span v-if="product.name">{{ contentShorten(product.name) }}</span>
           </div>
           <div class="card-review-content">
-            <!--            <div class="card-review-content-stars">-->
-            <!--              <svg-->
-            <!--                v-for="(star, i) of backgroundStars(product.review_average)"-->
-            <!--                :key="i"-->
-            <!--                aria-hidden="true"-->
-            <!--                class="star star-background"-->
-            <!--                data-icon="star"-->
-            <!--                data-prefix="fas"-->
-            <!--                focusable="false"-->
-            <!--                role="img"-->
-            <!--                viewBox="0 0 576 512"-->
-            <!--                xmlns="http://www.w3.org/2000/svg"-->
-            <!--                v-html="star"-->
-            <!--              />-->
-            <!--            </div>-->
+            <div class="card-review-content-stars">
+              <svg
+                v-for="(star, i) of backgroundStars(product.review_average)"
+                :key="i"
+                aria-hidden="true"
+                class="star star-background"
+                data-icon="star"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 576 512"
+                xmlns="http://www.w3.org/2000/svg"
+                v-html="star"
+              />
+            </div>
             <div class="card-review-content-count">
               <span>({{ product.review_counter }})</span>
             </div>

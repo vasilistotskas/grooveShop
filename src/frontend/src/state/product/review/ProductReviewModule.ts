@@ -1,4 +1,5 @@
 import router from '@/routes'
+import { cloneDeep } from 'lodash'
 import store from '@/dynamicStore'
 import api from '@/api/api.service'
 import { AxiosResponse } from 'axios'
@@ -54,11 +55,11 @@ export default class ProductReviewModule extends AppBaseModule {
   }
 
   @Mutation
-  setProductReviews(productReviews: Array<ProductReviewModel>): void {
-    const user_id: number = store.getters['user/getUserId']
+  setProductReviews(data: { productReviews: Array<ProductReviewModel>; userId: number }): void {
+    const productReviews = cloneDeep(data.productReviews)
 
     productReviews.forEach(function (item, i) {
-      if (item.user_id === user_id) {
+      if (item.user_id === data.userId) {
         productReviews.splice(i, 1)
         productReviews.unshift(item)
       }
@@ -189,13 +190,12 @@ export default class ProductReviewModule extends AppBaseModule {
   }
 
   @Action
-  fetchCurrentProductReviewsFromRemote<T>(): Promise<void> {
-    const product_id: number = store.getters['product/getProductId']
+  fetchCurrentProductReviewsFromRemote(productId: number, userId: number): Promise<void> {
     return api
-      .get(`reviews/product/${product_id}/`)
-      .then((response: AxiosResponse<PaginatedModel<T>>) => {
+      .get(`reviews/product/${productId}/`)
+      .then((response: AxiosResponse<PaginatedModel<ProductReviewModel>>) => {
         const data = response.data
-        this.context.commit('setProductReviews', data)
+        this.context.commit('setProductReviews', { productReviews: data, userId: userId })
       })
       .catch((e: Error) => {
         console.log(e)
@@ -218,12 +218,15 @@ export default class ProductReviewModule extends AppBaseModule {
   }
 
   @Action
-  fetchUserToProductReviewFromRemote(): Promise<void> {
-    const user_id: number = store.getters['user/getUserId']
-    const product_id: number = store.getters['product/getProductId']
-
+  fetchUserToProductReviewFromRemote(data: {
+    productId: number
+    userId: number | undefined
+  }): Promise<void> | ProductReviewModel {
+    if (!data.userId) {
+      return new ProductReviewModel()
+    }
     return api
-      .get(`reviews/review/${user_id}/${product_id}/`)
+      .get(`reviews/review/${data.userId}/${data.productId}/`)
       .then((response: AxiosResponse<ProductReviewModel>) => {
         const data = response.data
         this.context.commit('setUserToProductReview', data)

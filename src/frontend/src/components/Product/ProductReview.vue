@@ -91,6 +91,7 @@
 import { getModule } from 'vuex-module-decorators'
 import { RouteLocationNormalized } from 'vue-router'
 import AuthModule from '@/state/auth/auth/AuthModule'
+import UserModule from '@/state/user/data/UserModule'
 import ProductModule from '@/state/product/ProductModule'
 import { Options as Component, Vue } from 'vue-class-component'
 import { first, last, filter, times, constant, cloneDeep } from 'lodash'
@@ -110,6 +111,7 @@ export default class ProductReview extends Vue {
   productReviewModule = getModule(ProductReviewModule)
   authModule = getModule(AuthModule)
   productModule = getModule(ProductModule)
+  userModule = getModule(UserModule)
   $refs!: {
     ratingBoard: HTMLElement
   }
@@ -311,7 +313,10 @@ export default class ProductReview extends Vue {
     const IsAuthenticated: boolean = this.authModule.isAuthenticated
 
     if (IsAuthenticated) {
-      await this.productReviewModule.fetchUserToProductReviewFromRemote()
+      await this.productReviewModule.fetchUserToProductReviewFromRemote({
+        productId: this.productModule.getProductId,
+        userId: this.userModule.getUserId,
+      })
 
       this.comment = cloneDeep(this.userToProductReview.comment)
       this.rate = cloneDeep(this.userToProductReview.rate)

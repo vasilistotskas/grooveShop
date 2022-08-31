@@ -35,15 +35,16 @@ export default class PayWayModule extends AppBaseModule {
     return this.selectedPayWay.name !== undefined
   }
 
-  get getSelectedPayCost(): PayWayModel['cost'] {
-    const cartTotalPrice = store.getters['cart/getCartTotalPrice']
-    if (
-      Number(this.selectedPayWay.free_for_order_amount) < Number(cartTotalPrice) ||
-      !this.selectedPayWay.cost
-    ) {
-      return 0
+  get getSelectedPayCost(): (cartTotalPrice: number) => number {
+    return (cartTotalPrice: number) => {
+      if (
+        Number(this.selectedPayWay.free_for_order_amount) < Number(cartTotalPrice) ||
+        !this.selectedPayWay.cost
+      ) {
+        return 0
+      }
+      return Number(this.selectedPayWay.cost)
     }
-    return Number(this.selectedPayWay.cost)
   }
 
   @Mutation

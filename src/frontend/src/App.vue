@@ -29,7 +29,6 @@ import CountryModule from '@/state/country/CountryModule'
 import CategoryModule from '@/state/category/CategoryModule'
 import { Options as Component, Vue } from 'vue-class-component'
 import SocialSidebar from '@/components/Main/SocialSidebar.vue'
-import ProductReviewModule from '@/state/product/review/ProductReviewModule'
 import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 
 @Component({
@@ -50,7 +49,6 @@ export default class App extends Vue {
   userModule = getModule(UserModule)
   blogModule = getModule(BlogModule)
   productFavouriteModule = getModule(ProductFavouriteModule)
-  productReviewModule = getModule(ProductReviewModule)
 
   get lodash(): LoDashStatic {
     return _
@@ -78,7 +76,12 @@ export default class App extends Vue {
     ])
 
     if (this.isAuthenticated) {
-      await this.userModule.fetchUserDataFromRemote()
+      this.userModule.fetchUserDataFromRemote().then((response) => {
+        if (response) {
+          this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(this.userModule.getUserData)
+          this.productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
+        }
+      })
       await this.blogModule.fetchCommentsByUser()
     }
   }

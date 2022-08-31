@@ -118,6 +118,7 @@ import { getModule } from 'vuex-module-decorators'
 import { required } from '@/components/Form/Utils'
 import UserModule from '@/state/user/data/UserModule'
 import AuthModule from '@/state/auth/auth/AuthModule'
+import CountryModule from '@/state/country/CountryModule'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import LogInApiData from '@/state/auth/Interface/LogInApiData'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
@@ -131,6 +132,7 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 
 let { validateFields } = useValidation({})
 
@@ -147,6 +149,9 @@ let { validateFields } = useValidation({})
 export default class LogIn extends Vue {
   userModule = getModule(UserModule)
   authModule = getModule(AuthModule)
+  productFavouriteModule = getModule(ProductFavouriteModule)
+  countryModule = getModule(CountryModule)
+
   formManager = ({ validateFields } = useValidation({
     email: {
       $value: '',
@@ -186,7 +191,14 @@ export default class LogIn extends Vue {
       await this.authModule
         .login(apiData)
         .then(() => {
-          this.userModule.fetchUserDataFromRemote()
+          this.userModule.fetchUserDataFromRemote().then((response) => {
+            if (response) {
+              this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(
+                this.userModule.getUserData
+              )
+              this.productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
+            }
+          })
         })
         .catch((error: Error) => {
           console.log(error)

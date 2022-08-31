@@ -284,6 +284,7 @@ import StripeCardModule from '@/libraries/Stripe/Components/StripeCardModule'
 import CheckoutOrderApiData from '@/state/cart/Interface/CheckoutOrderApiData'
 import CheckoutStripeModal from '@/components/Utilities/CheckoutStripeModal.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 import CheckoutProductContainer from '@/components/Checkout/CheckoutProductContainer.vue'
 
 const toast = useToast()
@@ -309,6 +310,7 @@ export default class Checkout extends Vue {
     const stripeCardModule = getModule(StripeCardModule)
     const countryModule = getModule(CountryModule)
     const userModule = getModule(UserModule)
+    const productFavouriteModule = getModule(ProductFavouriteModule)
 
     const isAuthenticated: ComputedRef<boolean> = computed(() => authModule.isAuthenticated)
     const selectedPayWay: ComputedRef<PayWayModel> = computed(() => payWayModule.getSelectedPayWay)
@@ -324,7 +326,13 @@ export default class Checkout extends Vue {
 
     Promise.all([
       countryModule.fetchCountriesFromRemote(),
-      isAuthenticated ?? userModule.fetchUserDataFromRemote(),
+      isAuthenticated ??
+        userModule.fetchUserDataFromRemote().then((response) => {
+          if (response) {
+            countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserData)
+            productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
+          }
+        }),
       cartModule.cartTotalPriceForPayWayAction(selectedPayWay as unknown as PayWayModel),
     ])
 
