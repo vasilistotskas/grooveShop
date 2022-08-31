@@ -21,12 +21,11 @@ from django.http import HttpResponse
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.middleware.csrf import get_token
+from backend.core.graphql.schema import schema
 from django.views.decorators.http import require_GET
 from django.views.decorators.csrf import csrf_exempt
 from strawberry.django.views import AsyncGraphQLView, GraphQLView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-
-from backend.core.schema import schema
 
 
 class IndexView(View):
