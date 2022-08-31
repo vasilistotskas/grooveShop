@@ -5,26 +5,6 @@ from typing import List, Optional, TypeVar, Generic
 GenericType = TypeVar("GenericType")
 
 
-def encode_cursor(entity_id: int, entity_type: str) -> str:
-    """
-    Encodes the given ID into a cursor.
-    :param entity_id: The ID to encode
-    :param entity_type: The model type
-    :return: The encoded cursor.
-    """
-    return b64encode(f"{entity_type}:{entity_id}".encode("ascii")).decode("ascii")
-
-
-def decode_cursor(cursor: str) -> int:
-    """
-    Decodes the ID from the given cursor.
-    :param cursor: The cursor to decode.
-    :return: The decoded ID.
-    """
-    cursor_data = b64decode(cursor.encode("ascii")).decode("ascii")
-    return int(cursor_data.split(":")[1])
-
-
 @gql.type
 class PageMeta:
     has_previous_page: Optional[bool] = gql.field(
@@ -66,6 +46,7 @@ class PaginatedResponse(Generic[GenericType]):
 class PaginationBase:
     @staticmethod
     def find_in_matrix_list(value, matrix):
+        """Returns value position in list of lists."""
         for matrix_list in matrix:
             if value in matrix_list:
                 return [matrix.index(matrix_list) + 1, matrix_list.index(value) + 1]
@@ -76,3 +57,23 @@ class PaginationBase:
         """Yield successive n-sized chunks from lst."""
         for i in range(0, len(lst), n):
             yield lst[i:i + n]
+
+    @staticmethod
+    def encode_cursor(entity_id: int, entity_type: str) -> str:
+        """
+        Encodes the given ID into a cursor.
+        :param entity_id: The ID to encode
+        :param entity_type: The model type
+        :return: The encoded cursor.
+        """
+        return b64encode(f"{entity_type}:{entity_id}".encode("ascii")).decode("ascii")
+
+    @staticmethod
+    def decode_cursor(cursor: str) -> int:
+        """
+        Decodes the ID from the given cursor.
+        :param cursor: The cursor to decode.
+        :return: The decoded ID.
+        """
+        cursor_data = b64decode(cursor.encode("ascii")).decode("ascii")
+        return int(cursor_data.split(":")[1])

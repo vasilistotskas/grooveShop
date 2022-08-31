@@ -2,8 +2,7 @@ from backend.blog.models import Post
 from strawberry_django_plus import gql
 from typing import List, Optional, cast
 from backend.blog.schemas.post.post_type import PostType
-from backend.core.graphql.pagination import PageMeta, PaginatedResponse, encode_cursor, \
-    decode_cursor, PaginationBase
+from backend.core.graphql.pagination import PageMeta, PaginatedResponse, PaginationBase
 
 
 @gql.type
@@ -13,7 +12,7 @@ class Query:
         pagination_base = PaginationBase()
         post_data = Post.objects.all()
         if cursor is not None:
-            post_id = decode_cursor(cursor=cursor)
+            post_id = pagination_base.decode_cursor(cursor=cursor)
         else:
             post_id = 0
 
@@ -22,8 +21,8 @@ class Query:
         )
         posts_count = post_data.count()
         total_pages = int(posts_count / limit)
-        start_cursor = encode_cursor(post_data.order_by('id').first().id, 'post')
-        end_cursor = encode_cursor(post_data.order_by('id')[posts_count - limit].id, 'post')
+        start_cursor = pagination_base.encode_cursor(post_data.order_by('id').first().id, 'post')
+        end_cursor = pagination_base.encode_cursor(post_data.order_by('id')[posts_count - limit].id, 'post')
 
         post_chunks = list(pagination_base.create_chunks(
             list(map(lambda post: post.id, post_data)), limit)
@@ -37,7 +36,7 @@ class Query:
         sliced_posts = filtered_data[:limit + 1]
         if len(sliced_posts) > limit:
             last_post = sliced_posts.pop(-1)
-            next_cursor = encode_cursor(last_post.id, 'post')
+            next_cursor = pagination_base.encode_cursor(last_post.id, 'post')
         else:
             next_cursor = None
 
