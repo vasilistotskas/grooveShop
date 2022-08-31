@@ -81,10 +81,10 @@ export default class BlogModule extends AppBaseModule {
     return isEmpty(commentByUserToPost)
   }
 
-  get getIsCurrentPostInUserFavourites(): (userEmail: string) => boolean {
-    return (userEmail: string) => {
+  get getIsCurrentPostInUserFavourites(): (data: { userEmail: string }) => boolean {
+    return (data: { userEmail: string }) => {
       const postLikes = this.context.getters['getPostBySlug'].likes
-      return some(postLikes, { email: userEmail })
+      return some(postLikes, { email: data.userEmail })
     }
   }
 
@@ -417,12 +417,12 @@ export default class BlogModule extends AppBaseModule {
   }
 
   @Action
-  async fetchCommentsByUser(): Promise<Array<BlogCommentModel> | undefined> {
+  async fetchCommentsByUser(userEmail: string): Promise<Array<BlogCommentModel> | undefined> {
     try {
       const comments = await clientApollo.query({
         query: gql`
           query {
-            commentsByUser(userEmail: "${store.getters['user/getUserData'].email}") {
+            commentsByUser(userEmail: "${String(userEmail)}") {
               content
               createdAt
               isApproved
@@ -557,14 +557,14 @@ export default class BlogModule extends AppBaseModule {
   }
 
   @Action
-  async fetchCommentByUserToPost(): Promise<BlogCommentModel | undefined> {
+  async fetchCommentByUserToPost(userEmail: string): Promise<BlogCommentModel | undefined> {
     try {
       const comment = await clientApollo.query({
         query: gql`
           query {
             commentByUserToPost(postId: ${Number(
               this.context.getters['getPostBySlug'].id
-            )}, userEmail: ${store.getters['user/getUserData'].email}) {
+            )}, userEmail: ${String(userEmail)}) {
               id
               content
             }
@@ -585,7 +585,10 @@ export default class BlogModule extends AppBaseModule {
   }
 
   @Action
-  async createCommentToPost(content: string): Promise<BlogCommentModel | undefined> {
+  async createCommentToPost(data: {
+    content: string
+    userEmail: string
+  }): Promise<BlogCommentModel | undefined> {
     try {
       const comment = await clientApollo.mutate({
         mutation: gql`
@@ -618,8 +621,8 @@ export default class BlogModule extends AppBaseModule {
         `,
         variables: {
           postId: Number(this.context.getters['getPostBySlug'].id),
-          userEmail: String(store.getters['user/getUserData'].email),
-          content: String(content),
+          userEmail: String(data.userEmail),
+          content: String(data.content),
         },
       })
 
@@ -707,7 +710,9 @@ export default class BlogModule extends AppBaseModule {
   }
 
   @Action
-  async updateCommentLikes(): Promise<Promise<ApolloQueryResult<boolean>> | undefined> {
+  async updateCommentLikes(
+    userId: number
+  ): Promise<Promise<ApolloQueryResult<boolean>> | undefined> {
     try {
       const comment = await clientApollo.mutate({
         mutation: gql`
@@ -729,7 +734,7 @@ export default class BlogModule extends AppBaseModule {
         `,
         variables: {
           id: Number(this.context.getters['getCommentByUserToPost'].id),
-          userId: store.getters['user/getUserId'],
+          userId: Number(userId),
         },
       })
       return comment.data.updateCommentLikes
@@ -739,7 +744,10 @@ export default class BlogModule extends AppBaseModule {
   }
 
   @Action
-  async updatePostLikes(postId: number): Promise<ApolloQueryResult<boolean> | undefined> {
+  async updatePostLikes(data: {
+    postId: number
+    userId: number
+  }): Promise<ApolloQueryResult<boolean> | undefined> {
     try {
       const post = await clientApollo.mutate({
         mutation: gql`
@@ -753,8 +761,8 @@ export default class BlogModule extends AppBaseModule {
           }
         `,
         variables: {
-          id: Number(postId),
-          userId: store.getters['user/getUserId'],
+          id: Number(data.postId),
+          userId: Number(data.userId),
         },
       })
       return post.data.updatePostLikes.liked
@@ -764,7 +772,10 @@ export default class BlogModule extends AppBaseModule {
   }
 
   @Action
-  async toggleFavourite(post: BlogPostModel): Promise<boolean> {
-    return await this.context.dispatch('updatePostLikes', post.id)
+  async toggleFavourite(data: { postId: number; userId: number }): Promise<boolean> {
+    return await this.context.dispatch('updatePostLikes', {
+      postId: data.postId,
+      userId: data.userId,
+    })
   }
 }

@@ -37,6 +37,7 @@ import { useToast } from 'vue-toastification'
 import BlogModule from '@/state/blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/state/auth/auth/AuthModule'
+import UserModule from '@/state/user/data/UserModule'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
 import { Options as Component, Vue } from 'vue-class-component'
 import { faPenSquare } from '@fortawesome/free-solid-svg-icons/faPenSquare'
@@ -49,6 +50,7 @@ const toast = useToast()
 export default class BlogComment extends Vue {
   blogModule = getModule(BlogModule)
   authModule = getModule(AuthModule)
+  userModule = getModule(UserModule)
   writeReviewIcon = faPenSquare
   comment = ''
 
@@ -85,7 +87,10 @@ export default class BlogComment extends Vue {
       await this.blogModule.updateCommentToPost(this.comment)
       return toast.success('Your comment has been updated')
     } else {
-      await this.blogModule.createCommentToPost(this.comment)
+      await this.blogModule.createCommentToPost({
+        content: this.comment,
+        userEmail: this.userModule.getUserData.email,
+      })
       return toast.success('Your comment has been created')
     }
   }
@@ -95,7 +100,7 @@ export default class BlogComment extends Vue {
       return
     }
 
-    await this.blogModule.fetchCommentByUserToPost()
+    await this.blogModule.fetchCommentByUserToPost(this.userModule.getUserData.email)
 
     this.comment = cloneDeep(this.commentByUserToPost.content)
   }

@@ -82,7 +82,7 @@ export default class App extends Vue {
           this.productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
         }
       })
-      await this.blogModule.fetchCommentsByUser()
+      await this.blogModule.fetchCommentsByUser(this.userModule.getUserData.email)
     }
   }
 

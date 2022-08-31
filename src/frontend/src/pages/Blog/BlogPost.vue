@@ -34,8 +34,9 @@
           :model="postBySlug"
           :module="blogModule"
           :getter-type="'getIsCurrentPostInUserFavourites'"
-          :getter-params="[userEmail]"
+          :getter-params="{ userEmail: userEmail }"
           :dispatch-type="'toggleFavourite'"
+          :dispatch-params="{ postId: postBySlug.id, userId: userId }"
           :use-store="true"
         />
       </div>
@@ -111,11 +112,15 @@ export default class BlogPost extends Vue {
     return this.userModule.getUserData.email
   }
 
+  get userId(): number {
+    return this.userModule.getUserData.id
+  }
+
   async created(): Promise<void> {
     await this.blogModule.fetchPostBySlugFromRemote()
     await this.blogModule.fetchCommentsByPost()
     if (this.isAuthenticated) {
-      await this.blogModule.fetchCommentByUserToPost()
+      await this.blogModule.fetchCommentByUserToPost(this.userModule.getUserData.email)
     }
   }
 
