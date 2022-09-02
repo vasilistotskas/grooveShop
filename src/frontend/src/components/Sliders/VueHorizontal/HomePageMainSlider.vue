@@ -68,7 +68,7 @@ import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 })
 export default class HomePageMainSlider extends Vue {
   appModule = getModule(AppModule)
-  $refs!: {
+  declare $refs: {
     mainSliderVideoRef: HTMLVideoElement
     horizontal: any
   }

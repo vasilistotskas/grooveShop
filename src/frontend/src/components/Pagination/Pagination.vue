@@ -25,7 +25,7 @@
 
       <button
         v-for="page in pages"
-        :key="page.id"
+        :key="page.number"
         :aria-label="`Go to page number ${page.number}`"
         :class="{ active: isPageActive(page.number) }"
         :disabled="page.isDisabled"

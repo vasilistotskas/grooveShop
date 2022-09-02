@@ -97,7 +97,7 @@ SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard])
 })
 export default class HomePageMainSlider extends Vue {
   appModule = getModule(AppModule)
-  $refs!: {
+  declare $refs: {
     mainSliderVideoRef: HTMLVideoElement
   }
 

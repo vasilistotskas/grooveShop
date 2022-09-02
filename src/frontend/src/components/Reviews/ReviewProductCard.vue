@@ -119,7 +119,7 @@ export default class ReviewProductCard extends Vue {
   productReviewModule = getModule(ProductReviewModule)
   paginationModule = getModule<PaginationModule<ProductReviewModel>>(PaginationModule)
   MainRouteNames = MainRouteNames
-  $refs!: {
+  declare $refs: {
     userReviewsActionTarget: HTMLElement
   }
   review = new ProductReviewModel()

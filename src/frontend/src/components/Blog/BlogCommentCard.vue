@@ -97,7 +97,7 @@ export default class BlogCommentCard extends Vue {
   blogModule = getModule(BlogModule)
   authModule = getModule(AuthModule)
   MainRouteNames = MainRouteNames
-  $refs!: {
+  declare $refs: {
     userCommentActionTarget: HTMLElement
   }
   comment = new BlogCommentModel()

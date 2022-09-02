@@ -44,15 +44,11 @@ ALLOWED_HOSTS.extend(
         os.environ.get('ALLOWED_HOSTS', '').split(','),
     )
 )
-
-CSRF_TRUSTED_ORIGINS = ['http://localhost:8010']
+CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8010', 'http://localhost:8011']
 
 INTERNAL_IPS = [
     "127.0.0.1",
-    "http://localhost:8010",
-    "http://localhost:8010/",
-    "http://localhost:8001/",
-    "http://localhost:8001/",
 ]
 
 

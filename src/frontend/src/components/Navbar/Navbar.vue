@@ -221,7 +221,7 @@ export default class Navbar
   }
 
   preHeadHidden = true
-
+  cartTotalLength = 0
   blogIcon = faBlog
   userIcon = faUser
   heartIcon = faHeart
@@ -233,7 +233,7 @@ export default class Navbar
   ImageFitOptions = ImageFitOptions
   ImagePositionOptions = ImagePositionOptions
 
-  $refs!: {
+  declare $refs: {
     mainToggleButton: HTMLElement
     navbarProductsButton: HTMLElement
   }

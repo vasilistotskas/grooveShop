@@ -27,13 +27,15 @@
 </template>
 
 <script lang="ts">
+import { PropType } from 'vue'
 import { Options as Component, Vue } from 'vue-class-component'
+import { BreadcrumbItemType } from '@/routes/Type/BreadcrumbItemType'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
 @Component({
   name: 'Breadcrumbs',
   props: {
-    breadCrumbPath: {},
+    breadCrumbPath: Array as PropType<Array<BreadcrumbItemType>>,
   },
 })
 export default class Breadcrumbs extends Vue {

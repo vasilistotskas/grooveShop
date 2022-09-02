@@ -76,6 +76,8 @@ import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
   },
 })
 export default class UserProfileImage extends Vue {
+  src = ''
+  fullname = ''
   userModule = getModule(UserModule)
   profileImageHovering = false
   cameraIcon = faCamera

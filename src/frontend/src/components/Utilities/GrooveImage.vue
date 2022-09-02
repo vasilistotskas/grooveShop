@@ -147,7 +147,7 @@ export default class GrooveImage extends Vue {
     position?: ImagePositionOptions,
     trimThreshold?: number,
     format?: ImageFormatOptions
-  ): string | (() => string) {
+  ): string {
     const mediaStreamImageData: ImageUrlInterface = {
       pathType: pathType,
       imageType: imageType,

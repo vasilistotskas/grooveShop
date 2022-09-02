@@ -10,7 +10,7 @@
           <div>Total</div>
         </div>
         <div class="grid-container-table-items">
-          <CartItem v-for="item in cart" :key="item.id" :item="item" />
+          <CartItem v-for="item in cart" :key="item.product.id" :item="item" />
         </div>
       </div>
       <div v-else class="cart-empty">

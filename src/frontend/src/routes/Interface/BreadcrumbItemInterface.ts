@@ -8,4 +8,5 @@ export default interface BreadcrumbItemInterface {
   to: {
     full_path: string
   }
+  id?: string | number
 }

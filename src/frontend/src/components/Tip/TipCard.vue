@@ -59,7 +59,7 @@ export default class TipCard extends Vue {
     return helpers.contentShorten(content, 0, 50)
   }
 
-  protected tipBackground(kind: TipKindEnum): string {
+  public tipBackground(kind: TipKindEnum): string {
     switch (kind) {
       case TipKindEnum.SUCCESS: {
         return 'linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 25%, rgba(115,0,0,0.7483368347338936) 90%)'
