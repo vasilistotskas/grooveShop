@@ -333,7 +333,7 @@ export default class Checkout extends Vue {
             productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
           }
         }),
-      cartModule.cartTotalPriceForPayWayAction(selectedPayWay as unknown as PayWayModel),
+      cartModule.cartTotalPriceForPayWayAction(selectedPayWay.value as unknown as PayWayModel),
     ])
 
     const availableCountries: ComputedRef<Array<CountryModel>> = computed(
@@ -353,12 +353,23 @@ export default class Checkout extends Vue {
       isAuthenticated ? userModule.getUserData : new UserProfileModel()
     )
 
-    let customerDetailsData = new UserProfileModel()
+    let customerDetailsData = new UserProfileModel({
+      address: '',
+      city: '',
+      email: '',
+      first_name: '',
+      last_name: '',
+      phone: 0,
+      place: '',
+      zipcode: 0,
+      country: 'choose',
+      region: 'choose',
+    })
 
     const customerDetailsInitialize = () => {
       customerDetailsData = cloneDeep(userData.value)
 
-      if (isAuthenticated) {
+      if (isAuthenticated.value) {
         if (customerDetailsData.country === '') {
           customerDetailsData.country = 'choose'
           customerDetailsData.region = 'choose'
@@ -371,7 +382,6 @@ export default class Checkout extends Vue {
         customerDetailsData.last_name = ''
         customerDetailsData.phone = 0
         customerDetailsData.place = ''
-        customerDetailsData.region = ''
         customerDetailsData.zipcode = 0
         customerDetailsData.country = 'choose'
         customerDetailsData.region = 'choose'
@@ -382,6 +392,7 @@ export default class Checkout extends Vue {
 
     const elms = ref(null as unknown as Stripe)
     const card = ref({} as unknown as StripeCardElement | StripeCardNumberElement)
+    const customerNotes = ref('')
 
     const instanceOptions: StripeConstructorOptions = {
       // https://stripe.com/docs/js/initializing#init_stripe_js-options
@@ -419,7 +430,7 @@ export default class Checkout extends Vue {
           .number()
           .positive({ message: 'Must be a positive zipcode' })
           .int({ message: 'Must be an integer' }),
-        customerNotes: zod.string().optional(),
+        customerNotes: zod.string().default('test'),
       })
     )
 
@@ -472,7 +483,6 @@ export default class Checkout extends Vue {
     const { value: phone } = useField('phone')
     const { value: place } = useField('place')
     const { value: zipcode } = useField('zipcode')
-    const { value: customerNotes } = useField('customerNotes')
 
     const onSubmit = handleSubmit(async (values) => {
       try {
@@ -483,7 +493,7 @@ export default class Checkout extends Vue {
           await instance.createToken(cardElement).then((result: object) => {
             stripeCardModule.setResultToken(result)
           })
-          if (stripeResultToken) {
+          if (stripeResultToken.value) {
             return createOrder(values, items)
           }
         } else {
@@ -523,7 +533,7 @@ export default class Checkout extends Vue {
         toast.error('The country field is missing!')
       } else if (customerDetailsData.region === 'choose') {
         toast.error('The region field is missing!')
-      } else if (Object.keys(selectedPayWay).length <= 0) {
+      } else if (Object.keys(selectedPayWay.value).length <= 0) {
         toast.error('You have to select a pay way method')
       } else {
         cartModule.createOrder(apiData)
