@@ -37,8 +37,8 @@ class Command(BaseCommand):
             for _ in range(2):
                 region = Region.objects.create(
                     name='Greece Region' + str(i),
-                    alpha='GR',
-                    alpha_2__alpha_2=country_gr.alpha_2,
+                    alpha='GR' + str(i),
+                    alpha_2_id=country_gr.alpha_2,
                 )
                 i += i
 
@@ -61,8 +61,8 @@ class Command(BaseCommand):
             for _ in range(2):
                 region = Region.objects.create(
                     name='CY Region' + str(i),
-                    alpha='CY',
-                    alpha_2__alpha_2=country_cy.alpha_2,
+                    alpha='CY' + str(i),
+                    alpha_2_id=country_cy.alpha_2,
                 )
                 i += i
 

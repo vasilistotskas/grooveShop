@@ -37,7 +37,7 @@ class Tip(models.Model):
     def main_image_absolute_url(self) -> str:
         try:
             if self.id is not None:
-                icon = settings.APP_BASE_URL + self.icon.url
+                icon = settings.BACKEND_BASE_URL + self.icon.url
             else:
                 icon = ""
             return icon

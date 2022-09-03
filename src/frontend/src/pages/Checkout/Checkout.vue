@@ -3,7 +3,7 @@
     <div class="stripe-content">
       <GrooveImage
         :alt="'Stripe Logo'"
-        :src="'http://localhost:8010/backend/static/images/powered_by_stripe.svg'"
+        :src="`${myContext.backendBaseUrl}/backend/static/images/powered_by_stripe.svg`"
         :use-media-stream="false"
         :img-class="'stripe-content-img_logo'"
         :img-height="268"
@@ -256,6 +256,7 @@ import {
 } from '@stripe/stripe-js'
 import * as zod from 'zod'
 import router from '@/routes'
+import AppModule from '@/state/app/AppModule'
 import { useToast } from 'vue-toastification'
 import CartModule from '@/state/cart/CartModule'
 import { useForm, useField } from 'vee-validate'
@@ -310,9 +311,11 @@ export default class Checkout extends Vue {
     const stripeCardModule = getModule(StripeCardModule)
     const countryModule = getModule(CountryModule)
     const userModule = getModule(UserModule)
+    const appModule = getModule(AppModule)
     const productFavouriteModule = getModule(ProductFavouriteModule)
 
     const isAuthenticated: ComputedRef<boolean> = computed(() => authModule.isAuthenticated)
+    const backendBaseUrl: ComputedRef<string | undefined> = computed(() => appModule.backendBaseUrl)
     const selectedPayWay: ComputedRef<PayWayModel> = computed(() => payWayModule.getSelectedPayWay)
     const stripeKey = computed(() => stripeCardModule.getStripeKey)
     const stripeLoaded = ref(false)
@@ -326,7 +329,7 @@ export default class Checkout extends Vue {
 
     Promise.all([
       countryModule.fetchCountriesFromRemote(),
-      isAuthenticated ??
+      isAuthenticated.value ??
         userModule.fetchUserDataFromRemote().then((response) => {
           if (response) {
             countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserData)
@@ -350,7 +353,7 @@ export default class Checkout extends Vue {
     )
     const stripeResultToken = computed(() => stripeCardModule.getResultToken)
     const userData: ComputedRef<UserProfileModel> = computed(() =>
-      isAuthenticated ? userModule.getUserData : new UserProfileModel()
+      isAuthenticated.value ? userModule.getUserData : new UserProfileModel()
     )
 
     let customerDetailsData = new UserProfileModel({
@@ -557,6 +560,7 @@ export default class Checkout extends Vue {
       customerNotes,
       userData,
       isAuthenticated,
+      backendBaseUrl,
       availableCountries,
       regionsBasedOnAlpha,
       cart,

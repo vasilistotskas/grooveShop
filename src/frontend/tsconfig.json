@@ -27,13 +27,14 @@
         "src/*"
       ]
     },
-    "typeRoots": ["node_modules/@types", "typings.d.ts"]
+    "typeRoots": ["node_modules/@types", "typings.d.ts", "env.d.ts"]
   },
   "include": [
     "./src/**/*"
   ],
   "files": [
-    "typings.d.ts"
+    "typings.d.ts",
+    "env.d.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

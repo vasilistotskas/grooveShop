@@ -1,12 +1,12 @@
 <template>
   <div class="blog-share-actions-container">
-    <!--   :url="`http://localhost:8010${getCurrentPostUrl}`"-->
+    <!--   :url="`${backendBaseUrl}${getCurrentPostUrl}`"-->
     <div class="blog-share-actions-network">
       <ShareNetwork
         tag="button"
         class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
         network="facebook"
-        url="https://news.vuejs.org/issues/180"
+        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
         :title="props.post.title"
         :description="props.post.subtitle"
         quote="DeepWeb"
@@ -22,7 +22,7 @@
         tag="button"
         class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
         network="twitter"
-        url="https://news.vuejs.org/issues/180"
+        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
         :title="props.post.title"
         :description="props.post.subtitle"
         quote="DeepWeb"
@@ -38,7 +38,7 @@
         tag="button"
         class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
         network="viber"
-        url="https://news.vuejs.org/issues/180"
+        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
         :title="props.post.title"
         :description="props.post.subtitle"
         quote="DeepWeb"
@@ -54,7 +54,7 @@
         tag="button"
         class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
         network="email"
-        url="https://news.vuejs.org/issues/180"
+        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
         :title="props.post.title"
         :description="props.post.subtitle"
         quote="DeepWeb"
@@ -70,7 +70,7 @@
         tag="button"
         class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
         network="linkedin"
-        url="https://news.vuejs.org/issues/180"
+        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
         :title="props.post.title"
         :description="props.post.subtitle"
         quote="DeepWeb"
@@ -86,7 +86,7 @@
         tag="button"
         class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
         network="messenger"
-        url="https://news.vuejs.org/issues/180"
+        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
         :title="props.post.title"
         :description="props.post.subtitle"
         quote="DeepWeb"
@@ -102,7 +102,7 @@
         tag="button"
         class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
         network="pinterest"
-        url="https://news.vuejs.org/issues/180"
+        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
         :title="props.post.title"
         :description="props.post.subtitle"
         quote="DeepWeb"
@@ -118,7 +118,7 @@
         tag="button"
         class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
         network="reddit"
-        url="https://news.vuejs.org/issues/180"
+        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
         :title="props.post.title"
         :description="props.post.subtitle"
         quote="DeepWeb"
@@ -134,7 +134,7 @@
         tag="button"
         class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
         network="skype"
-        url="https://news.vuejs.org/issues/180"
+        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
         :title="props.post.title"
         :description="props.post.subtitle"
         quote="DeepWeb"
@@ -150,7 +150,7 @@
         tag="button"
         class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
         network="sms"
-        url="https://news.vuejs.org/issues/180"
+        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
         :title="props.post.title"
         :description="props.post.subtitle"
         quote="DeepWeb"
@@ -166,7 +166,7 @@
         tag="button"
         class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
         network="telegram"
-        url="https://news.vuejs.org/issues/180"
+        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
         :title="props.post.title"
         :description="props.post.subtitle"
         quote="DeepWeb"
@@ -182,7 +182,7 @@
         tag="button"
         class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
         network="tumblr"
-        url="https://news.vuejs.org/issues/180"
+        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
         :title="props.post.title"
         :description="props.post.subtitle"
         quote="DeepWeb"
@@ -198,7 +198,7 @@
         tag="button"
         class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
         network="whatsapp"
-        url="https://news.vuejs.org/issues/180"
+        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
         :title="props.post.title"
         :description="props.post.subtitle"
         quote="DeepWeb"
@@ -212,9 +212,11 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue'
+import { computed, ComputedRef, PropType } from 'vue'
 import { forEach } from 'lodash'
 import { useRouter } from 'vue-router'
+import AppModule from '@/state/app/AppModule'
+import { getModule } from 'vuex-module-decorators'
 import BlogTagModel from '@/state/blog/BlogTagModel'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import { MainRouteNames } from '@/routes/Enum/MainRouteNames'
@@ -233,6 +235,7 @@ import { faPinterest } from '@fortawesome/free-brands-svg-icons/faPinterest'
 import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons/faFacebookMessenger'
 
 const router = useRouter()
+const appModule = getModule(AppModule)
 
 const FacebookIcon = faFacebook
 const EmailIcon = faEnvelope
@@ -262,6 +265,8 @@ const getPostTagsSeparated = (tags: Array<BlogTagModel>) => {
   })
   return tagNames.join(',')
 }
+
+const backendBaseUrl: ComputedRef<string | undefined> = computed(() => appModule.backendBaseUrl)
 
 const getCurrentPostUrl = router.resolve({
   name: MainRouteNames.POST,

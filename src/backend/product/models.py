@@ -47,7 +47,7 @@ class Category(MPTTModel):
     def category_menu_image_one_absolute_url(self) -> str:
         try:
             if self.id is not None:
-                image = settings.APP_BASE_URL + self.menu_image_one.url
+                image = settings.BACKEND_BASE_URL + self.menu_image_one.url
             else:
                 image = ""
             return image
@@ -63,7 +63,7 @@ class Category(MPTTModel):
     def category_menu_image_two_absolute_url(self) -> str:
         try:
             if self.id is not None:
-                image = settings.APP_BASE_URL + self.menu_image_two.url
+                image = settings.BACKEND_BASE_URL + self.menu_image_two.url
             else:
                 image = ""
             return image
@@ -79,7 +79,7 @@ class Category(MPTTModel):
     def category_menu_main_banner_absolute_url(self) -> str:
         try:
             if self.id is not None:
-                image = settings.APP_BASE_URL + self.menu_main_banner.url
+                image = settings.BACKEND_BASE_URL + self.menu_main_banner.url
             else:
                 image = ""
             return image
@@ -198,7 +198,7 @@ class Product(SeoModel):
         try:
             img = ProductImages.objects.get(product_id=self.id, is_main=True)
             if img.id is not None:
-                image = settings.APP_BASE_URL + img.image.url
+                image = settings.BACKEND_BASE_URL + img.image.url
             else:
                 image = ""
             return image
@@ -269,7 +269,7 @@ class ProductImages(SortableModel):
     def product_image_absolute_url(self) -> str:
         try:
             if self.id is not None:
-                image = settings.APP_BASE_URL + self.image.url
+                image = settings.BACKEND_BASE_URL + self.image.url
             else:
                 image = ""
             return image

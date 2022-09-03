@@ -25,8 +25,8 @@ export default class AppModule extends AppBaseModule {
     return this.navbarMenuHidden
   }
 
-  get axiosBaseUrl(): string | undefined {
-    return 'http://localhost:8010'
+  get backendBaseUrl(): string | undefined {
+    return process.env.VITE_APP_BASE_URL
   }
 
   get getWindowWidth(): number {

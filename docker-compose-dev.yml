@@ -1,7 +1,7 @@
-version: '3.9'
+version: '3.3'
 
 services:
-  app:
+  backend:
     container_name: backend
     build:
       context: .
@@ -10,16 +10,19 @@ services:
     command: >
       sh -c "python manage.py wait_for_db &&
              python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8001"
+             python manage.py collectstatic --noinput &&
+             gunicorn backend.app.wsgi:application --bind 0.0.0.0:8001"
     volumes:
-      - ./app:/app
-      - ./app/static:/backend/static
-      - ./app/media:/backend/media
+      - ./src:/src
+      - web-static:/src/backend/static
+      - web-media:/src/backend/media
+      - web-files:/src/backend/files
+      - web-logs:/src/backend/logs
     environment:
       - DEBUG=${DEBUG}
       - SECRET_KEY=${SECRET_KEY}
       - APPEND_SLASH=${APPEND_SLASH}
-      - APP_BASE_URL=${APP_BASE_URL}
+      - BACKEND_BASE_URL=${BACKEND_BASE_URL}
       - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
@@ -41,7 +44,7 @@ services:
       - db
       - redis
     ports:
-      - 8001:8001
+      - "8001:8001"
     networks:
       - groovy-backbone
 
@@ -56,23 +59,23 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
-      - 5432:5432
+      - "5432:5432"
     networks:
       - groovy-backbone
 
   nginx:
     container_name: nginx
-    image: nginx:mainline
+    image: nginx:groovyshop
     build:
       context: ./nginx
       dockerfile: Nginx.Dockerfile
     volumes:
-      - ./app:/app
-      - ./nginx/dev-nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./src:/src
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
-      - 8010:8010
+      - "8010:8010"
     depends_on:
-      - app
+      - backend
     restart: always
     networks:
       - groovy-backbone
@@ -86,11 +89,59 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
       - PGADMIN_LISTEN_PORT=${PGADMIN_LISTEN_PORT}
     ports:
-      - 5050:5050
+      - "5050:5050"
     depends_on:
       - db
     networks:
       - groovy-backbone
+
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - groovy-backbone
+
+  service-media_stream:
+    container_name: service-media_stream
+    image: service-manager-media-stream:${SERVICE_MANAGER_IMAGE_REV}
+    build:
+      context: ./mediaStream
+      dockerfile: ./Dockerfile
+    command: npm run start:prod
+    ports:
+      - "3003:3003"
+    volumes:
+      - ./mediaStream:/usr/src/app
+      - /usr/src/app/node_modules
+      - service-media_stream:/usr/src/app/storage
+    restart: unless-stopped
+    depends_on:
+      - db
+      - redis
+      - backend
+    networks:
+      - groovy-backbone
+
+  frontend:
+    container_name: frontend
+    image: node:lts
+    build:
+      context: .
+      dockerfile: docker/Frontend.Dockerfile
+    volumes:
+      - ./src/frontend/var:/frontend/var
+      - /src/node_modules
+    restart: "always"
+    ports:
+      - "8011:8011"
+    depends_on:
+      - backend
+    networks:
+      - groovy-backbone
+
 #
 #  celery:
 #    container_name: celery
@@ -110,60 +161,14 @@ services:
 #      - redis
 #      - app
 
-  redis:
-    container_name: redis
-    image: redis
-    restart: always
-    ports:
-      - 6379:6379
-    networks:
-      - groovy-backbone
-
-  service-media_stream:
-    container_name: service-media_stream
-    image: service-manager:${SERVICE_MANAGER_IMAGE_REV}-dev
-    build:
-      context: ./mediaStream
-      dockerfile: ./Dockerfile
-    command: npm run start:prod
-    ports:
-      - 3003:3003
-    volumes:
-      - ./mediaStream:/usr/src/app
-      - /usr/src/app/node_modules
-      - service-media_stream:/usr/src/app/storage
-    restart: unless-stopped
-    depends_on:
-      - db
-      - redis
-      - app
-    networks:
-      - groovy-backbone
-
-#  frontend:
-#    container_name: frontend
-#    image: vuejs/ci
-#    build:
-#      context: .
-#      dockerfile: docker/Frontend.Dockerfile
-#    restart: always
-#    volumes:
-#      - ./app/frontend:/frontend
-#      - /app/node_modules
-#    environment:
-#      - NODE_ENV=development
-#      - BASE_URL=http://localhost:8010
-#      - VUE_APP_I18N_LOCALE=en
-#      - VUE_APP_I18N_FALLBACK_LOCALE=en
-#      - VUE_APP_API_URL=http://localhost:8010
-#      - VUE_APP_GRAPHQL_URL=http://localhost:8010/graphql
-#    depends_on:
-#      - app
-
 volumes:
   postgres_data:
   production_static_data:
   service-media_stream:
+  web-static:
+  web-media:
+  web-files:
+  web-logs:
 
 networks:
   groovy-backbone:

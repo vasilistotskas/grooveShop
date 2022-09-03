@@ -56,7 +56,7 @@ export default class ImageUrlModel {
     }
 
     return (
-      'http://localhost:8010' +
+      process.env.VITE_APP_BASE_URL +
       this.mediaStreamPath +
       this.imageType +
       '/' +
@@ -128,7 +128,7 @@ export default class ImageUrlModel {
           return image
         })
         .catch(() => {
-          return 'http://localhost:8010/backend/static/images/no_photo.jpg'
+          return `${process.env.VITE_APP_BASE_URL}/backend/static/images/no_photo.jpg`
         })
       return response as unknown as string
     }

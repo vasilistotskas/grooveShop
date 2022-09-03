@@ -1,19 +1,8 @@
-version: '3.9'
+version: '3.3'
 
 services:
-  gcloud:
-    image: google/cloud-sdk:338.0.0
-    volumes:
-      - gcp-creds:/creds
-      - .:/app
-    working_dir: /app
-    environment:
-      - CLOUDSDK_CONFIG=/creds
-
-
-  app:
+  backend:
     container_name: backend
-    image: service-manager-backend:${SERVICE_MANAGER_IMAGE_REV}
     build:
       context: .
       dockerfile: docker/Backend.Dockerfile
@@ -22,18 +11,18 @@ services:
       sh -c "python manage.py wait_for_db &&
              python manage.py migrate &&
              python manage.py collectstatic --noinput &&
-             gunicorn app.wsgi:application --bind 0.0.0.0:8001"
+             gunicorn backend.app.wsgi:application --bind 0.0.0.0:8001"
     volumes:
-      - ./app:/app
-      - web-static:/app/static
-      - web-media:/app/media
-      - web-files:/app/files
-      - web-logs:/app/logs
+      - ./src:/src
+      - web-static:/src/backend/static
+      - web-media:/src/backend/media
+      - web-files:/src/backend/files
+      - web-logs:/src/backend/logs
     environment:
       - DEBUG=${DEBUG}
       - SECRET_KEY=${SECRET_KEY}
       - APPEND_SLASH=${APPEND_SLASH}
-      - APP_BASE_URL=${APP_BASE_URL}
+      - BACKEND_BASE_URL=${BACKEND_BASE_URL}
       - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
@@ -55,7 +44,7 @@ services:
       - db
       - redis
     ports:
-      - 8001:8001
+      - "8001:8001"
     networks:
       - groovy-backbone
 
@@ -70,23 +59,23 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
-      - 5432:5432
+      - "5432:5432"
     networks:
       - groovy-backbone
 
   nginx:
     container_name: nginx
-    image: nginx:mainline
+    image: nginx:groovyshop
     build:
       context: ./nginx
       dockerfile: Nginx.Dockerfile
     volumes:
-      - ./app:/app
+      - ./src:/src
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
-      - 8010:8010
+      - "8010:8010"
     depends_on:
-      - app
+      - backend
     restart: always
     networks:
       - groovy-backbone
@@ -100,7 +89,7 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
       - PGADMIN_LISTEN_PORT=${PGADMIN_LISTEN_PORT}
     ports:
-      - 5050:5050
+      - "5050:5050"
     depends_on:
       - db
     networks:
@@ -111,7 +100,7 @@ services:
     image: redis
     restart: always
     ports:
-      - 6379:6379
+      - "6379:6379"
     networks:
       - groovy-backbone
 
@@ -123,7 +112,7 @@ services:
       dockerfile: ./Dockerfile
     command: npm run start:prod
     ports:
-      - 3003:3003
+      - "3003:3003"
     volumes:
       - ./mediaStream:/usr/src/app
       - /usr/src/app/node_modules
@@ -132,7 +121,24 @@ services:
     depends_on:
       - db
       - redis
-      - app
+      - backend
+    networks:
+      - groovy-backbone
+
+  frontend:
+    container_name: frontend
+    image: node:lts
+    build:
+      context: .
+      dockerfile: docker/Frontend.Dockerfile
+    volumes:
+      - ./src/frontend/var:/frontend/var
+      - /src/node_modules
+    restart: "always"
+    ports:
+      - "8011:8011"
+    depends_on:
+      - backend
     networks:
       - groovy-backbone
 
@@ -155,28 +161,7 @@ services:
 #      - redis
 #      - app
 
-#  frontend:
-#    container_name: frontend
-#    image: vuejs/ci
-#    build:
-#      context: .
-#      dockerfile: docker/Frontend.Dockerfile
-#    restart: always
-#    volumes:
-#      - ./app/frontend:/frontend
-#      - /app/node_modules
-#    environment:
-#      - NODE_ENV=development
-#      - BASE_URL=http://localhost:8010
-#      - VUE_APP_I18N_LOCALE=en
-#      - VUE_APP_I18N_FALLBACK_LOCALE=en
-#      - VUE_APP_API_URL=http://localhost:8010
-#      - VUE_APP_GRAPHQL_URL=http://localhost:8010/graphql
-#    depends_on:
-#      - app
-
 volumes:
-  gcp-creds:
   postgres_data:
   production_static_data:
   service-media_stream:

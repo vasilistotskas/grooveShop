@@ -103,13 +103,13 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+#.env
+#.venv
+#env/
+#venv/
+#ENV/
+#env.bak/
+#venv.bak/
 
 # Spyder project settings
 .spyderproject
@@ -130,9 +130,6 @@ dmypy.json
 .pyre/
 
 /data
-
-#vscode#
-.vscode
 
 #node#
 node_modules
@@ -190,7 +187,6 @@ GitHub.sublime-settings
 /examples/**/dist
 /coverage
 .DS_Store
-.idea
 .eslintcache
 package-lock.json
 build
@@ -198,3 +194,12 @@ dist
 webpack-stats.json
 npm-debug.log
 /app/static/
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

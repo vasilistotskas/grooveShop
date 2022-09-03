@@ -11,20 +11,20 @@
     <!-- For dev env -->
     <!--    <meta name="robots" content="noindex,nofollow"/>-->
 
-    <link href="http://localhost:8010/backend/static/favicon/apple-icon-57x57.png" rel="apple-touch-icon" sizes="57x57">
-    <link href="http://localhost:8010/backend/static/favicon/apple-icon-60x60.png" rel="apple-touch-icon" sizes="60x60">
-    <link href="http://localhost:8010/backend/static/favicon/apple-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
-    <link href="http://localhost:8010/backend/static/favicon/apple-icon-76x76.png" rel="apple-touch-icon" sizes="76x76">
-    <link href="http://localhost:8010/backend/static/favicon/apple-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
-    <link href="http://localhost:8010/backend/static/favicon/apple-icon-120x120.png" rel="apple-touch-icon" sizes="120x120">
-    <link href="http://localhost:8010/backend/static/favicon/apple-icon-144x144.png" rel="apple-touch-icon" sizes="144x144">
-    <link href="http://localhost:8010/backend/static/favicon/apple-icon-152x152.png" rel="apple-touch-icon" sizes="152x152">
-    <link href="http://localhost:8010/backend/static/favicon/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180">
-    <link href="http://localhost:8010/backend/static/favicon/android-icon-192x192.png" rel="icon" sizes="192x192" type="image/png">
-    <link href="http://localhost:8010/backend/static/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
-    <link href="http://localhost:8010/backend/static/favicon/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png">
-    <link href="http://localhost:8010/backend/static/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
-    <link crossorigin="use-credentials" href="http://localhost:8010/backend/static/manifest.json" rel="manifest">
+    <link href="<{ VITE_APP_BASE_URL }>/backend/static/favicon/apple-icon-57x57.png" rel="apple-touch-icon" sizes="57x57">
+    <link href="<{ VITE_APP_BASE_URL }>/backend/static/favicon/apple-icon-60x60.png" rel="apple-touch-icon" sizes="60x60">
+    <link href="<{ VITE_APP_BASE_URL }>/backend/static/favicon/apple-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
+    <link href="<{ VITE_APP_BASE_URL }>/backend/static/favicon/apple-icon-76x76.png" rel="apple-touch-icon" sizes="76x76">
+    <link href="<{ VITE_APP_BASE_URL }>/backend/static/favicon/apple-icon-114x114.png" rel="apple-touch-icon" sizes="114x114">
+    <link href="<{ VITE_APP_BASE_URL }>/backend/static/favicon/apple-icon-120x120.png" rel="apple-touch-icon" sizes="120x120">
+    <link href="<{ VITE_APP_BASE_URL }>/backend/static/favicon/apple-icon-144x144.png" rel="apple-touch-icon" sizes="144x144">
+    <link href="<{ VITE_APP_BASE_URL }>/backend/static/favicon/apple-icon-152x152.png" rel="apple-touch-icon" sizes="152x152">
+    <link href="<{ VITE_APP_BASE_URL }>/backend/static/favicon/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180">
+    <link href="<{ VITE_APP_BASE_URL }>/backend/static/favicon/android-icon-192x192.png" rel="icon" sizes="192x192" type="image/png">
+    <link href="<{ VITE_APP_BASE_URL }>/backend/static/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png">
+    <link href="<{ VITE_APP_BASE_URL }>/backend/static/favicon/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png">
+    <link href="<{ VITE_APP_BASE_URL }>/backend/static/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png">
+    <link crossorigin="use-credentials" href="<{ VITE_APP_BASE_URL }>/backend/static/manifest.json" rel="manifest">
 
     <meta content="#ffffff" name="msapplication-TileColor">
     <meta name="color-scheme" content="light dark">
@@ -32,8 +32,7 @@
 
     <meta name="description" content="Mary's simple recipe for maple bacon donuts  makes a sticky, sweet treat with just a hint of salt that you'll keep coming back for.">
 
-    <!--    <title><%= htmlWebpackPlugin.options.title %></title>-->
-    <title>{{ SiteTitle }}</title>
+  <title><{ VITE_APP_TITLE }></title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -41,16 +40,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body class="body-main">
-<noscript>
-    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
-        Please enable it to continue.</strong>
-</noscript>
-<div id="app"></div>
-<script type="module" src="/src/main.ts"></script>
-<!-- built files will be auto injected -->
+  <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
+  <!-- built files will be auto injected -->
 </body>
 </html>
-
-<style>
-
-</style>

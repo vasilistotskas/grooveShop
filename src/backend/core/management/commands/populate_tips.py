@@ -1,6 +1,7 @@
 import os
 import random
 from faker import Faker
+from django.conf import settings
 from backend.tip.models import Tip
 from backend.app.settings import BASE_DIR
 from django.core.management import BaseCommand
@@ -25,7 +26,7 @@ class Command(BaseCommand):
                 content=faker.text(50),
                 kind=random.choice(tip_kinds),
                 icon=img,
-                url='http://localhost:8010/',
+                url=settings.APP_BASE_URL,
                 created_at=faker.date_time(),
                 active=True
             )

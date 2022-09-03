@@ -10,7 +10,7 @@
     "build-vite": "vue-tsc --noEmit && vite build",
     "watch-vite": "vue-tsc --noEmit && vite build --watch --mode development",
     "build-dts-vite": "vue-tsc --declaration --emitDeclarationOnly && tsc-alias -p tsconfig.json && npx prettier --write ./build/",
-    "dev-vite": "vite --host"
+    "dev": "vite --host"
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
@@ -37,6 +37,8 @@
     "universal-cookie": "^4.0.4",
     "uuid": "^8.3.2",
     "vee-validate": "^4.6.0",
+    "vite-plugin-environment": "^1.1.2",
+    "vite-plugin-html-env": "^1.2.4",
     "vue": "^3.2.38",
     "vue-class-component": "^8.0.0-rc.1",
     "vue-horizontal": "^1.0.2",
@@ -66,7 +68,6 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-vue": "^8.7.1",
     "sass": "^1.53.0",
     "sass-loader": "^13.0.2",
     "tsc-alias": "^1.7.0",
