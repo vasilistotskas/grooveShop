@@ -19,18 +19,25 @@
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "lib": ["ESNext", "DOM"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "skipLibCheck": true,
+    "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "src/*"
+        "./*"
       ]
     },
     "typeRoots": ["node_modules/@types", "typings.d.ts", "env.d.ts"]
   },
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  },
   "include": [
-    "./src/**/*"
+    "./**/*"
   ],
   "files": [
     "typings.d.ts",

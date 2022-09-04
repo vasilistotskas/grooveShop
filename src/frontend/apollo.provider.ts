@@ -1,5 +1,6 @@
+import fetch from 'cross-fetch'
 import { createApolloProvider } from '@vue/apollo-option'
-import { InMemoryCache, ApolloClient } from '@apollo/client/core'
+import { InMemoryCache, ApolloClient, HttpLink } from '@apollo/client/core'
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -18,7 +19,7 @@ const cache = new InMemoryCache({
 
 export const clientApollo = new ApolloClient({
   cache: cache,
-  uri: process.env.VITE_APP_GRAPHQL_URL,
+  link: new HttpLink({ uri: process.env.VITE_APP_GRAPHQL_URL, fetch }),
 })
 
 export const provider = createApolloProvider({

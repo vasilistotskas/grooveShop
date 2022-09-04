@@ -1,17 +1,13 @@
 import * as path from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import VitePluginHtmlEnv from 'vite-plugin-html-env'
+import ssr from 'vite-plugin-ssr/plugin'
 import EnvironmentPlugin from 'vite-plugin-environment'
 
 export default defineConfig({
-  resolve: { alias: { '@': path.resolve(__dirname, 'src') } },
+  resolve: { alias: { '@': path.resolve(__dirname, './') } },
   envDir: './env/',
-  plugins: [vue(), VitePluginHtmlEnv(), EnvironmentPlugin('all')],
-  build: {
-    outDir: './dist/',
-    assetsDir: './backend/static/js',
-  },
+  plugins: [vue(), ssr(), EnvironmentPlugin('all')],
   server: {
     port: 8011,
     host: true,

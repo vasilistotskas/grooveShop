@@ -2,6 +2,7 @@
 -- tip an thelw na dw error 404 me debug afairw to route apo to front --
 ### ---BLOG MAIN PAGE--- ###
 
+### VITE FRONT NEW DOCKER CONTAINER NGINX PROXIES ETC ###
 # blog tips:
     ---> Estimate Time: 14 Hours
     tip title

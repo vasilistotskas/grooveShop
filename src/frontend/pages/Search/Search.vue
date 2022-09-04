@@ -1,0 +1,116 @@
+<template>
+  <div class="page-search mt-8 mb-5">
+    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
+    <div class="container">
+      <div class="content-min-height">
+        <div class="col-12 mb-3 mt-3">
+          <h2 class="is-size-5 has-text-grey">Search term: "{{ currentPageQuery }}"</h2>
+        </div>
+
+        <Pagination
+          v-if="Object.keys(allPaginatedResults).length !== 0"
+          :endpoint-url="'search-product'"
+          :max-visible-buttons="3"
+          :route="PaginationRoutesEnum.SEARCH"
+          :total-pages="allPaginatedResultsTotalPages"
+          :namespace="paginationNamespace"
+        />
+
+        <div class="product-listing-grid mt-3 mb-3">
+          <ProductCard
+            v-for="product in allPaginatedResults"
+            :key="product.id"
+            :product="product"
+            class="grid-item"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import router from '@/routes'
+import { getModule } from 'vuex-module-decorators'
+import ProductModel from '@/state/product/ProductModel'
+import { Options as Component } from 'vue-class-component'
+import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
+import ProductCard from '@/components/Product/ProductCard.vue'
+import Pagination from '@/components/Pagination/Pagination.vue'
+import PaginationModule from '@/state/pagination/PaginationModule'
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
+import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
+import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
+import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
+import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
+
+@Component({
+  name: 'Search',
+  extends: PaginatedComponent,
+  components: {
+    ProductCard,
+    Pagination,
+    Breadcrumbs,
+  },
+})
+export default class Search
+  extends PaginatedComponent<ProductModel>
+  implements PaginatedComponentInterface<ProductModel>
+{
+  paginationModule = getModule<PaginationModule<ProductModel>>(PaginationModule)
+  query: string | null = ''
+  PaginationRoutesEnum = PaginationRoutesEnum
+  paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
+
+  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
+    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
+      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    return currentRouteMetaBreadcrumb()
+  }
+
+  async mounted(): Promise<void> {
+    document.title = 'Search'
+
+    if (this.params.query) {
+      await this.paginationModule.setCurrentQuery({
+        queryParams: this.params,
+        namespace: this.paginationNamespace,
+      })
+    }
+
+    await this.paginationModule.setCurrentPageNumber({
+      pageNumber: 1,
+      namespace: this.paginationNamespace,
+    })
+
+    if (this.params.page) {
+      await this.paginationModule.setCurrentPageNumber({
+        pageNumber: Number(this.params.page),
+        namespace: this.paginationNamespace,
+      })
+    }
+
+    await this.fetchPaginationData()
+  }
+
+  async fetchPaginationData(): Promise<void> {
+    const paginationQuery = PaginationModel.createPaginationModel({
+      pageNumber: this.currentPageNumber,
+      endpointUrl: `search-product`,
+      queryParams: this.currentPageQuery,
+      method: ApiBaseMethods.GET,
+    })
+
+    await this.paginationModule.fetchPaginatedResults({
+      params: paginationQuery,
+      namespace: this.paginationNamespace,
+    })
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/assets/styles/pages/Search/Search';
+</style>
