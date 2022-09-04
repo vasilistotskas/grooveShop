@@ -15,5 +15,8 @@ export default defineConfig({
   server: {
     port: 8011,
     host: true,
+    watch: {
+      usePolling: process.env.NODE_ENV !== 'production',
+    },
   },
 })

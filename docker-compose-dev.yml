@@ -23,6 +23,8 @@ services:
       - SECRET_KEY=${SECRET_KEY}
       - APPEND_SLASH=${APPEND_SLASH}
       - BACKEND_BASE_URL=${BACKEND_BASE_URL}
+      - APP_BASE_URL=${APP_BASE_URL}
+      - VITE_APP_URL=${VITE_APP_URL}
       - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
@@ -133,6 +135,22 @@ services:
       dockerfile: docker/Frontend.Dockerfile
     volumes:
       - ./src/frontend/var:/frontend/var
+      - ./src/frontend/env:/frontend/env
+      - ./src/frontend/public:/frontend/public
+      - ./src/frontend/src:/frontend/src
+      - ./src/frontend/.eslintrc.cjs:/frontend/.eslintrc.cjs
+      - ./src/frontend/.prettierrc.yaml:/frontend/.prettierrc.yaml
+      - ./src/frontend/apollo.provider.ts:/frontend/apollo.provider.ts
+      - ./src/frontend/babel.config.js:/frontend/babel.config.js
+      - ./src/frontend/env.d.ts:/frontend/env.d.ts
+      - ./src/frontend/index.html:/frontend/index.html
+      - ./src/frontend/package.json:/frontend/package.json
+      - ./src/frontend/package-lock.json:/frontend/package-lock.json
+      - ./src/frontend/tsconfig.json:/frontend/tsconfig.json
+      - ./src/frontend/tsconfig.node.json:/frontend/tsconfig.node.json
+      - ./src/frontend/typings.d.ts:/frontend/typings.d.ts
+      - ./src/frontend/vite.config.ts:/frontend/vite.config.ts
+      - ./src/frontend/vue.config.js:/frontend/vue.config.js
       - /src/node_modules
     restart: "always"
     ports:
