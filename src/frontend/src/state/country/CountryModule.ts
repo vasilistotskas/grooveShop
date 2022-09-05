@@ -1,5 +1,5 @@
-import store from '@/store'
 import { find } from 'lodash'
+import store from '@/dynamicStore'
 import api from '@/api/api.service'
 import { AxiosResponse } from 'axios'
 import CountryModel from '@/state/country/CountryModel'
@@ -8,7 +8,13 @@ import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'country',
+})
 export default class CountryModule extends AppBaseModule {
   countries: Array<CountryModel> = []
   regionsBasedOnAlpha: Array<RegionsModel> = []
@@ -22,12 +28,13 @@ export default class CountryModule extends AppBaseModule {
     return this.regionsBasedOnAlpha
   }
 
-  get getSelectedCountry(): CountryModel {
-    const isAuthenticated: boolean = store.getters['auth/isAuthenticated']
-    if (isAuthenticated) {
-      return <CountryModel>this.selectedCountry
+  get getSelectedCountry(): (isAuthenticated: boolean) => CountryModel {
+    return (isAuthenticated: boolean) => {
+      if (isAuthenticated) {
+        return <CountryModel>this.selectedCountry
+      }
+      return new CountryModel()
     }
-    return new CountryModel()
   }
 
   @Mutation
@@ -65,9 +72,9 @@ export default class CountryModule extends AppBaseModule {
   }
 
   @Action
-  async findRegionsBasedOnAlphaForLoggedCustomer(): Promise<void> {
-    const UserProfileModel: UserProfileModel = store.getters['user/getUserData']
-
+  async findRegionsBasedOnAlphaForLoggedCustomer(
+    UserProfileModel: UserProfileModel
+  ): Promise<void> {
     if (UserProfileModel.country) {
       const countries = this.context.getters['getCountries']
       const result = countries.find((country: CountryModel) => {

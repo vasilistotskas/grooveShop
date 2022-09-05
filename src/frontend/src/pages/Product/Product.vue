@@ -85,8 +85,11 @@
             </button>
             <FavouriteButton
               :model="product"
-              :getter-type="'product/favourite/getIsCurrentProductInUserFavourites'"
-              :dispatch-type="'product/favourite/toggleFavourite'"
+              :module="productFavouriteModule"
+              :getter-type="'getIsCurrentProductInUserFavourites'"
+              :getter-params="{ productId: product.id }"
+              :dispatch-type="'toggleFavourite'"
+              :dispatch-params="{ productId: product.id, userId: userId }"
               :use-store="true"
             />
           </div>
@@ -103,12 +106,16 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
 import { useMeta } from 'vue-meta'
 import { RouteParams } from 'vue-router'
 import { computed } from '@vue/runtime-core'
+import AppModule from '@/state/app/AppModule'
+import CartModule from '@/state/cart/CartModule'
+import { getModule } from 'vuex-module-decorators'
+import UserModule from '@/state/user/data/UserModule'
 import ProductModel from '@/state/product/ProductModel'
+import ProductModule from '@/state/product/ProductModule'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import ProductReview from '@/components/Product/ProductReview.vue'
@@ -120,6 +127,7 @@ import FavouriteButton from '@/components/Utilities/FavouriteButton.vue'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import { faShippingFast } from '@fortawesome/free-solid-svg-icons/faShippingFast'
+import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
 
 @Component({
@@ -141,6 +149,12 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExcla
   },
 })
 export default class Product extends Vue {
+  appModule = getModule(AppModule)
+  userModule = getModule(UserModule)
+  productModule = getModule(ProductModule)
+  cartModule = getModule(CartModule)
+  productFavouriteModule = getModule(ProductFavouriteModule)
+
   meta = setup(() =>
     useMeta(
       computed(() => ({
@@ -166,11 +180,15 @@ export default class Product extends Vue {
   }
 
   get product(): ProductModel {
-    return store.getters['product/getProductData']
+    return this.productModule.getProductData
+  }
+
+  get userId(): number | undefined {
+    return this.userModule.getUserId
   }
 
   get addToCartButtonText(): string {
-    return store.getters['product/addToCartButtonText']
+    return this.productModule.addToCartButtonText
   }
 
   get disabled(): boolean {
@@ -181,15 +199,14 @@ export default class Product extends Vue {
     document.title = this.$route.params.product_slug as string
 
     await Promise.all([
-      await store.dispatch('product/fetchProductFromRemote'),
-      store.dispatch('product/updateProductHits'),
-
-      store.dispatch('app/updateMetaTagElement', {
-        metaName: 'description',
-        metaAttribute: 'content',
-        newValue: this.product.description,
-      }),
+      await this.productModule.fetchProductFromRemote(),
+      this.productModule.updateProductHits(),
     ])
+    await this.appModule.updateMetaTagElement({
+      metaName: 'description',
+      metaAttribute: 'content',
+      newValue: this.product.description,
+    })
   }
 
   public addToCart(): void {
@@ -202,7 +219,7 @@ export default class Product extends Vue {
       quantity: this.quantity,
     }
 
-    store.commit('cart/addToCart', item)
+    this.cartModule.addToCart(item)
   }
 }
 </script>

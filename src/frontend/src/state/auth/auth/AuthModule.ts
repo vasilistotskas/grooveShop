@@ -1,5 +1,5 @@
-import store from '@/store'
 import router from '@/routes'
+import store from '@/dynamicStore'
 import api from '@/api/api.service'
 import session from '@/api/session'
 import { AxiosResponse } from 'axios'
@@ -10,7 +10,13 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 const toast = useToast()
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'auth',
+})
 export default class AuthModule extends AppBaseModule {
   TOKEN_STORAGE_KEY = 'TOKEN_STORAGE_KEY'
   isProduction = process.env.NODE_ENV === 'production'
@@ -151,11 +157,6 @@ export default class AuthModule extends AppBaseModule {
       .then(() => {
         this.context.commit('afterLogOut')
         this.context.commit('removeToken')
-        store.commit('product/favourite/unsetFavourites')
-        store.commit('product/favourite/unsetUserFavourites')
-        store.commit('product/review/unsetUserToProductReview')
-        store.commit('product/review/unsetUserReviews')
-        store.commit('country/unsetUserCountryData')
         toast.success('Logged Out')
       })
       .catch((e: Error) => {

@@ -9,7 +9,9 @@
   >
     <div class="grid-account-password-fields">
       <div class="current_password">
-        <label :for="formManager.form.current_password.$uid" class="label">Current Password</label>
+        <label :for="String(formManager.form.current_password.$uid)" class="label"
+          >Current Password</label
+        >
         <FormBaseInput
           :id="formManager.form.current_password.$uid"
           v-model="formManager.form.current_password.$value"
@@ -25,7 +27,7 @@
         />
       </div>
       <div class="new_password">
-        <label :for="formManager.form.new_password.$uid" class="label">New Password</label>
+        <label :for="String(formManager.form.new_password.$uid)" class="label">New Password</label>
         <FormBaseInput
           :id="formManager.form.new_password.$uid"
           v-model="formManager.form.new_password.$value"
@@ -41,7 +43,7 @@
         />
       </div>
       <div class="re_new_password">
-        <label :for="formManager.form.re_new_password.$uid" class="label"
+        <label :for="String(formManager.form.re_new_password.$uid)" class="label"
           >Retype New Password</label
         >
         <FormBaseInput
@@ -80,15 +82,20 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
+import { getModule } from 'vuex-module-decorators'
+import AuthModule from '@/state/auth/auth/AuthModule'
 import { equal, min } from '@/components/Form/Utils'
+import CountryModule from '@/state/country/CountryModule'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import { Options as Component, Vue } from 'vue-class-component'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
+import PasswordModule from '@/state/auth/password/PasswordModule'
 import { useValidation, ValidationError } from 'vue3-form-validation'
 import FormSubmitButtons from '@/components/Form/FormSubmitButtons.vue'
+import ProductReviewModule from '@/state/product/review/ProductReviewModule'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 import UpdatePasswordApiData from '@/state/auth/Interface/UpdatePasswordApiData'
+import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 
 let { validateFields } = useValidation({})
 
@@ -102,6 +109,12 @@ let { validateFields } = useValidation({})
   },
 })
 export default class UserPassword extends Vue {
+  authModule = getModule(AuthModule)
+  passwordModule = getModule(PasswordModule)
+  productFavouriteModule = getModule(ProductFavouriteModule)
+  productReviewModule = getModule(ProductReviewModule)
+  countryModule = getModule(CountryModule)
+
   submitButtonText = 'Update'
 
   formManager = ({ validateFields } = useValidation({
@@ -140,7 +153,7 @@ export default class UserPassword extends Vue {
         re_new_password: formData.re_new_password,
       }
 
-      await store.dispatch('password/updateUserPassword', apiData)
+      await this.passwordModule.updateUserPassword(apiData)
     } catch (e) {
       if (e instanceof ValidationError) {
         console.log(e.message)
@@ -148,8 +161,13 @@ export default class UserPassword extends Vue {
     }
   }
 
-  clearAllAccountSessions(): void {
-    store.dispatch('auth/clearAllAccountSessions')
+  async clearAllAccountSessions(): Promise<void> {
+    await this.authModule.clearAllAccountSessions()
+    this.productFavouriteModule.unsetFavourites()
+    this.productFavouriteModule.unsetUserFavourites()
+    this.productReviewModule.unsetUserToProductReview()
+    this.productReviewModule.unsetUserReviews()
+    this.countryModule.unsetUserCountryData()
   }
 }
 </script>

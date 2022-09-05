@@ -34,9 +34,9 @@ const blogRoutes: Array<RouteRecordRaw> = [
           },
         },
         {
-          name: 'Author - ' + route.email,
+          name: 'Author - ' + route.id,
           to: {
-            full_path: 'author' + '/' + route.email,
+            full_path: 'author' + '/' + route.id,
           },
         },
       ],

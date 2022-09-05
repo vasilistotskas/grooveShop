@@ -46,10 +46,6 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
-import { Options as Component, Vue } from 'vue-class-component'
-import GrooveImage from '@/components/Utilities/GrooveImage.vue'
-import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
 import {
   ImagePathOptions,
   ImageFormatOptions,
@@ -57,6 +53,11 @@ import {
   ImagePositionOptions,
   ImageTypeOptions,
 } from '@/helpers/MediaStream/ImageUrlEnum'
+import { getModule } from 'vuex-module-decorators'
+import UserModule from '@/state/user/data/UserModule'
+import { Options as Component, Vue } from 'vue-class-component'
+import GrooveImage from '@/components/Utilities/GrooveImage.vue'
+import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
 
 @Component({
   name: 'UserProfileImage',
@@ -75,6 +76,9 @@ import {
   },
 })
 export default class UserProfileImage extends Vue {
+  src = ''
+  fullname = ''
+  userModule = getModule(UserModule)
   profileImageHovering = false
   cameraIcon = faCamera
 
@@ -87,7 +91,7 @@ export default class UserProfileImage extends Vue {
   async updateUserImage(): Promise<void> {
     const formEl = document.getElementById('uploadImageForm') as HTMLFormElement
     const data = new FormData(formEl)
-    await store.dispatch('user/updateUserProfile', data)
+    await this.userModule.updateUserProfile(data)
   }
 }
 </script>

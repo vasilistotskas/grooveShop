@@ -1,16 +1,20 @@
-import NamespacedDataRecord from '@/state/common/Interface/NamespacedDataRecord'
+import {
+  PaginationLink,
+  PaginationResults,
+  QueryParamsType,
+} from '@/state/pagination/Type/PaginationTypes'
 
-export default interface PaginationDataInterface {
+export default interface PaginationDataInterface<TPaginatedModel> {
   [key: string]: {
-    results: Array<NamespacedDataRecord>
-    results_count: number
-    results_next_page: string
-    results_previous_page: string
-    results_total_pages: number
+    results: PaginationResults<TPaginatedModel>
+    resultsCount: number
+    resultsNextPage: PaginationLink['next']
+    resultsPreviousPages: PaginationLink['previous']
+    resultsTotalPages: number
     alternativeToken: string
-    current_page_number: number
-    current_query: string
-    show_next_button: boolean
-    show_previous_button: boolean
+    currentPageNumber: number
+    currentQuery: QueryParamsType
+    showNextButton: boolean
+    showPreviousButton: boolean
   }
 }

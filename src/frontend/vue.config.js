@@ -1,6 +1,7 @@
 process.env.NODE_ENV = 'development'
 
 module.exports = {
+  // Default value
   publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
   // assetsDir must match Django's STATIC_URL
   assetsDir: 'backend/static/',

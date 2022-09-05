@@ -1,4 +1,5 @@
 import router from '@/routes'
+import store from '@/dynamicStore'
 import api from '@/api/api.service'
 import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/state/common/AppBaseModule'
@@ -7,9 +8,15 @@ import ToastRegisterActivationFail from '@/components/Toast/ToastRegisterActivat
 
 const toast = useToast()
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'signup',
+})
 export default class SignUpModule extends AppBaseModule {
-  registrationEmail = ''
+  registrationEmail?: string | undefined
   activationCompleted = false
   activationError = false
   activationLoading = false
@@ -18,7 +25,7 @@ export default class SignUpModule extends AppBaseModule {
   registrationError = false
   registrationLoading = false
 
-  get getRegistrationEmail(): string {
+  get getRegistrationEmail(): string | undefined {
     return this.registrationEmail
   }
 
@@ -51,9 +58,11 @@ export default class SignUpModule extends AppBaseModule {
   }
 
   @Mutation
-  setRegistrationEmail(email: string): void {
+  setRegistrationEmail(email: string | undefined): void {
     this.registrationEmail = email
-    localStorage.setItem('registrationEmail', email)
+    if (email !== undefined) {
+      localStorage.setItem('registrationEmail', email)
+    }
   }
 
   @Mutation

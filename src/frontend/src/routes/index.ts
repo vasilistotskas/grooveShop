@@ -33,7 +33,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  RouteModel.routeBeforeEach(to, from, next)
+  new RouteModel().routeBeforeEach(to, from, next)
 })
 
 export default router

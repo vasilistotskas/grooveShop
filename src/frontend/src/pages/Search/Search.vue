@@ -4,7 +4,7 @@
     <div class="container">
       <div class="content-min-height">
         <div class="col-12 mb-3 mt-3">
-          <h2 class="is-size-5 has-text-grey">Search term: "{{ currentPageQuery.query }}"</h2>
+          <h2 class="is-size-5 has-text-grey">Search term: "{{ currentPageQuery }}"</h2>
         </div>
 
         <Pagination
@@ -30,24 +30,25 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
+import { getModule } from 'vuex-module-decorators'
 import ProductModel from '@/state/product/ProductModel'
 import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
+import PaginationModule from '@/state/pagination/PaginationModule'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import PaginationBase from '@/components/Pagination/PaginationBase'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
-import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
+import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
   name: 'Search',
-  extends: PaginationBase,
+  extends: PaginatedComponent,
   components: {
     ProductCard,
     Pagination,
@@ -55,9 +56,10 @@ import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/Pagination
   },
 })
 export default class Search
-  extends PaginationBase<ProductModel>
-  implements PaginatedInterface<ProductModel>
+  extends PaginatedComponent<ProductModel>
+  implements PaginatedComponentInterface<ProductModel>
 {
+  paginationModule = getModule<PaginationModule<ProductModel>>(PaginationModule)
   query: string | null = ''
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
@@ -72,19 +74,19 @@ export default class Search
     document.title = 'Search'
 
     if (this.params.query) {
-      store.commit('pagination/setCurrentQuery', {
-        currentQuery: this.params,
+      await this.paginationModule.setCurrentQuery({
+        queryParams: this.params,
         namespace: this.paginationNamespace,
       })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', {
+    await this.paginationModule.setCurrentPageNumber({
       pageNumber: 1,
       namespace: this.paginationNamespace,
     })
 
     if (this.params.page) {
-      store.commit('pagination/setCurrentPageNumber', {
+      await this.paginationModule.setCurrentPageNumber({
         pageNumber: Number(this.params.page),
         namespace: this.paginationNamespace,
       })
@@ -93,19 +95,15 @@ export default class Search
     await this.fetchPaginationData()
   }
 
-  async unmounted(): Promise<void> {
-    store.commit('pagination/unsetResults', this.paginationNamespace)
-  }
-
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery = PaginationModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: `search-product`,
       queryParams: this.currentPageQuery,
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', {
+    await this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.paginationNamespace,
     })

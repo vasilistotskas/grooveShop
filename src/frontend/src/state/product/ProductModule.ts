@@ -1,12 +1,19 @@
 import { map } from 'lodash'
 import router from '@/routes'
+import store from '@/dynamicStore'
 import api from '@/api/api.service'
 import { AxiosResponse } from 'axios'
 import ProductModel from '@/state/product/ProductModel'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Module, Action, Mutation } from 'vuex-module-decorators'
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'product',
+})
 export default class ProductModule extends AppBaseModule {
   product = new ProductModel()
   latestProducts: Array<ProductModel> = []

@@ -36,7 +36,10 @@ DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 if "celery" in sys.argv[0]:
     DEBUG = False
 
-APP_BASE_URL = str(os.environ.get('APP_BASE_URL', 'http://localhost:8010'))
+BACKEND_BASE_URL = str(os.environ.get('BACKEND_BASE_URL'))
+APP_BASE_URL = str(os.environ.get('APP_BASE_URL'))
+VITE_APP_URL = str(os.environ.get('VITE_APP_URL'))
+
 ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS.extend(
     filter(
@@ -45,12 +48,26 @@ ALLOWED_HOSTS.extend(
     )
 )
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:8010']
+CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS = [
+    APP_BASE_URL,
+    VITE_APP_URL,
+]
+CORS_ALLOWED_ORIGINS = [
+    APP_BASE_URL,
+    VITE_APP_URL,
+]
 
-# Graphql force_text warning (w8ing for version 3)
-import django
-from django.utils.encoding import force_str
-django.utils.encoding.force_text = force_str
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+
+if DEBUG:
+    import socket  # only if you haven't already imported this
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
+
 
 # Application definition
 DJANGO_APPS = [
@@ -76,11 +93,12 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'graphene_django',
     'djoser',
     'mptt',
     'tinymce',
     'django_filters',
+    'strawberry.django',
+    'debug_toolbar'
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
@@ -94,6 +112,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'strawberry_django_plus.middlewares.debug_toolbar.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.app.urls'
@@ -212,7 +231,7 @@ STATICFILES_DIRS = (
     BASE_DIR.joinpath('frontend', 'dist'),
     BASE_DIR.joinpath('files'),
 )
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # graphql schema
 GRAPHENE = {

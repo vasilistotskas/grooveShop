@@ -1,20 +1,35 @@
-import store from '@/store'
+import {
+  CountType,
+  CurrentPageNumberType,
+  CurrentQueryType,
+  NextPageUrlType,
+  PaginationResultsType,
+  PreviousPageUrlType,
+  QueryParamsType,
+  ShowNextButtonType,
+  ShowPreviousButtonType,
+  TotalPagesType,
+} from '@/state/pagination/Type/PaginationTypes'
+import store from '@/dynamicStore'
 import session from '@/api/session'
 import { AxiosResponse } from 'axios'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import PaginatedModel from '@/state/pagination/Model/PaginatedModel'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
-import NamespacedResults from '@/state/common/Interface/NamespacedResults'
-import PaginatedQueryParams from '@/state/pagination/Interface/PaginatedQueryParams'
-import PaginatedDataInterface from '@/state/pagination/Interface/PaginatedDataInterface'
 import PaginationNamespaceDirectory from '@/state/pagination/PaginationNamespaceDirectory'
 import PaginationDataInterface from '@/state/pagination/Interface/PaginationDataInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
-@Module({ namespaced: true })
-export default class PaginationModule extends AppBaseModule {
-  namespaceData: PaginationDataInterface = PaginationNamespaceDirectory()
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'pagination',
+})
+export default class PaginationModule<TPaginatedModel> extends AppBaseModule {
+  namespaceData: PaginationDataInterface<TPaginatedModel> = PaginationNamespaceDirectory()
 
   alternativeToken = ''
 
@@ -30,115 +45,115 @@ export default class PaginationModule extends AppBaseModule {
 
   get getResultCountData() {
     return (namespace: PaginationNamespaceTypesEnum) => {
-      return this.namespaceData[namespace].results_count
+      return this.namespaceData[namespace].resultsCount
     }
   }
 
   get getResultNextPageUrl() {
     return (namespace: PaginationNamespaceTypesEnum) => {
-      return this.namespaceData[namespace].results_next_page
+      return this.namespaceData[namespace].resultsNextPage
     }
   }
 
   get getResultPreviousPageUrl() {
     return (namespace: PaginationNamespaceTypesEnum) => {
-      return this.namespaceData[namespace].results_previous_page
+      return this.namespaceData[namespace].resultsPreviousPages
     }
   }
 
   get getResultTotalPages() {
     return (namespace: PaginationNamespaceTypesEnum) => {
-      return this.namespaceData[namespace].results_total_pages
+      return this.namespaceData[namespace].resultsTotalPages
     }
   }
 
   get getCurrentPageNumber() {
     return (namespace: PaginationNamespaceTypesEnum) => {
-      return this.namespaceData[namespace].current_page_number
+      return this.namespaceData[namespace].currentPageNumber
     }
   }
 
   get getCurrentQuery() {
     return (namespace: PaginationNamespaceTypesEnum) => {
-      return this.namespaceData[namespace].current_query
+      return this.namespaceData[namespace].currentQuery
     }
   }
 
   get getShowNextButton() {
     return (namespace: PaginationNamespaceTypesEnum) => {
-      return this.namespaceData[namespace].show_next_button
+      return this.namespaceData[namespace].showNextButton
     }
   }
 
   get getShowPreviousButton() {
     return (namespace: PaginationNamespaceTypesEnum) => {
-      return this.namespaceData[namespace].show_previous_button
+      return this.namespaceData[namespace].showPreviousButton
     }
   }
 
   @Mutation
-  setResults(data: NamespacedResults): void {
-    this.namespaceData[data.namespace].results = data.results
+  setResults({ namespace, results }: PaginationResultsType<TPaginatedModel>): void {
+    this.namespaceData[namespace].results = results
   }
 
   @Mutation
   unsetResults(namespace: PaginationNamespaceTypesEnum): void {
     this.namespaceData[namespace].results = []
-    this.namespaceData[namespace].results_count = 0
+    this.namespaceData[namespace].resultsCount = 0
 
-    this.namespaceData[namespace].results_next_page = ''
-    this.namespaceData[namespace].results_previous_page = ''
-    this.namespaceData[namespace].results_total_pages = 0
+    this.namespaceData[namespace].resultsNextPage = ''
+    this.namespaceData[namespace].resultsPreviousPages = ''
+    this.namespaceData[namespace].resultsTotalPages = 0
 
-    this.namespaceData[namespace].current_page_number = 1
-    this.namespaceData[namespace].current_query = ''
+    this.namespaceData[namespace].currentPageNumber = 1
+    this.namespaceData[namespace].currentQuery = ''
 
-    this.namespaceData[namespace].show_next_button = false
-    this.namespaceData[namespace].show_previous_button = false
+    this.namespaceData[namespace].showNextButton = false
+    this.namespaceData[namespace].showPreviousButton = false
   }
 
   @Mutation
-  setCount(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].results_count = data.count
+  setCount({ namespace, count }: CountType): void {
+    this.namespaceData[namespace].resultsCount = count
   }
 
   @Mutation
-  setNextPageUrl(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].results_next_page = data.nextPageUrl
+  setNextPageUrl({ namespace, nextPageUrl }: NextPageUrlType): void {
+    this.namespaceData[namespace].resultsNextPage = nextPageUrl
   }
 
   @Mutation
-  setPreviousPageUrl(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].results_previous_page = data.previousPageUrl
+  setPreviousPageUrl({ namespace, previousPageUrl }: PreviousPageUrlType): void {
+    this.namespaceData[namespace].resultsPreviousPages = previousPageUrl
   }
 
   @Mutation
-  setTotalPages(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].results_total_pages = data.totalPages
+  setTotalPages({ namespace, totalPages }: TotalPagesType): void {
+    this.namespaceData[namespace].resultsTotalPages = totalPages
   }
 
   @Mutation
-  setCurrentPageNumber(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].current_page_number = data.pageNumber
+  setCurrentPageNumber({ namespace, pageNumber }: CurrentPageNumberType): void {
+    this.namespaceData[namespace].currentPageNumber = pageNumber
   }
 
   @Mutation
-  setCurrentQuery(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].current_query = data.currentQuery
+  setCurrentQuery({ namespace, queryParams }: CurrentQueryType): void {
+    this.namespaceData[namespace].currentQuery = queryParams
   }
 
   @Mutation
-  setShowNextButton(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].show_next_button = data.showNextButton
+  setShowNextButton({ namespace, showNextButton }: ShowNextButtonType): void {
+    this.namespaceData[namespace].showNextButton = showNextButton
   }
 
   @Mutation
-  setShowPreviousButton(data: PaginatedDataInterface): void {
-    this.namespaceData[data.namespace].show_previous_button = data.showPreviousButton
+  setShowPreviousButton({ namespace, showPreviousButton }: ShowPreviousButtonType): void {
+    this.namespaceData[namespace].showPreviousButton = showPreviousButton
   }
 
   @Action
-  buildPaginationQueryString(queryParams: Partial<PaginatedQueryParams>): string {
+  buildPaginationQueryString(queryParams: QueryParamsType): string {
     let finalQueryString = ''
 
     let i = 0
@@ -155,13 +170,11 @@ export default class PaginationModule extends AppBaseModule {
   }
 
   @Action
-  async fetchPaginatedResults<T>(data: {
+  async buildPaginatedApiUrl(data: {
     params: PaginationModel
     namespace: PaginationNamespaceTypesEnum
-  }): Promise<void> {
-    await store.commit('app/setLoading', true)
+  }): Promise<string> {
     const baseUrl = '/api/v1'
-
     let ApiUrl = ''
 
     if (!data.params.queryParams && !data.params.pageNumber) {
@@ -175,6 +188,17 @@ export default class PaginationModule extends AppBaseModule {
       )
       ApiUrl = `${baseUrl}/${data.params.endpointUrl}?p=${data.params.pageNumber}&${queryStringBuild}`
     }
+    return ApiUrl
+  }
+
+  @Action
+  async fetchPaginatedResults<T>(data: {
+    params: PaginationModel
+    namespace: PaginationNamespaceTypesEnum
+  }): Promise<void> {
+    await store.commit('app/setLoading', true)
+
+    const ApiUrl = await this.context.dispatch('buildPaginatedApiUrl', data)
 
     session({
       url: ApiUrl,

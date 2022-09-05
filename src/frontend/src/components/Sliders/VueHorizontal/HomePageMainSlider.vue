@@ -32,17 +32,18 @@
 </template>
 
 <script lang="ts">
-import 'swiper/css'
-import store from '@/store'
-import VueHorizontal from 'vue-horizontal'
-import SliderModel from '@/state/slider/SliderModel'
-import { Options as Component, Vue } from 'vue-class-component'
-import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import {
   ImageFitOptions,
   ImagePositionOptions,
   ImageTypeOptions,
 } from '@/helpers/MediaStream/ImageUrlEnum'
+import 'swiper/css'
+import VueHorizontal from 'vue-horizontal'
+import AppModule from '@/state/app/AppModule'
+import { getModule } from 'vuex-module-decorators'
+import SliderModel from '@/state/slider/SliderModel'
+import { Options as Component, Vue } from 'vue-class-component'
+import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 
 @Component({
   name: 'HomePageMainSlider',
@@ -66,7 +67,8 @@ import {
   },
 })
 export default class HomePageMainSlider extends Vue {
-  $refs!: {
+  appModule = getModule(AppModule)
+  declare $refs: {
     mainSliderVideoRef: HTMLVideoElement
     horizontal: any
   }
@@ -83,8 +85,8 @@ export default class HomePageMainSlider extends Vue {
   originX = 0
   originLeft = 0
 
-  get axiosBaseUrl(): string | undefined {
-    return store.getters['app/axiosBaseUrl']
+  get backendBaseUrl(): string | undefined {
+    return this.appModule.backendBaseUrl
   }
 
   mounted(): void {
@@ -101,7 +103,7 @@ export default class HomePageMainSlider extends Vue {
 
   public mainSliderVideoInit(): void {
     if (this.slider && Object.keys(this.slider).length > 0 && this.$refs.mainSliderVideoRef) {
-      this.$refs.mainSliderVideoRef.src = this.axiosBaseUrl + this.slider.video
+      this.$refs.mainSliderVideoRef.src = this.backendBaseUrl + this.slider.video
       this.$refs.mainSliderVideoRef.crossOrigin = 'anonymous'
       this.$refs.mainSliderVideoRef.loop = false
       this.$refs.mainSliderVideoRef.autoplay = true

@@ -54,7 +54,7 @@
               :title="`Delete Comment of ${comment.post.title}`"
               data-method="delete"
               rel="nofollow"
-              @click="deleteComment(comment.id)"
+              @click="deleteComment()"
               >Delete</a
             >
           </div>
@@ -65,14 +65,15 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
 import { PropType } from 'vue'
 import { onClickOutside } from '@vueuse/core'
+import BlogModule from '@/state/blog/BlogModule'
+import { getModule } from 'vuex-module-decorators'
+import AuthModule from '@/state/auth/auth/AuthModule'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
 import { MainRouteNames } from '@/routes/Enum/MainRouteNames'
 import { Options as Component, Vue } from 'vue-class-component'
-import UserProfileModel from '@/state/user/data/UserProfileModel'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
 
 @Component({
@@ -93,8 +94,10 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
   },
 })
 export default class BlogCommentCard extends Vue {
+  blogModule = getModule(BlogModule)
+  authModule = getModule(AuthModule)
   MainRouteNames = MainRouteNames
-  $refs!: {
+  declare $refs: {
     userCommentActionTarget: HTMLElement
   }
   comment = new BlogCommentModel()
@@ -110,23 +113,16 @@ export default class BlogCommentCard extends Vue {
   }
 
   get isAuthenticated(): boolean {
-    return store.getters['auth/isAuthenticated']
-  }
-
-  get userData(): UserProfileModel {
-    if (this.isAuthenticated) {
-      return store.getters['user/getUserData']
-    }
-    return new UserProfileModel()
+    return this.authModule.isAuthenticated
   }
 
   public openCommentActions() {
     this.commentActionsOpen = true
   }
 
-  public async deleteComment(comment_id: BlogCommentModel['id']): Promise<void> {
+  public async deleteComment(): Promise<void> {
     if (confirm('Are you sure you want to delete your rating?')) {
-      await store.dispatch('blog/deleteCommentFromPost', comment_id)
+      await this.blogModule.deleteCommentFromPost()
     }
   }
 
@@ -144,7 +140,7 @@ export default class BlogCommentCard extends Vue {
     if (router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT_BLOG_COMMENTS) {
       return (
         'url(' +
-        'http://localhost:8010' +
+        process.env.VITE_APP_BASE_URL +
         '/mediastream/media/uploads/' +
         'blog' +
         '/' +

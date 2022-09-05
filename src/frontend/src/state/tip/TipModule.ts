@@ -1,10 +1,17 @@
 import gql from 'graphql-tag'
+import store from '@/dynamicStore'
 import TipModel from '@/state/tip/TipModel'
 import { clientApollo } from '../../../apollo.provider'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Module, Action, Mutation } from 'vuex-module-decorators'
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'tip',
+})
 export default class TipModule extends AppBaseModule {
   allTips: Array<TipModel> = []
 
@@ -28,7 +35,12 @@ export default class TipModule extends AppBaseModule {
               title
               content
               kind
-              icon
+              icon {
+                name
+                path
+                size
+                url
+              }
               url
               createdAt
               active

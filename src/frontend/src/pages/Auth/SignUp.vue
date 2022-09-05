@@ -14,7 +14,7 @@
             >
               <div class="container">
                 <div class="email mb-3">
-                  <label :for="formManager.form.email.$uid" class="label mb-2">Email</label>
+                  <label :for="String(formManager.form.email.$uid)" class="label mb-2">Email</label>
                   <FormBaseInput
                     :id="formManager.form.email.$uid"
                     v-model="formManager.form.email.$value"
@@ -24,7 +24,6 @@
                     :validating="formManager.form.email.$validating"
                     placeholder="Alice, Bob, Oscar"
                     autocomplete="username"
-                    @blur="formManager.form.email.onBlur"
                   />
                   <FormValidationErrors
                     :errors="formManager.form.email.$errors"
@@ -32,7 +31,9 @@
                   />
                 </div>
                 <div class="password mb-3">
-                  <label :for="formManager.form.password.$uid" class="label mb-2">Password</label>
+                  <label :for="String(formManager.form.password.$uid)" class="label mb-2"
+                    >Password</label
+                  >
                   <FormBaseInput
                     :id="formManager.form.password.$uid"
                     v-model="formManager.form.password.$value"
@@ -41,13 +42,12 @@
                     :input-with-add-on-icon="keyIcon"
                     type="password"
                     autocomplete="new-password"
-                    @blur="formManager.form.password.onBlur"
                   />
                   <FormValidationErrors :errors="formManager.form.password.$errors" />
                 </div>
 
                 <div class="confirm-password mb-4">
-                  <label :for="formManager.form.confirmPassword.$uid" class="label mb-2">
+                  <label :for="String(formManager.form.confirmPassword.$uid)" class="label mb-2">
                     Confirm Password
                   </label>
                   <FormBaseInput
@@ -58,7 +58,6 @@
                     :input-with-add-on-icon="keyIcon"
                     type="password"
                     autocomplete="new-password"
-                    @blur="formManager.form.confirmPassword.onBlur"
                   />
                   <FormValidationErrors :errors="formManager.form.confirmPassword.$errors" />
                 </div>
@@ -103,7 +102,7 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
+import store from '@/dynamicStore'
 import router from '@/routes'
 import { min, email, equal } from '@/components/Form/Utils'
 import FormProvider from '@/components/Form/FormProvider.vue'
@@ -119,6 +118,8 @@ import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 import VerifyEmailResendInput from '@/pages/Auth/VerifyEmailResendInput.vue'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import { getModule } from 'vuex-module-decorators'
+import SignUpModule from '@/state/auth/signup/SignUpModule'
 
 let { validateFields } = useValidation({})
 
@@ -134,6 +135,7 @@ let { validateFields } = useValidation({})
   },
 })
 export default class Register extends Vue {
+  signupModule = getModule(SignUpModule)
   activationEmailAtLocalStorage = false
 
   formManager = ({ validateFields } = useValidation({
@@ -173,15 +175,15 @@ export default class Register extends Vue {
   }
 
   get registrationCompleted(): boolean {
-    return store.getters['signup/getRegistrationCompleted']
+    return this.signupModule.getRegistrationCompleted
   }
 
   get registrationError(): boolean {
-    return store.getters['signup/getRegistrationError']
+    return this.signupModule.getRegistrationError
   }
 
   get registrationLoading(): boolean {
-    return store.getters['signup/getRegistrationLoading']
+    return this.signupModule.getRegistrationLoading
   }
 
   mounted(): void {
@@ -189,19 +191,19 @@ export default class Register extends Vue {
   }
 
   updated(): void {
-    const emailFromLocalStorage = store.getters['signup/getRegistrationEmail']
+    const emailFromLocalStorage = this.signupModule.getRegistrationEmail
     if (emailFromLocalStorage) this.activationEmailAtLocalStorage = true
   }
 
   async clearRegistrationStatus(): Promise<void> {
-    await store.dispatch('signup/clearRegistrationStatus')
+    await this.signupModule.clearRegistrationStatus()
   }
 
   async activationEmailResend(): Promise<void> {
     const email = localStorage.getItem('registrationEmail')
 
     if (email) {
-      await store.dispatch('signup/activationEmailResend', email)
+      await this.signupModule.activationEmailResend(email)
     } else {
       await router.push('/accounts/activate/verify_mail_resend')
     }
@@ -217,8 +219,8 @@ export default class Register extends Vue {
         password: formData.password,
         re_password: formData.confirmPassword,
       }
-      await store.commit('signup/setRegistrationEmail', apiData.email)
-      await store.dispatch('signup/createAccount', apiData)
+      await this.signupModule.setRegistrationEmail(apiData.email)
+      await this.signupModule.createAccount(apiData as FormData)
     } catch (e) {
       if (e instanceof ValidationError) {
         console.log(e.message)

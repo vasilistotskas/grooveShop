@@ -12,6 +12,7 @@
 </template>
 
 <script lang="ts">
+import { PropType } from 'vue'
 import TipModel from '@/state/tip/TipModel'
 import TipCard from '@/components/Tip/TipCard.vue'
 import { Options as Component, Vue } from 'vue-class-component'
@@ -23,7 +24,7 @@ import { Options as Component, Vue } from 'vue-class-component'
   },
   props: {
     allTips: {
-      type: Array,
+      type: Array as PropType<Array<TipModel>>,
       required: true,
     },
   },

@@ -1,4 +1,4 @@
-import store from '@/store'
+import store from '@/dynamicStore'
 import api from '@/api/api.service'
 import { AxiosResponse } from 'axios'
 import { useToast } from 'vue-toastification'
@@ -8,7 +8,13 @@ import UserProfileModel from '@/state/user/data/UserProfileModel'
 
 const toast = useToast()
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'user',
+})
 export default class UserModule extends AppBaseModule {
   user_id!: number | undefined
   user_email!: string | undefined
@@ -45,27 +51,18 @@ export default class UserModule extends AppBaseModule {
   unsetUserData(): void {
     this.data = new UserProfileModel()
     this.user_id = undefined
-
-    store.dispatch('auth/logout').then(() => {
-      store.commit('product/favourite/unsetFavourites')
-      store.commit('product/favourite/unsetUserFavourites')
-      store.commit('product/review/unsetUserToProductReview')
-      store.commit('product/review/unsetUserReviews')
-      store.commit('country/unsetUserCountryData')
-    })
   }
 
   @Action
-  fetchUserDataFromRemote(): Promise<void> {
+  fetchUserDataFromRemote(): Promise<AxiosResponse<Array<UserProfileModel>> | void> {
     return api
       .get('userprofile/data')
-      .then((response: AxiosResponse<Array<UserProfileModel>>) => {
+      .then(async (response: AxiosResponse<Array<UserProfileModel>>) => {
         const data = response.data
         this.context.commit('setUserData', data[0])
         this.context.commit('setUserId', data[0].id)
         this.context.commit('setUserEmail', data[0].email)
-        store.dispatch('country/findRegionsBasedOnAlphaForLoggedCustomer')
-        store.dispatch('product/favourite/fetchUserFavouritesFromRemote', response.data[0].user)
+        return response
       })
       .catch((e: Error) => {
         console.log(e)
@@ -74,10 +71,12 @@ export default class UserModule extends AppBaseModule {
 
   @Action
   async updateUserProfile(
-    data: Record<
-      string,
-      string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]
-    >
+    data:
+      | Record<
+          string,
+          string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]
+        >
+      | FormData
   ): Promise<void> {
     const user_id = await this.context.getters['getUserId']
 

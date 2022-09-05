@@ -13,7 +13,9 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
+import AppModule from '@/state/app/AppModule'
+import { getModule } from 'vuex-module-decorators'
+import AppSettingsModule from '@/state/app/AppSettingsModule'
 import { Options as Component, Vue } from 'vue-class-component'
 import { faSun } from '@fortawesome/free-solid-svg-icons/faSun'
 import { faMoon } from '@fortawesome/free-solid-svg-icons/faMoon'
@@ -23,13 +25,14 @@ import AppSettingsThemeModeOption from '@/state/app/AppSettingsThemeModeOption'
   name: 'ThemeModeSwitcher',
 })
 export default class ThemeModeSwitcher extends Vue {
+  settingsModule = getModule(AppSettingsModule)
   sunIcon = faSun
   moonIcon = faMoon
 
   themeModeFromPreference: AppSettingsThemeModeOption = AppSettingsThemeModeOption.light
 
   get getThemeMode(): AppSettingsThemeModeOption {
-    return store.getters['settings/getSettings'].themeMode
+    return this.settingsModule.getSettings.themeMode
   }
 
   get themeModeFromLocalStorage(): AppSettingsThemeModeOption {
@@ -78,7 +81,8 @@ export default class ThemeModeSwitcher extends Vue {
     bodyElement.classList.remove(from)
     bodyElement.classList.add(to)
 
-    store.dispatch('app/updateMetaTagElement', {
+    const appModule = getModule(AppModule)
+    appModule.updateMetaTagElement({
       metaName: 'color-scheme',
       metaAttribute: 'content',
       newValue: to,
@@ -86,23 +90,23 @@ export default class ThemeModeSwitcher extends Vue {
   }
 
   private updateThemeModeFromLocalStorage(): void {
-    store
-      .dispatch('settings/toggleThemeModeFromPreference', this.themeModeFromLocalStorage)
+    this.settingsModule
+      .toggleThemeModeFromPreference(this.themeModeFromLocalStorage)
       .then((themeMode) => this.updateThemeMode(themeMode))
   }
 
   private updateThemeModeFromPreference(): void {
     if (AppSettingsThemeModeOption.no_theme === this.themeModeFromLocalStorage) {
-      store
-        .dispatch('settings/toggleThemeModeFromPreference', this.themeModeFromPreference)
+      this.settingsModule
+        .toggleThemeModeFromPreference(this.themeModeFromPreference)
         .then((themeMode) => this.updateThemeMode(themeMode))
     } else {
       this.updateThemeModeFromLocalStorage()
     }
   }
 
-  private toggleThemeMode(): void {
-    store.dispatch('settings/toggleThemeMode').then((themeMode) => this.updateThemeMode(themeMode))
+  public toggleThemeMode(): void {
+    this.settingsModule.toggleThemeMode().then((themeMode) => this.updateThemeMode(themeMode))
   }
 
   private updateThemeMode(

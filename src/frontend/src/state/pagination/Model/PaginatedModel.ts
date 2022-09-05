@@ -1,5 +1,5 @@
 import EntityBase from '@/state/common/EntityBase'
-import { TPaginatedModel, PaginationTotalPages } from '@/state/pagination/Type/PaginationTypes'
+import { PaginationTotalPages, PaginationResults } from '@/state/pagination/Type/PaginationTypes'
 
 export default class PaginatedModel<T> extends EntityBase {
   count!: number
@@ -7,7 +7,7 @@ export default class PaginatedModel<T> extends EntityBase {
     next: null,
     previous: null,
   }
-  results!: Array<TPaginatedModel<T>>
+  results!: PaginationResults<T>
   total_pages!: PaginationTotalPages
 
   public constructor(data?: Partial<PaginatedModel<T>>) {

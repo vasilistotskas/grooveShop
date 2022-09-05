@@ -1,10 +1,17 @@
+import store from '@/dynamicStore'
 import api from '@/api/api.service'
 import { AxiosResponse } from 'axios'
 import SliderModel from '@/state/slider/SliderModel'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Module, Action, Mutation } from 'vuex-module-decorators'
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'slider',
+})
 export default class SliderModule extends AppBaseModule {
   sliders: Array<SliderModel> = []
 

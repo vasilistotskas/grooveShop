@@ -10,7 +10,7 @@
   >
     <div class="grid-account-setting-fields">
       <div class="first_name">
-        <label :for="formManager.form.first_name.$uid" class="label">First Name</label>
+        <label :for="String(formManager.form.first_name.$uid)" class="label">First Name</label>
         <FormBaseInput
           :id="formManager.form.first_name.$uid"
           v-model="formManager.form.first_name.$value"
@@ -25,7 +25,7 @@
       </div>
 
       <div class="last_name">
-        <label :for="formManager.form.last_name.$uid" class="label">Last Name</label>
+        <label :for="String(formManager.form.last_name.$uid)" class="label">Last Name</label>
         <FormBaseInput
           :id="formManager.form.last_name.$uid"
           v-model="formManager.form.last_name.$value"
@@ -40,7 +40,7 @@
       </div>
 
       <div class="phone">
-        <label :for="formManager.form.phone.$uid" class="label">Phone</label>
+        <label :for="String(formManager.form.phone.$uid)" class="label">Phone</label>
         <FormBaseInput
           :id="formManager.form.phone.$uid"
           v-model="formManager.form.phone.$value"
@@ -52,7 +52,7 @@
       </div>
 
       <div class="city">
-        <label :for="formManager.form.city.$uid" class="label">City</label>
+        <label :for="String(formManager.form.city.$uid)" class="label">City</label>
         <FormBaseInput
           :id="formManager.form.city.$uid"
           v-model="formManager.form.city.$value"
@@ -64,7 +64,7 @@
       </div>
 
       <div class="zipcode">
-        <label :for="formManager.form.zipcode.$uid" class="label">Zipcode</label>
+        <label :for="String(formManager.form.zipcode.$uid)" class="label">Zipcode</label>
         <FormBaseInput
           :id="formManager.form.zipcode.$uid"
           v-model="formManager.form.zipcode.$value"
@@ -79,7 +79,7 @@
       </div>
 
       <div class="address">
-        <label :for="formManager.form.address.$uid" class="label">Address</label>
+        <label :for="String(formManager.form.address.$uid)" class="label">Address</label>
         <FormBaseInput
           :id="formManager.form.address.$uid"
           v-model="formManager.form.address.$value"
@@ -94,7 +94,7 @@
       </div>
 
       <div class="place">
-        <label :for="formManager.form.place.$uid" class="label">Place</label>
+        <label :for="String(formManager.form.place.$uid)" class="label">Place</label>
         <FormBaseInput
           :id="formManager.form.place.$uid"
           v-model="formManager.form.place.$value"
@@ -149,12 +149,15 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { PropType } from 'vue'
 import { cloneDeep } from 'lodash'
+import { getModule } from 'vuex-module-decorators'
+import AuthModule from '@/state/auth/auth/AuthModule'
+import UserModule from '@/state/user/data/UserModule'
 import { exactly, min } from '@/components/Form/Utils'
 import RegionsModel from '@/state/country/RegionsModel'
 import CountryModel from '@/state/country/CountryModel'
+import CountryModule from '@/state/country/CountryModule'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
 import { Options as Component, Vue } from 'vue-class-component'
@@ -183,6 +186,9 @@ let { validateFields } = useValidation({})
   },
 })
 export default class UserSettings extends Vue {
+  authModule = getModule(AuthModule)
+  countryModule = getModule(CountryModule)
+  userModule = getModule(UserModule)
   userProfile = new UserProfileModel()
   userData = new UserProfileModel()
   submitButtonText = 'Update'
@@ -226,15 +232,15 @@ export default class UserSettings extends Vue {
   }))
 
   get isAuthenticated(): boolean {
-    return store.getters['auth/isAuthenticated']
+    return this.authModule.isAuthenticated
   }
 
   get availableCountries(): Array<CountryModel> {
-    return store.getters['country/getCountries']
+    return this.countryModule.getCountries
   }
 
-  get regionsBasedOnAlpha(): RegionsModel {
-    return store.getters['country/getRegionsBasedOnAlpha']
+  get regionsBasedOnAlpha(): Array<RegionsModel> {
+    return this.countryModule.getRegionsBasedOnAlpha
   }
 
   async mounted(): Promise<void> {
@@ -245,7 +251,7 @@ export default class UserSettings extends Vue {
 
   async restRegions(e: HTMLElementEvent<HTMLTextAreaElement>): Promise<void> {
     const countryAlpha2Key = e.target?.value
-    await store.dispatch('country/findRegionsBasedOnAlphaFromInput', countryAlpha2Key)
+    await this.countryModule.findRegionsBasedOnAlphaFromInput(countryAlpha2Key)
     this.userProfile.region = 'choose'
   }
 
@@ -265,7 +271,7 @@ export default class UserSettings extends Vue {
         region: this.userProfile.region,
       }
 
-      await store.dispatch('user/updateUserProfile', apiData)
+      await this.userModule.updateUserProfile(apiData as unknown as FormData)
     } catch (e) {
       if (e instanceof ValidationError) {
         console.log(e.message)

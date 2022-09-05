@@ -1,19 +1,23 @@
-import store from '@/store'
-import router from '@/routes'
+import { cloneDeep } from 'lodash'
+import store from '@/dynamicStore'
 import api from '@/api/api.service'
 import { AxiosResponse } from 'axios'
 import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/state/common/AppBaseModule'
-import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import PaginatedModel from '@/state/pagination/Model/PaginatedModel'
-import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 const toast = useToast()
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'productReview',
+})
 export default class ProductReviewModule extends AppBaseModule {
   namespace = PaginationNamespaceTypesEnum.USER_REVIEWS
   productReviews: Array<ProductReviewModel> = []
@@ -22,6 +26,10 @@ export default class ProductReviewModule extends AppBaseModule {
 
   userReviews: Array<ProductReviewModel> = []
   userToProductReview = new ProductReviewModel()
+
+  get getNamespace(): PaginationNamespaceTypesEnum {
+    return this.namespace
+  }
 
   get getProductReviews(): ProductReviewModel[] {
     return this.productReviews
@@ -48,11 +56,11 @@ export default class ProductReviewModule extends AppBaseModule {
   }
 
   @Mutation
-  setProductReviews(productReviews: Array<ProductReviewModel>): void {
-    const user_id: number = store.getters['user/getUserId']
+  setProductReviews(data: { productReviews: Array<ProductReviewModel>; userId: number }): void {
+    const productReviews = cloneDeep(data.productReviews)
 
     productReviews.forEach(function (item, i) {
-      if (item.user_id === user_id) {
+      if (item.user_id === data.userId) {
         productReviews.splice(i, 1)
         productReviews.unshift(item)
       }
@@ -82,45 +90,6 @@ export default class ProductReviewModule extends AppBaseModule {
   }
 
   @Mutation
-  removeUserToProductReview<T>(data: Record<string, T>): void {
-    if (router.currentRoute.value.name === 'Product') {
-      const paginationQuery: PaginationModel = PaginationModel.createPaginationQuery({
-        endpointUrl: `reviews/product/${data.product_id}`,
-        queryParams: {
-          page: store.getters['pagination/getCurrentPageNumber'](this.namespace),
-          query: store.getters['pagination/getCurrentQuery'](this.namespace),
-        },
-        method: ApiBaseMethods.GET,
-      })
-
-      store
-        .dispatch('pagination/fetchPaginatedResults', {
-          params: paginationQuery,
-          namespace: this.namespace,
-        })
-        .then(() => toast.error('Your review has been deleted'))
-    }
-
-    if (router.currentRoute.value.name === 'Reviews') {
-      const paginationQuery: PaginationModel = PaginationModel.createPaginationQuery({
-        endpointUrl: `reviews/user/${data.user_id}`,
-        queryParams: {
-          page: store.getters['pagination/getCurrentPageNumber'](this.namespace),
-          query: store.getters['pagination/getCurrentQuery'](this.namespace),
-        },
-        method: ApiBaseMethods.GET,
-      })
-
-      store
-        .dispatch('pagination/fetchPaginatedResults', {
-          params: paginationQuery,
-          namespace: this.namespace,
-        })
-        .then(() => toast.error('Your review has been deleted'))
-    }
-  }
-
-  @Mutation
   setUserReviews(reviews: Array<ProductReviewModel>): void {
     this.userReviews = reviews
   }
@@ -147,18 +116,27 @@ export default class ProductReviewModule extends AppBaseModule {
   }
 
   @Action
-  async toggleReview(data: FormData): Promise<void> {
-    const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
-    if (IsAuthenticated) {
-      const product_id: string = store.getters['product/getProductId']
-      const user_id: string = store.getters['user/getUserId']
-      data.append('user_id', user_id)
-      data.append('product_id', product_id)
+  async toggleReview(data: {
+    FormData: FormData
+    IsAuthenticated: boolean
+    productId: number
+    userId: number | undefined
+  }): Promise<void> {
+    if (data.IsAuthenticated) {
+      data.FormData.append('user_id', String(data.userId))
+      data.FormData.append('product_id', String(data.productId))
       try {
         if (!this.getUserHasAlreadyReviewedProduct) {
-          await this.context.dispatch('createCurrentProductReview', data)
+          await this.context.dispatch('createCurrentProductReview', {
+            FormData: data.FormData,
+            productId: data.productId,
+          })
         } else {
-          await this.context.dispatch('updateCurrentProductReview', data)
+          await this.context.dispatch('updateCurrentProductReview', {
+            FormData: data.FormData,
+            productId: data.productId,
+            userId: data.userId,
+          })
         }
       } catch (error) {
         console.log(error)
@@ -183,13 +161,12 @@ export default class ProductReviewModule extends AppBaseModule {
   }
 
   @Action
-  fetchCurrentProductReviewsFromRemote<T>(): Promise<void> {
-    const product_id: number = store.getters['product/getProductId']
+  fetchCurrentProductReviewsFromRemote(productId: number, userId: number): Promise<void> {
     return api
-      .get(`reviews/product/${product_id}/`)
-      .then((response: AxiosResponse<PaginatedModel<T>>) => {
+      .get(`reviews/product/${productId}/`)
+      .then((response: AxiosResponse<PaginatedModel<ProductReviewModel>>) => {
         const data = response.data
-        this.context.commit('setProductReviews', data)
+        this.context.commit('setProductReviews', { productReviews: data, userId: userId })
       })
       .catch((e: Error) => {
         console.log(e)
@@ -197,13 +174,12 @@ export default class ProductReviewModule extends AppBaseModule {
   }
 
   @Action
-  createCurrentProductReview<T>(data: FormData): Promise<void> {
-    const product_id: number = store.getters['product/getProductId']
+  createCurrentProductReview<T>(data: { FormData: FormData; productId: number }): Promise<void> {
     return api
-      .post(`reviews/product/${product_id}/`, data)
+      .post(`reviews/product/${data.productId}/`, data.FormData)
       .then((response: AxiosResponse<PaginatedModel<T>>) => {
-        const data = response.data
-        this.context.commit('createUserToProductReview', data)
+        const responseData = response.data
+        this.context.commit('createUserToProductReview', responseData)
         toast.success('Your review has been created')
       })
       .catch((e: Error) => {
@@ -212,12 +188,15 @@ export default class ProductReviewModule extends AppBaseModule {
   }
 
   @Action
-  fetchUserToProductReviewFromRemote(): Promise<void> {
-    const user_id: number = store.getters['user/getUserId']
-    const product_id: number = store.getters['product/getProductId']
-
+  fetchUserToProductReviewFromRemote(data: {
+    productId: number
+    userId: number | undefined
+  }): Promise<void> | ProductReviewModel {
+    if (!data.userId) {
+      return new ProductReviewModel()
+    }
     return api
-      .get(`reviews/review/${user_id}/${product_id}/`)
+      .get(`reviews/review/${data.userId}/${data.productId}/`)
       .then((response: AxiosResponse<ProductReviewModel>) => {
         const data = response.data
         this.context.commit('setUserToProductReview', data)
@@ -228,16 +207,17 @@ export default class ProductReviewModule extends AppBaseModule {
   }
 
   @Action
-  updateCurrentProductReview(data: FormData): Promise<void> {
-    const user_id: number = store.getters['user/getUserId']
-    const product_id: number = store.getters['product/getProductId']
-
+  updateCurrentProductReview(data: {
+    FormData: FormData
+    productId: number
+    userId: number
+  }): Promise<void> {
     return api
-      .patch(`reviews/review/${user_id}/${product_id}/`, data)
+      .patch(`reviews/review/${data.userId}/${data.productId}/`, data.FormData)
       .then((response: AxiosResponse<ProductReviewModel>) => {
-        const data = response.data
-        this.context.commit('setUserToProductReview', data)
-        this.context.commit('updateUserToProductReview', data.id)
+        const responseData = response.data
+        this.context.commit('setUserToProductReview', responseData)
+        this.context.commit('updateUserToProductReview', responseData.id)
         toast.success('Your review has been updated')
       })
       .catch((e: Error) => {
@@ -250,7 +230,6 @@ export default class ProductReviewModule extends AppBaseModule {
     return api
       .delete(`reviews/review/${data.userId}/${data.productId}/`)
       .then(() => {
-        this.context.commit('removeUserToProductReview', data)
         this.context.commit('unsetUserToProductReview')
       })
       .catch((e: Error) => {

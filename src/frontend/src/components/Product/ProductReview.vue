@@ -22,12 +22,12 @@
                     ref="ratingBoard"
                     class="rating-board rating-background"
                     @click="lockSelection($event)"
-                    @mouseenter="unlockSelection($event)"
-                    @mouseleave="reLockSelection($event)"
+                    @mouseenter="unlockSelection()"
+                    @mouseleave="reLockSelection()"
                     @mousemove="updateNewSelectionRatio($event)"
-                    @touchend="reLockSelection($event)"
+                    @touchend="reLockSelection()"
                     @touchmove="updateNewSelectionRatio($event)"
-                    @touchstart="unlockSelection($event)"
+                    @touchstart="unlockSelection()"
                   >
                     <svg
                       v-for="(star, i) of backgroundStars"
@@ -88,12 +88,16 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
+import { getModule } from 'vuex-module-decorators'
 import { RouteLocationNormalized } from 'vue-router'
+import AuthModule from '@/state/auth/auth/AuthModule'
+import UserModule from '@/state/user/data/UserModule'
+import ProductModule from '@/state/product/ProductModule'
 import { Options as Component, Vue } from 'vue-class-component'
 import { first, last, filter, times, constant, cloneDeep } from 'lodash'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
 import { faPenSquare } from '@fortawesome/free-solid-svg-icons/faPenSquare'
+import ProductReviewModule from '@/state/product/review/ProductReviewModule'
 
 const starSvg =
   '<path data-v-558dc688="" fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" class=""></path>'
@@ -104,7 +108,11 @@ const starHalfSvg =
   name: 'ProductReview',
 })
 export default class ProductReview extends Vue {
-  $refs!: {
+  productReviewModule = getModule(ProductReviewModule)
+  authModule = getModule(AuthModule)
+  productModule = getModule(ProductModule)
+  userModule = getModule(UserModule)
+  declare $refs: {
     ratingBoard: HTMLElement
   }
 
@@ -218,11 +226,11 @@ export default class ProductReview extends Vue {
   }
 
   get userHasAlreadyReviewedProduct(): boolean {
-    return store.getters['product/review/getUserHasAlreadyReviewedProduct']
+    return this.productReviewModule.getUserHasAlreadyReviewedProduct
   }
 
   get userToProductReview(): ProductReviewModel {
-    return store.getters['product/review/getUserToProductReview']
+    return this.productReviewModule.getUserToProductReview
   }
 
   created() {
@@ -243,8 +251,8 @@ export default class ProductReview extends Vue {
     this.$watch(
       () => this.$route,
       () => {
-        store.commit('product/review/unsetUserToProductReview')
-        store.commit('product/review/unsetProductReviews')
+        this.productReviewModule.unsetUserToProductReview()
+        this.productReviewModule.unsetProductReviews()
       }
     )
   }
@@ -253,7 +261,7 @@ export default class ProductReview extends Vue {
     await this.reviewModuleInitialize()
   }
 
-  public lockSelection(event: MouseEvent) {
+  public lockSelection(event: TouchEvent | MouseEvent) {
     this.updateIsEditable(true)
     this.updateNewSelectionRatio(event)
     this.selectedRatio = this.newSelectionRatio
@@ -275,12 +283,15 @@ export default class ProductReview extends Vue {
     }
   }
 
-  public updateNewSelectionRatio(event: MouseEvent) {
+  public updateNewSelectionRatio(event: TouchEvent | MouseEvent) {
     if (!this.isEditable) {
       return
     }
     const target = this.$refs.ratingBoard
-    const leftBound = event.clientX - target.getBoundingClientRect().left
+    let leftBound = 0
+    if ('clientX' in event) {
+      leftBound = event.clientX - target.getBoundingClientRect().left
+    }
     const rightBound = target.getBoundingClientRect().right - target.getBoundingClientRect().left
     this.newSelectionRatio = leftBound / rightBound
   }
@@ -297,15 +308,23 @@ export default class ProductReview extends Vue {
       data.append('rate', this.rate as unknown as string)
     }
 
-    await store.dispatch('product/review/toggleReview', data)
+    await this.productReviewModule.toggleReview({
+      FormData: data,
+      IsAuthenticated: this.authModule.isAuthenticated,
+      productId: this.productModule.getProductId,
+      userId: this.userModule.getUserId,
+    })
   }
 
   public async reviewModuleInitialize(): Promise<void> {
-    await store.dispatch('product/fetchProductFromRemote')
-    const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
+    await this.productModule.fetchProductFromRemote()
+    const IsAuthenticated: boolean = this.authModule.isAuthenticated
 
     if (IsAuthenticated) {
-      await store.dispatch('product/review/fetchUserToProductReviewFromRemote')
+      await this.productReviewModule.fetchUserToProductReviewFromRemote({
+        productId: this.productModule.getProductId,
+        userId: this.userModule.getUserId,
+      })
 
       this.comment = cloneDeep(this.userToProductReview.comment)
       this.rate = cloneDeep(this.userToProductReview.rate)

@@ -7,14 +7,14 @@ const PaginationNamespaceDirectory = () => {
       ...newObject,
       [key]: {
         results: [],
-        results_count: 0,
-        results_next_page: '',
-        results_previous_page: '',
-        results_total_pages: 0,
-        current_page_number: 1,
-        current_query: '',
-        show_next_button: false,
-        show_previous_button: false,
+        resultsCount: 0,
+        resultsNextPage: '',
+        resultsPreviousPages: '',
+        resultsTotalPages: 0,
+        currentPageNumber: 1,
+        currentQuery: '',
+        showNextButton: false,
+        showPreviousButton: false,
       },
     }
   })

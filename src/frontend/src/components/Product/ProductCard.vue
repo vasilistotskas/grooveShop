@@ -18,21 +18,21 @@
             <span v-if="product.name">{{ contentShorten(product.name) }}</span>
           </div>
           <div class="card-review-content">
-            <!--            <div class="card-review-content-stars">-->
-            <!--              <svg-->
-            <!--                v-for="(star, i) of backgroundStars(product.review_average)"-->
-            <!--                :key="i"-->
-            <!--                aria-hidden="true"-->
-            <!--                class="star star-background"-->
-            <!--                data-icon="star"-->
-            <!--                data-prefix="fas"-->
-            <!--                focusable="false"-->
-            <!--                role="img"-->
-            <!--                viewBox="0 0 576 512"-->
-            <!--                xmlns="http://www.w3.org/2000/svg"-->
-            <!--                v-html="star"-->
-            <!--              />-->
-            <!--            </div>-->
+            <div class="card-review-content-stars">
+              <svg
+                v-for="(star, i) of backgroundStars(product.review_average)"
+                :key="i"
+                aria-hidden="true"
+                class="star star-background"
+                data-icon="star"
+                data-prefix="fas"
+                focusable="false"
+                role="img"
+                viewBox="0 0 576 512"
+                xmlns="http://www.w3.org/2000/svg"
+                v-html="star"
+              />
+            </div>
             <div class="card-review-content-count">
               <span>({{ product.review_counter }})</span>
             </div>
@@ -60,9 +60,10 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { constant, times } from 'lodash'
 import { helpers } from '@/helpers/main'
+import CartModule from '@/state/cart/CartModule'
+import { getModule } from 'vuex-module-decorators'
 import ProductModel from '@/state/product/ProductModel'
 import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
@@ -83,6 +84,7 @@ const starHalfSvg =
   },
 })
 export default class ProductCard extends Vue {
+  cartModule = getModule(CartModule)
   quantity = 1
   product = new ProductModel()
 
@@ -112,7 +114,7 @@ export default class ProductCard extends Vue {
       quantity: this.quantity,
     }
 
-    store.commit('cart/addToCart', item)
+    this.cartModule.addToCart(item)
   }
 
   public contentShorten(productName: string): string {

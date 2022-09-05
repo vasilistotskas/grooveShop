@@ -48,9 +48,10 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { cloneDeep } from 'lodash'
 import { onClickOutside } from '@vueuse/core'
+import AppModule from '@/state/app/AppModule'
+import { getModule } from 'vuex-module-decorators'
 import CategoryModel from '@/state/category/CategoryModel'
 import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
@@ -68,10 +69,11 @@ import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
   },
 })
 export default class NavbarCategories extends Vue {
-  $refs!: {
+  appModule = getModule(AppModule)
+  declare $refs: {
     headerNavbarMenu: HTMLElement
   }
-  categoryBoxHovered = null
+  categoryBoxHovered: null | number = null
   categoriesTree: Array<CategoryModel> = []
   categories: Array<CategoryModel> = []
   mainToggleButton!: HTMLElement
@@ -80,7 +82,7 @@ export default class NavbarCategories extends Vue {
   ImageTypeOptions = ImageTypeOptions
 
   get isLoading(): boolean {
-    return store.getters['app/getLoading']
+    return this.appModule.getLoading
   }
 
   mounted(): void {
@@ -98,7 +100,7 @@ export default class NavbarCategories extends Vue {
       'aria-expanded',
       this.mainToggleButton.classList.contains('opened') as unknown as string
     )
-    store.commit('app/setNavbarMenuHidden', true)
+    this.appModule.setNavbarMenuHidden(true)
   }
 }
 </script>

@@ -10,7 +10,7 @@
         <p>You can reset your password here.</p>
         <template v-if="emailLoading"> loading... </template>
         <template v-else-if="!emailCompleted">
-          <form @submit.prevent="submit">
+          <form>
             <div class="form-group">
               <div class="input-group-w-addon">
                 <span class="input-group-addon">
@@ -55,9 +55,10 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
+import { getModule } from 'vuex-module-decorators'
 import { Options as Component, Vue } from 'vue-class-component'
+import PasswordModule from '@/state/auth/password/PasswordModule'
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
@@ -70,6 +71,7 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
   },
 })
 export default class PasswordReset extends Vue {
+  passwordModule = getModule(PasswordModule)
   email = ''
 
   lockIcon = faLock
@@ -82,15 +84,15 @@ export default class PasswordReset extends Vue {
   }
 
   get emailCompleted(): boolean {
-    return store.getters['password/getEmailCompleted']
+    return this.passwordModule.getEmailCompleted
   }
 
   get emailError(): boolean {
-    return store.getters['password/getEmailError']
+    return this.passwordModule.getEmailError
   }
 
   get emailLoading(): boolean {
-    return store.getters['password/getEmailLoading']
+    return this.passwordModule.getEmailLoading
   }
 
   mounted(): void {
@@ -98,15 +100,15 @@ export default class PasswordReset extends Vue {
   }
 
   async unmounted(): Promise<void> {
-    await store.dispatch('password/clearEmailStatus')
+    await this.passwordModule.clearEmailStatus()
   }
 
   async sendResetEmail(email: string): Promise<void> {
-    await store.dispatch('password/sendPasswordResetEmail', email)
+    await this.passwordModule.sendPasswordResetEmail(email)
   }
 
   async clearEmailStatus(): Promise<void> {
-    await store.dispatch('password/clearEmailStatus')
+    await this.passwordModule.clearEmailStatus()
   }
 }
 </script>

@@ -32,8 +32,11 @@
       <div class="favourite-button-content">
         <FavouriteButton
           :model="postBySlug"
-          :getter-type="'blog/getIsCurrentPostInUserFavourites'"
-          :dispatch-type="'blog/toggleFavourite'"
+          :module="blogModule"
+          :getter-type="'getIsCurrentPostInUserFavourites'"
+          :getter-params="{ userEmail: userEmail }"
+          :dispatch-type="'toggleFavourite'"
+          :dispatch-params="{ postId: postBySlug.id, userId: userId }"
           :use-store="true"
         />
       </div>
@@ -44,9 +47,17 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
+import {
+  ImageFitOptions,
+  ImagePositionOptions,
+  ImageTypeOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
 import router from '@/routes'
 import { RouteParams } from 'vue-router'
+import BlogModule from '@/state/blog/BlogModule'
+import { getModule } from 'vuex-module-decorators'
+import AuthModule from '@/state/auth/auth/AuthModule'
+import UserModule from '@/state/user/data/UserModule'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions
 import BlogComment from '@/components/Blog/BlogComment.vue'
@@ -57,11 +68,6 @@ import BlogAuthorLink from '@/components/Blog/BlogAuthorLink.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import FavouriteButton from '@/components/Utilities/FavouriteButton.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
-import {
-  ImageFitOptions,
-  ImagePositionOptions,
-  ImageTypeOptions,
-} from '@/helpers/MediaStream/ImageUrlEnum'
 
 @Component({
   name: 'BlogPost',
@@ -81,6 +87,9 @@ import {
   },
 })
 export default class BlogPost extends Vue {
+  blogModule = getModule(BlogModule)
+  authModule = getModule(AuthModule)
+  userModule = getModule(UserModule)
   ImageTypeOptions = ImageTypeOptions
   ImageFitOptions = ImageFitOptions
   ImagePositionOptions = ImagePositionOptions
@@ -92,23 +101,31 @@ export default class BlogPost extends Vue {
   }
 
   get postBySlug(): BlogPostModel {
-    return store.getters['blog/getPostBySlug']
+    return this.blogModule.getPostBySlug
   }
 
   get isAuthenticated(): boolean {
-    return store.getters['auth/isAuthenticated']
+    return this.authModule.isAuthenticated
+  }
+
+  get userEmail(): string {
+    return this.userModule.getUserData.email
+  }
+
+  get userId(): number {
+    return this.userModule.getUserData.id
   }
 
   async created(): Promise<void> {
-    await store.dispatch('blog/fetchPostBySlugFromRemote')
-    await store.dispatch('blog/fetchCommentsByPost')
+    await this.blogModule.fetchPostBySlugFromRemote()
+    await this.blogModule.fetchCommentsByPost()
     if (this.isAuthenticated) {
-      await store.dispatch('blog/fetchCommentByUserToPost')
+      await this.blogModule.fetchCommentByUserToPost(this.userModule.getUserData.email)
     }
   }
 
   unmounted(): void {
-    store.commit('blog/clearPostData')
+    this.blogModule.clearPostData()
   }
 
   public displayableDate(date: string): string {

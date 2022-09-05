@@ -1,4 +1,5 @@
 import router from '@/routes'
+import store from '@/dynamicStore'
 import api from '@/api/api.service'
 import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/state/common/AppBaseModule'
@@ -8,7 +9,13 @@ import UpdatePasswordApiData from '@/state/auth/Interface/UpdatePasswordApiData'
 
 const toast = useToast()
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'password',
+})
 export default class PasswordModule extends AppBaseModule {
   emailCompleted = false
   emailError = false

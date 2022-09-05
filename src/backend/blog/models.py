@@ -6,7 +6,7 @@ from tinymce.models import HTMLField
 User = settings.AUTH_USER_MODEL
 
 
-class Profile(models.Model):
+class Author(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     website = models.URLField(blank=True, null=True)
@@ -47,7 +47,7 @@ class Category(models.Model):
     def main_image_absolute_url(self) -> str:
         try:
             if self.id is not None:
-                image = settings.APP_BASE_URL + self.image.url
+                image = settings.BACKEND_BASE_URL + self.image.url
             else:
                 image = ""
             return image
@@ -81,8 +81,8 @@ class Post(models.Model):
     # Each post belong to one author and one category.
     # Each post has many tags, and each tag has many posts.
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-    tags = models.ManyToManyField(Tag, blank=True)
-    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
+    tags = models.ManyToManyField(Tag, related_name='post_tag', blank=True)
+    author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
 
     class Meta:
         ordering = ["-publish_date"]
@@ -94,7 +94,7 @@ class Post(models.Model):
     def main_image_absolute_url(self) -> str:
         try:
             if self.id is not None:
-                image = settings.APP_BASE_URL + self.image.url
+                image = settings.BACKEND_BASE_URL + self.image.url
             else:
                 image = ""
             return image

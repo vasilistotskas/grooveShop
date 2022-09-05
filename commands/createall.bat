@@ -6,11 +6,15 @@ REM createblogfaker.bat
 
 docker-compose run backend sh -c "python manage.py makemigrations --noinput"
 docker-compose run backend sh -c "python manage.py migrate"
+docker-compose run backend sh -c "python manage.py populate_all"
 docker-compose run backend sh -c "python manage.py populate_users"
 docker-compose run backend sh -c "python manage.py populate_products"
 docker-compose run backend sh -c "python manage.py populate_orders"
 docker-compose run backend sh -c "python manage.py populate_blog"
 docker-compose run backend sh -c "python manage.py populate_reviews"
+docker-compose run backend sh -c "python manage.py populate_countries"
+docker-compose run backend sh -c "python manage.py populate_sliders"
+docker-compose run backend sh -c "python manage.py populate_tips"
 docker-compose run backend sh -c "python manage.py collectstatic --noinput"
 docker-compose run backend sh -c "python manage.py createsuperuser"
 

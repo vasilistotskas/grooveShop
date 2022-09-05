@@ -1,4 +1,4 @@
-import CartItemCheckout from '@/state/cart/CartItemCheckout'
+import CartItemCheckoutModel from '@/state/cart/CartItemCheckoutModel'
 
 export default interface CheckoutOrderApiData {
   user_id: number
@@ -14,5 +14,5 @@ export default interface CheckoutOrderApiData {
   country: string
   region: string
   customer_notes: string
-  items: Array<CartItemCheckout>
+  items: Array<CartItemCheckoutModel>
 }

@@ -22,7 +22,9 @@ services:
       - DEBUG=${DEBUG}
       - SECRET_KEY=${SECRET_KEY}
       - APPEND_SLASH=${APPEND_SLASH}
+      - BACKEND_BASE_URL=${BACKEND_BASE_URL}
       - APP_BASE_URL=${APP_BASE_URL}
+      - VITE_APP_URL=${VITE_APP_URL}
       - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
@@ -44,7 +46,7 @@ services:
       - db
       - redis
     ports:
-      - 8001:8001
+      - "8001:8001"
     networks:
       - groovy-backbone
 
@@ -59,7 +61,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
-      - 5432:5432
+      - "5432:5432"
     networks:
       - groovy-backbone
 
@@ -73,7 +75,7 @@ services:
       - ./src:/src
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
-      - 8010:8010
+      - "8010:8010"
     depends_on:
       - backend
     restart: always
@@ -89,7 +91,7 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
       - PGADMIN_LISTEN_PORT=${PGADMIN_LISTEN_PORT}
     ports:
-      - 5050:5050
+      - "5050:5050"
     depends_on:
       - db
     networks:
@@ -100,7 +102,7 @@ services:
     image: redis
     restart: always
     ports:
-      - 6379:6379
+      - "6379:6379"
     networks:
       - groovy-backbone
 
@@ -112,7 +114,7 @@ services:
       dockerfile: ./Dockerfile
     command: npm run start:prod
     ports:
-      - 3003:3003
+      - "3003:3003"
     volumes:
       - ./mediaStream:/usr/src/app
       - /usr/src/app/node_modules
@@ -121,6 +123,39 @@ services:
     depends_on:
       - db
       - redis
+      - backend
+    networks:
+      - groovy-backbone
+
+  frontend:
+    container_name: frontend
+    image: node:lts
+    build:
+      context: .
+      dockerfile: docker/Frontend.Dockerfile
+    volumes:
+      - ./src/frontend/var:/frontend/var
+      - ./src/frontend/env:/frontend/env
+      - ./src/frontend/public:/frontend/public
+      - ./src/frontend/src:/frontend/src
+      - ./src/frontend/.eslintrc.cjs:/frontend/.eslintrc.cjs
+      - ./src/frontend/.prettierrc.yaml:/frontend/.prettierrc.yaml
+      - ./src/frontend/apollo.provider.ts:/frontend/apollo.provider.ts
+      - ./src/frontend/babel.config.js:/frontend/babel.config.js
+      - ./src/frontend/env.d.ts:/frontend/env.d.ts
+      - ./src/frontend/index.html:/frontend/index.html
+      - ./src/frontend/package.json:/frontend/package.json
+      - ./src/frontend/package-lock.json:/frontend/package-lock.json
+      - ./src/frontend/tsconfig.json:/frontend/tsconfig.json
+      - ./src/frontend/tsconfig.node.json:/frontend/tsconfig.node.json
+      - ./src/frontend/typings.d.ts:/frontend/typings.d.ts
+      - ./src/frontend/vite.config.ts:/frontend/vite.config.ts
+      - ./src/frontend/vue.config.js:/frontend/vue.config.js
+      - /src/node_modules
+    restart: "always"
+    ports:
+      - "8011:8011"
+    depends_on:
       - backend
     networks:
       - groovy-backbone
@@ -142,26 +177,6 @@ services:
 #    depends_on:
 #      - db
 #      - redis
-#      - app
-
-#  frontend:
-#    container_name: frontend
-#    image: vuejs/ci
-#    build:
-#      context: .
-#      dockerfile: docker/Frontend.Dockerfile
-#    restart: always
-#    volumes:
-#      - ./app/frontend:/frontend
-#      - /app/node_modules
-#    environment:
-#      - NODE_ENV=development
-#      - BASE_URL=http://localhost:8010
-#      - VUE_APP_I18N_LOCALE=en
-#      - VUE_APP_I18N_FALLBACK_LOCALE=en
-#      - VUE_APP_API_URL=http://localhost:8010
-#      - VUE_APP_GRAPHQL_URL=http://localhost:8010/graphql
-#    depends_on:
 #      - app
 
 volumes:

@@ -1,11 +1,17 @@
-import store from '@/store'
+import store from '@/dynamicStore'
 import api from '@/api/api.service'
 import { AxiosResponse } from 'axios'
 import PayWayModel from '@/state/payway/PayWayModel'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'payWay',
+})
 export default class PayWayModule extends AppBaseModule {
   activePayWays: Array<PayWayModel> = []
   selectedPayWay = new PayWayModel()
@@ -29,15 +35,16 @@ export default class PayWayModule extends AppBaseModule {
     return this.selectedPayWay.name !== undefined
   }
 
-  get getSelectedPayCost(): PayWayModel['cost'] {
-    const cartTotalPrice = store.getters['cart/getCartTotalPrice']
-    if (
-      Number(this.selectedPayWay.free_for_order_amount) < Number(cartTotalPrice) ||
-      !this.selectedPayWay.cost
-    ) {
-      return 0
+  get getSelectedPayCost(): (cartTotalPrice: number) => number {
+    return (cartTotalPrice: number) => {
+      if (
+        Number(this.selectedPayWay.free_for_order_amount) < Number(cartTotalPrice) ||
+        !this.selectedPayWay.cost
+      ) {
+        return 0
+      }
+      return Number(this.selectedPayWay.cost)
     }
-    return Number(this.selectedPayWay.cost)
   }
 
   @Mutation

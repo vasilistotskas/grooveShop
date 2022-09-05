@@ -1,9 +1,16 @@
 import { ComputedRef } from 'vue'
+import store from '@/dynamicStore'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import MetaData from '@/state/common/Interface/MetaData'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'app',
+})
 export default class AppModule extends AppBaseModule {
   loading = false
   windowWidth: number = window.innerWidth
@@ -18,8 +25,8 @@ export default class AppModule extends AppBaseModule {
     return this.navbarMenuHidden
   }
 
-  get axiosBaseUrl(): string | undefined {
-    return 'http://localhost:8010'
+  get backendBaseUrl(): string | undefined {
+    return process.env.VITE_APP_BASE_URL
   }
 
   get getWindowWidth(): number {

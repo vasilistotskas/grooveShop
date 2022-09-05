@@ -9,7 +9,7 @@
 
         <Pagination
           v-if="Object.keys(allPaginatedResults).length !== 0"
-          :endpoint-url="'products/all'"
+          :endpoint-url="MainRoutePaths.ALL_PRODUCTS"
           :max-visible-buttons="3"
           :route="PaginationRoutesEnum.ALL_PRODUCTS"
           :total-pages="allPaginatedResultsTotalPages"
@@ -30,24 +30,26 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
+import { getModule } from 'vuex-module-decorators'
 import ProductModel from '@/state/product/ProductModel'
 import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
+import { MainRoutePaths } from '@/routes/Enum/MainRoutePaths'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import PaginationBase from '@/components/Pagination/PaginationBase'
+import PaginationModule from '@/state/pagination/PaginationModule'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
-import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
+import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
   name: 'AllProducts',
-  extends: PaginationBase,
+  extends: PaginatedComponent,
   components: {
     ProductCard,
     Pagination,
@@ -55,11 +57,13 @@ import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/Pagination
   },
 })
 export default class AllProducts
-  extends PaginationBase<ProductModel>
-  implements PaginatedInterface<ProductModel>
+  extends PaginatedComponent<ProductModel>
+  implements PaginatedComponentInterface<ProductModel>
 {
+  paginationModule = getModule<PaginationModule<ProductModel>>(PaginationModule)
   paginationNamespace = PaginationNamespaceTypesEnum.ALL_PRODUCTS
   PaginationRoutesEnum = PaginationRoutesEnum
+  MainRoutePaths = MainRoutePaths
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
@@ -71,19 +75,19 @@ export default class AllProducts
     document.title = 'All Products'
 
     if (this.params.query) {
-      await store.commit('pagination/setCurrentQuery', {
-        currentQuery: this.params.query,
+      await this.paginationModule.setCurrentQuery({
+        queryParams: this.params.query,
         namespace: this.paginationNamespace,
       })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', {
+    await this.paginationModule.setCurrentPageNumber({
       pageNumber: 1,
       namespace: this.paginationNamespace,
     })
 
     if (this.params.page) {
-      await store.commit('pagination/setCurrentPageNumber', {
+      await this.paginationModule.setCurrentPageNumber({
         pageNumber: Number(this.params.page),
         namespace: this.paginationNamespace,
       })
@@ -92,18 +96,14 @@ export default class AllProducts
     await this.fetchPaginationData()
   }
 
-  async unmounted(): Promise<void> {
-    store.commit('pagination/unsetResults', this.paginationNamespace)
-  }
-
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery = PaginationModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: 'products/all',
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', {
+    await this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.paginationNamespace,
     })

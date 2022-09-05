@@ -12,7 +12,7 @@
           >
             <div class="container">
               <div class="email mb-3">
-                <label :for="formManager.form.email.$uid" class="label mb-2">Email</label>
+                <label :for="String(formManager.form.email.$uid)" class="label mb-2">Email</label>
                 <FormBaseInput
                   :id="formManager.form.email.$uid"
                   v-model="formManager.form.email.$value"
@@ -22,7 +22,6 @@
                   :validating="formManager.form.email.$validating"
                   placeholder="Alice, Bob, Oscar"
                   autocomplete="username"
-                  @blur="formManager.form.email.onBlur"
                 />
                 <FormValidationErrors
                   :errors="formManager.form.email.$errors"
@@ -30,7 +29,9 @@
                 />
               </div>
               <div class="password mb-4">
-                <label :for="formManager.form.password.$uid" class="label mb-2">Password</label>
+                <label :for="String(formManager.form.password.$uid)" class="label mb-2"
+                  >Password</label
+                >
                 <FormBaseInput
                   :id="formManager.form.password.$uid"
                   v-model="formManager.form.password.$value"
@@ -39,7 +40,6 @@
                   :input-with-add-on-icon="keyIcon"
                   type="password"
                   autocomplete="current-password"
-                  @blur="formManager.form.password.onBlur"
                 />
                 <FormValidationErrors :errors="formManager.form.password.$errors" />
               </div>
@@ -112,10 +112,13 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
 import session from '@/api/session'
+import { getModule } from 'vuex-module-decorators'
 import { required } from '@/components/Form/Utils'
+import UserModule from '@/state/user/data/UserModule'
+import AuthModule from '@/state/auth/auth/AuthModule'
+import CountryModule from '@/state/country/CountryModule'
 import FormProvider from '@/components/Form/FormProvider.vue'
 import LogInApiData from '@/state/auth/Interface/LogInApiData'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
@@ -129,6 +132,7 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 
 let { validateFields } = useValidation({})
 
@@ -143,6 +147,11 @@ let { validateFields } = useValidation({})
   },
 })
 export default class LogIn extends Vue {
+  userModule = getModule(UserModule)
+  authModule = getModule(AuthModule)
+  productFavouriteModule = getModule(ProductFavouriteModule)
+  countryModule = getModule(CountryModule)
+
   formManager = ({ validateFields } = useValidation({
     email: {
       $value: '',
@@ -179,10 +188,17 @@ export default class LogIn extends Vue {
         email: formData.email,
         password: formData.password,
       }
-      await store
-        .dispatch('auth/login', apiData)
+      await this.authModule
+        .login(apiData)
         .then(() => {
-          store.dispatch('user/fetchUserDataFromRemote')
+          this.userModule.fetchUserDataFromRemote().then((response) => {
+            if (response) {
+              this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(
+                this.userModule.getUserData
+              )
+              this.productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
+            }
+          })
         })
         .catch((error: Error) => {
           console.log(error)

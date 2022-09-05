@@ -3,7 +3,7 @@
     <div class="product-listing-grid mb-4">
       <ProductCard
         v-for="product in allPaginatedResults"
-        :key="product.id"
+        :key="product.product_object.id"
         :product="product.product_object"
         class="grid-item"
       />
@@ -23,22 +23,24 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { PropType } from 'vue'
+import { getModule } from 'vuex-module-decorators'
 import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
-import PaginationBase from '@/components/Pagination/PaginationBase'
+import PaginationModule from '@/state/pagination/PaginationModule'
+import UserFavouriteModel from '@/state/user/favourite/UserFavouriteModel'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
-import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
+import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
   name: 'UserFavourites',
-  extends: PaginationBase,
+  extends: PaginatedComponent,
   props: {
     userData: {
       type: Object as PropType<UserProfileModel>,
@@ -51,9 +53,10 @@ import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/Pagination
   },
 })
 export default class UserFavourites
-  extends PaginationBase<UserProfileModel>
-  implements PaginatedInterface<UserProfileModel>
+  extends PaginatedComponent<UserFavouriteModel>
+  implements PaginatedComponentInterface<UserFavouriteModel>
 {
+  paginationModule = getModule<PaginationModule<UserFavouriteModel>>(PaginationModule)
   userData = new UserProfileModel()
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.USER_FAVOURITES
@@ -62,19 +65,19 @@ export default class UserFavourites
     document.title = 'My Favourites'
 
     if (this.params.query) {
-      await store.commit('pagination/setCurrentQuery', {
-        currentQuery: this.params.query,
+      await this.paginationModule.setCurrentQuery({
+        queryParams: this.params.query,
         namespace: this.paginationNamespace,
       })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', {
+    await this.paginationModule.setCurrentPageNumber({
       pageNumber: 1,
       namespace: this.paginationNamespace,
     })
 
     if (this.params.page) {
-      await store.commit('pagination/setCurrentPageNumber', {
+      await this.paginationModule.setCurrentPageNumber({
         pageNumber: Number(this.params.page),
         namespace: this.paginationNamespace,
       })
@@ -83,18 +86,14 @@ export default class UserFavourites
     await this.fetchPaginationData()
   }
 
-  async unmounted(): Promise<void> {
-    store.commit('pagination/unsetResults', this.paginationNamespace)
-  }
-
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery = PaginationModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: this.buildEndPointUrlForPaginatedResults(),
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', {
+    await this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.paginationNamespace,
     })

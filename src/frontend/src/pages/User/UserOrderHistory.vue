@@ -3,7 +3,7 @@
     v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0"
     class="user-order-history"
   >
-    <div v-for="order in allPaginatedResults" :key="order.id" class="mb-4" :order="order">
+    <div v-for="order in allPaginatedResults" :key="order.id" class="mb-4">
       <h3 class="is-size-4 mb-3">Order #{{ order.id }}</h3>
       <div class="box">
         <div class="card">
@@ -26,30 +26,32 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
+import { getModule } from 'vuex-module-decorators'
 import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import UserOrderModel from '@/state/user/order/UserOrderModel'
 import Pagination from '@/components/Pagination/Pagination.vue'
-import PaginationBase from '@/components/Pagination/PaginationBase'
+import PaginationModule from '@/state/pagination/PaginationModule'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
-import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import UserOrderHistoryContainer from '@/components/User/UserOrderHistoryContainer.vue'
+import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
   name: 'UserOrderHistory',
-  extends: PaginationBase,
+  extends: PaginatedComponent,
   components: {
     Pagination,
     UserOrderHistoryContainer,
   },
 })
 export default class UserOrderHistory
-  extends PaginationBase<UserOrderModel>
-  implements PaginatedInterface<UserOrderModel>
+  extends PaginatedComponent<UserOrderModel>
+  implements PaginatedComponentInterface<UserOrderModel>
 {
+  paginationModule = getModule<PaginationModule<UserOrderModel>>(PaginationModule)
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.USER_ORDER_HISTORY
 
@@ -57,19 +59,19 @@ export default class UserOrderHistory
     document.title = 'My Orders'
 
     if (this.params.query) {
-      await store.commit('pagination/setCurrentQuery', {
-        currentQuery: this.params.query,
+      await this.paginationModule.setCurrentQuery({
+        queryParams: this.params.query,
         namespace: this.paginationNamespace,
       })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', {
+    await this.paginationModule.setCurrentPageNumber({
       pageNumber: 1,
       namespace: this.paginationNamespace,
     })
 
     if (this.params.page) {
-      await store.commit('pagination/setCurrentPageNumber', {
+      await this.paginationModule.setCurrentPageNumber({
         pageNumber: Number(this.params.page),
         namespace: this.paginationNamespace,
       })
@@ -78,18 +80,14 @@ export default class UserOrderHistory
     await this.fetchPaginationData()
   }
 
-  async unmounted(): Promise<void> {
-    store.commit('pagination/unsetResults', this.paginationNamespace)
-  }
-
   async fetchPaginationData(): Promise<void> {
-    const paginationQuery = PaginationModel.createPaginationQuery({
+    const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: `orders`,
       method: ApiBaseMethods.GET,
     })
 
-    await store.dispatch('pagination/fetchPaginatedResults', {
+    await this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.paginationNamespace,
     })

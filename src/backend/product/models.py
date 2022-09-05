@@ -9,10 +9,10 @@ from mptt.models import MPTTModel
 from tinymce.models import HTMLField
 from mptt.fields import TreeForeignKey
 from backend.seo.models import SeoModel
+from django.db.models import Avg, Count
 from django.utils.html import format_html
 from backend.core.models import SortableModel
 from django.utils.safestring import mark_safe
-from django.db.models import Avg, Count, CharField
 from backend.helpers.image_resize import make_thumbnail
 
 User = settings.AUTH_USER_MODEL
@@ -47,7 +47,7 @@ class Category(MPTTModel):
     def category_menu_image_one_absolute_url(self) -> str:
         try:
             if self.id is not None:
-                image = settings.APP_BASE_URL + self.menu_image_one.url
+                image = settings.BACKEND_BASE_URL + self.menu_image_one.url
             else:
                 image = ""
             return image
@@ -63,7 +63,7 @@ class Category(MPTTModel):
     def category_menu_image_two_absolute_url(self) -> str:
         try:
             if self.id is not None:
-                image = settings.APP_BASE_URL + self.menu_image_two.url
+                image = settings.BACKEND_BASE_URL + self.menu_image_two.url
             else:
                 image = ""
             return image
@@ -79,7 +79,7 @@ class Category(MPTTModel):
     def category_menu_main_banner_absolute_url(self) -> str:
         try:
             if self.id is not None:
-                image = settings.APP_BASE_URL + self.menu_main_banner.url
+                image = settings.BACKEND_BASE_URL + self.menu_main_banner.url
             else:
                 image = ""
             return image
@@ -198,7 +198,7 @@ class Product(SeoModel):
         try:
             img = ProductImages.objects.get(product_id=self.id, is_main=True)
             if img.id is not None:
-                image = settings.APP_BASE_URL + img.image.url
+                image = settings.BACKEND_BASE_URL + img.image.url
             else:
                 image = ""
             return image
@@ -207,8 +207,8 @@ class Product(SeoModel):
 
     def main_image_filename(self) -> str:
         try:
-            test = ProductImages.objects.get(product_id=self.id, is_main=True)
-            return os.path.basename(test.image.name)
+            product_image = ProductImages.objects.get(product_id=self.id, is_main=True)
+            return os.path.basename(product_image.image.name)
         except:
             return ""
 
@@ -269,7 +269,7 @@ class ProductImages(SortableModel):
     def product_image_absolute_url(self) -> str:
         try:
             if self.id is not None:
-                image = settings.APP_BASE_URL + self.image.url
+                image = settings.BACKEND_BASE_URL + self.image.url
             else:
                 image = ""
             return image

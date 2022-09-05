@@ -1,5 +1,12 @@
+import store from '@/dynamicStore'
 import { Module } from 'vuex-module-decorators'
 import AppBaseModule from '@/state/common/AppBaseModule'
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'search',
+})
 export default class SearchModule extends AppBaseModule {}

@@ -1,4 +1,5 @@
 import router from '@/routes'
+import store from '@/dynamicStore'
 import api from '@/api/api.service'
 import { useToast } from 'vue-toastification'
 import PayWayModel from '@/state/payway/PayWayModel'
@@ -6,10 +7,17 @@ import CartItemModel from '@/state/cart/CartItemModel'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import UserOrderModel from '@/state/user/order/UserOrderModel'
+import CheckoutOrderApiData from '@/state/cart/Interface/CheckoutOrderApiData'
 
 const toast = useToast()
 
-@Module({ namespaced: true })
+@Module({
+  dynamic: true,
+  namespaced: true,
+  store: store,
+  stateFactory: true,
+  name: 'cart',
+})
 export default class CartModule extends AppBaseModule {
   cart: Array<CartItemModel> = []
   cartTotalPriceForPayWay = 0
@@ -41,6 +49,11 @@ export default class CartModule extends AppBaseModule {
     this.cartTotalPriceForPayWay = price
   }
 
+  @Mutation
+  setCart(cart: Array<CartItemModel>): void {
+    this.cart = cart
+  }
+
   @Action
   public async cartTotalPriceForPayWayAction(payWay?: PayWayModel): Promise<number> {
     const cartTotal = this.context.getters['getCartTotalPrice']
@@ -58,15 +71,6 @@ export default class CartModule extends AppBaseModule {
     const total = Number(payWay?.cost) + Number(cartTotal)
     this.context.commit('setCartTotalPriceForPayWay', total)
     return total
-  }
-
-  @Mutation
-  public async initializeCart(): Promise<void> {
-    if (localStorage.getItem('cart')) {
-      this.cart = JSON.parse(<string>localStorage.getItem('cart'))
-    } else {
-      localStorage.setItem('cart', JSON.stringify(this.cart))
-    }
   }
 
   @Mutation
@@ -109,9 +113,18 @@ export default class CartModule extends AppBaseModule {
   }
 
   @Action
-  createOrder(data: UserOrderModel): Promise<void> {
+  public async initializeCart(): Promise<void> {
+    if (localStorage.getItem('cart')) {
+      this.context.commit('setCart', JSON.parse(<string>localStorage.getItem('cart')))
+    } else {
+      localStorage.setItem('cart', JSON.stringify(this.cart))
+    }
+  }
+
+  @Action
+  async createOrder(data: CheckoutOrderApiData): Promise<void> {
     return api
-      .post<UserOrderModel>('checkout/', data)
+      .post<CheckoutOrderApiData>('checkout/', data)
       .then(() => {
         this.context.commit('clearCart')
         router.push('/cart/success')

@@ -12,9 +12,12 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
-import { some } from 'lodash'
+import { isEmpty, some } from 'lodash'
 import { useToast } from 'vue-toastification'
+import { DynamicStoreType } from '@/dynamicStore'
+import UserModule from '@/state/user/data/UserModule'
+import AuthModule from '@/state/auth/auth/AuthModule'
+import { getModule, VuexModule } from 'vuex-module-decorators'
 import { Options as Component, Vue } from 'vue-class-component'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import FavouriteButtonInterface from '@/components/Utilities/Interface/FavouriteButtonInterface'
@@ -28,15 +31,29 @@ const toast = useToast()
       type: Object,
       required: true,
     },
+    module: {
+      type: Object,
+      required: true,
+    },
     getterType: {
       type: String,
       required: false,
       default: '',
     },
+    getterParams: {
+      type: Object,
+      required: false,
+      default: {},
+    },
     dispatchType: {
       type: String,
       required: false,
       default: '',
+    },
+    dispatchParams: {
+      type: Object,
+      required: false,
+      default: {},
     },
     icon: {
       type: Object,
@@ -57,15 +74,24 @@ const toast = useToast()
 })
 export default class FavouriteButton
   extends Vue
-  implements FavouriteButtonInterface<Record<string, never>>
+  implements FavouriteButtonInterface<VuexModule<DynamicStoreType>>
 {
+  userModule = getModule(UserModule)
+  authModule = getModule(AuthModule)
   model!: Record<string, never>
+  module!: VuexModule<VuexModule<DynamicStoreType, any>, any>
   getterType!: string
+  getterParams!: Record<string, unknown>
+  dispatchParams!: Record<string, unknown>
   dispatchType!: string
   isFavourite = false
   icon = faHeart
   useStore!: boolean
   btnClass!: string
+
+  updated(): void {
+    this.isFavourite = this.getIsFavourite
+  }
 
   mounted(): void {
     this.isFavourite = this.getIsFavourite
@@ -73,21 +99,30 @@ export default class FavouriteButton
 
   get getIsFavourite(): boolean {
     if (this.useStore) {
-      return store.getters[this.getterType]
+      if (this.getterParams && !isEmpty(this.getterParams)) {
+        return this.module[this.getterType](this.getterParams)
+      }
+      return this.module[this.getterType]
     }
     const likes = this.model.likes
-    const userEmail = store.getters['user/getUserData'].email
+    const userEmail = this.userModule.getUserData.email
 
     return some(likes, { email: userEmail })
   }
 
   async favouriteHandle(): Promise<void> {
-    const IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
+    const IsAuthenticated: boolean = this.authModule.isAuthenticated
     if (!IsAuthenticated) {
       toast.error('You are not logged in')
       return
     }
-    await store.dispatch(this.dispatchType, this.model).then((isFavourite: boolean) => {
+    let dispatchPayload = {}
+    if (this.getterParams && !isEmpty(this.getterParams)) {
+      dispatchPayload = this.dispatchParams
+    } else {
+      dispatchPayload = this.model
+    }
+    await this.module[this.dispatchType](dispatchPayload).then((isFavourite: boolean) => {
       this.isFavourite = isFavourite
     })
     this.isFavourite ? toast.success('Added to Favourites') : toast.info('Removed From Favourites')

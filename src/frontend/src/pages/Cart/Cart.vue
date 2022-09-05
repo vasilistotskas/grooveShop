@@ -10,7 +10,7 @@
           <div>Total</div>
         </div>
         <div class="grid-container-table-items">
-          <CartItem v-for="item in cart" :key="item.id" :item="item" />
+          <CartItem v-for="item in cart" :key="item.product.id" :item="item" />
         </div>
       </div>
       <div v-else class="cart-empty">
@@ -40,8 +40,9 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
+import CartModule from '@/state/cart/CartModule'
+import { getModule } from 'vuex-module-decorators'
 import CartItem from '@/components/Cart/CartItem.vue'
 import CartItemModel from '@/state/cart/CartItemModel'
 import { Options as Component, Vue } from 'vue-class-component'
@@ -56,6 +57,8 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
   },
 })
 export default class Cart extends Vue {
+  cartModule = getModule(CartModule)
+
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
     const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
       .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
@@ -63,15 +66,15 @@ export default class Cart extends Vue {
   }
 
   get cart(): Array<CartItemModel> {
-    return store.getters['cart/getCart']
+    return this.cartModule.getCart
   }
 
   get cartTotalLength(): number {
-    return store.getters['cart/getCartTotalLength']
+    return this.cartModule.getCartTotalLength
   }
 
   get cartTotalPrice(): number {
-    return store.getters['cart/getCartTotalPrice']
+    return this.cartModule.getCartTotalPrice
   }
 
   mounted(): void {

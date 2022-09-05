@@ -13,88 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.views import View
 from django.contrib import admin
 from django.conf import settings
-from django.shortcuts import render
 from django.http import HttpResponse
 from django.urls import path, include
 from django.conf.urls.static import static
-from django.middleware.csrf import get_token
-from graphene_django.views import GraphQLView
-from django.views.generic.base import TemplateView
+from backend.core.graphql.schema import schema
 from django.views.decorators.http import require_GET
 from django.views.decorators.csrf import csrf_exempt
+from strawberry.django.views import AsyncGraphQLView, GraphQLView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-
-
-class IndexView(View):
-    template_name = 'dist/index.html'
-
-    def get(
-            self,
-            request,
-            category_slug='None',
-            product_slug='None',
-            uid='None',
-            token='None',
-            username='None',
-            slug='None',
-            tag='None',
-    ):
-        get_token(request)
-
-        to_render = {
-            'SiteTitle': 'DeepWeb'
-        }
-
-        return render(request, "dist/index.html", to_render)
-
-
-class OfflineView(View):
-    template_name = 'dist/offline.html'
-
-    def get(
-            self,
-            request
-    ):
-        get_token(request)
-
-        return render(request, "dist/offline.html")
-
-
-def error_400(request, exception):
-    context = {}
-    response = render(request, 'dist/index.html', context=context)
-    response.status_code = 400
-    return response
-
-
-def error_403(request, exception):
-    context = {}
-    response = render(request, 'dist/index.html', context=context)
-    response.status_code = 403
-    return response
-
-
-def error_404(request, exception):
-    context = {}
-    response = render(request, 'dist/index.html', context=context)
-    response.status_code = 404
-    return response
-
-
-def error_500(request):
-    context = {}
-    response = render(request, 'dist/index.html', context=context)
-    response.status_code = 500
-    return response
-
-
-handler400 = error_400
-handler403 = error_403
-handler404 = error_404
-handler500 = error_500
 
 
 @require_GET
@@ -108,35 +36,7 @@ def robots_txt(request):
 
 
 front_urls = [
-    path('', IndexView.as_view(), name='index'),
-    path('index.html', IndexView.as_view(), name='index'),
     path('robots.txt', robots_txt),
-    path('offline/', OfflineView.as_view(), name='offline'),
-    path('log-in', IndexView.as_view(), name='index'),
-    path('sign-up', IndexView.as_view(), name='index'),
-    path('accounts/activate/<uid>/<token>', IndexView.as_view(), name='index'),
-    path('accounts/activate/verify_mail_resend', IndexView.as_view(), name='index'),
-    path('password_reset', IndexView.as_view(), name='index'),
-    path('password-reset', IndexView.as_view(), name='index'),
-    path('password_reset/<uid>/<token>', IndexView.as_view(), name='index'),
-    path('password-reset/<uid>/<token>', IndexView.as_view(), name='index'),
-    path('user-account', IndexView.as_view(), name='index'),
-    path('user-account/orders', IndexView.as_view(), name='index'),
-    path('user-account/settings', IndexView.as_view(), name='index'),
-    path('user-account/favourites', IndexView.as_view(), name='index'),
-    path('user-account/reviews', IndexView.as_view(), name='index'),
-    path('user-account/password', IndexView.as_view(), name='index'),
-    path('search', IndexView.as_view(), name='index'),
-    path('cart', IndexView.as_view(), name='index'),
-    path('cart/success', IndexView.as_view(), name='index'),
-    path('cart/checkout', IndexView.as_view(), name='index'),
-    path('products/all', IndexView.as_view(), name='index'),
-    path('product/<category_slug>/<product_slug>', IndexView.as_view(), name='index'),
-    path('category/<category_slug>', IndexView.as_view(), name='index'),
-    path('blog', IndexView.as_view(), name='index'),
-    path('author/<username>', IndexView.as_view(), name='index'),
-    path('post/<slug>', IndexView.as_view(), name='index'),
-    path('tag/<tag>', IndexView.as_view(), name='index'),
 ]
 
 urlpatterns = [
@@ -151,11 +51,14 @@ urlpatterns = [
     path('api/v1/djoser/', include('djoser.urls')),
     path('api/v1/djoser/', include('djoser.urls.authtoken')),
     # graphql
-    path('graphql', csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    path('graphql/async', AsyncGraphQLView.as_view(schema=schema)),
+    path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
     # admin html editor
     path('tinymce/', include('tinymce.urls')),
     # vue urls
     path('', include(front_urls)),
+    # debug toolbar
+    path('__debug__/', include('debug_toolbar.urls'))
 ]
 
 urlpatterns += static(
@@ -163,4 +66,3 @@ urlpatterns += static(
     document_root=settings.MEDIA_ROOT,
 )
 urlpatterns += staticfiles_urlpatterns()
-

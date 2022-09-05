@@ -3,7 +3,7 @@
     <div class="stripe-content">
       <GrooveImage
         :alt="'Stripe Logo'"
-        :src="'http://localhost:8010/backend/static/images/powered_by_stripe.svg'"
+        :src="`${myContext.backendBaseUrl}/backend/static/images/powered_by_stripe.svg`"
         :use-media-stream="false"
         :img-class="'stripe-content-img_logo'"
         :img-height="268"
@@ -245,29 +245,6 @@
 </template>
 
 <script lang="ts">
-import * as zod from 'zod'
-import router from '@/routes'
-import { cloneDeep, merge, isEmpty } from 'lodash'
-import { useToast } from 'vue-toastification'
-import { toFormValidator } from '@vee-validate/zod'
-import PayWayModel from '@/state/payway/PayWayModel'
-import CartItemModel from '@/state/cart/CartItemModel'
-import CountryModel from '@/state/country/CountryModel'
-import RegionsModel from '@/state/country/RegionsModel'
-import { useForm, useField } from 'vee-validate'
-import CartItemCheckout from '@/state/cart/CartItemCheckout'
-import { PayWaysEnum } from '@/state/payway/Enum/PayWaysEnum'
-import { StripeElements, StripeElement } from 'vue-stripe-js'
-import GrooveImage from '@/components/Utilities/GrooveImage.vue'
-import UserProfileModel from '@/state/user/data/UserProfileModel'
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import { HTMLElementEvent } from '@/state/common/Types/HelpingTypes'
-import { Options as Component, setup, Vue } from 'vue-class-component'
-import CheckoutPayWays from '@/components/Checkout/CheckoutPayWays.vue'
-import CheckoutOrderApiData from '@/state/cart/Interface/CheckoutOrderApiData'
-import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
-import CheckoutStripeModal from '@/components/Utilities/CheckoutStripeModal.vue'
-import CheckoutProductContainer from '@/components/Checkout/CheckoutProductContainer.vue'
 import {
   loadStripe,
   Stripe,
@@ -277,8 +254,39 @@ import {
   StripeConstructorOptions,
   StripeElementsOptions,
 } from '@stripe/stripe-js'
+import * as zod from 'zod'
+import router from '@/routes'
+import AppModule from '@/state/app/AppModule'
+import { useToast } from 'vue-toastification'
+import CartModule from '@/state/cart/CartModule'
+import { useForm, useField } from 'vee-validate'
+import { cloneDeep, merge, isEmpty } from 'lodash'
+import { getModule } from 'vuex-module-decorators'
+import { toFormValidator } from '@vee-validate/zod'
+import PayWayModel from '@/state/payway/PayWayModel'
+import UserModule from '@/state/user/data/UserModule'
+import AuthModule from '@/state/auth/auth/AuthModule'
+import CartItemModel from '@/state/cart/CartItemModel'
+import PayWayModule from '@/state/payway/PayWayModule'
+import CountryModel from '@/state/country/CountryModel'
+import RegionsModel from '@/state/country/RegionsModel'
+import CountryModule from '@/state/country/CountryModule'
+import { PayWaysEnum } from '@/state/payway/Enum/PayWaysEnum'
+import { StripeElements, StripeElement } from 'vue-stripe-js'
+import GrooveImage from '@/components/Utilities/GrooveImage.vue'
+import UserProfileModel from '@/state/user/data/UserProfileModel'
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
+import { HTMLElementEvent } from '@/state/common/Types/HelpingTypes'
+import CartItemCheckoutModel from '@/state/cart/CartItemCheckoutModel'
+import { Options as Component, setup, Vue } from 'vue-class-component'
+import CheckoutPayWays from '@/components/Checkout/CheckoutPayWays.vue'
 import { computed, ComputedRef, onBeforeMount, onUnmounted, ref } from 'vue'
-import { useStore } from 'vuex'
+import StripeCardModule from '@/libraries/Stripe/Components/StripeCardModule'
+import CheckoutOrderApiData from '@/state/cart/Interface/CheckoutOrderApiData'
+import CheckoutStripeModal from '@/components/Utilities/CheckoutStripeModal.vue'
+import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
+import CheckoutProductContainer from '@/components/Checkout/CheckoutProductContainer.vue'
 
 const toast = useToast()
 
@@ -296,16 +304,20 @@ const toast = useToast()
 })
 export default class Checkout extends Vue {
   myContext = setup(() => {
-    const store = useStore()
     document.title = 'Checkout'
+    const authModule = getModule(AuthModule)
+    const cartModule = getModule(CartModule)
+    const payWayModule = getModule(PayWayModule)
+    const stripeCardModule = getModule(StripeCardModule)
+    const countryModule = getModule(CountryModule)
+    const userModule = getModule(UserModule)
+    const appModule = getModule(AppModule)
+    const productFavouriteModule = getModule(ProductFavouriteModule)
 
-    const isAuthenticated: ComputedRef<boolean> = computed(
-      () => store.getters['auth/isAuthenticated']
-    )
-    const selectedPayWay: ComputedRef<PayWayModel> = computed(
-      () => store.getters['pay_way/getSelectedPayWay']
-    )
-    const stripeKey = computed(() => store.getters['stripeCard/getStripeKey'])
+    const isAuthenticated: ComputedRef<boolean> = computed(() => authModule.isAuthenticated)
+    const backendBaseUrl: ComputedRef<string | undefined> = computed(() => appModule.backendBaseUrl)
+    const selectedPayWay: ComputedRef<PayWayModel> = computed(() => payWayModule.getSelectedPayWay)
+    const stripeKey = computed(() => stripeCardModule.getStripeKey)
     const stripeLoaded = ref(false)
 
     onBeforeMount(() => {
@@ -316,38 +328,51 @@ export default class Checkout extends Vue {
     })
 
     Promise.all([
-      store.dispatch('country/fetchCountriesFromRemote'),
-      isAuthenticated ?? store.dispatch('user/fetchUserDataFromRemote'),
-      store.dispatch('cart/cartTotalPriceForPayWayAction', selectedPayWay),
+      countryModule.fetchCountriesFromRemote(),
+      isAuthenticated.value ??
+        userModule.fetchUserDataFromRemote().then((response) => {
+          if (response) {
+            countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserData)
+            productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
+          }
+        }),
+      cartModule.cartTotalPriceForPayWayAction(selectedPayWay.value as unknown as PayWayModel),
     ])
 
     const availableCountries: ComputedRef<Array<CountryModel>> = computed(
-      () => store.getters['country/getCountries']
+      () => countryModule.getCountries
     )
     const regionsBasedOnAlpha: ComputedRef<Array<RegionsModel>> = computed(
-      () => store.getters['country/getRegionsBasedOnAlpha']
+      () => countryModule.getRegionsBasedOnAlpha
     )
-    const cart: ComputedRef<Array<CartItemModel>> = computed(() => store.getters['cart/getCart'])
-    const cartTotalLength: ComputedRef<number> = computed(
-      () => store.getters['cart/getCartTotalLength']
-    )
-    const cartTotalPrice: ComputedRef<number> = computed(
-      () => store.getters['cart/getCartTotalPrice']
-    )
+    const cart: ComputedRef<Array<CartItemModel>> = computed(() => cartModule.getCart)
+    const cartTotalLength: ComputedRef<number> = computed(() => cartModule.getCartTotalLength)
+    const cartTotalPrice: ComputedRef<number> = computed(() => cartModule.getCartTotalPrice)
     const cartTotalPriceForPayWay: ComputedRef<number> = computed(
-      () => store.getters['cart/getCartTotalPriceForPayWay']
+      () => cartModule.getCartTotalPriceForPayWay
     )
-    const stripeResultToken = computed(() => store.getters['stripeCard/getResultToken'])
+    const stripeResultToken = computed(() => stripeCardModule.getResultToken)
     const userData: ComputedRef<UserProfileModel> = computed(() =>
-      isAuthenticated ? store.getters['user/getUserData'] : new UserProfileModel()
+      isAuthenticated.value ? userModule.getUserData : new UserProfileModel()
     )
 
-    let customerDetailsData = new UserProfileModel()
+    let customerDetailsData = new UserProfileModel({
+      address: '',
+      city: '',
+      email: '',
+      first_name: '',
+      last_name: '',
+      phone: 0,
+      place: '',
+      zipcode: 0,
+      country: 'choose',
+      region: 'choose',
+    })
 
     const customerDetailsInitialize = () => {
       customerDetailsData = cloneDeep(userData.value)
 
-      if (isAuthenticated) {
+      if (isAuthenticated.value) {
         if (customerDetailsData.country === '') {
           customerDetailsData.country = 'choose'
           customerDetailsData.region = 'choose'
@@ -360,7 +385,6 @@ export default class Checkout extends Vue {
         customerDetailsData.last_name = ''
         customerDetailsData.phone = 0
         customerDetailsData.place = ''
-        customerDetailsData.region = ''
         customerDetailsData.zipcode = 0
         customerDetailsData.country = 'choose'
         customerDetailsData.region = 'choose'
@@ -371,6 +395,7 @@ export default class Checkout extends Vue {
 
     const elms = ref(null as unknown as Stripe)
     const card = ref({} as unknown as StripeCardElement | StripeCardNumberElement)
+    const customerNotes = ref('')
 
     const instanceOptions: StripeConstructorOptions = {
       // https://stripe.com/docs/js/initializing#init_stripe_js-options
@@ -408,7 +433,7 @@ export default class Checkout extends Vue {
           .number()
           .positive({ message: 'Must be a positive zipcode' })
           .int({ message: 'Must be an integer' }),
-        customerNotes: zod.string().optional(),
+        customerNotes: zod.string().default('test'),
       })
     )
 
@@ -418,7 +443,7 @@ export default class Checkout extends Vue {
       return currentRouteMetaBreadcrumb()
     }
 
-    const buildCartItems: () => Array<CartItemCheckout> = () => {
+    const buildCartItems: () => Array<CartItemCheckoutModel> = () => {
       const items = []
       for (let i = 0; i < cart.value.length; i++) {
         const item = cart.value[i]
@@ -434,7 +459,7 @@ export default class Checkout extends Vue {
 
     async function restRegions(e: HTMLElementEvent<HTMLTextAreaElement>): Promise<void> {
       const countryAlpha2Key = e.target?.value
-      await store.dispatch('country/findRegionsBasedOnAlphaFromInput', countryAlpha2Key)
+      await countryModule.findRegionsBasedOnAlphaFromInput(countryAlpha2Key)
       customerDetailsData.region = 'choose'
     }
 
@@ -461,7 +486,6 @@ export default class Checkout extends Vue {
     const { value: phone } = useField('phone')
     const { value: place } = useField('place')
     const { value: zipcode } = useField('zipcode')
-    const { value: customerNotes } = useField('customerNotes')
 
     const onSubmit = handleSubmit(async (values) => {
       try {
@@ -470,9 +494,9 @@ export default class Checkout extends Vue {
           const cardElement = card.value
           const instance = elms.value
           await instance.createToken(cardElement).then((result: object) => {
-            store.commit('stripeCard/setResultToken', result)
+            stripeCardModule.setResultToken(result)
           })
-          if (stripeResultToken) {
+          if (stripeResultToken.value) {
             return createOrder(values, items)
           }
         } else {
@@ -483,7 +507,7 @@ export default class Checkout extends Vue {
       }
     })
 
-    function createOrder(values, items: Array<CartItemCheckout>): void {
+    function createOrder(values, items: Array<CartItemCheckoutModel>): void {
       const apiData: CheckoutOrderApiData = {
         user_id: customerDetailsData.id ? customerDetailsData.id : userData.value.id,
         pay_way: selectedPayWay.value.name,
@@ -512,14 +536,14 @@ export default class Checkout extends Vue {
         toast.error('The country field is missing!')
       } else if (customerDetailsData.region === 'choose') {
         toast.error('The region field is missing!')
-      } else if (Object.keys(selectedPayWay).length <= 0) {
+      } else if (Object.keys(selectedPayWay.value).length <= 0) {
         toast.error('You have to select a pay way method')
       } else {
-        store.dispatch('cart/createOrder', apiData)
+        cartModule.createOrder(apiData)
       }
     }
 
-    onUnmounted(() => store.commit('pay_way/setSelectedPayWay', new PayWayModel()))
+    onUnmounted(() => payWayModule.setSelectedPayWay(new PayWayModel()))
 
     return {
       validationSchema,
@@ -536,6 +560,7 @@ export default class Checkout extends Vue {
       customerNotes,
       userData,
       isAuthenticated,
+      backendBaseUrl,
       availableCountries,
       regionsBasedOnAlpha,
       cart,
