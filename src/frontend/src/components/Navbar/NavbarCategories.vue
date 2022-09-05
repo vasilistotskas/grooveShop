@@ -2,25 +2,19 @@
   <div class="navbar-main-collapse-menu">
     <div
       ref="headerNavbarMenu"
-      :class="{'wrapper': Object.keys(categories).length === 0 }"
+      :class="{ wrapper: Object.keys(categories).length === 0 }"
       class="container navbar-menu-grid-container"
     >
-      <ul
-        v-if="categories && Object.keys(categories).length > 0"
-        class="navbar-menu-grid-head"
-      >
-        <li
-          v-for="(category, key) in categories"
-          :key="category.id"
-        >
+      <ul v-if="categories && Object.keys(categories).length > 0" class="navbar-menu-grid-head">
+        <li v-for="(category, key) in categories" :key="category.id">
           <h3>
             <RouterLink
-              :id="category.children ? `id-${category.id}` : '' "
+              :id="category.children ? `id-${category.id}` : ''"
               :key="category.id"
-              :class="{'has-children': category?.children }"
+              :class="{ 'has-children': category?.children }"
               :title="category.name"
-              :to="({ name: 'Category', params: { category_slug: category.slug } })"
-              :toggle="category.children ? 'toggle' : '' "
+              :to="{ name: 'Category', params: { category_slug: category.slug } }"
+              :toggle="category.children ? 'toggle' : ''"
               aria-current="page"
               aria-expanded="false"
               class="navbar-menu-grid-head-item"
@@ -30,9 +24,11 @@
             >
               <GrooveImage
                 :alt="category.name"
-                :file-name="categoryBoxHovered === key ?
-                  category.category_menu_image_two_filename :
-                  category.category_menu_image_two_filename"
+                :file-name="
+                  categoryBoxHovered === key
+                    ? category.category_menu_image_two_filename
+                    : category.category_menu_image_two_filename
+                "
                 :use-media-stream="true"
                 :img-type="ImageTypeOptions.CATEGORIES"
                 :img-width="80"
@@ -44,10 +40,7 @@
         </li>
       </ul>
 
-      <div
-        class="navbar-menu-grid-body"
-        style="display: none"
-      >
+      <div class="navbar-menu-grid-body" style="display: none">
         <div class="navbar-menu-grid-body-item" />
       </div>
     </div>
@@ -55,30 +48,32 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { cloneDeep } from 'lodash'
 import { onClickOutside } from '@vueuse/core'
-import { Options, Vue } from 'vue-class-component'
+import AppModule from '@/state/app/AppModule'
+import { getModule } from 'vuex-module-decorators'
 import CategoryModel from '@/state/category/CategoryModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
-@Options({
+@Component({
   name: 'NavbarCategories',
   components: {
-    GrooveImage
+    GrooveImage,
   },
   props: {
     categoriesTree: Array,
     mainToggleButton: HTMLElement,
-    navbarProductsButton: HTMLElement
-  }
+    navbarProductsButton: HTMLElement,
+  },
 })
 export default class NavbarCategories extends Vue {
-  $refs!: {
+  appModule = getModule(AppModule)
+  declare $refs: {
     headerNavbarMenu: HTMLElement
   }
-  categoryBoxHovered = null
+  categoryBoxHovered: null | number = null
   categoriesTree: Array<CategoryModel> = []
   categories: Array<CategoryModel> = []
   mainToggleButton!: HTMLElement
@@ -87,7 +82,7 @@ export default class NavbarCategories extends Vue {
   ImageTypeOptions = ImageTypeOptions
 
   get isLoading(): boolean {
-    return store.getters['app/getLoading']
+    return this.appModule.getLoading
   }
 
   mounted(): void {
@@ -101,13 +96,15 @@ export default class NavbarCategories extends Vue {
 
   public menuOpenHandle(): void {
     this.mainToggleButton.classList.toggle('opened')
-    this.mainToggleButton.setAttribute('aria-expanded', this.mainToggleButton.classList.contains('opened') as unknown as string)
-    store.commit('app/setNavbarMenuHidden', true)
+    this.mainToggleButton.setAttribute(
+      'aria-expanded',
+      this.mainToggleButton.classList.contains('opened') as unknown as string
+    )
+    this.appModule.setNavbarMenuHidden(true)
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Navbar/NavbarCategories"
-
+@import '@/assets/styles/components/Navbar/NavbarCategories';
 </style>

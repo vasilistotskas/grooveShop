@@ -1,7 +1,7 @@
 from faker import Faker
 from random import randrange
-from backend.order.models import Order, OrderItem
 from django.core.management import BaseCommand
+from backend.order.models import Order, OrderItem
 
 
 class Command(BaseCommand):

@@ -3,22 +3,12 @@
     <form id="blogPostComment">
       <div class="blog-comment-container">
         <div class="blog-comment-header">
-          <h1 class="blog-comment-header-title">
-            Make a comment
-          </h1>
-          <font-awesome-icon
-            :icon="writeReviewIcon"
-            size="lg"
-          />
+          <h1 class="blog-comment-header-title">Make a comment</h1>
+          <font-awesome-icon :icon="writeReviewIcon" size="lg" />
         </div>
         <div class="blog-comment-body">
           <h2 class="blog-comment-body-title">
-            <label
-              class="blog-comment-body-label"
-              for="commentTextArea"
-            >
-              Your Comment
-            </label>
+            <label class="blog-comment-body-label" for="commentTextArea"> Your Comment </label>
           </h2>
           <div class="blog-comment-body-textarea">
             <textarea
@@ -32,11 +22,7 @@
           </div>
         </div>
         <div class="blog-comment-footer">
-          <button
-            class="blog-comment-footer-btn"
-            type="button"
-            @click="commentHandle()"
-          >
+          <button class="blog-comment-footer-btn" type="button" @click="commentHandle()">
             {{ reviewButtonText }}
           </button>
         </div>
@@ -46,26 +32,30 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import { cloneDeep } from 'lodash'
 import { useToast } from 'vue-toastification'
-import { Options, Vue } from 'vue-class-component'
+import BlogModule from '@/state/blog/BlogModule'
+import { getModule } from 'vuex-module-decorators'
+import AuthModule from '@/state/auth/auth/AuthModule'
+import UserModule from '@/state/user/data/UserModule'
 import BlogCommentModel from '@/state/blog/BlogCommentModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import { faPenSquare } from '@fortawesome/free-solid-svg-icons/faPenSquare'
 
 const toast = useToast()
 
-@Options({
-  name: 'BlogComment'
+@Component({
+  name: 'BlogComment',
 })
-
 export default class BlogComment extends Vue {
-
+  blogModule = getModule(BlogModule)
+  authModule = getModule(AuthModule)
+  userModule = getModule(UserModule)
   writeReviewIcon = faPenSquare
-  comment: string = ''
+  comment = ''
 
   get isAuthenticated(): boolean {
-    return store.getters['auth/isAuthenticated']
+    return this.authModule.isAuthenticated
   }
 
   get reviewButtonText(): string {
@@ -73,11 +63,11 @@ export default class BlogComment extends Vue {
   }
 
   get userCommentToPostEmpty(): boolean {
-    return store.getters['blog/getUserCommentToPostEmpty']
+    return this.blogModule.getUserCommentToPostEmpty
   }
 
   get commentByUserToPost(): BlogCommentModel {
-    return store.getters['blog/getCommentByUserToPost']
+    return this.blogModule.getCommentByUserToPost
   }
 
   async mounted(): Promise<void> {
@@ -94,31 +84,29 @@ export default class BlogComment extends Vue {
     }
 
     if (!this.userCommentToPostEmpty) {
-      await store.dispatch('blog/updateCommentToPost', this.comment)
+      await this.blogModule.updateCommentToPost(this.comment)
       return toast.success('Your comment has been updated')
     } else {
-      await store.dispatch('blog/createCommentToPost', this.comment)
+      await this.blogModule.createCommentToPost({
+        content: this.comment,
+        userEmail: this.userModule.getUserData.email,
+      })
       return toast.success('Your comment has been created')
     }
   }
 
   public async commentModuleInitialize(): Promise<void> {
-    let IsAuthenticated: boolean = store.getters['auth/isAuthenticated']
-
-    if (!IsAuthenticated) {
+    if (this.isAuthenticated) {
       return
     }
 
-    await store.dispatch('blog/fetchCommentByUserToPost')
+    await this.blogModule.fetchCommentByUserToPost(this.userModule.getUserData.email)
 
     this.comment = cloneDeep(this.commentByUserToPost.content)
-
   }
-
 }
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/components/Blog/BlogComment"
-
+@import '@/assets/styles/components/Blog/BlogComment';
 </style>

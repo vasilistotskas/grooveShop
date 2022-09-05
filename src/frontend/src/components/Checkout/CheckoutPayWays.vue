@@ -4,11 +4,7 @@
       <span>Choose payment method</span>
     </h2>
     <div class="checkout-pay_way-section">
-      <div
-        v-for="payWay in validPayWays"
-        :key="payWay.name"
-        class="checkout-pay_way-content"
-      >
+      <div v-for="payWay in validPayWays" :key="payWay.name" class="checkout-pay_way-content">
         <input
           :id="payWay.name"
           v-model="selectedPayWay"
@@ -18,23 +14,13 @@
           class="checkout-pay_way-input"
           @click="managePayWayClick(payWay)"
           @change="setSelectedPayWay(payWay)"
-        >
-        <label
-          class="checkout-pay_way-input-label"
-          :for="payWay.name"
-        >
+        />
+        <label class="checkout-pay_way-input-label" :for="payWay.name">
           <span class="checkout-pay_way-icon">
-            <LottiePlayerMain
-              class="about_fedra_world-lottie"
-              :animation-data="getPayWayLottie(payWay.name)"
-              :loop="true"
-            />
+            <LottiePlayerMain :animation-data="getPayWayLottie(payWay.name)" :loop="true" />
           </span>
           <span class="checkout-pay_way-name">{{ payWay.name }}</span>
-          <span
-            class="checkout-pay_way-cost"
-            v-html="payWayExtraCost(payWay)"
-          />
+          <span class="checkout-pay_way-cost" v-html="payWayExtraCost(payWay)" />
         </label>
       </div>
     </div>
@@ -42,92 +28,86 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
-import { inject } from 'vue'
-import { Emitter } from 'mitt'
-import { Options, Vue } from 'vue-class-component'
+import { Emitter, EventType } from 'mitt'
+import { defineComponent, inject } from 'vue'
+import CartModule from '@/state/cart/CartModule'
+import { getModule } from 'vuex-module-decorators'
 import PayWayModel from '@/state/payway/PayWayModel'
+import PayWayModule from '@/state/payway/PayWayModule'
 import { PayWaysEnum } from '@/state/payway/Enum/PayWaysEnum'
 import * as credit_card_lottie from '@/assets/lotties/credit_card.json'
 import LottiePlayerMain from '@/components/Utilities/LottiePlayerMain.vue'
 import * as pay_on_delivery_lottie from '@/assets/lotties/pay_on_delivery.json'
 
-@Options({
+export default defineComponent({
   name: 'CheckoutPayWays',
   components: {
-    LottiePlayerMain
+    LottiePlayerMain,
   },
   props: {
-    cartTotalPrice: Number,
-    cartTotalPriceForPayWay: Number
-  }
-})
-export default class CheckoutPayWays extends Vue {
+    cartTotalPrice: {
+      type: Number,
+      required: true,
+    },
+    cartTotalPriceForPayWay: {
+      type: Number,
+      required: true,
+    },
+  },
+  async setup(props) {
+    const payWayModule = getModule(PayWayModule)
+    const cartModule = getModule(CartModule)
 
-  emitter: Emitter<any> | undefined = inject('emitter')
-  PayWaysEnum = PayWaysEnum
-  selectedPayWay: string = ''
-  cartTotalPrice: number = 0
-  cartTotalPriceForPayWay: number = 0
+    const emitter: Emitter<Record<EventType, unknown>> | undefined = inject('emitter')
 
-  async created(): Promise<void> {
-    await store.dispatch('pay_way/fetchActivePayWaysFromRemote')
+    const selectedPayWay = payWayModule.getSelectedPayWayName
+    const getSelectedPayWayName = () => payWayModule.getSelectedPayWayName
 
-    this.$watch(
-        () => this.getSelectedPayWayName,
-        (to: any) => {
-          this.selectedPayWay = to
+    const validPayWays: void | Array<PayWayModel> =
+      await payWayModule.fetchActivePayWaysFromRemote()
+    const getPayWayLottie = (payWayName: PayWayModel['name']): object => {
+      switch (payWayName) {
+        case PayWaysEnum.CREDIT_CARD: {
+          return credit_card_lottie
         }
-    )
-  }
-
-  get validPayWays(): Array<PayWayModel> {
-    return store.getters['pay_way/getActivePayWays']
-  }
-
-  get getSelectedPayWayName(): PayWayModel['name'] {
-    return store.getters['pay_way/getSelectedPayWayName']
-  }
-
-  public lottieReplay(): void {
-    this.emitter!.emit('lottie-replay')
-  }
-
-  public getPayWayLottie(payWayName: PayWayModel['name']): object {
-    switch(payWayName) {
-      case PayWaysEnum.CREDIT_CARD: {
-        return credit_card_lottie
-      }
-      case PayWaysEnum.PAY_ON_DELIVERY: {
-        return pay_on_delivery_lottie
-      }
-      default: {
-        return credit_card_lottie
+        case PayWaysEnum.PAY_ON_DELIVERY: {
+          return pay_on_delivery_lottie
+        }
+        default: {
+          return credit_card_lottie
+        }
       }
     }
-  }
-
-  protected setSelectedPayWay(selectedPayWay: PayWayModel): void {
-    store.dispatch('cart/cartTotalPriceForPayWayAction', selectedPayWay)
-    store.commit('pay_way/setSelectedPayWay', selectedPayWay)
-  }
-
-  protected managePayWayClick(selectedPayWay: PayWayModel): void {
-    if (selectedPayWay.name === PayWaysEnum.CREDIT_CARD) {
-      this.emitter!.emit('modal-open')
+    const setSelectedPayWay = async (selectedPayWay: PayWayModel): Promise<void> => {
+      await cartModule.cartTotalPriceForPayWayAction(selectedPayWay)
+      payWayModule.setSelectedPayWay(selectedPayWay)
     }
-  }
-
-  protected payWayExtraCost(payWay: PayWayModel): string {
-    if (payWay.free_for_order_amount < this.cartTotalPrice) {
-      return '(<span class="checkout-pay_way-cost-free green">Free</span>)'
+    const managePayWayClick = async (selectedPayWay: PayWayModel): Promise<void> => {
+      if (selectedPayWay.name === PayWaysEnum.CREDIT_CARD) {
+        emitter?.emit('modal-open')
+      }
+      await setSelectedPayWay(selectedPayWay)
     }
-    return '(+' + payWay.cost + '€ per shipment)'
-  }
-}
+    const payWayExtraCost = (payWay: PayWayModel): string => {
+      if (payWay.free_for_order_amount < props.cartTotalPrice) {
+        return '(<span class="checkout-pay_way-cost-free green">Free</span>)'
+      }
+      return '(+' + payWay.cost + '€ per shipment)'
+    }
+
+    return {
+      validPayWays,
+      selectedPayWay,
+      managePayWayClick,
+      setSelectedPayWay,
+      getPayWayLottie,
+      payWayExtraCost,
+      getSelectedPayWayName,
+    }
+  },
+})
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Checkout/CheckoutPayWays"
-
+@import '@/assets/styles/components/Checkout/CheckoutPayWays';
 </style>

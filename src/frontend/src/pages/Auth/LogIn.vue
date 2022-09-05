@@ -12,10 +12,7 @@
           >
             <div class="container">
               <div class="email mb-3">
-                <label
-                  :for="formManager.form.email.$uid"
-                  class="label mb-2"
-                >Email</label>
+                <label :for="String(formManager.form.email.$uid)" class="label mb-2">Email</label>
                 <FormBaseInput
                   :id="formManager.form.email.$uid"
                   v-model="formManager.form.email.$value"
@@ -25,18 +22,16 @@
                   :validating="formManager.form.email.$validating"
                   placeholder="Alice, Bob, Oscar"
                   autocomplete="username"
-                  @blur="formManager.form.email.onBlur"
                 />
                 <FormValidationErrors
                   :errors="formManager.form.email.$errors"
-                  class="validation-errros"
+                  class="validation-errors"
                 />
               </div>
               <div class="password mb-4">
-                <label
-                  :for="formManager.form.password.$uid"
-                  class="label mb-2"
-                >Password</label>
+                <label :for="String(formManager.form.password.$uid)" class="label mb-2"
+                  >Password</label
+                >
                 <FormBaseInput
                   :id="formManager.form.password.$uid"
                   v-model="formManager.form.password.$value"
@@ -45,7 +40,6 @@
                   :input-with-add-on-icon="keyIcon"
                   type="password"
                   autocomplete="current-password"
-                  @blur="formManager.form.password.onBlur"
                 />
                 <FormValidationErrors :errors="formManager.form.password.$errors" />
               </div>
@@ -68,19 +62,13 @@
                     class="form-check-input form-check-input-main"
                     type="checkbox"
                     value=""
-                  >
-                  <label
-                    class="form-check-label"
-                    for="form2Example3"
-                  > Remember me </label>
+                  />
+                  <label class="form-check-label" for="form2Example3"> Remember me </label>
                 </div>
               </div>
               <div class="grid-item-two">
                 <!-- Simple link -->
-                <RouterLink
-                  title="Password Reset"
-                  to="/password_reset"
-                >
+                <RouterLink title="Password Reset" to="/password_reset">
                   Forgot password?
                 </RouterLink>
               </div>
@@ -91,17 +79,9 @@
           <div class="login-register-field">
             <p class="mb-1">
               Not a member?
-              <RouterLink
-                aria-label="Sign Up"
-                title="Sign Up"
-                to="/sign-up"
-              >
-                Register
-              </RouterLink>
+              <RouterLink aria-label="Sign Up" title="Sign Up" to="/sign-up"> Register </RouterLink>
             </p>
-            <p class="mb-3">
-              or sign up with:
-            </p>
+            <p class="mb-3">or sign up with:</p>
           </div>
 
           <div class="login-grid-part-socials mb-3">
@@ -112,11 +92,7 @@
               role="button"
               title="Sign Up with Facebook"
             >
-              <font-awesome-icon
-                :icon="facebookIcon"
-                :style="{ color: '#4267B2' }"
-                size="lg"
-              />
+              <font-awesome-icon :icon="facebookIcon" :style="{ color: '#4267B2' }" size="lg" />
             </a>
 
             <!-- Google -->
@@ -126,11 +102,7 @@
               role="button"
               title="Sign Up with Google"
             >
-              <font-awesome-icon
-                :icon="googleIcon"
-                :style="{ color: '#DB4437' }"
-                size="lg"
-              />
+              <font-awesome-icon :icon="googleIcon" :style="{ color: '#DB4437' }" size="lg" />
             </a>
           </div>
         </div>
@@ -140,13 +112,17 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
 import session from '@/api/session'
-import { Options, Vue } from 'vue-class-component'
+import { getModule } from 'vuex-module-decorators'
 import { required } from '@/components/Form/Utils'
+import UserModule from '@/state/user/data/UserModule'
+import AuthModule from '@/state/auth/auth/AuthModule'
+import CountryModule from '@/state/country/CountryModule'
 import FormProvider from '@/components/Form/FormProvider.vue'
+import LogInApiData from '@/state/auth/Interface/LogInApiData'
 import FormBaseInput from '@/components/Form/FormBaseInput.vue'
+import { Options as Component, Vue } from 'vue-class-component'
 import { faKey } from '@fortawesome/free-solid-svg-icons/faKey'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import { useValidation, ValidationError } from 'vue3-form-validation'
@@ -156,40 +132,36 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
 import FormValidationErrors from '@/components/Form/FormValidationErrors.vue'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 
-let {
-  validateFields
-} = useValidation({})
+let { validateFields } = useValidation({})
 
-@Options({
+@Component({
   name: 'LogIn',
   components: {
     FormProvider,
     FormBaseInput,
     FormSubmitButtons,
     FormValidationErrors,
-    Breadcrumbs
-  }
+    Breadcrumbs,
+  },
 })
-
 export default class LogIn extends Vue {
+  userModule = getModule(UserModule)
+  authModule = getModule(AuthModule)
+  productFavouriteModule = getModule(ProductFavouriteModule)
+  countryModule = getModule(CountryModule)
 
-  formManager = {
-    validateFields
-  } = useValidation({
+  formManager = ({ validateFields } = useValidation({
     email: {
       $value: '',
-      $rules: [
-        required('Email is required')
-      ]
+      $rules: [required('Email is required')],
     },
     password: {
       $value: '',
-      $rules: [
-        required('Password is required')
-      ]
-    }
-  })
+      $rules: [required('Password is required')],
+    },
+  }))
 
   keyIcon = faKey
   googleIcon = faGoogle
@@ -197,8 +169,9 @@ export default class LogIn extends Vue {
   facebookIcon = faFacebook
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
-    return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
+      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+    return currentRouteMetaBreadcrumb()
   }
 
   mounted(): void {
@@ -210,18 +183,26 @@ export default class LogIn extends Vue {
     localStorage.removeItem('token')
 
     try {
-      const formData: any = await validateFields()
-      const apiData = {
+      const formData: LogInApiData = await validateFields()
+      const apiData: LogInApiData = {
         email: formData.email,
-        password: formData.password
+        password: formData.password,
       }
-      await store.dispatch('auth/login', apiData)
-          .then(() => {
-            store.dispatch('user/fetchUserDataFromRemote')
+      await this.authModule
+        .login(apiData)
+        .then(() => {
+          this.userModule.fetchUserDataFromRemote().then((response) => {
+            if (response) {
+              this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(
+                this.userModule.getUserData
+              )
+              this.productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
+            }
           })
-          .catch((error: Error) => {
-            console.log(error)
-          })
+        })
+        .catch((error: Error) => {
+          console.log(error)
+        })
     } catch (e) {
       if (e instanceof ValidationError) {
         console.log(e.message)
@@ -229,10 +210,8 @@ export default class LogIn extends Vue {
     }
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/Auth/LogIn"
-
+@import '@/assets/styles/pages/Auth/LogIn';
 </style>

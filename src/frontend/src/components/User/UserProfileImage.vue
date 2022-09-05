@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="src"
-    class="profile-image-grid-container"
-  >
+  <div v-if="src" class="profile-image-grid-container">
     <form
       id="uploadImageForm"
       class="profile-image-grid-form"
@@ -12,7 +9,7 @@
     >
       <div class="profile-image-grid-content">
         <div
-          :class="{ 'hovering': profileImageHovering }"
+          :class="{ hovering: profileImageHovering }"
           class="profile-image-part"
           @mouseout="profileImageHovering = false"
           @mouseover="profileImageHovering = true"
@@ -28,21 +25,9 @@
             :img-fit="ImageFitOptions.outside"
             :img-position="ImagePositionOptions.center"
           />
-          <label
-            class="profile-image-label"
-            for="image"
-          >
-            <input
-              id="image"
-              class="d-none"
-              name="image"
-              type="file"
-              @change="updateUserImage"
-            >
-            <font-awesome-icon
-              :icon="cameraIcon"
-              size="3x"
-            />
+          <label class="profile-image-label" for="image">
+            <input id="image" class="d-none" name="image" type="file" @change="updateUserImage" />
+            <font-awesome-icon :icon="cameraIcon" size="3x" />
           </label>
         </div>
         <div class="profile-fullname-part">
@@ -61,33 +46,40 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
-import { Options, Vue } from 'vue-class-component'
+import {
+  ImagePathOptions,
+  ImageFormatOptions,
+  ImageFitOptions,
+  ImagePositionOptions,
+  ImageTypeOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
+import { getModule } from 'vuex-module-decorators'
+import UserModule from '@/state/user/data/UserModule'
+import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
-import { ImagePathOptions, ImageFormatOptions, ImageFitOptions, ImagePositionOptions, ImageTypeOptions} from '@/helpers/MediaStream/ImageUrlEnum'
 
-
-@Options({
+@Component({
   name: 'UserProfileImage',
   components: {
-    GrooveImage
+    GrooveImage,
   },
   props: {
     fullname: {
       type: String,
-      default: ''
+      default: '',
     },
     src: {
       type: String,
-      default: ''
-    }
-  }
+      default: '',
+    },
+  },
 })
-
 export default class UserProfileImage extends Vue {
-
-  profileImageHovering: boolean = false
+  src = ''
+  fullname = ''
+  userModule = getModule(UserModule)
+  profileImageHovering = false
   cameraIcon = faCamera
 
   ImagePathOptions = ImagePathOptions
@@ -99,13 +91,11 @@ export default class UserProfileImage extends Vue {
   async updateUserImage(): Promise<void> {
     const formEl = document.getElementById('uploadImageForm') as HTMLFormElement
     const data = new FormData(formEl)
-    await store.dispatch('user/updateUserProfile', data)
+    await this.userModule.updateUserProfile(data)
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/User/UserProfileImage"
-
+@import '@/assets/styles/components/User/UserProfileImage';
 </style>

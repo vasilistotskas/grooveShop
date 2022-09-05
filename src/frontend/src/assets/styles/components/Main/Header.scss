@@ -1,5 +1,7 @@
+@import '@/assets/styles/base/variables';
+
 header {
-  @media screen and (min-width: 1200px) {
+  @media screen and (min-width: map-get($grid-breakpoints, 'xl')) {
     position: fixed;
   }
 

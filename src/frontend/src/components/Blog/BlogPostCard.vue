@@ -1,107 +1,156 @@
 <template>
-  <RouterLink
-    v-if="post && Object.keys(post).length > 0"
-    :title="post.slug"
-    :to="`/post/${post.slug}`"
-    class="cardSpecialEffect"
-    aria-label="Blog Post"
-  >
-    <div class="card blog-card">
-      <GrooveImage
-        :alt="post.title"
-        :file-name="post.mainImageFilename"
-        :use-media-stream="true"
-        :img-type="ImageTypeOptions.BLOG"
-        :img-height="268"
-        :img-width="462"
-      />
-      <div class="card-body">
-        <span class="card-title">{{ post.title }}: {{ post.subtitle }}</span>
-        <span v-if="showAuthor">
-          by <BlogAuthorLink :author="author" />
-        </span>
-        <p class="card-text">
-          {{ post.metaDescription }}
-        </p>
-        <ul class="grid-post-list-tags">
-          <li
-            v-for="tag in post.tags"
-            :key="tag.name"
-            class="post__tags"
-          >
-            <RouterLink
-              :title="tag.name"
-              :to="`/tag/${tag.name}`"
-              aria-label="Blog Tag"
-            >
-              #{{
-                tag.name
-              }}
-            </RouterLink>
-          </li>
-        </ul>
-        <small class="text-muted">{{ myContext.displayableDate(post.publishDate) }}</small>
+  <div v-if="post && Object.keys(post).length > 0" class="blog-post-card-container">
+    <div class="blog-post-card-wrapper">
+      <RouterLink
+        :title="post.slug"
+        :to="`/post/${post.slug}`"
+        class="blog-post-card-link"
+        aria-label="Blog Post"
+      >
+        <GrooveImage
+          :alt="post.title"
+          :file-name="post.mainImageFilename"
+          :use-media-stream="true"
+          :img-class="'blog-post-card-image'"
+          :img-type="ImageTypeOptions.BLOG"
+          :img-height="500"
+          :img-width="900"
+          :img-fit="ImageFitOptions.fill"
+          :img-position="ImagePositionOptions.center"
+        />
+        <div class="blog-post-card-body">
+          <span v-if="showAuthor" class="blog-post-card-body-author">
+            by <BlogAuthorLink :author="author" />
+          </span>
+          <span class="blog-post-card-body-title">{{ post.title }}</span>
+          <p
+            class="blog-post-card-body-description"
+            v-html="myContext.contentShorten(post.body)"
+          ></p>
+          <ul class="blog-post-card-body-tags" v-if="post.tags.length > 0">
+            <li v-for="tag in post.tags" :key="tag.name" class="blog-post-card-body-tag">
+              <RouterLink
+                :title="tag.name"
+                :to="`/tag/${tag.name}`"
+                class="blog-post-card-body-tag-link"
+                aria-label="Blog Tag"
+              >
+                <span class="blog-post-card-body-tag-name"> #{{ tag.name }} </span>
+              </RouterLink>
+            </li>
+          </ul>
+        </div>
+      </RouterLink>
+      <div class="blog-post-card-body-actions">
+        <div class="blog-post-card-body-actions-like">
+          <FavouriteButton
+            btn-class="blog-post-card-body-actions-like-btn"
+            :model="post"
+            :module="blogModule"
+            :dispatch-type="'toggleFavourite'"
+          />
+          <span class="blog-post-card-body-actions-like-count">609</span>
+        </div>
+
+        <div class="blog-post-card-body-actions-comment">
+          <font-awesome-icon :style="{ color: 'rgba(200,60,60,0.79)' }" :icon="commentIcon" />
+          <span class="blog-post-card-body-actions-comment-count">120</span>
+        </div>
+        <div class="blog-post-card-body-actions-share">
+          <span class="blog-post-card-body-actions-share-text" @click="openShareModal()">
+            SHARE
+          </span>
+          <GenericModal :unique-id="`postActionModal${post.id}`" :ref="`postActionModal${post.id}`">
+            <BlogShareActions :post="post" />
+          </GenericModal>
+        </div>
       </div>
-      <span class="line-1" />
-      <span class="line-2" />
-      <span class="line-3" />
-      <span class="line-4" />
     </div>
-  </RouterLink>
+  </div>
 </template>
 
 <script lang="ts">
+import {
+  ImageFitOptions,
+  ImagePositionOptions,
+  ImageTypeOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
+import { PropType } from 'vue'
+import { helpers } from '@/helpers/main'
+import BlogModule from '@/state/blog/BlogModule'
+import { getModule } from 'vuex-module-decorators'
 import BlogPostModel from '@/state/blog/BlogPostModel'
-import { Vue, setup, Options } from 'vue-class-component'
-import BlogSidebar from '@/components/Blog/BlogSidebar.vue'
+import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
+import DateTimeFormatOptions = Intl.DateTimeFormatOptions
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import BlogAuthorLink from '@/components/Blog/BlogAuthorLink.vue'
-import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import GenericModal from '@/components/Utilities/GenericModal.vue'
+import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
+import BlogShareActions from '@/components/Blog/BlogShareActions.vue'
+import { Vue, setup, Options as Component } from 'vue-class-component'
+import FavouriteButton from '@/components/Utilities/FavouriteButton.vue'
+import { faCommentDots } from '@fortawesome/free-solid-svg-icons/faCommentDots'
 
-@Options({
+@Component({
   name: 'BlogPostCard',
   components: {
     BlogAuthorLink,
-    BlogSidebar,
-    GrooveImage
+    BlogTagsSidebar,
+    GrooveImage,
+    FavouriteButton,
+    BlogShareActions,
+    GenericModal,
   },
   props: {
     post: {
-      type: Object,
-      required: true
+      type: Object as PropType<BlogPostModel>,
+      required: true,
     },
     showAuthor: {
       type: Boolean,
       required: false,
-      default: true
+      default: true,
     },
     author: {
-      type: Object,
-      required: false
-    }
-  }
+      type: Object as PropType<BlogAuthorModel>,
+      required: false,
+    },
+  },
 })
-
 export default class BlogPostCard extends Vue {
+  blogModule = getModule(BlogModule)
+  ImageFitOptions = ImageFitOptions
+  ImagePositionOptions = ImagePositionOptions
   post = new BlogPostModel()
-  showAuthor: boolean = false
-  author!: object
+  showAuthor = false
+  author!: BlogAuthorModel
   ImageTypeOptions = ImageTypeOptions
+  commentIcon = faCommentDots
+
+  declare $refs
 
   myContext = setup(() => {
-    const displayableDate = (date:string) => {
-      const options: any = { dateStyle: 'full', timeStyle: 'medium' }
+    const displayableDate = (date: string) => {
+      const options: DateTimeFormatOptions = { dateStyle: 'full', timeStyle: 'medium' }
       return new Intl.DateTimeFormat('en-US', options).format(new Date(date))
     }
+
+    const contentShorten = (productName: string) => {
+      return helpers.contentShorten(productName, 0, 120)
+    }
+
     return {
-      displayableDate
+      displayableDate,
+      contentShorten,
     }
   })
 
+  public openShareModal(): void {
+    this.$refs[`postActionModal${this.post.id}`].openModal()
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Blog/BlogPostList"
-
+@import '@/assets/styles/components/Blog/BlogPostCard';
 </style>

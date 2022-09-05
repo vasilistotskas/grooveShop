@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Profile, Post, Tag, Category, Comment
+from .models import Author, Post, Tag, Category, Comment
 
 
-@admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin):
-    model = Profile
+@admin.register(Author)
+class AuthorAdmin(admin.ModelAdmin):
+    model = Author
 
 
 @admin.register(Tag)

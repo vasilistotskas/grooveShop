@@ -1,30 +1,22 @@
 <template>
-  <div
-    id="page-not-found"
-    class="container mt-9"
-  >
+  <div id="page-not-found" class="container mt-9">
     <span>PAGE NOT FOUND</span>
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 
-@Options({
-  name: 'PageNotFound'
+@Component({
+  name: 'PageNotFound',
 })
-
 export default class PageNotFound extends Vue {
-
   mounted(): void {
     document.title = 'Page Not Found'
   }
-
 }
-
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/PageNotFound"
-
+@import '@/assets/styles/pages/PageNotFound';
 </style>

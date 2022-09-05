@@ -24,37 +24,33 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
 import ProductModel from '@/state/product/ProductModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
-@Options({
+@Component({
   name: 'UserOrderHistoryCard',
   components: {
     Pagination,
-    GrooveImage
+    GrooveImage,
   },
   props: {
     product: Object,
     orderTotal: Number,
-    quantity: Number
-  }
+    quantity: Number,
+  },
 })
-
-export default class UserOrderHistoryCard extends Vue  {
-
+export default class UserOrderHistoryCard extends Vue {
   product = new ProductModel()
   orderTotal = 0
   quantity = 0
 
   ImageTypeOptions = ImageTypeOptions
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/User/UserOrderHistory"
-
+@import '@/assets/styles/pages/User/UserOrderHistory';
 </style>

@@ -15,10 +15,14 @@ class Command(BaseCommand):
             last_name = ' '.join(name.split(' ')[-1:])
             username = first_name[0].lower() + last_name.lower().replace(' ', '')
             email = username + "@" + last_name.lower() + ".com"
-            user = UserAccount.objects.create_user(email, password=username)
-            user.first_name = first_name
-            user.last_name = last_name
-            user.is_superuser = False
-            user.is_staff = False
-            user.save()
+            try:
+                user_found = UserAccount.objects.get(email=email)
+                continue
+            except UserAccount.DoesNotExist:
+                user = UserAccount.objects.create_user(email, password=username)
+                user.first_name = first_name
+                user.last_name = last_name
+                user.is_superuser = False
+                user.is_staff = False
+                user.save()
         self.stdout.write(self.style.SUCCESS('Success'))

@@ -40,89 +40,115 @@
 </template>
 
 <script lang="ts">
-
-import store from '@/store'
+import {
+  ImageFitOptions,
+  ImagePositionOptions,
+  ImageTypeOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
 import router from '@/routes'
-import { Options } from 'vue-class-component'
+import AppModule from '@/state/app/AppModule'
+import { getModule } from 'vuex-module-decorators'
 import ProductModel from '@/state/product/ProductModel'
+import { Options as Component } from 'vue-class-component'
 import CategoryModel from '@/state/category/CategoryModel'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
+import CategoryModule from '@/state/category/CategoryModule'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
+import { RouteLocationNormalized, RouteParams } from 'vue-router'
+import PaginationModule from '@/state/pagination/PaginationModule'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import PaginationBase from '@/components/Pagination/PaginationBase'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
+import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
-import PaginatedInterface from '@/state/pagination/Interface/PaginatedInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
-import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
-import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
-import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
+import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
+import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
-@Options({
+@Component({
   name: 'Category',
-  extends: PaginationBase,
+  extends: PaginatedComponent,
   components: {
     ProductCard,
     Breadcrumbs,
     Pagination,
-    GrooveImage
+    GrooveImage,
   },
   props: {
-    category_slug: String
-  }
+    category_slug: String,
+  },
 })
-
-export default class Category extends PaginationBase<ProductModel> implements PaginatedInterface<ProductModel> {
-
+export default class Category
+  extends PaginatedComponent<ProductModel>
+  implements PaginatedComponentInterface<ProductModel>
+{
+  categoryModule = getModule(CategoryModule)
+  appModule = getModule(AppModule)
+  paginationModule = getModule<PaginationModule<ProductModel>>(PaginationModule)
   formEl = document.getElementById('burgerButton') as HTMLFormElement
   ImageTypeOptions = ImageTypeOptions
   ImageFitOptions = ImageFitOptions
   ImagePositionOptions = ImagePositionOptions
-  paginationNamespace = PaginationNamespaceDataEnum.CATEGORY_PRODUCTS
+  paginationNamespace = PaginationNamespaceTypesEnum.CATEGORY_PRODUCTS
 
   PaginationRoutesEnum = PaginationRoutesEnum
 
   get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: any = router.currentRoute.value.meta.breadcrumb
+    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router
+      .currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
   get category(): CategoryModel {
-    return store.getters['category/getCategory']
+    return this.categoryModule.getCategory
   }
 
   async created(): Promise<void> {
-
     document.title = this.$route.params.category_slug + ' Category'
     this.$watch(
-        () => this.$route,
-        (to: any, from: any) => {
-          if (to.name === 'Category') {
-            this.fetchCategory()
-            this.fetchPaginationData()
-          }
-          if (to.path !== from.path && to.name === 'Category') {
-            store.commit('pagination/unsetResults', this.paginationNamespace)
-            this.formEl.classList.toggle('opened')
-            this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)
-            store.commit('app/setNavbarMenuHidden', true)
-          }
+      () => this.$route,
+      (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+        if (to.name === 'Category') {
+          this.fetchCategory()
+          this.fetchPaginationData()
         }
+        if (to.path !== from.path && to.name === 'Category') {
+          this.paginationModule.unsetResults(this.paginationNamespace)
+          this.formEl.classList.toggle('opened')
+          this.formEl.setAttribute(
+            'aria-expanded',
+            this.formEl.classList.contains('opened') as unknown as string
+          )
+          this.appModule.setNavbarMenuHidden(true)
+        }
+      }
     )
 
     this.formEl.classList.remove('opened')
-    this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)
-    store.commit('app/setNavbarMenuHidden', true)
+    this.formEl.setAttribute(
+      'aria-expanded',
+      this.formEl.classList.contains('opened') as unknown as string
+    )
+    this.appModule.setNavbarMenuHidden(true)
 
     if (this.params.query) {
-      await store.commit('pagination/setCurrentQuery', { currentQuery: this.params.query, namespace: this.paginationNamespace })
+      await this.paginationModule.setCurrentQuery({
+        queryParams: this.params.query,
+        namespace: this.paginationNamespace,
+      })
     }
 
-    await store.commit('pagination/setCurrentPageNumber', { pageNumber: 1, namespace: this.paginationNamespace })
+    await this.paginationModule.setCurrentPageNumber({
+      pageNumber: 1,
+      namespace: this.paginationNamespace,
+    })
 
     if (this.params.page) {
-      await store.commit('pagination/setCurrentPageNumber', { pageNumber: Number(this.params.page), namespace: this.paginationNamespace })
+      await this.paginationModule.setCurrentPageNumber({
+        pageNumber: Number(this.params.page),
+        namespace: this.paginationNamespace,
+      })
     }
 
     await this.fetchCategory()
@@ -130,37 +156,39 @@ export default class Category extends PaginationBase<ProductModel> implements Pa
   }
 
   unmounted(): void {
-    store.commit('pagination/unsetResults', this.paginationNamespace)
+    this.paginationModule.unsetResults(this.paginationNamespace)
     this.formEl.classList.remove('opened')
-    this.formEl.setAttribute('aria-expanded', this.formEl.classList.contains('opened') as unknown as string)
+    this.formEl.setAttribute(
+      'aria-expanded',
+      this.formEl.classList.contains('opened') as unknown as string
+    )
   }
 
   public fetchCategory(): void {
     const categoryId = this.$route.params.category_slug
-    store.dispatch('category/fetchCategoryFromRemote', categoryId)
+    this.categoryModule.fetchCategoryFromRemote(categoryId as string)
   }
 
   async fetchPaginationData(): Promise<void> {
+    const paginationQuery = PaginationModel.createPaginationModel({
+      pageNumber: this.currentPageNumber,
+      endpointUrl: this.buildEndPointUrlForPaginatedResults(),
+      method: ApiBaseMethods.GET,
+    })
 
-    const paginationQuery = PaginationQueryParametersModel
-      .createPaginationQuery({
-        'pageNumber': this.currentPageNumber,
-        'endpointUrl': this.buildEndPointUrlForPaginatedResults(),
-        'method': ApiBaseMethods.GET
-      } )
-
-    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.paginationNamespace })
+    await this.paginationModule.fetchPaginatedResults({
+      params: paginationQuery,
+      namespace: this.paginationNamespace,
+    })
   }
 
   public buildEndPointUrlForPaginatedResults(): string {
     const categoryId = this.$route.params.category_slug
-    return 'category_products' + `/${ categoryId }`
+    return 'category_products' + `/${categoryId}`
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/Category/Category"
-
+@import '@/assets/styles/pages/Category/Category';
 </style>

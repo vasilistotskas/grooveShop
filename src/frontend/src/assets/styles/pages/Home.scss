@@ -50,7 +50,7 @@
 
 .home-top-grid-content {
   display: grid;
-  grid-template-columns: 61.5% 35%;
+  grid-template-columns: 2fr 1fr;
   gap: 45px;
   @media screen and (max-width: 767px) {
     gap: 10px;
@@ -60,6 +60,11 @@
 }
 
 .grid-item-swipper {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
   border-radius: 8px;
   transition: all 0.3s ease-in-out;
 
@@ -76,9 +81,7 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr;
-  overflow: hidden;
-  max-height: 575px;
-  gap: 10px;
+  max-width: 100%;
   @media screen and (max-width: 767px) {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
@@ -220,4 +223,12 @@
     overflow-y: auto;
     max-height: none;
   }
+}
+
+.grid-item-content-one, .grid-item-content-two {
+  max-width: 100%;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
 }

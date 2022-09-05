@@ -1,5 +1,5 @@
 # !!!! TODOS !!!!
-
+-- tip an thelw na dw error 404 me debug afairw to route apo to front --
 ### ---BLOG MAIN PAGE--- ###
 
 # blog tips:

@@ -1,14 +1,20 @@
-export default interface PaginationDataInterface {
-	[key: string]: {
-		results: Array<any>
-		results_count: number
-		results_next_page: string
-		results_previous_page: string
-		results_total_pages: number
-		alternativeToken: string
-		current_page_number: number
-		current_query: string
-		show_next_button: boolean
-		show_previous_button: boolean
-	}
+import {
+  PaginationLink,
+  PaginationResults,
+  QueryParamsType,
+} from '@/state/pagination/Type/PaginationTypes'
+
+export default interface PaginationDataInterface<TPaginatedModel> {
+  [key: string]: {
+    results: PaginationResults<TPaginatedModel>
+    resultsCount: number
+    resultsNextPage: PaginationLink['next']
+    resultsPreviousPages: PaginationLink['previous']
+    resultsTotalPages: number
+    alternativeToken: string
+    currentPageNumber: number
+    currentQuery: QueryParamsType
+    showNextButton: boolean
+    showPreviousButton: boolean
+  }
 }

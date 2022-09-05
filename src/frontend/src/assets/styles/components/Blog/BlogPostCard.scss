@@ -1,0 +1,136 @@
+@import '@/assets/styles/base/variables';
+
+.blog-post-card {
+  position: relative;
+  &-container {
+    box-shadow: 0 0 7px 0 rgb(153 153 153 / 40%);
+    border-radius: 10px;
+    &:first-child {
+      grid-row: 1;
+      grid-column: 1/3;
+      @media screen and (max-width: map-get($grid-breakpoints, 'md')) {
+        grid-row: unset;
+        grid-column: unset;
+      }
+      .blog-post-card-body-actions {
+        position: absolute;
+        top: 85%;
+        right: 0;
+        padding-bottom: unset;
+      }
+      .blog-post-card-body {
+        position: absolute;
+        display: grid;
+        grid-template-rows: auto auto;
+        gap: 1rem;
+        top: 20%;
+        left: 10%;
+        background: transparent;
+      }
+      .blog-post-card-body-title {
+        font-size: 36px;
+        font-weight: 500;
+      }
+      .blog-post-card-body-description {
+        font-size: 22px;
+      }
+      .blog-post-card-body-author, .blog-post-card-body-date {
+        display: none;
+      }
+      .blog-post-card-body-tags {
+        display: none;
+      }
+    }
+  }
+  &-image {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  &-wrapper {
+    position: relative;
+  }
+  &-link {
+    display: grid;
+    grid-template-rows: auto auto;
+  }
+  &-body {
+    display: grid;
+    gap: 1rem;
+    background-color: var(--cp-palette-main-fourth);
+    padding: 1rem 1.5rem;
+    &-title {
+      font-weight: 700;
+      font-size: 20px;
+    }
+    &-author {
+      text-decoration: underline;
+    }
+    &-description {
+      font-weight: 300;
+    }
+    &-tags {
+
+    }
+    &-tag {
+      &-link {
+
+      }
+      &-name {
+
+      }
+    }
+    &-date {
+
+    }
+    &-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr 2fr;
+      gap: 1rem;
+      align-items: center;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      padding-bottom: 1rem;
+      &-like {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        &-btn {
+          background: transparent;
+          border: unset;
+          font-size: 20px;
+        }
+        &-count {
+          font-weight: 700;
+          color: var(--cp-palette-main-primary);
+        }
+      }
+      &-comment {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        gap: 0.75rem;
+        &-count {
+          font-weight: 700;
+          color: var(--cp-palette-main-primary);
+        }
+      }
+      &-share {
+        display: grid;
+        justify-content: end;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        &-text {
+          font-weight: 700;
+          color: var(--cp-palette-main-primary);
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

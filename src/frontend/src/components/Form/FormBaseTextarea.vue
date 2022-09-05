@@ -1,16 +1,10 @@
 <template>
   <div
-    :class="[attrsClassName, { 'textarea-group-w-addon': textareaWithAddOn}]"
+    :class="[attrsClassName, { 'textarea-group-w-addon': textareaWithAddOn }]"
     class="_container"
   >
-    <span
-      v-if="textareaWithAddOn"
-      class="textarea-group-addon"
-    >
-      <font-awesome-icon
-        :icon="textareaWithAddOnIcon"
-        size="lg"
-      />
+    <span v-if="textareaWithAddOn" class="textarea-group-addon">
+      <font-awesome-icon :icon="textareaWithAddOnIcon" size="lg" />
     </span>
     <textarea
       v-model="value"
@@ -39,40 +33,40 @@ export default defineComponent({
   props: {
     modelValue: {
       type: [String, Number, Boolean],
-      required: true
+      required: true,
     },
     validating: {
-      type: Boolean
+      type: Boolean,
     },
     textareaWithAddOn: {
-      type: Boolean
+      type: Boolean,
     },
     textareaWithAddOnIcon: {
       type: Object,
-      default: () => {},
-      required: false
+      default: Object,
+      required: false,
     },
     disabled: {
-      type: Boolean
+      type: Boolean,
     },
     placeholder: {
       type: [String, Number],
       default: '',
-      required: false
+      required: false,
     },
     hasError: {
-      type: Boolean
+      type: Boolean,
     },
     maxlength: {
       type: Number,
       default: 500,
-      required: false
+      required: false,
     },
     rows: {
       type: Number,
       default: 6,
-      required: false
-    }
+      required: false,
+    },
   },
   emits: ['update:modelValue'],
   setup(props, { attrs }) {
@@ -80,7 +74,7 @@ export default defineComponent({
 
     return {
       attrsClassName,
-      attrsRest
+      attrsRest,
     }
   },
   computed: {
@@ -90,13 +84,12 @@ export default defineComponent({
       },
       set(value) {
         this.$emit('update:modelValue', value)
-      }
-    }
-  }
+      },
+    },
+  },
 })
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Form/FormBaseTextarea"
-
+@import '@/assets/styles/components/Form/FormBaseTextarea';
 </style>

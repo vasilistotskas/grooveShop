@@ -1,9 +1,6 @@
 <template>
   <div class="blog-main-content">
-    <div
-      v-if="posts && Object.keys(posts).length > 0"
-      class="grid-post-list"
-    >
+    <div v-if="posts && Object.keys(posts).length > 0" class="grid-post-list">
       <BlogPostCard
         v-for="post in posts"
         :key="post.title"
@@ -15,68 +12,67 @@
     <div v-else>
       <span>No Posts Found</span>
     </div>
-    <BlogSidebar
-      :authors="allAuthors"
-      :tags="allTags"
-    />
+    <BlogTagsSidebar :authors="allAuthors" :tags="allTags" />
   </div>
 </template>
 
 <script lang="ts">
-import store from '@/store'
-import { Options, Vue } from 'vue-class-component'
+import { PropType } from 'vue'
+import BlogModule from '@/state/blog/BlogModule'
+import { getModule } from 'vuex-module-decorators'
+import BlogTagModel from '@/state/blog/BlogTagModel'
 import BlogPostModel from '@/state/blog/BlogPostModel'
-import BlogSidebar from '@/components/Blog/BlogSidebar.vue'
+import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import BlogPostCard from '@/components/Blog/BlogPostCard.vue'
+import { Options as Component, Vue } from 'vue-class-component'
+import BlogTagsSidebar from '@/components/Blog/BlogTagsSidebar.vue'
 
-@Options({
+@Component({
   name: 'BlogAuthorPostList',
   components: {
-    BlogSidebar,
-    BlogPostCard
+    BlogTagsSidebar,
+    BlogPostCard,
   },
   props: {
     posts: {
-      type: Array,
-      required: true
+      type: Array as PropType<Array<BlogPostModel>>,
+      required: true,
     },
     showAuthor: {
       type: Boolean,
       required: false,
-      default: true
+      default: true,
     },
     author: {
-      type: Object,
-      required: false
-    }
-  }
+      type: Object as PropType<BlogAuthorModel>,
+      required: false,
+    },
+  },
 })
-
 export default class BlogAuthorPostList extends Vue {
-  showAuthor: boolean = false
+  blogModule = getModule(BlogModule)
+  showAuthor = false
   posts: Array<BlogPostModel> = []
   author!: object
 
-  get allTags(): Array<BlogPostModel> {
-    return store.getters['blog/getAllTags']
+  get allTags(): Array<BlogTagModel> {
+    return this.blogModule.getAllTags
   }
 
-  get allAuthors(): Array<BlogPostModel> {
-    return store.getters['blog/getAllAuthors']
+  get allAuthors(): Array<BlogAuthorModel> {
+    return this.blogModule.getAllAuthors
   }
 
   async mounted(): Promise<void> {
     await Promise.all([
-      store.dispatch('blog/fetchAllTagsFromRemote'),
-      store.dispatch('blog/fetchAllAuthorsFromRemote'),
-      store.dispatch('blog/fetchAllCategoriesFromRemote')
+      this.blogModule.fetchAllTagsFromRemote(),
+      this.blogModule.fetchAllAuthorsFromRemote(),
+      this.blogModule.fetchAllCategoriesFromRemote(),
     ])
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Blog/BlogPostList"
-
+@import '@/assets/styles/components/Blog/BlogPostList';
 </style>

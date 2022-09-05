@@ -2,16 +2,11 @@
   <div
     :style="{
       'column-gap': gap,
-      'grid-template-columns': `${r1}fr ${r2}fr`
+      'grid-template-columns': `${r1}fr ${r2}fr`,
     }"
     class="_buttons"
   >
-    <FormBaseButton
-      class="reset-button"
-      title="Reset"
-      type="primary-two"
-      @click="$emit('reset')"
-    >
+    <FormBaseButton class="reset-button" title="Reset" type="primary-two" @click="$emit('reset')">
       Reset
     </FormBaseButton>
     <FormBaseButton
@@ -32,24 +27,24 @@ import FormBaseButton from './FormBaseButton.vue'
 
 export default defineComponent({
   components: {
-    FormBaseButton
+    FormBaseButton,
   },
   props: {
     submitText: {
       type: String,
-      default: 'Submit'
+      default: 'Submit',
     },
     gap: {
       type: String,
-      required: true
+      required: true,
     },
     ratio: {
       type: String,
-      default: '1:1'
+      default: '1:1',
     },
     submitting: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   emits: ['reset'],
   computed: {
@@ -58,12 +53,11 @@ export default defineComponent({
     },
     r2() {
       return this.ratio.split(':')[1]
-    }
-  }
+    },
+  },
 })
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Form/FormSubmitButtons"
-
+@import '@/assets/styles/components/Form/FormSubmitButtons';
 </style>

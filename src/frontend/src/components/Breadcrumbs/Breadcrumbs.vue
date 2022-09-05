@@ -2,23 +2,14 @@
   <div class="container mt-2 mb-4 breadcrumb-container">
     <ul class="breadcrumb">
       <li class="breadcrumb__item">
-        <RouterLink
-          :to="{ name: 'Home' }"
-          aria-label="Home"
-          class="btn-w-effect"
-          title="Home"
-        >
+        <RouterLink :to="{ name: 'Home' }" aria-label="Home" class="btn-w-effect" title="Home">
           <span class="breadcrumb__inner">
             <span class="breadcrumb__title">Home</span>
           </span>
         </RouterLink>
         <span class="breadcrumb__seperator">/</span>
       </li>
-      <li
-        v-for="breadcrumb in breadCrumbPath"
-        :key="breadcrumb.id"
-        class="breadcrumb__item"
-      >
+      <li v-for="breadcrumb in breadCrumbPath" :key="breadcrumb.id" class="breadcrumb__item">
         <RouterLink
           :title="breadcrumb.name"
           :to="'/' + breadcrumb.to.full_path"
@@ -36,25 +27,22 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { PropType } from 'vue'
+import { Options as Component, Vue } from 'vue-class-component'
+import { BreadcrumbItemType } from '@/routes/Type/BreadcrumbItemType'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 
-@Options({
+@Component({
   name: 'Breadcrumbs',
   props: {
-    breadCrumbPath: {}
-  }
+    breadCrumbPath: Array as PropType<Array<BreadcrumbItemType>>,
+  },
 })
-
 export default class Breadcrumbs extends Vue {
-
   breadCrumbPath!: Array<BreadcrumbItemInterface>
-
 }
-
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Breadcrumbs/Breadcrumbs"
-
+@import '@/assets/styles/components/Breadcrumbs/Breadcrumbs';
 </style>

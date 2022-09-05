@@ -1,16 +1,7 @@
 <template>
-  <div
-    :class="[attrsClassName, { 'input-group-w-addon': inputWithAddOn}]"
-    class="_container"
-  >
-    <span
-      v-if="inputWithAddOn"
-      class="input-group-addon"
-    >
-      <font-awesome-icon
-        :icon="inputWithAddOnIcon"
-        size="lg"
-      />
+  <div :class="[attrsClassName, { 'input-group-w-addon': inputWithAddOn }]" class="_container">
+    <span v-if="inputWithAddOn" class="input-group-addon">
+      <font-awesome-icon :icon="inputWithAddOnIcon" size="lg" />
     </span>
     <input
       v-model="value"
@@ -18,7 +9,7 @@
       :class="['_input', { '_input-error': hasError, 'form-control': inputWithAddOn }]"
       :disabled="disabled"
       :placeholder="placeholder"
-    >
+    />
     <FormLoadingIcon
       v-if="validating"
       :class="{ '_loading-icon-error': hasError }"
@@ -37,30 +28,30 @@ export default defineComponent({
   props: {
     modelValue: {
       type: [String, Number, Boolean],
-      required: true
+      required: true,
     },
     validating: {
-      type: Boolean
+      type: Boolean,
     },
     inputWithAddOn: {
-      type: Boolean
+      type: Boolean,
     },
     inputWithAddOnIcon: {
       type: Object,
-      default: () => {},
-      required: false
+      default: Object,
+      required: false,
     },
     disabled: {
-      type: Boolean
+      type: Boolean,
     },
     placeholder: {
       type: [String, Number],
       default: '',
-      required: false
+      required: false,
     },
     hasError: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   emits: ['update:modelValue'],
   setup(props, { attrs }) {
@@ -68,7 +59,7 @@ export default defineComponent({
 
     return {
       attrsClassName,
-      attrsRest
+      attrsRest,
     }
   },
   computed: {
@@ -78,13 +69,12 @@ export default defineComponent({
       },
       set(value) {
         this.$emit('update:modelValue', value)
-      }
-    }
-  }
+      },
+    },
+  },
 })
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Form/FormBaseInput"
-
+@import '@/assets/styles/components/Form/FormBaseInput';
 </style>

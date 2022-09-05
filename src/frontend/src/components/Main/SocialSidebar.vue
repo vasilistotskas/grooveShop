@@ -9,11 +9,7 @@
         target="_blank"
         title="Open Facebook"
       >
-        <font-awesome-icon
-          :icon="facebookIcon"
-          :style="{ color: '#4267B2' }"
-          size="lg"
-        />
+        <font-awesome-icon :icon="facebookIcon" :style="{ color: '#4267B2' }" size="lg" />
         <span>Facebook</span>
       </a>
     </li>
@@ -26,11 +22,7 @@
         target="_blank"
         title="Open Google"
       >
-        <font-awesome-icon
-          :icon="googleIcon"
-          :style="{ color: '#DB4437' }"
-          size="lg"
-        />
+        <font-awesome-icon :icon="googleIcon" :style="{ color: '#DB4437' }" size="lg" />
         <span>Google+</span>
       </a>
     </li>
@@ -43,11 +35,7 @@
         target="_blank"
         title="Open Twitter"
       >
-        <font-awesome-icon
-          :icon="twitterIcon"
-          :style="{ color: '#1DA1F2' }"
-          size="lg"
-        />
+        <font-awesome-icon :icon="twitterIcon" :style="{ color: '#1DA1F2' }" size="lg" />
         <span>Tweeter</span>
       </a>
     </li>
@@ -60,11 +48,7 @@
         target="_blank"
         title="Open Instagram"
       >
-        <font-awesome-icon
-          :icon="instagramIcon"
-          :style="{ color: '#E1306C' }"
-          size="lg"
-        />
+        <font-awesome-icon :icon="instagramIcon" :style="{ color: '#E1306C' }" size="lg" />
         <span>Instagram</span>
       </a>
     </li>
@@ -77,11 +61,7 @@
         target="_blank"
         title="Open Linkedin"
       >
-        <font-awesome-icon
-          :icon="linkedinIcon"
-          :style="{ color: '#4267B2' }"
-          size="lg"
-        />
+        <font-awesome-icon :icon="linkedinIcon" :style="{ color: '#4267B2' }" size="lg" />
         <span>Linkedin</span>
       </a>
     </li>
@@ -94,11 +74,7 @@
         target="_blank"
         title="Open Github"
       >
-        <font-awesome-icon
-          :icon="githubIcon"
-          :style="{ color: 'white' }"
-          size="lg"
-        />
+        <font-awesome-icon :icon="githubIcon" :style="{ color: 'white' }" size="lg" />
         <span>Github</span>
       </a>
     </li>
@@ -106,7 +82,7 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
 import { faGithub } from '@fortawesome/free-brands-svg-icons/faGithub'
 import { faTwitter } from '@fortawesome/free-brands-svg-icons/faTwitter'
@@ -114,22 +90,19 @@ import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons/faLinkedin'
 import { faInstagram } from '@fortawesome/free-brands-svg-icons/faInstagram'
 
-@Options({
-  name: 'SocialSidebar'
+@Component({
+  name: 'SocialSidebar',
 })
 export default class SocialSidebar extends Vue {
-
   facebookIcon = faFacebook
   googleIcon = faGoogle
   twitterIcon = faTwitter
   instagramIcon = faInstagram
   linkedinIcon = faLinkedin
   githubIcon = faGithub
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Main/SocialSidebar"
-
+@import '@/assets/styles/components/Main/SocialSidebar';
 </style>

@@ -1,19 +1,10 @@
 <template>
-  <div
-    v-if="cart && Object.keys(cart).length > 0"
-    class="checkout-grid-order-info"
-  >
+  <div v-if="cart && Object.keys(cart).length > 0" class="checkout-grid-order-info">
     <div class="checkout-grid-title">
-      <h2 class="title">
-        Your Items
-      </h2>
+      <h2 class="title">Your Items</h2>
     </div>
     <div class="checkout-grid-head">
-      <CheckoutProductCard
-        v-for="item in cart"
-        :key="item.product.id"
-        :item="item"
-      />
+      <CheckoutProductCard v-for="item in cart" :key="item.product.id" :item="item" />
     </div>
     <div class="checkout-product-container-extra_costs">
       <span class="checkout-product-container-extra_costs-shipping">
@@ -22,7 +13,9 @@
       </span>
       <span class="checkout-product-container-extra_costs-pay_way">
         <span class="checkout-product-container-extra_costs-pay_way-title">Payment costs</span>
-        <span class="checkout-product-container-extra_costs-pay_way-price">{{ payWayExtraCost() }}</span>
+        <span class="checkout-product-container-extra_costs-pay_way-price">{{
+          payWayExtraCost()
+        }}</span>
       </span>
     </div>
     <div class="checkout-grid-head-part-three">
@@ -33,35 +26,38 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
-import { Options, Vue } from 'vue-class-component'
+import { PropType } from 'vue'
+import { getModule } from 'vuex-module-decorators'
 import PayWayModel from '@/state/payway/PayWayModel'
 import CartItemModel from '@/state/cart/CartItemModel'
+import PayWayModule from '@/state/payway/PayWayModule'
+import { Options as Component, Vue } from 'vue-class-component'
 import CheckoutProductCard from '@/components/Checkout/CheckoutProductCard.vue'
 
-@Options({
+@Component({
   name: 'CheckoutProductContainer',
   components: {
-    CheckoutProductCard
+    CheckoutProductCard,
   },
   props: {
-    cart: Array,
+    cart: Array as PropType<Array<CartItemModel>>,
     cartTotalLength: Number,
     cartTotalPriceForPayWay: Number,
-    cartTotalPrice: Number
-  }
+    cartTotalPrice: Number,
+  },
 })
 export default class CheckoutProductContainer extends Vue {
+  payWayModule = getModule(PayWayModule)
   cart: Array<CartItemModel> = []
   cartTotalLength = 0
   cartTotalPrice = 0
   cartTotalPriceForPayWay = 0
 
   get getSelectedPayWay(): PayWayModel {
-    return store.getters['pay_way/getSelectedPayWay']
+    return this.payWayModule.getSelectedPayWay
   }
 
-  protected payWayExtraCost(): string {
+  public payWayExtraCost(): string {
     const payWay = this.getSelectedPayWay
 
     if (payWay.free_for_order_amount < this.cartTotalPrice || Object.keys(payWay).length <= 0) {
@@ -69,11 +65,9 @@ export default class CheckoutProductContainer extends Vue {
     }
     return payWay.cost + '€'
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/Checkout/Checkout"
-
+@import '@/assets/styles/pages/Checkout/Checkout';
 </style>

@@ -13,10 +13,7 @@
       <video ref="mainSliderVideoRef" />
     </swiper-slide>
 
-    <swiper-slide
-      v-for="slide in slider.slides"
-      :key="slide.id"
-    >
+    <swiper-slide v-for="slide in slider.slides" :key="slide.id">
       <GrooveImage
         :alt="slide.title ? slide.title : 'no-alt'"
         :file-name="slide.main_image_filename"
@@ -32,74 +29,78 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
-import 'swiper/swiper-bundle.css'
+import {
+  ImageFitOptions,
+  ImagePositionOptions,
+  ImageTypeOptions,
+} from '@/helpers/MediaStream/ImageUrlEnum'
+import 'swiper/css'
+import AppModule from '@/state/app/AppModule'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Options, Vue } from 'vue-class-component'
+import { getModule } from 'vuex-module-decorators'
 import SliderModel from '@/state/slider/SliderModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import SwiperCore, { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper'
-import { ImageFitOptions, ImagePositionOptions, ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
 SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard])
 
-@Options({
+@Component({
   name: 'HomePageMainSlider',
   components: {
     GrooveImage,
     Swiper,
-    SwiperSlide
+    SwiperSlide,
   },
   props: {
     slider: {
       type: Object,
-      required: true
+      required: true,
     },
     style: {
       type: Object,
-      required: false
+      required: false,
     },
     grabCursor: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     keyboard: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     mousewheel: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     navigation: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     pagination: {
       type: Object,
-      required: false
+      required: false,
     },
     imgHeight: {
       type: Number,
-      required: true
+      required: true,
     },
     imgWidth: {
       type: Number,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 })
-
 export default class HomePageMainSlider extends Vue {
-
-  $refs!: {
-    mainSliderVideoRef: HTMLVideoElement;
+  appModule = getModule(AppModule)
+  declare $refs: {
+    mainSliderVideoRef: HTMLVideoElement
   }
-  
+
   slider!: SliderModel
   style!: object
   grabCursor!: boolean
@@ -114,8 +115,8 @@ export default class HomePageMainSlider extends Vue {
   ImageFitOptions = ImageFitOptions
   ImagePositionOptions = ImagePositionOptions
 
-  get axiosBaseUrl(): string | undefined {
-    return store.getters['app/axiosBaseUrl']
+  get backendBaseUrl(): string | undefined {
+    return this.appModule.backendBaseUrl
   }
 
   mounted(): void {
@@ -128,7 +129,7 @@ export default class HomePageMainSlider extends Vue {
 
   public mainSliderVideoInit(): void {
     if (this.slider && Object.keys(this.slider).length > 0 && this.$refs.mainSliderVideoRef) {
-      this.$refs.mainSliderVideoRef.src = this.axiosBaseUrl + this.slider.video
+      this.$refs.mainSliderVideoRef.src = this.backendBaseUrl + this.slider.video
       this.$refs.mainSliderVideoRef.crossOrigin = 'anonymous'
       this.$refs.mainSliderVideoRef.loop = false
       this.$refs.mainSliderVideoRef.autoplay = true
@@ -137,11 +138,7 @@ export default class HomePageMainSlider extends Vue {
       this.$refs.mainSliderVideoRef.play()
     }
   }
-
 }
 </script>
 
-<style lang="scss" scoped>
-@import "@/assets/styles/pages/Home"
-
-</style>
+<style lang="scss" scoped></style>

@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="item && Object.keys(item).length > 0"
-    class="checkout-product-card-container"
-  >
+  <div v-if="item && Object.keys(item).length > 0" class="checkout-product-card-container">
     <div class="checkout-grid-head-part-two-product-image">
       <RouterLink
         :title="item.product.name"
@@ -29,8 +26,12 @@
       >
         <span class="checkout-grid-head-part-two-product-info-name">{{ item.product.name }}</span>
       </RouterLink>
-      <span class="checkout-grid-head-part-two-product-info-price">Item Price: ${{ item.product.price }}</span>
-      <span class="checkout-grid-head-part-two-product-info-quantity">Qty: {{ item.quantity }}</span>
+      <span class="checkout-grid-head-part-two-product-info-price"
+        >Item Price: ${{ item.product.price }}</span
+      >
+      <span class="checkout-grid-head-part-two-product-info-quantity"
+        >Qty: {{ item.quantity }}</span
+      >
     </div>
     <div class="checkout-grid-head-part-two-product-total">
       <span>${{ itemTotal(item).toFixed(2) }}</span>
@@ -39,33 +40,30 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
 import CartItemModel from '@/state/cart/CartItemModel'
+import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 
-@Options({
+@Component({
   name: 'CheckoutProductCard',
   components: {
-    GrooveImage
+    GrooveImage,
   },
   props: {
-    item: Object
-  }
+    item: Object,
+  },
 })
 export default class CheckoutProductCard extends Vue {
-
   item = new CartItemModel()
   ImageTypeOptions = ImageTypeOptions
 
   itemTotal(item: CartItemModel): number {
     return item.quantity * item.product.price
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/pages/Checkout/Checkout"
-
+@import '@/assets/styles/pages/Checkout/Checkout';
 </style>

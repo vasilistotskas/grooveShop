@@ -1,11 +1,5 @@
 <template>
-  <div
-    id="mainLoader"
-    aria-busy="true"
-    aria-label="Loading"
-    class="main-loader"
-    tabindex="0"
-  >
+  <div id="mainLoader" aria-busy="true" aria-label="Loading" class="main-loader" tabindex="0">
     <div class="main-loader-icon">
       <svg
         height="194px"
@@ -15,7 +9,7 @@
         xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
       >
-        <g style="opacity:0.5">
+        <g style="opacity: 0.5">
           <polygon
             class="ldio-j8fbajw7p8s-st0"
             points="41.5 62 30 62 24.2 72 30 82 41.5 82 47.3 72"
@@ -174,28 +168,11 @@
             points="35.5 77.5 27.5 89.5 24 89.5"
             stroke="#ff0000"
           />
-          <rect
-            class="ldio-j8fbajw7p8s-st4"
-            height="7"
-            stroke="#ff0000"
-            width="17"
-            x="7"
-            y="86"
-          />
+          <rect class="ldio-j8fbajw7p8s-st4" height="7" stroke="#ff0000" width="17" x="7" y="86" />
         </g>
         <g>
-          <polyline
-            class="ldio-j8fbajw7p8s-st4"
-            points="59 22 69 12 82 12"
-            stroke="#ff0000"
-          />
-          <circle
-            class="ldio-j8fbajw7p8s-st4"
-            cx="87"
-            cy="12"
-            r="5"
-            stroke="#ff0000"
-          />
+          <polyline class="ldio-j8fbajw7p8s-st4" points="59 22 69 12 82 12" stroke="#ff0000" />
+          <circle class="ldio-j8fbajw7p8s-st4" cx="87" cy="12" r="5" stroke="#ff0000" />
         </g>
       </svg>
     </div>
@@ -203,18 +180,14 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component'
+import { Options as Component, Vue } from 'vue-class-component'
 
-@Options({
-  name: 'Loader'
+@Component({
+  name: 'Loader',
 })
-export default class Loader extends Vue {
-
-}
-
+export default class Loader extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Main/Loader"
-
+@import '@/assets/styles/components/Main/Loader';
 </style>

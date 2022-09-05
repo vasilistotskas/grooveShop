@@ -25,16 +25,16 @@
 
       <button
         v-for="page in pages"
-        :key="page.id"
-        :aria-label="`Go to page number ${page.name}`"
-        :class="{ active: isPageActive(page.name) }"
+        :key="page.number"
+        :aria-label="`Go to page number ${page.number}`"
+        :class="{ active: isPageActive(page.number) }"
         :disabled="page.isDisabled"
-        :title="`Go to page number ${page.name}`"
+        :title="`Go to page number ${page.number}`"
         class="btn-outline-primary-one"
         type="button"
-        @click="onClickPage(page.name)"
+        @click="onClickPage(page.number)"
       >
-        {{ page.name }}
+        {{ page.number }}
       </button>
 
       <button
@@ -63,49 +63,52 @@
 </template>
 
 <script lang="ts">
-import store from '@/store'
 import router from '@/routes'
-import { Options, Vue } from 'vue-class-component'
+import { LocationQueryValue } from 'vue-router'
+import { getModule } from 'vuex-module-decorators'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
-import { PaginationNamespaceDataEnum } from '@/state/pagination/Enum/PaginationNamespaceDataEnum'
-import { PaginationQueryParametersModel } from '@/state/pagination/Model/PaginationQueryParametersModel'
+import { Options as Component, Vue } from 'vue-class-component'
+import PaginationModule from '@/state/pagination/PaginationModule'
+import { QueryParamsType } from '@/state/pagination/Type/PaginationTypes'
+import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
+import PaginationPageInterface from '@/state/pagination/Interface/PaginationPageInterface'
+import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
 
-@Options({
+@Component({
   name: 'Pagination',
   props: {
     maxVisibleButtons: {
       type: Number,
       required: false,
-      default: 3
+      default: 3,
     },
     totalPages: {
       type: Number,
-      required: true
+      required: true,
     },
     route: {
       type: String,
-      required: true
+      required: true,
     },
     endpointUrl: {
       type: String,
-      required: true
+      required: true,
     },
     routerReplace: {
       type: Boolean,
       default: true,
-      required: false
+      required: false,
     },
     namespace: {
       type: String,
       default: false,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 })
-
 export default class Pagination extends Vue {
-
-  query: any
+  paginationModule = getModule(PaginationModule)
+  query?: Record<string, string | LocationQueryValue[] | number>
   uri = window.location.search.substring(1)
   params = router.currentRoute.value.query
   maxVisibleButtons!: number
@@ -113,7 +116,7 @@ export default class Pagination extends Vue {
   route!: string
   endpointUrl!: string
   routerReplace!: boolean
-  namespace!: typeof PaginationNamespaceDataEnum
+  namespace!: PaginationNamespaceTypesEnum
 
   get startPage(): number {
     if (this.currentPageNumber === 1) {
@@ -132,7 +135,7 @@ export default class Pagination extends Vue {
     return Math.min(this.startPage + this.maxVisibleButtons - 1, this.totalPages)
   }
 
-  get pages(): any {
+  get pages(): Array<PaginationPageInterface> {
     const range = []
 
     let endPageNumber: number
@@ -144,9 +147,9 @@ export default class Pagination extends Vue {
 
     for (let i = this.startPage; i <= endPageNumber; i += 1) {
       range.push({
-        name: i,
-        isDisabled: this.currentPageNumber === i
-      })
+        number: i as never,
+        isDisabled: (this.currentPageNumber === i) as never,
+      } as never)
     }
 
     return range
@@ -161,11 +164,11 @@ export default class Pagination extends Vue {
   }
 
   get currentPageNumber(): number {
-    return store.getters['pagination/getCurrentPageNumber'](this.namespace)
+    return this.paginationModule.getCurrentPageNumber(this.namespace)
   }
 
-  get currentPageQuery(): string {
-    return store.getters['pagination/getCurrentQuery'](this.namespace)
+  get currentPageQuery(): QueryParamsType {
+    return this.paginationModule.getCurrentQuery(this.namespace)
   }
 
   async mounted(): Promise<void> {
@@ -181,113 +184,120 @@ export default class Pagination extends Vue {
   }
 
   async onClickNextPage(): Promise<void> {
-    await store.commit('pagination/setCurrentPageNumber', { pageNumber: this.currentPageNumber + 1, namespace: this.namespace })
+    await this.paginationModule.setCurrentPageNumber({
+      pageNumber: this.currentPageNumber + 1,
+      namespace: this.namespace,
+    })
 
-    const paginationQuery = PaginationQueryParametersModel
-        .createPaginationQuery({
-          'pageNumber': this.currentPageNumber,
-          'endpointUrl': `${ this.endpointUrl }`,
-          'queryParams': {
-            'page': this.currentPageNumber,
-            'query': this.currentPageQuery
-          },
-          'method': ApiBaseMethods.GET
-        } )
+    const paginationQuery = PaginationModel.createPaginationModel({
+      pageNumber: this.currentPageNumber,
+      endpointUrl: `${this.endpointUrl}`,
+      queryParams: this.currentPageQuery,
+      method: ApiBaseMethods.GET,
+    })
 
-    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.namespace })
+    await this.paginationModule.fetchPaginatedResults({
+      params: paginationQuery,
+      namespace: this.namespace,
+    })
 
-    if (this.routerReplace) await router.replace({ name: `${ this.route }`, query: this.query })
+    if (this.routerReplace) await router.replace({ name: `${this.route}`, query: this.query })
   }
 
   async onClickPreviousPage(): Promise<void> {
-    await store.commit('pagination/setCurrentPageNumber', { pageNumber: this.currentPageNumber - 1, namespace: this.namespace })
+    await this.paginationModule.setCurrentPageNumber({
+      pageNumber: this.currentPageNumber - 1,
+      namespace: this.namespace,
+    })
 
-    const paginationQuery = PaginationQueryParametersModel
-        .createPaginationQuery({
-          'pageNumber': this.currentPageNumber,
-          'endpointUrl': `${ this.endpointUrl }`,
-          'queryParams': {
-            'page': this.currentPageNumber,
-            'query': this.currentPageQuery
-          },
-          'method': ApiBaseMethods.GET
-        } )
+    const paginationQuery = PaginationModel.createPaginationModel({
+      pageNumber: this.currentPageNumber,
+      endpointUrl: `${this.endpointUrl}`,
+      queryParams: this.currentPageQuery,
+      method: ApiBaseMethods.GET,
+    })
 
-    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.namespace })
+    await this.paginationModule.fetchPaginatedResults({
+      params: paginationQuery,
+      namespace: this.namespace,
+    })
 
-    if (this.routerReplace) await router.replace({ name: `${ this.route }`, query: this.query })
+    if (this.routerReplace) await router.replace({ name: `${this.route}`, query: this.query })
   }
 
   async onClickPage(pageNumber: number) {
-    await store.commit('pagination/setCurrentPageNumber', { pageNumber: pageNumber, namespace: this.namespace })
+    await this.paginationModule.setCurrentPageNumber({
+      pageNumber: pageNumber,
+      namespace: this.namespace,
+    })
 
-    const paginationQuery = PaginationQueryParametersModel
-        .createPaginationQuery({
-          'pageNumber': pageNumber,
-          'endpointUrl': `${ this.endpointUrl }`,
-          'queryParams': {
-            'page': this.currentPageNumber,
-            'query': this.currentPageQuery
-          },
-          'method': ApiBaseMethods.GET
-        } )
+    const paginationQuery = PaginationModel.createPaginationModel({
+      pageNumber: pageNumber,
+      endpointUrl: `${this.endpointUrl}`,
+      queryParams: this.currentPageQuery,
+      method: ApiBaseMethods.GET,
+    })
 
-    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.namespace })
+    await this.paginationModule.fetchPaginatedResults({
+      params: paginationQuery,
+      namespace: this.namespace,
+    })
 
-    if (this.routerReplace) await router.replace({ name: `${ this.route }`, query: this.query })
+    if (this.routerReplace) await router.replace({ name: `${this.route}`, query: this.query })
   }
 
   async onClickFirstPage(): Promise<void> {
-    await store.commit('pagination/setCurrentPageNumber', { pageNumber: 1, namespace: this.namespace })
+    await this.paginationModule.setCurrentPageNumber({
+      pageNumber: 1,
+      namespace: this.namespace,
+    })
 
-    const paginationQuery = PaginationQueryParametersModel
-        .createPaginationQuery({
-          'pageNumber': this.currentPageNumber,
-          'endpointUrl': `${ this.endpointUrl }`,
-          'queryParams': {
-            'page': this.currentPageNumber,
-            'query': this.currentPageQuery
-          },
-          'method': ApiBaseMethods.GET
-        } )
+    const paginationQuery = PaginationModel.createPaginationModel({
+      pageNumber: this.currentPageNumber,
+      endpointUrl: `${this.endpointUrl}`,
+      queryParams: this.currentPageQuery,
+      method: ApiBaseMethods.GET,
+    })
 
-    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.namespace })
+    await this.paginationModule.fetchPaginatedResults({
+      params: paginationQuery,
+      namespace: this.namespace,
+    })
 
-    if (this.routerReplace) await router.replace({ name: `${ this.route }`, query: this.query })
+    if (this.routerReplace) await router.replace({ name: `${this.route}`, query: this.query })
   }
 
   async onClickLastPage(): Promise<void> {
-    await store.commit('pagination/setCurrentPageNumber', { pageNumber: this.totalPages, namespace: this.namespace })
+    await this.paginationModule.setCurrentPageNumber({
+      pageNumber: this.totalPages,
+      namespace: this.namespace,
+    })
 
-    const paginationQuery = PaginationQueryParametersModel
-        .createPaginationQuery({
-          'pageNumber': this.totalPages,
-          'endpointUrl': `${ this.endpointUrl }`,
-          'queryParams': {
-            'page': this.currentPageNumber,
-            'query': this.currentPageQuery
-          },
-          'method': ApiBaseMethods.GET
-        } )
+    const paginationQuery = PaginationModel.createPaginationModel({
+      pageNumber: this.totalPages,
+      endpointUrl: `${this.endpointUrl}`,
+      queryParams: this.currentPageQuery,
+      method: ApiBaseMethods.GET,
+    })
 
-    await store.dispatch('pagination/fetchPaginatedResults', { params: paginationQuery, namespace: this.namespace })
+    await this.paginationModule.fetchPaginatedResults({
+      params: paginationQuery,
+      namespace: this.namespace,
+    })
 
-    if (this.routerReplace) await router.replace({ name: `${ this.route }`, query: this.query })
+    if (this.routerReplace) await router.replace({ name: `${this.route}`, query: this.query })
   }
 
   public initializeRouterQuery(): void {
     if (this.params.query) {
-      this.query = { ...this.$route.query, 'query': this.params.query, 'page': this.currentPageNumber }
+      this.query = { ...this.$route.query, query: this.params.query, page: this.currentPageNumber }
     } else {
-      this.query = { ...this.$route.query, 'page': this.currentPageNumber }
+      this.query = { ...this.$route.query, page: this.currentPageNumber }
     }
   }
-
 }
-
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/components/Pagination/Pagination"
-
+@import '@/assets/styles/components/Pagination/Pagination';
 </style>
