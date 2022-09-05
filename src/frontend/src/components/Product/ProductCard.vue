@@ -60,6 +60,7 @@
 </template>
 
 <script lang="ts">
+import { PropType } from 'vue'
 import { constant, times } from 'lodash'
 import { helpers } from '@/helpers/main'
 import CartModule from '@/state/cart/CartModule'
@@ -80,7 +81,7 @@ const starHalfSvg =
     GrooveImage,
   },
   props: {
-    product: Object,
+    product: Object as PropType<ProductModel>,
   },
 })
 export default class ProductCard extends Vue {

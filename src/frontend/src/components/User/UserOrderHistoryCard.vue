@@ -24,6 +24,7 @@
 </template>
 
 <script lang="ts">
+import { PropType } from 'vue'
 import ProductModel from '@/state/product/ProductModel'
 import { Options as Component, Vue } from 'vue-class-component'
 import Pagination from '@/components/Pagination/Pagination.vue'
@@ -37,7 +38,7 @@ import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
     GrooveImage,
   },
   props: {
-    product: Object,
+    product: Object as PropType<ProductModel>,
     orderTotal: Number,
     quantity: Number,
   },

@@ -29,6 +29,7 @@
 </template>
 
 <script lang="ts">
+import { PropType } from 'vue'
 import BlogTagModel from '@/state/blog/BlogTagModel'
 import BlogAuthorModel from '@/state/blog/BlogAuthorModel'
 import { Options as Component, Vue } from 'vue-class-component'
@@ -38,7 +39,7 @@ import { faUserTag } from '@fortawesome/free-solid-svg-icons/faUserTag'
 @Component({
   name: 'BlogTagsSidebar',
   props: {
-    tags: Array,
+    tags: Array as PropType<Array<BlogTagModel>>,
     authors: Array,
   },
 })
