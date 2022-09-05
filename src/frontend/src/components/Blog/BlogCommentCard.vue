@@ -97,7 +97,7 @@ export default class BlogCommentCard extends Vue {
   blogModule = getModule(BlogModule)
   authModule = getModule(AuthModule)
   MainRouteNames = MainRouteNames
-  $refs!: {
+  declare $refs: {
     userCommentActionTarget: HTMLElement
   }
   comment = new BlogCommentModel()
@@ -140,7 +140,7 @@ export default class BlogCommentCard extends Vue {
     if (router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT_BLOG_COMMENTS) {
       return (
         'url(' +
-        'http://localhost:8010' +
+        process.env.VITE_APP_BASE_URL +
         '/mediastream/media/uploads/' +
         'blog' +
         '/' +

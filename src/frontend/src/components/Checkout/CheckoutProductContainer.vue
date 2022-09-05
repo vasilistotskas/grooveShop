@@ -57,7 +57,7 @@ export default class CheckoutProductContainer extends Vue {
     return this.payWayModule.getSelectedPayWay
   }
 
-  protected payWayExtraCost(): string {
+  public payWayExtraCost(): string {
     const payWay = this.getSelectedPayWay
 
     if (payWay.free_for_order_amount < this.cartTotalPrice || Object.keys(payWay).length <= 0) {

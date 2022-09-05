@@ -47,7 +47,7 @@ class Category(models.Model):
     def main_image_absolute_url(self) -> str:
         try:
             if self.id is not None:
-                image = settings.APP_BASE_URL + self.image.url
+                image = settings.BACKEND_BASE_URL + self.image.url
             else:
                 image = ""
             return image
@@ -94,7 +94,7 @@ class Post(models.Model):
     def main_image_absolute_url(self) -> str:
         try:
             if self.id is not None:
-                image = settings.APP_BASE_URL + self.image.url
+                image = settings.BACKEND_BASE_URL + self.image.url
             else:
                 image = ""
             return image

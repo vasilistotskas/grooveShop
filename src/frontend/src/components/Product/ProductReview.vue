@@ -22,12 +22,12 @@
                     ref="ratingBoard"
                     class="rating-board rating-background"
                     @click="lockSelection($event)"
-                    @mouseenter="unlockSelection($event)"
-                    @mouseleave="reLockSelection($event)"
+                    @mouseenter="unlockSelection()"
+                    @mouseleave="reLockSelection()"
                     @mousemove="updateNewSelectionRatio($event)"
-                    @touchend="reLockSelection($event)"
+                    @touchend="reLockSelection()"
                     @touchmove="updateNewSelectionRatio($event)"
-                    @touchstart="unlockSelection($event)"
+                    @touchstart="unlockSelection()"
                   >
                     <svg
                       v-for="(star, i) of backgroundStars"
@@ -112,7 +112,7 @@ export default class ProductReview extends Vue {
   authModule = getModule(AuthModule)
   productModule = getModule(ProductModule)
   userModule = getModule(UserModule)
-  $refs!: {
+  declare $refs: {
     ratingBoard: HTMLElement
   }
 
@@ -261,7 +261,7 @@ export default class ProductReview extends Vue {
     await this.reviewModuleInitialize()
   }
 
-  public lockSelection(event: MouseEvent) {
+  public lockSelection(event: TouchEvent | MouseEvent) {
     this.updateIsEditable(true)
     this.updateNewSelectionRatio(event)
     this.selectedRatio = this.newSelectionRatio
@@ -283,12 +283,15 @@ export default class ProductReview extends Vue {
     }
   }
 
-  public updateNewSelectionRatio(event: MouseEvent) {
+  public updateNewSelectionRatio(event: TouchEvent | MouseEvent) {
     if (!this.isEditable) {
       return
     }
     const target = this.$refs.ratingBoard
-    const leftBound = event.clientX - target.getBoundingClientRect().left
+    let leftBound = 0
+    if ('clientX' in event) {
+      leftBound = event.clientX - target.getBoundingClientRect().left
+    }
     const rightBound = target.getBoundingClientRect().right - target.getBoundingClientRect().left
     this.newSelectionRatio = leftBound / rightBound
   }

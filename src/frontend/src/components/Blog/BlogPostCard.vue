@@ -57,10 +57,7 @@
           <span class="blog-post-card-body-actions-comment-count">120</span>
         </div>
         <div class="blog-post-card-body-actions-share">
-          <span
-            class="blog-post-card-body-actions-share-text"
-            @click="$refs[`postActionModal${post.id}`].openModal()"
-          >
+          <span class="blog-post-card-body-actions-share-text" @click="openShareModal()">
             SHARE
           </span>
           <GenericModal :unique-id="`postActionModal${post.id}`" :ref="`postActionModal${post.id}`">
@@ -130,6 +127,8 @@ export default class BlogPostCard extends Vue {
   ImageTypeOptions = ImageTypeOptions
   commentIcon = faCommentDots
 
+  declare $refs
+
   myContext = setup(() => {
     const displayableDate = (date: string) => {
       const options: DateTimeFormatOptions = { dateStyle: 'full', timeStyle: 'medium' }
@@ -145,6 +144,10 @@ export default class BlogPostCard extends Vue {
       contentShorten,
     }
   })
+
+  public openShareModal(): void {
+    this.$refs[`postActionModal${this.post.id}`].openModal()
+  }
 }
 </script>
 

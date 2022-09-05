@@ -1,6 +1,7 @@
 import os
 import datetime
 from faker import Faker
+from django.conf import settings
 from django.utils import timezone
 from backend.app.settings import BASE_DIR
 from django.core.management import BaseCommand
@@ -23,7 +24,7 @@ class Command(BaseCommand):
             name = faker.name()
             slider = Slider.objects.create(
                 name=name,
-                url='http://localhost:8010/',
+                url=settings.APP_BASE_URL,
                 title=faker.text(20),
                 description=faker.text(50),
                 image=img,
@@ -32,7 +33,7 @@ class Command(BaseCommand):
             for _ in range(4):
                 slide = Slide.objects.create(
                     slider_id=slider.id,
-                    url='http://localhost:8010/',
+                    url=settings.APP_BASE_URL,
                     title=faker.text(20),
                     subtitle=faker.text(20),
                     description=faker.text(50),

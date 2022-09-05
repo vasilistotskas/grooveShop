@@ -105,7 +105,7 @@ export default class ThemeModeSwitcher extends Vue {
     }
   }
 
-  private toggleThemeMode(): void {
+  public toggleThemeMode(): void {
     this.settingsModule.toggleThemeMode().then((themeMode) => this.updateThemeMode(themeMode))
   }
 

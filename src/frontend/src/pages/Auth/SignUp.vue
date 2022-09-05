@@ -14,7 +14,7 @@
             >
               <div class="container">
                 <div class="email mb-3">
-                  <label :for="formManager.form.email.$uid" class="label mb-2">Email</label>
+                  <label :for="String(formManager.form.email.$uid)" class="label mb-2">Email</label>
                   <FormBaseInput
                     :id="formManager.form.email.$uid"
                     v-model="formManager.form.email.$value"
@@ -24,7 +24,6 @@
                     :validating="formManager.form.email.$validating"
                     placeholder="Alice, Bob, Oscar"
                     autocomplete="username"
-                    @blur="formManager.form.email.onBlur"
                   />
                   <FormValidationErrors
                     :errors="formManager.form.email.$errors"
@@ -32,7 +31,9 @@
                   />
                 </div>
                 <div class="password mb-3">
-                  <label :for="formManager.form.password.$uid" class="label mb-2">Password</label>
+                  <label :for="String(formManager.form.password.$uid)" class="label mb-2"
+                    >Password</label
+                  >
                   <FormBaseInput
                     :id="formManager.form.password.$uid"
                     v-model="formManager.form.password.$value"
@@ -41,13 +42,12 @@
                     :input-with-add-on-icon="keyIcon"
                     type="password"
                     autocomplete="new-password"
-                    @blur="formManager.form.password.onBlur"
                   />
                   <FormValidationErrors :errors="formManager.form.password.$errors" />
                 </div>
 
                 <div class="confirm-password mb-4">
-                  <label :for="formManager.form.confirmPassword.$uid" class="label mb-2">
+                  <label :for="String(formManager.form.confirmPassword.$uid)" class="label mb-2">
                     Confirm Password
                   </label>
                   <FormBaseInput
@@ -58,7 +58,6 @@
                     :input-with-add-on-icon="keyIcon"
                     type="password"
                     autocomplete="new-password"
-                    @blur="formManager.form.confirmPassword.onBlur"
                   />
                   <FormValidationErrors :errors="formManager.form.confirmPassword.$errors" />
                 </div>

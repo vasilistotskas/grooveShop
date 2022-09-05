@@ -5,7 +5,7 @@
         <BlogCommentCard
           v-if="commentByUserToPost && Object.keys(commentByUserToPost).length > 0"
           :key="commentByUserToPost.id"
-          :class="{ 'blog-comments-card-user': commentByUserToPost.user_id === userId }"
+          :class="{ 'blog-comments-card-user': commentByUserToPost.user.id === userId }"
           :comment="commentByUserToPost"
           :user-id="userId"
           class="blog-comment-card"

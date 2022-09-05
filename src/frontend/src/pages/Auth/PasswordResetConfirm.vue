@@ -19,7 +19,9 @@
           >
             <div class="grid-account-password-fields">
               <div class="new_password">
-                <label :for="formManager.form.password1.$uid" class="label">New Password</label>
+                <label :for="String(formManager.form.password1.$uid)" class="label"
+                  >New Password</label
+                >
                 <FormBaseInput
                   :id="formManager.form.password1.$uid"
                   v-model="formManager.form.password1.$value"
@@ -36,7 +38,7 @@
                 />
               </div>
               <div class="re_new_password">
-                <label :for="formManager.form.password2.$uid" class="label"
+                <label :for="String(formManager.form.password2.$uid)" class="label"
                   >Retype New Password</label
                 >
                 <FormBaseInput

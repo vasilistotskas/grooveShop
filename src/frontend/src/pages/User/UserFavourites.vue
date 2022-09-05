@@ -3,7 +3,7 @@
     <div class="product-listing-grid mb-4">
       <ProductCard
         v-for="product in allPaginatedResults"
-        :key="product.id"
+        :key="product.product_object.id"
         :product="product.product_object"
         class="grid-item"
       />
@@ -31,8 +31,9 @@ import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
 import PaginationModule from '@/state/pagination/PaginationModule'
-import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
+import UserFavouriteModel from '@/state/user/favourite/UserFavouriteModel'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
@@ -52,10 +53,10 @@ import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/Pagination
   },
 })
 export default class UserFavourites
-  extends PaginatedComponent<UserProfileModel>
-  implements PaginatedComponentInterface<UserProfileModel>
+  extends PaginatedComponent<UserFavouriteModel>
+  implements PaginatedComponentInterface<UserFavouriteModel>
 {
-  paginationModule = getModule<PaginationModule<UserProfileModel>>(PaginationModule)
+  paginationModule = getModule<PaginationModule<UserFavouriteModel>>(PaginationModule)
   userData = new UserProfileModel()
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.USER_FAVOURITES

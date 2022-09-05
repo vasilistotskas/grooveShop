@@ -36,7 +36,10 @@ DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 if "celery" in sys.argv[0]:
     DEBUG = False
 
-APP_BASE_URL = str(os.environ.get('APP_BASE_URL', 'http://localhost:8010'))
+BACKEND_BASE_URL = str(os.environ.get('BACKEND_BASE_URL'))
+APP_BASE_URL = str(os.environ.get('APP_BASE_URL'))
+VITE_APP_URL = str(os.environ.get('VITE_APP_URL'))
+
 ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS.extend(
     filter(
@@ -45,14 +48,18 @@ ALLOWED_HOSTS.extend(
     )
 )
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:8010']
+CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS = [
+    APP_BASE_URL,
+    VITE_APP_URL,
+]
+CORS_ALLOWED_ORIGINS = [
+    APP_BASE_URL,
+    VITE_APP_URL,
+]
 
 INTERNAL_IPS = [
     "127.0.0.1",
-    "http://localhost:8010",
-    "http://localhost:8010/",
-    "http://localhost:8001/",
-    "http://localhost:8001/",
 ]
 
 

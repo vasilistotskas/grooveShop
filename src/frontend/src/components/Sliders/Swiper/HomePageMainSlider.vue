@@ -97,7 +97,7 @@ SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard])
 })
 export default class HomePageMainSlider extends Vue {
   appModule = getModule(AppModule)
-  $refs!: {
+  declare $refs: {
     mainSliderVideoRef: HTMLVideoElement
   }
 
@@ -115,8 +115,8 @@ export default class HomePageMainSlider extends Vue {
   ImageFitOptions = ImageFitOptions
   ImagePositionOptions = ImagePositionOptions
 
-  get axiosBaseUrl(): string | undefined {
-    return this.appModule.axiosBaseUrl
+  get backendBaseUrl(): string | undefined {
+    return this.appModule.backendBaseUrl
   }
 
   mounted(): void {
@@ -129,7 +129,7 @@ export default class HomePageMainSlider extends Vue {
 
   public mainSliderVideoInit(): void {
     if (this.slider && Object.keys(this.slider).length > 0 && this.$refs.mainSliderVideoRef) {
-      this.$refs.mainSliderVideoRef.src = this.axiosBaseUrl + this.slider.video
+      this.$refs.mainSliderVideoRef.src = this.backendBaseUrl + this.slider.video
       this.$refs.mainSliderVideoRef.crossOrigin = 'anonymous'
       this.$refs.mainSliderVideoRef.loop = false
       this.$refs.mainSliderVideoRef.autoplay = true

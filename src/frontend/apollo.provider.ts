@@ -18,7 +18,7 @@ const cache = new InMemoryCache({
 
 export const clientApollo = new ApolloClient({
   cache: cache,
-  uri: 'http://localhost:8010/graphql',
+  uri: process.env.VITE_APP_GRAPHQL_URL,
 })
 
 export const provider = createApolloProvider({

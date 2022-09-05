@@ -12,7 +12,7 @@
 
 <script>
 import { defineComponent } from 'vue'
-import PreFormData from '@/components/Form/PreFormData'
+import PreFormData from './PreFormData.vue'
 
 export default defineComponent({
   components: {

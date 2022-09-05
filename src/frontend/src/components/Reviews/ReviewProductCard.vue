@@ -119,7 +119,7 @@ export default class ReviewProductCard extends Vue {
   productReviewModule = getModule(ProductReviewModule)
   paginationModule = getModule<PaginationModule<ProductReviewModel>>(PaginationModule)
   MainRouteNames = MainRouteNames
-  $refs!: {
+  declare $refs: {
     userReviewsActionTarget: HTMLElement
   }
   review = new ProductReviewModel()
@@ -160,7 +160,7 @@ export default class ReviewProductCard extends Vue {
     if (router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT_REVIEWS) {
       return (
         'url(' +
-        'http://localhost:8010' +
+        process.env.VITE_APP_BASE_URL +
         '/mediastream/media/uploads/' +
         'products' +
         '/' +

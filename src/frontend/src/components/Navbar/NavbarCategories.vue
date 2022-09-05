@@ -70,10 +70,10 @@ import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
 })
 export default class NavbarCategories extends Vue {
   appModule = getModule(AppModule)
-  $refs!: {
+  declare $refs: {
     headerNavbarMenu: HTMLElement
   }
-  categoryBoxHovered = null
+  categoryBoxHovered: null | number = null
   categoriesTree: Array<CategoryModel> = []
   categories: Array<CategoryModel> = []
   mainToggleButton!: HTMLElement

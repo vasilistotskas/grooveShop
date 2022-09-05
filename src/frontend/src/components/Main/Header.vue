@@ -1,16 +1,17 @@
 <template>
   <header id="main-header">
-    <!--    <div class="predeader" :class="{ 'predeader&#45;&#45;hidden': !showPreHeader }">-->
-    <!--      <p>-->
-    <!--        Groove <a href="http://localhost:5000/">-->
-    <!--          <span style="text-decoration: underline;">Here</span>!</a>-->
-    <!--      </p>-->
-    <!--    </div>-->
+    <div class="predeader" :class="{ 'predeader--hidden': !showPreHeader }">
+      <p>
+        Groove
+        <a :href="backendBaseUrl"> <span style="text-decoration: underline">Here</span>!</a>
+      </p>
+    </div>
     <Navbar :cart-total-length="cartTotalLength" :pre-head-hidden="!showPreHeader" />
   </header>
 </template>
 
 <script lang="ts">
+import AppModule from '@/state/app/AppModule'
 import CartModule from '@/state/cart/CartModule'
 import { getModule } from 'vuex-module-decorators'
 import Navbar from '@/components/Navbar/Navbar.vue'
@@ -24,8 +25,13 @@ import { Options as Component, Vue } from 'vue-class-component'
 })
 export default class Header extends Vue {
   cartModule = getModule(CartModule)
+  appModule = getModule(AppModule)
   showPreHeader = true
   lastScrollPosition = 0
+
+  get backendBaseUrl(): string | undefined {
+    return this.appModule.backendBaseUrl
+  }
 
   get cartTotalLength(): number {
     return this.cartModule.getCartTotalLength

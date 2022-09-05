@@ -10,7 +10,7 @@
         <p>You can reset your password here.</p>
         <template v-if="emailLoading"> loading... </template>
         <template v-else-if="!emailCompleted">
-          <form @submit.prevent="submit">
+          <form>
             <div class="form-group">
               <div class="input-group-w-addon">
                 <span class="input-group-addon">
