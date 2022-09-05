@@ -4,7 +4,7 @@
     <div class="container">
       <div class="content-min-height">
         <div class="col-12 mb-3 mt-3">
-          <h2 class="is-size-5 has-text-grey">Search term: "{{ currentPageQuery.query }}"</h2>
+          <h2 class="is-size-5 has-text-grey">Search term: "{{ currentPageQuery }}"</h2>
         </div>
 
         <Pagination
