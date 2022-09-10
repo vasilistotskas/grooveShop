@@ -18,7 +18,6 @@
   --cp-palette-main-global-green: #{$color-palette-global-green};
 }
 
-
 body {
   // DARK
   --cp-palette-main-primary: var(--cp-palette-main-dark-primary);
@@ -81,13 +80,22 @@ body {
     border-bottom-right-radius: 10px;
     padding: 10px;
 
-    a, p, span, label, h1, h2, h3, h4, h5, h6 {
+    a,
+    p,
+    span,
+    label,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       color: var(--cp-palette-main-fifth);
     }
 
     .card-title {
       color: var(--cp-palette-main-fifth);
-      display: grid
+      display: grid;
     }
 
     .card-text {
@@ -99,9 +107,9 @@ body {
       background-color: var(--cp-palette-main-third);
       border-color: rgba(240, 246, 252, 0.1);
       box-shadow: 0 0 transparent, 0 0 transparent;
-      transition: .2s cubic-bezier(0.3, 0, 0.5, 1);
+      transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
       transition-property: color, background-color, border-color;
-      display: grid
+      display: grid;
     }
   }
 
@@ -163,7 +171,8 @@ body {
     grid-column: 4;
   }
 
-  .product-review-main-card, .product-card-main {
+  .product-review-main-card,
+  .product-card-main {
     background-color: var(--cp-palette-main-fourth) !important;
   }
 }
@@ -190,8 +199,9 @@ body {
   }
 }
 
-
-.container, .container-small, .container-fluid {
+.container,
+.container-small,
+.container-fluid {
   width: 100%;
   margin-right: auto;
   margin-left: auto;
@@ -258,8 +268,8 @@ body {
   display: flex;
   flex-wrap: wrap;
   margin-top: calc(-1 * var(--bs-gutter-y));
-  margin-right: calc(-.5 * var(--bs-gutter-x));
-  margin-left: calc(-.5 * var(--bs-gutter-x));
+  margin-right: calc(-0.5 * var(--bs-gutter-x));
+  margin-left: calc(-0.5 * var(--bs-gutter-x));
 }
 
 .d-flex {
@@ -281,17 +291,15 @@ body {
   -moz-appearance: none;
   appearance: none;
   border-radius: 0.25rem;
-  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
   // TO REMEMBER BASIC RESPONSIVE
   @media screen and (max-width: 1420px) {
     font-size: 12px;
   }
   @media screen and (max-width: 1200px) {
-
   }
   @media screen and (max-width: 990px) {
-
   }
   @media screen and (max-width: 767px) {
     font-size: 10px;
@@ -311,14 +319,13 @@ body {
   height: auto;
 }
 
-
 #social-sidebar {
   right: 0;
   position: fixed;
   top: 30%;
   z-index: 13;
   border: 1px solid var(--cp-palette-main-third);
-  @media screen and (max-width: map-get($grid-breakpoints, 'md'))  {
+  @media screen and (max-width: map-get($grid-breakpoints, 'md')) {
     display: none;
   }
   li {
@@ -356,7 +363,7 @@ body {
     }
 
     span {
-      font: 12px "Open Sans", sans-serif;
+      font: 12px 'Open Sans', sans-serif;
       text-transform: uppercase;
       border-radius: 3px;
       line-height: 24px;
@@ -365,12 +372,12 @@ body {
       opacity: 0;
       padding: 4px 8px;
       position: absolute;
-      transition: opacity .3s, right .4s;
+      transition: opacity 0.3s, right 0.4s;
       top: 50%;
       z-index: -1;
 
       &:before {
-        content: "";
+        content: '';
         display: block;
         height: 8px;
         width: 8px;
@@ -392,11 +399,10 @@ body {
 // Vue Transition
 .fade-enter {
   &-active {
-    transition: opacity .4s ease;
+    transition: opacity 0.4s ease;
   }
 
   &-to {
-
   }
 
   &-from {
@@ -406,7 +412,7 @@ body {
 
 .fade-leave {
   &-active {
-    transition: opacity .4s ease;
+    transition: opacity 0.4s ease;
   }
 
   &-to {
@@ -414,7 +420,6 @@ body {
   }
 
   &-from {
-
   }
 }
 
@@ -444,7 +449,8 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   background-color: transparent;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   border: unset;
 
   &:focus {
@@ -458,8 +464,11 @@ body {
 }
 
 .btn-outline-primary {
-  &-one, &-two, &-three, &-main {
-    @extend .primary_button
+  &-one,
+  &-two,
+  &-three,
+  &-main {
+    @extend .primary_button;
   }
 
   &-main {
@@ -526,7 +535,7 @@ body {
   border: 1px solid var(--cp-palette-main-third);
 
   &:hover {
-    border: 1px solid #FD0002e0;
+    border: 1px solid #fd0002e0;
     border-radius: 5px;
   }
 
@@ -565,7 +574,7 @@ body {
 
 .description {
   p {
-    letter-spacing: .5px;
+    letter-spacing: 0.5px;
     color: var(--cp-palette-main-fifth);
     line-height: 22px;
   }
@@ -580,7 +589,7 @@ body {
   background-color: var(--cp-palette-main-third);
   border-color: rgba(240, 246, 252, 0.1);
   box-shadow: 0 0 transparent, 0 0 transparent;
-  transition: .2s cubic-bezier(0.3, 0, 0.5, 1);
+  transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
   transition-property: color, background-color, border-color;
 }
 
@@ -641,7 +650,7 @@ body {
   }
 
   .line-1 {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     width: 1px;
@@ -651,7 +660,7 @@ body {
   }
 
   .line-2 {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     height: 1px;
@@ -661,7 +670,7 @@ body {
   }
 
   .line-3 {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     width: 1px;
@@ -671,7 +680,7 @@ body {
   }
 
   .line-4 {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     height: 1px;

@@ -5,23 +5,38 @@ html {
 
 * {
   font-family: 'Roboto', sans-serif;
-  transition: all .12s ease-in-out;
+  transition: all 0.12s ease-in-out;
   margin: 0;
   padding: 0;
 }
 
-*, :after, :before {
+*,
+:after,
+:before {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
-a, p, span, label, h1, h2, h3, h4, h5, h6 {
+a,
+p,
+span,
+label,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 400;
   color: var(--cp-palette-main-fifth);
 }
 
-
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1.3;
 }
 
@@ -49,7 +64,6 @@ h6 {
   font-size: 16px;
 }
 
-
 a {
   transition: all 0.3s ease-in-out;
   text-decoration: none !important;
@@ -60,7 +74,8 @@ a {
   }
 }
 
-p, a {
+p,
+a {
   font-size: 14px;
   line-height: 1.2;
 }

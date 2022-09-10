@@ -4,7 +4,8 @@
   flex-direction: column;
   gap: 20px;
 
-  &-tags, &-authors {
+  &-tags,
+  &-authors {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;

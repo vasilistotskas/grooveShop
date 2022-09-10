@@ -46,12 +46,14 @@
   height: 200px;
   text-align: center;
 
-  span, p {
+  span,
+  p {
     color: var(--cp-palette-main-fifth);
   }
 }
 
-.registration-resend-action, .register-login-field a {
+.registration-resend-action,
+.register-login-field a {
   color: var(--cp-palette-main-secondary);
   font-weight: 500;
   font-size: 17px;

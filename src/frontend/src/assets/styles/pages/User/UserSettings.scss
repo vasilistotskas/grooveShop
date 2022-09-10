@@ -3,7 +3,15 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 15px;
 
-  .first_name, .last_name, .phone, .city, .zipcode, .address, .place, .country, .region {
+  .first_name,
+  .last_name,
+  .phone,
+  .city,
+  .zipcode,
+  .address,
+  .place,
+  .country,
+  .region {
     display: grid;
     gap: 12px;
   }

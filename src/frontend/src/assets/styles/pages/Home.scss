@@ -68,7 +68,9 @@
   border-radius: 8px;
   transition: all 0.3s ease-in-out;
 
-  img, video, .swiper-slide {
+  img,
+  video,
+  .swiper-slide {
     border-radius: 8px;
   }
 
@@ -197,7 +199,8 @@
   align-items: center;
 }
 
-.swiper-slide img, video {
+.swiper-slide img,
+video {
   display: block;
   width: 100%;
   height: 100%;
@@ -225,7 +228,8 @@
   }
 }
 
-.grid-item-content-one, .grid-item-content-two {
+.grid-item-content-one,
+.grid-item-content-two {
   max-width: 100%;
   display: grid;
   align-items: center;

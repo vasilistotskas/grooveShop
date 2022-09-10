@@ -19,7 +19,6 @@
     }
 
     &-stars {
-
     }
 
     &-count {
@@ -125,7 +124,8 @@
   border-radius: 5px;
 
   .product-page-grid-info-part {
-    &-one, &-two {
+    &-one,
+    &-two {
       border-radius: 5px;
       background-color: var(--cp-palette-main-fourth);
       box-shadow: 0 0 7px 0 rgb(153 153 153 / 40%);

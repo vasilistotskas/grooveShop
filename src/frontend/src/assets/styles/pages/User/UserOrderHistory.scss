@@ -1,5 +1,6 @@
 .order-history-grid {
-  &-head, &-body a {
+  &-head,
+  &-body a {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 70px;

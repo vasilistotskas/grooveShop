@@ -34,7 +34,8 @@
       .blog-post-card-body-description {
         font-size: 22px;
       }
-      .blog-post-card-body-author, .blog-post-card-body-date {
+      .blog-post-card-body-author,
+      .blog-post-card-body-date {
         display: none;
       }
       .blog-post-card-body-tags {
@@ -71,18 +72,14 @@
       font-weight: 300;
     }
     &-tags {
-
     }
     &-tag {
       &-link {
-
       }
       &-name {
-
       }
     }
     &-date {
-
     }
     &-actions {
       display: grid;

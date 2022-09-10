@@ -40,7 +40,10 @@
   grid-template-columns: repeat(4, 1fr);
 
   .grid-item {
-    &-one, &-two, &-three, &-four {
+    &-one,
+    &-two,
+    &-three,
+    &-four {
       text-align: center;
     }
   }

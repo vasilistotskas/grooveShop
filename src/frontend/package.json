@@ -67,6 +67,7 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^9.4.0",
     "sass": "^1.53.0",
     "sass-loader": "^13.0.2",
     "tsc-alias": "^1.7.0",

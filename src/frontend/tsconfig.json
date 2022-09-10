@@ -23,18 +23,11 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
     "typeRoots": ["node_modules/@types", "typings.d.ts", "env.d.ts"]
   },
-  "include": [
-    "./src/**/*"
-  ],
-  "files": [
-    "typings.d.ts",
-    "env.d.ts"
-  ],
+  "include": ["./src/**/*"],
+  "files": ["typings.d.ts", "env.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
