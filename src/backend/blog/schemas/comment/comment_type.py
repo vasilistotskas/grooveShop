@@ -1,6 +1,7 @@
 from typing import List
+import strawberry.django
+from strawberry import auto
 from backend.app import settings
-from strawberry_django_plus import gql
 from backend.blog.models import Comment
 from backend.blog.schemas.post.post_type import PostType
 from backend.user.schemas.user.user_account_type import UserAccountType
@@ -8,16 +9,16 @@ from backend.user.schemas.user.user_account_type import UserAccountType
 User = settings.AUTH_USER_MODEL
 
 
-@gql.django.type(Comment)
+@strawberry.django.type(Comment)
 class CommentType:
-    id: gql.ID
+    id: strawberry.ID
     content: str
-    created_at: gql.auto
+    created_at: auto
     is_approved: bool
     likes: List[UserAccountType]
     user: 'UserAccountType'
     post: 'PostType'
 
-    @gql.django.field
+    @strawberry.django.field
     def number_of_likes(self) -> int:
         return self.likes.count()

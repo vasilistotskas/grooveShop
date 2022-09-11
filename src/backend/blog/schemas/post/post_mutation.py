@@ -1,12 +1,10 @@
-from strawberry_django_plus import gql
+from typing import List
+import strawberry.django
+from strawberry_django import mutations
 from backend.blog.schemas.post.post_type import PostType
-from backend.blog.schemas.post.post_filter import UpdatePostLikesFilter
-from backend.blog.schemas.post.post_input import UpdatePostLikesInputPartial
+from backend.blog.schemas.post.post_input import PostLikesPartialInput
 
 
-@gql.type
+@strawberry.type
 class Mutation:
-    updatePostLikes: PostType = gql.django.update_mutation(
-        UpdatePostLikesInputPartial,
-        filters=UpdatePostLikesFilter
-    )
+    updatePostLikes: List[PostType] = mutations.update(PostLikesPartialInput)

@@ -1,6 +1,6 @@
-import strawberry
+import strawberry.django
+from strawberry import auto
 from backend.blog.models import Post
-from strawberry_django_plus import gql
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -8,8 +8,8 @@ User = get_user_model()
 
 @strawberry.django.filters.filter(Post)
 class UpdatePostLikesFilter:
-    id: gql.ID
-    user_id: gql.ID
+    id: strawberry.ID
+    user_id: strawberry.ID
 
     def filter(self, queryset):
         post = Post.objects.get(pk=self.id)

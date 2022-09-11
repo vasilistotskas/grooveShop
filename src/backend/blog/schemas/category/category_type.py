@@ -1,18 +1,19 @@
 import os
+import strawberry.django
+from strawberry import auto
 from django.conf import settings
-from strawberry_django_plus import gql
 from backend.blog.models import Category
 
 
-@gql.django.type(Category)
+@strawberry.django.type(Category)
 class CategoryType:
-    id: gql.ID
+    id: auto
     name: str
-    slug: gql.auto
+    slug: auto
     description: str
-    image: gql.auto
+    image: auto
 
-    @gql.django.field
+    @strawberry.django.field
     def main_image_absolute_url(self) -> str:
         try:
             if self.id is not None:
@@ -23,7 +24,7 @@ class CategoryType:
         except:
             return ""
 
-    @gql.django.field
+    @strawberry.django.field
     def main_image_filename(self) -> str:
         try:
             return os.path.basename(self.image.name)

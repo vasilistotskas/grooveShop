@@ -2,6 +2,8 @@
 -- tip an thelw na dw error 404 me debug afairw to route apo to front --
 ### ---BLOG MAIN PAGE--- ###
 
+### STRAWBERRY INPUTS NA TA SPASW SE : # filters , # order, # types, # input types, # partial input types
+
 # blog tips:
     ---> Estimate Time: 14 Hours
     tip title

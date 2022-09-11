@@ -1,6 +1,5 @@
-import strawberry
-from strawberry.django import auth
-from strawberry_django_plus import gql
+import strawberry.django
+from strawberry import auto
 from backend.blog.models import Comment, Post
 from django.contrib.auth import get_user_model
 
@@ -9,8 +8,8 @@ User = get_user_model()
 
 @strawberry.django.filters.filter(Comment)
 class UpdateCommentLikesFilter:
-    id: gql.ID
-    user_id: gql.ID
+    id: strawberry.ID
+    user_id: strawberry.ID
 
     def filter(self, queryset):
         comment = Comment.objects.get(pk=self.id)
@@ -27,7 +26,7 @@ class UpdateCommentLikesFilter:
 
 @strawberry.django.filters.filter(Comment)
 class CreateCommentFilter:
-    post_id: gql.ID
+    post_id: strawberry.ID
     user_email: str
     content: str
 
@@ -41,7 +40,7 @@ class CreateCommentFilter:
 
 @strawberry.django.filters.filter(Comment)
 class UpdateCommentFilter:
-    comment_id: gql.ID
+    comment_id: strawberry.ID
     content: str
 
     def filter(self, queryset):
@@ -53,7 +52,7 @@ class UpdateCommentFilter:
 
 @strawberry.django.filters.filter(Comment)
 class DeleteCommentFilter:
-    comment_id: gql.ID
+    comment_id: strawberry.ID
 
     def filter(self, queryset):
         comment = Comment.objects.get(pk=self.comment_id)

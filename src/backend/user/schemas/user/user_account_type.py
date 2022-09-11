@@ -1,10 +1,11 @@
-from strawberry_django_plus import gql
+import strawberry.django
+from strawberry import auto
 from backend.user.models import UserAccount
 
 
-@gql.django.type(UserAccount)
+@strawberry.django.type(UserAccount)
 class UserAccountType:
-    id: gql.ID
+    id: strawberry.ID
     email: str
     first_name: str
     last_name: str

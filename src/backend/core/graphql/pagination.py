@@ -1,44 +1,44 @@
-from strawberry_django_plus import gql
+import strawberry.django
 from base64 import b64encode, b64decode
 from typing import List, Optional, TypeVar, Generic
 
 GenericType = TypeVar("GenericType")
 
 
-@gql.type
+@strawberry.type
 class PageMeta:
-    has_previous_page: Optional[bool] = gql.field(
+    has_previous_page: Optional[bool] = strawberry.field(
         description="Is there a previous page?"
     )
-    has_next_page: Optional[bool] = gql.field(
+    has_next_page: Optional[bool] = strawberry.field(
         description="Is there a next page?"
     )
-    count: Optional[int] = gql.field(
+    count: Optional[int] = strawberry.field(
         description="The total items count."
     )
-    total_pages: Optional[int] = gql.field(
+    total_pages: Optional[int] = strawberry.field(
         description="The total pages count."
     )
-    next_cursor: Optional[str] = gql.field(
+    next_cursor: Optional[str] = strawberry.field(
         description="The next cursor to continue with."
     )
-    start_cursor: Optional[str] = gql.field(
+    start_cursor: Optional[str] = strawberry.field(
         description="The start cursor to continue with."
     )
-    end_cursor: Optional[str] = gql.field(
+    end_cursor: Optional[str] = strawberry.field(
         description="The last cursor to continue with."
     )
-    current_page_number: Optional[int] = gql.field(
+    current_page_number: Optional[int] = strawberry.field(
         description="The current page number."
     )
 
 
-@gql.type
+@strawberry.type
 class PaginatedResponse(Generic[GenericType]):
-    collection: List[GenericType] = gql.field(
+    collection: List[GenericType] = strawberry.field(
         description="The list of items."
     )
-    page_meta: PageMeta = gql.field(
+    page_meta: PageMeta = strawberry.field(
         description="Metadata to aid in pagination."
     )
 

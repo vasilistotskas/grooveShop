@@ -1,13 +1,13 @@
+import strawberry.django
 from backend.blog.models import Post
-from strawberry_django_plus import gql
 from typing import List, Optional, cast
 from backend.blog.schemas.post.post_type import PostType
 from backend.core.graphql.pagination import PageMeta, PaginatedResponse, PaginationBase
 
 
-@gql.type
+@strawberry.type
 class Query:
-    @gql.field(description="Get a list of posts.")
+    @strawberry.django.field(description="Get a list of posts.")
     def all_posts(self, limit: int, cursor: Optional[str] = None) -> PaginatedResponse[PostType]:
         pagination_base = PaginationBase()
         post_data = Post.objects.all()
@@ -58,7 +58,7 @@ class Query:
             )
         )
 
-    @gql.field
+    @strawberry.django.field
     def posts_by_tag(self, tag: str) -> List[PostType]:
         return (
             Post.objects.prefetch_related("tags")
@@ -66,7 +66,7 @@ class Query:
             .filter(tags__name__iexact=tag)
         )
 
-    @gql.field
+    @strawberry.django.field
     def post_by_slug(self, slug: str) -> PostType:
         return (
             Post.objects.prefetch_related("tags")
@@ -74,7 +74,7 @@ class Query:
             .get(slug=slug)
         )
 
-    @gql.field
+    @strawberry.django.field
     def posts_by_author_id(self, author_id: str) -> List[PostType]:
         return (
             Post.objects.prefetch_related("tags")

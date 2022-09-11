@@ -1,9 +1,9 @@
+import strawberry.django
 from typing import List
-from strawberry_django_plus import gql
 from backend.blog.schemas.tag.tag_type import TagType
 
 
-@gql.type
+@strawberry.type
 class Query:
-    all_tags: List[TagType] = gql.django.field()
+    all_tags: List[TagType] = strawberry.django.field()
 

@@ -1,11 +1,12 @@
-from strawberry_django_plus import gql
+import strawberry.django
+from strawberry import auto
 from backend.blog.models import Author
 from backend.user.schemas.user.user_account_type import UserAccountType
 
 
-@gql.django.type(Author)
+@strawberry.django.type(Author)
 class AuthorType:
-    id: gql.ID
+    id: auto
     user: 'UserAccountType'
-    website: gql.auto
+    website: auto
     bio: str
