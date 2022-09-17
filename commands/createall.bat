@@ -45,6 +45,7 @@ pre-commit run --all-files
 pylint backend
 black backend
 
+
 REM LINT SCSS
 scss-lint -c .scss-lint.yml
 npm run lint
