@@ -4,7 +4,7 @@
   max-width: 500px;
 
   .card-body {
-    grid-template-rows: unset !important;
+    grid-template-rows: unset;
   }
 }
 
@@ -26,7 +26,7 @@
         font-weight: 500;
 
         &:hover {
-          color: var(--cp-palette-main-primary) !important;
+          color: var(--cp-palette-main-primary);
           cursor: pointer;
         }
       }
@@ -35,7 +35,7 @@
 
   &-socials {
     display: grid;
-    gap: 5px;
+    grid-gap: 5px;
     grid-template-columns: repeat(2, 1fr);
 
     a.btn {
@@ -53,7 +53,7 @@
     font-weight: 500;
 
     &:hover {
-      color: var(--cp-palette-main-primary) !important;
+      color: var(--cp-palette-main-primary);
       cursor: pointer;
     }
   }

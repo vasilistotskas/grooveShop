@@ -1,6 +1,6 @@
 .user-account-main-container {
   display: grid;
-  gap: 0 50px;
+  grid-gap: 0 50px;
   grid-template-columns: 25% auto;
   min-height: 500px;
   @media screen and (max-width: 767px) {
@@ -66,7 +66,7 @@
   a {
     background-color: transparent;
     border-radius: 35px;
-    color: var(--cp-palette-main-fifth) !important;
+    color: var(--cp-palette-main-fifth);
     display: grid;
     font-size: 20px;
     grid-gap: 15px;
@@ -77,14 +77,14 @@
     width: 66%;
 
     &:hover {
-      color: var(--cp-palette-main-fourth) !important;
+      color: var(--cp-palette-main-fourth);
     }
 
     &.router-link-active {
-      color: var(--cp-palette-main-primary) !important;
+      color: var(--cp-palette-main-primary);
 
       svg {
-        color: var(--cp-palette-main-primary) !important;
+        color: var(--cp-palette-main-primary);
       }
     }
 
@@ -106,7 +106,7 @@
   right: 20px;
 
   &:hover {
-    background-color: var(--cp-palette-main-primary) !important;
+    background-color: var(--cp-palette-main-primary);
     transform: scale(1.02);
   }
 }

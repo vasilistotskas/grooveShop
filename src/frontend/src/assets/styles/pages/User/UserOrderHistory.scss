@@ -3,7 +3,7 @@
   &-body a {
     align-items: center;
     display: grid;
-    gap: 70px;
+    grid-gap: 70px;
     grid-template-columns: repeat(5, 1fr);
     justify-items: center;
   }
@@ -28,8 +28,8 @@
 }
 
 .card-body-order-history {
-  background-color: var(--cp-palette-main-secondary) !important;
+  background-color: var(--cp-palette-main-secondary);
   border-radius: 10px;
-  padding-bottom: 30px !important;
-  padding-top: 30px !important;
+  padding-bottom: 30px;
+  padding-top: 30px;
 }

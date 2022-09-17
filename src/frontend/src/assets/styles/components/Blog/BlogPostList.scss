@@ -3,7 +3,7 @@
 .blog-post-list {
   &-container {
     display: grid;
-    gap: 2rem;
+    grid-gap: 2rem;
     grid-template-columns: 77.5% auto;
     @media screen and (max-width: map-get($grid-breakpoints, 'md')) {
       grid-template-columns: 1fr;

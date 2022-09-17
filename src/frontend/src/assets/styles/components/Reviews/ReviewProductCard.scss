@@ -3,7 +3,7 @@
 .user-review-product-content {
   align-items: center;
   display: inline-flex;
-  gap: 5px;
+  grid-gap: 5px;
   justify-items: center;
 
   .user-review-product-count {
@@ -15,7 +15,6 @@
 }
 
 .user-review-product-settings {
-  -webkit-tap-highlight-color: transparent;
   color: transparent;
   font-size: 0;
   height: 34px;
@@ -31,9 +30,6 @@
   }
 
   &:before {
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    -webkit-transition: color 0.1s ease-in-out;
     color: var(--cp-palette-main-fifth);
     content: '\2807';
     display: inline-block;
@@ -48,7 +44,7 @@
     text-align: center;
     text-decoration: none;
     text-transform: none;
-    transition: color 0.1s ease-in-out;
+    transition: color .1s ease-in-out;
     width: 1em;
   }
 }
@@ -63,7 +59,7 @@
   &-image {
     background-position: center;
     background-size: cover;
-    border: 1px solid rgba(246, 139, 36, 0.4);
+    border: 1px solid rgba(246, 139, 36, .4);
     border-radius: 50%;
     font: inherit;
     font-size: 100%;
@@ -108,11 +104,7 @@
 
 .user-review-actions {
   &-menu {
-    -ms-transform-origin: calc(100% - 30px) 30px;
-    -webkit-animation: scaleFade 0.15s;
-    -webkit-box-shadow: 0 2px 4px rgb(112 112 112 / 33%);
-    -webkit-transform-origin: -webkit-calc(100% - 30px) 30px;
-    animation: scaleFade 0.15s;
+    animation: scaleFade .15s;
     background: var(--cp-palette-main-secondary);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgb(112 112 112 / 33%);
@@ -134,7 +126,6 @@
   &-edit,
   &-delete {
     a {
-      -webkit-tap-highlight-color: transparent;
       color: var(--cp-palette-main-third);
       display: block;
       font-size: 14px;

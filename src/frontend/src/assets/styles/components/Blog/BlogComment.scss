@@ -12,7 +12,7 @@
   &-header {
     align-items: center;
     display: grid;
-    gap: 1rem;
+    grid-gap: 1rem;
     grid-template-columns: auto auto;
     justify-content: center;
     &-title {

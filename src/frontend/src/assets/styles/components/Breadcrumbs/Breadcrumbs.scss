@@ -1,11 +1,11 @@
 .breadcrumb {
   background-color: transparent;
   border: 0;
-  border-radius: 0.25rem;
+  border-radius: .25rem;
   display: flex;
   flex-wrap: wrap;
   font-size: 13px;
-  justify-content: center !important;
+  justify-content: center;
   list-style: none;
   margin-bottom: 0;
   padding-bottom: 0;
@@ -21,7 +21,7 @@
     }
 
     a {
-      color: var(--cp-palette-main-third) !important;
+      color: var(--cp-palette-main-third);
     }
 
     a.router-link-exact-active {

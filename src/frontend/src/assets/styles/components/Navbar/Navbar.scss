@@ -6,7 +6,6 @@
 }
 
 .btn-w-effect {
-  -webkit-font-smoothing: antialiased;
   align-items: center;
   color: var(--cp-palette-main-fifth);
   display: flex;
@@ -154,8 +153,8 @@
       fill: none;
       stroke: var(--cp-palette-main-fifth);
       stroke-width: 6;
-      transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
-      stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+      transition: stroke-dasharray 600ms cubic-bezier(.4, 0, .2, 1),
+      stroke-dashoffset 600ms cubic-bezier(.4, 0, .2, 1);
 
       &-one {
         stroke-dasharray: 60 207;
@@ -250,7 +249,7 @@
     display: grid;
     grid-template-columns: auto 25%;
     justify-self: center;
-    transition: all 0.3s ease-in-out;
+    transition: all .3s ease-in-out;
 
     &:hover {
       border: 1px solid var(--cp-palette-main-primary);
@@ -258,7 +257,7 @@
     }
 
     input:focus-visible {
-      outline: unset !important;
+      outline: unset;
     }
 
     .search-form-control {
@@ -266,11 +265,11 @@
       border-bottom-left-radius: 10px;
       border-radius: unset;
       border-top-left-radius: 10px;
-      transition: all 0.3s ease-in-out;
+      transition: all .3s ease-in-out;
     }
 
     button {
-      transition: all 0.3s ease-in-out;
+      transition: all .3s ease-in-out;
     }
 
     .btn {

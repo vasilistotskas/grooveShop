@@ -1,19 +1,13 @@
-html {
-  -webkit-tap-highlight-color: rgba(31, 45, 61, 0);
-  -webkit-text-size-adjust: 100%;
-}
-
 * {
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
-  transition: all 0.12s ease-in-out;
+  transition: .12s ease-in-out;
 }
 
 *,
 :after,
 :before {
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -65,12 +59,12 @@ h6 {
 }
 
 a {
-  text-decoration: none !important;
-  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+  transition: all .3s ease-in-out;
 
   &:hover {
     color: var(--cp-palette-main-fifth);
-    transition: all 0.3s ease-in-out;
+    transition: all .3s ease-in-out;
   }
 }
 
@@ -98,23 +92,23 @@ textarea {
   border-radius: 4px;
   font-family: inherit;
   font-size: Max(16px, 1em);
-  padding: 0.25em 0.5em;
+  padding: .25em .5em;
   resize: vertical;
   transition: 180ms box-shadow ease-in-out;
 
   &:focus {
-    border-color: rgba(253, 0, 2, 0.33);
+    border-color: rgba(253, 0, 2, .33);
     box-shadow: 0 0 0 2px rgb(253 0 2 / 25%);
     outline: 3px solid transparent;
   }
 }
 
 input:focus-visible {
-  outline: unset !important;
+  outline: unset;
 }
 
 // Router
 
 .router-link-active {
-  color: var(--cp-palette-main-primary) !important;
+  color: var(--cp-palette-main-primary);
 }

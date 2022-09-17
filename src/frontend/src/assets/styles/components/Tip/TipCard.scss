@@ -9,7 +9,7 @@
 
   &-wrapper {
     display: grid;
-    gap: 1.25rem;
+    grid-gap: 1.25rem;
     padding: 1rem 1.5rem;
     position: relative;
   }
@@ -36,7 +36,7 @@
     align-items: center;
     border-bottom: 1px solid var(--cp-palette-main-dark-primary);
     display: grid;
-    gap: 1rem;
+    grid-gap: 1rem;
     grid-template-columns: auto 1fr;
     padding-bottom: 1rem;
     &-icon {

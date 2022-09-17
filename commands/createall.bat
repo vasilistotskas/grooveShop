@@ -47,3 +47,5 @@ black backend
 
 REM LINT SCSS
 scss-lint -c .scss-lint.yml
+npm run lint
+npm run lint:fix

@@ -1,50 +1,49 @@
 @import '@/assets/styles/base/variables';
 
+@mixin cp-palette($prop: null, $value: null) {
+  @if ($prop and $value) {
+    #{$prop}: $value;
+  }
+}
+
 :root {
   // DARK
-  --cp-palette-main-dark-fifth: #{$color-palette-main-fifth};
+  @include cp-palette(--cp-palette-main-dark-primary, #{$color-palette-main-primary});
+  @include cp-palette(--cp-palette-main-dark-secondary, #{$color-palette-main-secondary});
+  @include cp-palette(--cp-palette-main-dark-third, #{$color-palette-main-third});
+  @include cp-palette(--cp-palette-main-dark-fourth, #{$color-palette-main-fourth});
+  @include cp-palette(--cp-palette-main-dark-fifth, #{$color-palette-main-fifth});
 
-  --cp-palette-main-dark-fourth: #{$color-palette-main-fourth};
 
-  --cp-palette-main-dark-primary: #{$color-palette-main-primary-light};
-
-  --cp-palette-main-dark-secondary: #{$color-palette-main-secondary};
-
-  --cp-palette-main-dark-third: #{$color-palette-main-third};
-  // WHITE
-  --cp-palette-main-global-green: #{$color-palette-global-green};
-
-  --cp-palette-main-light-fifth: #{$color-palette-main-fifth-light};
-
-  --cp-palette-main-light-fourth: #{$color-palette-main-fourth-light};
-
-  --cp-palette-main-light-primary: #{$color-palette-main-primary-light};
-
-  --cp-palette-main-light-secondary: #{$color-palette-main-secondary-light};
-
+  // LIGHT
+  @include cp-palette(--cp-palette-main-light-primary, #{$color-palette-main-primary-light});
+  @include cp-palette(--cp-palette-main-light-secondary, #{$color-palette-main-secondary-light});
+  @include cp-palette(--cp-palette-main-light-third, #{$color-palette-main-third-light});
+  @include cp-palette(--cp-palette-main-light-fourth, #{$color-palette-main-fourth-light});
+  @include cp-palette(--cp-palette-main-light-fifth, #{$color-palette-main-fifth-light});
   // GLOBAL
-  --cp-palette-main-light-third: #{$color-palette-main-third-light};
+  @include cp-palette(--cp-palette-main-global-green, #{$color-palette-global-green});
+
 }
 
 body {
   // DARK
-  --cp-palette-main-fifth: var(--cp-palette-main-dark-fifth);
-  --cp-palette-main-fourth: var(--cp-palette-main-dark-fourth);
-  --cp-palette-main-green: var(--cp-palette-main-global-green);
-  --cp-palette-main-primary: var(--cp-palette-main-dark-primary);
-  --cp-palette-main-secondary: var(--cp-palette-main-dark-secondary);
+  @include cp-palette(--cp-palette-main-primary, var(--cp-palette-main-dark-primary));
+  @include cp-palette(--cp-palette-main-secondary, var(--cp-palette-main-dark-secondary));
+  @include cp-palette(--cp-palette-main-third, var(--cp-palette-main-dark-third));
+  @include cp-palette(--cp-palette-main-fourth, var(--cp-palette-main-dark-fourth));
+  @include cp-palette(--cp-palette-main-fifth, var(--cp-palette-main-dark-fifth));
+  // GLOBAL
+  @include cp-palette(--cp-palette-main-green, var(--cp-palette-main-global-green));
 
   &.light {
     // LIGHT
-    --cp-palette-main-fifth: var(--cp-palette-main-light-fifth);
-    --cp-palette-main-fourth: var(--cp-palette-main-light-fourth);
-    --cp-palette-main-primary: var(--cp-palette-main-light-primary);
-    --cp-palette-main-secondary: var(--cp-palette-main-light-secondary);
-    --cp-palette-main-third: var(--cp-palette-main-light-third);
+    @include cp-palette(--cp-palette-main-fifth, var(--cp-palette-main-light-fifth));
+    @include cp-palette(--cp-palette-main-fourth, var(--cp-palette-main-light-fourth));
+    @include cp-palette(--cp-palette-main-primary, var(--cp-palette-main-light-primary));
+    @include cp-palette(--cp-palette-main-secondary, var(--cp-palette-main-light-secondary));
+    @include cp-palette(--cp-palette-main-third, var(--cp-palette-main-light-third));
   }
-
-  // GLOBAL
-  --cp-palette-main-third: var(--cp-palette-main-dark-third);
 
   background-color: var(--cp-palette-main-fourth);
   margin-bottom: 0 !important;
@@ -55,19 +54,19 @@ body {
 
 .grid-section {
   &-socials {
-    max-width: 400px;
-    margin: 0 auto;
     display: grid;
-    gap: 20px;
+    grid-gap: 20px;
     grid-template-columns: repeat(6, 1fr);
+    margin: 0 auto;
+    max-width: 400px;
   }
 }
 
 .card {
-  position: relative;
-  background-color: transparent !important;
-  display: grid;
+  background-color: transparent;
   content-visibility: auto;
+  display: grid;
+  position: relative;
 
   .card-img-top {
     border-top-left-radius: 10px;
@@ -79,17 +78,17 @@ body {
   }
 
   .card-body {
-    height: auto;
-    width: 100%;
-    display: grid;
-    gap: 10px;
-    grid-template-rows: repeat(1, 1fr);
-    text-align: center;
-    justify-content: center;
     background: var(--cp-palette-main-secondary);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-rows: repeat(1, 1fr);
+    height: auto;
+    justify-content: center;
     padding: 10px;
+    text-align: center;
+    width: 100%;
 
     a,
     p,
@@ -115,7 +114,7 @@ body {
 
     .btn-product-card {
       background-color: var(--cp-palette-main-third);
-      border-color: rgba(240, 246, 252, 0.1);
+      border-color: rgba(240, 246, 252, .1);
       box-shadow: 0 0 transparent, 0 0 transparent;
       color: var(--cp-palette-main-fifth);
       display: grid;
@@ -138,24 +137,24 @@ body {
 
 .product-listing-grid {
   display: grid;
+  grid-gap: 20px;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
   @media screen and (max-width: 1200px) {
     grid-template-columns: repeat(3, 1fr);
   }
 
   @media screen and (max-width: 767px) {
+    grid-gap: 10px;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
   }
 
   &-header {
     display: grid;
-    gap: 10px;
+    grid-gap: 10px;
     grid-template-columns: repeat(4, 1fr);
     @media screen and (max-width: 767px) {
+      grid-gap: 5px;
       grid-template-columns: repeat(2, 1fr);
-      gap: 5px;
     }
   }
 }
@@ -167,15 +166,15 @@ body {
 
 .user-account-page-main-content {
   .pagination-grid-content {
-    position: relative;
-    display: grid;
     bottom: 0;
-    right: 20px;
-    gap: 10px;
+    display: grid;
+    grid-gap: 10px;
     grid-template-columns: repeat(4, 1fr);
+    position: relative;
+    right: 20px;
     @media screen and (max-width: 767px) {
+      grid-gap: 5px;
       grid-template-columns: repeat(2, 1fr);
-      gap: 5px;
     }
   }
 
@@ -185,7 +184,7 @@ body {
 
   .product-review-main-card,
   .product-card-main {
-    background-color: var(--cp-palette-main-fourth) !important;
+    background-color: var(--cp-palette-main-fourth);
   }
 }
 
@@ -197,9 +196,9 @@ body {
 
 .pagination-buttons {
   display: grid;
-  max-width: 347px;
+  grid-gap: 5px;
   grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
+  max-width: 347px;
 }
 
 .product-listing-container {
@@ -214,11 +213,11 @@ body {
 .container,
 .container-small,
 .container-fluid {
-  width: 100%;
-  margin-right: auto;
   margin-left: auto;
+  margin-right: auto;
   padding-left: 15px;
   padding-right: 15px;
+  width: 100%;
 }
 
 .container-fluid {
@@ -226,8 +225,8 @@ body {
     padding: 0;
 
     .row {
-      margin-right: 0;
       margin-left: 0;
+      margin-right: 0;
     }
   }
 }
@@ -290,25 +289,23 @@ body {
 }
 
 .d-flex {
-  display: flex !important;
+  display: flex;
 }
 
 .form-control {
+  appearance: none;
+  background-clip: padding-box;
+  background-color: var(--cp-palette-main-fourth);
+  border: 1px solid var(--cp-palette-main-third);
+  border-radius: .25rem;
+  color: var(--cp-palette-main-fifth);
   display: block;
-  width: 100%;
-  padding: 9px 13px;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: var(--cp-palette-main-fifth);
-  background-color: var(--cp-palette-main-fourth);
-  background-clip: padding-box;
-  border: 1px solid var(--cp-palette-main-third);
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out;
+  padding: 9px 13px;
+  transition: border-color .15s ease-in-out;
+  width: 100%;
 
   // TO REMEMBER BASIC RESPONSIVE
   @media screen and (max-width: 1420px) {
@@ -336,16 +333,16 @@ body {
 }
 
 .img-fluid {
-  max-width: 100%;
   height: auto;
+  max-width: 100%;
 }
 
 #social-sidebar {
-  right: 0;
+  border: 1px solid var(--cp-palette-main-third);
   position: fixed;
+  right: 0;
   top: 30%;
   z-index: 13;
-  border: 1px solid var(--cp-palette-main-third);
   @media screen and (max-width: map-get($grid-breakpoints, 'md')) {
     display: none;
   }
@@ -367,61 +364,61 @@ body {
   a {
     background: var(--cp-palette-main-fourth);
     color: var(--cp-palette-main-fourth);
-    text-decoration: none;
+    cursor: pointer;
     display: block;
-    height: 40px;
-    width: 40px;
     font-size: 18px;
+    height: 40px;
     line-height: 42px;
     position: relative;
     text-align: center;
-    cursor: pointer;
+    text-decoration: none;
+    width: 40px;
 
     &:hover {
       span {
-        right: 120%;
         opacity: 1;
+        right: 120%;
       }
     }
 
     span {
-      font: 12px 'Open Sans', sans-serif;
-      text-transform: uppercase;
       border-radius: 3px;
+      font: 12px 'Open Sans', sans-serif;
       line-height: 24px;
-      right: -100%;
       margin-top: -16px;
       opacity: 0;
       padding: 4px 8px;
       position: absolute;
-      transition: opacity 0.3s, right 0.4s;
+      right: -100%;
+      text-transform: uppercase;
       top: 50%;
+      transition: opacity .3s, right .4s;
       z-index: -1;
 
-      &:before {
+      &::before {
         content: '';
         display: block;
         height: 8px;
-        width: 8px;
-        right: -4px;
         margin-top: -4px;
         position: absolute;
+        right: -4px;
         top: 50%;
         transform: rotate(45deg);
+        width: 8px;
       }
     }
   }
 }
 
 .content-min-height {
-  min-height: 600px !important;
   display: grid;
+  min-height: 600px;
 }
 
 // Vue Transition
 .fade-enter {
   &-active {
-    transition: opacity 0.4s ease;
+    transition: opacity .4s ease;
   }
 
   &-to {
@@ -434,7 +431,7 @@ body {
 
 .fade-leave {
   &-active {
-    transition: opacity 0.4s ease;
+    transition: opacity .4s ease;
   }
 
   &-to {
@@ -454,30 +451,27 @@ body {
 }
 
 .primary_button {
-  padding: 10px;
-  text-align: center;
-  width: 100%;
-  margin: 0 auto;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border: unset;
   border-radius: 7px;
-  text-decoration: none;
-  vertical-align: middle;
   cursor: pointer;
   display: inline-block;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
+  margin: 0 auto;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out;
   user-select: none;
-  border: 1px solid transparent;
-  font-size: 14px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  background-color: transparent;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
-  border: unset;
+  vertical-align: middle;
+  width: 100%;
 
   &:focus {
-    outline: none;
     box-shadow: none;
+    outline: none;
   }
 
   &:hover {
@@ -499,9 +493,9 @@ body {
   }
 
   &-one {
-    color: var(--cp-palette-main-fifth);
-    border: 1px solid var(--cp-palette-main-third);
     background-color: var(--cp-palette-main-third);
+    border: 1px solid var(--cp-palette-main-third);
+    color: var(--cp-palette-main-fifth);
 
     a {
       color: var(--cp-palette-main-fifth);
@@ -509,9 +503,9 @@ body {
   }
 
   &-two {
-    color: var(--cp-palette-main-fifth);
-    border: var(--cp-palette-main-primary);
     background-color: var(--cp-palette-main-primary);
+    border: var(--cp-palette-main-primary);
+    color: var(--cp-palette-main-fifth);
 
     a {
       color: var(--cp-palette-main-fifth);
@@ -519,9 +513,9 @@ body {
   }
 
   &-three {
-    color: var(--cp-palette-main-fifth);
-    border: 1px solid var(--cp-palette-main-third);
     background-color: var(--cp-palette-main-third);
+    border: 1px solid var(--cp-palette-main-third);
+    color: var(--cp-palette-main-fifth);
 
     a {
       color: var(--cp-palette-main-fifth);
@@ -535,26 +529,26 @@ body {
 }
 
 .product-review-main-card {
-  position: relative;
-  display: grid;
-  grid-template-columns: 100px auto;
-  gap: 20px 15px;
   align-items: center;
-  border-radius: 8px;
   background-color: var(--cp-palette-main-fourth);
-  padding: 30px;
   border: 1px solid var(--cp-palette-main-third);
+  border-radius: 8px;
   content-visibility: auto;
+  display: grid;
+  grid-gap: 20px 15px;
+  grid-template-columns: 100px auto;
+  padding: 30px;
+  position: relative;
   @media screen and (max-width: 1200px) {
     grid-template-columns: 100px auto;
   }
 }
 
 .input-group-w-addon {
-  grid-template-columns: 40px auto;
-  display: grid;
-  border-radius: 5px;
   border: 1px solid var(--cp-palette-main-third);
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: 40px auto;
 
   &:hover {
     border: 1px solid #fd0002e0;
@@ -562,30 +556,30 @@ body {
   }
 
   .input-group-addon {
-    display: grid;
-    justify-content: center;
     align-content: center;
-    padding: 6px 12px;
+    background-color: var(--cp-palette-main-fourth);
+    border: unset;
+    border-bottom-left-radius: 5px;
+    border-radius: unset;
+    border-right: 1px solid var(--cp-palette-main-third);
+    border-top-left-radius: 5px;
+    color: var(--cp-palette-main-fifth);
+    display: grid;
     font-size: 14px;
     font-weight: 400;
+    justify-content: center;
     line-height: 1;
-    color: var(--cp-palette-main-fifth);
+    padding: 6px 12px;
     text-align: center;
-    background-color: var(--cp-palette-main-fourth);
-    border-right: 1px solid var(--cp-palette-main-third);
-    white-space: nowrap;
     vertical-align: middle;
-    border: unset;
-    border-radius: unset;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    white-space: nowrap;
   }
 
   .form-control {
     border: unset;
+    border-bottom-right-radius: 5px;
     border-radius: unset;
     border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
   }
 }
 
@@ -596,8 +590,8 @@ body {
 
 .description {
   p {
-    letter-spacing: 0.5px;
     color: var(--cp-palette-main-fifth);
+    letter-spacing: .5px;
     line-height: 22px;
   }
 }
@@ -607,18 +601,18 @@ body {
 }
 
 .btn-product-card {
-  color: var(--cp-palette-main-fifth);
   background-color: var(--cp-palette-main-third);
-  border-color: rgba(240, 246, 252, 0.1);
+  border-color: rgba(240, 246, 252, .1);
   box-shadow: 0 0 transparent, 0 0 transparent;
-  transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  color: var(--cp-palette-main-fifth);
+  transition: .2s cubic-bezier(.3, 0, .5, 1);
   transition-property: color, background-color, border-color;
 }
 
 .form-check-input-main {
   &:checked {
-    background-color: var(--cp-palette-main-primary) !important;
-    border-color: var(--cp-palette-main-primary) !important;
+    background-color: var(--cp-palette-main-primary);
+    border-color: var(--cp-palette-main-primary);
   }
 }
 
@@ -629,17 +623,16 @@ body {
 }
 
 .cardSpecialEffect {
-  position: relative;
-  color: var(--cp-palette-main-fourth);
-  padding: 5px;
-  border-radius: 10px;
-  font-size: 20px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  -webkit-font-smoothing: antialiased;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  border-radius: 10px;
+  color: var(--cp-palette-main-fourth);
+  display: flex;
+  font-size: 20px;
+  justify-content: center;
+  letter-spacing: 2px;
+  padding: 5px;
+  position: relative;
+  text-transform: uppercase;
 
   img {
     background: var(--cp-palette-main-fifth);
@@ -672,43 +665,43 @@ body {
   }
 
   .line-1 {
+    background-color: var(--cp-palette-main-primary);
+    bottom: 0;
     content: '';
     display: block;
+    left: 0;
     position: absolute;
     width: 1px;
-    background-color: var(--cp-palette-main-primary);
-    left: 0;
-    bottom: 0;
   }
 
   .line-2 {
+    background-color: var(--cp-palette-main-primary);
     content: '';
     display: block;
-    position: absolute;
     height: 1px;
-    background-color: var(--cp-palette-main-primary);
     left: 0;
+    position: absolute;
     top: 0;
   }
 
   .line-3 {
+    background-color: var(--cp-palette-main-primary);
     content: '';
     display: block;
     position: absolute;
-    width: 1px;
-    background-color: var(--cp-palette-main-primary);
     right: 0;
     top: 0;
+    width: 1px;
   }
 
   .line-4 {
+    background-color: var(--cp-palette-main-primary);
+    bottom: 0;
     content: '';
     display: block;
-    position: absolute;
     height: 1px;
-    background-color: var(--cp-palette-main-primary);
+    position: absolute;
     right: 0;
-    bottom: 0;
   }
 }
 
@@ -718,8 +711,8 @@ body {
 
 .main-section {
   @media screen and (min-width: map-get($grid-breakpoints, 'xl')) {
-    min-height: 750px;
     display: grid;
+    min-height: 750px;
   }
 }
 

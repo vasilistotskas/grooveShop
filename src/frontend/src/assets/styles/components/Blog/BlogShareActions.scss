@@ -2,17 +2,17 @@
 
 .blog-share-actions {
   &-container {
-    background-color: rgba(48, 54, 61, 0.7);
+    background-color: rgba(48, 54, 61, .7);
     border-radius: 10px;
     display: grid;
-    gap: 3rem;
+    grid-gap: 3rem;
     grid-template-columns: repeat(13, 1fr);
     padding: 1.5rem 2rem 2rem;
   }
 
   &-network {
     &-btn {
-      background-color: transparentize($color-palette-main-fourth, 0.5);
+      background-color: transparentize($color-palette-main-fourth, .5);
       border: unset;
       border: 0;
       border-radius: 15px;
@@ -25,12 +25,12 @@
       text-align: center;
       width: 100%;
       &:hover {
-        background-color: transparentize($color-palette-main-fourth, 0.1);
+        background-color: transparentize($color-palette-main-fourth, .1);
         cursor: pointer;
       }
 
       &:active {
-        background-color: transparentize($color-palette-main-fourth, 0.1);
+        background-color: transparentize($color-palette-main-fourth, .1);
         box-shadow: 0 5px #666;
         transform: translateY(4px);
       }

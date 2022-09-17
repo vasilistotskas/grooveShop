@@ -26,12 +26,5 @@ resolvers:
   hex-notation: 1
   indentation: 0
   final-newline: 1
-  no-color-literals: 1
 options:
-  optOut: true
-
-rules:
-  nesting-depth:
-    - 1
-    -
-      max-depth: 10
+  optOut: false

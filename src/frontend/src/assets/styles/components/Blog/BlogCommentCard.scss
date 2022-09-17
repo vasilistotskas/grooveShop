@@ -8,7 +8,7 @@
     border-radius: 8px;
     content-visibility: auto;
     display: grid;
-    gap: 20px 15px;
+    grid-gap: 20px 15px;
     grid-template-columns: 100px auto;
     padding: 30px;
     position: relative;
@@ -17,7 +17,7 @@
   &-wrapper {
     background-position: center;
     background-size: cover;
-    border: 1px solid rgba(246, 139, 36, 0.4);
+    border: 1px solid rgba(246, 139, 36, .4);
     border-radius: 50%;
     font: inherit;
     font-size: 100%;

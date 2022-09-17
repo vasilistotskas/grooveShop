@@ -2,7 +2,7 @@
   background-color: var(--cp-palette-main-secondary);
   border-radius: 10px;
   display: grid;
-  gap: 25px;
+  grid-gap: 25px;
   grid-template-rows: minmax(90px, 1fr);
   padding: 15px 30px 30px;
 
@@ -16,7 +16,7 @@
 
     &-two {
       display: grid;
-      gap: 10px;
+      grid-gap: 10px;
       grid-template-rows: minmax(50px, 1fr);
 
       .grid-container-table {
@@ -47,7 +47,7 @@
 
   .grid-container-table-items {
     display: grid;
-    gap: 10px;
+    grid-gap: 10px;
   }
 }
 

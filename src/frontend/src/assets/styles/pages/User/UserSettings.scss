@@ -1,6 +1,6 @@
 .grid-account-setting-fields {
   display: grid;
-  gap: 15px;
+  grid-gap: 15px;
   grid-template-columns: repeat(2, 1fr);
 
   .first_name,
@@ -13,7 +13,7 @@
   .country,
   .region {
     display: grid;
-    gap: 12px;
+    grid-gap: 12px;
   }
 
   .button {

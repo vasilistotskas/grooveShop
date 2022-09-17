@@ -1,20 +1,20 @@
 .grid-blog-siderbar {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  grid-gap: 20px;
   position: relative;
 
   &-tags,
   &-authors {
     display: grid;
-    gap: 10px;
+    grid-gap: 10px;
     grid-template-columns: repeat(2, 1fr);
 
     span {
       align-self: center;
       display: grid;
       justify-self: start;
-      transition: all 0.3s ease-in-out;
+      transition: all .3s ease-in-out;
       width: 100%;
 
       &:not(.sidebar-blog-title) {
@@ -24,14 +24,14 @@
 
         &:hover {
           background: var(--cp-palette-main-secondary);
-          transition: all 0.3s ease-in-out;
+          transition: all .3s ease-in-out;
 
           a {
-            transition: all 0.3s ease-in-out;
+            transition: all .3s ease-in-out;
 
             svg {
-              color: var(--cp-palette-main-primary) !important;
-              transition: all 0.3s ease-in-out;
+              color: var(--cp-palette-main-primary);
+              transition: all .3s ease-in-out;
             }
           }
         }
