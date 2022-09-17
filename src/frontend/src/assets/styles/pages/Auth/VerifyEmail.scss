@@ -1,8 +1,8 @@
 #activate-account-view {
-  display: grid;
-  justify-content: center;
   align-content: center;
+  display: grid;
   height: 200px;
+  justify-content: center;
   text-align: center;
 }
 
@@ -13,23 +13,23 @@
 
   &-action {
     color: var(--cp-palette-main-fifth);
-    font-weight: 500;
     font-size: 17px;
+    font-weight: 500;
 
     &:hover {
-      cursor: pointer;
       color: var(--cp-palette-main-primary) !important;
+      cursor: pointer;
     }
   }
 }
 
 .activation-complete-action {
   color: var(--cp-palette-main-fifth);
-  font-weight: 500;
   font-size: 17px;
+  font-weight: 500;
 
   &:hover {
-    cursor: pointer;
     color: var(--cp-palette-main-primary) !important;
+    cursor: pointer;
   }
 }

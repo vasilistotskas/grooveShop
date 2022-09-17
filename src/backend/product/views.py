@@ -1,18 +1,29 @@
-from .paginators import *
-from .serializers import *
+from backend.product.models import Category
+from backend.product.models import Favourite
+from backend.product.models import Product
+from backend.product.models import Review
+from backend.product.paginators import CategoryProductsPagination
+from backend.product.paginators import ProductReviewPagination
+from backend.product.paginators import ProductsPagination
+from backend.product.paginators import UserFavouriteProductsPagination
+from backend.product.paginators import UserReviewPagination
+from backend.product.serializers import CategorySerializer
+from backend.product.serializers import FavouriteProductSerializer
+from backend.product.serializers import FavouriteSerializer
+from backend.product.serializers import ProductSerializer
+from backend.product.serializers import ReviewSerializer
 from django.http import Http404
+from rest_framework import authentication
 from rest_framework import filters
 from rest_framework import generics
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework import permissions
+from rest_framework import status
 from rest_framework.generics import GenericAPIView
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
-from rest_framework import status, authentication, permissions
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 class LatestProductsList(APIView):
-
     def get(self, format=None):
         products = Product.objects.all()[0:5]
         serializer = ProductSerializer(products, many=True)
@@ -26,7 +37,6 @@ class ProductsAllResults(generics.ListAPIView):
 
     # @method_decorator(cache_page(60*30))
     def list(self, request, *args, **kwargs):
-
         queryset = self.filter_queryset(self.get_queryset())
 
         page = self.paginate_queryset(queryset)
@@ -42,7 +52,9 @@ class ProductDetail(APIView):
     @staticmethod
     def get_object(category_slug, product_slug):
         try:
-            return Product.objects.filter(category__slug=category_slug).get(slug=product_slug)
+            return Product.objects.filter(category__slug=category_slug).get(
+                slug=product_slug
+            )
         except Product.DoesNotExist:
             raise Http404
 
@@ -53,10 +65,10 @@ class ProductDetail(APIView):
 
     def patch(self, request, category_slug, product_slug):
         product = self.get_object(category_slug, product_slug)
-        data = {
-            "hits": product.hits + 1
-        }
-        serializer = ProductSerializer(product, data=data, partial=True) # set partial=True to update a data partially
+        data = {"hits": product.hits + 1}
+        serializer = ProductSerializer(
+            product, data=data, partial=True
+        )  # set partial=True to update a data partially
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -67,7 +79,7 @@ class CategoryDetail(GenericAPIView):
     serializer_class = CategorySerializer
 
     def get_queryset(self):
-        category_slug = self.kwargs['category_slug']
+        category_slug = self.kwargs["category_slug"]
         return Category.objects.get(slug=category_slug)
 
     def get(self, request, *args, **kwargs):
@@ -88,13 +100,15 @@ class CategoryProductsList(generics.ListAPIView):
     pagination_class = CategoryProductsPagination
     serializer_class = ProductSerializer
     filter_backends = [filters.OrderingFilter]
-    ordering_fields = ['id', 'hits', 'name', 'discount_percent', 'price']
-    ordering = ['id']
+    ordering_fields = ["id", "hits", "name", "discount_percent", "price"]
+    ordering = ["id"]
 
-    def get_queryset(self,  *args, **kwargs):
-        category_slug = self.kwargs['category_slug']
+    def get_queryset(self, *args, **kwargs):
+        category_slug = self.kwargs["category_slug"]
         category = Category.objects.get(slug=category_slug)
-        qs = Product.objects.filter(category__in=category.get_descendants(include_self=True))
+        qs = Product.objects.filter(
+            category__in=category.get_descendants(include_self=True)
+        )
         return qs
 
     def list(self, request, *args, **kwargs):
@@ -157,15 +171,17 @@ class FavouriteUserListIds(APIView):
         return Response(serializer.data)
 
     def post(self, request, user_id, format=None):
-        product_id = request.data.get('product_id')
+        product_id = request.data.get("product_id")
         serializer = FavouriteSerializer(data=request.data)
 
         # Check if product is already favourite
         try:
             favourite = Favourite.objects.get(user_id=user_id, product_id=product_id)
             if favourite:
-                return Response('Product Already In Favourites', status=status.HTTP_400_BAD_REQUEST)
-        except Exception:
+                return Response(
+                    "Product Already In Favourites", status=status.HTTP_400_BAD_REQUEST
+                )
+        except Favourite.DoesNotExist:
             pass
 
         if serializer.is_valid():
@@ -214,7 +230,7 @@ class ProductReviews(generics.ListCreateAPIView):
     def get_queryset(self):
         # exclude current user review
         user = self.request.user
-        product_id = self.kwargs['product_id']
+        product_id = self.kwargs["product_id"]
         if not user.is_anonymous:
             return Review.objects.filter(product_id=product_id).exclude(user=user)
 
@@ -237,16 +253,19 @@ class ProductReviews(generics.ListCreateAPIView):
 
     # one review per customer at product, he can either edit or delete review , if delete he can make new one
     def post(self, request, *args, **kwargs):
-        product_id = self.kwargs['product_id']
-        user_id = request.data.get('user_id')
+        product_id = self.kwargs["product_id"]
+        user_id = request.data.get("user_id")
         serializer = self.get_serializer(data=request.data)
 
         # Check user has already add a review for this product
         try:
             review = Review.objects.get(user_id=user_id, product_id=product_id)
             if review:
-                return Response('You have already add a review for current product', status=status.HTTP_400_BAD_REQUEST)
-        except:
+                return Response(
+                    "You have already add a review for current product",
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+        except Review.DoesNotExist:
             pass
 
         if serializer.is_valid():
@@ -306,7 +325,9 @@ class UserToProductReview(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         data = request.data
-        serializer = ReviewSerializer(review, data=data, partial=True) # set partial=True to update a data partially
+        serializer = ReviewSerializer(
+            review, data=data, partial=True
+        )  # set partial=True to update a data partially
 
         if serializer.is_valid():
             serializer.save()

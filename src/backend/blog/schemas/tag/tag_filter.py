@@ -1,8 +1,8 @@
-import strawberry.django
-from strawberry import auto
+import strawberry_django
 from backend.blog import models
+from strawberry import auto
 
 
-@strawberry.django.filters.filter(models.Author)
+@strawberry_django.filters.filter(models.Author)
 class AuthorByIdFilter:
     id: auto

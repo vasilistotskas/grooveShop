@@ -1,9 +1,9 @@
 import strawberry.django
-from strawberry import auto
+import strawberry_django
 from backend.user.models import UserAccount
 
 
-@strawberry.django.type(UserAccount)
+@strawberry_django.type(UserAccount)
 class UserAccountType:
     id: strawberry.ID
     email: str

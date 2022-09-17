@@ -1,10 +1,10 @@
 @import '@/assets/styles/base/variables';
 
 .rating {
-  position: relative;
-  height: 26px;
-  display: flex;
   align-items: center;
+  display: flex;
+  height: 26px;
+  position: relative;
 
   &-background {
     position: relative;
@@ -12,27 +12,27 @@
   }
 
   &-foreground {
-    position: absolute;
     pointer-events: none;
+    position: absolute;
     z-index: 2;
   }
 
   &-board {
-    top: 0;
-    left: 0;
-    height: 26px;
-    display: inline-flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
     align-content: center;
-    justify-content: flex-start;
     align-items: center;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 26px;
+    justify-content: flex-start;
+    left: 0;
+    top: 0;
   }
 
   .star {
     cursor: pointer;
-    width: 26px;
     height: 26px;
+    width: 26px;
 
     &-foreground {
       color: $rating-starts;
@@ -46,9 +46,9 @@
 
 #productReviewForm {
   .modal-footer {
+    align-content: end;
     display: grid;
     justify-content: end;
-    align-content: end;
   }
 
   .btn-outline-primary-one {

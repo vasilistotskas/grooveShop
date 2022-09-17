@@ -5,11 +5,13 @@
   "scripts": {
     "serve": "vue-cli-service serve --port 5000",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
+    "lint-vue": "vue-cli-service lint",
     "watch": "vue-cli-service build --watch --mode development",
     "build-vite": "vue-tsc --noEmit && vite build",
     "watch-vite": "vue-tsc --noEmit && vite build --watch --mode development",
     "build-dts-vite": "vue-tsc --declaration --emitDeclarationOnly && tsc-alias -p tsconfig.json && npx prettier --write ./build/",
+    "lint": "sass-lint -v",
+    "lint:fix": "sass-lint-auto-fix",
     "dev": "vite --host"
   },
   "dependencies": {
@@ -69,6 +71,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^9.4.0",
     "sass": "^1.53.0",
+    "sass-lint-auto-fix": "^0.21.2",
     "sass-loader": "^13.0.2",
     "tsc-alias": "^1.7.0",
     "typescript": "^4.7.4",

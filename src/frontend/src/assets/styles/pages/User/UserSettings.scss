@@ -1,7 +1,7 @@
 .grid-account-setting-fields {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: 15px;
+  grid-template-columns: repeat(2, 1fr);
 
   .first_name,
   .last_name,
@@ -17,7 +17,7 @@
   }
 
   .button {
-    display: grid;
     align-items: end;
+    display: grid;
   }
 }

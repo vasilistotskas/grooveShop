@@ -1,13 +1,15 @@
-import os
 import datetime
-from faker import Faker
-from django.conf import settings
-from django.utils import timezone
+import os
+
 from backend.app.settings import BASE_DIR
-from django.core.management import BaseCommand
-from backend.slider.models import Slider, Slide
+from backend.slider.models import Slide
+from backend.slider.models import Slider
+from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.management import BaseCommand
+from django.utils import timezone
+from faker import Faker
 
 
 class Command(BaseCommand):
@@ -15,10 +17,14 @@ class Command(BaseCommand):
         faker = Faker()
         i = 1
 
-        img = 'uploads/products/no_photo.jpg'
+        img = "uploads/products/no_photo.jpg"
         if not default_storage.exists(img):
-            img_path = os.path.join(BASE_DIR, 'files/images') + '/no_photo.jpg'
-            img = SimpleUploadedFile(name='no_photo.jpg', content=open(img_path, 'rb').read(), content_type='image/jpeg')
+            img_path = os.path.join(BASE_DIR, "files/images") + "/no_photo.jpg"
+            img = SimpleUploadedFile(
+                name="no_photo.jpg",
+                content=open(img_path, "rb").read(),
+                content_type="image/jpeg",
+            )
 
         for _ in range(2):
             name = faker.name()
@@ -43,8 +49,8 @@ class Command(BaseCommand):
                     date_start=datetime.datetime.now(tz=timezone.utc),
                     date_end=datetime.datetime.now(tz=timezone.utc),
                     order_position=i,
-                    image=img
+                    image=img,
                 )
                 i = i + 1
 
-        self.stdout.write(self.style.SUCCESS('Success'))
+        self.stdout.write(self.style.SUCCESS("Success"))

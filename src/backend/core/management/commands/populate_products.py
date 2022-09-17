@@ -1,12 +1,17 @@
 import os
-from faker import Faker
 from random import randrange
-from django.utils.text import slugify
+
 from backend.app.settings import BASE_DIR
-from django.core.management import BaseCommand
+from backend.product.models import Category
+from backend.product.models import Favourite
+from backend.product.models import Product
+from backend.product.models import ProductImages
+from backend.product.models import Vat
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
-from backend.product.models import Category, Vat, Product, ProductImages, Favourite
+from django.core.management import BaseCommand
+from django.utils.text import slugify
+from faker import Faker
 
 
 class Command(BaseCommand):
@@ -15,16 +20,18 @@ class Command(BaseCommand):
         user_id = randrange(1, 10)
         i = 1
 
-        img = 'uploads/products/no_photo.jpg'
+        img = "uploads/products/no_photo.jpg"
         if not default_storage.exists(img):
-            img_path = os.path.join(BASE_DIR, 'files/images') + '/no_photo.jpg'
-            img = SimpleUploadedFile(name='no_photo.jpg', content=open(img_path, 'rb').read(), content_type='image/jpeg')
+            img_path = os.path.join(BASE_DIR, "files/images") + "/no_photo.jpg"
+            img = SimpleUploadedFile(
+                name="no_photo.jpg",
+                content=open(img_path, "rb").read(),
+                content_type="image/jpeg",
+            )
 
         for _ in range(3):
             vat = randrange(0, 100)
-            Vat.objects.create(
-                value=vat
-            )
+            Vat.objects.create(value=vat)
 
         for _ in range(2):
             name = faker.name()
@@ -48,10 +55,10 @@ class Command(BaseCommand):
                         slug=slugify(name),
                         description=faker.text(10),
                         price=product_price,
-                        active='True',
+                        active="True",
                         stock=100,
                         date_added=faker.date_time(),
-                        vat_id=1
+                        vat_id=1,
                     )
                     i = i + 1
 
@@ -59,13 +66,12 @@ class Command(BaseCommand):
                         title=faker.text(5),
                         product_id=product.id,
                         image=img,
-                        is_main=True
+                        is_main=True,
                     )
 
                     for _ in range(2):
                         favourite = Favourite.objects.get_or_create(
-                            user_id=user_id,
-                            product_id=product.id
+                            user_id=user_id, product_id=product.id
                         )
 
-        self.stdout.write(self.style.SUCCESS('Success'))
+        self.stdout.write(self.style.SUCCESS("Success"))

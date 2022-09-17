@@ -1,0 +1,57 @@
+[tool.poetry]
+name = "grooveShop"
+version = "0.1.0"
+description = ""
+authors = []
+
+[tool.poetry.dependencies]
+python = ">=3.8,<4.0.0"
+django = "4.1.1"
+djangorestframework = "3.13.1"
+django-cors-headers = "3.13.0"
+djoser = "2.1.0"
+pillow = "8.4.0"
+stripe = "3.5.0"
+django-admin-thumbnails = "0.2.6"
+django-mptt = "0.13.4"
+django-js-asset = "2.0.0"
+strawberry-graphql-django = "0.5.1"
+celery = "5.2.7"
+Faker = "14.2.0"
+django-environ = "0.9.0"
+django-tinymce = "3.5.0"
+gunicorn = "20.1.0"
+django-filter = "22.1"
+django-debug-toolbar = "3.6.0"
+pylint-celery = "0.3"
+pylint-django = "2.5.3"
+djangoql = "*"
+django-extensions = "*"
+django-redis = "*"
+psycopg2-binary = "*"
+pytest = "*"
+pytest-cov = "*"
+sentry-sdk = "*"
+shortuuid = "*"
+unittest-xml-reporting = "*"
+uwsgi = "*"
+werkzeug = "*"
+whitenoise = "*"
+
+[tool.poetry.dev-dependencies]
+ipython = "*"
+bpython = "*"
+pudb = "*"
+django-stubs = "*"
+pylint = "2.15.2"
+black = "22.8.0"
+
+[tool.setuptools.packages.find]
+where = ["src"]  # list of folders that contain the packages (["."] by default)
+include = ["backend*"]  # package names should match these glob patterns (["*"] by default)
+exclude = ["frontend*", "files*", "logs*"]  # exclude packages matching these glob patterns
+namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

@@ -1,23 +1,27 @@
-from rest_framework import serializers
 from backend.user.models import UserProfile
 from backend.user.serializers import UserProfileSerializer
-from .models import Category, Product, ProductImages, Favourite, Review
+from rest_framework import serializers
+
+from .models import Category
+from .models import Favourite
+from .models import Product
+from .models import ProductImages
+from .models import Review
 
 
 class ImagesSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ProductImages
         fields = (
             "id",
             "is_main",
             "product_image_absolute_url",
-            "product_image_filename"
+            "product_image_filename",
         )
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    images = serializers.SerializerMethodField('get_product_images')
+    images = serializers.SerializerMethodField("get_product_images")
 
     def get_product_images(self, product):
         qs = ProductImages.objects.filter(product=product)
@@ -50,7 +54,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "main_image_filename",
             "review_average",
             "review_counter",
-            "images"
+            "images",
         )
 
 
@@ -74,24 +78,19 @@ class CategorySerializer(serializers.ModelSerializer):
             "level",
             "tree_id",
             "absolute_url",
-            "recursive_product_count"
+            "recursive_product_count",
         )
 
 
 class FavouriteSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Favourite
-        fields = (
-            "id",
-            "user_id",
-            "product_id"
-        )
+        fields = ("id", "user_id", "product_id")
 
 
 class FavouriteProductSerializer(serializers.ModelSerializer):
 
-    product_object = serializers.SerializerMethodField('get_product_object')
+    product_object = serializers.SerializerMethodField("get_product_object")
 
     def get_product_object(self, favourite):
         qs = Product.objects.get(id=favourite.product_id)
@@ -104,7 +103,7 @@ class FavouriteProductSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    userprofile = serializers.SerializerMethodField('get_userprofile')
+    userprofile = serializers.SerializerMethodField("get_userprofile")
     product = ProductSerializer(required=False)
 
     def get_userprofile(self, review):
@@ -124,5 +123,5 @@ class ReviewSerializer(serializers.ModelSerializer):
             "status",
             "created_at",
             "updated_at",
-            "userprofile"
+            "userprofile",
         )

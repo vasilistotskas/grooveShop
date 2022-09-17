@@ -1,6 +1,9 @@
-from rest_framework import serializers
-from .models import Order, OrderItem, PayWay
 from backend.product.serializers import ProductSerializer
+from rest_framework import serializers
+
+from .models import Order
+from .models import OrderItem
+from .models import PayWay
 
 
 class UserOrderItemSerializer(serializers.ModelSerializer):
@@ -33,11 +36,11 @@ class UserOrderSerializer(serializers.ModelSerializer):
             "stripe_token",
             "customer_notes",
             "items",
-            "paid_amount"
+            "paid_amount",
         )
 
 
-class OrderItemSerializer(serializers.ModelSerializer):    
+class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = (
@@ -50,12 +53,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 class PayWaySerializer(serializers.ModelSerializer):
     class Meta:
         model = PayWay
-        fields = (
-            "name",
-            "active",
-            "cost",
-            "free_for_order_amount"
-        )
+        fields = ("name", "active", "cost", "free_for_order_amount")
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -77,15 +75,14 @@ class OrderSerializer(serializers.ModelSerializer):
             "phone",
             "customer_notes",
             "stripe_token",
-            "items"
+            "items",
         )
-    
+
     def create(self, validated_data):
-        items_data = validated_data.pop('items')
+        items_data = validated_data.pop("items")
         order = Order.objects.create(**validated_data)
 
         for item_data in items_data:
             OrderItem.objects.create(order=order, **item_data)
-            
-        return order
 
+        return order

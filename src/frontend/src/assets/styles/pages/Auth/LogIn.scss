@@ -1,7 +1,7 @@
 .login-card {
-  max-width: 500px;
   display: block;
   margin: 0 auto;
+  max-width: 500px;
 
   .card-body {
     grid-template-rows: unset !important;
@@ -14,20 +14,20 @@
     grid-template-columns: repeat(2, 1fr);
 
     .form-check {
+      align-items: center;
       display: grid;
       grid-template-columns: 20% 80%;
-      align-items: center;
     }
 
     .grid-item-two {
       a {
         color: var(--cp-palette-main-fifth);
-        font-weight: 500;
         font-size: 17px;
+        font-weight: 500;
 
         &:hover {
-          cursor: pointer;
           color: var(--cp-palette-main-primary) !important;
+          cursor: pointer;
         }
       }
     }
@@ -35,13 +35,13 @@
 
   &-socials {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
     gap: 5px;
+    grid-template-columns: repeat(2, 1fr);
 
     a.btn {
       background: var(--cp-palette-main-fourth);
-      padding: 5px;
       border-radius: 5px;
+      padding: 5px;
     }
   }
 }
@@ -49,12 +49,12 @@
 .login-register-field {
   a {
     color: var(--cp-palette-main-fifth);
-    font-weight: 500;
     font-size: 16px;
+    font-weight: 500;
 
     &:hover {
-      cursor: pointer;
       color: var(--cp-palette-main-primary) !important;
+      cursor: pointer;
     }
   }
 }

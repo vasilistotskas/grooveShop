@@ -1,7 +1,7 @@
 import strawberry.django
 import strawberry_django
-from strawberry import auto
 from backend.blog.models import Post
+from strawberry import auto
 
 
 @strawberry_django.input(Post)

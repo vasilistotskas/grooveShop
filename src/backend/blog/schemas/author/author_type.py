@@ -1,12 +1,13 @@
 import strawberry.django
-from strawberry import auto
+import strawberry_django
 from backend.blog.models import Author
 from backend.user.schemas.user.user_account_type import UserAccountType
+from strawberry import auto
 
 
-@strawberry.django.type(Author)
+@strawberry_django.type(Author)
 class AuthorType:
-    id: auto
-    user: 'UserAccountType'
+    id: strawberry.ID
+    user: "UserAccountType"
     website: auto
     bio: str

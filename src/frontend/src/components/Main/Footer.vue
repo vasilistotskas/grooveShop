@@ -29,7 +29,7 @@
           <span class="footer-safe-payments-text">Safe Payments</span>
           <LottiePlayerMain
             class="footer-safe-payments-lottie"
-            :animation-data="getSafeShieldAnim"
+            :animation-data="'lotties/safe_shield.json'"
             :loop="false"
           />
         </div>

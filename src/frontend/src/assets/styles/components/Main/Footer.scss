@@ -1,12 +1,12 @@
 .main-footer {
-  border-top: 1px solid var(--cp-palette-main-third);
   background-color: var(--cp-palette-main-secondary);
+  border-top: 1px solid var(--cp-palette-main-third);
 }
 
 .main-copyright {
-  text-align: center;
-  padding: 5px;
   border-top: 1px solid var(--cp-palette-main-third);
+  padding: 5px;
+  text-align: center;
 
   span {
     font-size: 12px;
@@ -15,15 +15,15 @@
 
 .footer-grid-newsletter {
   display: grid;
-  grid-template-rows: 1fr;
   grid-template-columns: 80% 20%;
-  max-width: 500px;
+  grid-template-rows: 1fr;
   margin: 0 auto;
+  max-width: 500px;
 
   .grid-item {
     &-one {
-      grid-column-start: 1;
       grid-column-end: span col4-start;
+      grid-column-start: 1;
       grid-row-start: 1;
     }
 
@@ -48,14 +48,17 @@
     }
   }
 }
+
 .footer-section-newsletter {
+  align-items: center;
   display: grid;
   grid-template-columns: auto auto;
-  align-items: center;
+
   .footer-safe-payments {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: center;
+
     &-lottie {
       max-width: 175px;
     }

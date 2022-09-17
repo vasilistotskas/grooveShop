@@ -1,28 +1,28 @@
 .main-loader {
-  z-index: 9999;
-  position: fixed;
-  display: flex;
-  background: #000000a8;
+  align-items: center;
   backdrop-filter: blur(2px);
-  opacity: 1;
-  pointer-events: unset;
+  background: #000000a8;
   bottom: 0;
+  display: flex;
+  justify-content: center;
   left: 0;
+  opacity: 1;
+  overflow: hidden;
+  pointer-events: unset;
+  position: fixed;
   right: 0;
   top: 0;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  z-index: 9999;
 
   &-icon {
     position: relative;
   }
 
   .ldio-j8fbajw7p8s-st0 {
-    opacity: 0.8;
     fill: none;
-    stroke-width: 0.4811;
+    opacity: 0.8;
     stroke-miterlimit: 10;
+    stroke-width: 0.4811;
   }
 
   .ldio-j8fbajw7p8s-st2 {
@@ -31,13 +31,13 @@
 
   .ldio-j8fbajw7p8s-st3 {
     fill: none;
-    stroke-width: 0.5;
     stroke-miterlimit: 10;
+    stroke-width: 0.5;
   }
 
   .ldio-j8fbajw7p8s-st4 {
     fill: none;
-    stroke-width: 0.4694;
     stroke-miterlimit: 10;
+    stroke-width: 0.4694;
   }
 }

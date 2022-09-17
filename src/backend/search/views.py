@@ -1,8 +1,9 @@
-from django.db.models import Q
-from backend.search.paginators import *
 from backend.product.models import Product
-from rest_framework import status, generics
 from backend.product.serializers import ProductSerializer
+from backend.search.paginators import *
+from django.db.models import Q
+from rest_framework import generics
+from rest_framework import status
 
 
 class SearchProduct(generics.ListAPIView):
@@ -11,12 +12,12 @@ class SearchProduct(generics.ListAPIView):
 
     def get_queryset(self):
         queryset = Product.objects.all()
-        query = self.request.query_params.get('query')
+        query = self.request.query_params.get("query")
 
         if query is not None:
             queryset = queryset.filter(
-                Q(name__contains=query) |
-                Q(description__contains=query) |
-                Q(id__contains=query)
+                Q(name__contains=query)
+                | Q(description__contains=query)
+                | Q(id__contains=query)
             )
         return queryset

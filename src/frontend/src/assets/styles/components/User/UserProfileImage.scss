@@ -1,17 +1,17 @@
 .profile-image-grid {
   &-container {
-    display: grid;
     border-bottom: 1px solid var(--cp-palette-main-fourth);
+    display: grid;
   }
 
   &-form {
-    display: grid;
-    grid-template-rows: minmax(90px, 1fr);
+    align-content: center;
     background-color: var(--cp-palette-main-secondary);
     border-radius: 10px;
+    display: grid;
     gap: 25px;
+    grid-template-rows: minmax(90px, 1fr);
     justify-content: center;
-    align-content: center;
 
     img.rounded-circle {
       border-radius: 60px;
@@ -19,17 +19,17 @@
   }
 
   &-content {
+    align-items: center;
     display: grid;
+    gap: 20px;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
-    align-items: center;
     position: relative;
-    gap: 20px;
 
     .profile-image-part {
       label.profile-image-label {
-        transition: all 0.3s ease-in-out;
         opacity: 0;
+        transition: all 0.3s ease-in-out;
         visibility: hidden;
       }
 
@@ -42,16 +42,16 @@
         cursor: pointer;
 
         label.profile-image-label {
-          transition: all 0.3s ease-in-out;
           opacity: 1;
+          transition: all 0.3s ease-in-out;
           visibility: visible;
         }
       }
     }
 
     label {
-      position: absolute;
       left: 32px;
+      position: absolute;
       top: 30px;
 
       &:hover {

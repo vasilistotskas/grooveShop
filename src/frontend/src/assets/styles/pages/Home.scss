@@ -3,35 +3,35 @@
 }
 
 .home-usp-grid-content {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  padding: 20px;
   background: var(--cp-palette-main-fourth);
   border-bottom: 1px solid var(--cp-palette-main-third);
   border-top: 1px solid var(--cp-palette-main-third);
-  max-width: 1320px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   margin: 0 auto;
+  max-width: 1320px;
+  padding: 20px;
 
   .grid-usp-item {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
     align-self: center;
-    justify-self: center;
+    display: grid;
     gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    justify-self: center;
 
     svg {
-      width: 100%;
       border-right: 2px solid var(--cp-palette-main-fifth);
+      width: 100%;
     }
 
     span {
-      display: grid;
       align-self: center;
-      justify-self: center;
-      width: 100%;
-      height: 100%;
+      display: grid;
       font-size: 18px;
       font-weight: 500;
+      height: 100%;
+      justify-self: center;
+      width: 100%;
 
       &:first-child {
         font-size: 12px;
@@ -50,8 +50,8 @@
 
 .home-top-grid-content {
   display: grid;
-  grid-template-columns: 2fr 1fr;
   gap: 45px;
+  grid-template-columns: 2fr 1fr;
   @media screen and (max-width: 767px) {
     gap: 10px;
     grid-template-columns: 1fr;
@@ -60,12 +60,12 @@
 }
 
 .grid-item-swipper {
-  display: grid;
-  justify-items: center;
-  align-items: center;
-  justify-content: center;
   align-content: center;
+  align-items: center;
   border-radius: 8px;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
   transition: all 0.3s ease-in-out;
 
   img,
@@ -90,22 +90,24 @@
   }
 
   .grid-item-content {
-    position: relative;
     height: 275px !important;
+    position: relative;
 
     &-one {
       .swiper-container-initialized {
         height: 275px !important;
-        width: 100% !important;
         margin: 0 auto;
+        width: 100% !important;
         @media screen and (max-width: 767px) {
           height: 200px !important;
           width: 300px !important;
         }
+
         @media screen and (max-width: 576px) {
           height: 125px !important;
           width: 175px !important;
         }
+
         @media screen and (max-width: 380px) {
           height: 110px !important;
           width: 125px !important;
@@ -116,16 +118,18 @@
     &-two {
       .swiper-container-initialized {
         height: 275px !important;
-        width: 100% !important;
         margin: 0 auto;
+        width: 100% !important;
         @media screen and (max-width: 767px) {
           height: 200px !important;
           width: 300px !important;
         }
+
         @media screen and (max-width: 576px) {
           height: 125px !important;
           width: 175px !important;
         }
+
         @media screen and (max-width: 380px) {
           height: 110px !important;
           width: 125px !important;
@@ -137,80 +141,81 @@
 
 .grid-content-six {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
   grid-gap: 20px;
+  grid-template-columns: repeat(5, 1fr);
   @media screen and (max-width: 1200px) {
     grid-template-columns: repeat(3, 1fr);
   }
+
   @media screen and (max-width: 767px) {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 .swiper {
-  width: 100%;
   height: 100%;
+  width: 100%;
 }
 
 .swiper-slide {
-  width: 100% !important;
-  text-align: center;
-  font-size: 18px;
-  background: var(--cp-palette-main-fifth);
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
 
   /* Center slide text vertically */
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  align-items: center;
+  background: var(--cp-palette-main-fifth);
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
+  font-size: 18px;
   justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  align-items: center;
+  text-align: center;
+  width: 100% !important;
 }
 
 .swiper {
-  width: 100%;
   height: 100%;
+  width: 100%;
 }
 
 .swiper-slide {
-  width: 100% !important;
-  text-align: center;
-  font-size: 18px;
-  background: #f00014;
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
 
   /* Center slide text vertically */
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  align-items: center;
+  background: #f00014;
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
+  font-size: 18px;
   justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  align-items: center;
+  text-align: center;
+  width: 100% !important;
 }
 
 .swiper-slide img,
 video {
   display: block;
-  width: 100%;
   height: 100%;
+  width: 100%;
 }
 
 .swiper-pagination-bullet {
   background-color: var(--cp-palette-main-primary);
+  height: 16px;
   opacity: 0.35;
   width: 16px;
-  height: 16px;
 }
 
 .swiper-pagination-bullet-active {
@@ -223,16 +228,16 @@ video {
   }
 
   &.swiper-container-initialized {
-    overflow-y: auto;
     max-height: none;
+    overflow-y: auto;
   }
 }
 
 .grid-item-content-one,
 .grid-item-content-two {
-  max-width: 100%;
-  display: grid;
-  align-items: center;
-  justify-content: center;
   align-content: center;
+  align-items: center;
+  display: grid;
+  justify-content: center;
+  max-width: 100%;
 }

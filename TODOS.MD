@@ -17,7 +17,7 @@
     blog listing - slider with selected posts --> Estimate Time: 12 Hours
     newsletter mails in db --> Estimate Time: 1 Hour
     3rd party newsletter integration --> Estimate Time: 30 Mins
-    slider with youtube / uploaded video --> Estimate Time: 8 Hours 
+    slider with youtube / uploaded video --> Estimate Time: 8 Hours
     instagram api and slider --> Estimate Time: 12 - 20 Hours
     footer --> Estimate Time: 3 Hours
     link share content --> Estimate Time: 4 Hours

@@ -1,26 +1,26 @@
 .grid-blog-siderbar {
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  position: relative;
 
   &-tags,
   &-authors {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
 
     span {
-      width: 100%;
+      align-self: center;
       display: grid;
       justify-self: start;
-      align-self: center;
       transition: all 0.3s ease-in-out;
+      width: 100%;
 
       &:not(.sidebar-blog-title) {
         border: 1px solid var(--cp-palette-main-third);
-        padding: 7px 12px;
         border-radius: 5px;
+        padding: 7px 12px;
 
         &:hover {
           background: var(--cp-palette-main-secondary);
@@ -48,8 +48,8 @@
   }
 
   .sidebar-blog-title {
-    font-weight: 500;
     font-size: 26px;
+    font-weight: 500;
 
     &.tags {
       grid-column-start: span 2;

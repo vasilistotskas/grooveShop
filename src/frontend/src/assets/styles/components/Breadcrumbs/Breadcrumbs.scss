@@ -1,16 +1,16 @@
 .breadcrumb {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0.25rem;
   display: flex;
-  top: 0;
+  flex-wrap: wrap;
+  font-size: 13px;
+  justify-content: center !important;
+  list-style: none;
+  margin-bottom: 0;
   padding-bottom: 0;
   padding-top: 0;
-  font-size: 13px;
-  border: 0;
-  justify-content: center !important;
-  flex-wrap: wrap;
-  margin-bottom: 0;
-  list-style: none;
-  background-color: transparent;
-  border-radius: 0.25rem;
+  top: 0;
 
   &__item {
     cursor: pointer;
@@ -46,8 +46,8 @@
 
   &__title {
     font-size: 13px;
-    text-overflow: ellipsis;
     overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
 
@@ -61,9 +61,11 @@
   .breadcrumb {
     height: 35px;
   }
+
   .breadcrumb__title {
     font-size: 10px;
   }
+
   .breadcrumb__item {
     padding: 0 30px;
   }
@@ -73,6 +75,7 @@
   .breadcrumb {
     height: 30px;
   }
+
   .breadcrumb__item {
     padding: 0 20px;
   }

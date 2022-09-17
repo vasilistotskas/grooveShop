@@ -1,6 +1,11 @@
+from base64 import b64decode
+from base64 import b64encode
+from typing import Generic
+from typing import List
+from typing import Optional
+from typing import TypeVar
+
 import strawberry.django
-from base64 import b64encode, b64decode
-from typing import List, Optional, TypeVar, Generic
 
 GenericType = TypeVar("GenericType")
 
@@ -13,12 +18,8 @@ class PageMeta:
     has_next_page: Optional[bool] = strawberry.field(
         description="Is there a next page?"
     )
-    count: Optional[int] = strawberry.field(
-        description="The total items count."
-    )
-    total_pages: Optional[int] = strawberry.field(
-        description="The total pages count."
-    )
+    count: Optional[int] = strawberry.field(description="The total items count.")
+    total_pages: Optional[int] = strawberry.field(description="The total pages count.")
     next_cursor: Optional[str] = strawberry.field(
         description="The next cursor to continue with."
     )
@@ -35,12 +36,8 @@ class PageMeta:
 
 @strawberry.type
 class PaginatedResponse(Generic[GenericType]):
-    collection: List[GenericType] = strawberry.field(
-        description="The list of items."
-    )
-    page_meta: PageMeta = strawberry.field(
-        description="Metadata to aid in pagination."
-    )
+    collection: List[GenericType] = strawberry.field(description="The list of items.")
+    page_meta: PageMeta = strawberry.field(description="Metadata to aid in pagination.")
 
 
 class PaginationBase:
@@ -56,7 +53,7 @@ class PaginationBase:
     def create_chunks(lst, n):
         """Yield successive n-sized chunks from lst."""
         for i in range(0, len(lst), n):
-            yield lst[i:i + n]
+            yield lst[i : i + n]
 
     @staticmethod
     def encode_cursor(entity_id: int, entity_type: str) -> str:

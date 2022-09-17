@@ -1,15 +1,16 @@
 import os
 from typing import List
+
 import strawberry.django
 import strawberry_django
-from strawberry import auto
-from django.conf import settings
 from backend.app import settings
 from backend.blog.models import Post
-from backend.blog.schemas.tag.tag_type import TagType
 from backend.blog.schemas.author.author_type import AuthorType
 from backend.blog.schemas.category.category_type import CategoryType
+from backend.blog.schemas.tag.tag_type import TagType
 from backend.user.schemas.user.user_account_type import UserAccountType
+from django.conf import settings
+from strawberry import auto
 
 User = settings.AUTH_USER_MODEL
 
@@ -28,26 +29,23 @@ class PostType:
     published: bool
     image: auto
     likes: List[UserAccountType]
-    category: 'CategoryType'
+    category: "CategoryType"
     tags: List[TagType]
-    author: 'AuthorType'
+    author: "AuthorType"
 
     @strawberry_django.field
     def main_image_absolute_url(self) -> str:
-        try:
-            if self.id is not None:
-                image = settings.BACKEND_BASE_URL + self.image.url
-            else:
-                image = ""
-            return image
-        except:
-            return ""
+        if self.image:
+            image = settings.BACKEND_BASE_URL + self.image.url
+        else:
+            image = ""
+        return image
 
     @strawberry_django.field
     def main_image_filename(self) -> str:
-        try:
+        if self.image:
             return os.path.basename(self.image.name)
-        except:
+        else:
             return ""
 
     @strawberry_django.field

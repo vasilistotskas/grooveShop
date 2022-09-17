@@ -1,13 +1,13 @@
 html {
-  -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(31, 45, 61, 0);
+  -webkit-text-size-adjust: 100%;
 }
 
 * {
   font-family: 'Roboto', sans-serif;
-  transition: all 0.12s ease-in-out;
   margin: 0;
   padding: 0;
+  transition: all 0.12s ease-in-out;
 }
 
 *,
@@ -27,8 +27,8 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 400;
   color: var(--cp-palette-main-fifth);
+  font-weight: 400;
 }
 
 h1,
@@ -65,12 +65,12 @@ h6 {
 }
 
 a {
-  transition: all 0.3s ease-in-out;
   text-decoration: none !important;
+  transition: all 0.3s ease-in-out;
 
   &:hover {
-    transition: all 0.3s ease-in-out;
     color: var(--cp-palette-main-fifth);
+    transition: all 0.3s ease-in-out;
   }
 }
 
@@ -93,14 +93,14 @@ th {
 }
 
 textarea {
-  font-size: Max(16px, 1em);
-  font-family: inherit;
-  padding: 0.25em 0.5em;
   background-color: var(--cp-palette-main-fifth);
   border: 2px solid var(--cp-palette-main-third);
   border-radius: 4px;
-  transition: 180ms box-shadow ease-in-out;
+  font-family: inherit;
+  font-size: Max(16px, 1em);
+  padding: 0.25em 0.5em;
   resize: vertical;
+  transition: 180ms box-shadow ease-in-out;
 
   &:focus {
     border-color: rgba(253, 0, 2, 0.33);

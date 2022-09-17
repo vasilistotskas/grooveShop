@@ -1,11 +1,10 @@
-import strawberry.django
-from strawberry import auto
-
+import strawberry
+import strawberry_django
 from backend.blog.models import Tag
 
 
-@strawberry.django.type(Tag)
+@strawberry_django.type(Tag)
 class TagType:
-    id: auto
+    id: strawberry.ID
     name: str
     active: str

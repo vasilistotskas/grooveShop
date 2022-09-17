@@ -1,8 +1,9 @@
 import os
-from django.db import models
-from django.conf import settings
-from django.utils.safestring import mark_safe
+
 from backend.helpers.image_resize import make_thumbnail
+from django.conf import settings
+from django.db import models
+from django.utils.safestring import mark_safe
 
 
 class Slider(models.Model):
@@ -11,9 +12,11 @@ class Slider(models.Model):
     url = models.CharField(max_length=255, blank=True, null=True)
     title = models.CharField(max_length=40, blank=True, null=True)
     description = models.CharField(max_length=255, blank=True, null=True)
-    image = models.ImageField(upload_to='uploads/sliders/', blank=True, null=True)
-    thumbnail = models.ImageField(upload_to='uploads/sliders/thumbnails/', blank=True, null=True)
-    video = models.FileField(upload_to='uploads/sliders/videos/', null=True, blank=True)
+    image = models.ImageField(upload_to="uploads/sliders/", blank=True, null=True)
+    thumbnail = models.ImageField(
+        upload_to="uploads/sliders/thumbnails/", blank=True, null=True
+    )
+    video = models.FileField(upload_to="uploads/sliders/videos/", null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Sliders"
@@ -28,29 +31,23 @@ class Slider(models.Model):
         super().save(*args, **kwargs)
 
     def main_image_absolute_url(self):
-        try:
-            if self.id is not None:
-                image = settings.BACKEND_BASE_URL + self.image.url
-            else:
-                image = ""
-            return image
-        except:
-            return ""
+        if self.image:
+            image = settings.BACKEND_BASE_URL + self.image.url
+        else:
+            image = ""
+        return image
 
     def main_image_filename(self):
-        try:
+        if self.image:
             return os.path.basename(self.image.name)
-        except:
+        else:
             return ""
 
     def image_tag(self):
-        try:
-            thumbnail = self.thumbnail
-            if thumbnail:
-                return mark_safe('<img src="{}"/>'.format(thumbnail.url))
-            return ''
-        except:
-            return ""
+        thumbnail = self.thumbnail
+        if thumbnail:
+            return mark_safe('<img src="{}"/>'.format(thumbnail.url))
+        return ""
 
 
 class Slide(models.Model):
@@ -66,15 +63,17 @@ class Slide(models.Model):
     date_start = models.DateTimeField(auto_now_add=False)
     date_end = models.DateTimeField(auto_now_add=False)
     order_position = models.IntegerField()
-    image = models.ImageField(upload_to='uploads/slides/', blank=True, null=True)
-    thumbnail = models.ImageField(upload_to='uploads/slides/thumbnails/', blank=True, null=True)
+    image = models.ImageField(upload_to="uploads/slides/", blank=True, null=True)
+    thumbnail = models.ImageField(
+        upload_to="uploads/slides/thumbnails/", blank=True, null=True
+    )
 
     class Meta:
         verbose_name_plural = "Slides"
-        ordering = ('order_position',)
+        ordering = ("order_position",)
 
     def __str__(self):
-        return '%s' % self.id
+        return "%s" % self.id
 
     def save(self, *args, **kwargs):
         if self.image:
@@ -83,26 +82,20 @@ class Slide(models.Model):
         super().save(*args, **kwargs)
 
     def main_image_absolute_url(self):
-        try:
-            if self.id is not None:
-                image = settings.BACKEND_BASE_URL + self.image.url
-            else:
-                image = ""
-            return image
-        except:
-            return ""
+        if self.image:
+            image = settings.BACKEND_BASE_URL + self.image.url
+        else:
+            image = ""
+        return image
 
     def main_image_filename(self):
-        try:
+        if self.image:
             return os.path.basename(self.image.name)
-        except:
+        else:
             return ""
 
     def image_tag(self):
-        try:
-            thumbnail = self.thumbnail
-            if thumbnail:
-                return mark_safe('<img src="{}"/>'.format(thumbnail.url))
-            return ''
-        except:
-            return ""
+        thumbnail = self.thumbnail
+        if thumbnail:
+            return mark_safe('<img src="{}"/>'.format(thumbnail.url))
+        return ""

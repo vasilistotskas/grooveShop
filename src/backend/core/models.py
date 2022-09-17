@@ -1,6 +1,9 @@
 import uuid
-from django.db.models import F, Max
-from django.db import models, transaction
+
+from django.db import models
+from django.db import transaction
+from django.db.models import F
+from django.db.models import Max
 
 
 class SortableModel(models.Model):

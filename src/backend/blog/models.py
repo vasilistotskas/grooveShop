@@ -1,6 +1,7 @@
 import os
-from django.db import models
+
 from django.conf import settings
+from django.db import models
 from tinymce.models import HTMLField
 
 User = settings.AUTH_USER_MODEL
@@ -17,10 +18,9 @@ class Author(models.Model):
 
 
 class Tag(models.Model):
-
     TAG_STATUS = (
-        ('True', 'Active'),
-        ('False', 'Not Active'),
+        ("True", "Active"),
+        ("False", "Not Active"),
     )
 
     id = models.AutoField(primary_key=True)
@@ -35,7 +35,7 @@ class Category(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField()
-    image = models.ImageField(upload_to='uploads/blog/', blank=True, null=True)
+    image = models.ImageField(upload_to="uploads/blog/", blank=True, null=True)
 
     class Meta:
         ordering = ["-name"]
@@ -45,20 +45,17 @@ class Category(models.Model):
 
     @property
     def main_image_absolute_url(self) -> str:
-        try:
-            if self.id is not None:
-                image = settings.BACKEND_BASE_URL + self.image.url
-            else:
-                image = ""
-            return image
-        except:
-            return ""
+        if self.image is not None:
+            image = settings.BACKEND_BASE_URL + self.image.url
+        else:
+            image = ""
+        return image
 
     @property
     def main_image_filename(self) -> str:
-        try:
+        if self.image:
             return os.path.basename(self.image.name)
-        except:
+        else:
             return ""
 
 
@@ -73,15 +70,15 @@ class Post(models.Model):
     date_modified = models.DateTimeField(auto_now=True)
     publish_date = models.DateTimeField(blank=True, null=True)
     published = models.BooleanField(default=False)
-    image = models.ImageField(upload_to='uploads/blog/', blank=True, null=True)
+    image = models.ImageField(upload_to="uploads/blog/", blank=True, null=True)
 
     # Each post can receive likes from multiple users, and each user can like multiple posts
-    likes = models.ManyToManyField(User, related_name='post_like')
+    likes = models.ManyToManyField(User, related_name="post_like")
 
     # Each post belong to one author and one category.
     # Each post has many tags, and each tag has many posts.
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-    tags = models.ManyToManyField(Tag, related_name='post_tag', blank=True)
+    tags = models.ManyToManyField(Tag, related_name="post_tag", blank=True)
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
 
     class Meta:
@@ -92,20 +89,17 @@ class Post(models.Model):
 
     @property
     def main_image_absolute_url(self) -> str:
-        try:
-            if self.id is not None:
-                image = settings.BACKEND_BASE_URL + self.image.url
-            else:
-                image = ""
-            return image
-        except:
-            return ""
+        if self.image:
+            image = settings.BACKEND_BASE_URL + self.image.url
+        else:
+            image = ""
+        return image
 
     @property
     def main_image_filename(self) -> str:
-        try:
+        if self.image:
             return os.path.basename(self.image.name)
-        except:
+        else:
             return ""
 
     def number_of_likes(self):
@@ -118,19 +112,19 @@ class Comment(models.Model):
     is_approved = models.BooleanField(default=False)
 
     # Each comment can receive likes from multiple users, and each user can like multiple comments
-    likes = models.ManyToManyField(User, related_name='comment_like', blank=True)
+    likes = models.ManyToManyField(User, related_name="comment_like", blank=True)
 
     # Each comment belongs to one user and one post
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     post = models.ForeignKey(Post, on_delete=models.SET_NULL, null=True)
 
     class Meta:
-        unique_together = (('user', 'post'),)
+        unique_together = (("user", "post"),)
         ordering = ["-created_at"]
 
     def __str__(self):
         if len(self.content) > 50:
-            comment = self.content[:50] + '...'
+            comment = self.content[:50] + "..."
         else:
             comment = self.content
         return comment

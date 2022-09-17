@@ -37,3 +37,13 @@ REM FOR VIRTUAL ENV
 pip install virtualenv
 virtualenv env
 env\scripts\activate
+
+REM LINT PYTHON
+cd src
+
+pre-commit run --all-files
+pylint backend
+black backend
+
+REM LINT SCSS
+scss-lint -c .scss-lint.yml

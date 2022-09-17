@@ -2,44 +2,55 @@
 
 :root {
   // DARK
-  --cp-palette-main-dark-primary: #{$color-palette-main-primary-light};
-  --cp-palette-main-dark-secondary: #{$color-palette-main-secondary};
-  --cp-palette-main-dark-third: #{$color-palette-main-third};
-  --cp-palette-main-dark-fourth: #{$color-palette-main-fourth};
   --cp-palette-main-dark-fifth: #{$color-palette-main-fifth};
+
+  --cp-palette-main-dark-fourth: #{$color-palette-main-fourth};
+
+  --cp-palette-main-dark-primary: #{$color-palette-main-primary-light};
+
+  --cp-palette-main-dark-secondary: #{$color-palette-main-secondary};
+
+  --cp-palette-main-dark-third: #{$color-palette-main-third};
   // WHITE
-  --cp-palette-main-light-primary: #{$color-palette-main-primary-light};
-  --cp-palette-main-light-secondary: #{$color-palette-main-secondary-light};
-  --cp-palette-main-light-third: #{$color-palette-main-third-light};
-  --cp-palette-main-light-fourth: #{$color-palette-main-fourth-light};
+  --cp-palette-main-global-green: #{$color-palette-global-green};
+
   --cp-palette-main-light-fifth: #{$color-palette-main-fifth-light};
 
+  --cp-palette-main-light-fourth: #{$color-palette-main-fourth-light};
+
+  --cp-palette-main-light-primary: #{$color-palette-main-primary-light};
+
+  --cp-palette-main-light-secondary: #{$color-palette-main-secondary-light};
+
   // GLOBAL
-  --cp-palette-main-global-green: #{$color-palette-global-green};
+  --cp-palette-main-light-third: #{$color-palette-main-third-light};
 }
 
 body {
   // DARK
+  --cp-palette-main-fifth: var(--cp-palette-main-dark-fifth);
+  --cp-palette-main-fourth: var(--cp-palette-main-dark-fourth);
+  --cp-palette-main-green: var(--cp-palette-main-global-green);
   --cp-palette-main-primary: var(--cp-palette-main-dark-primary);
   --cp-palette-main-secondary: var(--cp-palette-main-dark-secondary);
-  --cp-palette-main-third: var(--cp-palette-main-dark-third);
-  --cp-palette-main-fourth: var(--cp-palette-main-dark-fourth);
-  --cp-palette-main-fifth: var(--cp-palette-main-dark-fifth);
 
   &.light {
     // LIGHT
+    --cp-palette-main-fifth: var(--cp-palette-main-light-fifth);
+    --cp-palette-main-fourth: var(--cp-palette-main-light-fourth);
     --cp-palette-main-primary: var(--cp-palette-main-light-primary);
     --cp-palette-main-secondary: var(--cp-palette-main-light-secondary);
     --cp-palette-main-third: var(--cp-palette-main-light-third);
-    --cp-palette-main-fourth: var(--cp-palette-main-light-fourth);
-    --cp-palette-main-fifth: var(--cp-palette-main-light-fifth);
   }
 
   // GLOBAL
-  --cp-palette-main-green: var(--cp-palette-main-global-green);
+  --cp-palette-main-third: var(--cp-palette-main-dark-third);
 
   background-color: var(--cp-palette-main-fourth);
-  margin: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-top: 0 !important;
 }
 
 .grid-section {
@@ -103,13 +114,13 @@ body {
     }
 
     .btn-product-card {
-      color: var(--cp-palette-main-fifth);
       background-color: var(--cp-palette-main-third);
       border-color: rgba(240, 246, 252, 0.1);
       box-shadow: 0 0 transparent, 0 0 transparent;
-      transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
-      transition-property: color, background-color, border-color;
+      color: var(--cp-palette-main-fifth);
       display: grid;
+      transition: .2s cubic-bezier(.3, 0, .5, 1);
+      transition-property: color, background-color, border-color;
     }
   }
 
@@ -132,6 +143,7 @@ body {
   @media screen and (max-width: 1200px) {
     grid-template-columns: repeat(3, 1fr);
   }
+
   @media screen and (max-width: 767px) {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
@@ -224,21 +236,27 @@ body {
   @media (min-width: map-get($grid-breakpoints, 'sm')) {
     max-width: 540px;
   }
+
   @media (min-width: map-get($grid-breakpoints, 'md')) {
     max-width: 720px;
   }
+
   @media (min-width: map-get($grid-breakpoints, 'lg')) {
     max-width: 960px;
   }
+
   @media (min-width: map-get($grid-breakpoints, 'xl')) {
     max-width: 1140px;
   }
+
   @media screen and (min-width: map-get($grid-breakpoints, 'xlplus')) {
     max-width: 1320px;
   }
+
   @media screen and (min-width: map-get($grid-breakpoints, 'xxl')) {
     max-width: 1600px;
   }
+
   @media screen and (min-width: map-get($grid-breakpoints, 'xxxl')) {
     max-width: 1800px;
   }
@@ -248,28 +266,27 @@ body {
   @media (min-width: map-get($grid-breakpoints, 'sm')) {
     max-width: 540px;
   }
+
   @media (min-width: map-get($grid-breakpoints, 'md')) {
     max-width: 720px;
   }
+
   @media (min-width: map-get($grid-breakpoints, 'lg')) {
     max-width: 960px;
   }
+
   @media (min-width: map-get($grid-breakpoints, 'xl')) {
     max-width: 1140px;
   }
+
   @media screen and (min-width: map-get($grid-breakpoints, 'xlplus')) {
     max-width: 1320px;
   }
 }
 
 .row {
-  --bs-gutter-x: 1.5rem;
-  --bs-gutter-y: 0;
   display: flex;
   flex-wrap: wrap;
-  margin-top: calc(-1 * var(--bs-gutter-y));
-  margin-right: calc(-0.5 * var(--bs-gutter-x));
-  margin-left: calc(-0.5 * var(--bs-gutter-x));
 }
 
 .d-flex {
@@ -291,19 +308,23 @@ body {
   -moz-appearance: none;
   appearance: none;
   border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out;
 
   // TO REMEMBER BASIC RESPONSIVE
   @media screen and (max-width: 1420px) {
     font-size: 12px;
   }
+
   @media screen and (max-width: 1200px) {
   }
+
   @media screen and (max-width: 990px) {
   }
+
   @media screen and (max-width: 767px) {
     font-size: 10px;
   }
+
   @media screen and (max-width: 576px) {
     font-size: 8px;
   }
@@ -328,6 +349,7 @@ body {
   @media screen and (max-width: map-get($grid-breakpoints, 'md')) {
     display: none;
   }
+
   li {
     &:first-child {
       a {
@@ -430,6 +452,7 @@ body {
 .border-radius-img {
   border-radius: 10px;
 }
+
 .primary_button {
   padding: 10px;
   text-align: center;
@@ -449,8 +472,7 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   background-color: transparent;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
   border: unset;
 
   &:focus {
@@ -629,7 +651,7 @@ body {
   }
 
   &:hover {
-    border: none;
+    border: 0;
     transform: scale(1.02);
 
     .line-1 {
