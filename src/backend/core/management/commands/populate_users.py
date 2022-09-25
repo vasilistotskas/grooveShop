@@ -16,7 +16,7 @@ class Command(BaseCommand):
             username = first_name[0].lower() + last_name.lower().replace(" ", "")
             email = username + "@" + last_name.lower() + ".com"
             try:
-                user_found = UserAccount.objects.get(email=email)
+                UserAccount.objects.get(email=email)
                 continue
             except UserAccount.DoesNotExist:
                 user = UserAccount.objects.create_user(email, password=username)

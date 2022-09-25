@@ -28,7 +28,7 @@ class Command(BaseCommand):
                 slug=slugify(name),
                 body=faker.text(100),
                 meta_description=faker.text(10),
-                published=True,
+                is_published=True,
                 author=Author.objects.get(id=author_id),
                 image=img,
                 category_id=category_id,

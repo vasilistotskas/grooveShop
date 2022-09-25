@@ -31,19 +31,19 @@ class PostAdmin(admin.ModelAdmin):
         "title",
         "subtitle",
         "slug",
-        "publish_date",
-        "published",
+        "published_at",
+        "is_published",
     )
     list_filter = (
-        "published",
-        "publish_date",
+        "is_published",
+        "published_at",
     )
     list_editable = (
         "title",
         "subtitle",
         "slug",
-        "publish_date",
-        "published",
+        "published_at",
+        "is_published",
     )
     search_fields = (
         "title",
@@ -57,7 +57,7 @@ class PostAdmin(admin.ModelAdmin):
             "subtitle",
         )
     }
-    date_hierarchy = "publish_date"
+    date_hierarchy = "published_at"
     save_on_top = True
 
 

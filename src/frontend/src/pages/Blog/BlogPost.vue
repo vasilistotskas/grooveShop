@@ -19,7 +19,7 @@
         </p>
         <p class="card-text" v-html="postBySlug.body" />
         <p class="card-text">
-          <small class="text-muted">{{ displayableDate(postBySlug.publishDate) }}</small>
+          <small class="text-muted">{{ displayableDate(postBySlug.publishedAt) }}</small>
         </p>
         <ul>
           <li v-for="tag in postBySlug.tags" :key="tag.name" class="post__tags">

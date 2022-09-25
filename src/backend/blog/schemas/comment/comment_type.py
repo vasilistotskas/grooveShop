@@ -23,4 +23,4 @@ class CommentType:
 
     @strawberry_django.field
     def number_of_likes(self) -> int:
-        return self.likes.count()
+        return len(self.likes)

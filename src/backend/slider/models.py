@@ -1,12 +1,15 @@
 import os
 
+from backend.core.models import SortableModel
+from backend.core.models import TimeStampMixinModel
+from backend.core.models import UUIDModel
 from backend.helpers.image_resize import make_thumbnail
 from django.conf import settings
 from django.db import models
 from django.utils.safestring import mark_safe
 
 
-class Slider(models.Model):
+class Slider(TimeStampMixinModel, UUIDModel):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=40, unique=True)
     url = models.CharField(max_length=255, blank=True, null=True)
@@ -19,7 +22,7 @@ class Slider(models.Model):
     video = models.FileField(upload_to="uploads/sliders/videos/", null=True, blank=True)
 
     class Meta:
-        verbose_name_plural = "Sliders"
+        verbose_name_plural: str = "Sliders"
 
     def __str__(self):
         return self.name
@@ -31,10 +34,9 @@ class Slider(models.Model):
         super().save(*args, **kwargs)
 
     def main_image_absolute_url(self):
+        image: str = ""
         if self.image:
-            image = settings.BACKEND_BASE_URL + self.image.url
-        else:
-            image = ""
+            return settings.BACKEND_BASE_URL + self.image.url
         return image
 
     def main_image_filename(self):
@@ -50,9 +52,9 @@ class Slider(models.Model):
         return ""
 
 
-class Slide(models.Model):
+class Slide(TimeStampMixinModel, SortableModel, UUIDModel):
     id = models.AutoField(primary_key=True)
-    slider = models.ForeignKey(Slider, on_delete=models.CASCADE)
+    slider = models.ForeignKey(Slider, related_name="items", on_delete=models.CASCADE)
     url = models.CharField(max_length=255, blank=True, null=True)
     title = models.CharField(max_length=40, blank=True, null=True)
     subtitle = models.CharField(max_length=40, blank=True, null=True)
@@ -69,11 +71,14 @@ class Slide(models.Model):
     )
 
     class Meta:
-        verbose_name_plural = "Slides"
-        ordering = ("order_position",)
+        verbose_name_plural: str = "Slides"
+        ordering: tuple[str] = ("order_position",)
 
     def __str__(self):
         return "%s" % self.id
+
+    def get_ordering_queryset(self):
+        return self.slider.items.all()
 
     def save(self, *args, **kwargs):
         if self.image:
@@ -82,10 +87,9 @@ class Slide(models.Model):
         super().save(*args, **kwargs)
 
     def main_image_absolute_url(self):
+        image: str = ""
         if self.image:
-            image = settings.BACKEND_BASE_URL + self.image.url
-        else:
-            image = ""
+            return settings.BACKEND_BASE_URL + self.image.url
         return image
 
     def main_image_filename(self):

@@ -1,3 +1,5 @@
+from typing import List
+
 import admin_thumbnails
 from django.contrib import admin
 
@@ -8,7 +10,7 @@ from .models import Slider
 @admin_thumbnails.thumbnail("image")
 class SliderSlidesInline(admin.StackedInline):
     model = Slide
-    exclude = []
+    exclude: List[str] = []
     readonly_fields = ("id", "thumbnail")
     extra = 0
 
@@ -16,7 +18,6 @@ class SliderSlidesInline(admin.StackedInline):
 class SliderAdmin(admin.ModelAdmin):
     list_display = ["id", "title", "image_tag"]
     search_fields = ["id", "title"]
-    list_filter = ["slide"]
     inlines = [SliderSlidesInline]
     prepopulated_fields = {"title": ("name",)}
     readonly_fields = ("image_tag", "thumbnail")

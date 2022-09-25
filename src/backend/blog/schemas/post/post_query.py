@@ -9,6 +9,7 @@ from backend.blog.schemas.post.post_type import PostType
 from backend.core.graphql.pagination import PageMeta
 from backend.core.graphql.pagination import PaginatedResponse
 from backend.core.graphql.pagination import PaginationBase
+from django.db.models import QuerySet
 
 
 @strawberry.type
@@ -18,7 +19,7 @@ class Query:
         self, limit: int, cursor: Optional[str] = None
     ) -> PaginatedResponse[PostType]:
         pagination_base = PaginationBase()
-        post_data = Post.objects.all()
+        post_data: QuerySet[Post] = Post.objects.all()
         if cursor is not None:
             post_id = pagination_base.decode_cursor(cursor=cursor)
         else:
@@ -32,9 +33,8 @@ class Query:
         )
         posts_count = post_data.count()
         total_pages = int(posts_count / limit)
-        start_cursor = pagination_base.encode_cursor(
-            post_data.order_by("id").first().id, "post"
-        )
+        start_item = list(post_data[:1])[0]
+        start_cursor = pagination_base.encode_cursor(start_item.id, "post")
         end_cursor = pagination_base.encode_cursor(
             post_data.order_by("id")[posts_count - limit].id, "post"
         )
@@ -77,11 +77,12 @@ class Query:
 
     @strawberry_django.field
     def posts_by_tag(self, tag: str) -> List[PostType]:
-        return (
+        post_type_list: List[PostType] = list(
             Post.objects.prefetch_related("tags")
             .select_related("author")
             .filter(tags__name__iexact=tag)
         )
+        return post_type_list
 
     @strawberry_django.field
     def post_by_slug(self, slug: str) -> PostType:
@@ -93,6 +94,9 @@ class Query:
 
     @strawberry_django.field
     def posts_by_author_id(self, author_id: str) -> List[PostType]:
-        return Post.objects.prefetch_related("tags").filter(
-            author__id=author_id,
+        post_type_list: List[PostType] = list(
+            Post.objects.prefetch_related("tags").filter(
+                author__id=author_id,
+            )
         )
+        return post_type_list

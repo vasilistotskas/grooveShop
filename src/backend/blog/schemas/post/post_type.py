@@ -9,7 +9,6 @@ from backend.blog.schemas.author.author_type import AuthorType
 from backend.blog.schemas.category.category_type import CategoryType
 from backend.blog.schemas.tag.tag_type import TagType
 from backend.user.schemas.user.user_account_type import UserAccountType
-from django.conf import settings
 from strawberry import auto
 
 User = settings.AUTH_USER_MODEL
@@ -23,10 +22,10 @@ class PostType:
     slug: auto
     body: str
     meta_description: str
-    date_created: auto
-    date_modified: auto
-    publish_date: auto
-    published: bool
+    created_at: auto
+    updated_at: auto
+    published_at: auto
+    is_published: bool
     image: auto
     likes: List[UserAccountType]
     category: "CategoryType"
@@ -50,4 +49,4 @@ class PostType:
 
     @strawberry_django.field
     def number_of_likes(self) -> int:
-        return self.likes.count()
+        return len(self.likes)

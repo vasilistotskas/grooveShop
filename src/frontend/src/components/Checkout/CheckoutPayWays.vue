@@ -35,9 +35,7 @@ import { getModule } from 'vuex-module-decorators'
 import PayWayModel from '@/state/payway/PayWayModel'
 import PayWayModule from '@/state/payway/PayWayModule'
 import { PayWaysEnum } from '@/state/payway/Enum/PayWaysEnum'
-import * as credit_card_lottie from '@/assets/lotties/credit_card.json'
 import LottiePlayerMain from '@/components/Utilities/LottiePlayerMain.vue'
-import * as pay_on_delivery_lottie from '@/assets/lotties/pay_on_delivery.json'
 
 export default defineComponent({
   name: 'CheckoutPayWays',

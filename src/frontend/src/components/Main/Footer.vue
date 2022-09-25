@@ -6,7 +6,7 @@
           <div class="footer-grid-newsletter">
             <div class="grid-item-one mb-2">
               <p>
-                <strong>Sign up for our newsletter</strong>
+                <strong>{{ myContext.t('newsletter.sign.up') }}</strong>
               </p>
             </div>
             <div class="grid-item-two">
@@ -29,7 +29,7 @@
           <span class="footer-safe-payments-text">Safe Payments</span>
           <LottiePlayerMain
             class="footer-safe-payments-lottie"
-            :animation-data="'lotties/safe_shield.json'"
+            :icon-path="'lotties/safe_shield.json'"
             :loop="false"
           />
         </div>
@@ -115,8 +115,14 @@
 </template>
 
 <script lang="ts">
-import { Options as Component, Vue } from 'vue-class-component'
+import { useI18n } from 'vue-i18n'
+import { useMeta } from 'vue-meta'
+import { computed } from '@vue/runtime-core'
+import grBundle from '@/locales/Footer/gr.messages.json'
+import enBundle from '@/locales/Footer/en_us.messages.json'
+import { AvailableLocalesEnum } from '@/locales/LocaleEnum'
 import * as safe_shield from '@/assets/lotties/safe_shield.json'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import LottiePlayerMain from '@/components/Utilities/LottiePlayerMain.vue'
 
 @Component({
@@ -126,6 +132,24 @@ import LottiePlayerMain from '@/components/Utilities/LottiePlayerMain.vue'
   },
 })
 export default class Footer extends Vue {
+  myContext = setup(() => {
+    useMeta(
+      computed(() => ({
+        title: 'Deep Web Homepage',
+        description: 'Deep Web Homepage',
+      }))
+    )
+
+    const { locale, t } = useI18n({
+      inheritLocale: true,
+      messages: {
+        [AvailableLocalesEnum.EN_US]: enBundle,
+        [AvailableLocalesEnum.GR]: grBundle,
+      },
+    })
+    return { locale, t }
+  })
+
   get getSafeShieldAnim(): object {
     return safe_shield
   }

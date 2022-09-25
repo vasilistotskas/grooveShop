@@ -1,4 +1,6 @@
 import os
+from typing import Any
+from typing import List
 
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser
@@ -15,25 +17,21 @@ User = settings.AUTH_USER_MODEL
 
 class UserAccountManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
-        """
-        Create and save a user with the given username, email, and password.
-        """
+        """Create and save a user with the given username, email, and password."""
         if not email:
             raise ValueError("Users must have an email address")
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+        email: str = self.normalize_email(email)
+        user: UserAccount = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
     def _create_user(self, email, password, **extra_fields):
-        """
-        Create and save a user with the given username, email, and password.
-        """
+        """Create and save a user with the given username, email, and password."""
         if not email:
             raise ValueError("Users must have an email address")
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+        email: str = self.normalize_email(email)
+        user: UserAccount = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -57,13 +55,13 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
-    objects = UserAccountManager()
+    objects: UserAccountManager = UserAccountManager()
 
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name", "last_name"]
+    USERNAME_FIELD: str = "email"
+    REQUIRED_FIELDS: List[str] = ["first_name", "last_name"]
 
     def remove_all_sessions(self):
-        user_sessions = []
+        user_sessions: List[Any] = []
         for session in Session.objects.all():
             if str(self.pk) == session.get_decoded().get("_auth_user_id"):
                 user_sessions.append(session.pk)
@@ -82,7 +80,7 @@ class Country(models.Model):
     image_flag = models.ImageField(blank=True, null=True, upload_to="uploads/country/")
 
     class Meta:
-        verbose_name_plural = "Countries"
+        verbose_name_plural: str = "Countries"
 
     def __str__(self):
         return self.name
@@ -94,7 +92,7 @@ class Region(models.Model):
     alpha_2 = models.ForeignKey(Country, on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name_plural = "Regions"
+        verbose_name_plural: str = "Regions"
 
     def __str__(self):
         return self.name
@@ -121,7 +119,7 @@ class UserProfile(models.Model):
     image = models.ImageField(blank=True, null=True, upload_to="uploads/users/")
 
     class Meta:
-        verbose_name_plural = "User's Profile"
+        verbose_name_plural: str = "User's Profile"
 
     def __str__(self):
         return "%s" % self.user.id
@@ -162,5 +160,3 @@ class UserProfile(models.Model):
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserProfile.objects.create(user=instance)
-
-    image_tag.short_description = "Image"

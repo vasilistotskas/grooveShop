@@ -1,11 +1,17 @@
+from typing import Any
+
+from backend.core.models import SortableModel
+from backend.core.models import TimeStampMixinModel
+from backend.core.models import UUIDModel
 from backend.product.models import Product
 from django.conf import settings
 from django.db import models
+from django.db.models.query import QuerySet
 
 User = settings.AUTH_USER_MODEL
 
 
-class PayWay(models.Model):
+class PayWay(TimeStampMixinModel, SortableModel, UUIDModel):
 
     PAY_WAYS = (
         ("Credit Card", "Credit Card"),
@@ -29,17 +35,20 @@ class PayWay(models.Model):
     )
 
     class Meta:
-        verbose_name_plural = "Pay Ways"
+        verbose_name_plural: str = "Pay Ways"
 
     def __str__(self):
         return self.name
 
+    def get_ordering_queryset(self):
+        return PayWay.objects.all()
+
     @classmethod
-    def active_pay_ways_by_status(cls, status: bool) -> dict["PayWay"]:
+    def active_pay_ways_by_status(cls, status: bool) -> QuerySet["Any"]:
         return cls.objects.filter(active=status).values()
 
 
-class Order(models.Model):
+class Order(TimeStampMixinModel, UUIDModel):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(
         User, related_name="orders", on_delete=models.CASCADE, null=True
@@ -55,7 +64,6 @@ class Order(models.Model):
     place = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
     paid_amount = models.DecimalField(
         max_digits=8, decimal_places=2, blank=True, null=True
     )
@@ -71,7 +79,7 @@ class Order(models.Model):
         return self.first_name
 
 
-class OrderItem(models.Model):
+class OrderItem(TimeStampMixinModel, SortableModel, UUIDModel):
     id = models.AutoField(primary_key=True)
     order = models.ForeignKey(Order, related_name="items", on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name="items", on_delete=models.CASCADE)
@@ -80,3 +88,6 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return "%s" % self.id
+
+    def get_ordering_queryset(self):
+        return self.order.items.all()

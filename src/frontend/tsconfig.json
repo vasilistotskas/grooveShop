@@ -25,7 +25,8 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "typeRoots": ["node_modules/@types", "typings.d.ts", "env.d.ts"]
+    "typeRoots": ["node_modules/@types", "typings.d.ts", "env.d.ts"],
+    "types": ["@intlify/vite-plugin-vue-i18n/client"]
   },
   "include": ["./src/**/*"],
   "files": ["typings.d.ts", "env.d.ts"],

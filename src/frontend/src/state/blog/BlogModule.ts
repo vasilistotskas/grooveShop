@@ -57,7 +57,7 @@ export default class BlogModule extends AppBaseModule {
   }
 
   get getPublishedPosts(): Array<BlogPostModel> {
-    return this.allPosts.filter((post) => post.published)
+    return this.allPosts.filter((post) => post.isPublished)
   }
 
   get getAuthorById(): BlogAuthorModel {
@@ -155,8 +155,8 @@ export default class BlogModule extends AppBaseModule {
               id
               title
               subtitle
-              publishDate
-              published
+              publishedAt
+              isPublished
               metaDescription
               mainImageAbsoluteUrl
               mainImageFilename
@@ -276,8 +276,8 @@ export default class BlogModule extends AppBaseModule {
               id
               title
               subtitle
-              publishDate
-              published
+              publishedAt
+              isPublished
               metaDescription
               mainImageAbsoluteUrl
               mainImageFilename
@@ -325,7 +325,7 @@ export default class BlogModule extends AppBaseModule {
               id
               title
               subtitle
-              publishDate
+              publishedAt
               metaDescription
               mainImageAbsoluteUrl
               mainImageFilename
@@ -437,8 +437,8 @@ export default class BlogModule extends AppBaseModule {
                 id
                 title
                 subtitle
-                publishDate
-                published
+                publishedAt
+                isPublished
                 metaDescription
                 mainImageAbsoluteUrl
                 mainImageFilename
@@ -481,8 +481,8 @@ export default class BlogModule extends AppBaseModule {
                 id
                 title
                 subtitle
-                publishDate
-                published
+                publishedAt
+                isPublished
                 metaDescription
                 mainImageAbsoluteUrl
                 mainImageFilename
@@ -603,8 +603,8 @@ export default class BlogModule extends AppBaseModule {
                   id
                   title
                   subtitle
-                  publishDate
-                  published
+                  publishedAt
+                  isPublished
                   metaDescription
                   mainImageAbsoluteUrl
                   mainImageFilename
@@ -654,8 +654,8 @@ export default class BlogModule extends AppBaseModule {
                   id
                   title
                   subtitle
-                  publishDate
-                  published
+                  publishedAt
+                  isPublished
                   metaDescription
                   mainImageAbsoluteUrl
                   mainImageFilename

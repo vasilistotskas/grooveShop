@@ -11,4 +11,4 @@ class SeoModel(models.Model):
     )
 
     class Meta:
-        abstract = True
+        abstract: bool = True

@@ -1,7 +1,7 @@
+from backend.slider.models import Slider
+from backend.slider.serializers import SliderSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from .serializers import *
 
 
 class AllSliders(APIView):

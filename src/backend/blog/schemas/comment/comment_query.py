@@ -12,11 +12,17 @@ from strawberry import auto
 class Query:
     @strawberry_django.field
     def comments_by_post(self, post_id: auto) -> List[CommentType]:
-        return Comment.objects.select_related("post").filter(post__id=post_id)
+        comment_type_list: List[CommentType] = list(
+            Comment.objects.select_related("post").filter(post__id=post_id)
+        )
+        return comment_type_list
 
     @strawberry_django.field
     def comments_by_user(self, user_email: str) -> List[CommentType]:
-        return Comment.objects.select_related("user").filter(user__email=user_email)
+        comment_type_list: List[CommentType] = list(
+            Comment.objects.select_related("user").filter(user__email=user_email)
+        )
+        return comment_type_list
 
     @strawberry_django.field
     def comment_by_user_to_post(

@@ -37,7 +37,7 @@ class Command(BaseCommand):
             )
 
             for _ in range(4):
-                slide = Slide.objects.create(
+                Slide.objects.create(
                     slider_id=slider.id,
                     url=settings.APP_BASE_URL,
                     title=faker.text(20),

@@ -4,7 +4,7 @@ from django.core.files import File
 from PIL import Image
 
 
-def make_thumbnail(image, size) -> File:
+def make_thumbnail(image, size):
     if image:
         img = Image.open(image)
         img.convert("RGB")

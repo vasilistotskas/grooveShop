@@ -57,12 +57,12 @@ class Command(BaseCommand):
                         price=product_price,
                         active="True",
                         stock=100,
-                        date_added=faker.date_time(),
+                        created_at=faker.date_time(),
                         vat_id=1,
                     )
                     i = i + 1
 
-                    product_images = ProductImages.objects.create(
+                    ProductImages.objects.create(
                         title=faker.text(5),
                         product_id=product.id,
                         image=img,
@@ -70,7 +70,7 @@ class Command(BaseCommand):
                     )
 
                     for _ in range(2):
-                        favourite = Favourite.objects.get_or_create(
+                        Favourite.objects.get_or_create(
                             user_id=user_id, product_id=product.id
                         )
 

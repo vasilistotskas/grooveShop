@@ -27,10 +27,27 @@ repos:
 #      - id: mypy
 #        name: Run type checks
 #        args: ["--ignore-missing-imports", "--install-types", "--non-interactive"]
+#        additional_dependencies: [django-stubs]
 #  - repo: https://github.com/pycqa/pydocstyle
 #    rev: 6.1.1
 #    hooks:
 #      - id: pydocstyle
+#  - repo: https://github.com/PyCQA/pylint
+#    rev: v2.15.3
+#    hooks:
+#      - id: pylint
+#        name: pylint
+#        entry: pylint
+#        types: [python]
+#        args:
+#          [
+#            "-rn",
+#            "--rcfile=.pylintrc",
+#            "--load-plugins=pylint.extensions.bad_builtin, pylint.extensions.mccabe, pylint_celery, pylint_django",
+#          ]
+#        additional_dependencies:
+#          - pylint_django==2.5.3
+#          - pylint_celery==0.3
 #  - repo: local
 #    hooks:
 #      - id: migrations-check

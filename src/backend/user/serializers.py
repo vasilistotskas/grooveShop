@@ -10,7 +10,7 @@ from .models import UserProfile
 User = get_user_model()
 
 
-class UserCreateSerializer(UserCreateSerializer):
+class UserCreationSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
         model = User
         fields = ("id", "email", "first_name", "last_name", "password")

@@ -1,15 +1,17 @@
 import { createI18n } from 'vue-i18n'
-import enBundle from '@/locales/en.messages.json'
-import grBundle from '@/locales/gr.messages.json'
+import bundleGR from '@/locales/Global/gr.messages.json'
+import bundleEN from '@/locales/Global/en_us.messages.json'
+import { AvailableLocalesEnum } from '@/locales/LocaleEnum'
+import { AvailableLocales, MessageSchema } from '@/locales/LocaleType'
 
-const i18n = createI18n({
+const i18n = createI18n<[MessageSchema], AvailableLocales>({
   legacy: false,
-  locale: 'gr',
-  fallbackLocale: 'en',
+  locale: AvailableLocalesEnum.GR,
+  fallbackLocale: AvailableLocalesEnum.EN_US,
   globalInjection: true,
   messages: {
-    en: enBundle,
-    gr: grBundle,
+    [AvailableLocalesEnum.EN_US]: bundleEN,
+    [AvailableLocalesEnum.GR]: bundleGR,
   },
   silentTranslationWarn: true,
 })

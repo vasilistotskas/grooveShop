@@ -6,12 +6,10 @@ from backend.user.models import Region
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import BaseCommand
-from faker import Faker
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        faker = Faker()
 
         img = "uploads/country/no_photo.jpg"
         if not default_storage.exists(img):
@@ -39,7 +37,7 @@ class Command(BaseCommand):
 
             i = 1
             for _ in range(2):
-                region = Region.objects.create(
+                Region.objects.create(
                     name="Greece Region" + str(i),
                     alpha="GR" + str(i),
                     alpha_2_id=country_gr.alpha_2,
@@ -47,7 +45,7 @@ class Command(BaseCommand):
                 i += i
 
         try:
-            country_cy = Country.objects.get(
+            Country.objects.get(
                 alpha_2="CY",
             )
         except Country.DoesNotExist:
@@ -63,7 +61,7 @@ class Command(BaseCommand):
             i = 1
 
             for _ in range(2):
-                region = Region.objects.create(
+                Region.objects.create(
                     name="CY Region" + str(i),
                     alpha="CY" + str(i),
                     alpha_2_id=country_cy.alpha_2,

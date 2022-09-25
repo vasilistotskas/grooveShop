@@ -59,14 +59,20 @@ class CategoryAdmin(DraggableMPTTAdmin):
     def related_products_count(self, instance):
         return instance.products_count
 
-    related_products_count.short_description = (
-        "Related products (for this specific category)"
+    setattr(
+        related_products_count,
+        "short_description",
+        "Related products (for this specific category)",
     )
 
     def related_products_cumulative_count(self, instance):
         return instance.products_cumulative_count
 
-    related_products_cumulative_count.short_description = "Related products (in tree)"
+    setattr(
+        related_products_cumulative_count,
+        "short_description",
+        "Related products (in tree)",
+    )
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -93,12 +99,20 @@ class ProductAdmin(admin.ModelAdmin):
     except:
         pass
 
-    # Product status has Choices , this method returns boolean and displays the mini icon at admin panel
     def boolean_status(self, obj):
         return obj.active == "True"
 
-    boolean_status.boolean = True
-    boolean_status.short_description = "STATUS"
+    setattr(
+        boolean_status,
+        "boolean",
+        True,
+    )
+
+    setattr(
+        boolean_status,
+        "short_description",
+        "STATUS",
+    )
 
 
 class FavouriteAdmin(admin.ModelAdmin):
@@ -136,8 +150,17 @@ class ReviewAdmin(admin.ModelAdmin):
             messages.SUCCESS,
         )
 
-    make_published.short_description = "Mark selected comments as published"
-    make_unpublished.short_description = "Mark selected comments as unpublished"
+    setattr(
+        make_published,
+        "short_description",
+        "Mark selected comments as published",
+    )
+
+    setattr(
+        make_unpublished,
+        "short_description",
+        "Mark selected comments as unpublished",
+    )
 
 
 admin.site.register(Category, CategoryAdmin)

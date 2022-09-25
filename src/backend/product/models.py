@@ -2,29 +2,34 @@ import os
 import random
 import string
 from decimal import Decimal
+from typing import List
 from typing import Union
 
 from backend.core.models import SortableModel
+from backend.core.models import TimeStampMixinModel
+from backend.core.models import UUIDModel
 from backend.helpers.image_resize import make_thumbnail
 from backend.seo.models import SeoModel
 from django.conf import settings
 from django.db import models
 from django.db.models import Avg
 from django.db.models import Count
+from django.db.models.fields.files import ImageFieldFile
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
+from django.utils.safestring import SafeString
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
 from tinymce.models import HTMLField
 
-User = settings.AUTH_USER_MODEL
+User: str = settings.AUTH_USER_MODEL
 
 
 def generate_unique_code():
-    length = 11
+    length: int = 11
 
     while True:
-        code = "".join(random.choices(string.ascii_uppercase, k=length))
+        code: str = "".join(random.choices(string.ascii_uppercase, k=length))
         if Product.objects.filter(product_code=code).count() == 0:
             break
 
@@ -53,10 +58,9 @@ class Category(MPTTModel):
     )
 
     def category_menu_image_one_absolute_url(self) -> str:
+        image: str = ""
         if self.menu_image_one:
-            image = settings.BACKEND_BASE_URL + self.menu_image_one.url
-        else:
-            image = ""
+            return settings.BACKEND_BASE_URL + self.menu_image_one.url
         return image
 
     def category_menu_image_one_filename(self) -> str:
@@ -66,10 +70,9 @@ class Category(MPTTModel):
             return ""
 
     def category_menu_image_two_absolute_url(self) -> str:
+        image: str = ""
         if self.menu_image_two:
             image = settings.BACKEND_BASE_URL + self.menu_image_two.url
-        else:
-            image = ""
         return image
 
     def category_menu_image_two_filename(self) -> str:
@@ -79,10 +82,9 @@ class Category(MPTTModel):
             return ""
 
     def category_menu_main_banner_absolute_url(self) -> str:
+        image: str = ""
         if self.menu_main_banner:
-            image = settings.BACKEND_BASE_URL + self.menu_main_banner.url
-        else:
-            image = ""
+            return settings.BACKEND_BASE_URL + self.menu_main_banner.url
         return image
 
     def category_menu_main_banner_filename(self) -> str:
@@ -92,25 +94,25 @@ class Category(MPTTModel):
             return ""
 
     class Meta:
-        verbose_name_plural = "Categories"
-        ordering = ("id",)
+        verbose_name_plural: str = "Categories"
+        ordering: tuple[str] = ("id",)
 
     class MPTTMeta:
-        order_insertion_by = ["name"]
+        order_insertion_by: list[str] = ["name"]
 
     def __init__(self, *args, **kwargs):
         super(Category, self).__init__(*args, **kwargs)
         self.sub_categories_list = None
 
     def __str__(self):
-        full_path = [self.name]
+        full_path: list[str] = [self.name]
         k = self.parent
         while k is not None:
             full_path.append(k.name)
             k = k.parent
         return " / ".join(full_path[::-1])
 
-    def recursive_product_count(self) -> dict:
+    def recursive_product_count(self) -> int:
         return Product.objects.filter(
             category__in=self.get_descendants(include_self=True)
         ).count()
@@ -121,7 +123,7 @@ class Category(MPTTModel):
         )
 
 
-class Vat(models.Model):
+class Vat(TimeStampMixinModel, UUIDModel):
     id = models.AutoField(primary_key=True)
     value = models.DecimalField(max_digits=11, decimal_places=1)
 
@@ -129,7 +131,7 @@ class Vat(models.Model):
         return "%s" % self.value
 
 
-class Product(SeoModel):
+class Product(TimeStampMixinModel, SeoModel, UUIDModel):
     PRODUCT_STATUS = (
         ("True", "Active"),
         ("False", "Not Active"),
@@ -151,7 +153,6 @@ class Product(SeoModel):
     price = models.DecimalField(max_digits=11, decimal_places=2, null=True)
     active = models.CharField(max_length=10, choices=PRODUCT_STATUS, default=True)
     stock = models.IntegerField(default=1)
-    date_added = models.DateTimeField(auto_now_add=True)
     discount_percent = models.DecimalField(max_digits=11, decimal_places=2, default=0.0)
     vat = models.ForeignKey(
         Vat, related_name="vat", blank=True, null=True, on_delete=models.SET_NULL
@@ -159,23 +160,23 @@ class Product(SeoModel):
     hits = models.PositiveIntegerField(default=0)
 
     class Meta:
-        ordering = ("-date_added",)
+        ordering: tuple[str] = ("-created_at",)
 
     def __str__(self) -> str:
         return self.name
 
     def likes_counter(self) -> int:
         favourites = Favourite.objects.filter(product=self).aggregate(count=Count("id"))
-        cnt = 0
+        cnt: int = 0
         if favourites["count"] is not None:
             cnt = int(favourites["count"])
         return cnt
 
-    def review_average(self) -> int:
+    def review_average(self) -> float:
         reviews = Review.objects.filter(product=self, status="True").aggregate(
             average=Avg("rate")
         )
-        avg = 0
+        avg: float = 0.0
         if reviews["average"] is not None:
             avg = float(reviews["average"])
         return avg
@@ -184,9 +185,9 @@ class Product(SeoModel):
         reviews = Review.objects.filter(product=self, status="True").aggregate(
             count=Count("id")
         )
-        cnt = 0
+        cnt: int = 0
         if reviews["count"] is not None:
-            cnt = int(reviews["count"])
+            return int(reviews["count"])
         return cnt
 
     def vat_percent(self) -> Union[Decimal, int]:
@@ -203,9 +204,9 @@ class Product(SeoModel):
         return (self.price * self.discount_percent) / 100
 
     def price_save_percent(self) -> Decimal:
-        final_price = self.price - self.discount_value()
-        product_save_value = self.price - final_price
-        product_save_percent = (final_price * product_save_value) / self.price
+        final_price: Decimal = self.price - self.discount_value()
+        product_save_value: Decimal = self.price - final_price
+        product_save_percent: Decimal = (final_price * product_save_value) / self.price
         return product_save_percent
 
     def final_price(self) -> Decimal:
@@ -213,10 +214,9 @@ class Product(SeoModel):
 
     def main_image_absolute_url(self) -> str:
         img = ProductImages.objects.get(product_id=self.id, is_main=True)
+        image: str = ""
         if img.image:
-            image = settings.BACKEND_BASE_URL + img.image.url
-        else:
-            image = ""
+            return settings.BACKEND_BASE_URL + img.image.url
         return image
 
     def main_image_filename(self) -> str:
@@ -229,13 +229,13 @@ class Product(SeoModel):
             return mark_safe('<img src="{}"/>'.format(img.thumbnail.url))
         else:
             if img.image:
-                img.thumbnail = make_thumbnail(self.image, (100, 100))
+                img.thumbnail = make_thumbnail(img.image, (100, 100))
                 img.save()
                 return mark_safe('<img src="{}"/>'.format(img.thumbnail.url))
             else:
                 return ""
 
-    def colored_stock(self) -> format_html:
+    def colored_stock(self) -> Union[SafeString, SafeString]:
         if self.stock > 0:
             return format_html(
                 '<span style="color: #1bff00;">{}</span>',
@@ -251,7 +251,7 @@ class Product(SeoModel):
         return f"/{self.category.slug}/{self.slug}"
 
 
-class ProductImages(SortableModel):
+class ProductImages(TimeStampMixinModel, SortableModel, UUIDModel):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50, blank=True)
     product = models.ForeignKey(
@@ -273,16 +273,17 @@ class ProductImages(SortableModel):
         return self.product.imageproduct.all()
 
     def save(self, *args, **kwargs):
-        if self.image:
-            self.thumbnail = make_thumbnail(self.image, (100, 100))
+        image: ImageFieldFile = self.image
+        if image:
+            self.thumbnail = make_thumbnail(image, (100, 100))
 
         super().save(*args, **kwargs)
 
+    @property
     def product_image_absolute_url(self) -> str:
+        image: str = ""
         if self.image:
-            image = settings.BACKEND_BASE_URL + self.image.url
-        else:
-            image = ""
+            return settings.BACKEND_BASE_URL + self.image.url
         return image
 
     def product_image_filename(self) -> str:
@@ -292,8 +293,7 @@ class ProductImages(SortableModel):
             return ""
 
 
-# favourite Model
-class Favourite(models.Model):
+class Favourite(TimeStampMixinModel, UUIDModel):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -305,7 +305,7 @@ class Favourite(models.Model):
         return f"//{self.id}/"
 
 
-class Review(models.Model):
+class Review(TimeStampMixinModel, UUIDModel):
     STATUS = (
         ("New", "New"),
         ("True", "True"),
@@ -329,12 +329,10 @@ class Review(models.Model):
     comment = models.CharField(max_length=250, blank=True)
     rate = models.PositiveSmallIntegerField(choices=RATE_CHOICES)
     status = models.CharField(max_length=10, choices=STATUS, default="True")
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name_plural = "Reviews"
-        ordering = ["-updated_at"]
+        ordering: List[str] = ["-updated_at"]
 
     def __str__(self):
         return self.comment

@@ -1,9 +1,8 @@
 from backend.product.models import Product
 from backend.product.serializers import ProductSerializer
-from backend.search.paginators import *
+from backend.search.paginators import SearchPagination
 from django.db.models import Q
 from rest_framework import generics
-from rest_framework import status
 
 
 class SearchProduct(generics.ListAPIView):

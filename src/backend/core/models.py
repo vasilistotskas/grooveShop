@@ -1,18 +1,23 @@
+import datetime
 import uuid
+from typing import Any
 
+import pytz
 from django.db import models
 from django.db import transaction
 from django.db.models import F
 from django.db.models import Max
+from django.db.models import Q
+from django.db.models import QuerySet
 
 
 class SortableModel(models.Model):
     sort_order = models.IntegerField(editable=False, db_index=True, null=True)
 
     class Meta:
-        abstract = True
+        abstract: bool = True
 
-    def get_ordering_queryset(self):
+    def get_ordering_queryset(self) -> QuerySet[Any]:
         raise NotImplementedError("Unknown ordering queryset")
 
     @staticmethod
@@ -51,4 +56,30 @@ class UUIDModel(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 
     class Meta:
+        abstract: bool = True
+
+
+class PublishedQuerySet(models.QuerySet):
+    def published(self):
+        today = datetime.datetime.now(pytz.UTC)
+        return self.filter(
+            Q(published_at__lte=today) | Q(published_at__isnull=True),
+            is_published=True,
+        )
+
+
+class PublishableModel(models.Model):
+    published_at = models.DateTimeField(blank=True, null=True)
+    is_published = models.BooleanField(default=False)
+
+    objects: Any = models.Manager.from_queryset(PublishedQuerySet)()
+
+    class Meta:
         abstract = True
+
+    @property
+    def is_visible(self):
+        return self.is_published and (
+            self.published_at is None
+            or self.published_at <= datetime.datetime.now(pytz.UTC)
+        )

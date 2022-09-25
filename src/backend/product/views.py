@@ -251,7 +251,8 @@ class ProductReviews(generics.ListCreateAPIView):
             pass
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    # one review per customer at product, he can either edit or delete review , if delete he can make new one
+    # one review per customer at product, he can either edit or delete review
+    # if delete he can make new one
     def post(self, request, *args, **kwargs):
         product_id = self.kwargs["product_id"]
         user_id = request.data.get("user_id")

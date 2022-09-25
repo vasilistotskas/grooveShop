@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from .enum.pay_way_enum import PayWayEnum
 from .models import Order
 from .models import PayWay
-from .paginators import *
+from .paginators import UserOrderListPagination
 from .serializers import OrderSerializer
 from .serializers import PayWaySerializer
 from .serializers import UserOrderSerializer
@@ -46,7 +46,7 @@ class Checkout(APIView):
 
     def create_order(self, request, paid_amount, serializer, items, pay_way_name):
         if pay_way_name == PayWayEnum.CreditCard:
-            charge = stripe.Charge.create(
+            stripe.Charge.create(
                 amount=int(paid_amount * 100),
                 currency="USD",
                 description="Charge from grooveShop",
