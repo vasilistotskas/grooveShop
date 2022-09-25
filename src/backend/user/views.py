@@ -2,7 +2,11 @@ import json
 
 from backend.user.models import Country
 from backend.user.models import Region
+from backend.user.models import UserAccount
 from backend.user.models import UserProfile
+from backend.user.serializers import CountrySerializer
+from backend.user.serializers import RegionSerializer
+from backend.user.serializers import UserProfileSerializer
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login
@@ -24,11 +28,6 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from .models import UserAccount
-from .serializers import CountrySerializer
-from .serializers import RegionSerializer
-from .serializers import UserProfileSerializer
 
 User = get_user_model()
 

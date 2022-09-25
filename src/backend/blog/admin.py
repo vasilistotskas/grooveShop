@@ -1,10 +1,9 @@
+from backend.blog.models import Author
+from backend.blog.models import Category
+from backend.blog.models import Comment
+from backend.blog.models import Post
+from backend.blog.models import Tag
 from django.contrib import admin
-
-from .models import Author
-from .models import Category
-from .models import Comment
-from .models import Post
-from .models import Tag
 
 
 @admin.register(Author)

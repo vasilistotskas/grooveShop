@@ -1,7 +1,6 @@
+from backend.slider.models import Slide
+from backend.slider.models import Slider
 from rest_framework import serializers
-
-from .models import Slide
-from .models import Slider
 
 
 class SlideSerializer(serializers.ModelSerializer):

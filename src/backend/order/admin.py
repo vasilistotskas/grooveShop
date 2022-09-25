@@ -1,11 +1,10 @@
+from backend.order.models import Order
+from backend.order.models import OrderItem
+from backend.order.models import PayWay
 from django.contrib import admin
 
-from .models import Order
-from .models import OrderItem
-from .models import PayWay
 
-
-class OrderItemline(admin.TabularInline):
+class OrderItemLine(admin.TabularInline):
     model = OrderItem
     readonly_fields = ("product", "price", "quantity")
     can_delete = False
@@ -41,7 +40,7 @@ class OrderAdmin(admin.ModelAdmin):
         "city",
     )
     can_delete = False
-    inlines = [OrderItemline]
+    inlines = [OrderItemLine]
 
 
 class OrderItemAdmin(admin.ModelAdmin):

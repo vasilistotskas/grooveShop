@@ -2,11 +2,11 @@ import os
 from random import randrange
 
 from backend.app.settings import BASE_DIR
-from backend.product.models import Category
-from backend.product.models import Favourite
 from backend.product.models import Product
 from backend.product.models import ProductImages
-from backend.product.models import Vat
+from backend.product_category.models import Category
+from backend.product_favourite.models import Favourite
+from backend.vat.models import Vat
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import BaseCommand

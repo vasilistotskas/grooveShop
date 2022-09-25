@@ -76,12 +76,16 @@ PROJECT_APPS = [
     "backend.user",
     "backend.core",
     "backend.product",
+    "backend.product_review",
+    "backend.product_category",
+    "backend.product_favourite",
     "backend.order",
     "backend.search",
     "backend.slider",
     "backend.blog",
     "backend.seo",
     "backend.tip",
+    "backend.vat",
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",

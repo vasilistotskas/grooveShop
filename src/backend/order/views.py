@@ -1,4 +1,11 @@
 import stripe
+from backend.order.enum.pay_way_enum import PayWayEnum
+from backend.order.models import Order
+from backend.order.models import PayWay
+from backend.order.paginators import UserOrderListPagination
+from backend.order.serializers import OrderSerializer
+from backend.order.serializers import PayWaySerializer
+from backend.order.serializers import UserOrderSerializer
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from rest_framework import authentication
@@ -7,14 +14,6 @@ from rest_framework import permissions
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from .enum.pay_way_enum import PayWayEnum
-from .models import Order
-from .models import PayWay
-from .paginators import UserOrderListPagination
-from .serializers import OrderSerializer
-from .serializers import PayWaySerializer
-from .serializers import UserOrderSerializer
 
 User = get_user_model()
 

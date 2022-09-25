@@ -2,14 +2,19 @@ import os
 import random
 import string
 from decimal import Decimal
-from typing import List
 from typing import Union
 
+from backend.core.db.fields import SanitizedJSONField
 from backend.core.models import SortableModel
 from backend.core.models import TimeStampMixinModel
 from backend.core.models import UUIDModel
+from backend.core.utils.editorjs import clean_editor_js
 from backend.helpers.image_resize import make_thumbnail
+from backend.product_favourite.models import Favourite
+from backend.product_review.models import Review
 from backend.seo.models import SeoModel
+from backend.seo.models import SeoModelTranslation
+from backend.vat.models import Vat
 from django.conf import settings
 from django.db import models
 from django.db.models import Avg
@@ -36,101 +41,6 @@ def generate_unique_code():
     return code
 
 
-class Category(MPTTModel):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(unique=True)
-    description = HTMLField(null=True, blank=True)
-    menu_image_one = models.ImageField(
-        upload_to="uploads/categories/", null=True, blank=True
-    )
-    menu_image_two = models.ImageField(
-        upload_to="uploads/categories/", null=True, blank=True
-    )
-    menu_main_banner = models.ImageField(
-        upload_to="uploads/categories/", null=True, blank=True
-    )
-    parent = TreeForeignKey(
-        "self", blank=True, null=True, related_name="children", on_delete=models.CASCADE
-    )
-    tags = models.CharField(
-        max_length=100, null=True, blank=True, help_text="SEO keywords"
-    )
-
-    def category_menu_image_one_absolute_url(self) -> str:
-        image: str = ""
-        if self.menu_image_one:
-            return settings.BACKEND_BASE_URL + self.menu_image_one.url
-        return image
-
-    def category_menu_image_one_filename(self) -> str:
-        if self.menu_image_one:
-            return os.path.basename(self.menu_image_one.name)
-        else:
-            return ""
-
-    def category_menu_image_two_absolute_url(self) -> str:
-        image: str = ""
-        if self.menu_image_two:
-            image = settings.BACKEND_BASE_URL + self.menu_image_two.url
-        return image
-
-    def category_menu_image_two_filename(self) -> str:
-        if self.menu_image_two:
-            return os.path.basename(self.menu_image_two.name)
-        else:
-            return ""
-
-    def category_menu_main_banner_absolute_url(self) -> str:
-        image: str = ""
-        if self.menu_main_banner:
-            return settings.BACKEND_BASE_URL + self.menu_main_banner.url
-        return image
-
-    def category_menu_main_banner_filename(self) -> str:
-        if self.menu_main_banner:
-            return os.path.basename(self.menu_main_banner.name)
-        else:
-            return ""
-
-    class Meta:
-        verbose_name_plural: str = "Categories"
-        ordering: tuple[str] = ("id",)
-
-    class MPTTMeta:
-        order_insertion_by: list[str] = ["name"]
-
-    def __init__(self, *args, **kwargs):
-        super(Category, self).__init__(*args, **kwargs)
-        self.sub_categories_list = None
-
-    def __str__(self):
-        full_path: list[str] = [self.name]
-        k = self.parent
-        while k is not None:
-            full_path.append(k.name)
-            k = k.parent
-        return " / ".join(full_path[::-1])
-
-    def recursive_product_count(self) -> int:
-        return Product.objects.filter(
-            category__in=self.get_descendants(include_self=True)
-        ).count()
-
-    def absolute_url(self) -> str:
-        return "/".join(
-            [x["slug"] for x in self.get_ancestors(include_self=True).values()]
-        )
-
-
-class Vat(TimeStampMixinModel, UUIDModel):
-    id = models.AutoField(primary_key=True)
-    value = models.DecimalField(max_digits=11, decimal_places=1)
-
-    def __str__(self):
-        return "%s" % self.value
-
-
 class Product(TimeStampMixinModel, SeoModel, UUIDModel):
     PRODUCT_STATUS = (
         ("True", "Active"),
@@ -141,7 +51,7 @@ class Product(TimeStampMixinModel, SeoModel, UUIDModel):
         unique=True, max_length=100, default=generate_unique_code
     )
     category = TreeForeignKey(
-        "Category",
+        "product_category.Category",
         on_delete=models.SET_NULL,
         related_name="products",
         null=True,
@@ -251,6 +161,42 @@ class Product(TimeStampMixinModel, SeoModel, UUIDModel):
         return f"/{self.category.slug}/{self.slug}"
 
 
+class ProductTranslation(TimeStampMixinModel, UUIDModel, SeoModelTranslation):
+    product = models.ForeignKey(
+        Product, related_name="translations", on_delete=models.CASCADE
+    )
+    name = models.CharField(max_length=250, blank=True, null=True)
+    description = HTMLField(null=True, blank=True)
+
+    class Meta:
+        unique_together = (("language_code", "product"),)
+
+    def __str__(self) -> str:
+        return self.name if self.name else str(self.pk)
+
+    def __repr__(self) -> str:
+        class_ = type(self)
+        return "%s(pk=%r, name=%r, product_pk=%r)" % (
+            class_.__name__,
+            self.pk,
+            self.name,
+            self.product_id,
+        )
+
+    def get_translated_object_id(self):
+        return "Product", self.product_id
+
+    def get_translated_keys(self):
+        translated_keys = super().get_translated_keys()
+        translated_keys.update(
+            {
+                "name": self.name,
+                "description": self.description,
+            }
+        )
+        return translated_keys
+
+
 class ProductImages(TimeStampMixinModel, SortableModel, UUIDModel):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50, blank=True)
@@ -291,48 +237,3 @@ class ProductImages(TimeStampMixinModel, SortableModel, UUIDModel):
             return os.path.basename(self.image.name)
         else:
             return ""
-
-
-class Favourite(TimeStampMixinModel, UUIDModel):
-    id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.user.email
-
-    def absolute_url(self):
-        return f"//{self.id}/"
-
-
-class Review(TimeStampMixinModel, UUIDModel):
-    STATUS = (
-        ("New", "New"),
-        ("True", "True"),
-        ("False", "False"),
-    )
-    RATE_CHOICES = (
-        (1, 1),
-        (2, 2),
-        (3, 3),
-        (4, 4),
-        (5, 5),
-        (6, 6),
-        (7, 7),
-        (8, 8),
-        (9, 9),
-        (10, 10),
-    )
-    id = models.AutoField(primary_key=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.CharField(max_length=250, blank=True)
-    rate = models.PositiveSmallIntegerField(choices=RATE_CHOICES)
-    status = models.CharField(max_length=10, choices=STATUS, default="True")
-
-    class Meta:
-        verbose_name_plural = "Reviews"
-        ordering: List[str] = ["-updated_at"]
-
-    def __str__(self):
-        return self.comment

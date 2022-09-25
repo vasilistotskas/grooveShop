@@ -1,9 +1,8 @@
+from backend.order.models import Order
+from backend.order.models import OrderItem
+from backend.order.models import PayWay
 from backend.product.serializers import ProductSerializer
 from rest_framework import serializers
-
-from .models import Order
-from .models import OrderItem
-from .models import PayWay
 
 
 class UserOrderItemSerializer(serializers.ModelSerializer):

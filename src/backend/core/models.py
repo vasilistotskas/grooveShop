@@ -1,5 +1,6 @@
 import datetime
 import uuid
+from gettext import gettext as _
 from typing import Any
 
 import pytz
@@ -9,6 +10,7 @@ from django.db.models import F
 from django.db.models import Max
 from django.db.models import Q
 from django.db.models import QuerySet
+from django.utils import timezone as tz
 
 
 class SortableModel(models.Model):
@@ -45,7 +47,9 @@ class SortableModel(models.Model):
 
 
 class TimeStampMixinModel(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(
+        _("Created At"), null=False, blank=False, default=tz.now
+    )
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:

@@ -1,6 +1,5 @@
+from backend.tip.models import Tip
 from django.contrib import admin
-
-from .models import Tip
 
 
 class TipAdmin(admin.ModelAdmin):

@@ -1,11 +1,10 @@
 from backend.helpers.image_resize import make_thumbnail
+from backend.user.models import Country
+from backend.user.models import Region
+from backend.user.models import UserProfile
 from django.contrib.auth import get_user_model
 from djoser.serializers import UserCreateSerializer
 from rest_framework import serializers
-
-from .models import Country
-from .models import Region
-from .models import UserProfile
 
 User = get_user_model()
 

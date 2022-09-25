@@ -29,6 +29,9 @@ front_urls = [
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/", include("backend.product.urls")),
+    path("api/v1/", include("backend.product_favourite.urls")),
+    path("api/v1/", include("backend.product_category.urls")),
+    path("api/v1/", include("backend.product_review.urls")),
     path("api/v1/", include("backend.order.urls")),
     path("api/v1/", include("backend.user.urls")),
     path("api/v1/", include("backend.slider.urls")),

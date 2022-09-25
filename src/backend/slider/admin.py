@@ -1,10 +1,9 @@
 from typing import List
 
 import admin_thumbnails
+from backend.slider.models import Slide
+from backend.slider.models import Slider
 from django.contrib import admin
-
-from .models import Slide
-from .models import Slider
 
 
 @admin_thumbnails.thumbnail("image")

@@ -1,9 +1,8 @@
+from backend.user.models import Country
+from backend.user.models import Region
+from backend.user.models import UserAccount
+from backend.user.models import UserProfile
 from django.contrib import admin
-
-from .models import Country
-from .models import Region
-from .models import UserAccount
-from .models import UserProfile
 
 
 class UserProfileAdmin(admin.ModelAdmin):

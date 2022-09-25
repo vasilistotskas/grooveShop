@@ -1,7 +1,7 @@
 import datetime
 from random import randrange
 
-from backend.product.models import Review
+from backend.product_review.models import Review
 from django.core.management import BaseCommand
 from django.utils import timezone
 from faker import Faker
