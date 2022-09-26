@@ -93,7 +93,7 @@ class Query:
         )
 
     @strawberry_django.field
-    def posts_by_author_id(self, author_id: str) -> List[PostType]:
+    def posts_by_author_id(self, author_id: int) -> List[PostType]:
         post_type_list: List[PostType] = list(
             Post.objects.prefetch_related("tags").filter(
                 author__id=author_id,

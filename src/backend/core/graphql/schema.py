@@ -14,7 +14,7 @@ Query = merge_types(
     (
         AuthorQuery,
         CategoryQuery,
-        # CommentQuery,
+        CommentQuery,
         PostQuery,
         TagQuery,
         TipQuery,
