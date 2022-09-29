@@ -422,34 +422,46 @@ export default class BlogModule extends AppBaseModule {
       const comments = await clientApollo.query({
         query: gql`
           query {
-            commentsByUser(userEmail: "${String(userEmail)}") {
+            commentsByUser(userEmail: "bill@bill.gr") {
               content
               createdAt
-              isApproved
+              id
               numberOfLikes
-              user {
-                id
-                firstName
-                lastName
-                email
-              }
+              isApproved
               post {
+                body
+                createdAt
                 id
-                title
-                subtitle
-                publishedAt
                 isPublished
-                metaDescription
+                likes {
+                  id
+                }
                 mainImageAbsoluteUrl
                 mainImageFilename
-                slug
                 numberOfLikes
+                publishedAt
+                metaDescription
+                slug
+                subtitle
+                title
+                updatedAt
+                tags {
+                  id
+                  name
+                }
+                author {
+                  id
+                  user {
+                    id
+                  }
+                }
                 category {
                   id
                 }
-                tags {
-                  name
-                }
+              }
+              user {
+                id
+                email
               }
             }
           }
