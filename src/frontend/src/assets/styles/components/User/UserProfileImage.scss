@@ -1,17 +1,17 @@
 .profile-image-grid {
   &-container {
-    display: grid;
     border-bottom: 1px solid var(--cp-palette-main-fourth);
+    display: grid;
   }
 
   &-form {
-    display: grid;
-    grid-template-rows: minmax(90px, 1fr);
+    align-content: center;
     background-color: var(--cp-palette-main-secondary);
     border-radius: 10px;
-    gap: 25px;
+    display: grid;
+    grid-gap: 25px;
+    grid-template-rows: minmax(90px, 1fr);
     justify-content: center;
-    align-content: center;
 
     img.rounded-circle {
       border-radius: 60px;
@@ -19,38 +19,39 @@
   }
 
   &-content {
+    align-items: center;
     display: grid;
+    grid-gap: 20px;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
-    align-items: center;
     position: relative;
-    gap: 20px;
 
     .profile-image-part {
       label.profile-image-label {
-        transition: all 0.3s ease-in-out;
         opacity: 0;
+        transition: all .3s ease-in-out;
         visibility: hidden;
       }
 
       &:hover {
         img {
-          box-shadow: rgb(0 0 0 / 20%) 0 3px 5px -1px, rgb(0 0 0 / 14%) 0 6px 10px 0, rgb(0 0 0 / 12%) 0 1px 18px 0;
+          box-shadow: rgb(0 0 0 / 20%) 0 3px 5px -1px, rgb(0 0 0 / 14%) 0 6px 10px 0,
+            rgb(0 0 0 / 12%) 0 1px 18px 0;
         }
 
         cursor: pointer;
 
         label.profile-image-label {
-          transition: all 0.3s ease-in-out;
           opacity: 1;
+          transition: all .3s ease-in-out;
           visibility: visible;
         }
       }
     }
 
     label {
-      position: absolute;
       left: 32px;
+      position: absolute;
       top: 30px;
 
       &:hover {

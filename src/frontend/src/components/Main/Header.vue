@@ -7,6 +7,7 @@
       </p>
     </div>
     <Navbar :cart-total-length="cartTotalLength" :pre-head-hidden="!showPreHeader" />
+    <LocaleChanger></LocaleChanger>
   </header>
 </template>
 
@@ -16,11 +17,13 @@ import CartModule from '@/state/cart/CartModule'
 import { getModule } from 'vuex-module-decorators'
 import Navbar from '@/components/Navbar/Navbar.vue'
 import { Options as Component, Vue } from 'vue-class-component'
+import LocaleChanger from '@/components/I18n/LocaleChanger.vue'
 
 @Component({
   name: 'Header',
   components: {
     Navbar,
+    LocaleChanger,
   },
 })
 export default class Header extends Vue {

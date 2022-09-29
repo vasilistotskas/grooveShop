@@ -1,27 +1,34 @@
-from typing import List, Optional
-from strawberry_django_plus import gql
+from typing import List
+from typing import Optional
+
+import strawberry.django
+import strawberry_django
 from backend.blog.models import Comment
 from backend.blog.schemas.comment.comment_type import CommentType
 
 
-@gql.type
+@strawberry.type
 class Query:
-
-    @gql.field
-    def comments_by_post(self, post_id: gql.ID) -> List[CommentType]:
-        return Comment.objects.select_related("post").filter(
-            post__id=post_id
+    @strawberry_django.field
+    def comments_by_post(self, post_id: int) -> List[CommentType]:
+        comment_type_list: List[CommentType] = list(
+            Comment.objects.select_related("post").filter(post__id=post_id)
         )
+        return comment_type_list
 
-    @gql.field
+    @strawberry_django.field
     def comments_by_user(self, user_email: str) -> List[CommentType]:
-        return Comment.objects.select_related("user").filter(
-            user__email=user_email
+        comment_type_list: List[CommentType] = list(
+            Comment.objects.select_related("user").filter(user__email=user_email)
         )
+        return comment_type_list
 
-    @gql.field
-    def comment_by_user_to_post(self, post_id: gql.ID, user_email: str) -> Optional[CommentType]:
-        return Comment.objects.select_related("post").filter(
-            post__id=post_id,
-            user__email=user_email
-        ).first()
+    @strawberry_django.field
+    def comment_by_user_to_post(
+        self, post_id: int, user_email: str
+    ) -> Optional[CommentType]:
+        return (
+            Comment.objects.select_related("post")
+            .filter(post__id=post_id, user__email=user_email)
+            .first()
+        )

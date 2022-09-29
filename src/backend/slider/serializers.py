@@ -1,9 +1,9 @@
-from .models import Slider, Slide
+from backend.slider.models import Slide
+from backend.slider.models import Slider
 from rest_framework import serializers
 
 
 class SlideSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Slide
         fields = (
@@ -20,12 +20,12 @@ class SlideSerializer(serializers.ModelSerializer):
             "order_position",
             "main_image_absolute_url",
             "main_image_filename",
-            "thumbnail"
+            "thumbnail",
         )
 
 
 class SliderSerializer(serializers.ModelSerializer):
-    slides = SlideSerializer(source='slide_set', many=True, read_only=True)
+    slides = SlideSerializer(source="slide_set", many=True, read_only=True)
 
     class Meta:
         model = Slider

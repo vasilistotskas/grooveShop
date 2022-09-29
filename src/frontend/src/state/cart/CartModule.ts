@@ -6,7 +6,6 @@ import PayWayModel from '@/state/payway/PayWayModel'
 import CartItemModel from '@/state/cart/CartItemModel'
 import AppBaseModule from '@/state/common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import UserOrderModel from '@/state/user/order/UserOrderModel'
 import CheckoutOrderApiData from '@/state/cart/Interface/CheckoutOrderApiData'
 
 const toast = useToast()

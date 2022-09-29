@@ -3,22 +3,23 @@
 .blog-post-list {
   &-container {
     display: grid;
+    grid-gap: 2rem;
     grid-template-columns: 77.5% auto;
-    gap: 2rem;
-    @media screen and (max-width: map-get($grid-breakpoints, 'md'))  {
+    @media screen and (max-width: map-get($grid-breakpoints, 'md')) {
       grid-template-columns: 1fr;
     }
   }
+
   &-wrapper {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 2rem;
     grid-row-gap: 2rem;
-    @media screen and (max-width: map-get($grid-breakpoints, 'md'))  {
+    grid-template-columns: repeat(3, 1fr);
+    @media screen and (max-width: map-get($grid-breakpoints, 'md')) {
       grid-template-columns: 1fr;
     }
   }
-  &-no_posts {
 
+  &-no_posts {
   }
 }

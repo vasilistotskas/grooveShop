@@ -1,9 +1,10 @@
+import strawberry
+import strawberry_django
 from backend.blog.models import Tag
-from strawberry_django_plus import gql
 
 
-@gql.django.type(Tag)
+@strawberry_django.type(Tag)
 class TagType:
-    id: gql.ID
+    id: strawberry.ID
     name: str
     active: str

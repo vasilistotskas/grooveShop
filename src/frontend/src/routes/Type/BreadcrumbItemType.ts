@@ -1,5 +1,5 @@
 export type BreadcrumbItemType = {
-  name: string,
+  name: string
   to: {
     full_path: string
   }

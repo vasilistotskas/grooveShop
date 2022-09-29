@@ -1,12 +1,12 @@
 .grid-container-cart {
-  display: grid;
-  grid-template-columns: 45% 18% 18% 19%;
-  position: relative;
+  align-items: center;
   background-color: var(--cp-palette-main-fourth);
   border-radius: 5px;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 45% 18% 18% 19%;
   justify-items: center;
   padding: 5px;
+  position: relative;
 
   a {
     color: var(--cp-palette-main-secondary);
@@ -16,9 +16,9 @@
     width: 100%;
 
     a {
+      align-items: center;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      align-items: center;
       justify-items: center;
 
       span {
@@ -32,11 +32,11 @@
   }
 
   &-item-three {
-    grid-template-columns: repeat(3, 1fr);
-    display: grid;
     align-items: center;
-    justify-items: center;
     color: var(--cp-palette-main-fifth);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
 
     a {
       font-size: 14px;
@@ -49,13 +49,13 @@
   }
 
   &-item-five {
-    position: absolute;
     color: var(--cp-palette-main-fifth);
+    position: absolute;
     right: 30px;
   }
 }
 
 .grid-container-table-items {
   display: grid;
-  gap: 10px;
+  grid-gap: 10px;
 }

@@ -1,9 +1,11 @@
 from typing import List
-from strawberry_django_plus import gql
+
+import strawberry.django
+import strawberry_django
 from backend.blog.schemas.author.author_type import AuthorType
 
 
-@gql.type
+@strawberry.type
 class Query:
-    allAuthors: List[AuthorType] = gql.django.field()
-    authorById: AuthorType = gql.django.field()
+    allAuthors: List[AuthorType] = strawberry_django.field()
+    authorById: AuthorType = strawberry_django.field()

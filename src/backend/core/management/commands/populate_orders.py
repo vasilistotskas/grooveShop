@@ -1,7 +1,9 @@
-from faker import Faker
 from random import randrange
+
+from backend.order.models import Order
+from backend.order.models import OrderItem
 from django.core.management import BaseCommand
-from backend.order.models import Order, OrderItem
+from faker import Faker
 
 
 class Command(BaseCommand):
@@ -21,7 +23,7 @@ class Command(BaseCommand):
                 phone=faker.phone_number(),
                 created_at=faker.date_time(),
                 paid_amount=10.0,
-                stripe_token=faker.text(5)
+                stripe_token=faker.text(5),
             )
 
             product_id = randrange(1, 399)
@@ -36,4 +38,4 @@ class Command(BaseCommand):
                     quantity=quantity,
                 )
 
-        self.stdout.write(self.style.SUCCESS('Success'))
+        self.stdout.write(self.style.SUCCESS("Success"))

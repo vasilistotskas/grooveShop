@@ -1,3 +1,5 @@
+from typing import List
+
 app_name = "blog"
 
-urlpatterns = []
+urlpatterns: List[str] = []

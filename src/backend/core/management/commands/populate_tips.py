@@ -1,24 +1,29 @@
 import os
 import random
-from faker import Faker
-from django.conf import settings
-from backend.tip.models import Tip
+
 from backend.app.settings import BASE_DIR
-from django.core.management import BaseCommand
+from backend.tip.models import Tip
+from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.management import BaseCommand
+from faker import Faker
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
         faker = Faker()
 
-        img = 'uploads/tip/no_photo.jpg'
+        img = "uploads/tip/no_photo.jpg"
         if not default_storage.exists(img):
-            img_path = os.path.join(BASE_DIR, 'files/images') + '/no_photo.jpg'
-            img = SimpleUploadedFile(name='no_photo.jpg', content=open(img_path, 'rb').read(), content_type='image/jpeg')
+            img_path = os.path.join(BASE_DIR, "files/images") + "/no_photo.jpg"
+            img = SimpleUploadedFile(
+                name="no_photo.jpg",
+                content=open(img_path, "rb").read(),
+                content_type="image/jpeg",
+            )
 
-        tip_kinds = ['success', 'info', 'error', 'warning']
+        tip_kinds = ["success", "info", "error", "warning"]
 
         for _ in range(4):
             obj, created = Tip.objects.get_or_create(
@@ -28,6 +33,6 @@ class Command(BaseCommand):
                 icon=img,
                 url=settings.APP_BASE_URL,
                 created_at=faker.date_time(),
-                active=True
+                active=True,
             )
-        self.stdout.write(self.style.SUCCESS('Success'))
+        self.stdout.write(self.style.SUCCESS("Success"))

@@ -35,6 +35,7 @@ import {
   ImageTypeOptions,
 } from '@/helpers/MediaStream/ImageUrlEnum'
 import 'swiper/css'
+import { PropType } from 'vue'
 import AppModule from '@/state/app/AppModule'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { getModule } from 'vuex-module-decorators'
@@ -54,7 +55,7 @@ SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard])
   },
   props: {
     slider: {
-      type: Object,
+      type: Object as PropType<SliderModel>,
       required: true,
     },
     style: {

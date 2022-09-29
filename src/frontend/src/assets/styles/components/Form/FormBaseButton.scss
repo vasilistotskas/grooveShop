@@ -1,39 +1,39 @@
 @import '@/assets/styles/base/form_colors';
 
 .disabled {
-  cursor: not-allowed !important;
-  background-color: $gray-100 !important;
-  border-color: $gray-400 !important;
-  opacity: 0.3;
+  background-color: $gray-100;
+  border-color: $gray-400;
+  cursor: not-allowed;
+  opacity: .3;
 }
 
 .button {
-  display: block;
-  color: var(--cp-palette-main-fifth);
-  outline: none;
-  cursor: pointer;
   background: transparent;
-  border-width: 1px;
   border-color: transparent;
+  border-radius: .25rem;
+  border-width: 1px;
   box-shadow: none;
-  padding: 1rem 2rem;
-  border-radius: 0.25rem;
+  color: var(--cp-palette-main-fifth);
+  cursor: pointer;
+  display: block;
   min-width: 6rem;
+  outline: none;
+  padding: 1rem 2rem;
   transition: all 100ms;
 }
 
 .default {
-  background-color: var(--cp-palette-main-fourth) !important;
+  background-color: var(--cp-palette-main-fourth);
 }
 
 .primary {
-  background-color: var(--cp-palette-main-primary) !important;
-  border-color: var(--cp-palette-main-primary) !important;
+  background-color: var(--cp-palette-main-primary);
+  border-color: var(--cp-palette-main-primary);
 }
 
 .primary-two {
-  background-color: var(--cp-palette-main-third) !important;
-  border-color: var(--cp-palette-main-third) !important;
+  background-color: var(--cp-palette-main-third);
+  border-color: var(--cp-palette-main-third);
 }
 
 .danger {

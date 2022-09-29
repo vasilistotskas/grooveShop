@@ -14,7 +14,6 @@
 </template>
 
 <script lang="ts">
-import _, { LoDashStatic } from 'lodash'
 import packageMeta from '@/../package.json'
 import AppModule from '@/state/app/AppModule'
 import CartModule from '@/state/cart/CartModule'
@@ -49,10 +48,6 @@ export default class App extends Vue {
   userModule = getModule(UserModule)
   blogModule = getModule(BlogModule)
   productFavouriteModule = getModule(ProductFavouriteModule)
-
-  get lodash(): LoDashStatic {
-    return _
-  }
 
   get version(): string {
     return packageMeta.version

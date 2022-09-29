@@ -17,7 +17,7 @@
         />
         <label class="checkout-pay_way-input-label" :for="payWay.name">
           <span class="checkout-pay_way-icon">
-            <LottiePlayerMain :animation-data="getPayWayLottie(payWay.name)" :loop="true" />
+            <LottiePlayerMain :icon-path="getPayWayLottie(payWay.name)" :loop="true" />
           </span>
           <span class="checkout-pay_way-name">{{ payWay.name }}</span>
           <span class="checkout-pay_way-cost" v-html="payWayExtraCost(payWay)" />
@@ -35,9 +35,7 @@ import { getModule } from 'vuex-module-decorators'
 import PayWayModel from '@/state/payway/PayWayModel'
 import PayWayModule from '@/state/payway/PayWayModule'
 import { PayWaysEnum } from '@/state/payway/Enum/PayWaysEnum'
-import * as credit_card_lottie from '@/assets/lotties/credit_card.json'
 import LottiePlayerMain from '@/components/Utilities/LottiePlayerMain.vue'
-import * as pay_on_delivery_lottie from '@/assets/lotties/pay_on_delivery.json'
 
 export default defineComponent({
   name: 'CheckoutPayWays',
@@ -65,16 +63,17 @@ export default defineComponent({
 
     const validPayWays: void | Array<PayWayModel> =
       await payWayModule.fetchActivePayWaysFromRemote()
-    const getPayWayLottie = (payWayName: PayWayModel['name']): object => {
+
+    const getPayWayLottie = (payWayName: PayWayModel['name']): string => {
       switch (payWayName) {
         case PayWaysEnum.CREDIT_CARD: {
-          return credit_card_lottie
+          return 'lotties/credit_card.json'
         }
         case PayWaysEnum.PAY_ON_DELIVERY: {
-          return pay_on_delivery_lottie
+          return 'lotties/pay_on_delivery.json'
         }
         default: {
-          return credit_card_lottie
+          return 'lotties/credit_card.json'
         }
       }
     }

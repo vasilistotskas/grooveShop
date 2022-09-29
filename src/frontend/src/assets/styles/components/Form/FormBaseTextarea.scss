@@ -5,22 +5,22 @@
 }
 
 ._textarea {
-  width: 100%;
-  border: 1px solid var(--cp-palette-main-third);
   background-color: var(--cp-palette-main-fourth);
+  border: 1px solid var(--cp-palette-main-third);
+  border-radius: .25rem;
   color: var(--cp-palette-main-fifth);
   outline: none;
-  padding: 0.75rem;
-  border-radius: 0.25rem;
+  padding: .75rem;
+  width: 100%;
 
   &:focus {
-    border-color: #fd000252 !important;
-    box-shadow: 0 0 3px #fd000230 !important;
+    border-color: #fd000252;
+    box-shadow: 0 0 3px #fd000230;
   }
 }
 
 ._textarea-error {
-  border-color: $red-400 !important;
+  border-color: $red-400;
 
   &:focus {
     box-shadow: 0 0 3px $red-400;
@@ -28,13 +28,13 @@
 }
 
 ._loading-icon {
-  position: absolute;
-  top: 50%;
-  right: 0.75rem;
-  width: 14px;
+  color: $green-500;
   height: 14px;
   margin-top: -7px;
-  color: $green-500;
+  position: absolute;
+  right: .75rem;
+  top: 50%;
+  width: 14px;
 }
 
 ._loading-icon-error {

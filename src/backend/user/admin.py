@@ -1,14 +1,30 @@
+from backend.user.models import Country
+from backend.user.models import Region
+from backend.user.models import UserAccount
+from backend.user.models import UserProfile
 from django.contrib import admin
-from .models import UserProfile, Country, Region, UserAccount
 
 
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'first_name', 'last_name', 'phone', 'email',  'city', 'zipcode', 'address', 'place', 'country', 'region', 'image_tag']
-    search_fields = ['user__username', 'email']
+    list_display = [
+        "user",
+        "first_name",
+        "last_name",
+        "phone",
+        "email",
+        "city",
+        "zipcode",
+        "address",
+        "place",
+        "country",
+        "region",
+        "image_tag",
+    ]
+    search_fields = ["user__username", "email"]
 
 
 class UserAccountAdmin(admin.ModelAdmin):
-    list_display = ['email', 'first_name', 'last_name', 'is_active', 'is_staff']
+    list_display = ["email", "first_name", "last_name", "is_active", "is_staff"]
 
 
 class RegionInline(admin.TabularInline):

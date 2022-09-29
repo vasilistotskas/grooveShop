@@ -3,15 +3,13 @@
 </template>
 
 <script lang="ts">
-import { inject } from 'vue'
-import * as Lottie from 'lottie-web'
+import { inject, PropType } from 'vue'
 import { Emitter, EventType } from 'mitt'
 import { Options as Component, Vue } from 'vue-class-component'
-import {
+import Lottie, {
   AnimationConfigWithData,
   AnimationConfigWithPath,
   AnimationItem,
-  LottiePlayer,
   RendererType,
 } from 'lottie-web'
 
@@ -19,11 +17,18 @@ import {
   name: 'LottiePlayerMain',
   props: {
     animationData: {
-      type: [Object, String],
-      required: true,
+      type: [Object as PropType<AnimationItem>, String],
+      required: false,
+      default: undefined,
+    },
+    iconPath: {
+      type: String,
+      required: false,
+      default: undefined,
     },
     loop: {
-      type: [Boolean, Number],
+      type: Boolean,
+      required: false,
       default: false,
     },
     autoPlay: {
@@ -45,16 +50,17 @@ export default class LottiePlayerMain extends Vue {
 
   anim!: AnimationItem
   animationData!: AnimationItem | string
+  iconPath!: string
   loop!: boolean | number
   autoPlay!: boolean
   renderer!: RendererType | undefined
   speed!: number
 
-  get getLottieInstance(): LottiePlayer {
-    return Lottie as unknown as LottiePlayer
+  get getLottieInstance() {
+    return Lottie
   }
 
-  mounted() {
+  mounted(): void {
     this.emitter?.on('lottie-replay', () => this.replay())
     this.emitter?.on('lottie-play', () => this.play())
     this.emitter?.on('lottie-stop', () => this.stop())
@@ -63,11 +69,11 @@ export default class LottiePlayerMain extends Vue {
     this.init()
   }
 
-  beforeDestroy() {
+  beforeDestroy(): void {
     if (this.anim) this.anim.destroy()
   }
 
-  init() {
+  async init(): Promise<void> {
     const settings: AnimationConfigWithPath<RendererType> | AnimationConfigWithData<RendererType> =
       {
         container: this.$refs.animation as Element,
@@ -75,8 +81,13 @@ export default class LottiePlayerMain extends Vue {
         loop: this.loop,
         autoplay: this.autoPlay,
         animationData: this.animationData,
+        path: this.iconPath,
       }
-    this.anim = this.getLottieInstance.loadAnimation(settings)
+    try {
+      this.anim = await this.getLottieInstance.loadAnimation(settings)
+    } catch (error) {
+      console.error(error)
+    }
     this.anim.addEventListener('loopComplete', () => {
       this.$emit('loopComplete', this.anim)
     })

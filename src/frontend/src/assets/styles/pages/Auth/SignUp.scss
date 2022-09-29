@@ -3,8 +3,8 @@
 }
 
 .buttons {
-  margin-top: 1.25rem;
   grid-area: buttons;
+  margin-top: 1.25rem;
 }
 
 .name {
@@ -24,9 +24,9 @@
 }
 
 .sign-up-card {
-  max-width: 500px;
   display: block;
   margin: 0 auto;
+  max-width: 500px;
 
   .card-body {
     grid-template-rows: unset;
@@ -40,37 +40,39 @@
 }
 
 #registration-complete-view {
-  display: grid;
-  justify-content: center;
   align-content: center;
+  display: grid;
   height: 200px;
+  justify-content: center;
   text-align: center;
 
-  span, p {
+  span,
+  p {
     color: var(--cp-palette-main-fifth);
   }
 }
 
-.registration-resend-action, .register-login-field a {
+.registration-resend-action,
+.register-login-field a {
   color: var(--cp-palette-main-secondary);
-  font-weight: 500;
   font-size: 17px;
+  font-weight: 500;
 
   &:hover {
+    color: var(--cp-palette-main-primary);
     cursor: pointer;
-    color: var(--cp-palette-main-primary) !important;
   }
 }
 
 .registration-complete-message {
   max-width: 40vw;
   &-content {
-    position: relative;
-    padding: 20px;
     background: var(--cp-palette-main-fourth);
+    background: var(--cp-palette-main-secondary);
     border-radius: 10px;
     box-shadow: 0 0 7px 0 rgb(153 153 153 / 40%);
-    background: var(--cp-palette-main-secondary);
+    padding: 20px;
+    position: relative;
     span {
       color: var(--cp-palette-main-fifth);
     }

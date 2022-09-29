@@ -10,11 +10,11 @@ header {
 
   .predeader {
     background-color: var(--cp-palette-main-fifth);
-    text-align: center;
+    color: var(--cp-palette-main-fourth);
     font-size: 14px;
-    color: var(--cp-palette-main-fourth) !important;
+    text-align: center;
     transform: translate3d(0, 0, 0);
-    transition: all 0.3s ease-in-out;
+    transition: all .3s ease-in-out;
 
     &.predeader--hidden {
       box-shadow: none;
@@ -23,9 +23,9 @@ header {
 
     p {
       color: var(--cp-palette-main-fifth);
-      padding-top: 5px;
-      padding-bottom: 5px;
       margin: 0;
+      padding-bottom: 5px;
+      padding-top: 5px;
     }
 
     a {
