@@ -1,15 +1,15 @@
 @import '@/assets/styles/base/variables';
 
 .user-review-product-content {
-  display: inline-flex;
-  gap: 5px;
   align-items: center;
+  display: inline-flex;
+  grid-gap: 5px;
   justify-items: center;
 
   .user-review-product-count {
     span {
-      font-size: 14px;
       color: var(--cp-palette-main-third);
+      font-size: 14px;
     }
   }
 }
@@ -17,39 +17,35 @@
 .user-review-product-settings {
   color: transparent;
   font-size: 0;
-  position: absolute;
-  top: 8px;
-  right: 4px;
-  z-index: 10;
-  width: 34px;
   height: 34px;
+  position: absolute;
+  right: 4px;
   text-align: center;
-  -webkit-tap-highlight-color: transparent;
+  top: 8px;
+  width: 34px;
+  z-index: 10;
 
   &:hover {
     cursor: pointer;
   }
 
   &:before {
-    content: "\2807";
-    -webkit-transition: color .1s ease-in-out;
-    transition: color .1s ease-in-out;
-    margin-right: 0;
+    color: var(--cp-palette-main-fifth);
+    content: '\2807';
+    display: inline-block;
+    font-size: 20px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
     height: 34px;
     line-height: 34px;
-    color: var(--cp-palette-main-fifth);
-    font-size: 20px;
-    display: inline-block;
-    width: 1em;
+    margin-right: 0;
+    speak: none;
     text-align: center;
-    text-transform: none;
     text-decoration: none;
-    font-weight: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-variant: normal;
-    font-style: normal;
-    speak: none
+    text-transform: none;
+    transition: color .1s ease-in-out;
+    width: 1em;
   }
 }
 
@@ -61,17 +57,17 @@
   }
 
   &-image {
-    width: 100px;
-    height: 100px;
-    border: 1px solid rgba(246, 139, 36, 0.4);
-    border-radius: 50%;
     background-position: center;
     background-size: cover;
+    border: 1px solid rgba(246, 139, 36, .4);
+    border-radius: 50%;
+    font: inherit;
+    font-size: 100%;
+    height: 100px;
     overflow: hidden;
     padding: 0;
     vertical-align: baseline;
-    font: inherit;
-    font-size: 100%;
+    width: 100px;
   }
 
   &-body {
@@ -82,8 +78,8 @@
     margin-top: 5px;
 
     .star {
-      width: 18px;
       height: 18px;
+      width: 18px;
 
       &-background {
         color: $rating-starts;
@@ -100,46 +96,42 @@
     }
 
     span {
-      font-size: 13px;
       color: var(--cp-palette-main-fifth);
+      font-size: 13px;
     }
   }
 }
 
 .user-review-actions {
   &-menu {
-    position: absolute;
-    top: 0;
-    right: 0;
-    -webkit-transform-origin: -webkit-calc(100% - 30px) 30px;
-    -ms-transform-origin: calc(100% - 30px) 30px;
-    transform-origin: calc(100% - 30px) 30px;
-    z-index: 9;
-    width: auto;
-    max-width: 196px;
-    border-radius: 8px;
-    -webkit-box-shadow: 0 2px 4px rgb(112 112 112 / 33%);
-    box-shadow: 0 2px 4px rgb(112 112 112 / 33%);
-    background: var(--cp-palette-main-secondary);
-    padding: 20px 60px 20px 36px;
-    -webkit-animation: scaleFade .15s;
     animation: scaleFade .15s;
+    background: var(--cp-palette-main-secondary);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgb(112 112 112 / 33%);
+    max-width: 196px;
+    padding: 20px 60px 20px 36px;
+    position: absolute;
+    right: 0;
     text-align: left;
+    top: 0;
+    transform-origin: calc(100% - 30px) 30px;
+    width: auto;
+    z-index: 9;
   }
 
   &-controls {
     display: block;
   }
 
-  &-edit, &-delete {
+  &-edit,
+  &-delete {
     a {
+      color: var(--cp-palette-main-third);
+      display: block;
       font-size: 14px;
       line-height: 18px;
-      display: block;
-      position: relative;
       padding: 8px 0 7px;
-      color: var(--cp-palette-main-third);
-      -webkit-tap-highlight-color: transparent;
+      position: relative;
 
       &:hover {
         color: var(--cp-palette-main-fifth);

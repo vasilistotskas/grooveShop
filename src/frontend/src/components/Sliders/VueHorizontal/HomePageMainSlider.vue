@@ -38,6 +38,7 @@ import {
   ImageTypeOptions,
 } from '@/helpers/MediaStream/ImageUrlEnum'
 import 'swiper/css'
+import { PropType } from 'vue'
 import VueHorizontal from 'vue-horizontal'
 import AppModule from '@/state/app/AppModule'
 import { getModule } from 'vuex-module-decorators'
@@ -53,7 +54,7 @@ import GrooveImage from '@/components/Utilities/GrooveImage.vue'
   },
   props: {
     slider: {
-      type: Object,
+      type: Object as PropType<SliderModel>,
       required: true,
     },
     imgHeight: {

@@ -10,8 +10,8 @@ export default class BlogPostModel extends EntityBase {
   mainImageFilename!: string
   numberOfLikes!: number
   metaDescription!: string
-  publishDate!: string
-  published!: boolean
+  publishedAt!: string
+  isPublished!: boolean
   slug!: string
   likes!: Array<PostLikesModel>
   subtitle!: string

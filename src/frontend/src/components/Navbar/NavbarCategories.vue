@@ -48,6 +48,7 @@
 </template>
 
 <script lang="ts">
+import { PropType } from 'vue'
 import { cloneDeep } from 'lodash'
 import { onClickOutside } from '@vueuse/core'
 import AppModule from '@/state/app/AppModule'
@@ -63,7 +64,7 @@ import { ImageTypeOptions } from '@/helpers/MediaStream/ImageUrlEnum'
     GrooveImage,
   },
   props: {
-    categoriesTree: Array,
+    categoriesTree: Array as PropType<Array<CategoryModel>>,
     mainToggleButton: HTMLElement,
     navbarProductsButton: HTMLElement,
   },

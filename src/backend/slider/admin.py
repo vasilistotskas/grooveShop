@@ -1,31 +1,33 @@
+from typing import List
+
 import admin_thumbnails
+from backend.slider.models import Slide
+from backend.slider.models import Slider
 from django.contrib import admin
-from .models import Slider, Slide
 
 
-@admin_thumbnails.thumbnail('image')
+@admin_thumbnails.thumbnail("image")
 class SliderSlidesInline(admin.StackedInline):
     model = Slide
-    exclude = []
-    readonly_fields = ('id', 'thumbnail')
+    exclude: List[str] = []
+    readonly_fields = ("id", "thumbnail")
     extra = 0
 
 
 class SliderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'image_tag']
-    search_fields = ['id', 'title']
-    list_filter = ['slide']
+    list_display = ["id", "title", "image_tag"]
+    search_fields = ["id", "title"]
     inlines = [SliderSlidesInline]
-    prepopulated_fields = {'title': ('name',)}
-    readonly_fields = ('image_tag', 'thumbnail')
-    actions = ['']
+    prepopulated_fields = {"title": ("name",)}
+    readonly_fields = ("image_tag", "thumbnail")
+    actions = [""]
 
 
 class SlideAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'image_tag', 'order_position']
-    search_fields = ['id', 'title', 'slider__name']
-    readonly_fields = ('image_tag', 'thumbnail')
-    actions = ['']
+    list_display = ["id", "title", "image_tag", "order_position"]
+    search_fields = ["id", "title", "slider__name"]
+    readonly_fields = ("image_tag", "thumbnail")
+    actions = [""]
 
 
 admin.site.register(Slider, SliderAdmin)

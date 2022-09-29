@@ -33,9 +33,9 @@ const fetchInstaData = (url: string) => {
         hasError.value = true
       } else {
         instagramData.value = response.data
-        if (instagramData) {
-          paginationNextUrl.value = instagramData._rawValue.paging.next
-          paginationPrevUrl.value = instagramData._rawValue.paging.previous
+        if (instagramData.value) {
+          paginationNextUrl.value = instagramData.value._rawValue.paging.next
+          paginationPrevUrl.value = instagramData.value._rawValue.paging.previous
         }
         isLoading.value = false
       }

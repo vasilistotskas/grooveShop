@@ -1,8 +1,15 @@
+import strawberry.django
+import strawberry_django
 from backend.blog.models import Post
-from strawberry_django_plus import gql
+from strawberry import auto
 
 
-@gql.django.input(Post)
-class UpdatePostLikesInputPartial(gql.NodeInput):
-    id: gql.ID
-    user_id: gql.ID
+@strawberry_django.input(Post)
+class PostLikesInput:
+    id: auto
+    user_id: strawberry.ID
+
+
+@strawberry_django.input(Post, partial=True)
+class PostLikesPartialInput(PostLikesInput):
+    pass

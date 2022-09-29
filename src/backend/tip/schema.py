@@ -1,14 +1,14 @@
 import os
-import strawberry
 from typing import List
+
+import strawberry.django
 import strawberry_django
-from strawberry import auto
-from django.conf import settings
 from backend.tip.models import Tip
-from strawberry_django_plus import gql
+from django.conf import settings
+from strawberry import auto
 
 
-@gql.django.type(Tip)
+@strawberry_django.type(Tip)
 class TipType:
     id: strawberry.ID
     title: str
@@ -19,26 +19,22 @@ class TipType:
     created_at: auto
     active: bool
 
-    @gql.django.field
+    @strawberry_django.field
     def main_image_absolute_url(self) -> str:
-        try:
-            if self.id is not None:
-                icon = settings.BACKEND_BASE_URL + self.icon.url
-            else:
-                icon = ""
-            return icon
-        except:
-            return ""
+        if self.icon:
+            icon = settings.BACKEND_BASE_URL + self.icon.url
+        else:
+            icon = ""
+        return icon
 
-    @gql.django.field
+    @strawberry_django.field
     def main_image_filename(self) -> str:
-        try:
+        if self.icon:
             return os.path.basename(self.icon.name)
-        except:
+        else:
             return ""
 
 
-@gql.type
+@strawberry.type
 class Query:
-    allTips: List[TipType] = gql.django.field()
-
+    allTips: List[TipType] = strawberry_django.field()

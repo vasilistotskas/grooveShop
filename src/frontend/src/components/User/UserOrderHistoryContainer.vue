@@ -20,6 +20,7 @@
 </template>
 
 <script lang="ts">
+import { PropType } from 'vue'
 import { forEach } from 'lodash'
 import UserOrderModel from '@/state/user/order/UserOrderModel'
 import OrderItemModel from '@/state/user/order/OrderItemModel'
@@ -34,7 +35,7 @@ import UserOrderHistoryCard from '@/components/User/UserOrderHistoryCard.vue'
     UserOrderHistoryCard,
   },
   props: {
-    order: Object,
+    order: Object as PropType<UserOrderModel>,
   },
 })
 export default class UserOrderHistoryContainer extends Vue {

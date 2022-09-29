@@ -1,5 +1,9 @@
+from backend.blog.models import Author
+from backend.blog.models import Category
+from backend.blog.models import Comment
+from backend.blog.models import Post
+from backend.blog.models import Tag
 from django.contrib import admin
-from .models import Author, Post, Tag, Category, Comment
 
 
 @admin.register(Author)
@@ -26,19 +30,19 @@ class PostAdmin(admin.ModelAdmin):
         "title",
         "subtitle",
         "slug",
-        "publish_date",
-        "published",
+        "published_at",
+        "is_published",
     )
     list_filter = (
-        "published",
-        "publish_date",
+        "is_published",
+        "published_at",
     )
     list_editable = (
         "title",
         "subtitle",
         "slug",
-        "publish_date",
-        "published",
+        "published_at",
+        "is_published",
     )
     search_fields = (
         "title",
@@ -52,7 +56,7 @@ class PostAdmin(admin.ModelAdmin):
             "subtitle",
         )
     }
-    date_hierarchy = "publish_date"
+    date_hierarchy = "published_at"
     save_on_top = True
 
 

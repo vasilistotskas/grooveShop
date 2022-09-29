@@ -1,4 +1,4 @@
-FROM python:3.9-alpine3.13
+FROM python:3.10.7-alpine3.16
 LABEL maintainer="groove.com"
 
 ENV PYTHONUNBUFFERED 1

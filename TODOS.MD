@@ -2,6 +2,8 @@
 -- tip an thelw na dw error 404 me debug afairw to route apo to front --
 ### ---BLOG MAIN PAGE--- ###
 
+### STRAWBERRY INPUTS NA TA SPASW SE : # filters , # order, # types, # input types, # partial input types
+
 # blog tips:
     ---> Estimate Time: 14 Hours
     tip title
@@ -15,7 +17,7 @@
     blog listing - slider with selected posts --> Estimate Time: 12 Hours
     newsletter mails in db --> Estimate Time: 1 Hour
     3rd party newsletter integration --> Estimate Time: 30 Mins
-    slider with youtube / uploaded video --> Estimate Time: 8 Hours 
+    slider with youtube / uploaded video --> Estimate Time: 8 Hours
     instagram api and slider --> Estimate Time: 12 - 20 Hours
     footer --> Estimate Time: 3 Hours
     link share content --> Estimate Time: 4 Hours

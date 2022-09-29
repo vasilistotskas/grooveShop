@@ -1,26 +1,30 @@
-from strawberry_django_plus import gql
+import strawberry.django
+import strawberry_django
 from backend.blog.models import Comment
 
 
-@gql.django.input(Comment)
-class UpdateCommentLikesInputPartial(gql.NodeInput):
-    id: gql.ID
-    user_id: gql.ID
+# input types
 
 
-@gql.django.input(Comment)
+@strawberry_django.input(Comment)
+class UpdateCommentLikesInput:
+    id: strawberry.ID
+    user_id: strawberry.ID
+
+
+@strawberry_django.input(Comment)
+class UpdateCommentInput:
+    comment_id: strawberry.ID
+    content: str
+
+
+@strawberry_django.input(Comment)
 class CreateCommentInput:
-    post_id: gql.ID
+    post_id: strawberry.ID
     user_email: str
     content: str
 
 
-@gql.django.partial(Comment)
-class UpdateCommentInputPartial(gql.NodeInput):
-    comment_id: gql.ID
-    content: str
-
-
-@gql.django.input(Comment)
+@strawberry_django.input(Comment)
 class DeleteCommentInput:
-    comment_id: gql.ID
+    comment_id: strawberry.ID

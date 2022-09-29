@@ -57,7 +57,7 @@ export default class BlogModule extends AppBaseModule {
   }
 
   get getPublishedPosts(): Array<BlogPostModel> {
-    return this.allPosts.filter((post) => post.published)
+    return this.allPosts.filter((post) => post.isPublished)
   }
 
   get getAuthorById(): BlogAuthorModel {
@@ -155,8 +155,8 @@ export default class BlogModule extends AppBaseModule {
               id
               title
               subtitle
-              publishDate
-              published
+              publishedAt
+              isPublished
               metaDescription
               mainImageAbsoluteUrl
               mainImageFilename
@@ -276,8 +276,8 @@ export default class BlogModule extends AppBaseModule {
               id
               title
               subtitle
-              publishDate
-              published
+              publishedAt
+              isPublished
               metaDescription
               mainImageAbsoluteUrl
               mainImageFilename
@@ -325,7 +325,7 @@ export default class BlogModule extends AppBaseModule {
               id
               title
               subtitle
-              publishDate
+              publishedAt
               metaDescription
               mainImageAbsoluteUrl
               mainImageFilename
@@ -422,34 +422,46 @@ export default class BlogModule extends AppBaseModule {
       const comments = await clientApollo.query({
         query: gql`
           query {
-            commentsByUser(userEmail: "${String(userEmail)}") {
+            commentsByUser(userEmail: "bill@bill.gr") {
               content
               createdAt
-              isApproved
+              id
               numberOfLikes
-              user {
-                id
-                firstName
-                lastName
-                email
-              }
+              isApproved
               post {
+                body
+                createdAt
                 id
-                title
-                subtitle
-                publishDate
-                published
-                metaDescription
+                isPublished
+                likes {
+                  id
+                }
                 mainImageAbsoluteUrl
                 mainImageFilename
-                slug
                 numberOfLikes
+                publishedAt
+                metaDescription
+                slug
+                subtitle
+                title
+                updatedAt
+                tags {
+                  id
+                  name
+                }
+                author {
+                  id
+                  user {
+                    id
+                  }
+                }
                 category {
                   id
                 }
-                tags {
-                  name
-                }
+              }
+              user {
+                id
+                email
               }
             }
           }
@@ -481,8 +493,8 @@ export default class BlogModule extends AppBaseModule {
                 id
                 title
                 subtitle
-                publishDate
-                published
+                publishedAt
+                isPublished
                 metaDescription
                 mainImageAbsoluteUrl
                 mainImageFilename
@@ -603,8 +615,8 @@ export default class BlogModule extends AppBaseModule {
                   id
                   title
                   subtitle
-                  publishDate
-                  published
+                  publishedAt
+                  isPublished
                   metaDescription
                   mainImageAbsoluteUrl
                   mainImageFilename
@@ -654,8 +666,8 @@ export default class BlogModule extends AppBaseModule {
                   id
                   title
                   subtitle
-                  publishDate
-                  published
+                  publishedAt
+                  isPublished
                   metaDescription
                   mainImageAbsoluteUrl
                   mainImageFilename

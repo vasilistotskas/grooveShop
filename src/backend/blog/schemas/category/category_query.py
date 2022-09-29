@@ -1,8 +1,10 @@
 from typing import List
-from strawberry_django_plus import gql
+
+import strawberry.django
+import strawberry_django
 from backend.blog.schemas.category.category_type import CategoryType
 
 
-@gql.type
+@strawberry.type
 class Query:
-    allCategories: List[CategoryType] = gql.django.field()
+    allCategories: List[CategoryType] = strawberry_django.field()

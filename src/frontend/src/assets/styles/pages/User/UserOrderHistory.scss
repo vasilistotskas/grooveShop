@@ -1,9 +1,10 @@
 .order-history-grid {
-  &-head, &-body a {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 70px;
+  &-head,
+  &-body a {
     align-items: center;
+    display: grid;
+    grid-gap: 70px;
+    grid-template-columns: repeat(5, 1fr);
     justify-items: center;
   }
 
@@ -15,10 +16,10 @@
   }
 
   &-body {
-    padding: 10px;
-    border: 1px solid var(--cp-palette-main-third);
     background-color: var(--cp-palette-main-fourth);
+    border: 1px solid var(--cp-palette-main-third);
     border-radius: 8px;
+    padding: 10px;
 
     &:hover {
       box-shadow: 0 0 2px 1px #f800007d;
@@ -27,8 +28,8 @@
 }
 
 .card-body-order-history {
-  background-color: var(--cp-palette-main-secondary) !important;
+  background-color: var(--cp-palette-main-secondary);
   border-radius: 10px;
-  padding-top: 30px !important;
-  padding-bottom: 30px !important;
+  padding-bottom: 30px;
+  padding-top: 30px;
 }

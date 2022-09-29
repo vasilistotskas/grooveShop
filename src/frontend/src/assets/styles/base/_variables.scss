@@ -5,7 +5,7 @@ $color-palette-main-fourth: #0d1117;
 $color-palette-main-fifth: #dbdfe3;
 
 $color-palette-main-primary-light: #b70000;
-$color-palette-main-secondary-light: #ffffff;
+$color-palette-main-secondary-light: #fff;
 $color-palette-main-third-light: #dfdfdf;
 $color-palette-main-fourth-light: #f1f1f1;
 $color-palette-main-fifth-light: #080808;
@@ -15,20 +15,20 @@ $rating-starts: #f68b24;
 $color-palette-global-green: #43993e;
 
 $grid-breakpoints: (
-        xs: 0,
-        sm: 576px,
-        md: 768px,
-        lg: 992px,
-        xl: 1200px,
-        xlplus: 1440px,
-        xxl: 1620px,
-        xxxl: 1920px,
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xlplus: 1440px,
+  xxl: 1620px,
+  xxxl: 1920px,
 ) !default;
 
 $container-sizes: (
-        sm: 100%,
-        md: 1160px,
-        lg: 1560px
+  sm: 100%,
+  md: 1160px,
+  lg: 1560px,
 ) !default;
 
 @mixin container {
@@ -41,4 +41,3 @@ $container-sizes: (
     max-width: map-get($container-sizes, 'sm');
   }
 }
-
