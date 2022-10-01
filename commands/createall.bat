@@ -51,3 +51,8 @@ REM LINT SCSS
 scss-lint -c .scss-lint.yml
 npm run lint
 npm run lint:fix
+
+REM PACKAGE.JSON
+# npm install -g npm-check-updates -> IF NOT INSTALLED
+# ncu -> CHECK UPDATES
+# ncu -u -> to upgrade package.json
