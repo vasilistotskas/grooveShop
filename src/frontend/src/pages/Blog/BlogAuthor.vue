@@ -66,12 +66,12 @@ export default class BlogAuthor extends Vue {
     )
   }
 
-  async created(): Promise<void> {
-    await this.blogModule.fetchAuthorByIdFromRemote()
+  created(): void {
+    this.blogModule.fetchAuthorByIdFromRemote()
   }
 
-  async updated(): Promise<void> {
-    await this.blogModule.fetchAuthorByIdFromRemote()
+  updated(): void {
+    this.blogModule.fetchAuthorByIdFromRemote()
   }
 }
 </script>

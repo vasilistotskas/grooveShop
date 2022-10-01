@@ -116,11 +116,11 @@ export default class BlogPost extends Vue {
     return this.userModule.getUserData.id
   }
 
-  async created(): Promise<void> {
-    await this.blogModule.fetchPostBySlugFromRemote()
-    await this.blogModule.fetchCommentsByPost()
+  created(): void {
+    this.blogModule.fetchPostBySlugFromRemote()
+    this.blogModule.fetchCommentsByPost()
     if (this.isAuthenticated) {
-      await this.blogModule.fetchCommentByUserToPost(this.userModule.getUserData.email)
+      this.blogModule.fetchCommentByUserToPost(this.userModule.getUserData.email)
     }
   }
 

@@ -51,7 +51,7 @@ export default class VerifyEmailResendInput extends Vue {
   email = ''
   envelopeIcon = faEnvelope
 
-  async activationEmailResend(email: string): Promise<void> {
+  activationEmailResend(email: string): void {
     let finalEmail = ''
     const emailFromLocalStorage = this.signupModule.getRegistrationEmail
     if (emailFromLocalStorage) {
@@ -61,7 +61,7 @@ export default class VerifyEmailResendInput extends Vue {
       finalEmail = email
     }
 
-    await this.signupModule.activationEmailResend(finalEmail)
+    this.signupModule.activationEmailResend(finalEmail)
   }
 }
 </script>

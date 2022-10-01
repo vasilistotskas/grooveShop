@@ -22,14 +22,15 @@ export default class Offline extends Vue {
   refreshPage(): void {
     window.location.reload()
   }
-  async checkNetworkAndReload() {
+  checkNetworkAndReload() {
     try {
-      const response = await fetch('.')
-      // Verify we get a valid response from the server
-      if (response.status >= 200 && response.status < 500) {
-        window.location.reload()
-        return
-      }
+      fetch('.').then((response: Response) => {
+        // Verify we get a valid response from the server
+        if (response.status >= 200 && response.status < 500) {
+          this.refreshPage()
+          return
+        }
+      })
     } catch {
       // Unable to connect to the server, ignore.
     }

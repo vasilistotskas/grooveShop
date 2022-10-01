@@ -189,8 +189,8 @@ export default class PasswordRestConfirm extends Vue {
     }
   }
 
-  async clearResetStatus(): Promise<void> {
-    await this.passwordModule.clearResetStatus()
+  clearResetStatus(): void {
+    this.passwordModule.clearResetStatus()
   }
 }
 </script>

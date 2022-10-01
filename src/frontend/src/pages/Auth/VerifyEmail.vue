@@ -77,21 +77,21 @@ export default class VerifyEmail extends Vue {
     this.activateAccount()
   }
 
-  async activateAccount(): Promise<void> {
-    await this.signupModule.activateAccount()
+  activateAccount(): void {
+    this.signupModule.activateAccount()
   }
 
-  async clearActivationStatus(): Promise<void> {
-    await this.signupModule.clearActivationStatus()
+  clearActivationStatus(): void {
+    this.signupModule.clearActivationStatus()
   }
 
-  async activationEmailResend(): Promise<void> {
+  activationEmailResend(): void {
     const email = localStorage.getItem('registrationEmail')
 
     if (email) {
-      await this.signupModule.activationEmailResend(email)
+      this.signupModule.activationEmailResend(email)
     } else {
-      await router.push('/accounts/activate/verify_mail_resend')
+      router.push('/accounts/activate/verify_mail_resend')
     }
   }
 

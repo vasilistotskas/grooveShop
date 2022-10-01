@@ -57,7 +57,7 @@ export default class ThemeModeSwitcher extends Vue {
     }
   }
 
-  async created(): Promise<void> {
+  created(): void {
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
       this.themeModeFromPreference = e.matches
         ? AppSettingsThemeModeOption.dark

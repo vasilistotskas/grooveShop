@@ -195,14 +195,13 @@ export default class Product extends Vue {
     return this.product.active === 'False' || this.product.stock <= 0
   }
 
-  async created(): Promise<void> {
+  created(): void {
     document.title = this.$route.params.product_slug as string
 
-    await Promise.all([
-      await this.productModule.fetchProductFromRemote(),
-      this.productModule.updateProductHits(),
-    ])
-    await this.appModule.updateMetaTagElement({
+    this.productModule.fetchProductFromRemote().then(() => {
+      this.productModule.updateProductHits()
+    })
+    this.appModule.updateMetaTagElement({
       metaName: 'description',
       metaAttribute: 'content',
       newValue: this.product.description,

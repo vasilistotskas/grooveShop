@@ -25,6 +25,7 @@
     "@vee-validate/zod": "^4.6.10",
     "@vue/apollo-option": "^4.0.0-alpha.20",
     "@vue/cli-plugin-eslint": "^5.0.8",
+    "@vueuse/components": "^9.3.0",
     "@vueuse/core": "^9.3.0",
     "axios": "^0.27.2",
     "core-js": "^3.25.3",

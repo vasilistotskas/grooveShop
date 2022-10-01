@@ -195,17 +195,17 @@ export default class Register extends Vue {
     if (emailFromLocalStorage) this.activationEmailAtLocalStorage = true
   }
 
-  async clearRegistrationStatus(): Promise<void> {
-    await this.signupModule.clearRegistrationStatus()
+  clearRegistrationStatus(): void {
+    this.signupModule.clearRegistrationStatus()
   }
 
-  async activationEmailResend(): Promise<void> {
+  activationEmailResend(): void {
     const email = localStorage.getItem('registrationEmail')
 
     if (email) {
-      await this.signupModule.activationEmailResend(email)
+      this.signupModule.activationEmailResend(email)
     } else {
-      await router.push('/accounts/activate/verify_mail_resend')
+      router.push('/accounts/activate/verify_mail_resend')
     }
   }
 

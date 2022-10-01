@@ -1,7 +1,9 @@
 import router from '@/routes'
+import { AxiosResponse } from 'axios'
 import { getModule } from 'vuex-module-decorators'
 import { Options as Component, Vue } from 'vue-class-component'
 import PaginationModule from '@/state/pagination/PaginationModule'
+import PaginatedModel from '@/state/pagination/Model/PaginatedModel'
 import { PaginationResults, QueryParamsType } from '@/state/pagination/Type/PaginationTypes'
 import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
@@ -51,7 +53,7 @@ export default class PaginatedComponent<TPaginatedModel>
     return 1
   }
 
-  fetchPaginationData(): Promise<void> | undefined {
+  fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> | undefined {
     return
   }
 }

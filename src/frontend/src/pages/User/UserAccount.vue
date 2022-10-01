@@ -187,7 +187,7 @@ export default class UserAccount extends Vue {
     }
   }
 
-  async logout(): Promise<void> {
+  logout(): void {
     this.userModule.unsetUserData()
     this.authModule.logout().then(() => {
       this.productFavouriteModule.unsetFavourites()
@@ -196,7 +196,7 @@ export default class UserAccount extends Vue {
       this.productReviewModule.unsetUserReviews()
       this.countryModule.unsetUserCountryData()
     })
-    await router.push('/')
+    router.push('/')
   }
 }
 </script>

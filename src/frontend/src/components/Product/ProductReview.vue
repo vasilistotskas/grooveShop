@@ -257,8 +257,8 @@ export default class ProductReview extends Vue {
     )
   }
 
-  async mounted(): Promise<void> {
-    await this.reviewModuleInitialize()
+  mounted(): void {
+    this.reviewModuleInitialize()
   }
 
   public lockSelection(event: TouchEvent | MouseEvent) {
@@ -296,7 +296,7 @@ export default class ProductReview extends Vue {
     this.newSelectionRatio = leftBound / rightBound
   }
 
-  public async reviewHandle(): Promise<void> {
+  public reviewHandle(): void {
     const formEl = document.getElementById('productReviewForm') as HTMLFormElement
     const data = new FormData(formEl)
 
@@ -308,7 +308,7 @@ export default class ProductReview extends Vue {
       data.append('rate', this.rate as unknown as string)
     }
 
-    await this.productReviewModule.toggleReview({
+    this.productReviewModule.toggleReview({
       FormData: data,
       IsAuthenticated: this.authModule.isAuthenticated,
       productId: this.productModule.getProductId,
@@ -316,12 +316,12 @@ export default class ProductReview extends Vue {
     })
   }
 
-  public async reviewModuleInitialize(): Promise<void> {
-    await this.productModule.fetchProductFromRemote()
+  public reviewModuleInitialize(): void {
+    this.productModule.fetchProductFromRemote()
     const IsAuthenticated: boolean = this.authModule.isAuthenticated
 
     if (IsAuthenticated) {
-      await this.productReviewModule.fetchUserToProductReviewFromRemote({
+      this.productReviewModule.fetchUserToProductReviewFromRemote({
         productId: this.productModule.getProductId,
         userId: this.userModule.getUserId,
       })

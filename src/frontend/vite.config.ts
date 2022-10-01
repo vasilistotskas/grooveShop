@@ -8,7 +8,11 @@ import vueI18n from '@intlify/vite-plugin-vue-i18n'
 import EnvironmentPlugin from 'vite-plugin-environment'
 
 export default defineConfig({
-  resolve: { alias: { '@': path.resolve(__dirname, 'src') } },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
   envDir: './env/',
   plugins: [
     vue(),

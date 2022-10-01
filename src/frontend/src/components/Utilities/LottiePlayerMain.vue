@@ -73,7 +73,7 @@ export default class LottiePlayerMain extends Vue {
     if (this.anim) this.anim.destroy()
   }
 
-  async init(): Promise<void> {
+  init(): void {
     const settings: AnimationConfigWithPath<RendererType> | AnimationConfigWithData<RendererType> =
       {
         container: this.$refs.animation as Element,
@@ -84,7 +84,7 @@ export default class LottiePlayerMain extends Vue {
         path: this.iconPath,
       }
     try {
-      this.anim = await this.getLottieInstance.loadAnimation(settings)
+      this.anim = this.getLottieInstance.loadAnimation(settings)
     } catch (error) {
       console.error(error)
     }

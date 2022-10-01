@@ -99,16 +99,16 @@ export default class PasswordReset extends Vue {
     document.title = 'Password Reset'
   }
 
-  async unmounted(): Promise<void> {
-    await this.passwordModule.clearEmailStatus()
+  unmounted(): void {
+    this.passwordModule.clearEmailStatus()
   }
 
-  async sendResetEmail(email: string): Promise<void> {
-    await this.passwordModule.sendPasswordResetEmail(email)
+  sendResetEmail(email: string): void {
+    this.passwordModule.sendPasswordResetEmail(email)
   }
 
-  async clearEmailStatus(): Promise<void> {
-    await this.passwordModule.clearEmailStatus()
+  clearEmailStatus(): void {
+    this.passwordModule.clearEmailStatus()
   }
 }
 </script>

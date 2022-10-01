@@ -37,12 +37,12 @@ export default class BlogPostsByTag extends Vue {
     return this.blogModule.getPostsByTag
   }
 
-  async created(): Promise<void> {
-    await this.blogModule.fetchPostsByTagFromRemote()
+  created(): void {
+    this.blogModule.fetchPostsByTagFromRemote()
   }
 
-  async updated(): Promise<void> {
-    await this.blogModule.fetchPostsByTagFromRemote()
+  updated(): void {
+    this.blogModule.fetchPostsByTagFromRemote()
   }
 }
 </script>

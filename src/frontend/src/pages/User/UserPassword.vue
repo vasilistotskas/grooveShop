@@ -161,13 +161,14 @@ export default class UserPassword extends Vue {
     }
   }
 
-  async clearAllAccountSessions(): Promise<void> {
-    await this.authModule.clearAllAccountSessions()
-    this.productFavouriteModule.unsetFavourites()
-    this.productFavouriteModule.unsetUserFavourites()
-    this.productReviewModule.unsetUserToProductReview()
-    this.productReviewModule.unsetUserReviews()
-    this.countryModule.unsetUserCountryData()
+  clearAllAccountSessions(): void {
+    this.authModule.clearAllAccountSessions().then(() => {
+      this.productFavouriteModule.unsetFavourites()
+      this.productFavouriteModule.unsetUserFavourites()
+      this.productReviewModule.unsetUserToProductReview()
+      this.productReviewModule.unsetUserReviews()
+      this.countryModule.unsetUserCountryData()
+    })
   }
 }
 </script>

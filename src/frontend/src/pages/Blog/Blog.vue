@@ -38,10 +38,10 @@ export default class Blog extends Vue {
     return this.blogModule.getAllPosts
   }
 
-  async mounted(): Promise<void> {
+  mounted(): void {
     document.title = 'Blog'
 
-    await this.blogModule.fetchAllPostsFromRemote()
+    this.blogModule.fetchAllPostsFromRemote()
   }
 }
 </script>

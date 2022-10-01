@@ -63,8 +63,8 @@ export default class BlogAuthorPostList extends Vue {
     return this.blogModule.getAllAuthors
   }
 
-  async mounted(): Promise<void> {
-    await Promise.all([
+  mounted(): void {
+    Promise.all([
       this.blogModule.fetchAllTagsFromRemote(),
       this.blogModule.fetchAllAuthorsFromRemote(),
       this.blogModule.fetchAllCategoriesFromRemote(),

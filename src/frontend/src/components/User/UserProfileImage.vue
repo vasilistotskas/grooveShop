@@ -88,10 +88,10 @@ export default class UserProfileImage extends Vue {
   ImagePositionOptions = ImagePositionOptions
   ImageTypeOptions = ImageTypeOptions
 
-  async updateUserImage(): Promise<void> {
+  updateUserImage(): void {
     const formEl = document.getElementById('uploadImageForm') as HTMLFormElement
     const data = new FormData(formEl)
-    await this.userModule.updateUserProfile(data)
+    this.userModule.updateUserProfile(data)
   }
 }
 </script>
