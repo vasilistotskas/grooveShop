@@ -1,14 +1,5 @@
-FROM python:3.10.7-alpine3.16
-LABEL maintainer="groove.com"
-
-ENV PYTHONUNBUFFERED 1
-ENV PYTHONDONTWRITEBYTECODE 1
-
-COPY ./requirements.txt /requirements.txt
-COPY ./src /src
-COPY ./scripts /scripts
-
-WORKDIR /src
+# Base build
+FROM python:3.10.7-alpine3.16 as base
 
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
@@ -17,9 +8,22 @@ RUN python -m venv /py && \
     apk add --update --no-cache jpeg-dev zlib-dev && \
     apk add --update --no-cache --virtual .tmp-deps \
         build-base postgresql-dev musl-dev linux-headers && \
-    /py/bin/pip install -r /requirements.txt && \
-    apk del .tmp-deps && \
-    adduser --disabled-password --no-create-home backend && \
+    apk del .tmp-deps
+
+COPY ./requirements.txt /requirements.txt
+RUN pip install -r /requirements.txt
+
+FROM python:3.10.7-alpine3.16
+LABEL maintainer="groove.com"
+
+COPY --from=base /usr/local/lib/python3.10/site-packages/ /usr/local/lib/python3.10/site-packages/
+COPY --from=base /usr/local/bin/ /usr/local/bin/
+COPY ./src /src
+COPY ./scripts /scripts
+
+WORKDIR /src
+
+RUN adduser --disabled-password --no-create-home backend && \
     mkdir -p /src/backend/static && \
     mkdir -p /src/backend/media && \
     mkdir -p /src/backend/files && \
@@ -28,6 +32,8 @@ RUN python -m venv /py && \
     chmod -R 755 /src && \
     chmod -R +x /scripts
 
+ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
 ENV PATH="/scripts:/py/bin:$PATH"
 ENV LIBRARY_PATH=/lib:/usr/lib
 
