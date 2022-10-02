@@ -15,6 +15,10 @@ class ProductImageInline(admin.TabularInline):
     extra = 1
 
 
+class AppendActionException(Exception):
+    pass
+
+
 class ProductAdmin(admin.ModelAdmin):
     list_display = [
         "id",
@@ -36,7 +40,7 @@ class ProductAdmin(admin.ModelAdmin):
     try:
         for s in Category.objects.all():
             actions.append(category_update_action(s))
-    except:
+    except AppendActionException:
         pass
 
     def boolean_status(self, obj):

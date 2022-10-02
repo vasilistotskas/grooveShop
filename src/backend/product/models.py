@@ -4,11 +4,9 @@ import string
 from decimal import Decimal
 from typing import Union
 
-from backend.core.db.fields import SanitizedJSONField
 from backend.core.models import SortableModel
 from backend.core.models import TimeStampMixinModel
 from backend.core.models import UUIDModel
-from backend.core.utils.editorjs import clean_editor_js
 from backend.helpers.image_resize import make_thumbnail
 from backend.product_favourite.models import Favourite
 from backend.product_review.models import Review
@@ -24,7 +22,6 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.safestring import SafeString
 from mptt.fields import TreeForeignKey
-from mptt.models import MPTTModel
 from tinymce.models import HTMLField
 
 User: str = settings.AUTH_USER_MODEL

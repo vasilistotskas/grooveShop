@@ -11,11 +11,6 @@ HYPERLINK_TAG_WITH_URL_PATTERN = r"(.*?<a\s+href=\\?\")(\w+://\S+[^\\])(\\?\">)"
 
 
 def clean_editor_js(definitions: Optional[Dict], *, to_string: bool = False):
-    """Sanitize a given EditorJS JSON definitions.
-    Look for not allowed URLs, replaced them with `invalid` value, and clean valid ones.
-    `to_string` flag is used for returning concatenated string from all blocks
-     instead of returning json object.
-    """
     if definitions is None:
         return "" if to_string else definitions
 
@@ -55,10 +50,6 @@ def clean_editor_js(definitions: Optional[Dict], *, to_string: bool = False):
 
 
 def clean_text_data(text: str):
-    """Look for url in text, check if URL is allowed and return the cleaned URL.
-    By default, only the protocol ``javascript`` is denied.
-    """
-
     if not text:
         return
 

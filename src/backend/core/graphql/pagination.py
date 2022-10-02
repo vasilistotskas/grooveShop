@@ -1,14 +1,11 @@
 from base64 import b64decode
 from base64 import b64encode
-from typing import Any
 from typing import Generic
 from typing import List
 from typing import Optional
 from typing import TypeVar
-from typing import Union
 
 import strawberry.django
-from django.db.models import AutoField
 
 GenericType = TypeVar("GenericType")
 
