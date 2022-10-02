@@ -3,7 +3,7 @@ from setuptools import setup
 __version__ = "0.0.0"
 
 setup(
-    name="grooveShop",
+    name="src",
     version=__version__,
     description="GrooveShop Setup",
     author="Vasilis Totskas",
