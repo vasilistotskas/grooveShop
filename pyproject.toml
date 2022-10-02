@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "src"
-version = "0.1.2"
+version = "0.1.3"
 description = "GrooveShop Backend"
 authors = [
     "Vasilis Totskas"
