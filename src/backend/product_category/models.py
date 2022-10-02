@@ -1,11 +1,8 @@
 import os
 
-from backend.core.models import SortableModel
 from backend.core.models import TimeStampMixinModel
-from backend.core.models import UUIDModel
 from backend.product.models import Product
 from backend.seo.models import SeoModel
-from backend.seo.models import SeoModelTranslation
 from django.conf import settings
 from django.db import models
 from mptt.fields import TreeForeignKey
