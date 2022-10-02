@@ -1,6 +1,6 @@
 {
   "name": "mediastream",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "author": "",
   "private": true,
@@ -29,7 +29,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "sharp": "^0.29.3",
+    "sharp": "^0.31.1",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -40,7 +40,7 @@
     "@types/jest": "27.0.2",
     "@types/lodash": "^4.14.178",
     "@types/node": "^16.0.0",
-    "@types/sharp": "^0.29.4",
+    "@types/sharp": "^0.31.0",
     "@types/supertest": "^2.0.11",
     "@types/uuid": "^8.3.3",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
