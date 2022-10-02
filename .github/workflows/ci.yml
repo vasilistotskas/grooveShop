@@ -1,5 +1,4 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
 name: CI
 on:
@@ -52,6 +51,6 @@ jobs:
       - name: Semantic Release
         run: |
           pip install python-semantic-release
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name vasilistotskas
+          git config user.email vassilistotskas@msn.com
           semantic-release publish
