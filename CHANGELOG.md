@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.1 (2022-10-02)
+### Fix
+* **setup.py:** Fix setup.py ([`d438613`](https://github.com/vasilistotskas/grooveShop/commit/d438613c8f814beeb8aab32f177e2649b5e72379))
+
 ## v0.1.0 (2022-10-02)
 ### Feature
 * **Versioning:** Python Semantic Release concept ([`fb6379c`](https://github.com/vasilistotskas/grooveShop/commit/fb6379ca8a93b6bf6cf7532a6d0a6a05fbdc6fa5))
