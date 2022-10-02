@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "grooveShop"
+name = "src"
 version = "0.1.1"
 description = "GrooveShop Backend"
 authors = [
