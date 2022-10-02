@@ -3,16 +3,16 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --port 5000",
-    "build": "vue-cli-service build",
+    "serve-vue": "vue-cli-service serve --port 5000",
+    "build-vue": "vue-cli-service build",
     "lint-vue": "vue-cli-service lint",
-    "watch": "vue-cli-service build --watch --mode development",
+    "watch-vue": "vue-cli-service build --watch --mode development",
     "build-vite": "vue-tsc --noEmit && vite build",
     "watch-vite": "vue-tsc --noEmit && vite build --watch --mode development",
     "build-dts-vite": "vue-tsc --declaration --emitDeclarationOnly && tsc-alias -p tsconfig.json && npx prettier --write ./build/",
+    "dev": "vite --host",
     "lint": "sass-lint -v",
-    "lint:fix": "sass-lint-auto-fix -c .sass-lint-auto-fix.yml --config-sass-lint .sass-lint.yml",
-    "dev": "vite --host"
+    "lint:fix": "sass-lint-auto-fix -c .sass-lint-auto-fix.yml --config-sass-lint .sass-lint.yml"
   },
   "dependencies": {
     "@apollo/client": "^3.7.0",
