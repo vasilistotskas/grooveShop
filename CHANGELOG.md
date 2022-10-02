@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2 (2022-10-02)
+### Fix
+* **pyproject.toml:** Fix pyproject.toml ([`c109086`](https://github.com/vasilistotskas/grooveShop/commit/c109086604921b59eb180646b5f7d7c987f906db))
+
 ## v0.1.1 (2022-10-02)
 ### Fix
 * **setup.py:** Fix setup.py ([`d438613`](https://github.com/vasilistotskas/grooveShop/commit/d438613c8f814beeb8aab32f177e2649b5e72379))
