@@ -77,10 +77,8 @@ export default class PasswordReset extends Vue {
   lockIcon = faLock
   envelopeIcon = faEnvelope
 
-  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
-      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
-    return currentRouteMetaBreadcrumb()
+  get breadCrumbPath() {
+    return router.currentRoute.value.meta.breadcrumb
   }
 
   get emailCompleted(): boolean {

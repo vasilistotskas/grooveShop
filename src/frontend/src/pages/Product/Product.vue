@@ -129,6 +129,7 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import { faShippingFast } from '@fortawesome/free-solid-svg-icons/faShippingFast'
 import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
+import { RouteMetaBreadcrumbFunction } from '@/routes/Type/BreadcrumbItemType'
 
 @Component({
   name: 'Product',
@@ -173,9 +174,9 @@ export default class Product extends Vue {
 
   ImageTypeOptions = ImageTypeOptions
 
-  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router
-      .currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+  get breadCrumbPath() {
+    const currentRouteMetaBreadcrumb = router.currentRoute.value.meta
+      .breadcrumb as RouteMetaBreadcrumbFunction
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 

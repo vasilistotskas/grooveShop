@@ -67,10 +67,8 @@ export default class AllProducts
   PaginationRoutesEnum = PaginationRoutesEnum
   MainRoutePaths = MainRoutePaths
 
-  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
-      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
-    return currentRouteMetaBreadcrumb()
+  get breadCrumbPath() {
+    return router.currentRoute.value.meta.breadcrumb
   }
 
   created(): void {

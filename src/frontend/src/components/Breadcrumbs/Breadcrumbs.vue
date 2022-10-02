@@ -29,17 +29,16 @@
 <script lang="ts">
 import { PropType } from 'vue'
 import { Options as Component, Vue } from 'vue-class-component'
-import { BreadcrumbItemType } from '@/routes/Type/BreadcrumbItemType'
-import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import { RouteMetaBreadcrumb } from '@/routes/Type/BreadcrumbItemType'
 
 @Component({
   name: 'Breadcrumbs',
   props: {
-    breadCrumbPath: Array as PropType<Array<BreadcrumbItemType>>,
+    breadCrumbPath: Array as PropType<RouteMetaBreadcrumb>,
   },
 })
 export default class Breadcrumbs extends Vue {
-  breadCrumbPath!: Array<BreadcrumbItemInterface>
+  breadCrumbPath!: RouteMetaBreadcrumb
 }
 </script>
 

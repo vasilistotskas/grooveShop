@@ -1,4 +1,5 @@
 import { Store } from '@/store'
+import { RouteMetaBreadcrumb } from '@/routes/Type/BreadcrumbItemType'
 
 declare module '*.md' {
   const value: string
@@ -23,4 +24,10 @@ declare module '*.vue' {
   import { defineComponent } from 'vue'
   const component: ReturnType<typeof defineComponent>
   export default component
+}
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    breadcrumb: RouteMetaBreadcrumb
+  }
 }

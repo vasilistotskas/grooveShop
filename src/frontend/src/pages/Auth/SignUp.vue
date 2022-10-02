@@ -168,10 +168,8 @@ export default class Register extends Vue {
   envelopeIcon = faEnvelope
   keyIcon = faKey
 
-  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
-      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
-    return currentRouteMetaBreadcrumb()
+  get breadCrumbPath() {
+    return router.currentRoute.value.meta.breadcrumb
   }
 
   get registrationCompleted(): boolean {

@@ -259,8 +259,8 @@ import router from '@/routes'
 import AppModule from '@/state/app/AppModule'
 import { useToast } from 'vue-toastification'
 import CartModule from '@/state/cart/CartModule'
-import { useForm, useField } from 'vee-validate'
-import { cloneDeep, merge, isEmpty } from 'lodash'
+import { useField, useForm } from 'vee-validate'
+import { cloneDeep, isEmpty, merge } from 'lodash'
 import { getModule } from 'vuex-module-decorators'
 import { toFormValidator } from '@vee-validate/zod'
 import PayWayModel from '@/state/payway/PayWayModel'
@@ -272,7 +272,7 @@ import CountryModel from '@/state/country/CountryModel'
 import RegionsModel from '@/state/country/RegionsModel'
 import CountryModule from '@/state/country/CountryModule'
 import { PayWaysEnum } from '@/state/payway/Enum/PayWaysEnum'
-import { StripeElements, StripeElement } from 'vue-stripe-js'
+import { StripeElement, StripeElements } from 'vue-stripe-js'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
@@ -284,7 +284,6 @@ import { computed, ComputedRef, onBeforeMount, onUnmounted, ref } from 'vue'
 import StripeCardModule from '@/libraries/Stripe/Components/StripeCardModule'
 import CheckoutOrderApiData from '@/state/cart/Interface/CheckoutOrderApiData'
 import CheckoutStripeModal from '@/components/Utilities/CheckoutStripeModal.vue'
-import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
 import CheckoutProductContainer from '@/components/Checkout/CheckoutProductContainer.vue'
 
@@ -437,11 +436,7 @@ export default class Checkout extends Vue {
       })
     )
 
-    const breadCrumbPath: () => Array<BreadcrumbItemInterface> = () => {
-      const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
-        .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
-      return currentRouteMetaBreadcrumb()
-    }
+    const breadCrumbPath = router.currentRoute.value.meta.breadcrumb
 
     const buildCartItems: () => Array<CartItemCheckoutModel> = () => {
       const items = []

@@ -147,10 +147,8 @@ export default class PasswordRestConfirm extends Vue {
     },
   }))
 
-  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
-      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
-    return currentRouteMetaBreadcrumb()
+  get breadCrumbPath() {
+    return router.currentRoute.value.meta.breadcrumb
   }
 
   get resetCompleted(): boolean {

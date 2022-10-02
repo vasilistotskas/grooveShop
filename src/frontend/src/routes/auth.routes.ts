@@ -9,14 +9,14 @@ const authRoutes: Array<RouteRecordRaw> = [
     name: MainRouteNames.LOGIN,
     component: () => import('@/pages/Auth/LogIn.vue'),
     meta: {
-      breadcrumb: (): Array<BreadcrumbItemInterface> => [
+      breadcrumb: [
         {
           name: 'Log In',
           to: {
             full_path: 'log-in',
           },
         },
-      ],
+      ] as Array<BreadcrumbItemInterface>,
     },
   },
   {
@@ -24,14 +24,14 @@ const authRoutes: Array<RouteRecordRaw> = [
     name: MainRouteNames.SIGNUP,
     component: () => import('@/pages/Auth/SignUp.vue'),
     meta: {
-      breadcrumb: (): Array<BreadcrumbItemInterface> => [
+      breadcrumb: [
         {
           name: 'Sign Up',
           to: {
             full_path: 'sign-up',
           },
         },
-      ],
+      ] as Array<BreadcrumbItemInterface>,
     },
   },
   {
@@ -39,14 +39,14 @@ const authRoutes: Array<RouteRecordRaw> = [
     name: MainRouteNames.VERIFY_EMAIL,
     component: () => import('@/pages/Auth/VerifyEmail.vue'),
     meta: {
-      breadcrumb: (): Array<BreadcrumbItemInterface> => [
+      breadcrumb: [
         {
           name: 'Verify Email',
           to: {
             full_path: 'accounts/activate',
           },
         },
-      ],
+      ] as Array<BreadcrumbItemInterface>,
     },
   },
   {
@@ -54,14 +54,14 @@ const authRoutes: Array<RouteRecordRaw> = [
     name: MainRouteNames.VERIFY_EMAIL_RESEND_INPUT,
     component: () => import('@/pages/Auth/VerifyEmailResendInput.vue'),
     meta: {
-      breadcrumb: (): Array<BreadcrumbItemInterface> => [
+      breadcrumb: [
         {
           name: 'Verify Email Resend Input',
           to: {
             full_path: 'accounts/activate/verify_mail_resend',
           },
         },
-      ],
+      ] as Array<BreadcrumbItemInterface>,
     },
   },
   {
@@ -69,14 +69,14 @@ const authRoutes: Array<RouteRecordRaw> = [
     name: MainRouteNames.PASSWORD_RESET,
     component: () => import('@/pages/Auth/PasswordReset.vue'),
     meta: {
-      breadcrumb: (): Array<BreadcrumbItemInterface> => [
+      breadcrumb: [
         {
           name: 'Password Reset',
           to: {
             full_path: 'password-reset',
           },
         },
-      ],
+      ] as Array<BreadcrumbItemInterface>,
     },
   },
   {
@@ -84,14 +84,14 @@ const authRoutes: Array<RouteRecordRaw> = [
     name: MainRouteNames.PASSWORD_RESET_CONFIRM,
     component: () => import('@/pages/Auth/PasswordResetConfirm.vue'),
     meta: {
-      breadcrumb: (): Array<BreadcrumbItemInterface> => [
+      breadcrumb: [
         {
           name: 'Password Reset Confirm',
           to: {
             full_path: 'password-reset',
           },
         },
-      ],
+      ] as Array<BreadcrumbItemInterface>,
     },
   },
 ]

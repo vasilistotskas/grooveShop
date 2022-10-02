@@ -49,6 +49,7 @@ import router from '@/routes'
 import { AxiosResponse } from 'axios'
 import AppModule from '@/state/app/AppModule'
 import { getModule } from 'vuex-module-decorators'
+import { RouteLocationNormalized } from 'vue-router'
 import ProductModel from '@/state/product/ProductModel'
 import { Options as Component } from 'vue-class-component'
 import CategoryModel from '@/state/category/CategoryModel'
@@ -57,13 +58,12 @@ import CategoryModule from '@/state/category/CategoryModule'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
-import { RouteLocationNormalized, RouteParams } from 'vue-router'
 import PaginationModule from '@/state/pagination/PaginationModule'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import PaginatedModel from '@/state/pagination/Model/PaginatedModel'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
-import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import { RouteMetaBreadcrumbFunction } from '@/routes/Type/BreadcrumbItemType'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
@@ -96,9 +96,9 @@ export default class Category
 
   PaginationRoutesEnum = PaginationRoutesEnum
 
-  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router
-      .currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+  get breadCrumbPath() {
+    const currentRouteMetaBreadcrumb = router.currentRoute.value.meta
+      .breadcrumb as RouteMetaBreadcrumbFunction
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 

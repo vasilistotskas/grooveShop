@@ -9,14 +9,14 @@ const searchRoutes: Array<RouteRecordRaw> = [
     name: MainRouteNames.SEARCH,
     component: () => import('@/pages/Search/Search.vue'),
     meta: {
-      breadcrumb: (): Array<BreadcrumbItemInterface> => [
+      breadcrumb: [
         {
           name: 'Search',
           to: {
             full_path: 'search',
           },
         },
-      ],
+      ] as Array<BreadcrumbItemInterface>,
     },
   },
 ]

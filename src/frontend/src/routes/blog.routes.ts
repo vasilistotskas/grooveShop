@@ -10,14 +10,14 @@ const blogRoutes: Array<RouteRecordRaw> = [
     component: () => import('@/pages/Blog/Blog.vue'),
     props: true,
     meta: {
-      breadcrumb: (): Array<BreadcrumbItemInterface> => [
+      breadcrumb: [
         {
           name: 'Blog',
           to: {
             full_path: 'blog',
           },
         },
-      ],
+      ] as Array<BreadcrumbItemInterface>,
     },
   },
   {
@@ -26,20 +26,21 @@ const blogRoutes: Array<RouteRecordRaw> = [
     component: () => import('@/pages/Blog/BlogAuthor.vue'),
     props: true,
     meta: {
-      breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> => [
-        {
-          name: 'Blog',
-          to: {
-            full_path: 'blog',
+      breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> =>
+        [
+          {
+            name: 'Blog',
+            to: {
+              full_path: 'blog',
+            },
           },
-        },
-        {
-          name: 'Author - ' + route.id,
-          to: {
-            full_path: 'author' + '/' + route.id,
+          {
+            name: 'Author - ' + route.id,
+            to: {
+              full_path: 'author' + '/' + route.id,
+            },
           },
-        },
-      ],
+        ] as Array<BreadcrumbItemInterface>,
     },
   },
   {
@@ -48,20 +49,21 @@ const blogRoutes: Array<RouteRecordRaw> = [
     component: () => import('@/pages/Blog/BlogPost.vue'),
     props: true,
     meta: {
-      breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> => [
-        {
-          name: 'Blog',
-          to: {
-            full_path: 'blog',
+      breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> =>
+        [
+          {
+            name: 'Blog',
+            to: {
+              full_path: 'blog',
+            },
           },
-        },
-        {
-          name: 'Post - ' + route.slug,
-          to: {
-            full_path: 'post' + '/' + route.slug,
+          {
+            name: 'Post - ' + route.slug,
+            to: {
+              full_path: 'post' + '/' + route.slug,
+            },
           },
-        },
-      ],
+        ] as Array<BreadcrumbItemInterface>,
     },
   },
   {
@@ -70,20 +72,21 @@ const blogRoutes: Array<RouteRecordRaw> = [
     component: () => import('@/pages/Blog/BlogPostsByTag.vue'),
     props: true,
     meta: {
-      breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> => [
-        {
-          name: 'Blog',
-          to: {
-            full_path: 'blog',
+      breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> =>
+        [
+          {
+            name: 'Blog',
+            to: {
+              full_path: 'blog',
+            },
           },
-        },
-        {
-          name: 'Tag - ' + route.tag,
-          to: {
-            full_path: 'tag' + '/' + route.tag,
+          {
+            name: 'Tag - ' + route.tag,
+            to: {
+              full_path: 'tag' + '/' + route.tag,
+            },
           },
-        },
-      ],
+        ] as Array<BreadcrumbItemInterface>,
     },
   },
 ]

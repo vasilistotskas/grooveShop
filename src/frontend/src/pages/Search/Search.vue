@@ -66,10 +66,8 @@ export default class Search
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
 
-  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
-      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
-    return currentRouteMetaBreadcrumb()
+  get breadCrumbPath() {
+    return router.currentRoute.value.meta.breadcrumb
   }
 
   mounted(): void {
