@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.4 (2022-10-02)
+### Fix
+* **flake8:** Flake8 lint settings ([`078d26d`](https://github.com/vasilistotskas/grooveShop/commit/078d26db8af8c3413dc048b9e42eebe6f7770e56))
+
 ## v0.1.3 (2022-10-02)
 ### Fix
 * **VERSIONS:** Fix Versions ([`bc502a4`](https://github.com/vasilistotskas/grooveShop/commit/bc502a4b334b8e6b428365209351fd35f9471632))
