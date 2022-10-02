@@ -6,8 +6,8 @@ django-settings-module=backend.app.settings
 disable=C0103, C0111, I0011, R0903, W0621, W0622, W0707
 
 [DESIGN]
-max-complexity=5
-max-line-length = 92
+max-complexity=31
+max-line-length=92
 
 [SIMILARITIES]
 ignore-imports=yes
