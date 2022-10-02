@@ -70,11 +70,11 @@ export default class BlogComment extends Vue {
     return this.blogModule.getCommentByUserToPost
   }
 
-  async mounted(): Promise<void> {
-    await this.commentModuleInitialize()
+  mounted(): void {
+    this.commentModuleInitialize()
   }
 
-  public async commentHandle(): Promise<void | string | number> {
+  public commentHandle(): string | number {
     if (!this.isAuthenticated) {
       return toast.error('You are not logged in')
     }
@@ -84,10 +84,10 @@ export default class BlogComment extends Vue {
     }
 
     if (!this.userCommentToPostEmpty) {
-      await this.blogModule.updateCommentToPost(this.comment)
+      this.blogModule.updateCommentToPost(this.comment)
       return toast.success('Your comment has been updated')
     } else {
-      await this.blogModule.createCommentToPost({
+      this.blogModule.createCommentToPost({
         content: this.comment,
         userEmail: this.userModule.getUserData.email,
       })
@@ -95,13 +95,11 @@ export default class BlogComment extends Vue {
     }
   }
 
-  public async commentModuleInitialize(): Promise<void> {
+  public commentModuleInitialize(): void {
     if (this.isAuthenticated) {
       return
     }
-
-    await this.blogModule.fetchCommentByUserToPost(this.userModule.getUserData.email)
-
+    this.blogModule.fetchCommentByUserToPost(this.userModule.getUserData.email)
     this.comment = cloneDeep(this.commentByUserToPost.content)
   }
 }

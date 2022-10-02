@@ -28,20 +28,18 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 export default class Blog extends Vue {
   blogModule = getModule(BlogModule)
 
-  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
-      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
-    return currentRouteMetaBreadcrumb()
+  get breadCrumbPath() {
+    return router.currentRoute.value.meta.breadcrumb
   }
 
   get allPosts(): Array<BlogPostModel> {
     return this.blogModule.getAllPosts
   }
 
-  async mounted(): Promise<void> {
+  mounted(): void {
     document.title = 'Blog'
 
-    await this.blogModule.fetchAllPostsFromRemote()
+    this.blogModule.fetchAllPostsFromRemote()
   }
 }
 </script>

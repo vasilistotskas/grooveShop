@@ -243,15 +243,15 @@ export default class UserSettings extends Vue {
     return this.countryModule.getRegionsBasedOnAlpha
   }
 
-  async mounted(): Promise<void> {
+  mounted(): void {
     document.title = 'My Settings'
 
     this.userProfileInitialize()
   }
 
-  async restRegions(e: HTMLElementEvent<HTMLTextAreaElement>): Promise<void> {
+  restRegions(e: HTMLElementEvent<HTMLTextAreaElement>): void {
     const countryAlpha2Key = e.target?.value
-    await this.countryModule.findRegionsBasedOnAlphaFromInput(countryAlpha2Key)
+    this.countryModule.findRegionsBasedOnAlphaFromInput(countryAlpha2Key)
     this.userProfile.region = 'choose'
   }
 

@@ -61,18 +61,18 @@ export default class App extends Vue {
     return this.authModule.isAuthenticated
   }
 
-  async initializeUserData(): Promise<void> {
+  initializeUserData(): void {
     this.userModule.fetchUserDataFromRemote().then((response) => {
       if (response) {
         this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(this.userModule.getUserData)
         this.productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
       }
     })
-    await this.blogModule.fetchCommentsByUser(this.userModule.getUserData.email)
+    this.blogModule.fetchCommentsByUser(this.userModule.getUserData.email)
   }
 
-  async created(): Promise<void> {
-    await Promise.all([
+  created(): void {
+    Promise.all([
       this.authModule.initialize(),
       this.cartModule.initializeCart(),
       this.cartModule.cartTotalPriceForPayWayAction(),
@@ -81,7 +81,7 @@ export default class App extends Vue {
     ])
 
     if (this.isAuthenticated) {
-      await this.initializeUserData()
+      this.initializeUserData()
     }
   }
 

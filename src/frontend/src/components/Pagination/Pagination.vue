@@ -171,20 +171,20 @@ export default class Pagination extends Vue {
     return this.paginationModule.getCurrentQuery(this.namespace)
   }
 
-  async mounted(): Promise<void> {
-    await this.initializeRouterQuery()
+  mounted(): void {
+    this.initializeRouterQuery()
   }
 
-  async updated(): Promise<void> {
-    await this.initializeRouterQuery()
+  updated(): void {
+    this.initializeRouterQuery()
   }
 
   public isPageActive(page: number): boolean {
     return this.currentPageNumber === page
   }
 
-  async onClickNextPage(): Promise<void> {
-    await this.paginationModule.setCurrentPageNumber({
+  onClickNextPage(): void {
+    this.paginationModule.setCurrentPageNumber({
       pageNumber: this.currentPageNumber + 1,
       namespace: this.namespace,
     })
@@ -196,16 +196,16 @@ export default class Pagination extends Vue {
       method: ApiBaseMethods.GET,
     })
 
-    await this.paginationModule.fetchPaginatedResults({
+    this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.namespace,
     })
 
-    if (this.routerReplace) await router.replace({ name: `${this.route}`, query: this.query })
+    if (this.routerReplace) router.replace({ name: `${this.route}`, query: this.query })
   }
 
-  async onClickPreviousPage(): Promise<void> {
-    await this.paginationModule.setCurrentPageNumber({
+  onClickPreviousPage(): void {
+    this.paginationModule.setCurrentPageNumber({
       pageNumber: this.currentPageNumber - 1,
       namespace: this.namespace,
     })
@@ -217,16 +217,16 @@ export default class Pagination extends Vue {
       method: ApiBaseMethods.GET,
     })
 
-    await this.paginationModule.fetchPaginatedResults({
+    this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.namespace,
     })
 
-    if (this.routerReplace) await router.replace({ name: `${this.route}`, query: this.query })
+    if (this.routerReplace) router.replace({ name: `${this.route}`, query: this.query })
   }
 
-  async onClickPage(pageNumber: number) {
-    await this.paginationModule.setCurrentPageNumber({
+  onClickPage(pageNumber: number) {
+    this.paginationModule.setCurrentPageNumber({
       pageNumber: pageNumber,
       namespace: this.namespace,
     })
@@ -238,16 +238,16 @@ export default class Pagination extends Vue {
       method: ApiBaseMethods.GET,
     })
 
-    await this.paginationModule.fetchPaginatedResults({
+    this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.namespace,
     })
 
-    if (this.routerReplace) await router.replace({ name: `${this.route}`, query: this.query })
+    if (this.routerReplace) router.replace({ name: `${this.route}`, query: this.query })
   }
 
-  async onClickFirstPage(): Promise<void> {
-    await this.paginationModule.setCurrentPageNumber({
+  onClickFirstPage(): void {
+    this.paginationModule.setCurrentPageNumber({
       pageNumber: 1,
       namespace: this.namespace,
     })
@@ -259,16 +259,16 @@ export default class Pagination extends Vue {
       method: ApiBaseMethods.GET,
     })
 
-    await this.paginationModule.fetchPaginatedResults({
+    this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.namespace,
     })
 
-    if (this.routerReplace) await router.replace({ name: `${this.route}`, query: this.query })
+    if (this.routerReplace) router.replace({ name: `${this.route}`, query: this.query })
   }
 
-  async onClickLastPage(): Promise<void> {
-    await this.paginationModule.setCurrentPageNumber({
+  onClickLastPage(): void {
+    this.paginationModule.setCurrentPageNumber({
       pageNumber: this.totalPages,
       namespace: this.namespace,
     })
@@ -280,12 +280,12 @@ export default class Pagination extends Vue {
       method: ApiBaseMethods.GET,
     })
 
-    await this.paginationModule.fetchPaginatedResults({
+    this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.namespace,
     })
 
-    if (this.routerReplace) await router.replace({ name: `${this.route}`, query: this.query })
+    if (this.routerReplace) router.replace({ name: `${this.route}`, query: this.query })
   }
 
   public initializeRouterQuery(): void {

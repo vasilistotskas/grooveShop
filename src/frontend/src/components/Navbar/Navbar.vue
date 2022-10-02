@@ -80,14 +80,14 @@
               name="query"
               placeholder="Search"
               type="search"
-              @keyup.enter="fetchPaginationData"
+              @keyup.enter="fetchPaginationData()"
             />
             <button
               aria-label="search"
               class="btn-outline-primary-main"
               title="Search"
               type="submit"
-              @click="fetchPaginationData"
+              @click="fetchPaginationData()"
             >
               <font-awesome-icon :icon="searchIcon" :style="{ color: '#3b3b3b' }" size="lg" />
             </button>
@@ -172,6 +172,7 @@ import {
   ImagePositionOptions,
 } from '@/helpers/MediaStream/ImageUrlEnum'
 import router from '@/routes'
+import { AxiosResponse } from 'axios'
 import AppModule from '@/state/app/AppModule'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/state/auth/auth/AuthModule'
@@ -185,6 +186,7 @@ import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import PaginationModule from '@/state/pagination/PaginationModule'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
+import PaginatedModel from '@/state/pagination/Model/PaginatedModel'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
 import NavbarCategories from '@/components/Navbar/NavbarCategories.vue'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
@@ -264,9 +266,9 @@ export default class Navbar
     this.appModule.setNavbarMenuHidden(!this.navbarMenuHidden)
   }
 
-  async fetchPaginationData(): Promise<void> {
-    await this.paginationModule.unsetResults(this.paginationNamespace)
-    await this.paginationModule.setCurrentQuery({
+  fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
+    this.paginationModule.unsetResults(this.paginationNamespace)
+    this.paginationModule.setCurrentQuery({
       queryParams: this.searchQuery,
       namespace: this.paginationNamespace,
     })
@@ -278,15 +280,17 @@ export default class Navbar
       method: ApiBaseMethods.GET,
     })
 
-    await this.paginationModule.fetchPaginatedResults({
+    const results = this.paginationModule.fetchPaginatedResults<T>({
       params: paginationQuery,
       namespace: this.paginationNamespace,
     })
 
-    await router.push({
+    router.push({
       path: '/search',
       query: { ...this.$route.query, query: this.searchQuery.query, page: this.currentPageNumber },
     })
+
+    return results
   }
 }
 </script>

@@ -79,6 +79,7 @@ services:
       - "8010:8010"
     depends_on:
       - backend
+      - service-media_stream
     restart: always
     networks:
       - groovy-backbone

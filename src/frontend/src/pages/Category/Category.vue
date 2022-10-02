@@ -46,8 +46,10 @@ import {
   ImageTypeOptions,
 } from '@/helpers/MediaStream/ImageUrlEnum'
 import router from '@/routes'
+import { AxiosResponse } from 'axios'
 import AppModule from '@/state/app/AppModule'
 import { getModule } from 'vuex-module-decorators'
+import { RouteLocationNormalized } from 'vue-router'
 import ProductModel from '@/state/product/ProductModel'
 import { Options as Component } from 'vue-class-component'
 import CategoryModel from '@/state/category/CategoryModel'
@@ -56,12 +58,12 @@ import CategoryModule from '@/state/category/CategoryModule'
 import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import GrooveImage from '@/components/Utilities/GrooveImage.vue'
-import { RouteLocationNormalized, RouteParams } from 'vue-router'
 import PaginationModule from '@/state/pagination/PaginationModule'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
+import PaginatedModel from '@/state/pagination/Model/PaginatedModel'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
-import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
+import { RouteMetaBreadcrumbFunction } from '@/routes/Type/BreadcrumbItemType'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
@@ -94,9 +96,9 @@ export default class Category
 
   PaginationRoutesEnum = PaginationRoutesEnum
 
-  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router
-      .currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+  get breadCrumbPath() {
+    const currentRouteMetaBreadcrumb = router.currentRoute.value.meta
+      .breadcrumb as RouteMetaBreadcrumbFunction
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
@@ -104,14 +106,14 @@ export default class Category
     return this.categoryModule.getCategory
   }
 
-  async created(): Promise<void> {
+  created(): void {
     document.title = this.$route.params.category_slug + ' Category'
     this.$watch(
       () => this.$route,
       (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
         if (to.name === 'Category') {
           this.fetchCategory()
-          this.fetchPaginationData()
+          this.fetchPaginationData<ProductModel>()
         }
         if (to.path !== from.path && to.name === 'Category') {
           this.paginationModule.unsetResults(this.paginationNamespace)
@@ -133,26 +135,26 @@ export default class Category
     this.appModule.setNavbarMenuHidden(true)
 
     if (this.params.query) {
-      await this.paginationModule.setCurrentQuery({
+      this.paginationModule.setCurrentQuery({
         queryParams: this.params.query,
         namespace: this.paginationNamespace,
       })
     }
 
-    await this.paginationModule.setCurrentPageNumber({
+    this.paginationModule.setCurrentPageNumber({
       pageNumber: 1,
       namespace: this.paginationNamespace,
     })
 
     if (this.params.page) {
-      await this.paginationModule.setCurrentPageNumber({
+      this.paginationModule.setCurrentPageNumber({
         pageNumber: Number(this.params.page),
         namespace: this.paginationNamespace,
       })
     }
 
-    await this.fetchCategory()
-    await this.fetchPaginationData()
+    this.fetchCategory()
+    this.fetchPaginationData<ProductModel>()
   }
 
   unmounted(): void {
@@ -169,14 +171,14 @@ export default class Category
     this.categoryModule.fetchCategoryFromRemote(categoryId as string)
   }
 
-  async fetchPaginationData(): Promise<void> {
+  fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
     const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: this.buildEndPointUrlForPaginatedResults(),
       method: ApiBaseMethods.GET,
     })
 
-    await this.paginationModule.fetchPaginatedResults({
+    return this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.paginationNamespace,
     })

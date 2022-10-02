@@ -10,7 +10,7 @@ const checkoutRoutes: Array<RouteRecordRaw> = [
     component: () => import('@/pages/Checkout/Checkout.vue'),
     meta: {
       requireLogin: false,
-      breadcrumb: (): Array<BreadcrumbItemInterface> => [
+      breadcrumb: [
         {
           name: 'Cart',
           to: {
@@ -23,7 +23,7 @@ const checkoutRoutes: Array<RouteRecordRaw> = [
             full_path: 'cart/checkout',
           },
         },
-      ],
+      ] as Array<BreadcrumbItemInterface>,
     },
   },
   {
@@ -31,7 +31,7 @@ const checkoutRoutes: Array<RouteRecordRaw> = [
     name: MainRouteNames.CHECKOUT_SUCCESS,
     component: () => import('@/pages/Checkout/CheckoutSuccess.vue'),
     meta: {
-      breadcrumb: (): Array<BreadcrumbItemInterface> => [
+      breadcrumb: [
         {
           name: 'Cart',
           to: {
@@ -44,7 +44,7 @@ const checkoutRoutes: Array<RouteRecordRaw> = [
             full_path: 'cart/success',
           },
         },
-      ],
+      ] as Array<BreadcrumbItemInterface>,
     },
   },
   {
@@ -52,7 +52,7 @@ const checkoutRoutes: Array<RouteRecordRaw> = [
     name: MainRouteNames.CHECKOUT_ERROR,
     component: () => import('@/pages/Checkout/CheckoutError.vue'),
     meta: {
-      breadcrumb: (): Array<BreadcrumbItemInterface> => [
+      breadcrumb: [
         {
           name: 'Cart',
           to: {
@@ -65,7 +65,7 @@ const checkoutRoutes: Array<RouteRecordRaw> = [
             full_path: 'cart/error',
           },
         },
-      ],
+      ] as Array<BreadcrumbItemInterface>,
     },
   },
 ]

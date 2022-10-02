@@ -195,12 +195,12 @@ export default class PaginationModule<TPaginatedModel> extends AppBaseModule {
   async fetchPaginatedResults<T>(data: {
     params: PaginationModel
     namespace: PaginationNamespaceTypesEnum
-  }): Promise<void> {
+  }): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
     await store.commit('app/setLoading', true)
 
     const ApiUrl = await this.context.dispatch('buildPaginatedApiUrl', data)
 
-    session({
+    return session({
       url: ApiUrl,
       method: data.params.method,
       data: data.params,
@@ -250,6 +250,7 @@ export default class PaginationModule<TPaginatedModel> extends AppBaseModule {
           namespace: data.namespace,
         })
         this.context.commit('setTotalPages', { totalPages: totalPages, namespace: data.namespace })
+        return response
       })
       .catch((e: Error) => {
         this.context.commit('unsetResults', data.namespace)

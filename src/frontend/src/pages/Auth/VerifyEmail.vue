@@ -47,10 +47,8 @@ export default class VerifyEmail extends Vue {
   authModule = getModule(AuthModule)
   signupModule = getModule(SignUpModule)
 
-  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
-      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
-    return currentRouteMetaBreadcrumb()
+  get breadCrumbPath() {
+    return router.currentRoute.value.meta.breadcrumb
   }
 
   get isAuthenticated(): boolean {
@@ -77,21 +75,21 @@ export default class VerifyEmail extends Vue {
     this.activateAccount()
   }
 
-  async activateAccount(): Promise<void> {
-    await this.signupModule.activateAccount()
+  activateAccount(): void {
+    this.signupModule.activateAccount()
   }
 
-  async clearActivationStatus(): Promise<void> {
-    await this.signupModule.clearActivationStatus()
+  clearActivationStatus(): void {
+    this.signupModule.clearActivationStatus()
   }
 
-  async activationEmailResend(): Promise<void> {
+  activationEmailResend(): void {
     const email = localStorage.getItem('registrationEmail')
 
     if (email) {
-      await this.signupModule.activationEmailResend(email)
+      this.signupModule.activationEmailResend(email)
     } else {
-      await router.push('/accounts/activate/verify_mail_resend')
+      router.push('/accounts/activate/verify_mail_resend')
     }
   }
 

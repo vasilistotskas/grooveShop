@@ -1,4 +1,3 @@
-import { LocationQuery } from 'vue-router'
 import {
   PaginationCount,
   PaginationLink,
@@ -6,6 +5,9 @@ import {
   PaginationTotalPages,
   QueryParamsType,
 } from '@/state/pagination/Type/PaginationTypes'
+import { AxiosResponse } from 'axios'
+import { LocationQuery } from 'vue-router'
+import PaginatedModel from '@/state/pagination/Model/PaginatedModel'
 
 export default interface PaginatedComponentInterface<TPaginatedModel> {
   readonly uri: typeof window.location.search
@@ -19,5 +21,5 @@ export default interface PaginatedComponentInterface<TPaginatedModel> {
   readonly currentPageNumber: number
   readonly currentPageQuery?: QueryParamsType
 
-  fetchPaginationData(): Promise<void> | undefined
+  fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> | undefined
 }

@@ -120,9 +120,9 @@ export default class BlogCommentCard extends Vue {
     this.commentActionsOpen = true
   }
 
-  public async deleteComment(): Promise<void> {
+  public deleteComment(): void {
     if (confirm('Are you sure you want to delete your rating?')) {
-      await this.blogModule.deleteCommentFromPost()
+      this.blogModule.deleteCommentFromPost()
     }
   }
 

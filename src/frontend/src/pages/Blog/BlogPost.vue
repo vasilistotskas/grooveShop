@@ -53,7 +53,6 @@ import {
   ImageTypeOptions,
 } from '@/helpers/MediaStream/ImageUrlEnum'
 import router from '@/routes'
-import { RouteParams } from 'vue-router'
 import BlogModule from '@/state/blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/state/auth/auth/AuthModule'
@@ -67,7 +66,7 @@ import GrooveImage from '@/components/Utilities/GrooveImage.vue'
 import BlogAuthorLink from '@/components/Blog/BlogAuthorLink.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
 import FavouriteButton from '@/components/Utilities/FavouriteButton.vue'
-import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import { RouteMetaBreadcrumbFunction } from '@/routes/Type/BreadcrumbItemType'
 
 @Component({
   name: 'BlogPost',
@@ -94,9 +93,9 @@ export default class BlogPost extends Vue {
   ImageFitOptions = ImageFitOptions
   ImagePositionOptions = ImagePositionOptions
 
-  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router
-      .currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+  get breadCrumbPath() {
+    const currentRouteMetaBreadcrumb = router.currentRoute.value.meta
+      .breadcrumb as RouteMetaBreadcrumbFunction
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
@@ -116,11 +115,11 @@ export default class BlogPost extends Vue {
     return this.userModule.getUserData.id
   }
 
-  async created(): Promise<void> {
-    await this.blogModule.fetchPostBySlugFromRemote()
-    await this.blogModule.fetchCommentsByPost()
+  created(): void {
+    this.blogModule.fetchPostBySlugFromRemote()
+    this.blogModule.fetchCommentsByPost()
     if (this.isAuthenticated) {
-      await this.blogModule.fetchCommentByUserToPost(this.userModule.getUserData.email)
+      this.blogModule.fetchCommentByUserToPost(this.userModule.getUserData.email)
     }
   }
 

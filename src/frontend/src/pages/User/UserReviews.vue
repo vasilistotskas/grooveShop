@@ -31,6 +31,7 @@
 
 <script lang="ts">
 import { PropType } from 'vue'
+import { AxiosResponse } from 'axios'
 import { getModule } from 'vuex-module-decorators'
 import UserModule from '@/state/user/data/UserModule'
 import { Options as Component } from 'vue-class-component'
@@ -38,10 +39,11 @@ import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
 import PaginationModule from '@/state/pagination/PaginationModule'
-import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
+import PaginatedModel from '@/state/pagination/Model/PaginatedModel'
 import ProductReviewModel from '@/state/product/review/ProductReviewModel'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import ReviewProductCard from '@/components/Reviews/ReviewProductCard.vue'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/state/pagination/Enum/PaginationNamespaceTypesEnum'
@@ -74,38 +76,38 @@ export default class UserReviews
     return this.userModule.getUserId
   }
 
-  async created(): Promise<void> {
+  created(): void {
     document.title = 'My Reviews'
 
     if (this.params.query) {
-      await this.paginationModule.setCurrentQuery({
+      this.paginationModule.setCurrentQuery({
         queryParams: this.params.query,
         namespace: this.paginationNamespace,
       })
     }
-    await this.paginationModule.setCurrentPageNumber({
+    this.paginationModule.setCurrentPageNumber({
       pageNumber: 1,
       namespace: this.paginationNamespace,
     })
 
     if (this.params.page) {
-      await this.paginationModule.setCurrentPageNumber({
+      this.paginationModule.setCurrentPageNumber({
         pageNumber: Number(this.params.page),
         namespace: this.paginationNamespace,
       })
     }
 
-    await this.fetchPaginationData()
+    this.fetchPaginationData<ProductReviewModel>()
   }
 
-  async fetchPaginationData(): Promise<void> {
+  fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
     const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: this.buildEndPointUrlForPaginatedResults(),
       method: ApiBaseMethods.GET,
     })
 
-    await this.paginationModule.fetchPaginatedResults({
+    return this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.paginationNamespace,
     })

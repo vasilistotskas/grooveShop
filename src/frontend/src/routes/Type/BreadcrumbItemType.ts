@@ -1,3 +1,6 @@
+import { RouteParams } from 'vue-router'
+import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+
 export type BreadcrumbItemType = {
   name: string
   to: {
@@ -5,3 +8,7 @@ export type BreadcrumbItemType = {
   }
   id: string | number
 }
+export type RouteMetaBreadcrumbFunction = (route: RouteParams) => Array<BreadcrumbItemType>
+export type RouteMetaBreadcrumb =
+  | Array<BreadcrumbItemInterface>
+  | ((route: RouteParams) => Array<BreadcrumbItemInterface>)

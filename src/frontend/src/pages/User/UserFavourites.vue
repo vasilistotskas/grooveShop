@@ -24,6 +24,7 @@
 
 <script lang="ts">
 import { PropType } from 'vue'
+import { AxiosResponse } from 'axios'
 import { getModule } from 'vuex-module-decorators'
 import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/api/Enums/ApiBaseMethods'
@@ -31,6 +32,7 @@ import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import UserProfileModel from '@/state/user/data/UserProfileModel'
 import PaginationModule from '@/state/pagination/PaginationModule'
+import PaginatedModel from '@/state/pagination/Model/PaginatedModel'
 import UserFavouriteModel from '@/state/user/favourite/UserFavouriteModel'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
 import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
@@ -61,39 +63,39 @@ export default class UserFavourites
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.USER_FAVOURITES
 
-  async created(): Promise<void> {
+  created(): void {
     document.title = 'My Favourites'
 
     if (this.params.query) {
-      await this.paginationModule.setCurrentQuery({
+      this.paginationModule.setCurrentQuery({
         queryParams: this.params.query,
         namespace: this.paginationNamespace,
       })
     }
 
-    await this.paginationModule.setCurrentPageNumber({
+    this.paginationModule.setCurrentPageNumber({
       pageNumber: 1,
       namespace: this.paginationNamespace,
     })
 
     if (this.params.page) {
-      await this.paginationModule.setCurrentPageNumber({
+      this.paginationModule.setCurrentPageNumber({
         pageNumber: Number(this.params.page),
         namespace: this.paginationNamespace,
       })
     }
 
-    await this.fetchPaginationData()
+    this.fetchPaginationData<UserFavouriteModel>()
   }
 
-  async fetchPaginationData(): Promise<void> {
+  fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
     const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: this.buildEndPointUrlForPaginatedResults(),
       method: ApiBaseMethods.GET,
     })
 
-    await this.paginationModule.fetchPaginatedResults({
+    return this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.paginationNamespace,
     })

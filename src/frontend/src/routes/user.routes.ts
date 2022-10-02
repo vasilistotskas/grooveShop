@@ -10,14 +10,14 @@ const userRoutes: Array<RouteRecordRaw> = [
     component: () => import('@/pages/User/UserAccount.vue'),
     meta: {
       requireLogin: true,
-      breadcrumb: (): Array<BreadcrumbItemInterface> => [
+      breadcrumb: [
         {
           name: 'User Account',
           to: {
             full_path: 'user-account',
           },
         },
-      ],
+      ] as Array<BreadcrumbItemInterface>,
     },
     children: [
       {
@@ -25,7 +25,7 @@ const userRoutes: Array<RouteRecordRaw> = [
         name: MainRouteNames.USER_ACCOUNT_ORDERS,
         component: () => import('@/pages/User/UserOrderHistory.vue'),
         meta: {
-          breadcrumb: (): Array<BreadcrumbItemInterface> => [
+          breadcrumb: [
             {
               name: 'User Account',
               to: {
@@ -38,7 +38,7 @@ const userRoutes: Array<RouteRecordRaw> = [
                 full_path: 'user-account/orders',
               },
             },
-          ],
+          ] as Array<BreadcrumbItemInterface>,
         },
       },
       {
@@ -46,7 +46,7 @@ const userRoutes: Array<RouteRecordRaw> = [
         name: MainRouteNames.USER_ACCOUNT_SETTINGS,
         component: () => import('@/pages/User/UserSettings.vue'),
         meta: {
-          breadcrumb: (): Array<BreadcrumbItemInterface> => [
+          breadcrumb: [
             {
               name: 'User Account',
               to: {
@@ -59,7 +59,7 @@ const userRoutes: Array<RouteRecordRaw> = [
                 full_path: 'user-account/settings',
               },
             },
-          ],
+          ] as Array<BreadcrumbItemInterface>,
         },
       },
       {
@@ -67,7 +67,7 @@ const userRoutes: Array<RouteRecordRaw> = [
         name: MainRouteNames.USER_ACCOUNT_FAVOURITES,
         component: () => import('@/pages/User/UserFavourites.vue'),
         meta: {
-          breadcrumb: (): Array<BreadcrumbItemInterface> => [
+          breadcrumb: [
             {
               name: 'User Account',
               to: {
@@ -80,7 +80,7 @@ const userRoutes: Array<RouteRecordRaw> = [
                 full_path: 'user-account/favourites',
               },
             },
-          ],
+          ] as Array<BreadcrumbItemInterface>,
         },
       },
       {
@@ -88,7 +88,7 @@ const userRoutes: Array<RouteRecordRaw> = [
         name: MainRouteNames.USER_ACCOUNT_REVIEWS,
         component: () => import('@/pages/User/UserReviews.vue'),
         meta: {
-          breadcrumb: (): Array<BreadcrumbItemInterface> => [
+          breadcrumb: [
             {
               name: 'User Account',
               to: {
@@ -101,7 +101,7 @@ const userRoutes: Array<RouteRecordRaw> = [
                 full_path: 'user-account/reviews',
               },
             },
-          ],
+          ] as Array<BreadcrumbItemInterface>,
         },
       },
       {
@@ -109,7 +109,7 @@ const userRoutes: Array<RouteRecordRaw> = [
         name: MainRouteNames.USER_ACCOUNT_PASSWORD,
         component: () => import('@/pages/User/UserPassword.vue'),
         meta: {
-          breadcrumb: (): Array<BreadcrumbItemInterface> => [
+          breadcrumb: [
             {
               name: 'User Account',
               to: {
@@ -122,7 +122,7 @@ const userRoutes: Array<RouteRecordRaw> = [
                 full_path: 'user-account/password',
               },
             },
-          ],
+          ] as Array<BreadcrumbItemInterface>,
         },
       },
     ],

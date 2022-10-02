@@ -66,8 +66,8 @@ export default class BlogPostList extends Vue {
     return this.tipModule.getAllTips
   }
 
-  async mounted(): Promise<void> {
-    await Promise.all([
+  mounted(): void {
+    Promise.all([
       this.blogModule.fetchAllTagsFromRemote(),
       this.blogModule.fetchAllAuthorsFromRemote(),
       this.blogModule.fetchAllCategoriesFromRemote(),

@@ -9,14 +9,14 @@ const cartRoutes: Array<RouteRecordRaw> = [
     name: MainRouteNames.CART,
     component: () => import('@/pages/Cart/Cart.vue'),
     meta: {
-      breadcrumb: (): Array<BreadcrumbItemInterface> => [
+      breadcrumb: [
         {
           name: 'Cart',
           to: {
             full_path: 'cart',
           },
         },
-      ],
+      ] as Array<BreadcrumbItemInterface>,
     },
   },
 ]

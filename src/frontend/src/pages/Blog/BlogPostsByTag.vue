@@ -8,14 +8,13 @@
 
 <script lang="ts">
 import router from '@/routes'
-import { RouteParams } from 'vue-router'
 import BlogModule from '@/state/blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
 import BlogPostModel from '@/state/blog/BlogPostModel'
 import BlogPostList from '@/components/Blog/BlogPostList.vue'
 import { Options as Component, Vue } from 'vue-class-component'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
+import { RouteMetaBreadcrumbFunction } from '@/routes/Type/BreadcrumbItemType'
 
 @Component({
   name: 'BlogPostsByTag',
@@ -27,9 +26,9 @@ import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 export default class BlogPostsByTag extends Vue {
   blogModule = getModule(BlogModule)
 
-  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: (data: RouteParams) => Array<BreadcrumbItemInterface> = router
-      .currentRoute.value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
+  get breadCrumbPath() {
+    const currentRouteMetaBreadcrumb = router.currentRoute.value.meta
+      .breadcrumb as RouteMetaBreadcrumbFunction
     return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
   }
 
@@ -37,12 +36,12 @@ export default class BlogPostsByTag extends Vue {
     return this.blogModule.getPostsByTag
   }
 
-  async created(): Promise<void> {
-    await this.blogModule.fetchPostsByTagFromRemote()
+  created(): void {
+    this.blogModule.fetchPostsByTagFromRemote()
   }
 
-  async updated(): Promise<void> {
-    await this.blogModule.fetchPostsByTagFromRemote()
+  updated(): void {
+    this.blogModule.fetchPostsByTagFromRemote()
   }
 }
 </script>

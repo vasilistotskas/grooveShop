@@ -31,6 +31,7 @@
 
 <script lang="ts">
 import router from '@/routes'
+import { AxiosResponse } from 'axios'
 import { getModule } from 'vuex-module-decorators'
 import ProductModel from '@/state/product/ProductModel'
 import { Options as Component } from 'vue-class-component'
@@ -39,8 +40,9 @@ import ProductCard from '@/components/Product/ProductCard.vue'
 import Pagination from '@/components/Pagination/Pagination.vue'
 import PaginationModule from '@/state/pagination/PaginationModule'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs.vue'
-import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
+import PaginatedModel from '@/state/pagination/Model/PaginatedModel'
 import { PaginationModel } from '@/state/pagination/Model/PaginationModel'
+import PaginatedComponent from '@/components/Pagination/PaginatedComponent'
 import BreadcrumbItemInterface from '@/routes/Interface/BreadcrumbItemInterface'
 import { PaginationRoutesEnum } from '@/state/pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/state/pagination/Interface/PaginatedComponentInterface'
@@ -64,38 +66,36 @@ export default class Search
   PaginationRoutesEnum = PaginationRoutesEnum
   paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
 
-  get breadCrumbPath(): Array<BreadcrumbItemInterface> {
-    const currentRouteMetaBreadcrumb: () => Array<BreadcrumbItemInterface> = router.currentRoute
-      .value.meta.breadcrumb as () => Array<BreadcrumbItemInterface>
-    return currentRouteMetaBreadcrumb()
+  get breadCrumbPath() {
+    return router.currentRoute.value.meta.breadcrumb
   }
 
-  async mounted(): Promise<void> {
+  mounted(): void {
     document.title = 'Search'
 
     if (this.params.query) {
-      await this.paginationModule.setCurrentQuery({
+      this.paginationModule.setCurrentQuery({
         queryParams: this.params,
         namespace: this.paginationNamespace,
       })
     }
 
-    await this.paginationModule.setCurrentPageNumber({
+    this.paginationModule.setCurrentPageNumber({
       pageNumber: 1,
       namespace: this.paginationNamespace,
     })
 
     if (this.params.page) {
-      await this.paginationModule.setCurrentPageNumber({
+      this.paginationModule.setCurrentPageNumber({
         pageNumber: Number(this.params.page),
         namespace: this.paginationNamespace,
       })
     }
 
-    await this.fetchPaginationData()
+    this.fetchPaginationData<ProductModel>()
   }
 
-  async fetchPaginationData(): Promise<void> {
+  fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
     const paginationQuery = PaginationModel.createPaginationModel({
       pageNumber: this.currentPageNumber,
       endpointUrl: `search-product`,
@@ -103,7 +103,7 @@ export default class Search
       method: ApiBaseMethods.GET,
     })
 
-    await this.paginationModule.fetchPaginatedResults({
+    return this.paginationModule.fetchPaginatedResults({
       params: paginationQuery,
       namespace: this.paginationNamespace,
     })

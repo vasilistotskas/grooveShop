@@ -141,8 +141,8 @@ export default class Home extends Vue {
     return this.sliderModule.getSlidersData
   }
 
-  async beforeCreate(): Promise<void> {
-    await Promise.all([
+  beforeCreate(): void {
+    Promise.all([
       this.productModule.fetchLatestProductsFromRemote(),
       this.sliderModule.fetchSlidersFromRemote,
     ])
