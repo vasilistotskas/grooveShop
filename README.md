@@ -131,3 +131,11 @@
    ### --- VERSION 16.13.1 ---
    -     Step 1: cd mediaStream
    -     Run npm Install : npm install
+
+
+## GIT
+  ### --- VERSION 2.36.0.windows.1 ---
+   #### Delete origin tags :
+   -     git tag -l | xargs -n 1 git push --delete origin
+   #### Delete local tags :
+    -     git tag -l | xargs git tag -d
