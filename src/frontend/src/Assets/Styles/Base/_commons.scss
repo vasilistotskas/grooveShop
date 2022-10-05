@@ -14,7 +14,6 @@
   @include cp-palette(--cp-palette-main-dark-fourth, #{$color-palette-main-fourth});
   @include cp-palette(--cp-palette-main-dark-fifth, #{$color-palette-main-fifth});
 
-
   // LIGHT
   @include cp-palette(--cp-palette-main-light-primary, #{$color-palette-main-primary-light});
   @include cp-palette(--cp-palette-main-light-secondary, #{$color-palette-main-secondary-light});
@@ -23,7 +22,6 @@
   @include cp-palette(--cp-palette-main-light-fifth, #{$color-palette-main-fifth-light});
   // GLOBAL
   @include cp-palette(--cp-palette-main-global-green, #{$color-palette-global-green});
-
 }
 
 body {
@@ -114,11 +112,11 @@ body {
 
     .btn-product-card {
       background-color: var(--cp-palette-main-third);
-      border-color: rgba(240, 246, 252, .1);
+      border-color: rgba(240, 246, 252, 0.1);
       box-shadow: 0 0 transparent, 0 0 transparent;
       color: var(--cp-palette-main-fifth);
       display: grid;
-      transition: .2s cubic-bezier(.3, 0, .5, 1);
+      transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
       transition-property: color, background-color, border-color;
     }
   }
@@ -297,14 +295,14 @@ body {
   background-clip: padding-box;
   background-color: var(--cp-palette-main-fourth);
   border: 1px solid var(--cp-palette-main-third);
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   color: var(--cp-palette-main-fifth);
   display: block;
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
   padding: 9px 13px;
-  transition: border-color .15s ease-in-out;
+  transition: border-color 0.15s ease-in-out;
   width: 100%;
 
   // TO REMEMBER BASIC RESPONSIVE
@@ -392,7 +390,7 @@ body {
       right: -100%;
       text-transform: uppercase;
       top: 50%;
-      transition: opacity .3s, right .4s;
+      transition: opacity 0.3s, right 0.4s;
       z-index: -1;
 
       &::before {
@@ -418,7 +416,7 @@ body {
 // Vue Transition
 .fade-enter {
   &-active {
-    transition: opacity .4s ease;
+    transition: opacity 0.4s ease;
   }
 
   &-to {
@@ -431,7 +429,7 @@ body {
 
 .fade-leave {
   &-active {
-    transition: opacity .4s ease;
+    transition: opacity 0.4s ease;
   }
 
   &-to {
@@ -464,7 +462,7 @@ body {
   padding: 10px;
   text-align: center;
   text-decoration: none;
-  transition: color .15s ease-in-out, background-color .15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
   user-select: none;
   vertical-align: middle;
   width: 100%;
@@ -591,7 +589,7 @@ body {
 .description {
   p {
     color: var(--cp-palette-main-fifth);
-    letter-spacing: .5px;
+    letter-spacing: 0.5px;
     line-height: 22px;
   }
 }
@@ -602,10 +600,10 @@ body {
 
 .btn-product-card {
   background-color: var(--cp-palette-main-third);
-  border-color: rgba(240, 246, 252, .1);
+  border-color: rgba(240, 246, 252, 0.1);
   box-shadow: 0 0 transparent, 0 0 transparent;
   color: var(--cp-palette-main-fifth);
-  transition: .2s cubic-bezier(.3, 0, .5, 1);
+  transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
   transition-property: color, background-color, border-color;
 }
 

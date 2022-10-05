@@ -1,21 +1,21 @@
 .entypo {
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 
   svg {
     height: auto;
     padding: 10px;
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     width: auto;
   }
 
   &:hover {
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 
     svg {
       background-color: var(--cp-palette-main-fourth);
       box-shadow: 0 0 8px 1px #ffa1a1;
       transform: scale(1.01);
-      transition: all .3s ease-in-out;
+      transition: all 0.3s ease-in-out;
     }
   }
 }

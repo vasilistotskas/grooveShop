@@ -7,10 +7,10 @@
 ._input {
   background-color: var(--cp-palette-main-fourth);
   border: 1px solid var(--cp-palette-main-third);
-  border-radius: .25rem;
+  border-radius: 0.25rem;
   color: var(--cp-palette-main-fifth);
   outline: none;
-  padding: .75rem;
+  padding: 0.75rem;
   width: 100%;
 
   &:focus {
@@ -32,7 +32,7 @@
   height: 14px;
   margin-top: -7px;
   position: absolute;
-  right: .75rem;
+  right: 0.75rem;
   top: 50%;
   width: 14px;
 }

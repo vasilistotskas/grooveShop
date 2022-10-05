@@ -29,7 +29,7 @@
     .profile-image-part {
       label.profile-image-label {
         opacity: 0;
-        transition: all .3s ease-in-out;
+        transition: all 0.3s ease-in-out;
         visibility: hidden;
       }
 
@@ -43,7 +43,7 @@
 
         label.profile-image-label {
           opacity: 1;
-          transition: all .3s ease-in-out;
+          transition: all 0.3s ease-in-out;
           visibility: visible;
         }
       }
