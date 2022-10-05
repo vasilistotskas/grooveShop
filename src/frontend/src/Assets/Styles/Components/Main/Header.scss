@@ -1,0 +1,40 @@
+@import '@/Assets/Styles/Base/variables';
+
+header {
+  @media screen and (min-width: map-get($grid-breakpoints, 'xl')) {
+    position: fixed;
+  }
+
+  width: 100%;
+  z-index: 12;
+
+  .predeader {
+    background-color: var(--cp-palette-main-fifth);
+    color: var(--cp-palette-main-fourth);
+    font-size: 14px;
+    text-align: center;
+    transform: translate3d(0, 0, 0);
+    transition: all .3s ease-in-out;
+
+    &.predeader--hidden {
+      box-shadow: none;
+      transform: translate3d(0, -100%, 0);
+    }
+
+    p {
+      color: var(--cp-palette-main-fifth);
+      margin: 0;
+      padding-bottom: 5px;
+      padding-top: 5px;
+    }
+
+    a {
+      color: var(--cp-palette-main-fifth);
+      font-weight: 700;
+
+      span {
+        color: var(--cp-palette-main-fifth);
+      }
+    }
+  }
+}

@@ -15,20 +15,20 @@
 
 <script lang="ts">
 import packageMeta from '@/../package.json'
-import AppModule from '@/state/app/AppModule'
-import CartModule from '@/state/cart/CartModule'
-import BlogModule from '@/state/blog/BlogModule'
-import Footer from '@/components/Main/Footer.vue'
-import Header from '@/components/Main/Header.vue'
-import Loader from '@/components/Main/Loader.vue'
+import AppModule from '@/State/App/AppModule'
+import CartModule from '@/State/Cart/CartModule'
+import BlogModule from '@/State/Blog/BlogModule'
+import Footer from '@/Components/Main/Footer.vue'
+import Header from '@/Components/Main/Header.vue'
+import Loader from '@/Components/Main/Loader.vue'
 import { getModule } from 'vuex-module-decorators'
-import AuthModule from '@/state/auth/auth/AuthModule'
-import UserModule from '@/state/user/data/UserModule'
-import CountryModule from '@/state/country/CountryModule'
-import CategoryModule from '@/state/category/CategoryModule'
+import AuthModule from '@/State/Auth/Auth/AuthModule'
+import UserModule from '@/State/User/Profile/UserModule'
+import CountryModule from '@/State/Country/CountryModule'
+import CategoryModule from '@/State/Category/CategoryModule'
 import { Options as Component, Vue } from 'vue-class-component'
-import SocialSidebar from '@/components/Main/SocialSidebar.vue'
-import ProductFavouriteModule from '@/state/product/favourite/ProductFavouriteModule'
+import SocialSidebar from '@/Components/Main/SocialSidebar.vue'
+import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
 
 @Component({
   name: 'App',
@@ -94,9 +94,9 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
-@import '@/assets/styles/base/commons';
-@import '@/assets/styles/base/form_colors';
-@import '@/assets/styles/base/helpers';
-@import '@/assets/styles/base/mixins';
-@import '@/assets/styles/base/typography';
+@import '@/Assets/Styles/Base/commons';
+@import '@/Assets/Styles/Base/form_colors';
+@import '@/Assets/Styles/Base/helpers';
+@import '@/Assets/Styles/Base/mixins';
+@import '@/Assets/Styles/Base/typography';
 </style>

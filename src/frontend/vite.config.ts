@@ -21,7 +21,7 @@ export default defineConfig({
       // compositionOnly: false,
 
       // you need to set I18n resource including paths !
-      include: resolve(dirname(fileURLToPath(import.meta.url)), 'src/locales/**'),
+      include: resolve(dirname(fileURLToPath(import.meta.url)), 'src/Locales/**'),
     }),
     VitePluginHtmlEnv({
       compiler: true,

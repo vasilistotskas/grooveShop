@@ -1,13 +1,13 @@
 import mitt from 'mitt'
 import axios from 'axios'
 import App from '@/App.vue'
-import router from '@/routes'
+import router from '@/Routes'
 import { createApp } from 'vue'
-import { i18n } from '@/locales'
-import store from '@/dynamicStore'
+import { i18n } from '@/Locales'
+import store from '@/DynamicStore'
 import 'vue-toastification/dist/index.css'
 import VueSocialSharing from 'vue-social-sharing'
-import * as apolloProvider from '../apollo.provider'
+import * as apolloProvider from '@/Apollo/ApolloProvider'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast, { PluginOptions, TYPE } from 'vue-toastification'
 import { createMetaManager, plugin as metaPlugin } from 'vue-meta'
@@ -51,4 +51,4 @@ createApp(App)
   .use(VueSocialSharing)
   .component('font-awesome-icon', FontAwesomeIcon)
   .provide('emitter', emitter)
-  .mount('#app')
+  .mount('#App')
