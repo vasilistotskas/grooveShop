@@ -67,7 +67,7 @@ class Product(TimeStampMixinModel, SeoModel, UUIDModel):
     hits = models.PositiveIntegerField(default=0)
 
     class Meta:
-        ordering: tuple[str] = ("-created_at",)
+        ordering = ("-created_at",)
 
     def __str__(self) -> str:
         return self.name
