@@ -53,6 +53,8 @@ jobs:
       db:
         image: postgres:13
         env:
+          POSTGRES_DB_HOST: db
+          POSTGRES_HOST: db
           POSTGRES_DB: postgres
           POSTGRES_USER: devuser
           POSTGRES_PASSWORD: changeme
