@@ -67,11 +67,18 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: psycopg2 prerequisites
+        run: sudo apt-get install libpq-dev
+
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install apprise braintree coverage coveralls
+
+      - name: Run migrations
+        run: python src/manage.py migrate
+
       - name: Run Tests
         env:
           SYSTEM_ENV: GITHUB_WORKFLOW
