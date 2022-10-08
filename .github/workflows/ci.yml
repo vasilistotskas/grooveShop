@@ -47,9 +47,13 @@ jobs:
         python-version: [ 3.9, 3.10 ]
         include:
           - db: postgres
-            db_user: runner
-            db_password: ''
+            db_host: db
+            db_port: 5432
+            db_user: devuser
+            db_password: changeme
           - db: mysql
+            db_host: db
+            db_port: 3306
             db_user: root
             db_password: root
     steps:
@@ -76,6 +80,8 @@ jobs:
       - name: Run Tests
         env:
           DB: ${{ matrix.db }}
+          DB_HOST: ${{ matrix.db_host }}
+          DB_PORT: ${{ matrix.db_port }}
           DB_USER: ${{ matrix.db_user }}
           DB_PASSWORD: ${{ matrix.db_password }}
         run: |
