@@ -38,6 +38,7 @@ jobs:
     needs: Quality
     runs-on: ubuntu-latest
     strategy:
+      max-parallel: 4
       matrix:
         db: [ sqlite, postgres, mysql ]
         python-version: [ 3.10.7 ]
@@ -50,8 +51,33 @@ jobs:
           - db: mysql
             db_host: db
             db_port: 3306
-            db_user: root
-            db_password: root
+            db_user: devuser
+            db_password: changeme
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: devuser
+          POSTGRES_PASSWORD: changeme
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: changeme
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     steps:
       - uses: actions/checkout@v2
 
@@ -60,14 +86,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Start MySQL
-        if: matrix.db == 'mysql'
-        run: sudo systemctl start mysql.service
-      - name: Start PostgreSQL
-        if: matrix.db == 'postgres'
-        run: |
-          sudo systemctl start postgresql.service
-          sudo -u postgres createuser -s runner
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
