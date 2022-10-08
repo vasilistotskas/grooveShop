@@ -40,7 +40,7 @@ jobs:
     strategy:
       matrix:
         db: [ sqlite, postgres, mysql ]
-        python-version: [3.6, 3.7, 3.8]
+        python-version: [ 3.10.7 ]
         include:
           - db: postgres
             db_host: db
@@ -83,7 +83,7 @@ jobs:
         run: |
           coverage run --omit=*/tests/*  src/manage.py test && coverage report
       - name: Coveralls
-        if: matrix.db == 'postgres' && matrix.python-version == '3.8'
+        if: matrix.db == 'postgres'
         run: coveralls
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
