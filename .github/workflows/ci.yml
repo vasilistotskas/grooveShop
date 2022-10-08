@@ -77,7 +77,9 @@ jobs:
           pip install apprise braintree coverage coveralls
 
       - name: Run migrations
-        run: python src/manage.py migrate
+        run: |
+          python src/manage.py makemigrations
+          python src/manage.py migrate
         env:
           SYSTEM_ENV: GITHUB_WORKFLOW
 
