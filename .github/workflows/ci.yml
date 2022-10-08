@@ -78,6 +78,8 @@ jobs:
 
       - name: Run migrations
         run: python src/manage.py migrate
+        env:
+          SYSTEM_ENV: GITHUB_WORKFLOW
 
       - name: Run Tests
         env:
