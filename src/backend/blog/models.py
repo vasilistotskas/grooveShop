@@ -1,5 +1,4 @@
 import os
-from typing import List
 
 from backend.core.models import PublishableModel
 from backend.core.models import SortableModel
@@ -50,7 +49,7 @@ class Category(TimeStampMixinModel, SortableModel, UUIDModel):
     image = models.ImageField(upload_to="uploads/blog/", blank=True, null=True)
 
     class Meta:
-        ordering: List[str] = ["-name"]
+        ordering = ["-name"]
 
     def __str__(self):
         return self.name
@@ -90,7 +89,7 @@ class Post(TimeStampMixinModel, PublishableModel, UUIDModel):
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
 
     class Meta:
-        ordering: List[str] = ["-published_at"]
+        ordering = ["-published_at"]
 
     def __str__(self):
         return self.title
@@ -132,8 +131,8 @@ class Comment(TimeStampMixinModel, UUIDModel):
     post = models.ForeignKey(Post, on_delete=models.SET_NULL, null=True)
 
     class Meta:
-        unique_together: tuple[tuple[str, str]] = (("user", "post"),)
-        ordering: List[str] = ["-created_at"]
+        unique_together = (("user", "post"),)
+        ordering = ["-created_at"]
 
     def __str__(self):
         if len(self.content) > 50:

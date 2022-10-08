@@ -24,7 +24,7 @@ class Tip(TimeStampMixinModel):
     active = models.BooleanField(default=True)
 
     class Meta:
-        ordering: list[str] = ["-created_at"]
+        ordering = ["-created_at"]
 
     def image_tag(self):
         icon = self.icon

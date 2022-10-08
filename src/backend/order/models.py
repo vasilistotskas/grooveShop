@@ -35,7 +35,7 @@ class PayWay(TimeStampMixinModel, SortableModel, UUIDModel):
     )
 
     class Meta:
-        verbose_name_plural: str = "Pay Ways"
+        verbose_name_plural = "Pay Ways"
 
     def __str__(self):
         return self.name

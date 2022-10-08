@@ -17,7 +17,7 @@ class SortableModel(models.Model):
     sort_order = models.IntegerField(editable=False, db_index=True, null=True)
 
     class Meta:
-        abstract: bool = True
+        abstract = True
 
     def get_ordering_queryset(self) -> QuerySet[Any]:
         raise NotImplementedError("Unknown ordering queryset")
@@ -60,7 +60,7 @@ class UUIDModel(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 
     class Meta:
-        abstract: bool = True
+        abstract = True
 
 
 class PublishedQuerySet(models.QuerySet):

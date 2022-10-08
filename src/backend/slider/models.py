@@ -22,7 +22,7 @@ class Slider(TimeStampMixinModel, UUIDModel):
     video = models.FileField(upload_to="uploads/sliders/videos/", null=True, blank=True)
 
     class Meta:
-        verbose_name_plural: str = "Sliders"
+        verbose_name_plural = "Sliders"
 
     def __str__(self):
         return self.name
@@ -71,8 +71,8 @@ class Slide(TimeStampMixinModel, SortableModel, UUIDModel):
     )
 
     class Meta:
-        verbose_name_plural: str = "Slides"
-        ordering: tuple[str] = ("order_position",)
+        verbose_name_plural = "Slides"
+        ordering = ("order_position",)
 
     def __str__(self):
         return "%s" % self.id

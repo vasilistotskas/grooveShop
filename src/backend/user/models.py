@@ -80,7 +80,7 @@ class Country(models.Model):
     image_flag = models.ImageField(blank=True, null=True, upload_to="uploads/country/")
 
     class Meta:
-        verbose_name_plural: str = "Countries"
+        verbose_name_plural = "Countries"
 
     def __str__(self):
         return self.name
@@ -92,7 +92,7 @@ class Region(models.Model):
     alpha_2 = models.ForeignKey(Country, on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name_plural: str = "Regions"
+        verbose_name_plural = "Regions"
 
     def __str__(self):
         return self.name
@@ -119,7 +119,7 @@ class UserProfile(models.Model):
     image = models.ImageField(blank=True, null=True, upload_to="uploads/users/")
 
     class Meta:
-        verbose_name_plural: str = "User's Profile"
+        verbose_name_plural = "User's Profile"
 
     def __str__(self):
         return "%s" % self.user.id
