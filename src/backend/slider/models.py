@@ -35,12 +35,12 @@ class Slider(TimeStampMixinModel, UUIDModel):
 
     def main_image_absolute_url(self):
         image: str = ""
-        if self.image:
+        if self.image and hasattr(self.image, "url"):
             return settings.BACKEND_BASE_URL + self.image.url
         return image
 
     def main_image_filename(self):
-        if self.image:
+        if self.image and hasattr(self.image, "name"):
             return os.path.basename(self.image.name)
         else:
             return ""
@@ -88,12 +88,12 @@ class Slide(TimeStampMixinModel, SortableModel, UUIDModel):
 
     def main_image_absolute_url(self):
         image: str = ""
-        if self.image:
+        if self.image and hasattr(self.image, "url"):
             return settings.BACKEND_BASE_URL + self.image.url
         return image
 
     def main_image_filename(self):
-        if self.image:
+        if self.image and hasattr(self.image, "name"):
             return os.path.basename(self.image.name)
         else:
             return ""

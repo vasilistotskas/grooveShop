@@ -4,7 +4,6 @@ from backend.core.models import TimeStampMixinModel
 from backend.tip.validators import validate_file_extension
 from django.conf import settings
 from django.db import models
-from django.db.models import FileField
 from django.utils.safestring import mark_safe
 
 
@@ -28,21 +27,19 @@ class Tip(TimeStampMixinModel):
         ordering: list[str] = ["-created_at"]
 
     def image_tag(self):
-        icon: FileField = self.icon
+        icon = self.icon
         if icon:
             return mark_safe('<img src="{}" height="50"/>'.format(icon.url))
         return ""
 
-    @property
     def main_image_absolute_url(self) -> str:
         icon: str = ""
-        if self.icon:
+        if self.icon and hasattr(self.icon, "url"):
             return settings.BACKEND_BASE_URL + self.icon.url
         return icon
 
-    @property
     def main_image_filename(self) -> str:
-        if self.icon:
+        if self.icon and hasattr(self.icon, "name"):
             return os.path.basename(self.icon.name)
         else:
             return ""

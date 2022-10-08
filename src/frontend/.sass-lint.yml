@@ -1,5 +1,5 @@
 files:
-  include: "**/*.s+(a|c)ss"
+  include: '**/*.s+(a|c)ss'
   ignore:
     - node_modules/**
 syntax:
@@ -33,5 +33,4 @@ options:
 rules:
   nesting-depth:
     - 1
-    -
-      max-depth: 10
+    - max-depth: 10

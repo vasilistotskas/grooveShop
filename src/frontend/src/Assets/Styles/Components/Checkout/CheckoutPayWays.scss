@@ -1,0 +1,51 @@
+.checkout-pay_way {
+  &-container {
+    background-color: var(--cp-palette-main-secondary);
+    border-radius: 10px;
+    display: grid;
+    padding: 15px 30px 30px;
+    h2 {
+      color: var(--cp-palette-main-fifth);
+    }
+  }
+
+  &-section {
+    display: grid;
+  }
+
+  &-content {
+    align-items: center;
+    display: grid;
+    grid-template-columns: 26px auto;
+  }
+
+  &-input {
+    height: 18px;
+    width: 18px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &-input-label {
+    align-items: center;
+    display: flex;
+    grid-gap: 0.25rem;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &-icon {
+    max-width: 58px;
+  }
+
+  &-name {
+    font-size: 18px;
+  }
+
+  &-cost {
+    &-free {
+    }
+  }
+}

@@ -34,7 +34,7 @@ class PostType:
 
     @strawberry_django.field
     def main_image_absolute_url(self) -> str:
-        if self.image:
+        if self.image and hasattr(self.image, "url"):
             image = settings.BACKEND_BASE_URL + self.image.url
         else:
             image = ""
@@ -42,7 +42,7 @@ class PostType:
 
     @strawberry_django.field
     def main_image_filename(self) -> str:
-        if self.image:
+        if self.image and hasattr(self.image, "name"):
             return os.path.basename(self.image.name)
         else:
             return ""

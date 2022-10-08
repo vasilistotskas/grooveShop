@@ -1,5 +1,5 @@
 import { Store } from '@/store'
-import { RouteMetaBreadcrumb } from '@/routes/Type/BreadcrumbItemType'
+import { RouteMetaBreadcrumb } from '@/Routes/Type/BreadcrumbItemType'
 
 declare module '*.md' {
   const value: string

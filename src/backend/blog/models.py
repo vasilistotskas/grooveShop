@@ -38,6 +38,10 @@ class Tag(TimeStampMixinModel, SortableModel, UUIDModel):
     def get_ordering_queryset(self):
         return Tag.objects.all()
 
+    def get_tag_posts_count(self):
+        tag_id = self.id
+        return Post.objects.filter(tags__id=tag_id).count()
+
 
 class Category(TimeStampMixinModel, SortableModel, UUIDModel):
     name = models.CharField(max_length=200)
@@ -54,16 +58,14 @@ class Category(TimeStampMixinModel, SortableModel, UUIDModel):
     def get_ordering_queryset(self):
         return Category.objects.all()
 
-    @property
     def main_image_absolute_url(self) -> str:
         image: str = ""
-        if self.image is not None:
+        if self.image and hasattr(self.image, "url"):
             return settings.BACKEND_BASE_URL + self.image.url
         return image
 
-    @property
     def main_image_filename(self) -> str:
-        if self.image:
+        if self.image and hasattr(self.image, "name"):
             return os.path.basename(self.image.name)
         else:
             return ""
@@ -93,22 +95,28 @@ class Post(TimeStampMixinModel, PublishableModel, UUIDModel):
     def __str__(self):
         return self.title
 
-    @property
     def main_image_absolute_url(self) -> str:
         image: str = ""
-        if self.image:
+        if self.image and hasattr(self.image, "url"):
             return settings.BACKEND_BASE_URL + self.image.url
         return image
 
-    @property
     def main_image_filename(self) -> str:
-        if self.image:
+        if self.image and hasattr(self.image, "name"):
             return os.path.basename(self.image.name)
         else:
             return ""
 
     def number_of_likes(self):
         return self.likes.count()
+
+    def number_of_comments(self):
+        post_id = self.id
+        return Comment.objects.filter(post_id=post_id).count()
+
+    def get_post_tags_count(self):
+        post_id = self.id
+        return Post.objects.get(id=post_id).tags.count()
 
 
 class Comment(TimeStampMixinModel, UUIDModel):

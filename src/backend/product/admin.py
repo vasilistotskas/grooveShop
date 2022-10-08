@@ -15,7 +15,7 @@ class ProductImageInline(admin.TabularInline):
     extra = 1
 
 
-class AppendActionException(Exception):
+class AppendActionException(BaseException):
     pass
 
 
@@ -40,7 +40,8 @@ class ProductAdmin(admin.ModelAdmin):
     try:
         for s in Category.objects.all():
             actions.append(category_update_action(s))
-    except AppendActionException:
+    except BaseException as e:
+        print(e)
         pass
 
     def boolean_status(self, obj):

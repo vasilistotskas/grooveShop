@@ -122,7 +122,7 @@ class Product(TimeStampMixinModel, SeoModel, UUIDModel):
     def main_image_absolute_url(self) -> str:
         img = ProductImages.objects.get(product_id=self.id, is_main=True)
         image: str = ""
-        if img.image:
+        if img.image and hasattr(img.image, "url"):
             return settings.BACKEND_BASE_URL + img.image.url
         return image
 
@@ -222,7 +222,6 @@ class ProductImages(TimeStampMixinModel, SortableModel, UUIDModel):
 
         super().save(*args, **kwargs)
 
-    @property
     def product_image_absolute_url(self) -> str:
         image: str = ""
         if self.image:

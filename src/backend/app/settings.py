@@ -163,7 +163,15 @@ DATABASES = {
         "NAME": os.environ.get("DB_NAME"),
         "USER": os.environ.get("DB_USER"),
         "PASSWORD": os.environ.get("DB_PASS"),
-    }
+    },
+    "replica": {
+        "ENGINE": "django.db.backends.postgresql",
+        "HOST": os.environ.get("DB_HOST_TEST"),
+        "NAME": os.environ.get("DB_NAME_TEST"),
+        "TEST": {
+            "MIRROR": os.environ.get("DB_TEST_MIRROR"),
+        },
+    },
 }
 
 # Cache

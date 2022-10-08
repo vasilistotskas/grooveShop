@@ -1,0 +1,43 @@
+.main-loader {
+  align-items: center;
+  backdrop-filter: blur(2px);
+  background: #000000a8;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  opacity: 1;
+  overflow: hidden;
+  pointer-events: unset;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 9999;
+
+  &-icon {
+    position: relative;
+  }
+
+  .ldio-j8fbajw7p8s-st0 {
+    fill: none;
+    opacity: 0.8;
+    stroke-miterlimit: 10;
+    stroke-width: 0.4811;
+  }
+
+  .ldio-j8fbajw7p8s-st2 {
+    opacity: 0.8;
+  }
+
+  .ldio-j8fbajw7p8s-st3 {
+    fill: none;
+    stroke-miterlimit: 10;
+    stroke-width: 0.5;
+  }
+
+  .ldio-j8fbajw7p8s-st4 {
+    fill: none;
+    stroke-miterlimit: 10;
+    stroke-width: 0.4694;
+  }
+}

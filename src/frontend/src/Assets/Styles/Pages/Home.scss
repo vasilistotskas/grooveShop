@@ -1,0 +1,222 @@
+.home-usp-grid-container {
+  background: var(--cp-palette-main-fourth);
+}
+
+.home-usp-grid-content {
+  background: var(--cp-palette-main-fourth);
+  border-bottom: 1px solid var(--cp-palette-main-third);
+  border-top: 1px solid var(--cp-palette-main-third);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0 auto;
+  max-width: 1320px;
+  padding: 20px;
+
+  .grid-usp-item {
+    align-self: center;
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    justify-self: center;
+
+    svg {
+      border-right: 2px solid var(--cp-palette-main-fifth);
+      width: 100%;
+    }
+
+    span {
+      align-self: center;
+      display: grid;
+      font-size: 18px;
+      font-weight: 500;
+      height: 100%;
+      justify-self: center;
+      width: 100%;
+
+      &:first-child {
+        font-size: 12px;
+        font-weight: 300;
+      }
+
+      @media screen and (max-width: 767px) {
+        font-size: 14px;
+        &:first-child {
+          font-size: 10px;
+        }
+      }
+    }
+  }
+}
+
+.home-top-grid-content {
+  display: grid;
+  grid-gap: 45px;
+  grid-template-columns: 2fr 1fr;
+  @media screen and (max-width: 767px) {
+    grid-gap: 10px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+}
+
+.grid-item-swipper {
+  align-content: center;
+  align-items: center;
+  border-radius: 8px;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  transition: all 0.3s ease-in-out;
+
+  img,
+  video,
+  .swiper-slide {
+    border-radius: 8px;
+  }
+
+  &:hover {
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+.grid-item-right {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  max-width: 100%;
+  @media screen and (max-width: 767px) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .grid-item-content {
+    height: 275px;
+    position: relative;
+
+    &-one {
+      .swiper-container-initialized {
+        height: 275px;
+        margin: 0 auto;
+        width: 100%;
+        @media screen and (max-width: 767px) {
+          height: 200px;
+          width: 300px;
+        }
+
+        @media screen and (max-width: 576px) {
+          height: 125px;
+          width: 175px;
+        }
+
+        @media screen and (max-width: 380px) {
+          height: 110px;
+          width: 125px;
+        }
+      }
+    }
+
+    &-two {
+      .swiper-container-initialized {
+        height: 275px;
+        margin: 0 auto;
+        width: 100%;
+        @media screen and (max-width: 767px) {
+          height: 200px;
+          width: 300px;
+        }
+
+        @media screen and (max-width: 576px) {
+          height: 125px;
+          width: 175px;
+        }
+
+        @media screen and (max-width: 380px) {
+          height: 110px;
+          width: 125px;
+        }
+      }
+    }
+  }
+}
+
+.grid-content-six {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(5, 1fr);
+  @media screen and (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media screen and (max-width: 767px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.swiper {
+  height: 100%;
+  width: 100%;
+}
+
+.swiper-slide {
+  /* Center slide text vertically */
+  align-items: center;
+  background: var(--cp-palette-main-fifth);
+  display: flex;
+  font-size: 18px;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.swiper {
+  height: 100%;
+  width: 100%;
+}
+
+.swiper-slide {
+  align-items: center;
+  background: #f00014;
+  display: flex;
+  font-size: 18px;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.swiper-slide img,
+video {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.swiper-pagination-bullet {
+  background-color: var(--cp-palette-main-primary);
+  height: 16px;
+  opacity: 0.35;
+  width: 16px;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+.swiper-container {
+  .swiper-slide {
+    background-color: var(--cp-palette-main-primary);
+  }
+
+  &.swiper-container-initialized {
+    max-height: none;
+    overflow-y: auto;
+  }
+}
+
+.grid-item-content-one,
+.grid-item-content-two {
+  align-content: center;
+  align-items: center;
+  display: grid;
+  justify-content: center;
+  max-width: 100%;
+}

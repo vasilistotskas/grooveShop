@@ -142,7 +142,7 @@ services:
       - ./src/frontend/src:/frontend/src
       - ./src/frontend/.eslintrc.cjs:/frontend/.eslintrc.cjs
       - ./src/frontend/.prettierrc.yaml:/frontend/.prettierrc.yaml
-      - ./src/frontend/apollo.provider.ts:/frontend/apollo.provider.ts
+      - ./src/frontend/src/Apollo/ApolloProvider.ts:/frontend/src/Apollo/ApolloProvider.ts
       - ./src/frontend/babel.config.js:/frontend/babel.config.js
       - ./src/frontend/env.d.ts:/frontend/env.d.ts
       - ./src/frontend/index.html:/frontend/index.html

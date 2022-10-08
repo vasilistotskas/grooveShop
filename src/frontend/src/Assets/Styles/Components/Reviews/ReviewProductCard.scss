@@ -1,0 +1,142 @@
+@import '@/Assets/Styles/Base/variables';
+
+.user-review-product-content {
+  align-items: center;
+  display: inline-flex;
+  grid-gap: 5px;
+  justify-items: center;
+
+  .user-review-product-count {
+    span {
+      color: var(--cp-palette-main-third);
+      font-size: 14px;
+    }
+  }
+}
+
+.user-review-product-settings {
+  color: transparent;
+  font-size: 0;
+  height: 34px;
+  position: absolute;
+  right: 4px;
+  text-align: center;
+  top: 8px;
+  width: 34px;
+  z-index: 10;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:before {
+    color: var(--cp-palette-main-fifth);
+    content: '\2807';
+    display: inline-block;
+    font-size: 20px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    height: 34px;
+    line-height: 34px;
+    margin-right: 0;
+    speak: none;
+    text-align: center;
+    text-decoration: none;
+    text-transform: none;
+    transition: color 0.1s ease-in-out;
+    width: 1em;
+  }
+}
+
+.user-review-product {
+  &-actions {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  &-image {
+    background-position: center;
+    background-size: cover;
+    border: 1px solid rgba(246, 139, 36, 0.4);
+    border-radius: 50%;
+    font: inherit;
+    font-size: 100%;
+    height: 100px;
+    overflow: hidden;
+    padding: 0;
+    vertical-align: baseline;
+    width: 100px;
+  }
+
+  &-body {
+    grid-column: 3/1;
+  }
+
+  &-stars {
+    margin-top: 5px;
+
+    .star {
+      height: 18px;
+      width: 18px;
+
+      &-background {
+        color: $rating-starts;
+      }
+    }
+  }
+
+  &-date {
+    display: grid;
+    grid-template-columns: 37% auto;
+    margin-top: 20px;
+    @media screen and (max-width: 1200px) {
+      grid-template-columns: 1fr;
+    }
+
+    span {
+      color: var(--cp-palette-main-fifth);
+      font-size: 13px;
+    }
+  }
+}
+
+.user-review-actions {
+  &-menu {
+    animation: scaleFade 0.15s;
+    background: var(--cp-palette-main-secondary);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgb(112 112 112 / 33%);
+    max-width: 196px;
+    padding: 20px 60px 20px 36px;
+    position: absolute;
+    right: 0;
+    text-align: left;
+    top: 0;
+    transform-origin: calc(100% - 30px) 30px;
+    width: auto;
+    z-index: 9;
+  }
+
+  &-controls {
+    display: block;
+  }
+
+  &-edit,
+  &-delete {
+    a {
+      color: var(--cp-palette-main-third);
+      display: block;
+      font-size: 14px;
+      line-height: 18px;
+      padding: 8px 0 7px;
+      position: relative;
+
+      &:hover {
+        color: var(--cp-palette-main-fifth);
+        cursor: pointer;
+      }
+    }
+  }
+}
