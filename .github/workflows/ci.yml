@@ -50,9 +50,10 @@ jobs:
             db_password: changeme
 
     services:
-      postgres:
+      db:
         image: postgres:13
         env:
+          POSTGRES_DB: postgres
           POSTGRES_USER: devuser
           POSTGRES_PASSWORD: changeme
         options: >-
