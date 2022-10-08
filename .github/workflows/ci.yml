@@ -44,7 +44,6 @@ jobs:
         python-version: [ 3.10.7 ]
         include:
           - db: postgres
-            db_host: db
             db_port: 5432
             db_user: devuser
             db_password: changeme
@@ -53,16 +52,10 @@ jobs:
       db:
         image: postgres:13
         env:
-          POSTGRES_DB_HOST: db
-          POSTGRES_HOST: db
           POSTGRES_DB: postgres
           POSTGRES_USER: devuser
           POSTGRES_PASSWORD: changeme
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+        options: --mount type=tmpfs,destination=/var/lib/postgresql/data --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
         ports:
           - 5432:5432
 
@@ -83,7 +76,6 @@ jobs:
         env:
           SYSTEM_ENV: GITHUB_WORKFLOW
           DB: ${{ matrix.db }}
-          DB_HOST: ${{ matrix.db_host }}
           DB_PORT: ${{ matrix.db_port }}
           DB_USER: ${{ matrix.db_user }}
           DB_PASSWORD: ${{ matrix.db_password }}

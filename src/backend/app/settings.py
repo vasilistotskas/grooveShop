@@ -163,8 +163,8 @@ if SYSTEM_ENV == "GITHUB_WORKFLOW":
         "default": {
             "ENGINE": "django.db.backends.postgresql",
             "NAME": "postgres",
-            "USER": "devuser",
-            "PASSWORD": "changeme",
+            "USER": os.environ.get("DB_USER"),
+            "PASSWORD": os.environ.get("DB_PASS"),
             "HOST": "127.0.0.1",
             "PORT": "5432",
         }
