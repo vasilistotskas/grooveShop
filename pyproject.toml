@@ -81,6 +81,11 @@ requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
 
 [tool.coverage.run]
-omit = [
-    "tests/*"
-]
+branch = true
+command_line = '-m pytest'
+source = ['src/backend/tests/']
+
+[tool.coverage.report]
+precision = 2
+skip_covered = true
+fail_under = 50

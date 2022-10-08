@@ -33,9 +33,43 @@ jobs:
         python -m poetry run flake8 . --exclude .venv --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         python -m poetry run flake8 . --exclude .venv --count --exit-zero --max-complexity=31 --max-line-length=92 --statistics
-#    - name: Test with pytest
-#      run: |
-#        python -m poetry run python -m pytest -v tests
+    - name: Test with pytest
+      run: |
+        python -m poetry run python -m pytest -v tests
+
+  Testing:
+    runs-on: ubuntu-latest
+    name: Test and check Coverage
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        id: setup-python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3
+
+      - name: Install deps
+        run: pip install -r ./requirements.txt
+
+      - name: Launch tests & generate report
+        run: pytest
+
+      - name: Coverage comment
+        id: coverage_comment
+        uses: py-cov-action/python-coverage-comment-action@v3
+        with:
+          GITHUB_TOKEN: ${{ github.token }}
+          VERBOSE: true
+
+      - name: Store Pull Request comment to be posted
+        uses: actions/upload-artifact@v2
+        if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
+        with:
+          # If you use a different name, update COMMENT_ARTIFACT_NAME accordingly
+          name: python-coverage-comment-action
+          # If you use a different name, update COMMENT_FILENAME accordingly
+          path: python-coverage-comment-action.txt
 
   Release:
     needs: Quality

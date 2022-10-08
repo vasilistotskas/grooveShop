@@ -56,6 +56,15 @@ repos:
 #        entry: bash -c "./src/manage.py makemigrations --check --dry-run"
 #        types: ["python"]
 #        pass_filenames: false
+  - repo: local
+    hooks:
+      - id: coverage
+        name: coverage
+        stages: [push]
+        language: system
+        entry: coverage run
+        types: [python]
+        pass_filenames: false
 
 default_language_version:
   python: python3.10.7
