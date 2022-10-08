@@ -21,7 +21,7 @@ class TipType:
 
     @strawberry_django.field
     def main_image_absolute_url(self) -> str:
-        if self.icon:
+        if self.icon and hasattr(self.icon, "url"):
             icon = settings.BACKEND_BASE_URL + self.icon.url
         else:
             icon = ""
@@ -29,7 +29,7 @@ class TipType:
 
     @strawberry_django.field
     def main_image_filename(self) -> str:
-        if self.icon:
+        if self.icon and hasattr(self.icon, "name"):
             return os.path.basename(self.icon.name)
         else:
             return ""

@@ -9,3 +9,7 @@ class Vat(TimeStampMixinModel, UUIDModel):
 
     def __str__(self):
         return "%s" % self.value
+
+    @staticmethod
+    def get_highest_vat_value():
+        return Vat.objects.all().order_by("-value").first()

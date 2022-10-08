@@ -17,6 +17,15 @@
    #### Run django collectstatic through docker-compose :
    -     docker-compose run backend sh -c "python manage.py collectstatic --noinput"
 
+   #### Run django tests through docker-compose :
+   -     docker-compose run backend sh -c "python manage.py test backend/tests/"
+
+   #### Run django tests with coverage and html through docker-compose :
+   -     docker-compose run backend sh -c "coverage run --source='.' manage.py test backend/tests/ && coverage report && coverage html"
+
+   #### Run django coverage html through docker-compose :
+   -     docker-compose run backend sh -c "coverage html"
+
    #### Seed database with fake data through docker-compose :
    -     docker-compose run backend sh -c "python manage.py populate_all"
    -   #### Seperate seed commands :
