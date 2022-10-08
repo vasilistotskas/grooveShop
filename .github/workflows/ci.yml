@@ -40,9 +40,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install everything, run the tests, produce the .coverage file
-        run: make test  # This is the part where you put your own test command
-
       - name: Install deps
         run: pip install -r ./requirements.txt
 

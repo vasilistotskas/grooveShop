@@ -65,6 +65,7 @@ repos:
         entry: coverage run
         types: [python]
         pass_filenames: false
+        relative_files: true
 
 default_language_version:
   python: python3.10.7
