@@ -156,23 +156,37 @@ WSGI_APPLICATION = "backend.app.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "HOST": os.environ.get("DB_HOST"),
-        "NAME": os.environ.get("DB_NAME"),
-        "USER": os.environ.get("DB_USER"),
-        "PASSWORD": os.environ.get("DB_PASS"),
-    },
-    "replica": {
-        "ENGINE": "django.db.backends.postgresql",
-        "HOST": os.environ.get("DB_HOST_TEST"),
-        "NAME": os.environ.get("DB_NAME_TEST"),
-        "TEST": {
-            "MIRROR": os.environ.get("DB_TEST_MIRROR"),
+SYSTEM_ENV = os.environ.get("SYSTEM_ENV", None)
+
+if SYSTEM_ENV == "GITHUB_WORKFLOW":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "postgres",
+            "USER": "devuser",
+            "PASSWORD": "changeme",
+            "HOST": "127.0.0.1",
+            "PORT": "5432",
+        }
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "HOST": os.environ.get("DB_HOST"),
+            "NAME": os.environ.get("DB_NAME"),
+            "USER": os.environ.get("DB_USER"),
+            "PASSWORD": os.environ.get("DB_PASS"),
         },
-    },
-}
+        "replica": {
+            "ENGINE": "django.db.backends.postgresql",
+            "HOST": os.environ.get("DB_HOST_TEST"),
+            "NAME": os.environ.get("DB_NAME_TEST"),
+            "TEST": {
+                "MIRROR": os.environ.get("DB_TEST_MIRROR"),
+            },
+        },
+    }
 
 # Cache
 CACHES = {

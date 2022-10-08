@@ -11,8 +11,8 @@ jobs:
   Quality:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
       with:
         python-version: 3.10.7
     - name: Install Python Poetry
@@ -67,10 +67,10 @@ jobs:
           - 5432:5432
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -81,6 +81,7 @@ jobs:
           pip install apprise braintree coverage coveralls
       - name: Run Tests
         env:
+          SYSTEM_ENV: GITHUB_WORKFLOW
           DB: ${{ matrix.db }}
           DB_HOST: ${{ matrix.db_host }}
           DB_PORT: ${{ matrix.db_port }}
@@ -115,7 +116,7 @@ jobs:
     concurrency: release
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
