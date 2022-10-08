@@ -35,7 +35,7 @@ jobs:
         python -m poetry run flake8 . --exclude .venv --count --exit-zero --max-complexity=31 --max-line-length=92 --statistics
     - name: Testing
       run: |
-        python -m poetry run python -m coverage run --source='.' src/manage.py test && coverage report
+        python -m poetry run python -m coverage run -m test && coverage report
 
 
   Testing:
@@ -48,7 +48,7 @@ jobs:
         run: pip install -r ./requirements.txt
 
       - name: Launch tests & generate report
-        run: coverage run --source='.' src/manage.py test backend/tests/ && coverage report
+        run: coverage run -m test && coverage report
 
       - name: Coverage comment
         id: coverage_comment
