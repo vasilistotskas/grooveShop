@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.0 (2022-10-08)
+### Feature
+* **Testing-Coverage:** Prototype Concept for Django Testing plus Coverage. ([`a8dce48`](https://github.com/vasilistotskas/grooveShop/commit/a8dce480bfe8fdfccf9ed39613b412a6af29783b))
+
 ## v0.1.4 (2022-10-02)
 ### Fix
 * **flake8:** Flake8 lint settings ([`078d26d`](https://github.com/vasilistotskas/grooveShop/commit/078d26db8af8c3413dc048b9e42eebe6f7770e56))
