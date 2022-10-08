@@ -33,10 +33,6 @@ jobs:
         python -m poetry run flake8 . --exclude .venv --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         python -m poetry run flake8 . --exclude .venv --count --exit-zero --max-complexity=31 --max-line-length=92 --statistics
-    - name: Testing
-      run: |
-        python -m poetry run coverage run src/manage.py test && coverage report
-
 
   Testing:
     needs: Quality
