@@ -82,11 +82,12 @@ requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
 
 [tool.coverage.paths]
-source = ["src"]
+source = ["src/backend/*"]
 
 [tool.coverage.run]
 branch = true
-source = ["src"]
+source = ["src/backend/*"]
+relative_files = true
 
 [tool.coverage.report]
 precision = 2
