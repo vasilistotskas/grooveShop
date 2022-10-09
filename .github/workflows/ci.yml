@@ -91,7 +91,8 @@ jobs:
           DB_USER: ${{ matrix.db_user }}
           DB_PASSWORD: ${{ matrix.db_password }}
         run: |
-          coverage run --omit=*/tests/*  src/manage.py test && coverage report
+          coverage run --source='.' src/manage.py test src/backend/tests/ && coverage report
+
       - name: Coveralls
         if: matrix.db == 'postgres'
         run: coveralls
