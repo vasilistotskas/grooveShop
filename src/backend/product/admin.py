@@ -2,8 +2,6 @@ import admin_thumbnails
 from backend.product.models import Product
 from backend.product.models import ProductImages
 from backend.product.models import ProductTranslation
-from backend.product_category.admin import category_update_action
-from backend.product_category.models import Category
 from django.contrib import admin
 
 
@@ -35,14 +33,6 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImageInline]
     prepopulated_fields = {"slug": ("name",)}
     readonly_fields = ("image_tag",)
-    actions = [""]
-    # List with actions for mass category set to products
-    try:
-        for s in Category.objects.all():
-            actions.append(category_update_action(s))
-    except BaseException as e:
-        print(e)
-        pass
 
     def boolean_status(self, obj):
         return obj.active == "True"
