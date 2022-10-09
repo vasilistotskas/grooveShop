@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.1 (2022-10-09)
+### Fix
+* **Missing migration folders:** Add migration folder to new apps ([`9c66949`](https://github.com/vasilistotskas/grooveShop/commit/9c6694955966690c5d1d7b345b3ef95b26f0c9dc))
+
 ## v0.2.0 (2022-10-08)
 ### Feature
 * **Testing-Coverage:** Prototype Concept for Django Testing plus Coverage. ([`a8dce48`](https://github.com/vasilistotskas/grooveShop/commit/a8dce480bfe8fdfccf9ed39613b412a6af29783b))
