@@ -1,4 +1,5 @@
 import os
+from typing import Union
 
 from backend.app.settings import BASE_DIR
 from backend.blog.models import Author
@@ -15,7 +16,7 @@ User = get_user_model()
 
 
 class BlogPostTestCase(TestCase):
-    image = ""
+    image: Union[str, SimpleUploadedFile] = ""
 
     def setUp(self):
         user = User.objects.create_user(password="bar", email="email@email.com")
@@ -67,7 +68,7 @@ class BlogPostTestCase(TestCase):
 
 
 class WithImage(BlogPostTestCase):
-    image = "uploads/products/no_photo.jpg"
+    image: Union[str, SimpleUploadedFile] = "uploads/products/no_photo.jpg"
     if not default_storage.exists(image):
         image_path = os.path.join(BASE_DIR, "files/images") + "/no_photo.jpg"
         image = SimpleUploadedFile(
@@ -78,4 +79,4 @@ class WithImage(BlogPostTestCase):
 
 
 class WithoutImage(BlogPostTestCase):
-    image = ""
+    image: Union[str, SimpleUploadedFile] = ""

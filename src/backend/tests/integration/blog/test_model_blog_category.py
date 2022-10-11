@@ -1,4 +1,5 @@
 import os
+from typing import Union
 
 from backend.app.settings import BASE_DIR
 from backend.blog.models import Category
@@ -9,7 +10,7 @@ from django.test import TestCase
 
 
 class BlogCategoryTestCase(TestCase):
-    image = ""
+    image: Union[str, SimpleUploadedFile] = ""
 
     def setUp(self):
         Category.objects.create(
@@ -36,7 +37,7 @@ class BlogCategoryTestCase(TestCase):
 
 
 class WithImage(BlogCategoryTestCase):
-    image = "uploads/products/no_photo.jpg"
+    image: Union[str, SimpleUploadedFile] = "uploads/products/no_photo.jpg"
     if not default_storage.exists(image):
         image_path = os.path.join(BASE_DIR, "files/images") + "/no_photo.jpg"
         image = SimpleUploadedFile(
@@ -47,4 +48,4 @@ class WithImage(BlogCategoryTestCase):
 
 
 class WithoutImage(BlogCategoryTestCase):
-    image = ""
+    image: Union[str, SimpleUploadedFile] = ""
