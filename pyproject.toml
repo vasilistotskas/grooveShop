@@ -86,6 +86,9 @@ source = ["src/backend/*"]
 
 [tool.coverage.run]
 branch = true
+omit = [
+    "src/backend/*",
+]
 source = ["src/backend/*"]
 relative_files = true
 
@@ -93,3 +96,4 @@ relative_files = true
 precision = 2
 skip_covered = true
 fail_under = 50
+show_missing = true

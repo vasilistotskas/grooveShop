@@ -26,8 +26,9 @@
       <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/graphql" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/graphql/blog" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/unit" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/unit/blog" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/unit/vat" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration/blog" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration/vat" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/src/backend/media" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
