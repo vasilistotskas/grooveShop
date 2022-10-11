@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.3 (2022-10-11)
+### Fix
+* **Coverage files:** Omit coverage files that dont need to be included ([`2316234`](https://github.com/vasilistotskas/grooveShop/commit/2316234a3159a6c0447351b6f3ba5bc71d6bc62e))
+
 ## v0.2.2 (2022-10-11)
 ### Fix
 * **Testing:** Rename folder pack unit to integration ([`47a47e7`](https://github.com/vasilistotskas/grooveShop/commit/47a47e763dbea1928bfca58b2d8db3de6cc6141b))
