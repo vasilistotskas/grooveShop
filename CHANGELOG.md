@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.4 (2022-10-11)
+### Fix
+* **Graphql Blog:** Fixed useless imports and merge_types ([`49726dd`](https://github.com/vasilistotskas/grooveShop/commit/49726dd0ee301a215d94d57ed5742dc9c6f46ebc))
+
 ## v0.2.3 (2022-10-11)
 ### Fix
 * **Coverage files:** Omit coverage files that dont need to be included ([`2316234`](https://github.com/vasilistotskas/grooveShop/commit/2316234a3159a6c0447351b6f3ba5bc71d6bc62e))
