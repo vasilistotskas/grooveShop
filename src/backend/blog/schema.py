@@ -6,19 +6,15 @@ from backend.blog.schemas.post.post_mutation import Mutation as PostMutation
 from backend.blog.schemas.post.post_query import Query as PostQuery
 from backend.blog.schemas.tag.tag_query import Query as TagQuery
 
-
-class BlogQuery(
+BlogQueryType = (
     AuthorQuery,
     CategoryQuery,
     CommentQuery,
     PostQuery,
     TagQuery,
-):
-    pass
+)
 
-
-class BlogMutation(
+BlogMutation = (
     CommentMutation,
     PostMutation,
-):
-    pass
+)

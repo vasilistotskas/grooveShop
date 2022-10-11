@@ -36,6 +36,7 @@ urlpatterns = [
     path("api/v1/", include("backend.user.urls")),
     path("api/v1/", include("backend.slider.urls")),
     path("api/v1/", include("backend.search.urls")),
+    path("api/v1/", include("backend.tip.urls")),
     path("api/v1/", include("backend.blog.urls")),  # djoser api views
     path("api/v1/djoser/", include("djoser.urls")),
     path("api/v1/djoser/", include("djoser.urls.authtoken")),  # graphql
