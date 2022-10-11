@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.2 (2022-10-11)
+### Fix
+* **Testing:** Rename folder pack unit to integration ([`47a47e7`](https://github.com/vasilistotskas/grooveShop/commit/47a47e763dbea1928bfca58b2d8db3de6cc6141b))
+
 ## v0.2.1 (2022-10-09)
 ### Fix
 * **Missing migration folders:** Add migration folder to new apps ([`9c66949`](https://github.com/vasilistotskas/grooveShop/commit/9c6694955966690c5d1d7b345b3ef95b26f0c9dc))
