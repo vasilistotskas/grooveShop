@@ -21,7 +21,7 @@
    -     docker-compose run backend sh -c "python manage.py test backend/tests/"
 
    #### Run django tests with coverage and html through docker-compose :
-   -     docker-compose run backend sh -c "coverage run --omit=*/migrations/*,*/management/commands/*,*/manage.py,*/setup.py,*/asgi.py,*/wsgi.py --source='.' manage.py test backend/tests/ && coverage report && coverage html"
+   -     docker-compose run backend sh -c "coverage run --omit=*/migrations/*,*/management/*,*/manage.py,*/setup.py,*/asgi.py,*/wsgi.py --source='.' manage.py test backend/tests/ && coverage report && coverage html"
 
    #### Run django coverage html through docker-compose :
    -     docker-compose run backend sh -c "coverage html"

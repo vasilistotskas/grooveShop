@@ -3,7 +3,7 @@
  source = .
  omit =
      */migrations/*
-     */management/commands/*
+     */management/*
      */manage.py
      */setup.py
      */asgi.py
