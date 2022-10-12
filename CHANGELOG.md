@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.3.0 (2022-10-12)
+### Feature
+* **Graphql:Tip:** Include TipQuery in Graphl main Query ([`d8cea7e`](https://github.com/vasilistotskas/grooveShop/commit/d8cea7e86036bd2ccf969f3628e339672393423c))
+
 ## v0.2.4 (2022-10-11)
 ### Fix
 * **Graphql Blog:** Fixed useless imports and merge_types ([`49726dd`](https://github.com/vasilistotskas/grooveShop/commit/49726dd0ee301a215d94d57ed5742dc9c6f46ebc))
