@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.4.0 (2022-10-14)
+### Feature
+* **Graphql:Testing:** Introduce Blog comment query testing ([`6948875`](https://github.com/vasilistotskas/grooveShop/commit/694887598dfb365de04a358629e9163f19791f70))
+
 ## v0.3.0 (2022-10-12)
 ### Feature
 * **Graphql:Tip:** Include TipQuery in Graphl main Query ([`d8cea7e`](https://github.com/vasilistotskas/grooveShop/commit/d8cea7e86036bd2ccf969f3628e339672393423c))
