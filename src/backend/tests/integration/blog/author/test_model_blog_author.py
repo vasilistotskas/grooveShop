@@ -6,13 +6,14 @@ User = get_user_model()
 
 
 class BlogAuthorTestCase(TestCase):
+    author: Author
+
     def setUp(self):
         user = User.objects.create_user(password="bar", email="email@email.com")
-        Author.objects.create(
+        self.author = Author.objects.create(
             user_id=user.id, website="https://www.google.com", bio="bio"
         )
 
     def test___str__(self):
-        author = Author.objects.get(user_id=1)
-        user_email = author.user.email
-        self.assertEqual(str(author), user_email)
+        user_email = self.author.user.email
+        self.assertEqual(str(self.author), user_email)
