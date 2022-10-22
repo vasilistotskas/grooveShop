@@ -132,8 +132,8 @@
               npm run lint:scss:fix
 
   -  ### FORMAT:
-        -     npm run format
-              npm run format:fix
+        -     npm run lint:prettier
+              npm run lint:prettier:fix
 
   -  ### Packages Update
         -     npm install -g npm-check-updates
