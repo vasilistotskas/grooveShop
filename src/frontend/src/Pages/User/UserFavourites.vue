@@ -1,25 +1,28 @@
 <template>
-  <div v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0" class="container">
-    <div class="product-listing-grid mb-4">
-      <ProductCard
-        v-for="product in allPaginatedResults"
-        :key="product.product_object.id"
-        :product="product.product_object"
-        class="grid-item"
-      />
-    </div>
-    <Pagination
-      v-if="Object.keys(allPaginatedResults).length !== 0"
-      :endpoint-url="buildEndPointUrlForPaginatedResults()"
-      :max-visible-buttons="3"
-      :route="PaginationRoutesEnum.FAVOURITES"
-      :total-pages="allPaginatedResultsTotalPages"
-      :namespace="paginationNamespace"
-    />
-  </div>
-  <div v-else class="user_profile-no-data">
-    <h1>NO FAVOURITES</h1>
-  </div>
+	<div
+		v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0"
+		class="container"
+	>
+		<div class="product-listing-grid mb-4">
+			<ProductCard
+				v-for="product in allPaginatedResults"
+				:key="product.product_object.id"
+				:product="product.product_object"
+				class="grid-item"
+			/>
+		</div>
+		<Pagination
+			v-if="Object.keys(allPaginatedResults).length !== 0"
+			:endpoint-url="buildEndPointUrlForPaginatedResults()"
+			:max-visible-buttons="3"
+			:route="PaginationRoutesEnum.FAVOURITES"
+			:total-pages="allPaginatedResultsTotalPages"
+			:namespace="paginationNamespace"
+		/>
+	</div>
+	<div v-else class="user_profile-no-data">
+		<h1>NO FAVOURITES</h1>
+	</div>
 </template>
 
 <script lang="ts">
@@ -41,70 +44,70 @@ import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedC
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
-  name: 'UserFavourites',
-  extends: PaginatedComponent,
-  props: {
-    userData: {
-      type: Object as PropType<UserProfileModel>,
-      required: true,
-    },
-  },
-  components: {
-    ProductCard,
-    Pagination,
-  },
+	name: 'UserFavourites',
+	extends: PaginatedComponent,
+	props: {
+		userData: {
+			type: Object as PropType<UserProfileModel>,
+			required: true
+		}
+	},
+	components: {
+		ProductCard,
+		Pagination
+	}
 })
 export default class UserFavourites
-  extends PaginatedComponent<UserFavouriteModel>
-  implements PaginatedComponentInterface<UserFavouriteModel>
+	extends PaginatedComponent<UserFavouriteModel>
+	implements PaginatedComponentInterface<UserFavouriteModel>
 {
-  paginationModule = getModule<PaginationModule<UserFavouriteModel>>(PaginationModule)
-  userData = new UserProfileModel()
-  PaginationRoutesEnum = PaginationRoutesEnum
-  paginationNamespace = PaginationNamespaceTypesEnum.USER_FAVOURITES
+	paginationModule = getModule<PaginationModule<UserFavouriteModel>>(PaginationModule)
+	userData = new UserProfileModel()
+	PaginationRoutesEnum = PaginationRoutesEnum
+	paginationNamespace = PaginationNamespaceTypesEnum.USER_FAVOURITES
 
-  created(): void {
-    document.title = 'My Favourites'
+	created(): void {
+		document.title = 'My Favourites'
 
-    if (this.params.query) {
-      this.paginationModule.setCurrentQuery({
-        queryParams: this.params.query,
-        namespace: this.paginationNamespace,
-      })
-    }
+		if (this.params.query) {
+			this.paginationModule.setCurrentQuery({
+				queryParams: this.params.query,
+				namespace: this.paginationNamespace
+			})
+		}
 
-    this.paginationModule.setCurrentPageNumber({
-      pageNumber: 1,
-      namespace: this.paginationNamespace,
-    })
+		this.paginationModule.setCurrentPageNumber({
+			pageNumber: 1,
+			namespace: this.paginationNamespace
+		})
 
-    if (this.params.page) {
-      this.paginationModule.setCurrentPageNumber({
-        pageNumber: Number(this.params.page),
-        namespace: this.paginationNamespace,
-      })
-    }
+		if (this.params.page) {
+			this.paginationModule.setCurrentPageNumber({
+				pageNumber: Number(this.params.page),
+				namespace: this.paginationNamespace
+			})
+		}
 
-    this.fetchPaginationData<UserFavouriteModel>()
-  }
+		this.fetchPaginationData<UserFavouriteModel>()
+	}
 
-  fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
-    const paginationQuery = PaginationModel.createPaginationModel({
-      pageNumber: this.currentPageNumber,
-      endpointUrl: this.buildEndPointUrlForPaginatedResults(),
-      method: ApiBaseMethods.GET,
-    })
+	fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
+		const paginationQuery = PaginationModel.createPaginationModel({
+			pageNumber: this.currentPageNumber,
+			endpointUrl: this.buildEndPointUrlForPaginatedResults(),
+			method: ApiBaseMethods.GET
+		})
 
-    return this.paginationModule.fetchPaginatedResults({
-      params: paginationQuery,
-      namespace: this.paginationNamespace,
-    })
-  }
+		return this.paginationModule.fetchPaginatedResults({
+			params: paginationQuery,
+			namespace: this.paginationNamespace
+		})
+	}
 
-  public buildEndPointUrlForPaginatedResults(): string {
-    const userId = this.userData.id
-    return 'favourites/products' + `/${userId}`
-  }
+	public buildEndPointUrlForPaginatedResults(): string {
+		const userId = this.userData.id
+		return 'favourites/products' + `/${userId}`
+	}
 }
 </script>
 <style lang="scss" scoped>

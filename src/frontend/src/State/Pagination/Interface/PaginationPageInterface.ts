@@ -1,4 +1,4 @@
 export default interface PaginationPageInterface {
-  number: number
-  isDisabled: boolean
+	number: number
+	isDisabled: boolean
 }

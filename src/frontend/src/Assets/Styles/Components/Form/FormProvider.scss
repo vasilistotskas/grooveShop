@@ -1,13 +1,13 @@
 .checkout-grid {
-  &-form {
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: 1fr 1fr;
+	&-form {
+		display: grid;
+		grid-gap: 20px;
+		grid-template-columns: 1fr 1fr;
 
-    &-part-left {
-    }
+		&-part-left {
+		}
 
-    &-part-right {
-    }
-  }
+		&-part-right {
+		}
+	}
 }

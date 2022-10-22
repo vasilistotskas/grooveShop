@@ -1,214 +1,232 @@
 <template>
-  <div class="blog-share-actions-container">
-    <!--   :url="`${backendBaseUrl}${getCurrentPostUrl}`"-->
-    <div class="blog-share-actions-network">
-      <ShareNetwork
-        tag="button"
-        class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
-        network="facebook"
-        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
-        :title="props.post.title"
-        :description="props.post.subtitle"
-        quote="DeepWeb"
-        :media="props.post.mainImageAbsoluteUrl"
-        :hashtags="getPostTagsSeparated(post.tags)"
-      >
-        <font-awesome-icon class="blog-share-actions-icon facebook" :icon="FacebookIcon" />
-      </ShareNetwork>
-    </div>
+	<div class="blog-share-actions-container">
+		<!--   :url="`${backendBaseUrl}${getCurrentPostUrl}`"-->
+		<div class="blog-share-actions-network">
+			<ShareNetwork
+				tag="button"
+				class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
+				network="facebook"
+				:url="`${backendBaseUrl}${getCurrentPostUrl}`"
+				:title="props.post.title"
+				:description="props.post.subtitle"
+				quote="DeepWeb"
+				:media="props.post.mainImageAbsoluteUrl"
+				:hashtags="getPostTagsSeparated(post.tags)"
+			>
+				<font-awesome-icon
+					class="blog-share-actions-icon facebook"
+					:icon="FacebookIcon"
+				/>
+			</ShareNetwork>
+		</div>
 
-    <div class="blog-share-actions-network">
-      <ShareNetwork
-        tag="button"
-        class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
-        network="twitter"
-        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
-        :title="props.post.title"
-        :description="props.post.subtitle"
-        quote="DeepWeb"
-        :media="props.post.mainImageAbsoluteUrl"
-        :hashtags="getPostTagsSeparated(post.tags)"
-      >
-        <font-awesome-icon class="blog-share-actions-icon twitter" :icon="TwitterIcon" />
-      </ShareNetwork>
-    </div>
+		<div class="blog-share-actions-network">
+			<ShareNetwork
+				tag="button"
+				class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
+				network="twitter"
+				:url="`${backendBaseUrl}${getCurrentPostUrl}`"
+				:title="props.post.title"
+				:description="props.post.subtitle"
+				quote="DeepWeb"
+				:media="props.post.mainImageAbsoluteUrl"
+				:hashtags="getPostTagsSeparated(post.tags)"
+			>
+				<font-awesome-icon class="blog-share-actions-icon twitter" :icon="TwitterIcon" />
+			</ShareNetwork>
+		</div>
 
-    <div class="blog-share-actions-network">
-      <ShareNetwork
-        tag="button"
-        class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
-        network="viber"
-        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
-        :title="props.post.title"
-        :description="props.post.subtitle"
-        quote="DeepWeb"
-        :media="props.post.mainImageAbsoluteUrl"
-        :hashtags="getPostTagsSeparated(post.tags)"
-      >
-        <font-awesome-icon class="blog-share-actions-icon viber" :icon="ViberIcon" />
-      </ShareNetwork>
-    </div>
+		<div class="blog-share-actions-network">
+			<ShareNetwork
+				tag="button"
+				class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
+				network="viber"
+				:url="`${backendBaseUrl}${getCurrentPostUrl}`"
+				:title="props.post.title"
+				:description="props.post.subtitle"
+				quote="DeepWeb"
+				:media="props.post.mainImageAbsoluteUrl"
+				:hashtags="getPostTagsSeparated(post.tags)"
+			>
+				<font-awesome-icon class="blog-share-actions-icon viber" :icon="ViberIcon" />
+			</ShareNetwork>
+		</div>
 
-    <div class="blog-share-actions-network">
-      <ShareNetwork
-        tag="button"
-        class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
-        network="email"
-        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
-        :title="props.post.title"
-        :description="props.post.subtitle"
-        quote="DeepWeb"
-        :media="props.post.mainImageAbsoluteUrl"
-        :hashtags="getPostTagsSeparated(post.tags)"
-      >
-        <font-awesome-icon class="blog-share-actions-icon email" :icon="EmailIcon" />
-      </ShareNetwork>
-    </div>
+		<div class="blog-share-actions-network">
+			<ShareNetwork
+				tag="button"
+				class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
+				network="email"
+				:url="`${backendBaseUrl}${getCurrentPostUrl}`"
+				:title="props.post.title"
+				:description="props.post.subtitle"
+				quote="DeepWeb"
+				:media="props.post.mainImageAbsoluteUrl"
+				:hashtags="getPostTagsSeparated(post.tags)"
+			>
+				<font-awesome-icon class="blog-share-actions-icon email" :icon="EmailIcon" />
+			</ShareNetwork>
+		</div>
 
-    <div class="blog-share-actions-network">
-      <ShareNetwork
-        tag="button"
-        class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
-        network="linkedin"
-        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
-        :title="props.post.title"
-        :description="props.post.subtitle"
-        quote="DeepWeb"
-        :media="props.post.mainImageAbsoluteUrl"
-        :hashtags="getPostTagsSeparated(post.tags)"
-      >
-        <font-awesome-icon class="blog-share-actions-icon linkedin" :icon="LinkedinIcon" />
-      </ShareNetwork>
-    </div>
+		<div class="blog-share-actions-network">
+			<ShareNetwork
+				tag="button"
+				class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
+				network="linkedin"
+				:url="`${backendBaseUrl}${getCurrentPostUrl}`"
+				:title="props.post.title"
+				:description="props.post.subtitle"
+				quote="DeepWeb"
+				:media="props.post.mainImageAbsoluteUrl"
+				:hashtags="getPostTagsSeparated(post.tags)"
+			>
+				<font-awesome-icon
+					class="blog-share-actions-icon linkedin"
+					:icon="LinkedinIcon"
+				/>
+			</ShareNetwork>
+		</div>
 
-    <div class="blog-share-actions-network">
-      <ShareNetwork
-        tag="button"
-        class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
-        network="messenger"
-        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
-        :title="props.post.title"
-        :description="props.post.subtitle"
-        quote="DeepWeb"
-        :media="props.post.mainImageAbsoluteUrl"
-        :hashtags="getPostTagsSeparated(post.tags)"
-      >
-        <font-awesome-icon class="blog-share-actions-icon messenger" :icon="MessengerIcon" />
-      </ShareNetwork>
-    </div>
+		<div class="blog-share-actions-network">
+			<ShareNetwork
+				tag="button"
+				class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
+				network="messenger"
+				:url="`${backendBaseUrl}${getCurrentPostUrl}`"
+				:title="props.post.title"
+				:description="props.post.subtitle"
+				quote="DeepWeb"
+				:media="props.post.mainImageAbsoluteUrl"
+				:hashtags="getPostTagsSeparated(post.tags)"
+			>
+				<font-awesome-icon
+					class="blog-share-actions-icon messenger"
+					:icon="MessengerIcon"
+				/>
+			</ShareNetwork>
+		</div>
 
-    <div class="blog-share-actions-network">
-      <ShareNetwork
-        tag="button"
-        class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
-        network="pinterest"
-        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
-        :title="props.post.title"
-        :description="props.post.subtitle"
-        quote="DeepWeb"
-        :media="props.post.mainImageAbsoluteUrl"
-        :hashtags="getPostTagsSeparated(post.tags)"
-      >
-        <font-awesome-icon class="blog-share-actions-icon pinterest" :icon="PinterestIcon" />
-      </ShareNetwork>
-    </div>
+		<div class="blog-share-actions-network">
+			<ShareNetwork
+				tag="button"
+				class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
+				network="pinterest"
+				:url="`${backendBaseUrl}${getCurrentPostUrl}`"
+				:title="props.post.title"
+				:description="props.post.subtitle"
+				quote="DeepWeb"
+				:media="props.post.mainImageAbsoluteUrl"
+				:hashtags="getPostTagsSeparated(post.tags)"
+			>
+				<font-awesome-icon
+					class="blog-share-actions-icon pinterest"
+					:icon="PinterestIcon"
+				/>
+			</ShareNetwork>
+		</div>
 
-    <div class="blog-share-actions-network">
-      <ShareNetwork
-        tag="button"
-        class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
-        network="reddit"
-        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
-        :title="props.post.title"
-        :description="props.post.subtitle"
-        quote="DeepWeb"
-        :media="props.post.mainImageAbsoluteUrl"
-        :hashtags="getPostTagsSeparated(post.tags)"
-      >
-        <font-awesome-icon class="blog-share-actions-icon reddit" :icon="RedditIcon" />
-      </ShareNetwork>
-    </div>
+		<div class="blog-share-actions-network">
+			<ShareNetwork
+				tag="button"
+				class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
+				network="reddit"
+				:url="`${backendBaseUrl}${getCurrentPostUrl}`"
+				:title="props.post.title"
+				:description="props.post.subtitle"
+				quote="DeepWeb"
+				:media="props.post.mainImageAbsoluteUrl"
+				:hashtags="getPostTagsSeparated(post.tags)"
+			>
+				<font-awesome-icon class="blog-share-actions-icon reddit" :icon="RedditIcon" />
+			</ShareNetwork>
+		</div>
 
-    <div class="blog-share-actions-network">
-      <ShareNetwork
-        tag="button"
-        class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
-        network="skype"
-        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
-        :title="props.post.title"
-        :description="props.post.subtitle"
-        quote="DeepWeb"
-        :media="props.post.mainImageAbsoluteUrl"
-        :hashtags="getPostTagsSeparated(post.tags)"
-      >
-        <font-awesome-icon class="blog-share-actions-icon skype" :icon="SkypeIcon" />
-      </ShareNetwork>
-    </div>
+		<div class="blog-share-actions-network">
+			<ShareNetwork
+				tag="button"
+				class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
+				network="skype"
+				:url="`${backendBaseUrl}${getCurrentPostUrl}`"
+				:title="props.post.title"
+				:description="props.post.subtitle"
+				quote="DeepWeb"
+				:media="props.post.mainImageAbsoluteUrl"
+				:hashtags="getPostTagsSeparated(post.tags)"
+			>
+				<font-awesome-icon class="blog-share-actions-icon skype" :icon="SkypeIcon" />
+			</ShareNetwork>
+		</div>
 
-    <div class="blog-share-actions-network">
-      <ShareNetwork
-        tag="button"
-        class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
-        network="sms"
-        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
-        :title="props.post.title"
-        :description="props.post.subtitle"
-        quote="DeepWeb"
-        :media="props.post.mainImageAbsoluteUrl"
-        :hashtags="getPostTagsSeparated(post.tags)"
-      >
-        <font-awesome-icon class="blog-share-actions-icon sms" :icon="SmsIcon" />
-      </ShareNetwork>
-    </div>
+		<div class="blog-share-actions-network">
+			<ShareNetwork
+				tag="button"
+				class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
+				network="sms"
+				:url="`${backendBaseUrl}${getCurrentPostUrl}`"
+				:title="props.post.title"
+				:description="props.post.subtitle"
+				quote="DeepWeb"
+				:media="props.post.mainImageAbsoluteUrl"
+				:hashtags="getPostTagsSeparated(post.tags)"
+			>
+				<font-awesome-icon class="blog-share-actions-icon sms" :icon="SmsIcon" />
+			</ShareNetwork>
+		</div>
 
-    <div class="blog-share-actions-network">
-      <ShareNetwork
-        tag="button"
-        class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
-        network="telegram"
-        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
-        :title="props.post.title"
-        :description="props.post.subtitle"
-        quote="DeepWeb"
-        :media="props.post.mainImageAbsoluteUrl"
-        :hashtags="getPostTagsSeparated(post.tags)"
-      >
-        <font-awesome-icon class="blog-share-actions-icon telegram" :icon="TelegramIcon" />
-      </ShareNetwork>
-    </div>
+		<div class="blog-share-actions-network">
+			<ShareNetwork
+				tag="button"
+				class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
+				network="telegram"
+				:url="`${backendBaseUrl}${getCurrentPostUrl}`"
+				:title="props.post.title"
+				:description="props.post.subtitle"
+				quote="DeepWeb"
+				:media="props.post.mainImageAbsoluteUrl"
+				:hashtags="getPostTagsSeparated(post.tags)"
+			>
+				<font-awesome-icon
+					class="blog-share-actions-icon telegram"
+					:icon="TelegramIcon"
+				/>
+			</ShareNetwork>
+		</div>
 
-    <div class="blog-share-actions-network">
-      <ShareNetwork
-        tag="button"
-        class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
-        network="tumblr"
-        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
-        :title="props.post.title"
-        :description="props.post.subtitle"
-        quote="DeepWeb"
-        :media="props.post.mainImageAbsoluteUrl"
-        :hashtags="getPostTagsSeparated(post.tags)"
-      >
-        <font-awesome-icon class="blog-share-actions-icon tumblr" :icon="TumblrIcon" />
-      </ShareNetwork>
-    </div>
+		<div class="blog-share-actions-network">
+			<ShareNetwork
+				tag="button"
+				class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
+				network="tumblr"
+				:url="`${backendBaseUrl}${getCurrentPostUrl}`"
+				:title="props.post.title"
+				:description="props.post.subtitle"
+				quote="DeepWeb"
+				:media="props.post.mainImageAbsoluteUrl"
+				:hashtags="getPostTagsSeparated(post.tags)"
+			>
+				<font-awesome-icon class="blog-share-actions-icon tumblr" :icon="TumblrIcon" />
+			</ShareNetwork>
+		</div>
 
-    <div class="blog-share-actions-network">
-      <ShareNetwork
-        tag="button"
-        class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
-        network="whatsapp"
-        :url="`${backendBaseUrl}${getCurrentPostUrl}`"
-        :title="props.post.title"
-        :description="props.post.subtitle"
-        quote="DeepWeb"
-        :media="props.post.mainImageAbsoluteUrl"
-        :hashtags="getPostTagsSeparated(post.tags)"
-      >
-        <font-awesome-icon class="blog-share-actions-icon whatsapp" :icon="WhatsAppIcon" />
-      </ShareNetwork>
-    </div>
-  </div>
+		<div class="blog-share-actions-network">
+			<ShareNetwork
+				tag="button"
+				class="btn btn-outline-primary btn-floating mx-1 blog-share-actions-network-btn"
+				network="whatsapp"
+				:url="`${backendBaseUrl}${getCurrentPostUrl}`"
+				:title="props.post.title"
+				:description="props.post.subtitle"
+				quote="DeepWeb"
+				:media="props.post.mainImageAbsoluteUrl"
+				:hashtags="getPostTagsSeparated(post.tags)"
+			>
+				<font-awesome-icon
+					class="blog-share-actions-icon whatsapp"
+					:icon="WhatsAppIcon"
+				/>
+			</ShareNetwork>
+		</div>
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -252,25 +270,27 @@ const ViberIcon = faViber
 const WhatsAppIcon = faWhatsapp
 
 const props = defineProps({
-  post: {
-    type: Object as PropType<BlogPostModel>,
-    default: () => Object,
-  },
+	post: {
+		type: Object as PropType<BlogPostModel>,
+		default: () => Object
+	}
 })
 
 const getPostTagsSeparated = (tags: Array<BlogTagModel>) => {
-  const tagNames: Array<BlogTagModel['name']> = []
-  forEach(tags, (tag) => {
-    tagNames.push(tag.name)
-  })
-  return tagNames.join(',')
+	const tagNames: Array<BlogTagModel['name']> = []
+	forEach(tags, (tag) => {
+		tagNames.push(tag.name)
+	})
+	return tagNames.join(',')
 }
 
-const backendBaseUrl: ComputedRef<string | undefined> = computed(() => appModule.backendBaseUrl)
+const backendBaseUrl: ComputedRef<string | undefined> = computed(
+	() => appModule.backendBaseUrl
+)
 
 const getCurrentPostUrl = router.resolve({
-  name: MainRouteNames.POST,
-  params: { slug: props.post.slug },
+	name: MainRouteNames.POST,
+	params: { slug: props.post.slug }
 }).href
 </script>
 

@@ -2,54 +2,54 @@
 @import '@/Assets/Styles/Base/commons';
 
 .blog-comment {
-  &-wrapper {
-  }
+	&-wrapper {
+	}
 
-  &-container {
-    text-align: center;
-  }
+	&-container {
+		text-align: center;
+	}
 
-  &-header {
-    align-items: center;
-    display: grid;
-    grid-gap: 1rem;
-    grid-template-columns: auto auto;
-    justify-content: center;
-    &-title {
-    }
-  }
+	&-header {
+		align-items: center;
+		display: grid;
+		grid-gap: 1rem;
+		grid-template-columns: auto auto;
+		justify-content: center;
+		&-title {
+		}
+	}
 
-  &-body {
-    &-title {
-    }
+	&-body {
+		&-title {
+		}
 
-    &-textarea {
-      &-content {
-        background-color: var(--cp-palette-main-third);
-        width: 50%;
-      }
-    }
+		&-textarea {
+			&-content {
+				background-color: var(--cp-palette-main-third);
+				width: 50%;
+			}
+		}
 
-    &-label {
-      font-size: 24px;
-    }
-  }
+		&-label {
+			font-size: 24px;
+		}
+	}
 
-  &-footer {
-    &-btn {
-      @extend .primary_button;
-      background-color: var(--cp-palette-main-primary);
-      border: var(--cp-palette-main-primary);
-      color: var(--cp-palette-main-fifth);
-      width: 50%;
+	&-footer {
+		&-btn {
+			@extend .primary_button;
+			background-color: var(--cp-palette-main-primary);
+			border: var(--cp-palette-main-primary);
+			color: var(--cp-palette-main-fifth);
+			width: 50%;
 
-      a {
-        color: var(--cp-palette-main-fifth);
-      }
+			a {
+				color: var(--cp-palette-main-fifth);
+			}
 
-      @media screen and (max-width: map-get($grid-breakpoints, 'xl')) {
-        width: 100%;
-      }
-    }
-  }
+			@media screen and (max-width: map-get($grid-breakpoints, 'xl')) {
+				width: 100%;
+			}
+		}
+	}
 }

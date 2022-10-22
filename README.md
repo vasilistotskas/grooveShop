@@ -116,19 +116,24 @@
   ### Package.json :
   -  ### SCRIPTS
   -  #### VUE :
-        -     npm run serve-vue
-              npm run build-vue
-              npm run watch-vue
+        -     npm run serve:vue
+              npm run build:vue
+              npm run watch:vue
         - #### Lint :
-              npm run lint-vue
+              npm run lint:vue
   -  #### VITE :
-        -     npm run build-vite
-              npm run watch-vite
-              npm run build-dts-vite
+        -     npm run build:vite
+              npm run watch:vite
+              npm run dts:vite
               npm run dev
   -  #### LINT :
-        -     npm run lint
-              npm run lint:fix
+        -  ### SCSS
+        -     npm run lint:scss
+              npm run lint:scss:fix
+
+  -  ### FORMAT:
+        -     npm run format
+              npm run format:fix
 
   -  ### Packages Update
         -     npm install -g npm-check-updates

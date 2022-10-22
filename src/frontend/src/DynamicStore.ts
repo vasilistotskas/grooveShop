@@ -21,30 +21,30 @@ import StripeIbanModule from '@/Libraries/Stripe/Components/StripeIbanModule'
 import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
 
 export interface DynamicStoreType {
-  app: AppModule
-  settings: AppSettingsModule
-  category: CategoryModule
-  product: ProductModule
-  productFavourite: ProductFavouriteModule
-  productReview: ProductReviewModule
-  user: UserModule
-  cart: CartModule
-  search: SearchModule
-  pagination: PaginationModule<unknown>
-  country: CountryModule
-  slider: SliderModule
-  stripeIban: StripeIbanModule
-  stripeCard: StripeCardModule
-  auth: AuthModule
-  password: PasswordModule
-  signup: SignUpModule
-  blog: BlogModule
-  payWay: PayWayModule
-  tip: TipModule
+	app: AppModule
+	settings: AppSettingsModule
+	category: CategoryModule
+	product: ProductModule
+	productFavourite: ProductFavouriteModule
+	productReview: ProductReviewModule
+	user: UserModule
+	cart: CartModule
+	search: SearchModule
+	pagination: PaginationModule<unknown>
+	country: CountryModule
+	slider: SliderModule
+	stripeIban: StripeIbanModule
+	stripeCard: StripeCardModule
+	auth: AuthModule
+	password: PasswordModule
+	signup: SignUpModule
+	blog: BlogModule
+	payWay: PayWayModule
+	tip: TipModule
 }
 // Declare empty store first
 const store = new Vuex.Store<DynamicStoreType>({
-  strict: true,
+	strict: true
 })
 
 export default store

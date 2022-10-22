@@ -1,16 +1,16 @@
 <template>
-  <Loader v-show="isLoading" id="mainLoader" />
-  <div id="wrapper">
-    <Header />
+	<Loader v-show="isLoading" id="mainLoader" />
+	<div id="wrapper">
+		<Header />
 
-    <section class="main-section">
-      <RouterView />
-    </section>
+		<section class="main-section">
+			<RouterView />
+		</section>
 
-    <Footer />
+		<Footer />
 
-    <SocialSidebar />
-  </div>
+		<SocialSidebar />
+	</div>
 </template>
 
 <script lang="ts">
@@ -31,65 +31,67 @@ import SocialSidebar from '@/Components/Main/SocialSidebar.vue'
 import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
 
 @Component({
-  name: 'App',
-  components: {
-    Header,
-    Footer,
-    SocialSidebar,
-    Loader,
-  },
+	name: 'App',
+	components: {
+		Header,
+		Footer,
+		SocialSidebar,
+		Loader
+	}
 })
 export default class App extends Vue {
-  appModule = getModule(AppModule)
-  authModule = getModule(AuthModule)
-  cartModule = getModule(CartModule)
-  categoryModule = getModule(CategoryModule)
-  countryModule = getModule(CountryModule)
-  userModule = getModule(UserModule)
-  blogModule = getModule(BlogModule)
-  productFavouriteModule = getModule(ProductFavouriteModule)
+	appModule = getModule(AppModule)
+	authModule = getModule(AuthModule)
+	cartModule = getModule(CartModule)
+	categoryModule = getModule(CategoryModule)
+	countryModule = getModule(CountryModule)
+	userModule = getModule(UserModule)
+	blogModule = getModule(BlogModule)
+	productFavouriteModule = getModule(ProductFavouriteModule)
 
-  get version(): string {
-    return packageMeta.version
-  }
+	get version(): string {
+		return packageMeta.version
+	}
 
-  get isLoading(): boolean {
-    return this.appModule.getLoading
-  }
+	get isLoading(): boolean {
+		return this.appModule.getLoading
+	}
 
-  get isAuthenticated(): boolean {
-    return this.authModule.isAuthenticated
-  }
+	get isAuthenticated(): boolean {
+		return this.authModule.isAuthenticated
+	}
 
-  initializeUserData(): void {
-    this.userModule.fetchUserDataFromRemote().then((response) => {
-      if (response) {
-        this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(this.userModule.getUserData)
-        this.productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
-      }
-    })
-    this.blogModule.fetchCommentsByUser(this.userModule.getUserData.email)
-  }
+	initializeUserData(): void {
+		this.userModule.fetchUserDataFromRemote().then((response) => {
+			if (response) {
+				this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(
+					this.userModule.getUserData
+				)
+				this.productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
+			}
+		})
+		this.blogModule.fetchCommentsByUser(this.userModule.getUserData.email)
+	}
 
-  created(): void {
-    Promise.all([
-      this.authModule.initialize(),
-      this.cartModule.initializeCart(),
-      this.cartModule.cartTotalPriceForPayWayAction(),
-      this.categoryModule.fetchCategoriesTreeFromRemote(),
-      this.countryModule.fetchCountriesFromRemote(),
-    ])
+	created(): void {
+		Promise.all([
+			this.authModule.initialize(),
+			this.cartModule.initializeCart(),
+			this.cartModule.cartTotalPriceForPayWayAction(),
+			this.categoryModule.fetchCategoriesTreeFromRemote(),
+			this.countryModule.fetchCountriesFromRemote()
+		])
 
-    if (this.isAuthenticated) {
-      this.initializeUserData()
-    }
-  }
+		if (this.isAuthenticated) {
+			this.initializeUserData()
+		}
+	}
 
-  mounted(): void {
-    window.addEventListener('resize', () => {
-      this.appModule.setWindowWidth(window.innerWidth)
-    })
-  }
+	mounted(): void {
+		window.addEventListener('resize', () => {
+			this.appModule.setWindowWidth(window.innerWidth)
+		})
+	}
 }
 </script>
 

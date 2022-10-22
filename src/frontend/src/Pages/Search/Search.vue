@@ -1,32 +1,32 @@
 <template>
-  <div class="page-search mt-8 mb-5">
-    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
-    <div class="container">
-      <div class="content-min-height">
-        <div class="col-12 mb-3 mt-3">
-          <h2 class="is-size-5 has-text-grey">Search term: "{{ currentPageQuery }}"</h2>
-        </div>
+	<div class="page-search mt-8 mb-5">
+		<Breadcrumbs :bread-crumb-path="breadCrumbPath" />
+		<div class="container">
+			<div class="content-min-height">
+				<div class="col-12 mb-3 mt-3">
+					<h2 class="is-size-5 has-text-grey">Search term: "{{ currentPageQuery }}"</h2>
+				</div>
 
-        <Pagination
-          v-if="Object.keys(allPaginatedResults).length !== 0"
-          :endpoint-url="'Search-Product'"
-          :max-visible-buttons="3"
-          :route="PaginationRoutesEnum.SEARCH"
-          :total-pages="allPaginatedResultsTotalPages"
-          :namespace="paginationNamespace"
-        />
+				<Pagination
+					v-if="Object.keys(allPaginatedResults).length !== 0"
+					:endpoint-url="'Search-Product'"
+					:max-visible-buttons="3"
+					:route="PaginationRoutesEnum.SEARCH"
+					:total-pages="allPaginatedResultsTotalPages"
+					:namespace="paginationNamespace"
+				/>
 
-        <div class="product-listing-grid mt-3 mb-3">
-          <ProductCard
-            v-for="product in allPaginatedResults"
-            :key="product.id"
-            :product="product"
-            class="grid-item"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
+				<div class="product-listing-grid mt-3 mb-3">
+					<ProductCard
+						v-for="product in allPaginatedResults"
+						:key="product.id"
+						:product="product"
+						class="grid-item"
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">
@@ -48,65 +48,65 @@ import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedC
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
-  name: 'Search',
-  extends: PaginatedComponent,
-  components: {
-    ProductCard,
-    Pagination,
-    Breadcrumbs,
-  },
+	name: 'Search',
+	extends: PaginatedComponent,
+	components: {
+		ProductCard,
+		Pagination,
+		Breadcrumbs
+	}
 })
 export default class Search
-  extends PaginatedComponent<ProductModel>
-  implements PaginatedComponentInterface<ProductModel>
+	extends PaginatedComponent<ProductModel>
+	implements PaginatedComponentInterface<ProductModel>
 {
-  paginationModule = getModule<PaginationModule<ProductModel>>(PaginationModule)
-  query: string | null = ''
-  PaginationRoutesEnum = PaginationRoutesEnum
-  paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
+	paginationModule = getModule<PaginationModule<ProductModel>>(PaginationModule)
+	query: string | null = ''
+	PaginationRoutesEnum = PaginationRoutesEnum
+	paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
 
-  get breadCrumbPath() {
-    return router.currentRoute.value.meta.breadcrumb
-  }
+	get breadCrumbPath() {
+		return router.currentRoute.value.meta.breadcrumb
+	}
 
-  mounted(): void {
-    document.title = 'Search'
+	mounted(): void {
+		document.title = 'Search'
 
-    if (this.params.query) {
-      this.paginationModule.setCurrentQuery({
-        queryParams: this.params,
-        namespace: this.paginationNamespace,
-      })
-    }
+		if (this.params.query) {
+			this.paginationModule.setCurrentQuery({
+				queryParams: this.params,
+				namespace: this.paginationNamespace
+			})
+		}
 
-    this.paginationModule.setCurrentPageNumber({
-      pageNumber: 1,
-      namespace: this.paginationNamespace,
-    })
+		this.paginationModule.setCurrentPageNumber({
+			pageNumber: 1,
+			namespace: this.paginationNamespace
+		})
 
-    if (this.params.page) {
-      this.paginationModule.setCurrentPageNumber({
-        pageNumber: Number(this.params.page),
-        namespace: this.paginationNamespace,
-      })
-    }
+		if (this.params.page) {
+			this.paginationModule.setCurrentPageNumber({
+				pageNumber: Number(this.params.page),
+				namespace: this.paginationNamespace
+			})
+		}
 
-    this.fetchPaginationData<ProductModel>()
-  }
+		this.fetchPaginationData<ProductModel>()
+	}
 
-  fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
-    const paginationQuery = PaginationModel.createPaginationModel({
-      pageNumber: this.currentPageNumber,
-      endpointUrl: `search-product`,
-      queryParams: this.currentPageQuery,
-      method: ApiBaseMethods.GET,
-    })
+	fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
+		const paginationQuery = PaginationModel.createPaginationModel({
+			pageNumber: this.currentPageNumber,
+			endpointUrl: `search-product`,
+			queryParams: this.currentPageQuery,
+			method: ApiBaseMethods.GET
+		})
 
-    return this.paginationModule.fetchPaginatedResults({
-      params: paginationQuery,
-      namespace: this.paginationNamespace,
-    })
-  }
+		return this.paginationModule.fetchPaginatedResults({
+			params: paginationQuery,
+			namespace: this.paginationNamespace
+		})
+	}
 }
 </script>
 

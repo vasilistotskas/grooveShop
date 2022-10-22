@@ -1,34 +1,34 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    // if i set true using vite i have problem with vue-class-component
-    "useDefineForClassFields": false,
-    "strict": true,
-    "jsx": "preserve",
-    "importHelpers": true,
-    "moduleResolution": "Node",
-    "experimentalDecorators": true,
-    "allowJs": true,
-    "esModuleInterop": true,
-    "outDir": "build",
-    "noImplicitAny": false,
-    "strictFunctionTypes": false,
-    "downlevelIteration": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
-    "lib": ["ESNext", "DOM"],
-    "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    },
-    "typeRoots": ["node_modules/@types", "typings.d.ts", "env.d.ts"],
-    "types": ["@intlify/vite-plugin-vue-i18n/client"]
-  },
-  "include": ["./src/**/*"],
-  "files": ["typings.d.ts", "env.d.ts"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+		// if i set true using vite i have problem with vue-class-component
+		"useDefineForClassFields": false,
+		"strict": true,
+		"jsx": "preserve",
+		"importHelpers": true,
+		"moduleResolution": "Node",
+		"experimentalDecorators": true,
+		"allowJs": true,
+		"esModuleInterop": true,
+		"outDir": "build",
+		"noImplicitAny": false,
+		"strictFunctionTypes": false,
+		"downlevelIteration": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"allowSyntheticDefaultImports": true,
+		"sourceMap": true,
+		"lib": ["ESNext", "DOM"],
+		"skipLibCheck": true,
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"]
+		},
+		"typeRoots": ["node_modules/@types", "typings.d.ts", "env.d.ts"],
+		"types": ["@intlify/vite-plugin-vue-i18n/client"]
+	},
+	"include": ["./src/**/*"],
+	"files": ["typings.d.ts", "env.d.ts"],
+	"references": [{ "path": "./tsconfig.node.json" }]
 }

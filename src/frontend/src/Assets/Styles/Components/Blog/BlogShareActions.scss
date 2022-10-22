@@ -1,93 +1,93 @@
 @import '@/Assets/Styles/Base/variables';
 
 .blog-share-actions {
-  &-container {
-    background-color: rgba(48, 54, 61, 0.7);
-    border-radius: 10px;
-    display: grid;
-    grid-gap: 3rem;
-    grid-template-columns: repeat(13, 1fr);
-    padding: 1.5rem 2rem 2rem;
-  }
+	&-container {
+		background-color: rgba(48, 54, 61, 0.7);
+		border-radius: 10px;
+		display: grid;
+		grid-gap: 3rem;
+		grid-template-columns: repeat(13, 1fr);
+		padding: 1.5rem 2rem 2rem;
+	}
 
-  &-network {
-    &-btn {
-      background-color: transparentize($color-palette-main-fourth, 0.5);
-      border: unset;
-      border: 0;
-      border-radius: 15px;
-      box-shadow: 0 9px #999;
-      color: #fff;
-      cursor: pointer;
-      font-size: 60px;
-      outline: none;
-      padding: 15px 25px;
-      text-align: center;
-      width: 100%;
-      &:hover {
-        background-color: transparentize($color-palette-main-fourth, 0.1);
-        cursor: pointer;
-      }
+	&-network {
+		&-btn {
+			background-color: transparentize($color-palette-main-fourth, 0.5);
+			border: unset;
+			border: 0;
+			border-radius: 15px;
+			box-shadow: 0 9px #999;
+			color: #fff;
+			cursor: pointer;
+			font-size: 60px;
+			outline: none;
+			padding: 15px 25px;
+			text-align: center;
+			width: 100%;
+			&:hover {
+				background-color: transparentize($color-palette-main-fourth, 0.1);
+				cursor: pointer;
+			}
 
-      &:active {
-        background-color: transparentize($color-palette-main-fourth, 0.1);
-        box-shadow: 0 5px #666;
-        transform: translateY(4px);
-      }
-    }
-  }
+			&:active {
+				background-color: transparentize($color-palette-main-fourth, 0.1);
+				box-shadow: 0 5px #666;
+				transform: translateY(4px);
+			}
+		}
+	}
 
-  &-icon {
-    &.facebook {
-      color: #4267b2;
-    }
+	&-icon {
+		&.facebook {
+			color: #4267b2;
+		}
 
-    &.email {
-      color: #fff;
-    }
+		&.email {
+			color: #fff;
+		}
 
-    &.linkedin {
-      color: #0a66c2;
-    }
+		&.linkedin {
+			color: #0a66c2;
+		}
 
-    &.messenger {
-      color: #00b2ff;
-    }
+		&.messenger {
+			color: #00b2ff;
+		}
 
-    &.pinterest {
-      color: #e60023;
-    }
+		&.pinterest {
+			color: #e60023;
+		}
 
-    &.reddit {
-      color: #ff5700;
-    }
+		&.reddit {
+			color: #ff5700;
+		}
 
-    &.skype {
-      color: #00aff0;
-    }
+		&.skype {
+			color: #00aff0;
+		}
 
-    &.sms {
-      color: #fff;
-    }
+		&.sms {
+			color: #fff;
+		}
 
-    &.telegram {
-      color: #2aabee;
-    }
+		&.telegram {
+			color: #2aabee;
+		}
 
-    &.tumblr {
-      color: #34526f;
-    }
+		&.tumblr {
+			color: #34526f;
+		}
 
-    &.twitter {
-      color: #1da1f2;
-    }
+		&.twitter {
+			color: #1da1f2;
+		}
 
-    &.viber {
-      color: #7360f2;
-    }
+		&.viber {
+			color: #7360f2;
+		}
 
-    &.whatsapp {
-      color: #2db640;
-    }
-  }
+		&.whatsapp {
+			color: #2db640;
+		}
+	}
 }

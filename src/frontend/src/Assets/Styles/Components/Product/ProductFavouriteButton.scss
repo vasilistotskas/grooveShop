@@ -1,12 +1,12 @@
 .favourite-content {
-  background: #e4e4e4;
-  padding: 8px;
+	background: #e4e4e4;
+	padding: 8px;
 
-  .fa-heart {
-    font-size: 20px;
+	.fa-heart {
+		font-size: 20px;
 
-    &.fas {
-      color: var(--cp-palette-main-primary);
-    }
-  }
+		&.fas {
+			color: var(--cp-palette-main-primary);
+		}
+	}
 }

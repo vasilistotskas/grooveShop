@@ -1,49 +1,49 @@
 .navbar-main-collapse-menu {
-  background-color: var(--cp-palette-main-fourth);
-  position: absolute;
-  width: 100%;
-  z-index: 10;
+	background-color: var(--cp-palette-main-fourth);
+	position: absolute;
+	width: 100%;
+	z-index: 10;
 
-  .navbar-menu-grid {
-    &-head {
-      background-color: var(--cp-palette-main-secondary);
-      border-radius: 5px;
-      box-shadow: 0 2px 4px rgb(153 153 153 / 33%);
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      max-height: 162px;
+	.navbar-menu-grid {
+		&-head {
+			background-color: var(--cp-palette-main-secondary);
+			border-radius: 5px;
+			box-shadow: 0 2px 4px rgb(153 153 153 / 33%);
+			display: grid;
+			grid-template-columns: repeat(7, 1fr);
+			max-height: 162px;
 
-      &-item {
-        align-items: center;
-        border-left: 1px solid var(--cp-palette-main-third);
-        border-right: 1px solid var(--cp-palette-main-third);
-        display: grid;
-        grid-gap: 15px 0;
-        grid-template-rows: repeat(2, 1fr);
-        height: 100%;
-        justify-items: center;
-        max-height: 160px;
-        width: 100%;
+			&-item {
+				align-items: center;
+				border-left: 1px solid var(--cp-palette-main-third);
+				border-right: 1px solid var(--cp-palette-main-third);
+				display: grid;
+				grid-gap: 15px 0;
+				grid-template-rows: repeat(2, 1fr);
+				height: 100%;
+				justify-items: center;
+				max-height: 160px;
+				width: 100%;
 
-        &:hover {
-          background-color: var(--cp-palette-main-fifth);
-          span {
-            color: var(--cp-palette-main-secondary);
-          }
-        }
+				&:hover {
+					background-color: var(--cp-palette-main-fifth);
+					span {
+						color: var(--cp-palette-main-secondary);
+					}
+				}
 
-        img {
-          height: auto;
-          max-width: 100px;
-          padding: 10px;
-          width: 100%;
-        }
+				img {
+					height: auto;
+					max-width: 100px;
+					padding: 10px;
+					width: 100%;
+				}
 
-        span {
-          font-weight: 500;
-          text-align: center;
-        }
-      }
-    }
-  }
+				span {
+					font-weight: 500;
+					text-align: center;
+				}
+			}
+		}
+	}
 }

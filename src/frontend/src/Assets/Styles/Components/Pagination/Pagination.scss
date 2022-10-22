@@ -1,16 +1,16 @@
 .pagination-grid-content {
-  display: grid;
+	display: grid;
 }
 
 .pagination {
-  list-style-type: none;
+	list-style-type: none;
 }
 
 .pagination-item {
-  display: inline-block;
+	display: inline-block;
 }
 
 .active {
-  background-color: var(--cp-palette-main-primary);
-  color: var(--cp-palette-main-fifth);
+	background-color: var(--cp-palette-main-primary);
+	color: var(--cp-palette-main-fifth);
 }

@@ -1,50 +1,53 @@
 <template>
-  <div class="navbar-main-collapse-menu">
-    <div
-      ref="headerNavbarMenu"
-      :class="{ wrapper: Object.keys(categories).length === 0 }"
-      class="container navbar-menu-grid-container"
-    >
-      <ul v-if="categories && Object.keys(categories).length > 0" class="navbar-menu-grid-head">
-        <li v-for="(category, key) in categories" :key="category.id">
-          <h3>
-            <RouterLink
-              :id="category.children ? `id-${category.id}` : ''"
-              :key="category.id"
-              :class="{ 'has-children': category?.children }"
-              :title="category.name"
-              :to="{ name: 'Category', params: { category_slug: category.slug } }"
-              :toggle="category.children ? 'toggle' : ''"
-              aria-current="page"
-              aria-expanded="false"
-              class="navbar-menu-grid-head-item"
-              role="button"
-              @mouseleave="categoryBoxHovered = null"
-              @mouseover="categoryBoxHovered = key"
-            >
-              <GrooveImage
-                :alt="category.name"
-                :file-name="
-                  categoryBoxHovered === key
-                    ? category.category_menu_image_two_filename
-                    : category.category_menu_image_two_filename
-                "
-                :use-media-stream="true"
-                :img-type="ImageTypeOptions.CATEGORIES"
-                :img-width="80"
-                :img-height="83"
-              />
-              <span>{{ category.name }}</span>
-            </RouterLink>
-          </h3>
-        </li>
-      </ul>
+	<div class="navbar-main-collapse-menu">
+		<div
+			ref="headerNavbarMenu"
+			:class="{ wrapper: Object.keys(categories).length === 0 }"
+			class="container navbar-menu-grid-container"
+		>
+			<ul
+				v-if="categories && Object.keys(categories).length > 0"
+				class="navbar-menu-grid-head"
+			>
+				<li v-for="(category, key) in categories" :key="category.id">
+					<h3>
+						<RouterLink
+							:id="category.children ? `id-${category.id}` : ''"
+							:key="category.id"
+							:class="{ 'has-children': category?.children }"
+							:title="category.name"
+							:to="{ name: 'Category', params: { category_slug: category.slug } }"
+							:toggle="category.children ? 'toggle' : ''"
+							aria-current="page"
+							aria-expanded="false"
+							class="navbar-menu-grid-head-item"
+							role="button"
+							@mouseleave="categoryBoxHovered = null"
+							@mouseover="categoryBoxHovered = key"
+						>
+							<GrooveImage
+								:alt="category.name"
+								:file-name="
+									categoryBoxHovered === key
+										? category.category_menu_image_two_filename
+										: category.category_menu_image_two_filename
+								"
+								:use-media-stream="true"
+								:img-type="ImageTypeOptions.CATEGORIES"
+								:img-width="80"
+								:img-height="83"
+							/>
+							<span>{{ category.name }}</span>
+						</RouterLink>
+					</h3>
+				</li>
+			</ul>
 
-      <div class="navbar-menu-grid-body" style="display: none">
-        <div class="navbar-menu-grid-body-item" />
-      </div>
-    </div>
-  </div>
+			<div class="navbar-menu-grid-body" style="display: none">
+				<div class="navbar-menu-grid-body-item" />
+			</div>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">
@@ -59,50 +62,50 @@ import GrooveImage from '@/Components/Utilities/GrooveImage.vue'
 import { ImageTypeOptions } from '@/Helpers/MediaStream/ImageUrlEnum'
 
 @Component({
-  name: 'NavbarCategories',
-  components: {
-    GrooveImage,
-  },
-  props: {
-    categoriesTree: Array as PropType<Array<CategoryModel>>,
-    mainToggleButton: HTMLElement,
-    navbarProductsButton: HTMLElement,
-  },
+	name: 'NavbarCategories',
+	components: {
+		GrooveImage
+	},
+	props: {
+		categoriesTree: Array as PropType<Array<CategoryModel>>,
+		mainToggleButton: HTMLElement,
+		navbarProductsButton: HTMLElement
+	}
 })
 export default class NavbarCategories extends Vue {
-  appModule = getModule(AppModule)
-  declare $refs: {
-    headerNavbarMenu: HTMLElement
-  }
-  categoryBoxHovered: null | number = null
-  categoriesTree: Array<CategoryModel> = []
-  categories: Array<CategoryModel> = []
-  mainToggleButton!: HTMLElement
-  navbarProductsButton!: HTMLElement
+	appModule = getModule(AppModule)
+	declare $refs: {
+		headerNavbarMenu: HTMLElement
+	}
+	categoryBoxHovered: null | number = null
+	categoriesTree: Array<CategoryModel> = []
+	categories: Array<CategoryModel> = []
+	mainToggleButton!: HTMLElement
+	navbarProductsButton!: HTMLElement
 
-  ImageTypeOptions = ImageTypeOptions
+	ImageTypeOptions = ImageTypeOptions
 
-  get isLoading(): boolean {
-    return this.appModule.getLoading
-  }
+	get isLoading(): boolean {
+		return this.appModule.getLoading
+	}
 
-  mounted(): void {
-    this.categories = cloneDeep(this.categoriesTree)
-    onClickOutside(this.$refs.headerNavbarMenu, (e) => {
-      if (!e.composedPath().includes(this.navbarProductsButton)) {
-        this.menuOpenHandle()
-      }
-    })
-  }
+	mounted(): void {
+		this.categories = cloneDeep(this.categoriesTree)
+		onClickOutside(this.$refs.headerNavbarMenu, (e) => {
+			if (!e.composedPath().includes(this.navbarProductsButton)) {
+				this.menuOpenHandle()
+			}
+		})
+	}
 
-  public menuOpenHandle(): void {
-    this.mainToggleButton.classList.toggle('opened')
-    this.mainToggleButton.setAttribute(
-      'aria-expanded',
-      this.mainToggleButton.classList.contains('opened') as unknown as string
-    )
-    this.appModule.setNavbarMenuHidden(true)
-  }
+	public menuOpenHandle(): void {
+		this.mainToggleButton.classList.toggle('opened')
+		this.mainToggleButton.setAttribute(
+			'aria-expanded',
+			this.mainToggleButton.classList.contains('opened') as unknown as string
+		)
+		this.appModule.setNavbarMenuHidden(true)
+	}
 }
 </script>
 

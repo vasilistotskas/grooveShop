@@ -1,9 +1,9 @@
 <template>
-  <div class="container content-min-height mt-7 mb-5">
-    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
-    <BlogPostList v-if="allPosts" :posts="allPosts" />
-    <InstagramFeed :count="8" :pagination="false" :caption="false" :use-slider="true" />
-  </div>
+	<div class="container content-min-height mt-7 mb-5">
+		<Breadcrumbs :bread-crumb-path="breadCrumbPath" />
+		<BlogPostList v-if="allPosts" :posts="allPosts" />
+		<InstagramFeed :count="8" :pagination="false" :caption="false" :use-slider="true" />
+	</div>
 </template>
 
 <script lang="ts">
@@ -17,29 +17,29 @@ import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import InstagramFeed from '@/Components/Utilities/InstagramFeed.vue'
 
 @Component({
-  name: 'Blog',
-  components: {
-    BlogPostList,
-    Breadcrumbs,
-    InstagramFeed,
-  },
+	name: 'Blog',
+	components: {
+		BlogPostList,
+		Breadcrumbs,
+		InstagramFeed
+	}
 })
 export default class Blog extends Vue {
-  blogModule = getModule(BlogModule)
+	blogModule = getModule(BlogModule)
 
-  get breadCrumbPath() {
-    return router.currentRoute.value.meta.breadcrumb
-  }
+	get breadCrumbPath() {
+		return router.currentRoute.value.meta.breadcrumb
+	}
 
-  get allPosts(): Array<BlogPostModel> {
-    return this.blogModule.getAllPosts
-  }
+	get allPosts(): Array<BlogPostModel> {
+		return this.blogModule.getAllPosts
+	}
 
-  mounted(): void {
-    document.title = 'Blog'
+	mounted(): void {
+		document.title = 'Blog'
 
-    this.blogModule.fetchAllPostsFromRemote()
-  }
+		this.blogModule.fetchAllPostsFromRemote()
+	}
 }
 </script>
 
