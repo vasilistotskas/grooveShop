@@ -48,6 +48,7 @@ class Command(BaseCommand):
                     product = Product.objects.get(
                         name=name,
                     )
+                    print(product.translated)
                 except Product.DoesNotExist:
                     product = Product.objects.create(
                         category_id=category.id,

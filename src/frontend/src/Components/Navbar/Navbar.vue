@@ -20,7 +20,7 @@
 								loading="eager"
 								:img-fit="ImageFitOptions.outside"
 								:img-position="ImagePositionOptions.center"
-								:img-format="ImageFormatOptions.png"
+								:img-format="ImageFormatOptions.jpg"
 							/>
 						</RouterLink>
 					</h1>
@@ -60,18 +60,6 @@
 							<h2 class="title">PRODUCTS</h2>
 						</div>
 					</div>
-				</div>
-
-				<div class="blog-header">
-					<RouterLink aria-label="Blog" class="btn-w-effect" title="Blog" to="/blog">
-						<font-awesome-icon v-if="isMobile" :icon="blogIcon" />
-						<font-awesome-icon v-else :icon="blogIcon" size="2x" />
-						<h3 class="navbar-blog-title">BLOG</h3>
-						<span class="line-1" />
-						<span class="line-2" />
-						<span class="line-3" />
-						<span class="line-4" />
-					</RouterLink>
 				</div>
 				<div class="search-header">
 					<div class="search-buttons-container">
@@ -192,7 +180,6 @@ import CategoryModel from '@/State/Category/CategoryModel'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import CategoryModule from '@/State/Category/CategoryModule'
 import GrooveImage from '@/Components/Utilities/GrooveImage.vue'
-import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import PaginationModule from '@/State/Pagination/PaginationModule'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
@@ -234,7 +221,6 @@ export default class Navbar
 
 	preHeadHidden = true
 	cartTotalLength = 0
-	blogIcon = faBlog
 	userIcon = faUser
 	heartIcon = faHeart
 	searchIcon = faSearch

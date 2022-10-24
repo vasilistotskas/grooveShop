@@ -837,3 +837,71 @@ Traceback (most recent call last):
   File "/usr/local/lib/python3.10/site-packages/django/db/models/query.py", line 650, in get
     raise self.model.DoesNotExist(
 backend.product_category.models.Category.DoesNotExist: Category matching query does not exist.
+[2022-10-15 21:59:43] ERROR | response_for_exception | django.security.SuspiciousOperation | Unable to parse request body as JSON
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/strawberry/django/views.py", line 108, in get_request_data
+    data = self.parse_body(request)
+  File "/usr/local/lib/python3.10/site-packages/strawberry/django/views.py", line 89, in parse_body
+    return json.loads(request.body)
+  File "/usr/local/lib/python3.10/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/lib/python3.10/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/lib/python3.10/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/utils/decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/strawberry/django/views.py", line 179, in dispatch
+    request_data = self.get_request_data(request)
+  File "/usr/local/lib/python3.10/site-packages/strawberry/django/views.py", line 110, in get_request_data
+    raise SuspiciousOperation("Unable to parse request body as JSON")
+django.core.exceptions.SuspiciousOperation: Unable to parse request body as JSON
+[2022-10-15 21:59:58] ERROR | response_for_exception | django.security.SuspiciousOperation | Unable to parse request body as JSON
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/strawberry/django/views.py", line 108, in get_request_data
+    data = self.parse_body(request)
+  File "/usr/local/lib/python3.10/site-packages/strawberry/django/views.py", line 89, in parse_body
+    return json.loads(request.body)
+  File "/usr/local/lib/python3.10/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/lib/python3.10/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/lib/python3.10/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/utils/decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/strawberry/django/views.py", line 179, in dispatch
+    request_data = self.get_request_data(request)
+  File "/usr/local/lib/python3.10/site-packages/strawberry/django/views.py", line 110, in get_request_data
+    raise SuspiciousOperation("Unable to parse request body as JSON")
+django.core.exceptions.SuspiciousOperation: Unable to parse request body as JSON

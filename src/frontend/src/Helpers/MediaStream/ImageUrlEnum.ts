@@ -2,7 +2,6 @@ export enum ImageTypeOptions {
 	SLIDES = 'slides',
 	PRODUCTS = 'products',
 	CATEGORIES = 'categories',
-	BLOG = 'blog',
 	USERS = 'users'
 }
 

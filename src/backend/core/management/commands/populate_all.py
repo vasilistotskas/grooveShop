@@ -33,12 +33,6 @@ class Command(BaseCommand):
             )
 
         with io.StringIO() as out:
-            populate_blog_start_time = time.time()
-            management.call_command("populate_blog", stdout=out)
-            populate_blog_response = str(out.getvalue())
-            populate_blog_end_time = round((time.time() - populate_blog_start_time), 2)
-
-        with io.StringIO() as out:
             populate_reviews_start_time = time.time()
             management.call_command("populate_reviews", stdout=out)
             populate_reviews_response = str(out.getvalue())
@@ -79,10 +73,6 @@ class Command(BaseCommand):
         self.stdout.write(
             f"populate_orders_response : {populate_orders_response} ---> "
             f"{populate_orders_end_time} seconds"
-        )
-        self.stdout.write(
-            f"populate_blog_response : {populate_blog_response} ---> "
-            f"{populate_blog_end_time} seconds"
         )
         self.stdout.write(
             f"populate_reviews_response : {populate_reviews_response} ---> "

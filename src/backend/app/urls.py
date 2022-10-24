@@ -1,4 +1,3 @@
-from backend.core.graphql.schema import schema
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -6,10 +5,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.http import HttpResponse
 from django.urls import include
 from django.urls import path
-from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET
-from strawberry.django.views import AsyncGraphQLView
-from strawberry.django.views import GraphQLView
 
 
 @require_GET
@@ -36,12 +32,9 @@ urlpatterns = [
     path("api/v1/", include("backend.user.urls")),
     path("api/v1/", include("backend.slider.urls")),
     path("api/v1/", include("backend.search.urls")),
-    path("api/v1/", include("backend.tip.urls")),
-    path("api/v1/", include("backend.blog.urls")),  # djoser api views
+    path("api/v1/", include("backend.tip.urls")),  # djoser api views
     path("api/v1/djoser/", include("djoser.urls")),
-    path("api/v1/djoser/", include("djoser.urls.authtoken")),  # graphql
-    path("graphql/async", AsyncGraphQLView.as_view(schema=schema)),
-    path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
+    path("api/v1/djoser/", include("djoser.urls.authtoken")),
     # admin html editor
     path("tinymce/", include("tinymce.urls")),  # vue urls
     path("", include(front_urls)),  # debug toolbar

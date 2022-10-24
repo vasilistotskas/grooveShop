@@ -17,7 +17,6 @@
 import packageMeta from '@/../package.json'
 import AppModule from '@/State/App/AppModule'
 import CartModule from '@/State/Cart/CartModule'
-import BlogModule from '@/State/Blog/BlogModule'
 import Footer from '@/Components/Main/Footer.vue'
 import Header from '@/Components/Main/Header.vue'
 import Loader from '@/Components/Main/Loader.vue'
@@ -46,7 +45,6 @@ export default class App extends Vue {
 	categoryModule = getModule(CategoryModule)
 	countryModule = getModule(CountryModule)
 	userModule = getModule(UserModule)
-	blogModule = getModule(BlogModule)
 	productFavouriteModule = getModule(ProductFavouriteModule)
 
 	get version(): string {
@@ -70,7 +68,6 @@ export default class App extends Vue {
 				this.productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
 			}
 		})
-		this.blogModule.fetchCommentsByUser(this.userModule.getUserData.email)
 	}
 
 	created(): void {

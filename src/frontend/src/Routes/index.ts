@@ -2,7 +2,6 @@ import routes from '@/Routes/MainRoutes'
 import authRoutes from '@/Routes/AuthRoutes'
 import userRoutes from '@/Routes/UserRoutes'
 import cartRoutes from '@/Routes/CartRoutes'
-import blogRoutes from '@/Routes/BlogRoutes'
 import searchRoutes from '@/Routes/SearchRoutes'
 import productRoutes from '@/Routes/ProductRoutes'
 import checkoutRoutes from '@/Routes/CheckoutRoutes'
@@ -17,7 +16,6 @@ const router = createRouter({
 		...authRoutes,
 		...userRoutes,
 		...cartRoutes,
-		...blogRoutes,
 		...searchRoutes,
 		...productRoutes,
 		...checkoutRoutes,

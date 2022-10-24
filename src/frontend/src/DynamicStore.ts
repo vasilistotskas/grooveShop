@@ -2,7 +2,6 @@ import Vuex from 'vuex'
 import TipModule from '@/State/Tip/TipModule'
 import AppModule from '@/State/App/AppModule'
 import CartModule from '@/State/Cart/CartModule'
-import BlogModule from '@/State/Blog/BlogModule'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
 import SearchModule from '@/State/Search/SearchModule'
 import SliderModule from '@/State/Slider/SliderModule'
@@ -38,7 +37,6 @@ export interface DynamicStoreType {
 	auth: AuthModule
 	password: PasswordModule
 	signup: SignUpModule
-	blog: BlogModule
 	payWay: PayWayModule
 	tip: TipModule
 }

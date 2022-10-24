@@ -22,7 +22,6 @@
 				<RouterLink
 					:title="breadcrumb.name"
 					:to="'/' + breadcrumb.to.full_path"
-					aria-label="Blog"
 					class="btn-w-effect"
 				>
 					<span class="breadcrumb__inner">

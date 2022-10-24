@@ -40,12 +40,12 @@ ALLOWED_HOSTS.extend(
 
 CORS_ORIGIN_ALLOW_ALL = True
 CSRF_TRUSTED_ORIGINS = [
-    APP_BASE_URL,
-    VITE_APP_URL,
+    str(APP_BASE_URL),
+    str(VITE_APP_URL),
 ]
 CORS_ALLOWED_ORIGINS = [
-    APP_BASE_URL,
-    VITE_APP_URL,
+    str(APP_BASE_URL),
+    str(VITE_APP_URL),
 ]
 
 INTERNAL_IPS = [
@@ -82,7 +82,6 @@ PROJECT_APPS = [
     "backend.order",
     "backend.search",
     "backend.slider",
-    "backend.blog",
     "backend.seo",
     "backend.tip",
     "backend.vat",

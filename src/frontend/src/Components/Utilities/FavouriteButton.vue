@@ -132,6 +132,4 @@ export default class FavouriteButton
 }
 </script>
 
-<style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Blog/BlogFavouriteButton';
-</style>
+<style lang="scss" scoped></style>

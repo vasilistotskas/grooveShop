@@ -20,7 +20,6 @@ export enum MainRoutePaths {
 	ALL_PRODUCTS = '/products/all',
 	PRODUCT = '/product/:category_slug/:product_slug',
 	CATEGORY = '/category/:category_slug',
-	BLOG = '/blog',
 	AUTHOR = '/author/:id',
 	POST = '/post/:slug',
 	POSTS_BY_TAG = '/tag/:tag',
