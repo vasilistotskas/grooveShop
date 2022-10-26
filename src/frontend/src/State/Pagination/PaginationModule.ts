@@ -174,7 +174,7 @@ export default class PaginationModule<TPaginatedModel> extends AppBaseModule {
 		params: PaginationModel
 		namespace: PaginationNamespaceTypesEnum
 	}): Promise<string> {
-		const baseUrl = '/Api/v1'
+		const baseUrl = '/api/v1'
 		let ApiUrl = ''
 
 		if (!data.params.queryParams && !data.params.pageNumber) {
@@ -259,6 +259,6 @@ export default class PaginationModule<TPaginatedModel> extends AppBaseModule {
 				this.context.commit('unsetResults', data.namespace)
 				console.log(e)
 			})
-			.finally(() => store.commit('App/setLoading', false))
+			.finally(() => console.log('finally'))
 	}
 }

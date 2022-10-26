@@ -3,7 +3,7 @@ import store from '@/DynamicStore'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import { ApiGetData, ApiPatchData, ApiPostData, ApiPutData } from '@/Api/Type/ApiData'
 
-const baseUrl = '/Api/v1'
+const baseUrl = '/api/v1'
 
 export default {
 	alternativeToken: null,
@@ -13,11 +13,11 @@ export default {
 	},
 
 	beforeRequest(): void {
-		store.commit('App/setLoading', true)
+		console.log('beforeRequest')
 	},
 
 	afterResponse(): void {
-		store.commit('App/setLoading', false)
+		console.log('afterResponse')
 	},
 
 	get(endpoint: string, data?: ApiGetData): Promise<unknown> {
