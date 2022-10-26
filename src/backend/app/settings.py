@@ -250,7 +250,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "backend/media")
 FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 
 STATICFILES_DIRS = (
-    os.path.join(FRONTEND_DIR, "dist/backend/static"),
     BASE_DIR.joinpath("frontend", "dist"),
     BASE_DIR.joinpath("files"),
 )
