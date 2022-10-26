@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.4.1 (2022-10-26)
+### Fix
+* **frontend:** Fix 'Api' to api and 'App' to app ([`0d1947c`](https://github.com/vasilistotskas/grooveShop/commit/0d1947cacf655edbcb6067b52a55b82e9c37e555))
+
 ## v0.4.0 (2022-10-14)
 ### Feature
 * **Graphql:Testing:** Introduce Blog comment query testing ([`6948875`](https://github.com/vasilistotskas/grooveShop/commit/694887598dfb365de04a358629e9163f19791f70))
