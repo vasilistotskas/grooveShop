@@ -1,4 +1,4 @@
-FROM node:17.5-alpine as build
+FROM node:19.0-alpine as build
 WORKDIR /frontend
 
 COPY ../src/frontend ./
