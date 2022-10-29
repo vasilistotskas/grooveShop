@@ -99,6 +99,7 @@
 						</button>
 					</div>
 				</div>
+				<LocaleChanger></LocaleChanger>
 				<ul class="navigation-header">
 					<li class="navigation-header-part">
 						<RouterLink
@@ -158,18 +159,18 @@
 					<ThemeModeSwitcher />
 				</ul>
 			</div>
-			<!--    <transition name="fade">-->
-			<NavbarCategories
-				v-if="
-					categoriesTreeData &&
-					Object.keys(categoriesTreeData).length > 0 &&
-					!navbarMenuHidden
-				"
-				:categories-tree="categoriesTreeData"
-				:main-toggle-button="$refs.mainToggleButton"
-				:navbar-products-button="$refs.navbarProductsButton"
-			/>
-			<!--    </transition>-->
+			<transition name="fade">
+				<NavbarCategories
+					v-if="
+						categoriesTreeData &&
+						Object.keys(categoriesTreeData).length > 0 &&
+						!navbarMenuHidden
+					"
+					:categories-tree="categoriesTreeData"
+					:main-toggle-button="$refs.mainToggleButton"
+					:navbar-products-button="$refs.navbarProductsButton"
+				/>
+			</transition>
 		</nav>
 	</section>
 </template>
@@ -191,6 +192,7 @@ import { Options as Component } from 'vue-class-component'
 import CategoryModel from '@/State/Category/CategoryModel'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import CategoryModule from '@/State/Category/CategoryModule'
+import LocaleChanger from '@/Components/I18n/LocaleChanger.vue'
 import GrooveImage from '@/Components/Utilities/GrooveImage.vue'
 import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
@@ -211,7 +213,8 @@ import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/Pagination
 	components: {
 		NavbarCategories,
 		GrooveImage,
-		ThemeModeSwitcher
+		ThemeModeSwitcher,
+		LocaleChanger
 	},
 	props: {
 		cartTotalLength: Number,

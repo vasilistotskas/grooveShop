@@ -1,6 +1,6 @@
 <template>
-	<header id="main-header">
-		<div class="predeader" :class="{ 'predeader--hidden': !showPreHeader }">
+	<header id="main-header" :class="{ 'pre-header-hidden': !showPreHeader }">
+		<div class="preheader" :class="{ 'preheader--hidden': !showPreHeader }">
 			<p>
 				Groove
 				<a :href="backendBaseUrl">
@@ -9,7 +9,6 @@
 			</p>
 		</div>
 		<Navbar :cart-total-length="cartTotalLength" :pre-head-hidden="!showPreHeader" />
-		<LocaleChanger></LocaleChanger>
 	</header>
 </template>
 
@@ -19,13 +18,11 @@ import CartModule from '@/State/Cart/CartModule'
 import { getModule } from 'vuex-module-decorators'
 import Navbar from '@/Components/Navbar/Navbar.vue'
 import { Options as Component, Vue } from 'vue-class-component'
-import LocaleChanger from '@/Components/I18n/LocaleChanger.vue'
 
 @Component({
 	name: 'Header',
 	components: {
-		Navbar,
-		LocaleChanger
+		Navbar
 	}
 })
 export default class Header extends Vue {
