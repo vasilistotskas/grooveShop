@@ -1,3 +1,4 @@
+import datetime
 import os
 from random import randrange
 
@@ -10,6 +11,7 @@ from backend.vat.models import Vat
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import BaseCommand
+from django.utils import timezone
 from django.utils.text import slugify
 from faker import Faker
 
@@ -57,7 +59,7 @@ class Command(BaseCommand):
                         price=product_price,
                         active="True",
                         stock=100,
-                        created_at=faker.date_time(),
+                        created_at=datetime.datetime.now(tz=timezone.utc),
                         vat_id=1,
                     )
                     i = i + 1
