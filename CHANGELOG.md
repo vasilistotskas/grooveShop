@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.4.2 (2022-10-29)
+### Fix
+* **pre-commit-config:** Remove pylint and mypy miss configured libs ([`bd9567a`](https://github.com/vasilistotskas/grooveShop/commit/bd9567a87ac23a44223e27c7f9845de678bbacf0))
+
 ## v0.4.1 (2022-10-26)
 ### Fix
 * **frontend:** Fix 'Api' to api and 'App' to app ([`0d1947c`](https://github.com/vasilistotskas/grooveShop/commit/0d1947cacf655edbcb6067b52a55b82e9c37e555))
