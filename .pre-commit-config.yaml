@@ -21,33 +21,10 @@ repos:
       - id: flake8
         args: ["--config=setup.cfg"]
         language_version: python3
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.971
-    hooks:
-      - id: mypy
-        name: Run type checks
-        args: ["--ignore-missing-imports", "--install-types", "--non-interactive"]
-        additional_dependencies: [django-stubs]
   - repo: https://github.com/pycqa/pydocstyle
     rev: 6.1.1
     hooks:
       - id: pydocstyle
-#  - repo: https://github.com/PyCQA/pylint
-#    rev: v2.15.3
-#    hooks:
-#      - id: pylint
-#        name: pylint
-#        entry: pylint
-#        types: [python]
-#        args:
-#          [
-#            "-rn",
-#            "--rcfile=.pylintrc",
-#            "--load-plugins=pylint.extensions.bad_builtin, pylint.extensions.mccabe, pylint_celery, pylint_django",
-#          ]
-#        additional_dependencies:
-#          - pylint_django==2.5.3
-#          - pylint_celery==0.3
   - repo: local
     hooks:
       - id: coverage
@@ -57,14 +34,6 @@ repos:
         entry: coverage run
         types: [python]
         pass_filenames: false
-#  - repo: local
-#    hooks:
-#      - id: migrations-check
-#        language: system
-#        name: Check for uncreated migrations.
-#        entry: bash -c "./src/manage.py makemigrations --check --dry-run"
-#        types: ["python"]
-#        pass_filenames: false
 
 default_language_version:
   python: python3.10.7

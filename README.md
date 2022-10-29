@@ -79,7 +79,6 @@
   -     Step 1: cd src
   -     AVAILABLE COMMANDS :
         pre-commit run --all-files
-        pylint backend
         black backend
 
   ### Poetry :

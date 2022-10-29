@@ -18,13 +18,9 @@ gunicorn==20.1.0
 whitenoise==6.2.0
 django-filter==22.1
 django-debug-toolbar==3.7.0
-pylint==2.15.5
 black==22.10.0
-pylint-celery==0.3
-pylint-django==2.5.3
 django-stubs==1.12.0
 django-stubs-ext==0.5.0
-mypy==0.982
 python-semantic-release==7.32.2
 flake8==5.0.4
 coverage==6.5.0
