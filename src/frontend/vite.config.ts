@@ -31,7 +31,16 @@ export default defineConfig({
 	],
 	build: {
 		outDir: './dist/',
-		assetsDir: './backend/static/js'
+		assetsDir: './backend/static/js',
+		rollupOptions: {
+			output: {
+				manualChunks(id) {
+					if (id.includes('node_modules')) {
+						return id.toString().split('node_modules/')[1].split('/')[0].toString()
+					}
+				}
+			}
+		}
 	},
 	server: {
 		port: 8011,

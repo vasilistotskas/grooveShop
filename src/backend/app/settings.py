@@ -30,7 +30,14 @@ BACKEND_BASE_URL = str(os.environ.get("BACKEND_BASE_URL"))
 APP_BASE_URL = str(os.environ.get("APP_BASE_URL"))
 VITE_APP_URL = str(os.environ.get("VITE_APP_URL"))
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "http://localhost:8001",
+    "http://localhost:3003",
+    APP_BASE_URL,
+    VITE_APP_URL,
+]
 ALLOWED_HOSTS.extend(
     filter(
         None,
@@ -38,12 +45,23 @@ ALLOWED_HOSTS.extend(
     )
 )
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:8001",
+    "http://localhost:3003",
+    APP_BASE_URL,
+    VITE_APP_URL,
+]
 CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8001",
+    "http://localhost:3003",
     APP_BASE_URL,
     VITE_APP_URL,
 ]
 CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8001",
+    "http://localhost:3003",
     APP_BASE_URL,
     VITE_APP_URL,
 ]
