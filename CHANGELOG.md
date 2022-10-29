@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.4.3 (2022-10-29)
+### Fix
+* **Navbar.vue, Header.vue:** Ui improvements ([`c0cd9ae`](https://github.com/vasilistotskas/grooveShop/commit/c0cd9aed6b4f53c3984d9c2c05fb0b4816155738))
+
 ## v0.4.2 (2022-10-29)
 ### Fix
 * **pre-commit-config:** Remove pylint and mypy miss configured libs ([`bd9567a`](https://github.com/vasilistotskas/grooveShop/commit/bd9567a87ac23a44223e27c7f9845de678bbacf0))
