@@ -8,13 +8,15 @@
 
 <script lang="ts">
 import router from '@/Routes'
+import { useMeta } from 'vue-meta'
+import { computed } from '@vue/runtime-core'
 import BlogModule from '@/State/Blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
 import BlogPostModel from '@/State/Blog/BlogPostModel'
 import BlogPostList from '@/Components/Blog/BlogPostList.vue'
-import { Options as Component, Vue } from 'vue-class-component'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import InstagramFeed from '@/Components/Utilities/InstagramFeed.vue'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 
 @Component({
 	name: 'Blog',
@@ -27,6 +29,16 @@ import InstagramFeed from '@/Components/Utilities/InstagramFeed.vue'
 export default class Blog extends Vue {
 	blogModule = getModule(BlogModule)
 
+	meta = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: 'Blog',
+				description: 'Blog'
+			}))
+		)
+		return { meta }
+	})
+
 	get breadCrumbPath() {
 		return router.currentRoute.value.meta.breadcrumb
 	}
@@ -36,8 +48,6 @@ export default class Blog extends Vue {
 	}
 
 	mounted(): void {
-		document.title = 'Blog'
-
 		this.blogModule.fetchAllPostsFromRemote()
 	}
 }

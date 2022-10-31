@@ -183,6 +183,7 @@ import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import { HTMLElementEvent } from '@/State/Common/Types/HelpingTypes'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import UserProfileApiData from '@/State/User/Interface/UserProfileApiData'
+import { useMeta } from 'vue-meta'
 
 @Component({
 	name: 'UserSettings',
@@ -203,6 +204,15 @@ export default class UserSettings extends Vue {
 
 	myContext = setup(() => {
 		const props = this.$props as { userData: UserProfileModel }
+
+		const meta = useMeta(
+			computed(() => ({
+				title:
+					props.userData?.first_name + ' ' + props.userData?.last_name + ' | Settings',
+				description:
+					props.userData?.first_name + ' ' + props.userData?.last_name + ' | Settings'
+			}))
+		)
 
 		const validationSchema = toFormValidator(
 			zod.object({
@@ -281,7 +291,8 @@ export default class UserSettings extends Vue {
 			place,
 			country,
 			region,
-			isTooManyAttempts
+			isTooManyAttempts,
+			meta
 		}
 	})
 
@@ -295,10 +306,6 @@ export default class UserSettings extends Vue {
 
 	get regionsBasedOnAlpha(): Array<RegionsModel> {
 		return this.countryModule.getRegionsBasedOnAlpha
-	}
-
-	mounted(): void {
-		document.title = 'My Settings'
 	}
 
 	restRegions(e: HTMLElementEvent<HTMLTextAreaElement>): void {

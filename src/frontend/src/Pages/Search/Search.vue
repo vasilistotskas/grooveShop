@@ -31,13 +31,15 @@
 
 <script lang="ts">
 import router from '@/Routes'
+import { useMeta } from 'vue-meta'
 import { AxiosResponse } from 'axios'
+import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import ProductModel from '@/State/Product/ProductModel'
-import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import ProductCard from '@/Components/Product/ProductCard.vue'
 import Pagination from '@/Components/Pagination/Pagination.vue'
+import { Options as Component, setup } from 'vue-class-component'
 import PaginationModule from '@/State/Pagination/PaginationModule'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
@@ -64,14 +66,23 @@ export default class Search
 	query: string | null = ''
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
+	endpointUrl = 'search-product'
+
+	meta = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: this.query ? `Search: ${this.query}` : 'Search',
+				description: this.query ? `Search: ${this.query}` : 'Search'
+			}))
+		)
+		return { meta }
+	})
 
 	get breadCrumbPath() {
 		return router.currentRoute.value.meta.breadcrumb
 	}
 
 	mounted(): void {
-		document.title = 'Search'
-
 		if (this.params.query) {
 			this.paginationModule.setCurrentQuery({
 				queryParams: this.params,
@@ -97,7 +108,7 @@ export default class Search
 	fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
 		const paginationQuery = PaginationModel.createPaginationModel({
 			pageNumber: this.currentPageNumber,
-			endpointUrl: `search-product`,
+			endpointUrl: `${this.endpointUrl}`,
 			queryParams: this.currentPageQuery,
 			method: ApiBaseMethods.GET
 		})

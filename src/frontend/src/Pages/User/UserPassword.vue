@@ -76,6 +76,7 @@
 <script lang="ts">
 import * as zod from 'zod'
 import { PropType } from 'vue'
+import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import { useField, useForm } from 'vee-validate'
 import zodPassword from '@/Helpers/Zod/Password'
@@ -106,8 +107,16 @@ export default class UserPassword extends Vue {
 	productReviewModule = getModule(ProductReviewModule)
 	countryModule = getModule(CountryModule)
 	submitButtonText = 'Update'
+	userData = new UserProfileModel()
 
 	myContext = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: `${this.userData?.first_name} ${this.userData?.last_name} | Password`,
+				description: `${this.userData?.first_name} ${this.userData?.last_name} | Password`
+			}))
+		)
+
 		const validationSchema = toFormValidator(
 			zod
 				.object({
@@ -165,7 +174,8 @@ export default class UserPassword extends Vue {
 			current_password,
 			new_password,
 			re_new_password,
-			isTooManyAttempts
+			isTooManyAttempts,
+			meta
 		}
 	})
 

@@ -64,6 +64,7 @@ coverage.xml
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+django.log
 
 # Flask stuff:
 instance/
@@ -201,3 +202,6 @@ npm-debug.log
 *.njsproj
 *.sln
 *.sw?
+
+# Sass cache
+.sass-cache

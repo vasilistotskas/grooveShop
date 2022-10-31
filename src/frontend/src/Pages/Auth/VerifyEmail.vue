@@ -30,11 +30,13 @@
 
 <script lang="ts">
 import router from '@/Routes'
+import { useMeta } from 'vue-meta'
+import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
 import SignUpModule from '@/State/Auth/SignUp/SignUpModule'
-import { Options as Component, Vue } from 'vue-class-component'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 
 @Component({
@@ -46,6 +48,16 @@ import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 export default class VerifyEmail extends Vue {
 	authModule = getModule(AuthModule)
 	signupModule = getModule(SignUpModule)
+
+	meta = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: 'Verify Email',
+				description: 'Verify Email'
+			}))
+		)
+		return { meta }
+	})
 
 	get breadCrumbPath() {
 		return router.currentRoute.value.meta.breadcrumb

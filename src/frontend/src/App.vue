@@ -1,4 +1,9 @@
 <template>
+	<metainfo>
+		<template #title="{ content }">{{
+			content ? `${content} | DeepWeb` : `DeepWeb`
+		}}</template>
+	</metainfo>
 	<Loader v-show="isLoading" id="mainLoader" />
 	<div id="wrapper">
 		<Header />
@@ -14,6 +19,7 @@
 </template>
 
 <script lang="ts">
+import { useMeta } from 'vue-meta'
 import packageMeta from '@/../package.json'
 import AppModule from '@/State/App/AppModule'
 import CartModule from '@/State/Cart/CartModule'
@@ -26,8 +32,8 @@ import AuthModule from '@/State/Auth/Auth/AuthModule'
 import UserModule from '@/State/User/Profile/UserModule'
 import CountryModule from '@/State/Country/CountryModule'
 import CategoryModule from '@/State/Category/CategoryModule'
-import { Options as Component, Vue } from 'vue-class-component'
 import SocialSidebar from '@/Components/Main/SocialSidebar.vue'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
 
 @Component({
@@ -48,6 +54,16 @@ export default class App extends Vue {
 	userModule = getModule(UserModule)
 	blogModule = getModule(BlogModule)
 	productFavouriteModule = getModule(ProductFavouriteModule)
+
+	meta = setup(() => {
+		const meta = useMeta({
+			title: '',
+			htmlAttrs: { lang: 'en', amp: true }
+		})
+		return {
+			meta
+		}
+	})
 
 	get version(): string {
 		return packageMeta.version

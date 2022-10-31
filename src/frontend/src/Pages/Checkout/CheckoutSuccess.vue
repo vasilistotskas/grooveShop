@@ -13,8 +13,10 @@
 
 <script lang="ts">
 import router from '@/Routes'
-import { Options as Component, Vue } from 'vue-class-component'
+import { useMeta } from 'vue-meta'
+import { computed } from '@vue/runtime-core'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 
 @Component({
 	name: 'CheckoutSuccess',
@@ -23,12 +25,18 @@ import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 	}
 })
 export default class CheckoutSuccess extends Vue {
+	meta = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: 'Checkout Success',
+				description: 'Checkout Success'
+			}))
+		)
+		return { meta }
+	})
+
 	get breadCrumbPath() {
 		return router.currentRoute.value.meta.breadcrumb
-	}
-
-	mounted(): void {
-		document.title = 'Order Success'
 	}
 }
 </script>

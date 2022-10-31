@@ -111,14 +111,15 @@ export default class Home extends Vue {
 	productModule = getModule(ProductModule)
 	sliderModule = getModule(SliderModule)
 
-	meta = setup(() =>
-		useMeta(
+	meta = setup(() => {
+		const meta = useMeta(
 			computed(() => ({
 				title: 'Deep Web Homepage',
 				description: 'Deep Web Homepage'
 			}))
 		)
-	)
+		return { meta }
+	})
 
 	mainSliderStyle = {
 		'--swiper-navigation-color': '#fff',

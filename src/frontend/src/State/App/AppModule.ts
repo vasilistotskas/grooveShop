@@ -75,6 +75,8 @@ export default class AppModule extends AppBaseModule {
 		const metaTagElement = <Element>(
 			document.querySelector(`meta[name=${metaData.metaName}]`)
 		)
-		metaTagElement.setAttribute(metaData.metaAttribute, metaData.newValue)
+		if (metaTagElement) {
+			metaTagElement.setAttribute(metaData.metaAttribute, metaData.newValue)
+		}
 	}
 }

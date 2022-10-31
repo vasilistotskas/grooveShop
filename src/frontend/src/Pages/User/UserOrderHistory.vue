@@ -26,13 +26,17 @@
 </template>
 
 <script lang="ts">
+import { PropType } from 'vue'
+import { useMeta } from 'vue-meta'
 import { AxiosResponse } from 'axios'
+import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
-import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import UserOrderModel from '@/State/User/Order/UserOrderModel'
 import Pagination from '@/Components/Pagination/Pagination.vue'
+import { Options as Component, setup } from 'vue-class-component'
 import PaginationModule from '@/State/Pagination/PaginationModule'
+import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 import UserFavouriteModel from '@/State/User/Favourite/UserFavouriteModel'
 import { PaginationModel } from '@/State/Pagination/Model/PaginationModel'
@@ -45,6 +49,12 @@ import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/Pagination
 @Component({
 	name: 'UserOrderHistory',
 	extends: PaginatedComponent,
+	props: {
+		userData: {
+			type: Object as PropType<UserProfileModel>,
+			required: true
+		}
+	},
 	components: {
 		Pagination,
 		UserOrderHistoryContainer
@@ -57,10 +67,21 @@ export default class UserOrderHistory
 	paginationModule = getModule<PaginationModule<UserOrderModel>>(PaginationModule)
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_ORDER_HISTORY
+	userData = new UserProfileModel()
+
+	meta = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: `${this.userData?.first_name} ${this.userData?.last_name} | Order History`,
+				description: `${this.userData?.first_name} ${this.userData?.last_name} | Order History`
+			}))
+		)
+		return {
+			meta
+		}
+	})
 
 	created(): void {
-		document.title = 'My Orders'
-
 		if (this.params.query) {
 			this.paginationModule.setCurrentQuery({
 				queryParams: this.params.query,

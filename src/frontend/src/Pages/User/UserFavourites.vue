@@ -27,12 +27,14 @@
 
 <script lang="ts">
 import { PropType } from 'vue'
+import { useMeta } from 'vue-meta'
 import { AxiosResponse } from 'axios'
+import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
-import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import ProductCard from '@/Components/Product/ProductCard.vue'
 import Pagination from '@/Components/Pagination/Pagination.vue'
+import { Options as Component, setup } from 'vue-class-component'
 import PaginationModule from '@/State/Pagination/PaginationModule'
 import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
@@ -66,9 +68,19 @@ export default class UserFavourites
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_FAVOURITES
 
-	created(): void {
-		document.title = 'My Favourites'
+	meta = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: `${this.userData?.first_name} ${this.userData?.last_name} | Favourites`,
+				description: `${this.userData?.first_name} ${this.userData?.last_name} | Favourites`
+			}))
+		)
+		return {
+			meta
+		}
+	})
 
+	created(): void {
 		if (this.params.query) {
 			this.paginationModule.setCurrentQuery({
 				queryParams: this.params.query,

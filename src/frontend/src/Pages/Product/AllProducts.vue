@@ -31,14 +31,16 @@
 
 <script lang="ts">
 import router from '@/Routes'
+import { useMeta } from 'vue-meta'
 import { AxiosResponse } from 'axios'
+import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import ProductModel from '@/State/Product/ProductModel'
-import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import { MainRoutePaths } from '@/Routes/Enum/MainRoutePaths'
 import ProductCard from '@/Components/Product/ProductCard.vue'
 import Pagination from '@/Components/Pagination/Pagination.vue'
+import { Options as Component, setup } from 'vue-class-component'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import PaginationModule from '@/State/Pagination/PaginationModule'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
@@ -66,13 +68,21 @@ export default class AllProducts
 	PaginationRoutesEnum = PaginationRoutesEnum
 	MainRoutePaths = MainRoutePaths
 
+	meta = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: 'Products',
+				description: 'Products'
+			}))
+		)
+		return { meta }
+	})
+
 	get breadCrumbPath() {
 		return router.currentRoute.value.meta.breadcrumb
 	}
 
 	created(): void {
-		document.title = 'All Products'
-
 		if (this.params.query) {
 			this.paginationModule.setCurrentQuery({
 				queryParams: this.params.query,
@@ -98,7 +108,7 @@ export default class AllProducts
 	fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
 		const paginationQuery = PaginationModel.createPaginationModel({
 			pageNumber: this.currentPageNumber,
-			endpointUrl: 'products/all',
+			endpointUrl: MainRoutePaths.ALL_PRODUCTS,
 			method: ApiBaseMethods.GET
 		})
 

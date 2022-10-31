@@ -56,11 +56,13 @@
 
 <script lang="ts">
 import router from '@/Routes'
+import { useMeta } from 'vue-meta'
+import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
-import { Options as Component, Vue } from 'vue-class-component'
 import PasswordModule from '@/State/Auth/Password/PasswordModule'
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 
 @Component({
@@ -72,9 +74,18 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 export default class PasswordReset extends Vue {
 	passwordModule = getModule(PasswordModule)
 	email = ''
-
 	lockIcon = faLock
 	envelopeIcon = faEnvelope
+
+	meta = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: 'Reset Password',
+				description: 'Reset Password'
+			}))
+		)
+		return { meta }
+	})
 
 	get breadCrumbPath() {
 		return router.currentRoute.value.meta.breadcrumb
@@ -90,10 +101,6 @@ export default class PasswordReset extends Vue {
 
 	get emailLoading(): boolean {
 		return this.passwordModule.getEmailLoading
-	}
-
-	mounted(): void {
-		document.title = 'Password Reset'
 	}
 
 	unmounted(): void {

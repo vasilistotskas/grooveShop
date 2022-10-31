@@ -124,6 +124,7 @@
 <script lang="ts">
 import * as zod from 'zod'
 import router from '@/Routes'
+import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import { useField, useForm } from 'vee-validate'
 import zodPassword from '@/Helpers/Zod/Password'
@@ -150,15 +151,17 @@ export default class LogIn extends Vue {
 	authModule = getModule(AuthModule)
 	productFavouriteModule = getModule(ProductFavouriteModule)
 	countryModule = getModule(CountryModule)
-
 	googleIcon = faGoogle
 	facebookIcon = faFacebook
 
-	get breadCrumbPath() {
-		return router.currentRoute.value.meta.breadcrumb
-	}
-
 	myContext = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: 'Log In',
+				description: 'Log In'
+			}))
+		)
+
 		const validationSchema = toFormValidator(
 			zod.object({
 				email: zod.string().email(),
@@ -210,12 +213,13 @@ export default class LogIn extends Vue {
 			errors,
 			email,
 			password,
-			isTooManyAttempts
+			isTooManyAttempts,
+			meta
 		}
 	})
 
-	mounted(): void {
-		document.title = 'Log In'
+	get breadCrumbPath() {
+		return router.currentRoute.value.meta.breadcrumb
 	}
 }
 </script>

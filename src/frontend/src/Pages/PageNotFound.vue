@@ -10,11 +10,7 @@ import { Options as Component, Vue } from 'vue-class-component'
 @Component({
 	name: 'PageNotFound'
 })
-export default class PageNotFound extends Vue {
-	mounted(): void {
-		document.title = 'Page Not Found'
-	}
-}
+export default class PageNotFound extends Vue {}
 </script>
 
 <style lang="scss" scoped>

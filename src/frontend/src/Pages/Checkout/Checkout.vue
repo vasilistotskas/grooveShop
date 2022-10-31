@@ -164,7 +164,7 @@
 								<label class="form-label" for="inputCountry">Country</label>
 								<select
 									id="inputCountry"
-									v-model="myContext.customerDetailsData.country"
+									v-model="myContext.country"
 									class="form-select"
 									name="country"
 									@change="myContext.restRegions"
@@ -184,7 +184,7 @@
 								<select
 									id="inputRegion"
 									ref="regionElement"
-									v-model="myContext.customerDetailsData.region"
+									v-model="myContext.region"
 									class="form-select"
 									name="region"
 								>
@@ -256,6 +256,7 @@ import {
 } from '@stripe/stripe-js'
 import * as zod from 'zod'
 import router from '@/Routes'
+import { useMeta } from 'vue-meta'
 import AppModule from '@/State/App/AppModule'
 import { useToast } from 'vue-toastification'
 import CartModule from '@/State/Cart/CartModule'
@@ -303,7 +304,12 @@ const toast = useToast()
 })
 export default class Checkout extends Vue {
 	myContext = setup(() => {
-		document.title = 'Checkout'
+		const meta = useMeta(
+			computed(() => ({
+				title: 'Checkout',
+				description: 'Checkout'
+			}))
+		)
 		const authModule = getModule(AuthModule)
 		const cartModule = getModule(CartModule)
 		const payWayModule = getModule(PayWayModule)
@@ -487,6 +493,8 @@ export default class Checkout extends Vue {
 		const { value: phone } = useField('phone')
 		const { value: place } = useField('place')
 		const { value: zipcode } = useField('zipcode')
+		const { value: country } = useField('country')
+		const { value: region } = useField('region')
 
 		const onSubmit = handleSubmit(async (values) => {
 			try {
@@ -520,8 +528,8 @@ export default class Checkout extends Vue {
 				place: values.place,
 				phone: values.phone,
 				city: values.city,
-				country: customerDetailsData.country,
-				region: customerDetailsData.region,
+				country: values.country,
+				region: values.region,
 				customer_notes: values.customerNotes,
 				items
 			}
@@ -558,6 +566,8 @@ export default class Checkout extends Vue {
 			place,
 			zipcode,
 			address,
+			country,
+			region,
 			customerNotes,
 			userData,
 			isAuthenticated,
@@ -578,7 +588,8 @@ export default class Checkout extends Vue {
 			instanceOptions,
 			elementsOptions,
 			cardOptions,
-			customerDetailsData
+			customerDetailsData,
+			meta
 		}
 	})
 	get isEmpty(): typeof isEmpty {

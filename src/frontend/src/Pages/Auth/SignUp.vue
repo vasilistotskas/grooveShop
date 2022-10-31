@@ -109,6 +109,7 @@
 <script lang="ts">
 import * as zod from 'zod'
 import router from '@/Routes'
+import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import { useField, useForm } from 'vee-validate'
 import zodPassword from '@/Helpers/Zod/Password'
@@ -133,6 +134,13 @@ export default class Register extends Vue {
 	activationEmailAtLocalStorage = false
 
 	myContext = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: 'Register',
+				description: 'Register'
+			}))
+		)
+
 		const validationSchema = toFormValidator(
 			zod
 				.object({
@@ -185,7 +193,8 @@ export default class Register extends Vue {
 			email,
 			password,
 			confirmPassword,
-			isTooManyAttempts
+			isTooManyAttempts,
+			meta
 		}
 	})
 
@@ -203,10 +212,6 @@ export default class Register extends Vue {
 
 	get registrationLoading(): boolean {
 		return this.signupModule.getRegistrationLoading
-	}
-
-	mounted(): void {
-		document.title = 'Sign Up'
 	}
 
 	updated(): void {

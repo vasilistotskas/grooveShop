@@ -11,12 +11,12 @@
 		"watch:vite": "vue-tsc --noEmit && vite build --watch --mode development",
 		"dts:vite": "vue-tsc --declaration --emitDeclarationOnly && tsc-alias -p tsconfig.json && npx prettier --write ./build/",
 		"lint:vue": "vue-cli-service lint",
-    "lint:scss": "npx stylelint \"**/*.{css,scss}\"",
+		"lint:scss": "npx stylelint \"**/*.{css,scss}\"",
 		"lint:scss:fix": "npx stylelint \"**/*.{css,scss}\" --fix",
 		"lint:prettier": "prettier --check .",
 		"lint:prettier:fix": "prettier --write .",
 		"lint:all": "npm run lint:vue && npm run lint:scss && npm run lint:prettier",
-		"lint:all:fix": "npm run lint:vue && npm run lint:prettier:fix"
+		"lint:all:fix": "npm run lint:vue && npm run lint:prettier:fix && npm run lint:scss:fix"
 	},
 	"dependencies": {
 		"@apollo/client": "^3.7.1",
@@ -76,7 +76,6 @@
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-prettier": "^4.2.1",
 		"eslint-plugin-vue": "^9.6.0",
-		"sass": "^1.55.0",
 		"sass-loader": "^13.1.0",
 		"tsc-alias": "^1.7.0",
 		"typescript": "^4.8.4",

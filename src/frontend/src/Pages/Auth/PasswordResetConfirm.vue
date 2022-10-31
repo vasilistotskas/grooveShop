@@ -81,6 +81,7 @@
 <script lang="ts">
 import * as zod from 'zod'
 import router from '@/Routes'
+import { useMeta } from 'vue-meta'
 import { useRoute } from 'vue-router'
 import { computed } from '@vue/runtime-core'
 import { useField, useForm } from 'vee-validate'
@@ -121,6 +122,13 @@ export default class PasswordRestConfirm extends Vue {
 	}
 
 	myContext = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: 'Password Reset Confirm',
+				description: 'Password Reset Confirm'
+			}))
+		)
+
 		const router = useRoute()
 		const validationSchema = toFormValidator(
 			zod.object({
@@ -160,13 +168,10 @@ export default class PasswordRestConfirm extends Vue {
 			errors,
 			new_password,
 			re_new_password,
-			isTooManyAttempts
+			isTooManyAttempts,
+			meta
 		}
 	})
-
-	mounted(): void {
-		document.title = 'Password Reset Confirm'
-	}
 
 	clearResetStatus(): void {
 		this.passwordModule.clearResetStatus()

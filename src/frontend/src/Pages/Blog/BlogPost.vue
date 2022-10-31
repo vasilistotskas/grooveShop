@@ -59,6 +59,8 @@ import {
 	ImageTypeOptions
 } from '@/Helpers/MediaStream/ImageUrlEnum'
 import router from '@/Routes'
+import { useMeta } from 'vue-meta'
+import { computed } from '@vue/runtime-core'
 import BlogModule from '@/State/Blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
@@ -67,10 +69,10 @@ import BlogPostModel from '@/State/Blog/BlogPostModel'
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions
 import BlogComment from '@/Components/Blog/BlogComment.vue'
 import BlogComments from '@/Components/Blog/BlogComments.vue'
-import { Options as Component, Vue } from 'vue-class-component'
 import GrooveImage from '@/Components/Utilities/GrooveImage.vue'
 import BlogAuthorLink from '@/Components/Blog/BlogAuthorLink.vue'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import FavouriteButton from '@/Components/Utilities/FavouriteButton.vue'
 import { RouteMetaBreadcrumbFunction } from '@/Routes/Type/BreadcrumbItemType'
 
@@ -98,6 +100,16 @@ export default class BlogPost extends Vue {
 	ImageTypeOptions = ImageTypeOptions
 	ImageFitOptions = ImageFitOptions
 	ImagePositionOptions = ImagePositionOptions
+
+	meta = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: this.postBySlug?.title,
+				description: 'Blog Post'
+			}))
+		)
+		return { meta }
+	})
 
 	get breadCrumbPath() {
 		const currentRouteMetaBreadcrumb = router.currentRoute.value.meta

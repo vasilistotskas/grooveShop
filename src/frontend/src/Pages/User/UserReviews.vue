@@ -34,7 +34,7 @@ import { PropType } from 'vue'
 import { AxiosResponse } from 'axios'
 import { getModule } from 'vuex-module-decorators'
 import UserModule from '@/State/User/Profile/UserModule'
-import { Options as Component } from 'vue-class-component'
+import { Options as Component, setup } from 'vue-class-component'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import Pagination from '@/Components/Pagination/Pagination.vue'
 import PaginationModule from '@/State/Pagination/PaginationModule'
@@ -47,6 +47,8 @@ import PaginatedComponent from '@/Components/Pagination/PaginatedComponent'
 import { PaginationRoutesEnum } from '@/State/Pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
+import { useMeta } from 'vue-meta'
+import { computed } from '@vue/runtime-core'
 
 @Component({
 	name: 'UserReviews',
@@ -72,13 +74,23 @@ export default class UserReviews
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_REVIEWS
 
+	meta = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: `${this.userData?.first_name} ${this.userData?.last_name} | Reviews`,
+				description: `${this.userData?.first_name} ${this.userData?.last_name} | Reviews`
+			}))
+		)
+		return {
+			meta
+		}
+	})
+
 	get userId(): number | undefined {
 		return this.userModule.getUserId
 	}
 
 	created(): void {
-		document.title = 'My Reviews'
-
 		if (this.params.query) {
 			this.paginationModule.setCurrentQuery({
 				queryParams: this.params.query,

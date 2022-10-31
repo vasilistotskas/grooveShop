@@ -46,18 +46,20 @@ import {
 	ImageTypeOptions
 } from '@/Helpers/MediaStream/ImageUrlEnum'
 import router from '@/Routes'
+import { useMeta } from 'vue-meta'
 import { AxiosResponse } from 'axios'
+import { computed } from '@vue/runtime-core'
 import AppModule from '@/State/App/AppModule'
 import { getModule } from 'vuex-module-decorators'
 import { RouteLocationNormalized } from 'vue-router'
 import ProductModel from '@/State/Product/ProductModel'
-import { Options as Component } from 'vue-class-component'
 import CategoryModel from '@/State/Category/CategoryModel'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import CategoryModule from '@/State/Category/CategoryModule'
 import ProductCard from '@/Components/Product/ProductCard.vue'
 import Pagination from '@/Components/Pagination/Pagination.vue'
 import GrooveImage from '@/Components/Utilities/GrooveImage.vue'
+import { Options as Component, setup } from 'vue-class-component'
 import PaginationModule from '@/State/Pagination/PaginationModule'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
@@ -93,8 +95,17 @@ export default class Category
 	ImageFitOptions = ImageFitOptions
 	ImagePositionOptions = ImagePositionOptions
 	paginationNamespace = PaginationNamespaceTypesEnum.CATEGORY_PRODUCTS
-
 	PaginationRoutesEnum = PaginationRoutesEnum
+
+	meta = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: this.category?.name,
+				description: 'Category'
+			}))
+		)
+		return { meta }
+	})
 
 	get breadCrumbPath() {
 		const currentRouteMetaBreadcrumb = router.currentRoute.value.meta
@@ -107,7 +118,6 @@ export default class Category
 	}
 
 	created(): void {
-		document.title = this.$route.params.category_slug + ' Category'
 		this.$watch(
 			() => this.$route,
 			(to: RouteLocationNormalized, from: RouteLocationNormalized) => {

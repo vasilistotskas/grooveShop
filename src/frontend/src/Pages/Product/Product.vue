@@ -165,14 +165,15 @@ export default class Product extends Vue {
 	cartModule = getModule(CartModule)
 	productFavouriteModule = getModule(ProductFavouriteModule)
 
-	meta = setup(() =>
-		useMeta(
+	meta = setup(() => {
+		const meta = useMeta(
 			computed(() => ({
 				title: this.product?.name ?? '',
 				description: this.product?.description ?? ''
 			}))
 		)
-	)
+		return { meta }
+	})
 
 	quantity = 1
 
@@ -206,15 +207,8 @@ export default class Product extends Vue {
 	}
 
 	created(): void {
-		document.title = this.$route.params.product_slug as string
-
 		this.productModule.fetchProductFromRemote().then(() => {
 			this.productModule.updateProductHits()
-		})
-		this.appModule.updateMetaTagElement({
-			metaName: 'description',
-			metaAttribute: 'content',
-			newValue: this.product.description
 		})
 	}
 

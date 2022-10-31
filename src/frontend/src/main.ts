@@ -29,7 +29,7 @@ const ToastOptions: PluginOptions = {
 const emitter = mitt()
 const metaManager = createMetaManager()
 
-createApp(App)
+const app = createApp(App)
 	.use(store)
 	.use(router, axios)
 	.use(metaManager)
@@ -40,4 +40,7 @@ createApp(App)
 	.use(VueSocialSharing)
 	.component('font-awesome-icon', FontAwesomeIcon)
 	.provide('emitter', emitter)
-	.mount('#app')
+
+await router.isReady()
+
+app.mount('#app')

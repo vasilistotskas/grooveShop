@@ -1,0 +1,50 @@
+.login-card {
+	display: block;
+	margin: 0 auto;
+	max-width: 500px;
+}
+.login-card .card-body {
+	grid-template-rows: unset;
+}
+
+.login-grid-part-one {
+	display: grid;
+	gap: 0.5rem;
+	grid-template-rows: auto auto;
+	align-items: center;
+	justify-content: center;
+}
+.login-grid-part-one .form-check {
+	align-items: center;
+	display: grid;
+	grid-template-columns: 20% 80%;
+}
+.login-grid-part-one .grid-item-two a {
+	color: var(--cp-palette-main-fifth);
+	font-size: 17px;
+	font-weight: 500;
+}
+.login-grid-part-one .grid-item-two a:hover {
+	color: var(--cp-palette-main-primary);
+	cursor: pointer;
+}
+.login-grid-part-socials {
+	display: grid;
+	grid-gap: 5px;
+	grid-template-columns: repeat(2, 1fr);
+}
+.login-grid-part-socials a.btn {
+	background: var(--cp-palette-main-fourth);
+	border-radius: 5px;
+	padding: 5px;
+}
+
+.login-register-field a {
+	color: var(--cp-palette-main-fifth);
+	font-size: 16px;
+	font-weight: 500;
+}
+.login-register-field a:hover {
+	color: var(--cp-palette-main-primary);
+	cursor: pointer;
+}

@@ -3,8 +3,8 @@ import { fileURLToPath } from 'url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve, dirname } from 'node:path'
-import VitePluginHtmlEnv from 'vite-plugin-html-env'
 import vueI18n from '@intlify/vite-plugin-vue-i18n'
+import VitePluginHtmlEnv from 'vite-plugin-html-env'
 import EnvironmentPlugin from 'vite-plugin-environment'
 
 export default defineConfig({
@@ -30,6 +30,7 @@ export default defineConfig({
 		EnvironmentPlugin('all')
 	],
 	build: {
+		target: 'esnext',
 		outDir: './dist/',
 		assetsDir: './backend/static/js',
 		rollupOptions: {

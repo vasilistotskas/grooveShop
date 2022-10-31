@@ -8,12 +8,14 @@
 
 <script lang="ts">
 import router from '@/Routes'
+import { useMeta } from 'vue-meta'
+import { computed } from '@vue/runtime-core'
 import BlogModule from '@/State/Blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
 import BlogPostModel from '@/State/Blog/BlogPostModel'
 import BlogPostList from '@/Components/Blog/BlogPostList.vue'
-import { Options as Component, Vue } from 'vue-class-component'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import { RouteMetaBreadcrumbFunction } from '@/Routes/Type/BreadcrumbItemType'
 
 @Component({
@@ -25,6 +27,16 @@ import { RouteMetaBreadcrumbFunction } from '@/Routes/Type/BreadcrumbItemType'
 })
 export default class BlogPostsByTag extends Vue {
 	blogModule = getModule(BlogModule)
+
+	meta = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: `Posts in #${router.currentRoute.value.params.tag}`,
+				description: 'Blog Post'
+			}))
+		)
+		return { meta }
+	})
 
 	get breadCrumbPath() {
 		const currentRouteMetaBreadcrumb = router.currentRoute.value.meta

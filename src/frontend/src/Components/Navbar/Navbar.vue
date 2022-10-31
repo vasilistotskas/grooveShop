@@ -230,7 +230,7 @@ export default class Navbar
 	authModule = getModule(AuthModule)
 	categoryModule = getModule(CategoryModule)
 	paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
-
+	endpointUrl = 'search-product'
 	searchQuery = {
 		query: ''
 	}
@@ -288,7 +288,7 @@ export default class Navbar
 
 		const paginationQuery = PaginationModel.createPaginationModel({
 			pageNumber: this.currentPageNumber,
-			endpointUrl: `search-product`,
+			endpointUrl: `${this.endpointUrl}`,
 			queryParams: this.searchQuery,
 			method: ApiBaseMethods.GET
 		})

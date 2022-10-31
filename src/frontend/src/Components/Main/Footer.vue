@@ -116,8 +116,6 @@
 
 <script lang="ts">
 import { useI18n } from 'vue-i18n'
-import { useMeta } from 'vue-meta'
-import { computed } from '@vue/runtime-core'
 import grBundle from '@/Locales/Footer/gr.messages.json'
 import enBundle from '@/Locales/Footer/en_us.messages.json'
 import { AvailableLocalesEnum } from '@/Locales/LocaleEnum'
@@ -133,13 +131,6 @@ import LottiePlayerMain from '@/Components/Utilities/LottiePlayerMain.vue'
 })
 export default class Footer extends Vue {
 	myContext = setup(() => {
-		useMeta(
-			computed(() => ({
-				title: 'Deep Web Homepage',
-				description: 'Deep Web Homepage'
-			}))
-		)
-
 		const { locale, t } = useI18n({
 			inheritLocale: true,
 			messages: {

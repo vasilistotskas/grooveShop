@@ -16,7 +16,6 @@ import { Options as Component, Vue } from 'vue-class-component'
 })
 export default class Offline extends Vue {
 	mounted(): void {
-		document.title = 'Page Not Found'
 		this.checkNetworkAndReload()
 	}
 	refreshPage(): void {

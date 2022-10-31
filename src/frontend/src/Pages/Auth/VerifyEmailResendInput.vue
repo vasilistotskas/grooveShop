@@ -34,9 +34,11 @@
 </template>
 
 <script lang="ts">
+import { useMeta } from 'vue-meta'
+import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import SignUpModule from '@/State/Auth/SignUp/SignUpModule'
-import { Options as Component, Vue } from 'vue-class-component'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 
 @Component({
@@ -53,6 +55,16 @@ export default class VerifyEmailResendInput extends Vue {
 	activationEmailAtLocalStorage = false
 	email = ''
 	envelopeIcon = faEnvelope
+
+	meta = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: 'Verify Email Resend',
+				description: 'Verify Email Resend'
+			}))
+		)
+		return { meta }
+	})
 
 	activationEmailResend(email: string): void {
 		let finalEmail

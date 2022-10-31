@@ -107,7 +107,7 @@ import AuthModule from '@/State/Auth/Auth/AuthModule'
 import UserModule from '@/State/User/Profile/UserModule'
 import CountryModule from '@/State/Country/CountryModule'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
-import { Options as Component, Vue } from 'vue-class-component'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
 import { faCogs } from '@fortawesome/free-solid-svg-icons/faCogs'
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
@@ -118,6 +118,8 @@ import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import UserProfileImage from '@/Components/User/UserProfileImage.vue'
 import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
 import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
+import { useMeta } from 'vue-meta'
+import { computed } from '@vue/runtime-core'
 
 @Component({
 	name: 'UserAccount',
@@ -140,6 +142,18 @@ export default class UserAccount extends Vue {
 	truckIcon = faTruck
 	heartIcon = faHeart
 	lockIcon = faLock
+
+	meta = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: this.userData?.first_name + ' ' + this.userData?.last_name + ' | Account',
+				description: 'Account page'
+			}))
+		)
+		return {
+			meta
+		}
+	})
 
 	get breadCrumbPath() {
 		return router.currentRoute.value.meta.breadcrumb
@@ -184,7 +198,6 @@ export default class UserAccount extends Vue {
 	}
 
 	created(): void {
-		document.title = 'My Account'
 		this.$watch(
 			() => this.userData,
 			(image: UserProfileModel) => {
@@ -196,12 +209,6 @@ export default class UserAccount extends Vue {
 	mounted(): void {
 		this.initializeUserData()
 		this.profileImageFilename = this.userData.main_image_filename
-	}
-
-	updated(): void {
-		if (router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT) {
-			document.title = 'My Account'
-		}
 	}
 
 	logout(): void {

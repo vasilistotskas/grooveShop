@@ -23,12 +23,14 @@
 
 <script lang="ts">
 import router from '@/Routes'
+import { useMeta } from 'vue-meta'
+import { computed } from '@vue/runtime-core'
 import BlogModule from '@/State/Blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
 import BlogPostModel from '@/State/Blog/BlogPostModel'
 import BlogAuthorModel from '@/State/Blog/BlogAuthorModel'
-import { Options as Component, Vue } from 'vue-class-component'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import BlogAuthorPostList from '@/Components/Blog/BlogAuthorPostList.vue'
 import { RouteMetaBreadcrumbFunction } from '@/Routes/Type/BreadcrumbItemType'
 
@@ -41,6 +43,16 @@ import { RouteMetaBreadcrumbFunction } from '@/Routes/Type/BreadcrumbItemType'
 })
 export default class BlogAuthor extends Vue {
 	blogModule = getModule(BlogModule)
+
+	meta = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: this.displayName || 'Blog Author',
+				description: 'Blog Author'
+			}))
+		)
+		return { meta }
+	})
 
 	get breadCrumbPath() {
 		const currentRouteMetaBreadcrumb = router.currentRoute.value.meta
