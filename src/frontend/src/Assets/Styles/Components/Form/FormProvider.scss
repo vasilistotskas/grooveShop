@@ -1,3 +1,11 @@
+._form {
+	display: grid;
+	gap: 1rem;
+}
+.validation-errors {
+	font-size: 0.8rem;
+	margin-top: 0.5rem;
+}
 .checkout-grid {
 	&-form {
 		display: grid;

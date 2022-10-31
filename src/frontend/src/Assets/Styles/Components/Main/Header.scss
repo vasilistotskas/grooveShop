@@ -5,17 +5,17 @@ header {
 		position: fixed;
 	}
 
-  display: grid;
-  grid-template-rows: auto auto;
+	display: grid;
+	grid-template-rows: auto auto;
 	width: 100%;
 	z-index: 12;
-  transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 
-  &.pre-header-hidden {
-    section {
-      grid-row: 1;
-    }
-  }
+	&.pre-header-hidden {
+		section {
+			grid-row: 1;
+		}
+	}
 
 	.preheader {
 		background-color: var(--cp-palette-main-fifth);
@@ -26,7 +26,7 @@ header {
 		transition: all 0.3s ease-in-out;
 
 		&.preheader--hidden {
-      display: none;
+			display: none;
 			box-shadow: none;
 			transform: translate3d(0, -100%, 0);
 		}

@@ -196,8 +196,6 @@ export default class PaginationModule<TPaginatedModel> extends AppBaseModule {
 		params: PaginationModel
 		namespace: PaginationNamespaceTypesEnum
 	}): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
-		await store.commit('App/setLoading', true)
-
 		const ApiUrl = await this.context.dispatch('buildPaginatedApiUrl', data)
 
 		return session({

@@ -35,6 +35,7 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "http://localhost:8001",
     "http://localhost:3003",
+    "backend",
     APP_BASE_URL,
     VITE_APP_URL,
 ]
