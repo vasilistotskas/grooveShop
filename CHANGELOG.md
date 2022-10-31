@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.5.0 (2022-10-31)
+### Feature
+* **useMeta:** Introduce UseMeta in Pages at setup method ([`020e3a5`](https://github.com/vasilistotskas/grooveShop/commit/020e3a5234adedd6b658cbb4c3e658238b9c6342))
+
 ## v0.4.3 (2022-10-29)
 ### Fix
 * **Navbar.vue, Header.vue:** Ui improvements ([`c0cd9ae`](https://github.com/vasilistotskas/grooveShop/commit/c0cd9aed6b4f53c3984d9c2c05fb0b4816155738))
