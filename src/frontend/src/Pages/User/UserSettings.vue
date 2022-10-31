@@ -1,128 +1,129 @@
 <template>
-	<FormProvider
+	<form
 		v-if="userData && Object.keys(userData).length > 0"
-		id="userProfileForm"
-		:errors="formManager.errors"
-		:form="formManager.form"
-		name="userProfileForm"
-		title=""
-		@submit="handleSubmit()"
+		@submit="myContext.onSubmit"
+		class="_form"
+		id="SignUpForm"
+		name="SignUpForm"
 	>
 		<div class="grid-account-setting-fields">
 			<div class="first_name">
-				<label :for="String(formManager.form.first_name.$uid)" class="label"
-					>First Name</label
-				>
-				<FormBaseInput
-					:id="formManager.form.first_name.$uid"
-					v-model="formManager.form.first_name.$value"
-					:has-error="formManager.form.first_name.$hasError"
-					:placeholder="userProfile.first_name"
-					:validating="formManager.form.first_name.$validating"
-				/>
-				<FormValidationErrors
-					:errors="formManager.form.first_name.$errors"
-					class="validation-errors"
-				/>
+				<label for="first_name" class="label mb-2">First Name</label>
+				<div class="_container">
+					<input
+						v-model="myContext.first_name"
+						id="first_name"
+						name="first_name"
+						type="text"
+						class="_input"
+						placeholder="First Name"
+						autocomplete="first_name"
+					/>
+				</div>
+				<span class="validation-errors">{{ myContext.errors.first_name }}</span>
 			</div>
 
 			<div class="last_name">
-				<label :for="String(formManager.form.last_name.$uid)" class="label"
-					>Last Name</label
-				>
-				<FormBaseInput
-					:id="formManager.form.last_name.$uid"
-					v-model="formManager.form.last_name.$value"
-					:has-error="formManager.form.last_name.$hasError"
-					:placeholder="userProfile.last_name"
-					:validating="formManager.form.last_name.$validating"
-				/>
-				<FormValidationErrors
-					:errors="formManager.form.last_name.$errors"
-					class="validation-errors"
-				/>
+				<label for="last_name" class="label mb-2">Last Name</label>
+				<div class="_container">
+					<input
+						v-model="myContext.last_name"
+						id="last_name"
+						name="last_name"
+						type="text"
+						class="_input"
+						placeholder="Last Name"
+						autocomplete="last_name"
+					/>
+				</div>
+				<span class="validation-errors">{{ myContext.errors.last_name }}</span>
 			</div>
 
 			<div class="phone">
-				<label :for="String(formManager.form.phone.$uid)" class="label">Phone</label>
-				<FormBaseInput
-					:id="formManager.form.phone.$uid"
-					v-model="formManager.form.phone.$value"
-					:has-error="formManager.form.phone.$hasError"
-					:placeholder="userProfile.phone"
-					:validating="formManager.form.phone.$validating"
-				/>
-				<FormValidationErrors
-					:errors="formManager.form.phone.$errors"
-					class="validation-errors"
-				/>
+				<label for="phone" class="label mb-2">Phone</label>
+				<div class="_container">
+					<input
+						v-model="myContext.phone"
+						id="phone"
+						name="phone"
+						type="number"
+						class="_input"
+						placeholder="Phone"
+						autocomplete="phone"
+					/>
+				</div>
+				<span class="validation-errors">{{ myContext.errors.phone }}</span>
 			</div>
 
 			<div class="city">
-				<label :for="String(formManager.form.city.$uid)" class="label">City</label>
-				<FormBaseInput
-					:id="formManager.form.city.$uid"
-					v-model="formManager.form.city.$value"
-					:has-error="formManager.form.city.$hasError"
-					:placeholder="userProfile.city"
-					:validating="formManager.form.city.$validating"
-				/>
-				<FormValidationErrors
-					:errors="formManager.form.city.$errors"
-					class="validation-errors"
-				/>
+				<label for="city" class="label mb-2">City</label>
+				<div class="_container">
+					<input
+						v-model="myContext.city"
+						id="city"
+						name="city"
+						type="text"
+						class="_input"
+						placeholder="City"
+						autocomplete="city"
+					/>
+				</div>
+				<span class="validation-errors">{{ myContext.errors.city }}</span>
 			</div>
 
 			<div class="zipcode">
-				<label :for="String(formManager.form.zipcode.$uid)" class="label">Zipcode</label>
-				<FormBaseInput
-					:id="formManager.form.zipcode.$uid"
-					v-model="formManager.form.zipcode.$value"
-					:has-error="formManager.form.zipcode.$hasError"
-					:placeholder="userProfile.zipcode"
-					:validating="formManager.form.zipcode.$validating"
-				/>
-				<FormValidationErrors
-					:errors="formManager.form.zipcode.$errors"
-					class="validation-errors"
-				/>
+				<label for="zipcode" class="label mb-2">ZipCode</label>
+				<div class="_container">
+					<input
+						v-model="myContext.zipcode"
+						id="zipcode"
+						name="zipcode"
+						type="text"
+						class="_input"
+						placeholder="ZipCode"
+						autocomplete="zipcode"
+					/>
+				</div>
+				<span class="validation-errors">{{ myContext.errors.zipcode }}</span>
 			</div>
 
 			<div class="address">
-				<label :for="String(formManager.form.address.$uid)" class="label">Address</label>
-				<FormBaseInput
-					:id="formManager.form.address.$uid"
-					v-model="formManager.form.address.$value"
-					:has-error="formManager.form.address.$hasError"
-					:placeholder="userProfile.address"
-					:validating="formManager.form.address.$validating"
-				/>
-				<FormValidationErrors
-					:errors="formManager.form.address.$errors"
-					class="validation-errors"
-				/>
+				<label for="address" class="label mb-2">Address</label>
+				<div class="_container">
+					<input
+						v-model="myContext.address"
+						id="address"
+						name="address"
+						type="text"
+						class="_input"
+						placeholder="Address"
+						autocomplete="address"
+					/>
+				</div>
+				<span class="validation-errors">{{ myContext.errors.address }}</span>
 			</div>
 
 			<div class="place">
-				<label :for="String(formManager.form.place.$uid)" class="label">Place</label>
-				<FormBaseInput
-					:id="formManager.form.place.$uid"
-					v-model="formManager.form.place.$value"
-					:has-error="formManager.form.place.$hasError"
-					:placeholder="userProfile.place"
-					:validating="formManager.form.place.$validating"
-				/>
-				<FormValidationErrors
-					:errors="formManager.form.place.$errors"
-					class="validation-errors"
-				/>
+				<label for="place" class="label mb-2">Place</label>
+				<div class="_container">
+					<input
+						v-model="myContext.place"
+						id="place"
+						name="place"
+						type="text"
+						class="_input"
+						placeholder="Place"
+						autocomplete="place"
+					/>
+				</div>
+				<span class="validation-errors">{{ myContext.errors.place }}</span>
 			</div>
 
 			<div class="country">
 				<label class="form-label" for="inputCountry">Country</label>
 				<select
 					id="inputCountry"
-					v-model="userProfile.country"
+					v-model="myContext.country"
 					class="form-select"
 					name="country"
 					@change="restRegions"
@@ -142,7 +143,7 @@
 				<label class="form-label" for="inputRegion">Region</label>
 				<select
 					id="inputRegion"
-					v-model="userProfile.region"
+					v-model="myContext.region"
 					class="form-select"
 					name="region"
 				>
@@ -158,48 +159,33 @@
 			</div>
 
 			<div class="button">
-				<FormSubmitButtons
-					:submit-text="submitButtonText"
-					:submitting="formManager.submitting"
-					class="buttons float-end"
-					gap="2rem"
-					@reset="formManager.resetFields()"
-				/>
+				<button class="btn btn-outline-primary-one green-bg" :title="submitButtonText">
+					{{ submitButtonText }}
+				</button>
 			</div>
 		</div>
-	</FormProvider>
+	</form>
 </template>
 
 <script lang="ts">
+import * as zod from 'zod'
 import { PropType } from 'vue'
-import { cloneDeep } from 'lodash'
+import { computed } from '@vue/runtime-core'
+import { useField, useForm } from 'vee-validate'
 import { getModule } from 'vuex-module-decorators'
+import { toFormValidator } from '@vee-validate/zod'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
-import { exactly, min } from '@/Components/Form/Utils'
 import RegionsModel from '@/State/Country/RegionsModel'
 import CountryModel from '@/State/Country/CountryModel'
 import UserModule from '@/State/User/Profile/UserModule'
 import CountryModule from '@/State/Country/CountryModule'
-import FormProvider from '@/Components/Form/FormProvider.vue'
-import FormBaseInput from '@/Components/Form/FormBaseInput.vue'
-import { Options as Component, Vue } from 'vue-class-component'
 import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import { HTMLElementEvent } from '@/State/Common/Types/HelpingTypes'
-import { useValidation, ValidationError } from 'vue3-form-validation'
-import FormSubmitButtons from '@/Components/Form/FormSubmitButtons.vue'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import UserProfileApiData from '@/State/User/Interface/UserProfileApiData'
-import FormValidationErrors from '@/Components/Form/FormValidationErrors.vue'
-
-let { validateFields } = useValidation({})
 
 @Component({
 	name: 'UserSettings',
-	components: {
-		FormProvider,
-		FormBaseInput,
-		FormSubmitButtons,
-		FormValidationErrors
-	},
 	props: {
 		userData: {
 			type: Object as PropType<UserProfileModel>,
@@ -214,44 +200,90 @@ export default class UserSettings extends Vue {
 	userProfile = new UserProfileModel()
 	userData = new UserProfileModel()
 	submitButtonText = 'Update'
-	formManager = ({ validateFields } = useValidation({
-		first_name: {
-			$value: '',
-			$rules: [min(2)('First Name has to be longer than 1 characters')]
-		},
-		last_name: {
-			$value: '',
-			$rules: [min(2)('Last Name has to be longer than 1 characters')]
-		},
-		phone: {
-			$value: '',
-			$rules: [exactly(10)('Phone number has to be 10 characters')]
-		},
-		city: {
-			$value: '',
-			$rules: [
-				// min(2)("City has to be longer than 1 characters")
-			]
-		},
-		zipcode: {
-			$value: '',
-			$rules: [
-				// exactly(5)("Zipcode has to be 5 characters")
-			]
-		},
-		address: {
-			$value: '',
-			$rules: [
-				// min(2)("City has to be longer than 1 characters")
-			]
-		},
-		place: {
-			$value: '',
-			$rules: [
-				// min(2)("Place has to be longer than 1 characters")
-			]
+
+	myContext = setup(() => {
+		const props = this.$props as { userData: UserProfileModel }
+
+		const validationSchema = toFormValidator(
+			zod.object({
+				first_name: zod.string().min(3).max(100),
+				last_name: zod.string().min(3).max(100),
+				phone: zod
+					.number()
+					.positive({ message: 'Must be a positive phone' })
+					.int({ message: 'Must be an integer' }),
+				city: zod.string().min(3).max(100),
+				zipcode: zod.string().min(3).max(100),
+				address: zod.string().min(3).max(100),
+				place: zod.string().min(3).max(100)
+			})
+		)
+		const { handleSubmit, errors, submitCount } = useForm({
+			validationSchema,
+			initialValues: {
+				first_name: props.userData.first_name,
+				last_name: props.userData.last_name,
+				phone: props.userData.phone,
+				place: props.userData.place,
+				city: props.userData.city,
+				zipcode: props.userData.zipcode,
+				address: props.userData.address,
+				country: props.userData.country,
+				region: props.userData.region
+			}
+		})
+
+		const { value: first_name } = useField('first_name')
+		const { value: last_name } = useField('last_name')
+		const { value: phone } = useField('phone')
+		const { value: city } = useField('city')
+		const { value: zipcode } = useField('zipcode')
+		const { value: address } = useField('address')
+		const { value: place } = useField('place')
+		const { value: country } = useField('country')
+		const { value: region } = useField('region')
+
+		const isTooManyAttempts = computed(() => {
+			return submitCount.value >= 10
+		})
+
+		const onSubmit = handleSubmit(async () => {
+			try {
+				const apiData: UserProfileApiData = {
+					user_id: props.userData.id,
+					first_name: first_name.value,
+					last_name: last_name.value,
+					phone: phone.value,
+					place: place.value,
+					city: city.value,
+					zipcode: zipcode.value,
+					address: address.value,
+					country: country.value,
+					region: region.value
+				}
+
+				await this.userModule.updateUserProfile(apiData as unknown as FormData)
+			} catch (e) {
+				console.log(e)
+			}
+		})
+
+		return {
+			validationSchema,
+			onSubmit,
+			errors,
+			first_name,
+			last_name,
+			phone,
+			city,
+			zipcode,
+			address,
+			place,
+			country,
+			region,
+			isTooManyAttempts
 		}
-	}))
+	})
 
 	get isAuthenticated(): boolean {
 		return this.authModule.isAuthenticated
@@ -267,8 +299,6 @@ export default class UserSettings extends Vue {
 
 	mounted(): void {
 		document.title = 'My Settings'
-
-		this.userProfileInitialize()
 	}
 
 	restRegions(e: HTMLElementEvent<HTMLTextAreaElement>): void {
@@ -276,64 +306,12 @@ export default class UserSettings extends Vue {
 		this.countryModule.findRegionsBasedOnAlphaFromInput(countryAlpha2Key)
 		this.userProfile.region = 'choose'
 	}
-
-	handleSubmit = async () => {
-		try {
-			const formData = (await validateFields()) as UserProfileModel
-			const apiData: UserProfileApiData = {
-				user_id: 1,
-				first_name: formData.first_name,
-				last_name: formData.last_name,
-				phone: formData.phone,
-				place: formData.place,
-				city: formData.city,
-				zipcode: formData.zipcode,
-				address: formData.address,
-				country: this.userProfile.country,
-				region: this.userProfile.region
-			}
-
-			await this.userModule.updateUserProfile(apiData as unknown as FormData)
-		} catch (e) {
-			if (e instanceof ValidationError) {
-				console.log(e.message)
-			}
-		}
-	}
-
-	public userProfileInitialize(): void {
-		if (this.isAuthenticated) {
-			this.userProfile = cloneDeep(this.userData)
-			if (this.userProfile.first_name !== null) {
-				this.formManager.form.first_name.$value = cloneDeep(this.userData.first_name)
-			}
-			if (this.userProfile.last_name !== null) {
-				this.formManager.form.last_name.$value = cloneDeep(this.userData.last_name)
-			}
-			if (this.userProfile.phone !== null) {
-				this.formManager.form.phone.$value = String(
-					cloneDeep(this.userData.phone) as unknown as string
-				)
-			}
-			if (this.userProfile.place !== null) {
-				this.formManager.form.place.$value = cloneDeep(this.userData.place)
-			}
-			if (this.userProfile.city !== null) {
-				this.formManager.form.city.$value = cloneDeep(this.userData.city)
-			}
-			if (this.userProfile.zipcode !== null) {
-				this.formManager.form.zipcode.$value = String(
-					cloneDeep(this.userData.zipcode) as unknown as string
-				)
-			}
-			if (this.userProfile.address !== null) {
-				this.formManager.form.address.$value = cloneDeep(this.userData.address)
-			}
-		}
-	}
 }
 </script>
 
 <style lang="scss" scoped>
+@import '@/Assets/Styles/Components/Form/FormProvider';
+@import '@/Assets/Styles/Components/Form/FormBaseTextarea';
+@import '@/Assets/Styles/Components/Form/FormBaseInput';
 @import '@/Assets/Styles/Pages/User/UserSettings';
 </style>

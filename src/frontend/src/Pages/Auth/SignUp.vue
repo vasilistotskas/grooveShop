@@ -6,77 +6,73 @@
 			<template v-else-if="!registrationCompleted">
 				<div class="card sign-up-card">
 					<div class="card-body card-body-border-top">
-						<FormProvider
-							:errors="formManager.errors"
-							:form="formManager.form"
-							title="Register"
-							@submit="handleSubmit()"
+						<h1 class="plr-15 mb-3 mt-3">Sign Up</h1>
+						<form
+							@submit="myContext.onSubmit"
+							class="_form"
+							id="SignUpForm"
+							name="SignUpForm"
 						>
 							<div class="container">
 								<div class="email mb-3">
-									<label :for="String(formManager.form.email.$uid)" class="label mb-2"
-										>Email</label
-									>
-									<FormBaseInput
-										:id="formManager.form.email.$uid"
-										v-model="formManager.form.email.$value"
-										:has-error="formManager.form.email.$hasError"
-										:input-with-add-on="true"
-										:input-with-add-on-icon="envelopeIcon"
-										:validating="formManager.form.email.$validating"
-										placeholder="Alice, Bob, Oscar"
-										autocomplete="username"
-									/>
-									<FormValidationErrors
-										:errors="formManager.form.email.$errors"
-										class="validation-errors"
-									/>
+									<label for="email" class="label mb-2">Email</label>
+									<div class="_container">
+										<input
+											v-model="myContext.email"
+											id="email"
+											name="email"
+											type="email"
+											class="_input"
+											placeholder="Email"
+											autocomplete="email"
+										/>
+									</div>
+									<span class="validation-errors">{{ myContext.errors.email }}</span>
 								</div>
 								<div class="password mb-3">
-									<label :for="String(formManager.form.password.$uid)" class="label mb-2"
-										>Password</label
-									>
-									<FormBaseInput
-										:id="formManager.form.password.$uid"
-										v-model="formManager.form.password.$value"
-										:has-error="formManager.form.password.$hasError"
-										:input-with-add-on="true"
-										:input-with-add-on-icon="keyIcon"
-										type="password"
-										autocomplete="new-password"
-									/>
-									<FormValidationErrors :errors="formManager.form.password.$errors" />
+									<label for="password" class="label mb-2">Password</label>
+									<div class="_container">
+										<input
+											v-model="myContext.password"
+											id="password"
+											name="password"
+											type="password"
+											class="_input"
+											placeholder="Password"
+											autocomplete="current-password"
+										/>
+									</div>
+									<span class="validation-errors">{{ myContext.errors.password }}</span>
 								</div>
 
 								<div class="confirm-password mb-4">
-									<label
-										:for="String(formManager.form.confirmPassword.$uid)"
-										class="label mb-2"
-									>
-										Confirm Password
-									</label>
-									<FormBaseInput
-										:id="formManager.form.confirmPassword.$uid"
-										v-model="formManager.form.confirmPassword.$value"
-										:has-error="formManager.form.confirmPassword.$hasError"
-										:input-with-add-on="true"
-										:input-with-add-on-icon="keyIcon"
-										type="password"
-										autocomplete="new-password"
-									/>
-									<FormValidationErrors
-										:errors="formManager.form.confirmPassword.$errors"
-									/>
+									<label for="password" class="label mb-2">Confirm Password</label>
+									<div class="_container">
+										<input
+											v-model="myContext.confirmPassword"
+											id="confirmPassword"
+											name="confirmPassword"
+											type="password"
+											class="_input"
+											placeholder="Confirm Password"
+											autocomplete="new-password"
+										/>
+									</div>
+									<span class="validation-errors">{{
+										myContext.errors.confirmPassword
+									}}</span>
 								</div>
 								<span v-show="registrationError" class="error">
-									An error occured while processing your request.
+									An error occurred while processing your request.
 								</span>
-								<FormSubmitButtons
-									:submitting="formManager.submitting"
-									class="buttons"
-									gap="2rem"
-									@reset="formManager.resetFields()"
-								/>
+								<button
+									v-if="!myContext.isTooManyAttempts"
+									class="btn btn-outline-primary-one green-bg"
+									title="Sign Up"
+								>
+									Sign Up
+								</button>
+								<span v-else>Too many attempts try again later</span>
 							</div>
 							<p class="register-login-field mt-4 mb-4">
 								Or
@@ -85,7 +81,7 @@
 								</RouterLink>
 								to log in!
 							</p>
-						</FormProvider>
+						</form>
 					</div>
 				</div>
 			</template>
@@ -111,32 +107,23 @@
 </template>
 
 <script lang="ts">
+import * as zod from 'zod'
 import router from '@/Routes'
+import { computed } from '@vue/runtime-core'
+import { useField, useForm } from 'vee-validate'
+import zodPassword from '@/Helpers/Zod/Password'
 import { getModule } from 'vuex-module-decorators'
+import { toFormValidator } from '@vee-validate/zod'
 import SignUpModule from '@/State/Auth/SignUp/SignUpModule'
-import { min, email, equal } from '@/Components/Form/Utils'
-import FormProvider from '@/Components/Form/FormProvider.vue'
-import { Options as Component, Vue } from 'vue-class-component'
-import { faKey } from '@fortawesome/free-solid-svg-icons/faKey'
-import FormBaseInput from '@/Components/Form/FormBaseInput.vue'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
-import RegisterInputApi from '@/State/Auth/Interface/RegisterInputApi'
-import { useValidation, ValidationError } from 'vue3-form-validation'
-import FormSubmitButtons from '@/Components/Form/FormSubmitButtons.vue'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
+import SignUpInputApi from '@/State/Auth/Interface/SignUpInputApi'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 import VerifyEmailResendInput from '@/Pages/Auth/VerifyEmailResendInput.vue'
-import FormValidationErrors from '@/Components/Form/FormValidationErrors.vue'
-
-let { validateFields } = useValidation({})
 
 @Component({
 	name: 'Register',
 	components: {
-		FormProvider,
-		FormBaseInput,
-		FormSubmitButtons,
-		FormValidationErrors,
 		Breadcrumbs,
 		VerifyEmailResendInput
 	}
@@ -145,35 +132,62 @@ export default class Register extends Vue {
 	signupModule = getModule(SignUpModule)
 	activationEmailAtLocalStorage = false
 
-	formManager = ({ validateFields } = useValidation({
-		email: {
-			$value: '',
-			$rules: [email('Please enter a valid email address')]
-		},
-		password: {
-			$value: '',
-			$rules: [
-				min(8)('Password has to be longer than 7 characters'),
-				{
-					key: 'pw',
-					rule: equal('Passwords do not match')
-				}
-			]
-		},
-		confirmPassword: {
-			$value: '',
-			$rules: [
-				min(8)('Password has to be longer than 7 characters'),
-				{
-					key: 'pw',
-					rule: equal('Passwords do not match')
-				}
-			]
-		}
-	}))
+	myContext = setup(() => {
+		const validationSchema = toFormValidator(
+			zod
+				.object({
+					email: zod.string().email(),
+					password: zodPassword,
+					confirmPassword: zodPassword
+				})
+				.superRefine(({ confirmPassword, password }, ctx) => {
+					if (confirmPassword !== password) {
+						ctx.addIssue({
+							code: 'custom',
+							message: 'The passwords did not match',
+							path: ['confirmPassword']
+						})
+					}
+				})
+		)
+		const { handleSubmit, errors, submitCount } = useForm({
+			validationSchema
+		})
 
-	envelopeIcon = faEnvelope
-	keyIcon = faKey
+		const { value: email } = useField('email')
+		const { value: password } = useField('password')
+		const { value: confirmPassword } = useField('confirmPassword')
+
+		const isTooManyAttempts = computed(() => {
+			return submitCount.value >= 10
+		})
+
+		const onSubmit = handleSubmit(async () => {
+			try {
+				const apiData: SignUpInputApi = {
+					first_name: 'who',
+					last_name: 'me',
+					email: email.value,
+					password: password.value,
+					re_password: confirmPassword.value
+				}
+				await this.signupModule.setRegistrationEmail(apiData.email)
+				await this.signupModule.createAccount(apiData as FormData)
+			} catch (e) {
+				console.log(e)
+			}
+		})
+
+		return {
+			validationSchema,
+			onSubmit,
+			errors,
+			email,
+			password,
+			confirmPassword,
+			isTooManyAttempts
+		}
+	})
 
 	get breadCrumbPath() {
 		return router.currentRoute.value.meta.breadcrumb
@@ -214,25 +228,6 @@ export default class Register extends Vue {
 		}
 	}
 
-	handleSubmit = async () => {
-		try {
-			const formData: RegisterInputApi = await validateFields()
-			const apiData: RegisterInputApi = {
-				first_name: 'who',
-				last_name: 'me',
-				email: formData.email,
-				password: formData.password,
-				re_password: formData.confirmPassword
-			}
-			await this.signupModule.setRegistrationEmail(apiData.email)
-			await this.signupModule.createAccount(apiData as FormData)
-		} catch (e) {
-			if (e instanceof ValidationError) {
-				console.log(e.message)
-			}
-		}
-	}
-
 	beforeRouteLeave(
 		to: RouteLocationNormalized,
 		from: RouteLocationNormalized,
@@ -245,5 +240,8 @@ export default class Register extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import '@/Assets/Styles/Components/Form/FormProvider';
+@import '@/Assets/Styles/Components/Form/FormBaseTextarea';
+@import '@/Assets/Styles/Components/Form/FormBaseInput';
 @import '@/Assets/Styles/Pages/Auth/SignUp';
 </style>

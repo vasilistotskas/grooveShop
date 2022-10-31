@@ -1,5 +1,5 @@
 export default interface UpdatePasswordInputApi {
-	current_password: string
-	new_password: string
-	re_new_password: string
+	current_password: unknown
+	new_password: unknown
+	re_new_password: unknown
 }

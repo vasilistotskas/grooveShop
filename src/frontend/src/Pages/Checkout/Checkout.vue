@@ -53,7 +53,7 @@
 					>
 						<div class="checkout-grid-form-part-left">
 							<div class="firstName col-12 mb-3">
-								<label for="firstName" class="label" data-v-547a8e9b="">First Name</label>
+								<label for="firstName" class="label">First Name</label>
 								<div class="_container">
 									<input
 										v-model="myContext.firstName"
@@ -66,7 +66,7 @@
 								<span class="validation-errors">{{ myContext.errors.firstName }}</span>
 							</div>
 							<div class="phone col-12 mb-3">
-								<label for="phone" class="label" data-v-547a8e9b="">Phone</label>
+								<label for="phone" class="label">Phone</label>
 								<div class="_container">
 									<input
 										v-model="myContext.phone"
@@ -79,7 +79,7 @@
 								<span class="validation-errors">{{ myContext.errors.phone }}</span>
 							</div>
 							<div class="city col-12 mb-3">
-								<label for="city" class="label" data-v-547a8e9b="">City</label>
+								<label for="city" class="label">City</label>
 								<div class="_container">
 									<input
 										v-model="myContext.city"
@@ -92,7 +92,7 @@
 								<span class="validation-errors">{{ myContext.errors.city }}</span>
 							</div>
 							<div class="address col-12 mb-3">
-								<label for="address" class="label" data-v-547a8e9b="">Address</label>
+								<label for="address" class="label">Address</label>
 								<div class="_container">
 									<input
 										v-model="myContext.address"
@@ -107,7 +107,7 @@
 						</div>
 						<div class="checkout-grid-form-part-right">
 							<div class="lastName col-12 mb-3">
-								<label for="lastName" class="label" data-v-547a8e9b="">Last Name</label>
+								<label for="lastName" class="label">Last Name</label>
 								<div class="_container">
 									<input
 										v-model="myContext.lastName"
@@ -120,7 +120,7 @@
 								<span class="validation-errors">{{ myContext.errors.lastName }}</span>
 							</div>
 							<div class="email col-12 mb-3">
-								<label for="email" class="label" data-v-547a8e9b="">Email</label>
+								<label for="email" class="label">Email</label>
 								<div class="_container">
 									<input
 										v-model="myContext.email"
@@ -133,20 +133,20 @@
 								<span class="validation-errors">{{ myContext.errors.lastName }}</span>
 							</div>
 							<div class="zipcode col-12 mb-3">
-								<label for="zipcode" class="label" data-v-547a8e9b="">Zipcode</label>
+								<label for="zipcode" class="label">Zipcode</label>
 								<div class="_container">
 									<input
 										v-model="myContext.zipcode"
 										id="zipcode"
 										name="zipcode"
-										type="number"
+										type="text"
 										class="_input"
 									/>
 								</div>
 								<span class="validation-errors">{{ myContext.errors.zipcode }}</span>
 							</div>
 							<div class="place col-12 mb-3">
-								<label for="place" class="label" data-v-547a8e9b="">Place</label>
+								<label for="place" class="label">Place</label>
 								<div class="_container">
 									<input
 										v-model="myContext.place"
@@ -200,9 +200,7 @@
 							</div>
 						</div>
 						<div class="customer_notes col-12">
-							<label for="customerNotes" class="label" data-v-547a8e9b=""
-								>Customer Notes</label
-							>
+							<label for="customerNotes" class="label">Customer Notes</label>
 							<div class="_container">
 								<textarea
 									v-model="myContext.customerNotes"
@@ -429,23 +427,17 @@ export default class Checkout extends Vue {
 
 		const validationSchema = toFormValidator(
 			zod.object({
-				address: zod.string().nonempty('This is required'),
-				city: zod.string().nonempty('This is required'),
-				email: zod
-					.string()
-					.nonempty('This is required')
-					.email({ message: 'Must be a valid email' }),
-				firstName: zod.string().nonempty('This is required'),
-				lastName: zod.string().nonempty('This is required'),
+				address: zod.string().min(3).max(100),
+				city: zod.string().min(3).max(100),
+				email: zod.string().email({ message: 'Must be a valid email' }),
+				firstName: zod.string().min(3).max(100),
+				lastName: zod.string().min(3).max(100),
 				phone: zod
 					.number()
 					.positive({ message: 'Must be a positive phone' })
 					.int({ message: 'Must be an integer' }),
-				place: zod.string().nonempty('This is required'),
-				zipcode: zod
-					.number()
-					.positive({ message: 'Must be a positive zipcode' })
-					.int({ message: 'Must be an integer' }),
+				place: zod.string().min(3).max(100),
+				zipcode: zod.string().min(3).max(100),
 				customerNotes: zod.string().default('test')
 			})
 		)

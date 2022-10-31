@@ -55,7 +55,7 @@ export default class VerifyEmailResendInput extends Vue {
 	envelopeIcon = faEnvelope
 
 	activationEmailResend(email: string): void {
-		let finalEmail = ''
+		let finalEmail
 		const emailFromLocalStorage = this.signupModule.getRegistrationEmail
 		if (emailFromLocalStorage) {
 			finalEmail = emailFromLocalStorage

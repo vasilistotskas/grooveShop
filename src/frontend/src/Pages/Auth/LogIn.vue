@@ -4,59 +4,56 @@
 			<Breadcrumbs :bread-crumb-path="breadCrumbPath" />
 			<div class="card login-card">
 				<div class="card-body card-body-border-top">
-					<FormProvider
-						:errors="formManager.errors"
-						:form="formManager.form"
-						title="Log In"
-						@submit="handleSubmit()"
+					<h1 class="plr-15 mb-3 mt-3">Log In</h1>
+					<form
+						@submit="myContext.onSubmit"
+						class="_form"
+						id="logInForm"
+						name="logInForm"
 					>
 						<div class="container">
 							<div class="email mb-3">
-								<label :for="String(formManager.form.email.$uid)" class="label mb-2"
-									>Email</label
-								>
-								<FormBaseInput
-									:id="formManager.form.email.$uid"
-									v-model="formManager.form.email.$value"
-									:has-error="formManager.form.email.$hasError"
-									:input-with-add-on="true"
-									:input-with-add-on-icon="envelopeIcon"
-									:validating="formManager.form.email.$validating"
-									placeholder="Alice, Bob, Oscar"
-									autocomplete="username"
-								/>
-								<FormValidationErrors
-									:errors="formManager.form.email.$errors"
-									class="validation-errors"
-								/>
+								<label for="email" class="label mb-2">Email</label>
+								<div class="_container">
+									<input
+										v-model="myContext.email"
+										id="email"
+										name="email"
+										type="email"
+										class="_input"
+										placeholder="Email"
+										autocomplete="email"
+									/>
+								</div>
+								<span class="validation-errors">{{ myContext.errors.email }}</span>
 							</div>
 							<div class="password mb-4">
-								<label :for="String(formManager.form.password.$uid)" class="label mb-2"
-									>Password</label
-								>
-								<FormBaseInput
-									:id="formManager.form.password.$uid"
-									v-model="formManager.form.password.$value"
-									:has-error="formManager.form.password.$hasError"
-									:input-with-add-on="true"
-									:input-with-add-on-icon="keyIcon"
-									type="password"
-									autocomplete="current-password"
-								/>
-								<FormValidationErrors :errors="formManager.form.password.$errors" />
+								<label for="password" class="label mb-2">Password</label>
+								<div class="_container">
+									<input
+										v-model="myContext.password"
+										id="password"
+										name="password"
+										type="password"
+										class="_input"
+										placeholder="Password"
+										autocomplete="current-password"
+									/>
+								</div>
+								<span class="validation-errors">{{ myContext.errors.password }}</span>
 							</div>
-							<FormSubmitButtons
-								:submitting="formManager.submitting"
-								class="buttons mt-3 mb-3"
-								gap="2rem"
-								@reset="formManager.resetFields()"
-							/>
+							<button
+								v-if="!myContext.isTooManyAttempts"
+								class="btn btn-outline-primary-one green-bg"
+								title="Log In"
+							>
+								Log In
+							</button>
+							<span v-else>Too many attempts try again later</span>
 						</div>
 
-						<!-- 2 column grid layout for inline styling -->
 						<div class="login-grid-part-one mb-3">
 							<div class="grid-item-one">
-								<!-- Checkbox -->
 								<div class="form-check">
 									<input
 										id="form2Example3"
@@ -71,13 +68,12 @@
 								</div>
 							</div>
 							<div class="grid-item-two">
-								<!-- Simple link -->
 								<RouterLink title="Password Reset" to="/password_reset">
 									Forgot password?
 								</RouterLink>
 							</div>
 						</div>
-					</FormProvider>
+					</form>
 
 					<!-- Register buttons -->
 					<div class="login-register-field">
@@ -126,36 +122,26 @@
 </template>
 
 <script lang="ts">
+import * as zod from 'zod'
 import router from '@/Routes'
-import session from '@/Api/Session'
+import { computed } from '@vue/runtime-core'
+import { useField, useForm } from 'vee-validate'
+import zodPassword from '@/Helpers/Zod/Password'
 import { getModule } from 'vuex-module-decorators'
-import { required } from '@/Components/Form/Utils'
+import { toFormValidator } from '@vee-validate/zod'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
 import UserModule from '@/State/User/Profile/UserModule'
 import CountryModule from '@/State/Country/CountryModule'
-import FormProvider from '@/Components/Form/FormProvider.vue'
 import LogInInputApi from '@/State/Auth/Interface/LogInInputApi'
-import { Options as Component, Vue } from 'vue-class-component'
-import { faKey } from '@fortawesome/free-solid-svg-icons/faKey'
-import FormBaseInput from '@/Components/Form/FormBaseInput.vue'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
-import { useValidation, ValidationError } from 'vue3-form-validation'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
-import FormSubmitButtons from '@/Components/Form/FormSubmitButtons.vue'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
-import FormValidationErrors from '@/Components/Form/FormValidationErrors.vue'
 import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
-
-let { validateFields } = useValidation({})
 
 @Component({
 	name: 'LogIn',
 	components: {
-		FormProvider,
-		FormBaseInput,
-		FormSubmitButtons,
-		FormValidationErrors,
 		Breadcrumbs
 	}
 })
@@ -165,66 +151,78 @@ export default class LogIn extends Vue {
 	productFavouriteModule = getModule(ProductFavouriteModule)
 	countryModule = getModule(CountryModule)
 
-	formManager = ({ validateFields } = useValidation({
-		email: {
-			$value: '',
-			$rules: [required('Email is required')]
-		},
-		password: {
-			$value: '',
-			$rules: [required('Password is required')]
-		}
-	}))
-
-	keyIcon = faKey
 	googleIcon = faGoogle
-	envelopeIcon = faEnvelope
 	facebookIcon = faFacebook
 
 	get breadCrumbPath() {
 		return router.currentRoute.value.meta.breadcrumb
 	}
 
+	myContext = setup(() => {
+		const validationSchema = toFormValidator(
+			zod.object({
+				email: zod.string().email(),
+				password: zodPassword
+			})
+		)
+		const { handleSubmit, errors, submitCount } = useForm({
+			validationSchema
+		})
+
+		const { value: email } = useField('email')
+		const { value: password } = useField('password')
+
+		const isTooManyAttempts = computed(() => {
+			return submitCount.value >= 10
+		})
+
+		const onSubmit = handleSubmit(async () => {
+			try {
+				const apiData: LogInInputApi = {
+					email: email.value,
+					password: password.value
+				}
+				await this.authModule
+					.login(apiData)
+					.then(() => {
+						this.userModule.fetchUserDataFromRemote().then((response) => {
+							if (response) {
+								this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(
+									this.userModule.getUserData
+								)
+								this.productFavouriteModule.fetchUserFavouritesFromRemote(
+									response.data[0].user
+								)
+							}
+						})
+					})
+					.catch((error: Error) => {
+						console.log(error)
+					})
+			} catch (e) {
+				console.log(e)
+			}
+		})
+
+		return {
+			validationSchema,
+			onSubmit,
+			errors,
+			email,
+			password,
+			isTooManyAttempts
+		}
+	})
+
 	mounted(): void {
 		document.title = 'Log In'
-	}
-
-	handleSubmit = async () => {
-		session.defaults.headers.common['Authorization'] = ''
-		localStorage.removeItem('token')
-
-		try {
-			const formData: LogInInputApi = await validateFields()
-			const apiData: LogInInputApi = {
-				email: formData.email,
-				password: formData.password
-			}
-			await this.authModule
-				.login(apiData)
-				.then(() => {
-					this.userModule.fetchUserDataFromRemote().then((response) => {
-						if (response) {
-							this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(
-								this.userModule.getUserData
-							)
-							this.productFavouriteModule.fetchUserFavouritesFromRemote(
-								response.data[0].user
-							)
-						}
-					})
-				})
-				.catch((error: Error) => {
-					console.log(error)
-				})
-		} catch (e) {
-			if (e instanceof ValidationError) {
-				console.log(e.message)
-			}
-		}
 	}
 }
 </script>
 
 <style lang="scss" scoped>
+@import '@/Assets/Styles/Components/Form/FormProvider';
+@import '@/Assets/Styles/Components/Form/FormBaseTextarea';
+@import '@/Assets/Styles/Components/Form/FormBaseInput';
 @import '@/Assets/Styles/Pages/Auth/LogIn';
 </style>

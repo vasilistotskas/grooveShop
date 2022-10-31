@@ -160,7 +160,7 @@ export default class PasswordModule extends AppBaseModule {
 		const reset_data = {
 			uid: data.uid,
 			token: data.token,
-			new_password: data.password1
+			new_password: data.new_password
 		}
 		return api
 			.post('djoser/users/reset_password_confirm/', reset_data)

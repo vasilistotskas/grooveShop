@@ -101,6 +101,7 @@
 
 <script lang="ts">
 import router from '@/Routes'
+import BlogModule from '@/State/Blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
 import UserModule from '@/State/User/Profile/UserModule'
@@ -131,6 +132,7 @@ export default class UserAccount extends Vue {
 	productFavouriteModule = getModule(ProductFavouriteModule)
 	productReviewModule = getModule(ProductReviewModule)
 	countryModule = getModule(CountryModule)
+	blogModule = getModule(BlogModule)
 	MainRouteNames = MainRouteNames
 	profileImageFilename = ''
 	cogsIcon = faCogs
@@ -169,6 +171,18 @@ export default class UserAccount extends Vue {
 		return first_name + ' ' + last_name
 	}
 
+	initializeUserData(): void {
+		this.userModule.fetchUserDataFromRemote().then((response) => {
+			if (response) {
+				this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(
+					this.userModule.getUserData
+				)
+				this.productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
+			}
+		})
+		this.blogModule.fetchCommentsByUser(this.userModule.getUserData.email)
+	}
+
 	created(): void {
 		document.title = 'My Account'
 		this.$watch(
@@ -180,6 +194,7 @@ export default class UserAccount extends Vue {
 	}
 
 	mounted(): void {
+		this.initializeUserData()
 		this.profileImageFilename = this.userData.main_image_filename
 	}
 

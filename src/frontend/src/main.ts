@@ -11,16 +11,6 @@ import * as apolloProvider from '@/Apollo/ApolloProvider'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast, { PluginOptions, TYPE } from 'vue-toastification'
 import { createMetaManager, plugin as metaPlugin } from 'vue-meta'
-import { createValidation, ValidationBehaviorInfo } from 'vue3-form-validation'
-
-const validation = createValidation({
-	defaultValidationBehavior: <never>'change',
-	validationBehavior: {
-		change: ({ force }: ValidationBehaviorInfo) => !force,
-		lazy: ({ touched }: ValidationBehaviorInfo) => touched,
-		submit: ({ submit, hasError }: ValidationBehaviorInfo) => submit || hasError
-	}
-})
 
 const ToastOptions: PluginOptions = {
 	toastDefaults: {
@@ -45,7 +35,6 @@ createApp(App)
 	.use(metaManager)
 	.use(metaPlugin)
 	.use(i18n)
-	.use(validation)
 	.use(apolloProvider.provider)
 	.use(Toast, ToastOptions)
 	.use(VueSocialSharing)

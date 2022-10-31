@@ -9,67 +9,62 @@
 				<h1>Reset Password Confirm</h1>
 				<template v-if="resetLoading"> loading... </template>
 				<template v-else-if="!resetCompleted">
-					<FormProvider
+					<form
+						@submit="myContext.onSubmit"
+						class="_form"
 						id="userPasswordForm"
-						:errors="formManager.errors"
-						:form="formManager.form"
 						name="userPasswordForm"
-						title=""
-						@submit="handleSubmit()"
 					>
 						<div class="grid-account-password-fields">
 							<div class="new_password">
-								<label :for="String(formManager.form.password1.$uid)" class="label"
-									>New Password</label
-								>
-								<FormBaseInput
-									:id="formManager.form.password1.$uid"
-									v-model="formManager.form.password1.$value"
-									:has-error="formManager.form.password1.$hasError"
-									:placeholder="'New Password'"
-									:validating="formManager.form.password1.$validating"
-									:input-with-add-on="true"
-									:input-with-add-on-icon="lockIcon"
-									type="password"
-								/>
-								<FormValidationErrors
-									:errors="formManager.form.password1.$errors"
-									class="validation-errors"
-								/>
+								<label for="new_password" class="label mb-2">New Password</label>
+								<div class="_container">
+									<input
+										v-model="myContext.new_password"
+										id="new_password"
+										name="new_password"
+										type="password"
+										class="_input"
+										placeholder="New Password"
+										autocomplete="new_password"
+									/>
+								</div>
+								<span class="validation-errors">{{ myContext.errors.new_password }}</span>
 							</div>
 							<div class="re_new_password">
-								<label :for="String(formManager.form.password2.$uid)" class="label"
+								<label for="re_new_password" class="label mb-2"
 									>Retype New Password</label
 								>
-								<FormBaseInput
-									:id="formManager.form.password2.$uid"
-									v-model="formManager.form.password2.$value"
-									:has-error="formManager.form.password2.$hasError"
-									:placeholder="'Retype New Password'"
-									:validating="formManager.form.password2.$validating"
-									:input-with-add-on="true"
-									:input-with-add-on-icon="lockIcon"
-									type="password"
-								/>
-								<FormValidationErrors
-									:errors="formManager.form.password2.$errors"
-									class="validation-errors"
-								/>
+								<div class="_container">
+									<input
+										v-model="myContext.re_new_password"
+										id="re_new_password"
+										name="re_new_password"
+										type="password"
+										class="_input"
+										placeholder="Retype New Password"
+										autocomplete="re_new_password"
+									/>
+								</div>
+								<span class="validation-errors">{{
+									myContext.errors.re_new_password
+								}}</span>
 							</div>
 							<div class="button">
-								<FormSubmitButtons
-									:submit-text="submitButtonText"
-									:submitting="formManager.submitting"
-									class="buttons float-end"
-									gap="2rem"
-									@reset="formManager.resetFields()"
-								/>
+								<button
+									v-if="!myContext.isTooManyAttempts"
+									class="btn btn-outline-primary-one green-bg"
+									:title="submitButtonText"
+								>
+									{{ submitButtonText }}
+								</button>
+								<span v-else>Too many attempts try again later</span>
 							</div>
 						</div>
-					</FormProvider>
+					</form>
 
 					<span v-show="resetError" class="error">
-						A error occured while processing your request.
+						A error occurred while processing your request.
 					</span>
 				</template>
 				<template v-else>
@@ -84,67 +79,30 @@
 </template>
 
 <script lang="ts">
+import * as zod from 'zod'
 import router from '@/Routes'
+import { useRoute } from 'vue-router'
+import { computed } from '@vue/runtime-core'
+import { useField, useForm } from 'vee-validate'
+import zodPassword from '@/Helpers/Zod/Password'
 import { getModule } from 'vuex-module-decorators'
-import { equal, min } from '@/Components/Form/Utils'
-import FormProvider from '@/Components/Form/FormProvider.vue'
-import { Options as Component, Vue } from 'vue-class-component'
-import FormBaseInput from '@/Components/Form/FormBaseInput.vue'
+import { toFormValidator } from '@vee-validate/zod'
 import PasswordModule from '@/State/Auth/Password/PasswordModule'
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
-import { useValidation, ValidationError } from 'vue3-form-validation'
-import FormSubmitButtons from '@/Components/Form/FormSubmitButtons.vue'
-import FormValidationErrors from '@/Components/Form/FormValidationErrors.vue'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import ResetPasswordInputApi from '@/State/Auth/Interface/ResetPasswordInputApi'
-
-let { validateFields } = useValidation({} as ResetPasswordInputApi)
 
 @Component({
 	name: 'PasswordRestConfirm',
 	components: {
-		Breadcrumbs,
-		FormProvider,
-		FormBaseInput,
-		FormSubmitButtons,
-		FormValidationErrors
+		Breadcrumbs
 	}
 })
 export default class PasswordRestConfirm extends Vue {
 	passwordModule = getModule(PasswordModule)
 	submitButtonText = 'Reset Password'
-
-	inputs = {
-		password1: '',
-		password2: '',
-		uid: '',
-		token: ''
-	} as ResetPasswordInputApi
-
 	lockIcon = faLock
-
-	formManager = ({ validateFields } = useValidation({
-		password1: {
-			$value: '',
-			$rules: [
-				min(8)('Password has to be longer than 7 characters'),
-				{
-					key: 'pw',
-					rule: equal('Passwords do not match')
-				}
-			]
-		},
-		password2: {
-			$value: '',
-			$rules: [
-				min(8)('Password has to be longer than 7 characters'),
-				{
-					key: 'pw',
-					rule: equal('Passwords do not match')
-				}
-			]
-		}
-	}))
 
 	get breadCrumbPath() {
 		return router.currentRoute.value.meta.breadcrumb
@@ -162,28 +120,52 @@ export default class PasswordRestConfirm extends Vue {
 		return this.passwordModule.getResetLoading
 	}
 
+	myContext = setup(() => {
+		const router = useRoute()
+		const validationSchema = toFormValidator(
+			zod.object({
+				new_password: zodPassword,
+				password2: zodPassword
+			})
+		)
+		const { handleSubmit, errors, submitCount } = useForm({
+			validationSchema
+		})
+
+		const { value: new_password } = useField('new_password')
+		const { value: re_new_password } = useField('re_new_password')
+
+		const isTooManyAttempts = computed(() => {
+			return submitCount.value >= 10
+		})
+
+		const onSubmit = handleSubmit(async () => {
+			try {
+				const apiData: ResetPasswordInputApi = {
+					new_password: new_password.value,
+					re_new_password: re_new_password.value,
+					uid: router.params.uid,
+					token: router.params.token
+				}
+
+				await this.passwordModule.resetPasswordConfirm(apiData)
+			} catch (e) {
+				console.log(e)
+			}
+		})
+
+		return {
+			validationSchema,
+			onSubmit,
+			errors,
+			new_password,
+			re_new_password,
+			isTooManyAttempts
+		}
+	})
+
 	mounted(): void {
 		document.title = 'Password Reset Confirm'
-		this.inputs.uid = this.$route.params.uid as string
-		this.inputs.token = this.$route.params.token as string
-	}
-
-	handleSubmit = async () => {
-		try {
-			const formData = await validateFields()
-			const apiData: ResetPasswordInputApi = {
-				password1: formData.password1,
-				password2: formData.password2,
-				uid: this.inputs.uid,
-				token: this.inputs.token
-			}
-
-			await this.passwordModule.resetPasswordConfirm(apiData)
-		} catch (e) {
-			if (e instanceof ValidationError) {
-				console.log(e.message)
-			}
-		}
 	}
 
 	clearResetStatus(): void {
@@ -193,5 +175,8 @@ export default class PasswordRestConfirm extends Vue {
 </script>
 
 <style lang="scss">
+@import '@/Assets/Styles/Components/Form/FormProvider';
+@import '@/Assets/Styles/Components/Form/FormBaseTextarea';
+@import '@/Assets/Styles/Components/Form/FormBaseInput';
 @import '@/Assets/Styles/Pages/Auth/PasswordResetConfirm';
 </style>

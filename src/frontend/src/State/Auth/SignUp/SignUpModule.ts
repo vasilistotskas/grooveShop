@@ -16,7 +16,7 @@ const toast = useToast()
 	name: 'signup'
 })
 export default class SignUpModule extends AppBaseModule {
-	registrationEmail?: string | undefined
+	registrationEmail?: unknown
 	activationCompleted = false
 	activationError = false
 	activationLoading = false
@@ -25,7 +25,7 @@ export default class SignUpModule extends AppBaseModule {
 	registrationError = false
 	registrationLoading = false
 
-	get getRegistrationEmail(): string | undefined {
+	get getRegistrationEmail(): unknown {
 		return this.registrationEmail
 	}
 
@@ -58,10 +58,12 @@ export default class SignUpModule extends AppBaseModule {
 	}
 
 	@Mutation
-	setRegistrationEmail(email: string | undefined): void {
+	setRegistrationEmail(email: unknown): void {
 		this.registrationEmail = email
 		if (email !== undefined) {
-			localStorage.setItem('registrationEmail', email)
+			if (typeof email === 'string') {
+				localStorage.setItem('registrationEmail', email)
+			}
 		}
 	}
 
