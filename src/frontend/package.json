@@ -2,6 +2,7 @@
 	"name": "frontend",
 	"version": "0.1.2",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"dev": "vite --host",
 		"serve:vue": "vue-cli-service serve --port 5000",
