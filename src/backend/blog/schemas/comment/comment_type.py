@@ -20,7 +20,4 @@ class CommentType:
     likes: List[UserAccountType]
     user: "UserAccountType"
     post: "PostType"
-
-    @strawberry_django.field
-    def number_of_likes(self) -> int:
-        return self.likes.count()
+    number_of_likes: int

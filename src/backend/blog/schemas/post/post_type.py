@@ -1,4 +1,3 @@
-import os
 from typing import List
 
 import strawberry.django
@@ -31,22 +30,6 @@ class PostType:
     category: "CategoryType"
     tags: List[TagType]
     author: "AuthorType"
-
-    @strawberry_django.field
-    def main_image_absolute_url(self) -> str:
-        if self.image and hasattr(self.image, "url"):
-            image = settings.BACKEND_BASE_URL + self.image.url
-        else:
-            image = ""
-        return image
-
-    @strawberry_django.field
-    def main_image_filename(self) -> str:
-        if self.image and hasattr(self.image, "name"):
-            return os.path.basename(self.image.name)
-        else:
-            return ""
-
-    @strawberry_django.field
-    def number_of_likes(self) -> int:
-        return self.likes.count()
+    main_image_absolute_url: str
+    main_image_filename: str
+    number_of_likes: int
