@@ -18,7 +18,7 @@ const toast = useToast()
 export default class UserModule extends AppBaseModule {
 	user_id!: number | undefined
 	user_email!: string | undefined
-	data = new UserProfileModel()
+	data!: UserProfileModel
 
 	get getUserId(): number | undefined {
 		return this.user_id

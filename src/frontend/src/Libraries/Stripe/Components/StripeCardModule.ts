@@ -15,19 +15,19 @@ export default class StripeCardModule extends AppBaseModule {
 	stripeKey = 'pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3'
 	element!: StripeElement
 	selector!: string
-	cbOnChange!: (ev: any) => void
-	cbError!: (ev: any) => void
+	cbOnChange!: (ev) => void
+	cbError!: (ev) => void
 	stripeInstance = window as any
-	stripeEl!: any
-	notifyError!: (ev: any) => void
-	cardNumberError!: any
-	cardNumberIsCompleted!: any
-	cardExpiryError!: (ev: any) => void
-	cardNumberEl!: any
-	cardExpiryIsCompleted!: any
+	stripeEl!: unknown
+	notifyError!: (ev: unknown) => void
+	cardNumberError!: unknown
+	cardNumberIsCompleted!: unknown
+	cardExpiryError!: (ev: unknown) => void
+	cardNumberEl!: unknown
+	cardExpiryIsCompleted!: unknown
 	cardCvcIsCompleted!: boolean
-	cardExpiryEl!: any
-	cardCvcEl!: any
+	cardExpiryEl!: unknown
+	cardCvcEl!: unknown
 	resultToken!: string
 	card!: Record<
 		string,
@@ -74,7 +74,7 @@ export default class StripeCardModule extends AppBaseModule {
 	}
 
 	@Mutation
-	setCardNumberIsCompleted(complete: any): void {
+	setCardNumberIsCompleted(complete: unknown): void {
 		this.cardNumberIsCompleted = complete
 	}
 
@@ -89,7 +89,7 @@ export default class StripeCardModule extends AppBaseModule {
 	}
 
 	@Mutation
-	setCardExpiryIsCompleted(complete: any): void {
+	setCardExpiryIsCompleted(complete: unknown): void {
 		this.cardExpiryIsCompleted = complete
 	}
 
@@ -116,7 +116,7 @@ export default class StripeCardModule extends AppBaseModule {
 	@Action
 	async createStripeToken(): Promise<void> {
 		const elements = this.card
-		await this.stripeInstance.createToken(elements).then((result: any) => {
+		await this.stripeInstance.createToken(elements).then((result: unknown) => {
 			this.context.commit('setResultToken', result)
 		})
 	}

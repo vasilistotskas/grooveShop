@@ -93,24 +93,19 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
 		userId: {
 			type: Number,
 			required: false
-		},
-		class: {
-			type: String,
-			required: false
 		}
 	}
 })
 export default class BlogCommentCard extends Vue {
-	blogModule = getModule(BlogModule)
-	authModule = getModule(AuthModule)
-	MainRouteNames = MainRouteNames
 	declare $refs: {
 		userCommentActionTarget: HTMLElement
 	}
-	comment = new BlogCommentModel()
+	blogModule = getModule(BlogModule)
+	authModule = getModule(AuthModule)
+	MainRouteNames = MainRouteNames
+	comment!: BlogCommentModel
 	userId = 0
 	commentActionsOpen = true
-
 	checkCircleIcon = faCheckCircle
 
 	updated(): void {

@@ -42,7 +42,7 @@ import UserOrderHistoryCard from '@/Components/User/UserOrderHistoryCard.vue'
 	}
 })
 export default class UserOrderHistoryContainer extends Vue {
-	order = new UserOrderModel()
+	order!: UserOrderModel
 
 	get orderTotal(): number {
 		let total = 0

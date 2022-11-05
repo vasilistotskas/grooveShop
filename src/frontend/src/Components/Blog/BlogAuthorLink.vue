@@ -23,7 +23,7 @@ import { Options as Component, Vue } from 'vue-class-component'
 	}
 })
 export default class BlogAuthorLink extends Vue {
-	author = new BlogAuthorModel()
+	author!: BlogAuthorModel
 
 	get displayName(): string {
 		return (

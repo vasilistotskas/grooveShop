@@ -30,7 +30,6 @@ import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/Pagination
 })
 export default class PaginationModule<TPaginatedModel> extends AppBaseModule {
 	namespaceData: PaginationDataInterface<TPaginatedModel> = PaginationNamespaceDirectory()
-
 	alternativeToken = ''
 
 	get getUserToken(): string | null {
@@ -175,7 +174,7 @@ export default class PaginationModule<TPaginatedModel> extends AppBaseModule {
 		namespace: PaginationNamespaceTypesEnum
 	}): Promise<string> {
 		const baseUrl = '/api/v1'
-		let ApiUrl = ''
+		let ApiUrl: string
 
 		if (!data.params.queryParams && !data.params.pageNumber) {
 			ApiUrl = `${baseUrl}/${data.params.endpointUrl}`

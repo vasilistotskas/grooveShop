@@ -41,8 +41,8 @@ export default class AppModule extends AppBaseModule {
 		return this.checkoutErrors
 	}
 
-	get getInstagramApiToken(): string {
-		return 'IGQVJYTlhTQzlKYXBTY2RXRkp5YzRwalNpR1VJVm5QY0toZAzhKVWpabDBLWGk1VUdfZAEU2Nzhrd3B2ZAFJ3bV9IdzRNaGhjbThDNDJrcVA5Si1CTzloVnBxQzhOZA2ZAzQXNOcE9WbVE2UWtsX0VGTEltMQZDZD'
+	get getInstagramApiToken(): string | undefined {
+		return process.env.INSTAGRAM_API_TOKEN
 	}
 
 	@Mutation

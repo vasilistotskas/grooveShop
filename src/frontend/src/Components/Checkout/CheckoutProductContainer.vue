@@ -52,7 +52,7 @@ import CheckoutProductCard from '@/Components/Checkout/CheckoutProductCard.vue'
 })
 export default class CheckoutProductContainer extends Vue {
 	payWayModule = getModule(PayWayModule)
-	cart: Array<CartItemModel> = []
+	cart!: Array<CartItemModel>
 	cartTotalLength = 0
 	cartTotalPrice = 0
 	cartTotalPriceForPayWay = 0

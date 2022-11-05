@@ -55,9 +55,9 @@ import { PropType } from 'vue'
 import AppModule from '@/State/App/AppModule'
 import CartModule from '@/State/Cart/CartModule'
 import { getModule } from 'vuex-module-decorators'
+import GrooveImage from '@/Utilities/GrooveImage.vue'
 import CartItemModel from '@/State/Cart/CartItemModel'
 import { Options as Component, Vue } from 'vue-class-component'
-import GrooveImage from '@/Components/Utilities/GrooveImage.vue'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 import { ImageTypeOptions } from '@/Helpers/MediaStream/ImageUrlEnum'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle'
@@ -77,12 +77,10 @@ import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle'
 export default class CartItem extends Vue {
 	appModule = getModule(AppModule)
 	cartModule = getModule(CartModule)
-	item = new CartItemModel()
-
+	item!: CartItemModel
 	trashIcon = faTrash
 	minusIcon = faMinusCircle
 	plusIcon = faPlusCircle
-
 	ImageTypeOptions = ImageTypeOptions
 
 	get itemTotal(): number {

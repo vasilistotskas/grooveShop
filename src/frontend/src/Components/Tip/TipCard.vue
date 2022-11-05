@@ -33,9 +33,9 @@
 import { PropType } from 'vue'
 import { helpers } from '@/Helpers/main'
 import TipModel from '@/State/Tip/TipModel'
+import GrooveImage from '@/Utilities/GrooveImage.vue'
 import { TipKindEnum } from '@/State/Tip/Enum/TipEnum'
 import { Options as Component, Vue } from 'vue-class-component'
-import GrooveImage from '@/Components/Utilities/GrooveImage.vue'
 import { faGlobe } from '@fortawesome/free-solid-svg-icons/faGlobe'
 
 @Component({
@@ -51,8 +51,7 @@ import { faGlobe } from '@fortawesome/free-solid-svg-icons/faGlobe'
 	}
 })
 export default class TipCard extends Vue {
-	tip = new TipModel()
-
+	tip!: TipModel
 	globeIcon = faGlobe
 
 	public contentShorten(content: string): string {

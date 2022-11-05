@@ -67,7 +67,7 @@ export default class UserOrderHistory
 	paginationModule = getModule<PaginationModule<UserOrderModel>>(PaginationModule)
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_ORDER_HISTORY
-	userData = new UserProfileModel()
+	userData!: UserProfileModel
 
 	meta = setup(() => {
 		const meta = useMeta(

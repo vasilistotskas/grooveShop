@@ -37,14 +37,13 @@ import {
 	ImagePositionOptions,
 	ImageTypeOptions
 } from '@/Helpers/MediaStream/ImageUrlEnum'
-import 'swiper/css'
 import { PropType } from 'vue'
 import VueHorizontal from 'vue-horizontal'
 import AppModule from '@/State/App/AppModule'
 import { getModule } from 'vuex-module-decorators'
 import SliderModel from '@/State/Slider/SliderModel'
+import GrooveImage from '@/Utilities/GrooveImage.vue'
 import { Options as Component, Vue } from 'vue-class-component'
-import GrooveImage from '@/Components/Utilities/GrooveImage.vue'
 
 @Component({
 	name: 'HomePageMainSlider',
@@ -68,20 +67,17 @@ import GrooveImage from '@/Components/Utilities/GrooveImage.vue'
 	}
 })
 export default class HomePageMainSlider extends Vue {
-	appModule = getModule(AppModule)
 	declare $refs: {
 		mainSliderVideoRef: HTMLVideoElement
 		horizontal: any
 	}
-
+	appModule = getModule(AppModule)
 	slider!: SliderModel
 	imgHeight!: number
 	imgWidth!: number
-
 	ImageTypeOptions = ImageTypeOptions
 	ImageFitOptions = ImageFitOptions
 	ImagePositionOptions = ImagePositionOptions
-
 	left = 0
 	originX = 0
 	originLeft = 0

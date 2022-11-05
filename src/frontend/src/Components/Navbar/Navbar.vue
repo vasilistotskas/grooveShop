@@ -187,13 +187,14 @@ import { AxiosResponse } from 'axios'
 import AppModule from '@/State/App/AppModule'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
+import GrooveImage from '@/Utilities/GrooveImage.vue'
 import ProductModel from '@/State/Product/ProductModel'
 import { Options as Component } from 'vue-class-component'
 import CategoryModel from '@/State/Category/CategoryModel'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import CategoryModule from '@/State/Category/CategoryModule'
 import LocaleChanger from '@/Components/I18n/LocaleChanger.vue'
-import GrooveImage from '@/Components/Utilities/GrooveImage.vue'
+import ThemeModeSwitcher from '@/Utilities/ThemeModeSwitcher.vue'
 import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import PaginationModule from '@/State/Pagination/PaginationModule'
@@ -203,7 +204,6 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
 import NavbarCategories from '@/Components/Navbar/NavbarCategories.vue'
 import { PaginationModel } from '@/State/Pagination/Model/PaginationModel'
 import PaginatedComponent from '@/Components/Pagination/PaginatedComponent'
-import ThemeModeSwitcher from '@/Components/Utilities/ThemeModeSwitcher.vue'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart'
 import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
@@ -225,6 +225,10 @@ export default class Navbar
 	extends PaginatedComponent<ProductModel>
 	implements PaginatedComponentInterface<ProductModel>
 {
+	declare $refs: {
+		mainToggleButton: HTMLElement
+		navbarProductsButton: HTMLElement
+	}
 	appModule = getModule(AppModule)
 	paginationModule = getModule<PaginationModule<ProductModel>>(PaginationModule)
 	authModule = getModule(AuthModule)
@@ -234,7 +238,6 @@ export default class Navbar
 	searchQuery = {
 		query: ''
 	}
-
 	preHeadHidden = true
 	cartTotalLength = 0
 	blogIcon = faBlog
@@ -242,16 +245,10 @@ export default class Navbar
 	heartIcon = faHeart
 	searchIcon = faSearch
 	shoppingCartIcon = faShoppingCart
-
 	ImagePathOptions = ImagePathOptions
 	ImageFormatOptions = ImageFormatOptions
 	ImageFitOptions = ImageFitOptions
 	ImagePositionOptions = ImagePositionOptions
-
-	declare $refs: {
-		mainToggleButton: HTMLElement
-		navbarProductsButton: HTMLElement
-	}
 
 	get navbarMenuHidden(): boolean {
 		return this.appModule.getNavbarMenuHidden

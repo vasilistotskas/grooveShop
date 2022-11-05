@@ -52,8 +52,8 @@ import BlogTagsSidebar from '@/Components/Blog/BlogTagsSidebar.vue'
 export default class BlogAuthorPostList extends Vue {
 	blogModule = getModule(BlogModule)
 	showAuthor = false
-	posts: Array<BlogPostModel> = []
-	author!: object
+	posts!: Array<BlogPostModel>
+	author!: BlogAuthorModel
 
 	get allTags(): Array<BlogTagModel> {
 		return this.blogModule.getAllTags

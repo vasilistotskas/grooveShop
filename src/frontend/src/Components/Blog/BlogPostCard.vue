@@ -85,16 +85,16 @@ import { PropType } from 'vue'
 import { helpers } from '@/Helpers/main'
 import BlogModule from '@/State/Blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
+import GrooveImage from '@/Utilities/GrooveImage.vue'
 import BlogPostModel from '@/State/Blog/BlogPostModel'
+import GenericModal from '@/Utilities/GenericModal.vue'
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions
 import BlogAuthorModel from '@/State/Blog/BlogAuthorModel'
-import GrooveImage from '@/Components/Utilities/GrooveImage.vue'
+import FavouriteButton from '@/Utilities/FavouriteButton.vue'
 import BlogAuthorLink from '@/Components/Blog/BlogAuthorLink.vue'
-import GenericModal from '@/Components/Utilities/GenericModal.vue'
 import BlogTagsSidebar from '@/Components/Blog/BlogTagsSidebar.vue'
 import BlogShareActions from '@/Components/Blog/BlogShareActions.vue'
 import { Vue, setup, Options as Component } from 'vue-class-component'
-import FavouriteButton from '@/Components/Utilities/FavouriteButton.vue'
 import { faCommentDots } from '@fortawesome/free-solid-svg-icons/faCommentDots'
 
 @Component({
@@ -124,16 +124,15 @@ import { faCommentDots } from '@fortawesome/free-solid-svg-icons/faCommentDots'
 	}
 })
 export default class BlogPostCard extends Vue {
+	declare $refs
 	blogModule = getModule(BlogModule)
 	ImageFitOptions = ImageFitOptions
 	ImagePositionOptions = ImagePositionOptions
-	post = new BlogPostModel()
+	post!: BlogPostModel
 	showAuthor = false
 	author!: BlogAuthorModel
 	ImageTypeOptions = ImageTypeOptions
 	commentIcon = faCommentDots
-
-	declare $refs
 
 	myContext = setup(() => {
 		const displayableDate = (date: string) => {

@@ -26,8 +26,8 @@ export default class BlogModule extends AppBaseModule {
 	allAuthors: Array<BlogAuthorModel> = []
 	allCategories: Array<BlogCategoryModel> = []
 	postsByTag: Array<BlogPostModel> = []
-	postBySlug = new BlogPostModel()
-	author = new BlogAuthorModel()
+	postBySlug!: BlogPostModel
+	author!: BlogAuthorModel
 	commentsByUser: Array<BlogCommentModel> = []
 	commentsByPost: Array<BlogCommentModel> = []
 	commentByUserToPost = new BlogCommentModel()

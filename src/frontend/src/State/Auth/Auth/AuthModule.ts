@@ -21,7 +21,6 @@ export default class AuthModule extends AppBaseModule {
 	TOKEN_STORAGE_KEY = 'TOKEN_STORAGE_KEY'
 	isProduction = process.env.NODE_ENV === 'production'
 	isSessionAuthenticated = false
-
 	initialState = {
 		authenticating: false,
 		error: false,

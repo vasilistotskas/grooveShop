@@ -13,7 +13,7 @@ import { Module, Action, Mutation } from 'vuex-module-decorators'
 	name: 'tip'
 })
 export default class TipModule extends AppBaseModule {
-	allTips: Array<TipModel> = []
+	allTips!: Array<TipModel>
 
 	get getAllTips(): TipModel[] {
 		return this.allTips

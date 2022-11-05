@@ -46,9 +46,9 @@
 
 <script lang="ts">
 import { PropType } from 'vue'
+import GrooveImage from '@/Utilities/GrooveImage.vue'
 import CartItemModel from '@/State/Cart/CartItemModel'
 import { Options as Component, Vue } from 'vue-class-component'
-import GrooveImage from '@/Components/Utilities/GrooveImage.vue'
 import { ImageTypeOptions } from '@/Helpers/MediaStream/ImageUrlEnum'
 
 @Component({
@@ -61,7 +61,7 @@ import { ImageTypeOptions } from '@/Helpers/MediaStream/ImageUrlEnum'
 	}
 })
 export default class CheckoutProductCard extends Vue {
-	item = new CartItemModel()
+	item!: CartItemModel
 	ImageTypeOptions = ImageTypeOptions
 
 	itemTotal(item: CartItemModel): number {

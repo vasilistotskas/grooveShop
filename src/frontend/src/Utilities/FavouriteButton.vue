@@ -20,7 +20,7 @@ import UserModule from '@/State/User/Profile/UserModule'
 import { getModule, VuexModule } from 'vuex-module-decorators'
 import { Options as Component, Vue } from 'vue-class-component'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
-import FavouriteButtonInterface from '@/Components/Utilities/Interface/FavouriteButtonInterface'
+import FavouriteButtonInterface from '@/Utilities/Interface/FavouriteButtonInterface'
 
 const toast = useToast()
 
@@ -79,7 +79,7 @@ export default class FavouriteButton
 	userModule = getModule(UserModule)
 	authModule = getModule(AuthModule)
 	model!: Record<string, never>
-	module!: VuexModule<VuexModule<DynamicStoreType, any>, any>
+	module!: VuexModule<VuexModule<DynamicStoreType, unknown>, unknown>
 	getterType!: string
 	getterParams!: Record<string, unknown>
 	dispatchParams!: Record<string, unknown>
@@ -133,5 +133,5 @@ export default class FavouriteButton
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Blog/BlogFavouriteButton';
+@import '@/Assets/Styles/Components/Blog/BlogFavouriteButton.scss';
 </style>

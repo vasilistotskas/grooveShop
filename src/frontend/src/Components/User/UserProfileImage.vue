@@ -60,9 +60,9 @@ import {
 	ImageTypeOptions
 } from '@/Helpers/MediaStream/ImageUrlEnum'
 import { getModule } from 'vuex-module-decorators'
+import GrooveImage from '@/Utilities/GrooveImage.vue'
 import UserModule from '@/State/User/Profile/UserModule'
 import { Options as Component, Vue } from 'vue-class-component'
-import GrooveImage from '@/Components/Utilities/GrooveImage.vue'
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
 
 @Component({
@@ -87,7 +87,6 @@ export default class UserProfileImage extends Vue {
 	userModule = getModule(UserModule)
 	profileImageHovering = false
 	cameraIcon = faCamera
-
 	ImagePathOptions = ImagePathOptions
 	ImageFormatOptions = ImageFormatOptions
 	ImageFitOptions = ImageFitOptions

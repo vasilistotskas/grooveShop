@@ -13,9 +13,9 @@ import { computed } from '@vue/runtime-core'
 import BlogModule from '@/State/Blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
 import BlogPostModel from '@/State/Blog/BlogPostModel'
+import InstagramFeed from '@/Utilities/InstagramFeed.vue'
 import BlogPostList from '@/Components/Blog/BlogPostList.vue'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
-import InstagramFeed from '@/Components/Utilities/InstagramFeed.vue'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 
 @Component({

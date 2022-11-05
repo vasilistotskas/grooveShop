@@ -25,10 +25,10 @@
 
 <script lang="ts">
 import { PropType } from 'vue'
+import GrooveImage from '@/Utilities/GrooveImage.vue'
 import ProductModel from '@/State/Product/ProductModel'
 import { Options as Component, Vue } from 'vue-class-component'
 import Pagination from '@/Components/Pagination/Pagination.vue'
-import GrooveImage from '@/Components/Utilities/GrooveImage.vue'
 import { ImageTypeOptions } from '@/Helpers/MediaStream/ImageUrlEnum'
 
 @Component({
@@ -44,10 +44,9 @@ import { ImageTypeOptions } from '@/Helpers/MediaStream/ImageUrlEnum'
 	}
 })
 export default class UserOrderHistoryCard extends Vue {
-	product = new ProductModel()
+	product!: ProductModel
 	orderTotal = 0
 	quantity = 0
-
 	ImageTypeOptions = ImageTypeOptions
 }
 </script>

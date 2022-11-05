@@ -18,7 +18,7 @@ const toast = useToast()
 	name: 'cart'
 })
 export default class CartModule extends AppBaseModule {
-	cart: Array<CartItemModel> = []
+	cart!: Array<CartItemModel>
 	cartTotalPriceForPayWay = 0
 
 	get getCart(): Array<CartItemModel> {

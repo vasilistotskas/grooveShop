@@ -119,9 +119,9 @@ import { useI18n } from 'vue-i18n'
 import grBundle from '@/Locales/Footer/gr.messages.json'
 import enBundle from '@/Locales/Footer/en_us.messages.json'
 import { AvailableLocalesEnum } from '@/Locales/LocaleEnum'
+import LottiePlayerMain from '@/Utilities/LottiePlayerMain.vue'
 import * as safe_shield from '@/Assets/Lotties/safe_shield.json'
 import { Options as Component, setup, Vue } from 'vue-class-component'
-import LottiePlayerMain from '@/Components/Utilities/LottiePlayerMain.vue'
 
 @Component({
 	name: 'Footer',

@@ -16,9 +16,9 @@ import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 	name: 'country'
 })
 export default class CountryModule extends AppBaseModule {
-	countries: Array<CountryModel> = []
-	regionsBasedOnAlpha: Array<RegionsModel> = []
-	selectedCountry = new CountryModel()
+	countries!: Array<CountryModel>
+	regionsBasedOnAlpha!: Array<RegionsModel>
+	selectedCountry!: CountryModel
 
 	get getCountries(): Array<CountryModel> {
 		return this.countries

@@ -56,9 +56,9 @@ import { cloneDeep } from 'lodash'
 import { onClickOutside } from '@vueuse/core'
 import AppModule from '@/State/App/AppModule'
 import { getModule } from 'vuex-module-decorators'
+import GrooveImage from '@/Utilities/GrooveImage.vue'
 import CategoryModel from '@/State/Category/CategoryModel'
 import { Options as Component, Vue } from 'vue-class-component'
-import GrooveImage from '@/Components/Utilities/GrooveImage.vue'
 import { ImageTypeOptions } from '@/Helpers/MediaStream/ImageUrlEnum'
 
 @Component({
@@ -73,16 +73,15 @@ import { ImageTypeOptions } from '@/Helpers/MediaStream/ImageUrlEnum'
 	}
 })
 export default class NavbarCategories extends Vue {
-	appModule = getModule(AppModule)
 	declare $refs: {
 		headerNavbarMenu: HTMLElement
 	}
+	appModule = getModule(AppModule)
 	categoryBoxHovered: null | number = null
 	categoriesTree: Array<CategoryModel> = []
 	categories: Array<CategoryModel> = []
 	mainToggleButton!: HTMLElement
 	navbarProductsButton!: HTMLElement
-
 	ImageTypeOptions = ImageTypeOptions
 
 	get isLoading(): boolean {

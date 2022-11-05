@@ -51,7 +51,6 @@ import { faUserTag } from '@fortawesome/free-solid-svg-icons/faUserTag'
 export default class BlogTagsSidebar extends Vue {
 	tags: Array<BlogTagModel> = []
 	authors: Array<BlogAuthorModel> = []
-
 	tagIcon = faTag
 	authorIcon = faUserTag
 

@@ -34,9 +34,9 @@ import { PropType } from 'vue'
 import { AxiosResponse } from 'axios'
 import { getModule } from 'vuex-module-decorators'
 import UserModule from '@/State/User/Profile/UserModule'
-import { Options as Component, setup } from 'vue-class-component'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import Pagination from '@/Components/Pagination/Pagination.vue'
+import { Options as Component, setup } from 'vue-class-component'
 import PaginationModule from '@/State/Pagination/PaginationModule'
 import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
@@ -70,7 +70,7 @@ export default class UserReviews
 {
 	userModule = getModule(UserModule)
 	paginationModule = getModule<PaginationModule<ProductReviewModel>>(PaginationModule)
-	userData = new UserProfileModel()
+	userData!: UserProfileModel
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_REVIEWS
 

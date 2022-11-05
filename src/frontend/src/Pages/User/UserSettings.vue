@@ -170,6 +170,7 @@
 <script lang="ts">
 import * as zod from 'zod'
 import { PropType } from 'vue'
+import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import { useField, useForm } from 'vee-validate'
 import { getModule } from 'vuex-module-decorators'
@@ -183,7 +184,6 @@ import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import { HTMLElementEvent } from '@/State/Common/Types/HelpingTypes'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import UserProfileApiData from '@/State/User/Interface/UserProfileApiData'
-import { useMeta } from 'vue-meta'
 
 @Component({
 	name: 'UserSettings',
@@ -198,8 +198,7 @@ export default class UserSettings extends Vue {
 	authModule = getModule(AuthModule)
 	countryModule = getModule(CountryModule)
 	userModule = getModule(UserModule)
-	userProfile = new UserProfileModel()
-	userData = new UserProfileModel()
+	userData!: UserProfileModel
 	submitButtonText = 'Update'
 
 	myContext = setup(() => {
@@ -311,7 +310,7 @@ export default class UserSettings extends Vue {
 	restRegions(e: HTMLElementEvent<HTMLTextAreaElement>): void {
 		const countryAlpha2Key = e.target?.value
 		this.countryModule.findRegionsBasedOnAlphaFromInput(countryAlpha2Key)
-		this.userProfile.region = 'choose'
+		this.userData.region = 'choose'
 	}
 }
 </script>

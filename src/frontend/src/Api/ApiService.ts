@@ -1,5 +1,4 @@
 import session from './Session'
-import store from '@/DynamicStore'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import { ApiGetData, ApiPatchData, ApiPostData, ApiPutData } from '@/Api/Type/ApiData'
 

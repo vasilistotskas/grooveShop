@@ -124,16 +124,15 @@ const starHalfSvg =
 	}
 })
 export default class ReviewProductCard extends Vue {
-	productReviewModule = getModule(ProductReviewModule)
-	paginationModule = getModule<PaginationModule<ProductReviewModel>>(PaginationModule)
-	MainRouteNames = MainRouteNames
 	declare $refs: {
 		userReviewsActionTarget: HTMLElement
 	}
-	review = new ProductReviewModel()
+	productReviewModule = getModule(ProductReviewModule)
+	paginationModule = getModule<PaginationModule<ProductReviewModel>>(PaginationModule)
+	MainRouteNames = MainRouteNames
+	review!: ProductReviewModel
 	userId = 0
 	reviewActionsOpen = false
-
 	checkCircleIcon = faCheckCircle
 
 	updated(): void {

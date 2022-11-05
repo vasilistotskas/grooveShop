@@ -3,6 +3,7 @@
 		:class="`cp-utilities-generic_modal-wrapper ${
 			isModalCurrentlyOpen ? 'open' : 'closed'
 		}`"
+		:ref="getMyId"
 	>
 		<div class="cp-utilities-generic_modal-overlay" @click="closeModal">
 			<svg
@@ -43,25 +44,16 @@
 </template>
 
 <script lang="ts">
-import { getModule } from 'vuex-module-decorators'
-import PayWayModel from '@/State/Payway/PayWayModel'
-import PayWayModule from '@/State/Payway/PayWayModule'
 import { Options as Component } from 'vue-class-component'
-import GenericModalModel from '@/Components/Utilities/Model/GenericModalModel'
+import GenericModalModel from '@/Utilities/Model/GenericModalModel'
 
 @Component({
-	name: 'CheckoutStripeModal',
+	name: 'GenericModal',
 	extends: GenericModalModel
 })
-export default class CheckoutStripeModal extends GenericModalModel {
-	payWayModule = getModule(PayWayModule)
-	closeModal(): void {
-		this.payWayModule.setSelectedPayWay(new PayWayModel())
-		this.isModalCurrentlyOpen = false
-	}
-}
+export default class GenericModal extends GenericModalModel {}
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Utilities/CheckoutStripeModal';
+@import '@/Assets/Styles/Utilities/GenericModal.scss';
 </style>

@@ -14,7 +14,7 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 	name: 'category'
 })
 export default class CategoryModule extends AppBaseModule {
-	category = new CategoryModel()
+	category!: CategoryModel
 	categoriesTree: Array<CategoryModel> = []
 
 	get getCategory(): CategoryModel {

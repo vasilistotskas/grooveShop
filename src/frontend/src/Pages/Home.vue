@@ -83,7 +83,6 @@
 </template>
 
 <script lang="ts">
-import 'swiper/css'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import AppModule from '@/State/App/AppModule'
@@ -120,11 +119,6 @@ export default class Home extends Vue {
 		)
 		return { meta }
 	})
-
-	mainSliderStyle = {
-		'--swiper-navigation-color': '#fff',
-		'--swiper-pagination-color': '#fff'
-	}
 
 	phoneIcon = faPhone
 	envelopeIcon = faEnvelope

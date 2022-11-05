@@ -1,6 +1,5 @@
 <template>
 	<div class="blog-share-actions-container">
-		<!--   :url="`${backendBaseUrl}${getCurrentPostUrl}`"-->
 		<div class="blog-share-actions-network">
 			<ShareNetwork
 				tag="button"

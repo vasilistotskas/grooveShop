@@ -12,11 +12,6 @@
 			<span class="blog-post-list-no_posts">No Posts Found</span>
 		</div>
 		<TipSidebar :all-tips="allTips" />
-
-		<!--    <BlogTagsSidebar-->
-		<!--      :authors="allAuthors"-->
-		<!--      :tags="allTags"-->
-		<!--    />-->
 	</div>
 </template>
 

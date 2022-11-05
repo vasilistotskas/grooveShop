@@ -64,7 +64,7 @@ export default class UserFavourites
 	implements PaginatedComponentInterface<UserFavouriteModel>
 {
 	paginationModule = getModule<PaginationModule<UserFavouriteModel>>(PaginationModule)
-	userData = new UserProfileModel()
+	userData!: UserProfileModel
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_FAVOURITES
 

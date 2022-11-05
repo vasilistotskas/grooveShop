@@ -107,7 +107,7 @@ export default class UserPassword extends Vue {
 	productReviewModule = getModule(ProductReviewModule)
 	countryModule = getModule(CountryModule)
 	submitButtonText = 'Update'
-	userData = new UserProfileModel()
+	userData!: UserProfileModel
 
 	myContext = setup(() => {
 		const meta = useMeta(

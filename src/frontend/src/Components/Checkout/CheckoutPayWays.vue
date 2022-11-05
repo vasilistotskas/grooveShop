@@ -39,7 +39,7 @@ import { getModule } from 'vuex-module-decorators'
 import PayWayModel from '@/State/Payway/PayWayModel'
 import PayWayModule from '@/State/Payway/PayWayModule'
 import { PayWaysEnum } from '@/State/Payway/Enum/PayWaysEnum'
-import LottiePlayerMain from '@/Components/Utilities/LottiePlayerMain.vue'
+import LottiePlayerMain from '@/Utilities/LottiePlayerMain.vue'
 
 export default defineComponent({
 	name: 'CheckoutPayWays',

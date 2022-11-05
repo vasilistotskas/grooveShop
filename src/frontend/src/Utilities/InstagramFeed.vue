@@ -131,5 +131,5 @@ const handlePaginationPrev = () => {
 </template>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Utilities/InstagramFeed';
+@import '@/Assets/Styles/Utilities/InstagramFeed.scss';
 </style>
