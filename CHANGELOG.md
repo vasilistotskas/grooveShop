@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.5.1 (2022-11-05)
+### Fix
+* **GraphQL API:** Custom fields in types remove as they get discovered from model ([`f511de0`](https://github.com/vasilistotskas/grooveShop/commit/f511de02c7df3f91b8c3f714b9442e49c310b87a))
+
 ## v0.5.0 (2022-10-31)
 ### Feature
 * **useMeta:** Introduce UseMeta in Pages at setup method ([`020e3a5`](https://github.com/vasilistotskas/grooveShop/commit/020e3a5234adedd6b658cbb4c3e658238b9c6342))
