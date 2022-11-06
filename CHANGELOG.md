@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.6.0 (2022-11-06)
+### Feature
+* **Frontend:** Introduce Emitter and tons of code improvements ([`2167ff7`](https://github.com/vasilistotskas/grooveShop/commit/2167ff7568b9930af7ae387f1ae4103f2e53d7cb))
+
 ## v0.5.1 (2022-11-05)
 ### Fix
 * **GraphQL API:** Custom fields in types remove as they get discovered from model ([`f511de0`](https://github.com/vasilistotskas/grooveShop/commit/f511de02c7df3f91b8c3f714b9442e49c310b87a))
