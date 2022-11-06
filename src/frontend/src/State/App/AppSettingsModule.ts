@@ -27,11 +27,13 @@ export default class AppSettingsModule extends AppBaseModule {
 
 	@Action
 	async toggleThemeMode(): Promise<AppSettingsThemeModeOption> {
-		const currentThemeMode = this.context.getters['getSettings'].themeMode
+		const currentThemeMode = this.context.getters['getSettings']?.themeMode
+
 		const nextThemeMode =
 			currentThemeMode === AppSettingsThemeModeOption.light
 				? AppSettingsThemeModeOption.dark
 				: AppSettingsThemeModeOption.light
+
 		await this.context.dispatch('updateSetting', {
 			key: 'themeMode',
 			value: nextThemeMode
@@ -69,6 +71,11 @@ export default class AppSettingsModule extends AppBaseModule {
 		value: never
 	}): Promise<void> {
 		const settings = cloneDeep(this.context.getters['getSettings']) as AppSettings
+
+		if (!settings) {
+			return
+		}
+
 		settings.themeMode = value
 
 		this.context.commit('setSettings', settings)

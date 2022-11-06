@@ -89,7 +89,7 @@ export default class AuthModule extends AppBaseModule {
 	@Action
 	async login(inputs: LogInInputApi): Promise<void> {
 		await this.context.commit('logInBegin')
-		return api
+		return await api
 			.post('login/', inputs)
 			.then((response: AxiosResponse<Record<string, string>>) => {
 				const token: string = response.data.auth_token
@@ -111,7 +111,7 @@ export default class AuthModule extends AppBaseModule {
 	@Action
 	async logout(): Promise<void> {
 		await this.context.commit('logInBegin')
-		return api
+		return await api
 			.post('logout/', {})
 			.then(() => {
 				this.context.commit('afterLogOut')
@@ -150,8 +150,8 @@ export default class AuthModule extends AppBaseModule {
 	}
 
 	@Action
-	clearAllAccountSessions(): Promise<void> {
-		return api
+	async clearAllAccountSessions(): Promise<void> {
+		return await api
 			.post('session/clear_all/', {})
 			.then(() => {
 				this.context.commit('afterLogOut')

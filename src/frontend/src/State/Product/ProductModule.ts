@@ -17,14 +17,9 @@ import { Module, Action, Mutation } from 'vuex-module-decorators'
 export default class ProductModule extends AppBaseModule {
 	product!: ProductModel
 	latestProducts!: Array<ProductModel>
-	product_id!: number
 
 	get getProductData(): ProductModel {
 		return this.product
-	}
-
-	get getProductId(): number {
-		return this.product_id
 	}
 
 	get getLatestProductData(): ProductModel[] {
@@ -32,7 +27,7 @@ export default class ProductModule extends AppBaseModule {
 	}
 
 	get addToCartButtonText(): string {
-		return this.product.active === 'False' || this.product.stock <= 0
+		return this.product?.active === 'False' || this.product?.stock <= 0
 			? 'Out Of Stock'
 			: 'Add To Cart'
 	}
@@ -43,27 +38,20 @@ export default class ProductModule extends AppBaseModule {
 	}
 
 	@Mutation
-	setProductId(productId: number): void {
-		this.product_id = productId
-	}
-
-	@Mutation
 	setLatestProduct(latestProducts: ProductModel[]): void {
 		this.latestProducts = latestProducts
 	}
 
 	@Action
-	fetchProductFromRemote(): Promise<void> {
+	async fetchProductFromRemote(): Promise<void> {
 		const category_slug = router.currentRoute.value.params.category_slug
 		const product_slug = router.currentRoute.value.params.product_slug
 
-		return api
+		return await api
 			.get(`products/${category_slug}/${product_slug}`)
 			.then((response: AxiosResponse<ProductModel>) => {
 				const data = response.data
-				const product = new ProductModel(data)
-				this.context.commit('setProduct', product)
-				this.context.commit('setProductId', data.id)
+				this.context.commit('setProduct', data)
 			})
 			.catch((e: Error) => {
 				console.log(e)
@@ -71,8 +59,8 @@ export default class ProductModule extends AppBaseModule {
 	}
 
 	@Action
-	fetchLatestProductsFromRemote(): Promise<void> {
-		return api
+	async fetchLatestProductsFromRemote(): Promise<void> {
+		return await api
 			.get('latest-products/')
 			.then((response: AxiosResponse<Array<ProductModel>>) => {
 				const data = response.data
@@ -85,16 +73,18 @@ export default class ProductModule extends AppBaseModule {
 	}
 
 	@Action
-	updateProductHits(): Promise<unknown> {
+	async updateProductHits(): Promise<unknown> {
 		const category_slug = router.currentRoute.value.params.category_slug
 		const product_slug = router.currentRoute.value.params.product_slug
 
-		if (!this.product) {
-			throw new Error()
+		if (!category_slug && product_slug) {
+			return Promise.resolve()
 		}
 
-		return api.patch(`products/${category_slug}/${product_slug}/`).catch((e: Error) => {
-			console.log(e)
-		})
+		return await api
+			.patch(`products/${category_slug}/${product_slug}/`)
+			.catch((e: Error) => {
+				console.log(e)
+			})
 	}
 }

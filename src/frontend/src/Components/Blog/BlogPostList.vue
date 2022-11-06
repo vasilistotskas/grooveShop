@@ -11,16 +11,13 @@
 		<div v-else>
 			<span class="blog-post-list-no_posts">No Posts Found</span>
 		</div>
-		<TipSidebar :all-tips="allTips" />
+		<TipSidebar :tips="tips" />
 	</div>
 </template>
 
 <script lang="ts">
 import { PropType } from 'vue'
 import TipModel from '@/State/Tip/TipModel'
-import TipModule from '@/State/Tip/TipModule'
-import BlogModule from '@/State/Blog/BlogModule'
-import { getModule } from 'vuex-module-decorators'
 import BlogTagModel from '@/State/Blog/BlogTagModel'
 import BlogPostModel from '@/State/Blog/BlogPostModel'
 import TipSidebar from '@/Components/Tip/TipSidebar.vue'
@@ -37,6 +34,18 @@ import BlogTagsSidebar from '@/Components/Blog/BlogTagsSidebar.vue'
 		BlogPostCard
 	},
 	props: {
+		tags: {
+			type: Array as PropType<Array<BlogTagModel>>,
+			required: true
+		},
+		authors: {
+			type: Array as PropType<Array<BlogAuthorModel>>,
+			required: true
+		},
+		tips: {
+			type: Array as PropType<Array<TipModel>>,
+			required: true
+		},
 		posts: {
 			type: Array as PropType<Array<BlogPostModel>>,
 			required: true
@@ -49,31 +58,11 @@ import BlogTagsSidebar from '@/Components/Blog/BlogTagsSidebar.vue'
 	}
 })
 export default class BlogPostList extends Vue {
-	blogModule = getModule(BlogModule)
-	tipModule = getModule(TipModule)
 	showAuthor = false
-	posts: Array<BlogPostModel> = []
-
-	get allTags(): Array<BlogTagModel> {
-		return this.blogModule.getAllTags
-	}
-
-	get allAuthors(): Array<BlogAuthorModel> {
-		return this.blogModule.getAllAuthors
-	}
-
-	get allTips(): Array<TipModel> {
-		return this.tipModule.getAllTips
-	}
-
-	mounted(): void {
-		Promise.all([
-			this.blogModule.fetchAllTagsFromRemote(),
-			this.blogModule.fetchAllAuthorsFromRemote(),
-			this.blogModule.fetchAllCategoriesFromRemote(),
-			this.tipModule.fetchAllTipsFromRemote()
-		])
-	}
+	tags!: Array<BlogTagModel>
+	authors!: Array<BlogAuthorModel>
+	tips!: Array<TipModel>
+	posts!: Array<BlogPostModel>
 }
 </script>
 

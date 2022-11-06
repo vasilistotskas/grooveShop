@@ -10,6 +10,9 @@ import { useToast } from 'vue-toastification'
 import CartModule from '@/State/Cart/CartModule'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
+import UserModule from '@/State/User/Profile/UserModule'
+import CountryModule from '@/State/Country/CountryModule'
+import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
 
 const toast = useToast()
 
@@ -18,6 +21,9 @@ export class RouteModel {
 	routePaths: Array<_RouteRecordBase['path']> = []
 	authModule = getModule(AuthModule)
 	cartModule = getModule(CartModule)
+	userModule = getModule(UserModule)
+	countryModule = getModule(CountryModule)
+	productReviewModule = getModule(ProductReviewModule)
 
 	constructor(routes?: RouteRecordNormalized[]) {
 		map(routes, (route: RouteRecord) => {
@@ -35,7 +41,14 @@ export class RouteModel {
 		from: RouteLocationNormalized,
 		next: NavigationGuardNext
 	): void {
+		this.cartModule.initializeCart()
+		this.countryModule.fetchCountriesFromRemote()
 		this.authModule.initialize().then(() => {
+			if (this.authModule.isAuthenticated) {
+				this.userModule.fetchUserDataFromRemote().then(() => {
+					this.productReviewModule.fetchCurrentUserReviews(this.userModule.getUserData.id)
+				})
+			}
 			if (
 				to.matched.some((record) => record.meta.requireLogin) &&
 				!this.authModule.isAuthenticated

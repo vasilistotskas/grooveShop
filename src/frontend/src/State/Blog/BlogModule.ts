@@ -21,31 +21,31 @@ import UserProfileModelGql from '@/State/User/Profile/UserProfileModelGql'
 	name: 'blog'
 })
 export default class BlogModule extends AppBaseModule {
-	allPosts: Array<BlogPostModel> = []
-	allTags: Array<BlogTagModel> = []
-	allAuthors: Array<BlogAuthorModel> = []
-	allCategories: Array<BlogCategoryModel> = []
-	postsByTag: Array<BlogPostModel> = []
+	posts!: Array<BlogPostModel>
+	tags!: Array<BlogTagModel>
+	authors!: Array<BlogAuthorModel>
+	categories!: Array<BlogCategoryModel>
+	postsByTag!: Array<BlogPostModel>
 	postBySlug!: BlogPostModel
 	author!: BlogAuthorModel
-	commentsByUser: Array<BlogCommentModel> = []
-	commentsByPost: Array<BlogCommentModel> = []
-	commentByUserToPost = new BlogCommentModel()
+	commentsByUser!: Array<BlogCommentModel>
+	commentsByPost!: Array<BlogCommentModel>
+	commentByUserToPost!: BlogCommentModel
 
-	get getAllPosts(): Array<BlogPostModel> {
-		return this.allPosts
+	get getPosts(): Array<BlogPostModel> {
+		return this.posts
 	}
 
-	get getAllTags(): Array<BlogTagModel> {
-		return this.allTags
+	get getTags(): Array<BlogTagModel> {
+		return this.tags
 	}
 
-	get getAllAuthors(): Array<BlogAuthorModel> {
-		return this.allAuthors
+	get getAuthors(): Array<BlogAuthorModel> {
+		return this.authors
 	}
 
-	get getAllCategories(): Array<BlogCategoryModel> {
-		return this.allCategories
+	get getCategories(): Array<BlogCategoryModel> {
+		return this.categories
 	}
 
 	get getPostsByTag(): Array<BlogPostModel> {
@@ -57,7 +57,8 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	get getPublishedPosts(): Array<BlogPostModel> {
-		return this.allPosts.filter((post) => post.isPublished)
+		if (!this.posts) return []
+		return this.posts.filter((post) => post.isPublished)
 	}
 
 	get getAuthorById(): BlogAuthorModel {
@@ -89,23 +90,23 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	@Mutation
-	setAllPosts(data: Array<BlogPostModel>): void {
-		this.allPosts = data
+	setPosts(data: Array<BlogPostModel>): void {
+		this.posts = data
 	}
 
 	@Mutation
-	setAllTags(data: Array<BlogTagModel>): void {
-		this.allTags = data
+	setTags(data: Array<BlogTagModel>): void {
+		this.tags = data
 	}
 
 	@Mutation
-	setAllAuthors(data: Array<BlogAuthorModel>): void {
-		this.allAuthors = data
+	setAuthors(data: Array<BlogAuthorModel>): void {
+		this.authors = data
 	}
 
 	@Mutation
-	setAllCategories(data: Array<BlogCategoryModel>): void {
-		this.allCategories = data
+	setCategories(data: Array<BlogCategoryModel>): void {
+		this.categories = data
 	}
 
 	@Mutation
@@ -146,12 +147,12 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	@Action
-	async fetchAllPostsFromRemote(): Promise<Array<BlogPostModel> | undefined> {
+	async fetchPostsFromRemote(): Promise<Array<BlogPostModel> | undefined> {
 		try {
 			const posts = await clientApollo.query({
 				query: gql`
 					query {
-						allPosts {
+						posts {
 							id
 							title
 							subtitle
@@ -189,8 +190,8 @@ export default class BlogModule extends AppBaseModule {
 				fetchPolicy: 'no-cache'
 			})
 
-			const data = posts.data.allPosts
-			this.context.commit('setAllPosts', data)
+			const data = posts.data.posts
+			this.context.commit('setPosts', data)
 			return data
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
@@ -198,19 +199,19 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	@Action
-	async fetchAllTagsFromRemote(): Promise<Array<BlogTagModel> | undefined> {
+	async fetchTagsFromRemote(): Promise<Array<BlogTagModel> | undefined> {
 		try {
 			const tags = await clientApollo.query({
 				query: gql`
 					query {
-						allTags {
+						tags {
 							name
 						}
 					}
 				`
 			})
-			const data = tags.data.allTags
-			this.context.commit('setAllTags', data)
+			const data = tags.data.tags
+			this.context.commit('setTags', data)
 			return data
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
@@ -218,12 +219,12 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	@Action
-	async fetchAllAuthorsFromRemote(): Promise<Array<BlogAuthorModel> | undefined> {
+	async fetchAuthorsFromRemote(): Promise<Array<BlogAuthorModel> | undefined> {
 		try {
 			const authors = await clientApollo.query({
 				query: gql`
 					query {
-						allAuthors {
+						authors {
 							website
 							bio
 							user {
@@ -236,8 +237,8 @@ export default class BlogModule extends AppBaseModule {
 					}
 				`
 			})
-			const data = authors.data.allAuthors
-			this.context.commit('setAllAuthors', data)
+			const data = authors.data.authors
+			this.context.commit('setAuthors', data)
 			return data
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
@@ -245,12 +246,12 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	@Action
-	async fetchAllCategoriesFromRemote(): Promise<Array<BlogCategoryModel> | undefined> {
+	async fetchCategoriesFromRemote(): Promise<Array<BlogCategoryModel> | undefined> {
 		try {
 			const categories = await clientApollo.query({
 				query: gql`
 					query {
-						allCategories {
+						categories {
 							name
 							slug
 							description
@@ -258,8 +259,8 @@ export default class BlogModule extends AppBaseModule {
 					}
 				`
 			})
-			const data = categories.data.allCategories
-			this.context.commit('setAllCategories', data)
+			const data = categories.data.categories
+			this.context.commit('setCategories', data)
 			return data
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))

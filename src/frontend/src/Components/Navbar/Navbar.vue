@@ -27,12 +27,13 @@
 				</div>
 
 				<div
-					:class="{ wrapper: Object.keys(categoriesTreeData).length === 0 }"
+					v-if="categoriesTreeData"
+					:class="{ wrapper: categoriesTreeData.length === 0 }"
 					class="navbar-categories-loading"
 				>
 					<div
 						:class="{
-							'content wrapper-cell': Object.keys(categoriesTreeData).length === 0
+							'content wrapper-cell': categoriesTreeData.length === 0
 						}"
 						class="products-header"
 						@click="menuToggle"
@@ -183,21 +184,19 @@ import {
 	ImagePositionOptions
 } from '@/Helpers/MediaStream/ImageUrlEnum'
 import router from '@/Routes'
+import { Emitter } from 'mitt'
 import { AxiosResponse } from 'axios'
-import AppModule from '@/State/App/AppModule'
-import { getModule } from 'vuex-module-decorators'
-import AuthModule from '@/State/Auth/Auth/AuthModule'
+import { inject, PropType } from 'vue'
+import { AppEvents } from '@/Emitter/Type/App/Events'
 import GrooveImage from '@/Utilities/GrooveImage.vue'
 import ProductModel from '@/State/Product/ProductModel'
 import { Options as Component } from 'vue-class-component'
 import CategoryModel from '@/State/Category/CategoryModel'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
-import CategoryModule from '@/State/Category/CategoryModule'
 import LocaleChanger from '@/Components/I18n/LocaleChanger.vue'
 import ThemeModeSwitcher from '@/Utilities/ThemeModeSwitcher.vue'
 import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
-import PaginationModule from '@/State/Pagination/PaginationModule'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
@@ -217,8 +216,29 @@ import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/Pagination
 		LocaleChanger
 	},
 	props: {
-		cartTotalLength: Number,
-		preHeadHidden: Boolean
+		cartTotalLength: {
+			type: Number,
+			default: 0
+		},
+		preHeadHidden: {
+			type: Boolean,
+			default: false
+		},
+		navbarMenuHidden: {
+			type: Boolean,
+			default: false
+		},
+		isMobile: {
+			type: Boolean,
+			default: false
+		},
+		categoriesTreeData: {
+			type: Array as PropType<Array<CategoryModel>>
+		},
+		isAuthenticated: {
+			type: Boolean,
+			default: false
+		}
 	}
 })
 export default class Navbar
@@ -229,10 +249,6 @@ export default class Navbar
 		mainToggleButton: HTMLElement
 		navbarProductsButton: HTMLElement
 	}
-	appModule = getModule(AppModule)
-	paginationModule = getModule<PaginationModule<ProductModel>>(PaginationModule)
-	authModule = getModule(AuthModule)
-	categoryModule = getModule(CategoryModule)
 	paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
 	endpointUrl = 'search-product'
 	searchQuery = {
@@ -240,6 +256,10 @@ export default class Navbar
 	}
 	preHeadHidden = true
 	cartTotalLength = 0
+	navbarMenuHidden = false
+	isMobile = false
+	categoriesTreeData!: Array<CategoryModel>
+	isAuthenticated = false
 	blogIcon = faBlog
 	userIcon = faUser
 	heartIcon = faHeart
@@ -249,22 +269,7 @@ export default class Navbar
 	ImageFormatOptions = ImageFormatOptions
 	ImageFitOptions = ImageFitOptions
 	ImagePositionOptions = ImagePositionOptions
-
-	get navbarMenuHidden(): boolean {
-		return this.appModule.getNavbarMenuHidden
-	}
-
-	get isMobile(): boolean {
-		return this.appModule.isMobile
-	}
-
-	get categoriesTreeData(): Array<CategoryModel> {
-		return this.categoryModule.getCategoriesTree
-	}
-
-	get isAuthenticated(): boolean {
-		return this.authModule.isAuthenticated
-	}
+	emitter: Emitter<AppEvents> | undefined = inject('emitter')
 
 	public menuToggle(): void {
 		this.$refs.mainToggleButton.classList.toggle('opened')
@@ -273,7 +278,7 @@ export default class Navbar
 			this.$refs.mainToggleButton.classList.contains('opened') as unknown as string
 		)
 
-		this.appModule.setNavbarMenuHidden(!this.navbarMenuHidden)
+		this.emitter?.emit('setNavbarMenuHidden', !this.navbarMenuHidden)
 	}
 
 	fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {

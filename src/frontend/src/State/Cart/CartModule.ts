@@ -31,7 +31,7 @@ export default class CartModule extends AppBaseModule {
 
 	get getCartTotalLength(): number {
 		let totalLength = 0
-		for (let i = 0; i < this.cart.length; i++) {
+		for (let i = 0; i < this.cart?.length; i++) {
 			totalLength += this.cart[i].quantity
 		}
 		return totalLength
@@ -122,7 +122,7 @@ export default class CartModule extends AppBaseModule {
 
 	@Action
 	async createOrder(data: CheckoutOrderApiData): Promise<void> {
-		return api
+		return await api
 			.post<CheckoutOrderApiData>('checkout/', data)
 			.then(() => {
 				this.context.commit('clearCart')

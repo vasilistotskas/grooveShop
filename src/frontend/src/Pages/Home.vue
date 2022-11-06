@@ -3,29 +3,44 @@
 		<div class="container mt-9 mb-5">
 			<div class="home-top-grid-content">
 				<HomePageMainSlider
-					v-if="homepageSlider[0] && Object.keys(homepageSlider[0]).length > 0"
+					v-if="
+						homepageSlider &&
+						homepageSlider[0] &&
+						Object.keys(homepageSlider[0]).length > 0
+					"
 					:img-height="760"
 					:img-width="1200"
 					:slider="homepageSlider[0]"
+					:backend-base-url="backendBaseUrl"
 					class="grid-item-swipper"
 				/>
 
 				<div class="grid-item-right">
 					<div class="grid-item-content-one">
 						<HomePageMainSlider
-							v-if="homepageSlider[1] && Object.keys(homepageSlider[1]).length > 0"
+							v-if="
+								homepageSlider &&
+								homepageSlider[1] &&
+								Object.keys(homepageSlider[1]).length > 0
+							"
 							:img-height="400"
 							:img-width="525"
 							:slider="homepageSlider[1]"
+							:backend-base-url="backendBaseUrl"
 							class="grid-item-swipper"
 						/>
 					</div>
 					<div class="grid-item-content-two">
 						<HomePageMainSlider
-							v-if="homepageSlider[2] && Object.keys(homepageSlider[2]).length > 0"
+							v-if="
+								homepageSlider &&
+								homepageSlider[2] &&
+								Object.keys(homepageSlider[2]).length > 0
+							"
 							:img-height="400"
 							:img-width="525"
 							:slider="homepageSlider[2]"
+							:backend-base-url="backendBaseUrl"
 							class="grid-item-swipper"
 						/>
 					</div>
@@ -136,10 +151,14 @@ export default class Home extends Vue {
 		return this.sliderModule.getSlidersData
 	}
 
-	beforeCreate(): void {
+	get backendBaseUrl(): string | undefined {
+		return this.appModule.backendBaseUrl
+	}
+
+	created(): void {
 		Promise.all([
 			this.productModule.fetchLatestProductsFromRemote(),
-			this.sliderModule.fetchSlidersFromRemote
+			this.sliderModule.fetchSlidersFromRemote()
 		])
 	}
 }

@@ -10,6 +10,7 @@ import { LocationQuery } from 'vue-router'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 
 export default interface PaginatedComponentInterface<TPaginatedModel> {
+	clearPagination: boolean
 	readonly uri: typeof window.location.search
 	readonly params: LocationQuery
 

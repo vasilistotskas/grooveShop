@@ -25,13 +25,12 @@ export default class SliderModule extends AppBaseModule {
 	}
 
 	@Action
-	fetchSlidersFromRemote(): Promise<void> {
-		return api
+	async fetchSlidersFromRemote(): Promise<void> {
+		return await api
 			.get('sliders/all/')
 			.then((response: AxiosResponse<SliderModel>) => {
 				const data = response.data
-				const slider = new SliderModel(data)
-				this.context.commit('setSliders', slider)
+				this.context.commit('setSliders', data)
 			})
 			.catch((e: Error) => {
 				console.log(e)

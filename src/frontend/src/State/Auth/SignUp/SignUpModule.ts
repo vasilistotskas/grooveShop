@@ -134,7 +134,7 @@ export default class SignUpModule extends AppBaseModule {
 	@Action
 	async createAccount(formData: FormData): Promise<void> {
 		await this.context.commit('registrationBegin')
-		return api
+		return await api
 			.post('djoser/users/', formData)
 			.then(() => {
 				this.context.commit('registrationSuccess')
@@ -153,7 +153,7 @@ export default class SignUpModule extends AppBaseModule {
 
 		await this.context.commit('activationBegin')
 
-		return api
+		return await api
 			.get(`accounts/activate/${uid}/${activationToken}`)
 			.then(() => {
 				this.context.commit('activationSuccess')
@@ -172,7 +172,7 @@ export default class SignUpModule extends AppBaseModule {
 		}
 
 		await this.context.commit('activationBegin')
-		return api
+		return await api
 			.post('accounts/resend_activation_mail/', data)
 			.then(() => {
 				this.context.commit('reActivationEmailSend')

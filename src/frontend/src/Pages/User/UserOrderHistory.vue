@@ -30,12 +30,10 @@ import { PropType } from 'vue'
 import { useMeta } from 'vue-meta'
 import { AxiosResponse } from 'axios'
 import { computed } from '@vue/runtime-core'
-import { getModule } from 'vuex-module-decorators'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import UserOrderModel from '@/State/User/Order/UserOrderModel'
 import Pagination from '@/Components/Pagination/Pagination.vue'
 import { Options as Component, setup } from 'vue-class-component'
-import PaginationModule from '@/State/Pagination/PaginationModule'
 import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 import UserFavouriteModel from '@/State/User/Favourite/UserFavouriteModel'
@@ -64,7 +62,6 @@ export default class UserOrderHistory
 	extends PaginatedComponent<UserOrderModel>
 	implements PaginatedComponentInterface<UserOrderModel>
 {
-	paginationModule = getModule<PaginationModule<UserOrderModel>>(PaginationModule)
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_ORDER_HISTORY
 	userData!: UserProfileModel

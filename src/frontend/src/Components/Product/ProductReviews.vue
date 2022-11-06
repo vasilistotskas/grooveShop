@@ -44,11 +44,9 @@
 					<ReviewProductCard
 						v-if="userToProductReview && Object.keys(userToProductReview).length > 0"
 						:key="userToProductReview.id"
-						:class="{
-							'current-user-review-card': userToProductReview.user_id === userId
-						}"
 						:review="userToProductReview"
 						:user-id="userId"
+						:product-review-module-namespace="productReviewModuleNamespace"
 						class="product-review-main-card"
 					/>
 
@@ -56,9 +54,10 @@
 						v-for="review in allPaginatedResults"
 						:key="review.id"
 						:review="review"
-						:class="{ 'current-user-review-card': review.user_id === userId }"
+						:class="{ 'current-user-review-card': review.userprofile.id === userId }"
 						:route="PaginationRoutesEnum.REVIEWS"
 						:user-id="userId"
+						:product-review-module-namespace="productReviewModuleNamespace"
 						class="product-review-main-card"
 					/>
 				</div>
@@ -77,21 +76,20 @@
 </template>
 
 <script lang="ts">
+import { Emitter } from 'mitt'
 import { AxiosResponse } from 'axios'
+import { inject, PropType } from 'vue'
 import { constant, times } from 'lodash'
-import { getModule } from 'vuex-module-decorators'
-import UserModule from '@/State/User/Profile/UserModule'
 import ProductModel from '@/State/Product/ProductModel'
 import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
+import { ProductEvents } from '@/Emitter/Type/Product/Events'
 import Pagination from '@/Components/Pagination/Pagination.vue'
-import PaginationModule from '@/State/Pagination/PaginationModule'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 import { PaginationModel } from '@/State/Pagination/Model/PaginationModel'
 import ReviewProductCard from '@/Components/Reviews/ReviewProductCard.vue'
 import ProductReviewModel from '@/State/Product/Review/ProductReviewModel'
 import PaginatedComponent from '@/Components/Pagination/PaginatedComponent'
-import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
 import { PaginationRoutesEnum } from '@/State/Pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
@@ -110,8 +108,31 @@ const starHalfSvg =
 	},
 	props: {
 		product: {
-			type: ProductModel,
+			type: Object as PropType<ProductModel>,
 			required: true
+		},
+		userId: {
+			type: Number,
+			required: true
+		},
+		userToProductReview: {
+			type: Object as PropType<ProductReviewModel>
+		},
+		productReviewsAverage: {
+			type: Number,
+			default: 0
+		},
+		productReviewsCounter: {
+			type: Number,
+			default: 0
+		},
+		isAuthenticated: {
+			type: Boolean,
+			default: false
+		},
+		productReviewModuleNamespace: {
+			type: String as PropType<PaginationNamespaceTypesEnum>,
+			required: false
 		}
 	}
 })
@@ -119,28 +140,17 @@ export default class ProductReviews
 	extends PaginatedComponent<ProductReviewModel>
 	implements PaginatedComponentInterface<ProductReviewModel>
 {
-	productReviewModule = getModule(ProductReviewModule)
-	userModule = getModule(UserModule)
-	paginationModule = getModule<PaginationModule<ProductReviewModel>>(PaginationModule)
+	clearPagination = true
 	product!: ProductModel
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.PRODUCT_PAGE_REVIEWS
-
-	get userId(): number | undefined {
-		return this.userModule.getUserId
-	}
-
-	get userToProductReview(): ProductReviewModel {
-		return this.productReviewModule.getUserToProductReview
-	}
-
-	get productReviewsAverage(): number {
-		return this.productReviewModule.getProductReviewsAverage
-	}
-
-	get productReviewsCounter(): number {
-		return this.productReviewModule.getProductReviewsCounter
-	}
+	userId!: number
+	userToProductReview!: ProductReviewModel
+	productReviewsAverage!: number
+	productReviewsCounter!: number
+	isAuthenticated = false
+	productReviewModuleNamespace!: PaginationNamespaceTypesEnum
+	emitter: Emitter<ProductEvents> | undefined = inject('emitter')
 
 	get shouldReviewsAppear(): boolean {
 		return (
@@ -149,10 +159,10 @@ export default class ProductReviews
 		)
 	}
 
-	created(): void {
+	mounted(): void {
 		this.fetchPaginationData<ProductReviewModel>().then(() => {
-			this.productReviewModule.setProductReviewsAverage(this.product.review_average)
-			this.productReviewModule.setProductReviewsCounter(this.product.review_counter)
+			this.emitter?.emit('setProductReviewsAverage', this.product.review_average)
+			this.emitter?.emit('setProductReviewsCounter', this.product.review_counter)
 		})
 	}
 

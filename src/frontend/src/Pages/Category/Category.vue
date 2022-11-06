@@ -1,5 +1,5 @@
 <template>
-	<div class="page-category mt-7 mb-5">
+	<div v-if="category" class="page-category mt-7 mb-5">
 		<Breadcrumbs :bread-crumb-path="breadCrumbPath" />
 		<div class="container">
 			<div class="content-min-height">
@@ -60,7 +60,6 @@ import CategoryModule from '@/State/Category/CategoryModule'
 import ProductCard from '@/Components/Product/ProductCard.vue'
 import Pagination from '@/Components/Pagination/Pagination.vue'
 import { Options as Component, setup } from 'vue-class-component'
-import PaginationModule from '@/State/Pagination/PaginationModule'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 import { PaginationModel } from '@/State/Pagination/Model/PaginationModel'
@@ -89,7 +88,6 @@ export default class Category
 {
 	categoryModule = getModule(CategoryModule)
 	appModule = getModule(AppModule)
-	paginationModule = getModule<PaginationModule<ProductModel>>(PaginationModule)
 	formEl = document.getElementById('burgerButton') as HTMLFormElement
 	ImageTypeOptions = ImageTypeOptions
 	ImageFitOptions = ImageFitOptions
@@ -127,20 +125,20 @@ export default class Category
 				}
 				if (to.path !== from.path && to.name === 'Category') {
 					this.paginationModule.unsetResults(this.paginationNamespace)
-					this.formEl.classList.toggle('opened')
-					this.formEl.setAttribute(
+					this.formEl?.classList.toggle('opened')
+					this.formEl?.setAttribute(
 						'aria-expanded',
-						this.formEl.classList.contains('opened') as unknown as string
+						this.formEl?.classList.contains('opened') as unknown as string
 					)
 					this.appModule.setNavbarMenuHidden(true)
 				}
 			}
 		)
 
-		this.formEl.classList.remove('opened')
-		this.formEl.setAttribute(
+		this.formEl?.classList.remove('opened')
+		this.formEl?.setAttribute(
 			'aria-expanded',
-			this.formEl.classList.contains('opened') as unknown as string
+			this.formEl?.classList.contains('opened') as unknown as string
 		)
 		this.appModule.setNavbarMenuHidden(true)
 
@@ -169,10 +167,10 @@ export default class Category
 
 	unmounted(): void {
 		this.paginationModule.unsetResults(this.paginationNamespace)
-		this.formEl.classList.remove('opened')
-		this.formEl.setAttribute(
+		this.formEl?.classList.remove('opened')
+		this.formEl?.setAttribute(
 			'aria-expanded',
-			this.formEl.classList.contains('opened') as unknown as string
+			this.formEl?.classList.contains('opened') as unknown as string
 		)
 	}
 

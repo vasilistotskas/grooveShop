@@ -54,8 +54,10 @@ export default class UserModule extends AppBaseModule {
 	}
 
 	@Action
-	fetchUserDataFromRemote(): Promise<AxiosResponse<Array<UserProfileModel>> | void> {
-		return api
+	async fetchUserDataFromRemote(): Promise<AxiosResponse<
+		Array<UserProfileModel>
+	> | void> {
+		return await api
 			.get('userprofile/data')
 			.then(async (response: AxiosResponse<Array<UserProfileModel>>) => {
 				const data = response.data

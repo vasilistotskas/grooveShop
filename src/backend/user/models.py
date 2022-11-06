@@ -107,7 +107,7 @@ class UserProfile(models.Model):
     last_name = models.CharField(max_length=20, blank=True, null=True)
     phone = models.PositiveBigIntegerField(blank=True, null=True)
     city = models.CharField(max_length=50, blank=True, null=True)
-    zipcode = models.PositiveIntegerField(blank=True, null=True)
+    zipcode = models.CharField(max_length=75, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
     place = models.CharField(max_length=50, blank=True, null=True)
     country = models.ForeignKey(

@@ -100,14 +100,18 @@
 </template>
 
 <script lang="ts">
+import { inject } from 'vue'
 import router from '@/Routes'
+import { Emitter } from 'mitt'
+import { useMeta } from 'vue-meta'
+import { computed } from '@vue/runtime-core'
 import BlogModule from '@/State/Blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
 import UserModule from '@/State/User/Profile/UserModule'
 import CountryModule from '@/State/Country/CountryModule'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
-import { Options as Component, setup, Vue } from 'vue-class-component'
+import { UserAccountEvents } from '@/Emitter/Type/User/Events'
 import { faStar } from '@fortawesome/free-solid-svg-icons/faStar'
 import { faCogs } from '@fortawesome/free-solid-svg-icons/faCogs'
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
@@ -116,10 +120,9 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import { faTruck } from '@fortawesome/free-solid-svg-icons/faTruck'
 import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import UserProfileImage from '@/Components/User/UserProfileImage.vue'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
 import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
-import { useMeta } from 'vue-meta'
-import { computed } from '@vue/runtime-core'
 
 @Component({
 	name: 'UserAccount',
@@ -142,6 +145,7 @@ export default class UserAccount extends Vue {
 	truckIcon = faTruck
 	heartIcon = faHeart
 	lockIcon = faLock
+	emitter: Emitter<UserAccountEvents> | undefined = inject('emitter')
 
 	meta = setup(() => {
 		const meta = useMeta(
@@ -186,15 +190,13 @@ export default class UserAccount extends Vue {
 	}
 
 	initializeUserData(): void {
-		this.userModule.fetchUserDataFromRemote().then((response) => {
-			if (response) {
-				this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(
-					this.userModule.getUserData
-				)
-				this.productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
-			}
-		})
-		this.blogModule.fetchCommentsByUser(this.userModule.getUserData.email)
+		this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(
+			this.userModule.getUserData
+		)
+		this.productFavouriteModule.fetchUserFavouritesFromRemote(
+			this.userModule?.getUserData?.id
+		)
+		this.blogModule.fetchCommentsByUser(this.userModule?.getUserData?.email)
 	}
 
 	created(): void {
@@ -204,6 +206,7 @@ export default class UserAccount extends Vue {
 				this.profileImageFilename = image.main_image_filename
 			}
 		)
+		this.emitter?.on('updateUserProfile', (e) => this.userModule.updateUserProfile(e))
 	}
 
 	mounted(): void {

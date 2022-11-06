@@ -39,8 +39,6 @@ import {
 } from '@/Helpers/MediaStream/ImageUrlEnum'
 import { PropType } from 'vue'
 import VueHorizontal from 'vue-horizontal'
-import AppModule from '@/State/App/AppModule'
-import { getModule } from 'vuex-module-decorators'
 import SliderModel from '@/State/Slider/SliderModel'
 import GrooveImage from '@/Utilities/GrooveImage.vue'
 import { Options as Component, Vue } from 'vue-class-component'
@@ -63,6 +61,10 @@ import { Options as Component, Vue } from 'vue-class-component'
 		imgWidth: {
 			type: Number,
 			required: true
+		},
+		backendBaseUrl: {
+			type: String,
+			default: ''
 		}
 	}
 })
@@ -71,7 +73,6 @@ export default class HomePageMainSlider extends Vue {
 		mainSliderVideoRef: HTMLVideoElement
 		horizontal: any
 	}
-	appModule = getModule(AppModule)
 	slider!: SliderModel
 	imgHeight!: number
 	imgWidth!: number
@@ -81,10 +82,7 @@ export default class HomePageMainSlider extends Vue {
 	left = 0
 	originX = 0
 	originLeft = 0
-
-	get backendBaseUrl(): string | undefined {
-		return this.appModule.backendBaseUrl
-	}
+	backendBaseUrl = ''
 
 	mounted(): void {
 		try {
@@ -94,7 +92,7 @@ export default class HomePageMainSlider extends Vue {
 		}
 	}
 
-	destroyed(): void {
+	unmounted(): void {
 		this.onMouseUp()
 	}
 

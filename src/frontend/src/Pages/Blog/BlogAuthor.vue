@@ -17,6 +17,8 @@
 			:posts="authorPostSet"
 			:show-author="false"
 			:author="authorById"
+			:tags="tags"
+			:authors="authors"
 		/>
 	</div>
 </template>
@@ -27,6 +29,7 @@ import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import BlogModule from '@/State/Blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
+import BlogTagModel from '@/State/Blog/BlogTagModel'
 import BlogPostModel from '@/State/Blog/BlogPostModel'
 import BlogAuthorModel from '@/State/Blog/BlogAuthorModel'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
@@ -68,6 +71,14 @@ export default class BlogAuthor extends Vue {
 		return this.authorById.postSet
 	}
 
+	get tags(): Array<BlogTagModel> {
+		return this.blogModule.getTags
+	}
+
+	get authors(): Array<BlogAuthorModel> {
+		return this.blogModule.getAuthors
+	}
+
 	get displayName(): string {
 		return (
 			(this.authorById.user?.firstName &&
@@ -78,7 +89,12 @@ export default class BlogAuthor extends Vue {
 	}
 
 	created(): void {
-		this.blogModule.fetchAuthorByIdFromRemote()
+		Promise.all([
+			this.blogModule.fetchAuthorByIdFromRemote(),
+			this.blogModule.fetchTagsFromRemote(),
+			this.blogModule.fetchAuthorsFromRemote(),
+			this.blogModule.fetchCategoriesFromRemote()
+		])
 	}
 
 	updated(): void {

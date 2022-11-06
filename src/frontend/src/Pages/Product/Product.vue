@@ -107,26 +107,43 @@
 				</div>
 				<div class="product-page-grid-info-part-two">
 					<div class="product-page-grid-modal">
-						<ProductReview />
+						<ProductReview
+							:is-authenticated="isAuthenticated"
+							:user-has-already-reviewed-product="userHasAlreadyReviewedProduct"
+							:user-to-product-review="userToProductReview"
+						/>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<ProductReviews v-if="product.id" :product="product" />
+	<ProductReviews
+		v-if="product?.id"
+		:product="product"
+		:user-id="userId"
+		:user-to-product-review="userToProductReview"
+		:product-reviews-average="productReviewsAverage"
+		:product-reviews-counter="productReviewsCounter"
+		:is-authenticated="isAuthenticated"
+		:product-review-module-namespace="productReviewModuleNamespace"
+	/>
 </template>
 
 <script lang="ts">
+import { inject } from 'vue'
 import router from '@/Routes'
+import { Emitter } from 'mitt'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
-import AppModule from '@/State/App/AppModule'
+import { useToast } from 'vue-toastification'
 import CartModule from '@/State/Cart/CartModule'
 import { getModule } from 'vuex-module-decorators'
+import AuthModule from '@/State/Auth/Auth/AuthModule'
 import GrooveImage from '@/Utilities/GrooveImage.vue'
 import ProductModel from '@/State/Product/ProductModel'
 import UserModule from '@/State/User/Profile/UserModule'
 import ProductModule from '@/State/Product/ProductModule'
+import { ProductEvents } from '@/Emitter/Type/Product/Events'
 import FavouriteButton from '@/Utilities/FavouriteButton.vue'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import ProductReview from '@/Components/Product/ProductReview.vue'
@@ -134,11 +151,15 @@ import { faCubes } from '@fortawesome/free-solid-svg-icons/faCubes'
 import ProductReviews from '@/Components/Product/ProductReviews.vue'
 import { ImageTypeOptions } from '@/Helpers/MediaStream/ImageUrlEnum'
 import { Options as Component, setup, Vue } from 'vue-class-component'
+import ProductReviewModel from '@/State/Product/Review/ProductReviewModel'
+import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
 import { RouteMetaBreadcrumbFunction } from '@/Routes/Type/BreadcrumbItemType'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag'
 import { faShippingFast } from '@fortawesome/free-solid-svg-icons/faShippingFast'
 import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
+
+const toast = useToast()
 
 @Component({
 	name: 'Product',
@@ -159,11 +180,13 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExcla
 	}
 })
 export default class Product extends Vue {
-	appModule = getModule(AppModule)
 	userModule = getModule(UserModule)
 	productModule = getModule(ProductModule)
 	cartModule = getModule(CartModule)
 	productFavouriteModule = getModule(ProductFavouriteModule)
+	productReviewModule = getModule(ProductReviewModule)
+	authModule = getModule(AuthModule)
+	emitter: Emitter<ProductEvents> | undefined = inject('emitter')
 
 	meta = setup(() => {
 		const meta = useMeta(
@@ -190,12 +213,16 @@ export default class Product extends Vue {
 		return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
 	}
 
-	get product(): ProductModel {
-		return this.productModule.getProductData
+	get isAuthenticated(): boolean {
+		return this.authModule.isAuthenticated
 	}
 
-	get userId(): number | undefined {
-		return this.userModule.getUserId
+	get productReviewModuleNamespace() {
+		return this.productReviewModule.getNamespace
+	}
+
+	get product(): ProductModel {
+		return this.productModule.getProductData
 	}
 
 	get addToCartButtonText(): string {
@@ -203,12 +230,66 @@ export default class Product extends Vue {
 	}
 
 	get disabled(): boolean {
-		return this.product.active === 'False' || this.product.stock <= 0
+		return this.product?.active === 'False' || this.product?.stock <= 0
+	}
+
+	get userId(): number | undefined {
+		return this.userModule.getUserId
+	}
+
+	get userToProductReview(): ProductReviewModel {
+		return this.productReviewModule.getUserToProductReview
+	}
+
+	get productReviewsAverage(): number {
+		return this.productReviewModule.getProductReviewsAverage
+	}
+
+	get productReviewsCounter(): number {
+		return this.productReviewModule.getProductReviewsCounter
+	}
+
+	get userHasAlreadyReviewedProduct(): boolean {
+		return this.productReviewModule.getUserHasAlreadyReviewedProduct
+	}
+
+	unmounted() {
+		this.productModule.setProduct(new ProductModel())
+		this.productReviewModule.setUserToProductReview(new ProductReviewModel())
 	}
 
 	created(): void {
 		this.productModule.fetchProductFromRemote().then(() => {
 			this.productModule.updateProductHits()
+			this.productReviewModule.fetchUserToProductReviewFromRemote({
+				productId: this.productModule.getProductData.id,
+				userId: this.userModule.getUserId
+			})
+		})
+		this.emitter?.on('setProductReviewsAverage', (e) => {
+			this.productReviewModule.setProductReviewsAverage(e)
+		})
+		this.emitter?.on('setProductReviewsCounter', (e) => {
+			this.productReviewModule.setProductReviewsCounter(e)
+		})
+		this.emitter?.on('unsetUserToProductReview', () => {
+			this.productReviewModule.unsetUserToProductReview()
+		})
+		this.emitter?.on('unsetProductReviews', () => {
+			this.productReviewModule.unsetProductReviews()
+		})
+		this.emitter?.on('toggleReview', (e) => {
+			this.productReviewModule.toggleReview({
+				FormData: e,
+				IsAuthenticated: this.authModule.isAuthenticated,
+				productId: this.productModule.getProductData.id,
+				userId: this.userModule.getUserId
+			})
+		})
+		this.emitter?.on('deleteCurrentProductReview', (e) => {
+			this.productReviewModule.deleteCurrentProductReview(e).then(() => {
+				toast.success('Your Review has been deleted')
+			})
 		})
 	}
 

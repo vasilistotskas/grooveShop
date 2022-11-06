@@ -239,6 +239,7 @@
 				:cart-total-length="myContext.cartTotalLength"
 				:cart-total-price="myContext.cartTotalPrice"
 				:cart-total-price-for-pay-way="myContext.cartTotalPriceForPayWay"
+				:selected-pay-way="myContext.selectedPayWay"
 			/>
 		</div>
 	</div>
@@ -338,15 +339,11 @@ export default class Checkout extends Vue {
 			})
 		})
 
+		payWayModule.setSelectedPayWay(new PayWayModel())
+
 		Promise.all([
-			countryModule.fetchCountriesFromRemote(),
-			isAuthenticated.value ??
-				userModule.fetchUserDataFromRemote().then((response) => {
-					if (response) {
-						countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserData)
-						productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
-					}
-				}),
+			countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserData),
+			productFavouriteModule.fetchUserFavouritesFromRemote(userModule.getUserData.id),
 			cartModule.cartTotalPriceForPayWayAction(
 				selectedPayWay.value as unknown as PayWayModel
 			)
@@ -381,7 +378,7 @@ export default class Checkout extends Vue {
 			last_name: '',
 			phone: 0,
 			place: '',
-			zipcode: 0,
+			zipcode: '',
 			country: 'choose',
 			region: 'choose'
 		})
@@ -402,7 +399,7 @@ export default class Checkout extends Vue {
 				customerDetailsData.last_name = ''
 				customerDetailsData.phone = 0
 				customerDetailsData.place = ''
-				customerDetailsData.zipcode = 0
+				customerDetailsData.zipcode = ''
 				customerDetailsData.country = 'choose'
 				customerDetailsData.region = 'choose'
 			}
@@ -473,14 +470,16 @@ export default class Checkout extends Vue {
 		const { handleSubmit, errors } = useForm({
 			validationSchema,
 			initialValues: {
-				address: customerDetailsData.address,
-				city: customerDetailsData.city,
-				email: customerDetailsData.email,
-				firstName: customerDetailsData.first_name,
-				lastName: customerDetailsData.last_name,
-				phone: customerDetailsData.phone,
-				place: customerDetailsData.place,
-				zipcode: customerDetailsData.zipcode,
+				address: customerDetailsData?.address,
+				city: customerDetailsData?.city,
+				email: customerDetailsData?.email,
+				firstName: customerDetailsData?.first_name,
+				lastName: customerDetailsData?.last_name,
+				phone: customerDetailsData?.phone,
+				place: customerDetailsData?.place,
+				zipcode: customerDetailsData?.zipcode,
+				country: customerDetailsData.country,
+				region: customerDetailsData.region,
 				customerNotes: ''
 			}
 		})

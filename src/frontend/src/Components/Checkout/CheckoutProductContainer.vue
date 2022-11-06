@@ -31,10 +31,8 @@
 
 <script lang="ts">
 import { PropType } from 'vue'
-import { getModule } from 'vuex-module-decorators'
 import PayWayModel from '@/State/Payway/PayWayModel'
 import CartItemModel from '@/State/Cart/CartItemModel'
-import PayWayModule from '@/State/Payway/PayWayModule'
 import { Options as Component, Vue } from 'vue-class-component'
 import CheckoutProductCard from '@/Components/Checkout/CheckoutProductCard.vue'
 
@@ -47,25 +45,22 @@ import CheckoutProductCard from '@/Components/Checkout/CheckoutProductCard.vue'
 		cart: Array as PropType<Array<CartItemModel>>,
 		cartTotalLength: Number,
 		cartTotalPriceForPayWay: Number,
-		cartTotalPrice: Number
+		cartTotalPrice: Number,
+		selectedPayWay: Object as PropType<PayWayModel>
 	}
 })
 export default class CheckoutProductContainer extends Vue {
-	payWayModule = getModule(PayWayModule)
 	cart!: Array<CartItemModel>
 	cartTotalLength = 0
 	cartTotalPrice = 0
 	cartTotalPriceForPayWay = 0
-
-	get getSelectedPayWay(): PayWayModel {
-		return this.payWayModule.getSelectedPayWay
-	}
+	selectedPayWay!: PayWayModel
 
 	public payWayExtraCost(): string {
-		const payWay = this.getSelectedPayWay
+		const payWay = this.selectedPayWay
 
 		if (
-			payWay.free_for_order_amount < this.cartTotalPrice ||
+			payWay?.free_for_order_amount < this.cartTotalPrice ||
 			Object.keys(payWay).length <= 0
 		) {
 			return 'Free'

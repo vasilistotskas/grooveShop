@@ -8,7 +8,7 @@
 				<ReviewProductCard
 					v-for="review in allPaginatedResults"
 					:key="review.id"
-					:class="{ 'current-user-review-card': review.user_id === userId }"
+					:class="{ 'current-user-review-card': review.userprofile.id === userId }"
 					:review="review"
 					:user-id="userId"
 					class="product-review-main-card"
@@ -31,13 +31,14 @@
 
 <script lang="ts">
 import { PropType } from 'vue'
+import { useMeta } from 'vue-meta'
 import { AxiosResponse } from 'axios'
+import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import UserModule from '@/State/User/Profile/UserModule'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import Pagination from '@/Components/Pagination/Pagination.vue'
 import { Options as Component, setup } from 'vue-class-component'
-import PaginationModule from '@/State/Pagination/PaginationModule'
 import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 import ProductReviewModel from '@/State/Product/Review/ProductReviewModel'
@@ -47,8 +48,6 @@ import PaginatedComponent from '@/Components/Pagination/PaginatedComponent'
 import { PaginationRoutesEnum } from '@/State/Pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
-import { useMeta } from 'vue-meta'
-import { computed } from '@vue/runtime-core'
 
 @Component({
 	name: 'UserReviews',
@@ -69,7 +68,6 @@ export default class UserReviews
 	implements PaginatedComponentInterface<ProductReviewModel>
 {
 	userModule = getModule(UserModule)
-	paginationModule = getModule<PaginationModule<ProductReviewModel>>(PaginationModule)
 	userData!: UserProfileModel
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_REVIEWS

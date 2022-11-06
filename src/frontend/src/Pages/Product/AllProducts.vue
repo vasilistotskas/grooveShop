@@ -34,7 +34,6 @@ import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import { AxiosResponse } from 'axios'
 import { computed } from '@vue/runtime-core'
-import { getModule } from 'vuex-module-decorators'
 import ProductModel from '@/State/Product/ProductModel'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import { MainRoutePaths } from '@/Routes/Enum/MainRoutePaths'
@@ -42,7 +41,6 @@ import ProductCard from '@/Components/Product/ProductCard.vue'
 import Pagination from '@/Components/Pagination/Pagination.vue'
 import { Options as Component, setup } from 'vue-class-component'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
-import PaginationModule from '@/State/Pagination/PaginationModule'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 import { PaginationModel } from '@/State/Pagination/Model/PaginationModel'
 import PaginatedComponent from '@/Components/Pagination/PaginatedComponent'
@@ -63,7 +61,6 @@ export default class AllProducts
 	extends PaginatedComponent<ProductModel>
 	implements PaginatedComponentInterface<ProductModel>
 {
-	paginationModule = getModule<PaginationModule<ProductModel>>(PaginationModule)
 	paginationNamespace = PaginationNamespaceTypesEnum.ALL_PRODUCTS
 	PaginationRoutesEnum = PaginationRoutesEnum
 	MainRoutePaths = MainRoutePaths

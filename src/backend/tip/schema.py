@@ -22,4 +22,4 @@ class TipType:
 
 @strawberry.type
 class Query:
-    allTips: List[TipType] = strawberry_django.field()
+    tips: List[TipType] = strawberry_django.field()

@@ -15,7 +15,7 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 })
 export default class CategoryModule extends AppBaseModule {
 	category!: CategoryModel
-	categoriesTree: Array<CategoryModel> = []
+	categoriesTree!: Array<CategoryModel>
 
 	get getCategory(): CategoryModel {
 		return this.category
@@ -36,8 +36,8 @@ export default class CategoryModule extends AppBaseModule {
 	}
 
 	@Action
-	fetchCategoriesTreeFromRemote(): Promise<void> {
-		return api
+	async fetchCategoriesTreeFromRemote(): Promise<void> {
+		return await api
 			.get('categories/categoriesTree/')
 			.then((response: AxiosResponse<Array<CategoryModel>>) => {
 				const data = response.data
@@ -50,13 +50,12 @@ export default class CategoryModule extends AppBaseModule {
 	}
 
 	@Action
-	fetchCategoryFromRemote(categorySlug: CategoryModel['slug']): Promise<void> {
-		return api
+	async fetchCategoryFromRemote(categorySlug: CategoryModel['slug']): Promise<void> {
+		return await api
 			.get(`categories/${categorySlug}/`)
 			.then((response: AxiosResponse<Array<CategoryModel>>) => {
 				const data = response.data[0]
-				const category = new CategoryModel(data)
-				this.context.commit('setCategory', category)
+				this.context.commit('setCategory', data)
 			})
 			.catch((e: Error) => {
 				console.log(e)

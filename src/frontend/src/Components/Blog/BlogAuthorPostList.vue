@@ -12,14 +12,12 @@
 		<div v-else>
 			<span>No Posts Found</span>
 		</div>
-		<BlogTagsSidebar :authors="allAuthors" :tags="allTags" />
+		<BlogTagsSidebar :authors="authors" :tags="tags" />
 	</div>
 </template>
 
 <script lang="ts">
 import { PropType } from 'vue'
-import BlogModule from '@/State/Blog/BlogModule'
-import { getModule } from 'vuex-module-decorators'
 import BlogTagModel from '@/State/Blog/BlogTagModel'
 import BlogPostModel from '@/State/Blog/BlogPostModel'
 import BlogAuthorModel from '@/State/Blog/BlogAuthorModel'
@@ -34,6 +32,14 @@ import BlogTagsSidebar from '@/Components/Blog/BlogTagsSidebar.vue'
 		BlogPostCard
 	},
 	props: {
+		tags: {
+			type: Array as PropType<Array<BlogTagModel>>,
+			required: true
+		},
+		authors: {
+			type: Array as PropType<Array<BlogAuthorModel>>,
+			required: true
+		},
 		posts: {
 			type: Array as PropType<Array<BlogPostModel>>,
 			required: true
@@ -50,26 +56,11 @@ import BlogTagsSidebar from '@/Components/Blog/BlogTagsSidebar.vue'
 	}
 })
 export default class BlogAuthorPostList extends Vue {
-	blogModule = getModule(BlogModule)
 	showAuthor = false
+	tags!: Array<BlogTagModel>
+	authors!: Array<BlogAuthorModel>
 	posts!: Array<BlogPostModel>
 	author!: BlogAuthorModel
-
-	get allTags(): Array<BlogTagModel> {
-		return this.blogModule.getAllTags
-	}
-
-	get allAuthors(): Array<BlogAuthorModel> {
-		return this.blogModule.getAllAuthors
-	}
-
-	mounted(): void {
-		Promise.all([
-			this.blogModule.fetchAllTagsFromRemote(),
-			this.blogModule.fetchAllAuthorsFromRemote(),
-			this.blogModule.fetchAllCategoriesFromRemote()
-		])
-	}
 }
 </script>
 

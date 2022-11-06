@@ -41,6 +41,8 @@ const app = createApp(App)
 	.component('font-awesome-icon', FontAwesomeIcon)
 	.provide('emitter', emitter)
 
+app.config.globalProperties.emitter = emitter
+
 router.isReady().then(() => {
 	app.mount('#app')
 })

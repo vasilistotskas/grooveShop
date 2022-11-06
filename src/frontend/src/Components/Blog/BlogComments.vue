@@ -8,17 +8,19 @@
 				<BlogCommentCard
 					v-if="commentByUserToPost && Object.keys(commentByUserToPost).length > 0"
 					:key="commentByUserToPost.id"
-					:class="{ 'blog-comments-card-user': commentByUserToPost.user.id === userId }"
+					:class="commentByUserToPost.user.id === userId ? 'blog-comments-card-user' : ''"
 					:comment="commentByUserToPost"
 					:user-id="userId"
+					:is-authenticated="isAuthenticated"
 					class="blog-comment-card"
 				/>
 
 				<BlogCommentCard
-					v-for="comment in allBlogPostComments"
+					v-for="comment in blogPostComments"
 					:key="comment.id"
 					:comment="comment"
 					:user-id="userId"
+					:is-authenticated="isAuthenticated"
 					class="blog-comment-card"
 				/>
 			</div>
@@ -28,10 +30,7 @@
 
 <script lang="ts">
 import { PropType } from 'vue'
-import BlogModule from '@/State/Blog/BlogModule'
-import { getModule } from 'vuex-module-decorators'
 import BlogPostModel from '@/State/Blog/BlogPostModel'
-import UserModule from '@/State/User/Profile/UserModule'
 import BlogCommentModel from '@/State/Blog/BlogCommentModel'
 import { Options as Component, Vue } from 'vue-class-component'
 import BlogCommentCard from '@/Components/Blog/BlogCommentCard.vue'
@@ -45,29 +44,33 @@ import BlogCommentCard from '@/Components/Blog/BlogCommentCard.vue'
 		post: {
 			type: Object as PropType<BlogPostModel>,
 			required: true
+		},
+		userId: {
+			type: Number
+		},
+		blogPostComments: {
+			type: Array as PropType<Array<BlogCommentModel>>,
+			required: true
+		},
+		commentByUserToPost: {
+			type: Object as PropType<BlogCommentModel>
+		},
+		isAuthenticated: {
+			type: Boolean,
+			default: false
 		}
 	}
 })
 export default class BlogComments extends Vue {
-	userModule = getModule(UserModule)
-	blogModule = getModule(BlogModule)
 	post!: BlogPostModel
-
-	get userId(): number | undefined {
-		return this.userModule.getUserId
-	}
-
-	get allBlogPostComments(): Array<BlogCommentModel> {
-		return this.blogModule.getCommentsByPost
-	}
-
-	get commentByUserToPost(): BlogCommentModel {
-		return this.blogModule.getCommentByUserToPost
-	}
+	userId!: number
+	blogPostComments!: Array<BlogCommentModel>
+	commentByUserToPost!: BlogCommentModel
+	isAuthenticated = false
 
 	get shouldCommentsAppear(): boolean {
 		return (
-			(this.allBlogPostComments && Object.keys(this.allBlogPostComments).length > 0) ||
+			(this.blogPostComments && Object.keys(this.blogPostComments).length > 0) ||
 			(this.commentByUserToPost && Object.keys(this.commentByUserToPost).length > 0)
 		)
 	}

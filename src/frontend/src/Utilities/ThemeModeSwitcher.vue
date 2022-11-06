@@ -32,7 +32,7 @@ export default class ThemeModeSwitcher extends Vue {
 	themeModeFromPreference: AppSettingsThemeModeOption = AppSettingsThemeModeOption.light
 
 	get getThemeMode(): AppSettingsThemeModeOption {
-		return this.settingsModule.getSettings.themeMode
+		return this.settingsModule.getSettings?.themeMode
 	}
 
 	get themeModeFromLocalStorage(): AppSettingsThemeModeOption {
@@ -106,9 +106,9 @@ export default class ThemeModeSwitcher extends Vue {
 	}
 
 	public toggleThemeMode(): void {
-		this.settingsModule
-			.toggleThemeMode()
-			.then((themeMode) => this.updateThemeMode(themeMode))
+		this.settingsModule.toggleThemeMode().then((themeMode) => {
+			return this.updateThemeMode(themeMode)
+		})
 	}
 
 	private updateThemeMode(

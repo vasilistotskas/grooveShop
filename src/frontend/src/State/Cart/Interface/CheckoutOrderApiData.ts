@@ -7,7 +7,7 @@ export default interface CheckoutOrderApiData {
 	last_name: string
 	email: string
 	address: string
-	zipcode: number
+	zipcode: string
 	place: string
 	phone: number
 	city: string

@@ -5,7 +5,7 @@ const cache = new InMemoryCache({
 	typePolicies: {
 		Query: {
 			fields: {
-				fetchAllPostsFromRemote: {
+				fetchPostsFromRemote: {
 					merge: true
 				},
 				fetchPostBySlugFromRemote: {

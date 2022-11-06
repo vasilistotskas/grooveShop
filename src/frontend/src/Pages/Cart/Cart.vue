@@ -40,13 +40,16 @@
 </template>
 
 <script lang="ts">
+import { inject } from 'vue'
 import router from '@/Routes'
+import { Emitter } from 'mitt'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import CartModule from '@/State/Cart/CartModule'
 import { getModule } from 'vuex-module-decorators'
 import CartItem from '@/Components/Cart/CartItem.vue'
 import CartItemModel from '@/State/Cart/CartItemModel'
+import { CartEvents } from '@/Emitter/Type/Cart/Events'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 
@@ -59,6 +62,7 @@ import { Options as Component, setup, Vue } from 'vue-class-component'
 })
 export default class Cart extends Vue {
 	cartModule = getModule(CartModule)
+	emitter: Emitter<CartEvents> | undefined = inject('emitter')
 
 	meta = setup(() => {
 		const meta = useMeta(
@@ -69,6 +73,18 @@ export default class Cart extends Vue {
 		)
 		return { meta }
 	})
+
+	created(): void {
+		this.emitter?.on('decrementQuantity', (e) => {
+			this.cartModule.decrementQuantity(e)
+		})
+		this.emitter?.on('incrementQuantity', (e) => {
+			this.cartModule.incrementQuantity(e)
+		})
+		this.emitter?.on('removeFromCart', (e) => {
+			this.cartModule.removeFromCart(e)
+		})
+	}
 
 	get breadCrumbPath() {
 		return router.currentRoute.value.meta.breadcrumb

@@ -34,12 +34,11 @@
 </template>
 
 <script lang="ts">
+import { Emitter } from 'mitt'
 import { cloneDeep } from 'lodash'
+import { inject, PropType } from 'vue'
 import { useToast } from 'vue-toastification'
-import BlogModule from '@/State/Blog/BlogModule'
-import { getModule } from 'vuex-module-decorators'
-import AuthModule from '@/State/Auth/Auth/AuthModule'
-import UserModule from '@/State/User/Profile/UserModule'
+import { BlogPostEvents } from '@/Emitter/Type/Blog/Events'
 import BlogCommentModel from '@/State/Blog/BlogCommentModel'
 import { Options as Component, Vue } from 'vue-class-component'
 import { faPenSquare } from '@fortawesome/free-solid-svg-icons/faPenSquare'
@@ -47,29 +46,31 @@ import { faPenSquare } from '@fortawesome/free-solid-svg-icons/faPenSquare'
 const toast = useToast()
 
 @Component({
-	name: 'BlogComment'
+	name: 'BlogComment',
+	props: {
+		isAuthenticated: {
+			type: Boolean,
+			default: false
+		},
+		userCommentToPostEmpty: {
+			type: Boolean,
+			default: true
+		},
+		commentByUserToPost: {
+			type: BlogCommentModel as PropType<BlogCommentModel>
+		}
+	}
 })
 export default class BlogComment extends Vue {
-	blogModule = getModule(BlogModule)
-	authModule = getModule(AuthModule)
-	userModule = getModule(UserModule)
+	isAuthenticated = false
+	userCommentToPostEmpty = true
+	commentByUserToPost!: BlogCommentModel
 	writeReviewIcon = faPenSquare
 	comment = ''
-
-	get isAuthenticated(): boolean {
-		return this.authModule.isAuthenticated
-	}
+	emitter: Emitter<BlogPostEvents> | undefined = inject('emitter')
 
 	get reviewButtonText(): string {
 		return this.userCommentToPostEmpty ? 'Post' : 'Update'
-	}
-
-	get userCommentToPostEmpty(): boolean {
-		return this.blogModule.getUserCommentToPostEmpty
-	}
-
-	get commentByUserToPost(): BlogCommentModel {
-		return this.blogModule.getCommentByUserToPost
 	}
 
 	mounted(): void {
@@ -86,12 +87,11 @@ export default class BlogComment extends Vue {
 		}
 
 		if (!this.userCommentToPostEmpty) {
-			this.blogModule.updateCommentToPost(this.comment)
+			this.emitter?.emit('updateCommentToPost', this.comment)
 			return toast.success('Your comment has been updated')
 		} else {
-			this.blogModule.createCommentToPost({
-				content: this.comment,
-				userEmail: this.userModule.getUserData.email
+			this.emitter?.emit('createCommentToPost', {
+				content: this.comment
 			})
 			return toast.success('Your comment has been created')
 		}
@@ -101,7 +101,7 @@ export default class BlogComment extends Vue {
 		if (this.isAuthenticated) {
 			return
 		}
-		this.blogModule.fetchCommentByUserToPost(this.userModule.getUserData.email)
+		this.emitter?.emit('fetchCommentByUserToPost')
 		this.comment = cloneDeep(this.commentByUserToPost.content)
 	}
 }

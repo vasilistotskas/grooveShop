@@ -51,11 +51,11 @@
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
+import { Emitter } from 'mitt'
 import { cloneDeep } from 'lodash'
+import { inject, PropType } from 'vue'
 import { onClickOutside } from '@vueuse/core'
-import AppModule from '@/State/App/AppModule'
-import { getModule } from 'vuex-module-decorators'
+import { AppEvents } from '@/Emitter/Type/App/Events'
 import GrooveImage from '@/Utilities/GrooveImage.vue'
 import CategoryModel from '@/State/Category/CategoryModel'
 import { Options as Component, Vue } from 'vue-class-component'
@@ -76,17 +76,13 @@ export default class NavbarCategories extends Vue {
 	declare $refs: {
 		headerNavbarMenu: HTMLElement
 	}
-	appModule = getModule(AppModule)
 	categoryBoxHovered: null | number = null
 	categoriesTree: Array<CategoryModel> = []
 	categories: Array<CategoryModel> = []
 	mainToggleButton!: HTMLElement
 	navbarProductsButton!: HTMLElement
 	ImageTypeOptions = ImageTypeOptions
-
-	get isLoading(): boolean {
-		return this.appModule.getLoading
-	}
+	emitter: Emitter<AppEvents> | undefined = inject('emitter')
 
 	mounted(): void {
 		this.categories = cloneDeep(this.categoriesTree)
@@ -103,7 +99,7 @@ export default class NavbarCategories extends Vue {
 			'aria-expanded',
 			this.mainToggleButton.classList.contains('opened') as unknown as string
 		)
-		this.appModule.setNavbarMenuHidden(true)
+		this.emitter?.emit('setNavbarMenuHidden', true)
 	}
 }
 </script>

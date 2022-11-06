@@ -13,24 +13,24 @@ import { Module, Action, Mutation } from 'vuex-module-decorators'
 	name: 'tip'
 })
 export default class TipModule extends AppBaseModule {
-	allTips!: Array<TipModel>
+	tips!: Array<TipModel>
 
-	get getAllTips(): TipModel[] {
-		return this.allTips
+	get getTips(): TipModel[] {
+		return this.tips
 	}
 
 	@Mutation
-	setAllTips(tips: TipModel[]): void {
-		this.allTips = tips
+	setTips(tips: TipModel[]): void {
+		this.tips = tips
 	}
 
 	@Action
-	async fetchAllTipsFromRemote(): Promise<void> {
+	async fetchTipsFromRemote(): Promise<void> {
 		try {
 			const tips = await clientApollo.query({
 				query: gql`
 					query {
-						allTips {
+						tips {
 							id
 							title
 							content
@@ -51,8 +51,8 @@ export default class TipModule extends AppBaseModule {
 				`
 			})
 
-			const data = tips.data.allTips
-			this.context.commit('setAllTips', data)
+			const data = tips.data.tips
+			this.context.commit('setTips', data)
 			return data
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))

@@ -44,11 +44,19 @@
 				/>
 			</div>
 		</div>
-		<BlogComment />
+		<BlogComment
+			:is-authenticated="isAuthenticated"
+			:user-comment-to-post-empty="userCommentToPostEmpty"
+			:comment-by-user-to-post="commentByUserToPost"
+		/>
 	</div>
 	<BlogComments
 		v-if="postBySlug && Object.keys(postBySlug).length > 0"
 		:post="postBySlug"
+		:user-id="userId"
+		:blog-post-comments="blogPostComments"
+		:comment-by-user-to-post="commentByUserToPost"
+		:is-authenticated="isAuthenticated"
 	/>
 </template>
 
@@ -58,7 +66,9 @@ import {
 	ImagePositionOptions,
 	ImageTypeOptions
 } from '@/Helpers/MediaStream/ImageUrlEnum'
+import { inject } from 'vue'
 import router from '@/Routes'
+import { Emitter } from 'mitt'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import BlogModule from '@/State/Blog/BlogModule'
@@ -68,7 +78,9 @@ import GrooveImage from '@/Utilities/GrooveImage.vue'
 import BlogPostModel from '@/State/Blog/BlogPostModel'
 import UserModule from '@/State/User/Profile/UserModule'
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions
+import { BlogPostEvents } from '@/Emitter/Type/Blog/Events'
 import BlogComment from '@/Components/Blog/BlogComment.vue'
+import BlogCommentModel from '@/State/Blog/BlogCommentModel'
 import FavouriteButton from '@/Utilities/FavouriteButton.vue'
 import BlogComments from '@/Components/Blog/BlogComments.vue'
 import BlogAuthorLink from '@/Components/Blog/BlogAuthorLink.vue'
@@ -100,6 +112,7 @@ export default class BlogPost extends Vue {
 	ImageTypeOptions = ImageTypeOptions
 	ImageFitOptions = ImageFitOptions
 	ImagePositionOptions = ImagePositionOptions
+	emitter: Emitter<BlogPostEvents> | undefined = inject('emitter')
 
 	meta = setup(() => {
 		const meta = useMeta(
@@ -133,12 +146,39 @@ export default class BlogPost extends Vue {
 		return this.userModule.getUserData.id
 	}
 
+	get blogPostComments(): Array<BlogCommentModel> {
+		return this.blogModule.getCommentsByPost
+	}
+
+	get commentByUserToPost(): BlogCommentModel {
+		return this.blogModule.getCommentByUserToPost
+	}
+
+	get userCommentToPostEmpty(): boolean {
+		return this.blogModule.getUserCommentToPostEmpty
+	}
+
 	created(): void {
 		this.blogModule.fetchPostBySlugFromRemote()
 		this.blogModule.fetchCommentsByPost()
 		if (this.isAuthenticated) {
 			this.blogModule.fetchCommentByUserToPost(this.userModule.getUserData.email)
 		}
+
+		this.emitter?.on('updateCommentToPost', (e) => this.blogModule.updateCommentToPost(e))
+		this.emitter?.on('createCommentToPost', (e) => {
+			const payload = {
+				content: e.content,
+				userEmail: this.userEmail
+			}
+			return this.blogModule.createCommentToPost(payload)
+		})
+		this.emitter?.on('fetchCommentByUserToPost', () =>
+			this.blogModule.fetchCommentByUserToPost(this.userEmail)
+		)
+		this.emitter?.on('deleteCommentFromPost', () =>
+			this.blogModule.deleteCommentFromPost()
+		)
 	}
 
 	unmounted(): void {

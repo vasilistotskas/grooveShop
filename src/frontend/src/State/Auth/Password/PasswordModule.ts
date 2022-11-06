@@ -127,8 +127,8 @@ export default class PasswordModule extends AppBaseModule {
 	}
 
 	@Action
-	updateUserPassword(data: UpdatePasswordInputApi): Promise<void> {
-		return api
+	async updateUserPassword(data: UpdatePasswordInputApi): Promise<void> {
+		return await api
 			.post('djoser/users/set_password/', data)
 			.then(() => this.context.commit('passwordChangeSuccess'))
 			.then(() => {
@@ -146,8 +146,8 @@ export default class PasswordModule extends AppBaseModule {
 	}
 
 	@Action
-	sendPasswordResetEmail(email: string): Promise<void> {
-		return api
+	async sendPasswordResetEmail(email: string): Promise<void> {
+		return await api
 			.post('djoser/users/reset_password/', email)
 			.then(() => this.context.commit('passwordEmailSuccess'))
 			.catch(() => {
@@ -156,13 +156,13 @@ export default class PasswordModule extends AppBaseModule {
 	}
 
 	@Action
-	resetPasswordConfirm(data: ResetPasswordInputApi): Promise<void> {
+	async resetPasswordConfirm(data: ResetPasswordInputApi): Promise<void> {
 		const reset_data = {
 			uid: data.uid,
 			token: data.token,
 			new_password: data.new_password
 		}
-		return api
+		return await api
 			.post('djoser/users/reset_password_confirm/', reset_data)
 			.then(() => this.context.commit('passwordResetSuccess'))
 			.catch(() => {

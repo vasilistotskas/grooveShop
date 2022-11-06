@@ -27,6 +27,9 @@ export default class ProductFavouriteModule extends AppBaseModule {
 	get getIsCurrentProductInUserFavourites(): (data: { productId: number }) => boolean {
 		return (data: { productId: number }) => {
 			const favouriteProducts = this.context.getters['getFavouriteData']
+			if (!favouriteProducts) {
+				return false
+			}
 			const exists = favouriteProducts.filter(
 				(i: ProductFavouriteModel) => i.product_id === data.productId
 			)
@@ -70,8 +73,8 @@ export default class ProductFavouriteModule extends AppBaseModule {
 	}
 
 	@Action
-	fetchUserFavouritesFromRemote(userId: number): Promise<void> {
-		return api
+	async fetchUserFavouritesFromRemote(userId: number): Promise<void> {
+		return await api
 			.get(`favourites/${userId}`)
 			.then((response: AxiosResponse<Array<ProductFavouriteModel>>) => {
 				const data = response.data

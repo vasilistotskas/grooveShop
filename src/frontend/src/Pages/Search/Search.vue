@@ -34,13 +34,11 @@ import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import { AxiosResponse } from 'axios'
 import { computed } from '@vue/runtime-core'
-import { getModule } from 'vuex-module-decorators'
 import ProductModel from '@/State/Product/ProductModel'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import ProductCard from '@/Components/Product/ProductCard.vue'
 import Pagination from '@/Components/Pagination/Pagination.vue'
 import { Options as Component, setup } from 'vue-class-component'
-import PaginationModule from '@/State/Pagination/PaginationModule'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 import { PaginationModel } from '@/State/Pagination/Model/PaginationModel'
@@ -62,7 +60,6 @@ export default class Search
 	extends PaginatedComponent<ProductModel>
 	implements PaginatedComponentInterface<ProductModel>
 {
-	paginationModule = getModule<PaginationModule<ProductModel>>(PaginationModule)
 	query: string | null = ''
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS

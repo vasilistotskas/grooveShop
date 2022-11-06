@@ -6,7 +6,15 @@
 	</metainfo>
 	<Loader v-show="isLoading" id="mainLoader" />
 	<div id="wrapper">
-		<Header />
+		<Header
+			:cart-total-length="cartTotalLength"
+			:backend-base-url="backendBaseUrl"
+			:navbar-menu-hidden="navbarMenuHidden"
+			:categories-tree-data="categoriesTreeData"
+			:is-authenticated="isAuthenticated"
+			:is-mobile="isMobile"
+			:is-loading="isLoading"
+		/>
 
 		<section class="main-section">
 			<RouterView />
@@ -19,6 +27,8 @@
 </template>
 
 <script lang="ts">
+import { inject } from 'vue'
+import { Emitter } from 'mitt'
 import { useMeta } from 'vue-meta'
 import packageMeta from '@/../package.json'
 import AppModule from '@/State/App/AppModule'
@@ -28,9 +38,11 @@ import Footer from '@/Components/Main/Footer.vue'
 import Header from '@/Components/Main/Header.vue'
 import Loader from '@/Components/Main/Loader.vue'
 import { getModule } from 'vuex-module-decorators'
+import { AppEvents } from '@/Emitter/Type/App/Events'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
 import UserModule from '@/State/User/Profile/UserModule'
 import CountryModule from '@/State/Country/CountryModule'
+import CategoryModel from '@/State/Category/CategoryModel'
 import CategoryModule from '@/State/Category/CategoryModule'
 import SocialSidebar from '@/Components/Main/SocialSidebar.vue'
 import { Options as Component, setup, Vue } from 'vue-class-component'
@@ -54,6 +66,7 @@ export default class App extends Vue {
 	userModule = getModule(UserModule)
 	blogModule = getModule(BlogModule)
 	productFavouriteModule = getModule(ProductFavouriteModule)
+	emitter: Emitter<AppEvents> | undefined = inject('emitter')
 
 	meta = setup(() => {
 		const meta = useMeta({
@@ -77,30 +90,53 @@ export default class App extends Vue {
 		return this.authModule.isAuthenticated
 	}
 
+	get cartTotalLength(): number {
+		return this.cartModule.getCartTotalLength
+	}
+
+	get backendBaseUrl(): string | undefined {
+		return this.appModule.backendBaseUrl
+	}
+
+	get navbarMenuHidden(): boolean {
+		return this.appModule.getNavbarMenuHidden
+	}
+
+	get isMobile(): boolean {
+		return this.appModule.isMobile
+	}
+
+	get categoriesTreeData(): Array<CategoryModel> {
+		return this.categoryModule.getCategoriesTree
+	}
+
 	initializeUserData(): void {
-		this.userModule.fetchUserDataFromRemote().then((response) => {
-			if (response) {
-				this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(
-					this.userModule.getUserData
-				)
-				this.productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
-			}
-		})
-		this.blogModule.fetchCommentsByUser(this.userModule.getUserData.email)
+		this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(
+			this.userModule.getUserData
+		)
+		this.productFavouriteModule.fetchUserFavouritesFromRemote(
+			this.userModule?.getUserData?.id
+		)
+		this.blogModule.fetchCommentsByUser(this.userModule?.getUserData?.email)
 	}
 
 	created(): void {
 		Promise.all([
 			this.authModule.initialize(),
-			this.cartModule.initializeCart(),
 			this.cartModule.cartTotalPriceForPayWayAction(),
-			this.categoryModule.fetchCategoriesTreeFromRemote(),
-			this.countryModule.fetchCountriesFromRemote()
+			this.categoryModule.fetchCategoriesTreeFromRemote()
 		])
 
 		if (this.isAuthenticated) {
 			this.initializeUserData()
 		}
+
+		this.emitter?.on('setNavbarMenuHidden', (e) => {
+			this.appModule.setNavbarMenuHidden(e)
+		})
+		this.emitter?.on('addToCart', (e) => {
+			this.cartModule.addToCart(e)
+		})
 	}
 
 	mounted(): void {

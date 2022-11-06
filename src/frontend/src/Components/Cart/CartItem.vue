@@ -51,12 +51,11 @@
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
-import AppModule from '@/State/App/AppModule'
-import CartModule from '@/State/Cart/CartModule'
-import { getModule } from 'vuex-module-decorators'
+import { Emitter } from 'mitt'
+import { inject, PropType } from 'vue'
 import GrooveImage from '@/Utilities/GrooveImage.vue'
 import CartItemModel from '@/State/Cart/CartItemModel'
+import { CartEvents } from '@/Emitter/Type/Cart/Events'
 import { Options as Component, Vue } from 'vue-class-component'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 import { ImageTypeOptions } from '@/Helpers/MediaStream/ImageUrlEnum'
@@ -75,13 +74,12 @@ import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle'
 	}
 })
 export default class CartItem extends Vue {
-	appModule = getModule(AppModule)
-	cartModule = getModule(CartModule)
 	item!: CartItemModel
 	trashIcon = faTrash
 	minusIcon = faMinusCircle
 	plusIcon = faPlusCircle
 	ImageTypeOptions = ImageTypeOptions
+	emitter: Emitter<CartEvents> | undefined = inject('emitter')
 
 	get itemTotal(): number {
 		return this.item.quantity * this.item.product.price
@@ -92,15 +90,15 @@ export default class CartItem extends Vue {
 	}
 
 	public decrementQuantity(item: CartItemModel): void {
-		this.cartModule.decrementQuantity(item)
+		this.emitter?.emit('decrementQuantity', item)
 	}
 
 	public incrementQuantity(item: CartItemModel): void {
-		this.cartModule.incrementQuantity(item)
+		this.emitter?.emit('incrementQuantity', item)
 	}
 
 	public removeFromCart(item: CartItemModel): void {
-		this.cartModule.removeFromCart(item)
+		this.emitter?.emit('removeFromCart', item)
 	}
 }
 </script>

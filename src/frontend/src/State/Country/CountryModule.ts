@@ -59,8 +59,8 @@ export default class CountryModule extends AppBaseModule {
 	}
 
 	@Action
-	fetchCountriesFromRemote(): Promise<void> {
-		return api
+	async fetchCountriesFromRemote(): Promise<void> {
+		return await api
 			.get('countries/')
 			.then((response: AxiosResponse<Array<CountryModel>>) => {
 				const data = response.data

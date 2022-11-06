@@ -30,12 +30,10 @@ import { PropType } from 'vue'
 import { useMeta } from 'vue-meta'
 import { AxiosResponse } from 'axios'
 import { computed } from '@vue/runtime-core'
-import { getModule } from 'vuex-module-decorators'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import ProductCard from '@/Components/Product/ProductCard.vue'
 import Pagination from '@/Components/Pagination/Pagination.vue'
 import { Options as Component, setup } from 'vue-class-component'
-import PaginationModule from '@/State/Pagination/PaginationModule'
 import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 import UserFavouriteModel from '@/State/User/Favourite/UserFavouriteModel'
@@ -63,7 +61,6 @@ export default class UserFavourites
 	extends PaginatedComponent<UserFavouriteModel>
 	implements PaginatedComponentInterface<UserFavouriteModel>
 {
-	paginationModule = getModule<PaginationModule<UserFavouriteModel>>(PaginationModule)
 	userData!: UserProfileModel
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_FAVOURITES

@@ -92,16 +92,14 @@
 </template>
 
 <script lang="ts">
-import { getModule } from 'vuex-module-decorators'
+import { Emitter } from 'mitt'
+import { inject, PropType } from 'vue'
 import { RouteLocationNormalized } from 'vue-router'
-import AuthModule from '@/State/Auth/Auth/AuthModule'
-import UserModule from '@/State/User/Profile/UserModule'
-import ProductModule from '@/State/Product/ProductModule'
+import { ProductEvents } from '@/Emitter/Type/Product/Events'
 import { Options as Component, Vue } from 'vue-class-component'
 import { first, last, filter, times, constant, cloneDeep } from 'lodash'
 import ProductReviewModel from '@/State/Product/Review/ProductReviewModel'
 import { faPenSquare } from '@fortawesome/free-solid-svg-icons/faPenSquare'
-import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
 
 const starSvg =
 	'<path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" class=""></path>'
@@ -109,13 +107,22 @@ const starHalfSvg =
 	'<path fill="currentColor" d="M288 0c-11.4 0-22.8 5.9-28.7 17.8L194 150.2 47.9 171.4c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.1 23 46 46.4 33.7L288 439.6V0z" class=""></path>'
 
 @Component({
-	name: 'ProductReview'
+	name: 'ProductReview',
+	props: {
+		userHasAlreadyReviewedProduct: {
+			type: Boolean,
+			default: false
+		},
+		userToProductReview: {
+			type: Object as PropType<ProductReviewModel>
+		},
+		isAuthenticated: {
+			type: Boolean,
+			default: false
+		}
+	}
 })
 export default class ProductReview extends Vue {
-	productReviewModule = getModule(ProductReviewModule)
-	authModule = getModule(AuthModule)
-	productModule = getModule(ProductModule)
-	userModule = getModule(UserModule)
 	declare $refs: {
 		ratingBoard: HTMLElement
 	}
@@ -131,6 +138,10 @@ export default class ProductReview extends Vue {
 	newSelectionRatio = 0
 	selectedRatio = 0
 	writeReviewIcon = faPenSquare
+	userHasAlreadyReviewedProduct = false
+	userToProductReview!: ProductReviewModel
+	isAuthenticated = false
+	emitter: Emitter<ProductEvents> | undefined = inject('emitter')
 
 	get reviewButtonText(): string {
 		return this.userHasAlreadyReviewedProduct ? 'Update' : 'Post'
@@ -228,14 +239,6 @@ export default class ProductReview extends Vue {
 		return times(this.starCountMax, constant(starSvg)) as string[]
 	}
 
-	get userHasAlreadyReviewedProduct(): boolean {
-		return this.productReviewModule.getUserHasAlreadyReviewedProduct
-	}
-
-	get userToProductReview(): ProductReviewModel {
-		return this.productReviewModule.getUserToProductReview
-	}
-
 	created() {
 		this.$watch(
 			() => this.liveReviewCount,
@@ -245,17 +248,16 @@ export default class ProductReview extends Vue {
 		)
 		this.$watch(
 			() => this.userToProductReview,
-			(to: RouteLocationNormalized) => {
-				if (Object.keys(to).length <= 0) {
-					this.clearModule()
-				}
+			() => {
+				this.comment = this.userToProductReview.comment
+				this.rate = this.userToProductReview.rate
 			}
 		)
 		this.$watch(
 			() => this.$route,
 			() => {
-				this.productReviewModule.unsetUserToProductReview()
-				this.productReviewModule.unsetProductReviews()
+				this.emitter?.emit('unsetUserToProductReview')
+				this.emitter?.emit('unsetProductReviews')
 			}
 		)
 	}
@@ -312,26 +314,13 @@ export default class ProductReview extends Vue {
 			data.append('rate', this.rate as unknown as string)
 		}
 
-		this.productReviewModule.toggleReview({
-			FormData: data,
-			IsAuthenticated: this.authModule.isAuthenticated,
-			productId: this.productModule.getProductId,
-			userId: this.userModule.getUserId
-		})
+		this.emitter?.emit('toggleReview', data)
 	}
 
 	public reviewModuleInitialize(): void {
-		this.productModule.fetchProductFromRemote()
-		const IsAuthenticated: boolean = this.authModule.isAuthenticated
-
-		if (IsAuthenticated) {
-			this.productReviewModule.fetchUserToProductReviewFromRemote({
-				productId: this.productModule.getProductId,
-				userId: this.userModule.getUserId
-			})
-
-			this.comment = cloneDeep(this.userToProductReview.comment)
-			this.rate = cloneDeep(this.userToProductReview.rate)
+		if (this.isAuthenticated) {
+			this.comment = cloneDeep(this.userToProductReview?.comment)
+			this.rate = cloneDeep(this.userToProductReview?.rate)
 		}
 	}
 

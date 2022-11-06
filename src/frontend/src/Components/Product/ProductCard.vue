@@ -60,12 +60,12 @@
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
+import { Emitter } from 'mitt'
+import { inject, PropType } from 'vue'
 import { constant, times } from 'lodash'
 import { helpers } from '@/Helpers/main'
-import CartModule from '@/State/Cart/CartModule'
-import { getModule } from 'vuex-module-decorators'
 import GrooveImage from '@/Utilities/GrooveImage.vue'
+import { CartEvents } from '@/Emitter/Type/Cart/Events'
 import ProductModel from '@/State/Product/ProductModel'
 import { Options as Component, Vue } from 'vue-class-component'
 import { ImageTypeOptions } from '@/Helpers/MediaStream/ImageUrlEnum'
@@ -85,14 +85,13 @@ const starHalfSvg =
 	}
 })
 export default class ProductCard extends Vue {
-	cartModule = getModule(CartModule)
 	quantity = 1
 	product!: ProductModel
-
 	ImageTypeOptions = ImageTypeOptions
+	emitter: Emitter<CartEvents> | undefined = inject('emitter')
 
 	get disabled(): boolean {
-		return this.product.active === 'False' || this.product.stock <= 0
+		return this.product?.active === 'False' || this.product?.stock <= 0
 	}
 
 	get productPath(): string {
@@ -100,7 +99,7 @@ export default class ProductCard extends Vue {
 	}
 
 	get addToCartButtonText(): string {
-		return this.product.active === 'False' || this.product.stock <= 0
+		return this.product?.active === 'False' || this.product?.stock <= 0
 			? 'Out Of Stock'
 			: 'Add To Cart'
 	}
@@ -115,7 +114,7 @@ export default class ProductCard extends Vue {
 			quantity: this.quantity
 		}
 
-		this.cartModule.addToCart(item)
+		this.emitter?.emit('addToCart', item)
 	}
 
 	public contentShorten(productName: string): string {

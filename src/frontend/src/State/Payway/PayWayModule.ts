@@ -25,25 +25,25 @@ export default class PayWayModule extends AppBaseModule {
 	}
 
 	get getSelectedPayWayName(): PayWayModel['name'] {
-		if (this.selectedPayWay.name === undefined) {
+		if (this.selectedPayWay?.name === undefined) {
 			return ''
 		}
-		return this.selectedPayWay.name
+		return this.selectedPayWay?.name
 	}
 
 	get getPayWayChecked(): boolean {
-		return this.selectedPayWay.name !== undefined
+		return this.selectedPayWay?.name !== undefined
 	}
 
 	get getSelectedPayCost(): (cartTotalPrice: number) => number {
 		return (cartTotalPrice: number) => {
 			if (
-				Number(this.selectedPayWay.free_for_order_amount) < Number(cartTotalPrice) ||
-				!this.selectedPayWay.cost
+				Number(this.selectedPayWay?.free_for_order_amount) < Number(cartTotalPrice) ||
+				!this.selectedPayWay?.cost
 			) {
 				return 0
 			}
-			return Number(this.selectedPayWay.cost)
+			return Number(this.selectedPayWay?.cost)
 		}
 	}
 
@@ -58,8 +58,8 @@ export default class PayWayModule extends AppBaseModule {
 	}
 
 	@Action
-	fetchActivePayWaysFromRemote(): Promise<void | Array<PayWayModel>> {
-		return api
+	async fetchActivePayWaysFromRemote(): Promise<void | Array<PayWayModel>> {
+		return await api
 			.get('pay_way/')
 			.then((response: AxiosResponse<Array<PayWayModel>>) => {
 				const data: Array<PayWayModel> = response.data

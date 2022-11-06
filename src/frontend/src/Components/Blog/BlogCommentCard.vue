@@ -73,11 +73,10 @@
 
 <script lang="ts">
 import router from '@/Routes'
-import { PropType } from 'vue'
+import { Emitter } from 'mitt'
+import { inject, PropType } from 'vue'
 import { onClickOutside } from '@vueuse/core'
-import BlogModule from '@/State/Blog/BlogModule'
-import { getModule } from 'vuex-module-decorators'
-import AuthModule from '@/State/Auth/Auth/AuthModule'
+import { BlogPostEvents } from '@/Emitter/Type/Blog/Events'
 import BlogCommentModel from '@/State/Blog/BlogCommentModel'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
 import { Options as Component, Vue } from 'vue-class-component'
@@ -93,6 +92,10 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
 		userId: {
 			type: Number,
 			required: false
+		},
+		isAuthenticated: {
+			type: Boolean,
+			default: false
 		}
 	}
 })
@@ -100,22 +103,18 @@ export default class BlogCommentCard extends Vue {
 	declare $refs: {
 		userCommentActionTarget: HTMLElement
 	}
-	blogModule = getModule(BlogModule)
-	authModule = getModule(AuthModule)
 	MainRouteNames = MainRouteNames
 	comment!: BlogCommentModel
 	userId = 0
 	commentActionsOpen = true
 	checkCircleIcon = faCheckCircle
+	isAuthenticated = false
+	emitter: Emitter<BlogPostEvents> | undefined = inject('emitter')
 
 	updated(): void {
 		onClickOutside(this.$refs.userCommentActionTarget, () => {
 			this.commentActionsOpen = false
 		})
-	}
-
-	get isAuthenticated(): boolean {
-		return this.authModule.isAuthenticated
 	}
 
 	public openCommentActions() {
@@ -124,7 +123,7 @@ export default class BlogCommentCard extends Vue {
 
 	public deleteComment(): void {
 		if (confirm('Are you sure you want to delete your rating?')) {
-			this.blogModule.deleteCommentFromPost()
+			this.emitter?.emit('deleteCommentFromPost')
 		}
 	}
 

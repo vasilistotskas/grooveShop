@@ -175,17 +175,25 @@ export default class PaginationModule<TPaginatedModel> extends AppBaseModule {
 	}): Promise<string> {
 		const baseUrl = '/api/v1'
 		let ApiUrl: string
+		let queryStringBuild = ''
+
+		if (data.params.queryParams) {
+			queryStringBuild = await this.context.dispatch(
+				'buildPaginationQueryString',
+				data.params.queryParams
+			)
+		}
 
 		if (!data.params.queryParams && !data.params.pageNumber) {
 			ApiUrl = `${baseUrl}/${data.params.endpointUrl}`
 		} else if (!data.params.queryParams) {
 			ApiUrl = `${baseUrl}/${data.params.endpointUrl}/?p=${data.params.pageNumber}`
-		} else {
-			const queryStringBuild = await this.context.dispatch(
-				'buildPaginationQueryString',
-				data.params.queryParams
-			)
+		} else if (!data.params.pageNumber && queryStringBuild) {
+			ApiUrl = `${baseUrl}/${data.params.endpointUrl}`
+		} else if (queryStringBuild) {
 			ApiUrl = `${baseUrl}/${data.params.endpointUrl}?p=${data.params.pageNumber}&${queryStringBuild}`
+		} else {
+			ApiUrl = `${baseUrl}/${data.params.endpointUrl}`
 		}
 		return ApiUrl
 	}
@@ -197,7 +205,7 @@ export default class PaginationModule<TPaginatedModel> extends AppBaseModule {
 	}): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
 		const ApiUrl = await this.context.dispatch('buildPaginatedApiUrl', data)
 
-		return session({
+		return await session({
 			url: ApiUrl,
 			method: data.params.method,
 			data: data.params,
@@ -257,5 +265,10 @@ export default class PaginationModule<TPaginatedModel> extends AppBaseModule {
 				console.log(e)
 			})
 			.finally(() => console.log('finally'))
+	}
+
+	@Action
+	clearPagination(namespace: PaginationNamespaceTypesEnum): void {
+		this.context.commit('unsetResults', namespace)
 	}
 }

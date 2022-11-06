@@ -59,9 +59,10 @@ import {
 	ImagePositionOptions,
 	ImageTypeOptions
 } from '@/Helpers/MediaStream/ImageUrlEnum'
-import { getModule } from 'vuex-module-decorators'
+import { inject } from 'vue'
+import { Emitter } from 'mitt'
 import GrooveImage from '@/Utilities/GrooveImage.vue'
-import UserModule from '@/State/User/Profile/UserModule'
+import { UserAccountEvents } from '@/Emitter/Type/User/Events'
 import { Options as Component, Vue } from 'vue-class-component'
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
 
@@ -84,7 +85,6 @@ import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
 export default class UserProfileImage extends Vue {
 	src = ''
 	fullname = ''
-	userModule = getModule(UserModule)
 	profileImageHovering = false
 	cameraIcon = faCamera
 	ImagePathOptions = ImagePathOptions
@@ -92,11 +92,12 @@ export default class UserProfileImage extends Vue {
 	ImageFitOptions = ImageFitOptions
 	ImagePositionOptions = ImagePositionOptions
 	ImageTypeOptions = ImageTypeOptions
+	emitter: Emitter<UserAccountEvents> | undefined = inject('emitter')
 
 	updateUserImage(): void {
 		const formEl = document.getElementById('uploadImageForm') as HTMLFormElement
 		const data = new FormData(formEl)
-		this.userModule.updateUserProfile(data)
+		this.emitter?.emit('updateUserProfile', data)
 	}
 }
 </script>
