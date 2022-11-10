@@ -19,6 +19,7 @@
 		:height="imgHeight"
 		:width="imgWidth"
 		:loading="loading"
+		:fetchpriority="fetchPriority"
 	/>
 	<img
 		v-else
@@ -28,6 +29,7 @@
 		:height="imgHeight"
 		:width="imgWidth"
 		:loading="loading"
+		:fetchpriority="fetchPriority"
 	/>
 </template>
 
@@ -114,6 +116,11 @@ import { HtmlImageLoadingOptions } from '@/Components/Sliders/Enums/SliderEnum'
 			type: String,
 			required: false,
 			default: ImageFormatOptions.jpg
+		},
+		fetchPriority: {
+			type: String,
+			required: false,
+			default: 'low'
 		}
 	}
 })
@@ -134,6 +141,7 @@ export default class GrooveImage extends Vue {
 	imgPosition!: ImagePositionOptions
 	imgTrimThreshold!: number
 	imgFormat!: ImageFormatOptions
+	fetchPriority!: string
 
 	imageUrl = ''
 

@@ -93,6 +93,8 @@ import { Emitter } from 'mitt'
 import { inject, PropType } from 'vue'
 import { constant, times } from 'lodash'
 import { onClickOutside } from '@vueuse/core'
+import { useToast } from 'vue-toastification'
+import { getModule } from 'vuex-module-decorators'
 import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
@@ -100,9 +102,12 @@ import { ProductEvents } from '@/Emitter/Type/Product/Events'
 import { PaginationModel } from '@/State/Pagination/Model/PaginationModel'
 import ProductReviewModel from '@/State/Product/Review/ProductReviewModel'
 import PaginatedComponent from '@/Components/Pagination/PaginatedComponent'
+import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
 import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
+
+const toast = useToast()
 
 const starSvg =
 	'<path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" class=""></path>'
@@ -137,6 +142,7 @@ export default class ReviewProductCard
 	declare $refs: {
 		userReviewsActionTarget: HTMLElement
 	}
+	productReviewModule = getModule(ProductReviewModule)
 	MainRouteNames = MainRouteNames
 	review!: ProductReviewModel
 	userId = 0
@@ -230,28 +236,32 @@ export default class ReviewProductCard
 		}
 
 		if (confirm('Are you sure you want to delete your rating?')) {
-			await this.emitter?.emit('deleteCurrentProductReview', data)
-			let path = ''
-			if (router.currentRoute.value.name === 'Product') {
-				path = 'product'
-			}
-			if (router.currentRoute.value.name === 'Reviews') {
-				path = 'user'
-			}
-			const paginationQuery: PaginationModel = PaginationModel.createPaginationModel({
-				endpointUrl: `reviews/${path}/${data.productId}`,
-				queryParams: {
-					page: this.paginationModule.getCurrentPageNumber(
-						this.productReviewModuleNamespace
-					),
-					query: this.paginationModule.getCurrentQuery(this.productReviewModuleNamespace)
-				},
-				method: ApiBaseMethods.GET
-			})
+			this.productReviewModule.deleteCurrentProductReview(data).then(() => {
+				let path = ''
+				if (router.currentRoute.value.name === 'Product') {
+					path = 'product'
+				}
+				if (router.currentRoute.value.name === 'Reviews') {
+					path = 'user'
+				}
+				const paginationQuery: PaginationModel = PaginationModel.createPaginationModel({
+					endpointUrl: `reviews/${path}/${data.productId}`,
+					queryParams: {
+						page: this.paginationModule.getCurrentPageNumber(
+							this.productReviewModuleNamespace
+						),
+						query: this.paginationModule.getCurrentQuery(
+							this.productReviewModuleNamespace
+						)
+					},
+					method: ApiBaseMethods.GET
+				})
 
-			await this.paginationModule.fetchPaginatedResults({
-				params: paginationQuery,
-				namespace: this.productReviewModuleNamespace
+				this.paginationModule.fetchPaginatedResults({
+					params: paginationQuery,
+					namespace: this.productReviewModuleNamespace
+				})
+				toast.success('Your Review has been deleted')
 			})
 		}
 	}

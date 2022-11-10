@@ -11,19 +11,17 @@ import CartModule from '@/State/Cart/CartModule'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
 import UserModule from '@/State/User/Profile/UserModule'
-import CountryModule from '@/State/Country/CountryModule'
-import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
+import AppModule from '@/State/App/AppModule'
 
 const toast = useToast()
 
 export class RouteModel {
 	routeNames: Array<_RouteRecordBase['name']> = []
 	routePaths: Array<_RouteRecordBase['path']> = []
+	appModule = getModule(AppModule)
+	userModule = getModule(UserModule)
 	authModule = getModule(AuthModule)
 	cartModule = getModule(CartModule)
-	userModule = getModule(UserModule)
-	countryModule = getModule(CountryModule)
-	productReviewModule = getModule(ProductReviewModule)
 
 	constructor(routes?: RouteRecordNormalized[]) {
 		map(routes, (route: RouteRecord) => {
@@ -41,13 +39,11 @@ export class RouteModel {
 		from: RouteLocationNormalized,
 		next: NavigationGuardNext
 	): void {
+		this.appModule.setLoading(true)
 		this.cartModule.initializeCart()
-		this.countryModule.fetchCountriesFromRemote()
 		this.authModule.initialize().then(() => {
 			if (this.authModule.isAuthenticated) {
-				this.userModule.fetchUserDataFromRemote().then(() => {
-					this.productReviewModule.fetchCurrentUserReviews(this.userModule.getUserData.id)
-				})
+				this.userModule.fetchUserDataFromRemote()
 			}
 			if (
 				to.matched.some((record) => record.meta.requireLogin) &&
@@ -59,12 +55,9 @@ export class RouteModel {
 				next()
 			}
 		})
-		if (to.name === 'Checkout' && !this.cartModule.getCartTotalLength) {
-			toast.error('Your Cart is Empty...')
-			next({ name: 'Cart', query: { to: to.path } })
-		}
-		if (to.name === 'NotFound') {
-			next('/errors/error_404')
-		}
+	}
+
+	routeAfterEach(): void {
+		this.appModule.setLoading(false)
 	}
 }

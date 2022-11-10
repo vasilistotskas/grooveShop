@@ -2,7 +2,13 @@
 	<div class="container mt-7 mb-5">
 		<Breadcrumbs :bread-crumb-path="breadCrumbPath" />
 		<h2>Posts in #{{ $route.params.tag }}</h2>
-		<BlogPostList v-if="postsByTag" :posts="postsByTag" />
+		<BlogPostList
+			v-if="blogModule.getPostsByTag && blogModule.getPostsByTag.length > 0"
+			:tags="blogModule.getTags"
+			:authors="blogModule.getAuthors"
+			:tips="tipModule.getTips"
+			:posts="blogModule.getPostsByTag"
+		/>
 	</div>
 </template>
 
@@ -10,9 +16,9 @@
 import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
+import TipModule from '@/State/Tip/TipModule'
 import BlogModule from '@/State/Blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
-import BlogPostModel from '@/State/Blog/BlogPostModel'
 import BlogPostList from '@/Components/Blog/BlogPostList.vue'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import { Options as Component, setup, Vue } from 'vue-class-component'
@@ -27,6 +33,7 @@ import { RouteMetaBreadcrumbFunction } from '@/Routes/Type/BreadcrumbItemType'
 })
 export default class BlogPostsByTag extends Vue {
 	blogModule = getModule(BlogModule)
+	tipModule = getModule(TipModule)
 
 	meta = setup(() => {
 		const meta = useMeta(
@@ -44,12 +51,14 @@ export default class BlogPostsByTag extends Vue {
 		return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
 	}
 
-	get postsByTag(): Array<BlogPostModel> {
-		return this.blogModule.getPostsByTag
-	}
-
 	created(): void {
-		this.blogModule.fetchPostsByTagFromRemote()
+		Promise.all([
+			this.blogModule.fetchPostsFromRemote(),
+			this.blogModule.fetchTagsFromRemote(),
+			this.blogModule.fetchAuthorsFromRemote(),
+			this.blogModule.fetchCategoriesFromRemote(),
+			this.tipModule.fetchTipsFromRemote()
+		])
 	}
 
 	updated(): void {

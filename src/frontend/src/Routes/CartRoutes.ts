@@ -1,3 +1,4 @@
+import Cart from '@/Pages/Cart/Cart.vue'
 import { RouteRecordRaw } from 'vue-router'
 import { MainRoutePaths } from '@/Routes/Enum/MainRoutePaths'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
@@ -7,7 +8,7 @@ const cartRoutes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.CART,
 		name: MainRouteNames.CART,
-		component: () => import('@/Pages/Cart/Cart.vue'),
+		component: Cart,
 		meta: {
 			breadcrumb: [
 				{

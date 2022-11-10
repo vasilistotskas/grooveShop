@@ -94,6 +94,7 @@ export default class AuthModule extends AppBaseModule {
 			.then((response: AxiosResponse<Record<string, string>>) => {
 				const token: string = response.data.auth_token
 				this.context.commit('setToken', token)
+				this.context.commit('setSessionAuth', true)
 				router.push('/')
 			})
 			.then(() => {
@@ -114,6 +115,7 @@ export default class AuthModule extends AppBaseModule {
 		return await api
 			.post('logout/', {})
 			.then(() => {
+				this.context.commit('setSessionAuth', false)
 				this.context.commit('afterLogOut')
 			})
 			.then(() => {

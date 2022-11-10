@@ -71,13 +71,13 @@ export default defineComponent({
 		const getPayWayLottie = (payWayName: PayWayModel['name']): string => {
 			switch (payWayName) {
 				case PayWaysEnum.CREDIT_CARD: {
-					return 'Lotties/credit_card.json'
+					return '/Lotties/credit_card.json'
 				}
 				case PayWaysEnum.PAY_ON_DELIVERY: {
-					return 'Lotties/pay_on_delivery.json'
+					return '/Lotties/pay_on_delivery.json'
 				}
 				default: {
-					return 'Lotties/credit_card.json'
+					return '/Lotties/credit_card.json'
 				}
 			}
 		}

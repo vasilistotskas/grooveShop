@@ -16,17 +16,7 @@ const toast = useToast()
 	name: 'user'
 })
 export default class UserModule extends AppBaseModule {
-	user_id!: number | undefined
-	user_email!: string | undefined
 	data!: UserProfileModel
-
-	get getUserId(): number | undefined {
-		return this.user_id
-	}
-
-	get getUserEmail(): string | undefined {
-		return this.user_email
-	}
 
 	get getUserData(): UserProfileModel {
 		return this.data
@@ -38,19 +28,8 @@ export default class UserModule extends AppBaseModule {
 	}
 
 	@Mutation
-	setUserId(user_id: number) {
-		this.user_id = user_id
-	}
-
-	@Mutation
-	setUserEmail(user_email: string) {
-		this.user_email = user_email
-	}
-
-	@Mutation
 	unsetUserData(): void {
 		this.data = new UserProfileModel()
-		this.user_id = undefined
 	}
 
 	@Action
@@ -62,8 +41,6 @@ export default class UserModule extends AppBaseModule {
 			.then(async (response: AxiosResponse<Array<UserProfileModel>>) => {
 				const data = response.data
 				this.context.commit('setUserData', data[0])
-				this.context.commit('setUserId', data[0].id)
-				this.context.commit('setUserEmail', data[0].email)
 				return response
 			})
 			.catch((e: Error) => {
@@ -85,10 +62,10 @@ export default class UserModule extends AppBaseModule {
 			  >
 			| FormData
 	): Promise<void> {
-		const user_id = await this.context.getters['getUserId']
+		const userId = await this.context.getters['getUserData'].id
 
 		const response = await api
-			.patch(`userprofile/${user_id}/`, data)
+			.patch(`userprofile/${userId}/`, data)
 			.then((response: AxiosResponse<UserProfileModel>) => {
 				this.context.commit('setUserData', response.data)
 			})

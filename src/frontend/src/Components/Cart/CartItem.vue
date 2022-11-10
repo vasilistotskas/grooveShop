@@ -21,7 +21,7 @@
 				class="btn-outline-primary-main"
 				data-mdb-ripple-color="dark"
 				type="button"
-				@click="decrementQuantity(item)"
+				@click="cartModule.decrementQuantity(item)"
 			>
 				<font-awesome-icon :icon="minusIcon" size="lg" />
 			</a>
@@ -31,7 +31,7 @@
 				class="btn-outline-primary-main"
 				data-mdb-ripple-color="dark"
 				type="button"
-				@click="incrementQuantity(item)"
+				@click="cartModule.incrementQuantity(item)"
 			>
 				<font-awesome-icon :icon="plusIcon" size="lg" />
 			</a>
@@ -42,7 +42,7 @@
 				:title="`Remove from cart ${item.product.name}`"
 				class="btn-outline-primary-main"
 				type="button"
-				@click="removeFromCart(item)"
+				@click="cartModule.removeFromCart(item)"
 			>
 				<font-awesome-icon :icon="trashIcon" />
 			</button>
@@ -51,11 +51,11 @@
 </template>
 
 <script lang="ts">
-import { Emitter } from 'mitt'
-import { inject, PropType } from 'vue'
+import { PropType } from 'vue'
+import CartModule from '@/State/Cart/CartModule'
+import { getModule } from 'vuex-module-decorators'
 import GrooveImage from '@/Utilities/GrooveImage.vue'
 import CartItemModel from '@/State/Cart/CartItemModel'
-import { CartEvents } from '@/Emitter/Type/Cart/Events'
 import { Options as Component, Vue } from 'vue-class-component'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 import { ImageTypeOptions } from '@/Helpers/MediaStream/ImageUrlEnum'
@@ -79,7 +79,7 @@ export default class CartItem extends Vue {
 	minusIcon = faMinusCircle
 	plusIcon = faPlusCircle
 	ImageTypeOptions = ImageTypeOptions
-	emitter: Emitter<CartEvents> | undefined = inject('emitter')
+	cartModule = getModule(CartModule)
 
 	get itemTotal(): number {
 		return this.item.quantity * this.item.product.price
@@ -87,18 +87,6 @@ export default class CartItem extends Vue {
 
 	get productPath(): string {
 		return '/Product' + this.item.product.absolute_url
-	}
-
-	public decrementQuantity(item: CartItemModel): void {
-		this.emitter?.emit('decrementQuantity', item)
-	}
-
-	public incrementQuantity(item: CartItemModel): void {
-		this.emitter?.emit('incrementQuantity', item)
-	}
-
-	public removeFromCart(item: CartItemModel): void {
-		this.emitter?.emit('removeFromCart', item)
 	}
 }
 </script>

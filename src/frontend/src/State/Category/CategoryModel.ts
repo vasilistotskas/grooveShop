@@ -15,7 +15,7 @@ export default class CategoryModel extends EntityBase {
 	parent!: number
 	all_tree_products!: Array<ProductModel>
 	children!: Array<CategoryModel>
-	slug!: string
+	slug!: string | string[]
 	tags!: string
 	level!: number
 	recursive_product_count!: number

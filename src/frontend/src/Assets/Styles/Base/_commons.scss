@@ -8,58 +8,44 @@
 
 :root {
 	// DARK
-	@include cp-palette(--cp-palette-main-dark-primary, #{$color-palette-main-primary});
-	@include cp-palette(--cp-palette-main-dark-secondary, #{$color-palette-main-secondary});
-	@include cp-palette(--cp-palette-main-dark-third, #{$color-palette-main-third});
-	@include cp-palette(--cp-palette-main-dark-fourth, #{$color-palette-main-fourth});
-	@include cp-palette(--cp-palette-main-dark-fifth, #{$color-palette-main-fifth});
+	--cp-palette-main-dark-primary: #{$color-palette-main-primary};
+	--cp-palette-main-dark-secondary: #{$color-palette-main-secondary};
+	--cp-palette-main-dark-third: #{$color-palette-main-third};
+	--cp-palette-main-dark-fourth: #{$color-palette-main-fourth};
+	--cp-palette-main-dark-fifth: #{$color-palette-main-fifth};
 
 	// LIGHT
-	@include cp-palette(
-		--cp-palette-main-light-primary,
-		#{$color-palette-main-primary-light}
-	);
-	@include cp-palette(
-		--cp-palette-main-light-secondary,
-		#{$color-palette-main-secondary-light}
-	);
-	@include cp-palette(--cp-palette-main-light-third, #{$color-palette-main-third-light});
-	@include cp-palette(
-		--cp-palette-main-light-fourth,
-		#{$color-palette-main-fourth-light}
-	);
-	@include cp-palette(--cp-palette-main-light-fifth, #{$color-palette-main-fifth-light});
+	--cp-palette-main-light-primary: #{$color-palette-main-primary-light};
+	--cp-palette-main-light-secondary: #{$color-palette-main-secondary-light};
+	--cp-palette-main-light-third: #{$color-palette-main-third-light};
+	--cp-palette-main-light-fourth: #{$color-palette-main-fourth-light};
+	--cp-palette-main-light-fifth: #{$color-palette-main-fifth-light};
+
 	// GLOBAL
-	@include cp-palette(--cp-palette-main-global-green, #{$color-palette-global-green});
+	--cp-palette-main-global-green: #{$color-palette-global-green};
 }
 
 body {
 	// DARK
-	@include cp-palette(--cp-palette-main-primary, var(--cp-palette-main-dark-primary));
-	@include cp-palette(--cp-palette-main-secondary, var(--cp-palette-main-dark-secondary));
-	@include cp-palette(--cp-palette-main-third, var(--cp-palette-main-dark-third));
-	@include cp-palette(--cp-palette-main-fourth, var(--cp-palette-main-dark-fourth));
-	@include cp-palette(--cp-palette-main-fifth, var(--cp-palette-main-dark-fifth));
+	--cp-palette-main-primary: var(--cp-palette-main-dark-primary);
+	--cp-palette-main-secondary: var(--cp-palette-main-dark-secondary);
+	--cp-palette-main-third: var(--cp-palette-main-dark-third);
+	--cp-palette-main-fourth: var(--cp-palette-main-dark-fourth);
+	--cp-palette-main-fifth: var(--cp-palette-main-dark-fifth);
+
 	// GLOBAL
-	@include cp-palette(--cp-palette-main-green, var(--cp-palette-main-global-green));
+	--cp-palette-main-green: var(--cp-palette-main-global-green);
 
 	&.light {
 		// LIGHT
-		@include cp-palette(--cp-palette-main-fifth, var(--cp-palette-main-light-fifth));
-		@include cp-palette(--cp-palette-main-fourth, var(--cp-palette-main-light-fourth));
-		@include cp-palette(--cp-palette-main-primary, var(--cp-palette-main-light-primary));
-		@include cp-palette(
-			--cp-palette-main-secondary,
-			var(--cp-palette-main-light-secondary)
-		);
-		@include cp-palette(--cp-palette-main-third, var(--cp-palette-main-light-third));
+		--cp-palette-main-primary: var(--cp-palette-main-light-primary);
+		--cp-palette-main-secondary: var(--cp-palette-main-light-secondary);
+		--cp-palette-main-third: var(--cp-palette-main-light-third);
+		--cp-palette-main-fourth: var(--cp-palette-main-light-fourth);
+		--cp-palette-main-fifth: var(--cp-palette-main-light-fifth);
 	}
 
-	background-color: var(--cp-palette-main-fourth);
-	margin-bottom: 0 !important;
-	margin-left: 0 !important;
-	margin-right: 0 !important;
-	margin-top: 0 !important;
+	background: var(--cp-palette-main-fourth);
 }
 
 .grid-section {
@@ -211,6 +197,7 @@ body {
 }
 
 .product-listing-container {
+	position: relative;
 	border-radius: 10px;
 	padding: 20px 35px 35px;
 

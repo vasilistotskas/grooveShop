@@ -8,9 +8,12 @@
 				<ReviewProductCard
 					v-for="review in allPaginatedResults"
 					:key="review.id"
-					:class="{ 'current-user-review-card': review.userprofile.id === userId }"
+					:class="{
+						'current-user-review-card':
+							review.userprofile.id === userModule.getUserData.id
+					}"
 					:review="review"
-					:user-id="userId"
+					:user-id="userModule.getUserData.id"
 					class="product-review-main-card"
 				/>
 			</div>
@@ -30,7 +33,6 @@
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
 import { useMeta } from 'vue-meta'
 import { AxiosResponse } from 'axios'
 import { computed } from '@vue/runtime-core'
@@ -39,12 +41,12 @@ import UserModule from '@/State/User/Profile/UserModule'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import Pagination from '@/Components/Pagination/Pagination.vue'
 import { Options as Component, setup } from 'vue-class-component'
-import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 import ProductReviewModel from '@/State/Product/Review/ProductReviewModel'
 import { PaginationModel } from '@/State/Pagination/Model/PaginationModel'
 import ReviewProductCard from '@/Components/Reviews/ReviewProductCard.vue'
 import PaginatedComponent from '@/Components/Pagination/PaginatedComponent'
+import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
 import { PaginationRoutesEnum } from '@/State/Pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
@@ -55,12 +57,6 @@ import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/Pagination
 	components: {
 		ReviewProductCard,
 		Pagination
-	},
-	props: {
-		userData: {
-			type: Object as PropType<UserProfileModel>,
-			required: true
-		}
 	}
 })
 export default class UserReviews
@@ -68,25 +64,21 @@ export default class UserReviews
 	implements PaginatedComponentInterface<ProductReviewModel>
 {
 	userModule = getModule(UserModule)
-	userData!: UserProfileModel
+	productReviewModule = getModule(ProductReviewModule)
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_REVIEWS
 
 	meta = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
-				title: `${this.userData?.first_name} ${this.userData?.last_name} | Reviews`,
-				description: `${this.userData?.first_name} ${this.userData?.last_name} | Reviews`
+				title: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Reviews`,
+				description: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Reviews`
 			}))
 		)
 		return {
 			meta
 		}
 	})
-
-	get userId(): number | undefined {
-		return this.userModule.getUserId
-	}
 
 	created(): void {
 		if (this.params.query) {
@@ -107,6 +99,7 @@ export default class UserReviews
 			})
 		}
 
+		this.productReviewModule.fetchCurrentUserReviews(this.userModule.getUserData.id)
 		this.fetchPaginationData<ProductReviewModel>()
 	}
 
@@ -124,7 +117,7 @@ export default class UserReviews
 	}
 
 	public buildEndPointUrlForPaginatedResults(): string {
-		const userId = this.userData.id
+		const userId = this.userModule.getUserData.id
 		return `reviews/user/${userId}`
 	}
 }

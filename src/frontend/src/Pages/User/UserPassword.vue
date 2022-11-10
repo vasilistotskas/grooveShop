@@ -75,7 +75,6 @@
 
 <script lang="ts">
 import * as zod from 'zod'
-import { PropType } from 'vue'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import { useField, useForm } from 'vee-validate'
@@ -83,22 +82,16 @@ import zodPassword from '@/Helpers/Zod/Password'
 import { getModule } from 'vuex-module-decorators'
 import { toFormValidator } from '@vee-validate/zod'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
+import UserModule from '@/State/User/Profile/UserModule'
 import CountryModule from '@/State/Country/CountryModule'
 import PasswordModule from '@/State/Auth/Password/PasswordModule'
-import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
 import UpdatePasswordInputApi from '@/State/Auth/Interface/UpdatePasswordInputApi'
 import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
 
 @Component({
-	name: 'UserPassword',
-	props: {
-		userData: {
-			type: Object as PropType<UserProfileModel>,
-			required: true
-		}
-	}
+	name: 'UserPassword'
 })
 export default class UserPassword extends Vue {
 	authModule = getModule(AuthModule)
@@ -106,14 +99,14 @@ export default class UserPassword extends Vue {
 	productFavouriteModule = getModule(ProductFavouriteModule)
 	productReviewModule = getModule(ProductReviewModule)
 	countryModule = getModule(CountryModule)
+	userModule = getModule(UserModule)
 	submitButtonText = 'Update'
-	userData!: UserProfileModel
 
 	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
-				title: `${this.userData?.first_name} ${this.userData?.last_name} | Password`,
-				description: `${this.userData?.first_name} ${this.userData?.last_name} | Password`
+				title: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Password`,
+				description: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Password`
 			}))
 		)
 

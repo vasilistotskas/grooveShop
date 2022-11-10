@@ -1,6 +1,6 @@
 <template>
 	<form
-		v-if="userData && Object.keys(userData).length > 0"
+		v-if="myContext.userData && Object.keys(myContext.userData).length > 0"
 		@submit="myContext.onSubmit"
 		class="_form"
 		id="SignUpForm"
@@ -130,7 +130,7 @@
 				>
 					<option disabled value="choose">Choose...</option>
 					<option
-						v-for="country in availableCountries"
+						v-for="country in countryModule.getCountries"
 						:key="country.alpha_2"
 						:value="country.alpha_2"
 					>
@@ -149,7 +149,7 @@
 				>
 					<option disabled value="choose">Choose...</option>
 					<option
-						v-for="region in regionsBasedOnAlpha"
+						v-for="region in countryModule.getRegionsBasedOnAlpha"
 						:key="region.alpha"
 						:value="region.alpha"
 					>
@@ -169,47 +169,39 @@
 
 <script lang="ts">
 import * as zod from 'zod'
-import { PropType } from 'vue'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import { useField, useForm } from 'vee-validate'
 import { getModule } from 'vuex-module-decorators'
 import { toFormValidator } from '@vee-validate/zod'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
-import RegionsModel from '@/State/Country/RegionsModel'
-import CountryModel from '@/State/Country/CountryModel'
 import UserModule from '@/State/User/Profile/UserModule'
 import CountryModule from '@/State/Country/CountryModule'
-import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import { HTMLElementEvent } from '@/State/Common/Types/HelpingTypes'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import UserProfileApiData from '@/State/User/Interface/UserProfileApiData'
 
 @Component({
-	name: 'UserSettings',
-	props: {
-		userData: {
-			type: Object as PropType<UserProfileModel>,
-			required: true
-		}
-	}
+	name: 'UserSettings'
 })
 export default class UserSettings extends Vue {
 	authModule = getModule(AuthModule)
 	countryModule = getModule(CountryModule)
-	userModule = getModule(UserModule)
-	userData!: UserProfileModel
 	submitButtonText = 'Update'
 
 	myContext = setup(() => {
-		const props = this.$props as { userData: UserProfileModel }
+		const countryModule = getModule(CountryModule)
+		const userModule = getModule(UserModule)
+
+		countryModule.fetchCountriesFromRemote()
+		countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserData)
+
+		const userData = userModule.getUserData
 
 		const meta = useMeta(
 			computed(() => ({
-				title:
-					props.userData?.first_name + ' ' + props.userData?.last_name + ' | Settings',
-				description:
-					props.userData?.first_name + ' ' + props.userData?.last_name + ' | Settings'
+				title: userData?.first_name + ' ' + userData?.last_name + ' | Settings',
+				description: userData?.first_name + ' ' + userData?.last_name + ' | Settings'
 			}))
 		)
 
@@ -230,15 +222,15 @@ export default class UserSettings extends Vue {
 		const { handleSubmit, errors, submitCount } = useForm({
 			validationSchema,
 			initialValues: {
-				first_name: props.userData.first_name,
-				last_name: props.userData.last_name,
-				phone: props.userData.phone,
-				place: props.userData.place,
-				city: props.userData.city,
-				zipcode: props.userData.zipcode,
-				address: props.userData.address,
-				country: props.userData.country,
-				region: props.userData.region
+				first_name: userData.first_name,
+				last_name: userData.last_name,
+				phone: userData.phone,
+				place: userData.place,
+				city: userData.city,
+				zipcode: userData.zipcode,
+				address: userData.address,
+				country: userData.country,
+				region: userData.region
 			}
 		})
 
@@ -259,7 +251,7 @@ export default class UserSettings extends Vue {
 		const onSubmit = handleSubmit(async () => {
 			try {
 				const apiData: UserProfileApiData = {
-					user_id: props.userData.id,
+					user_id: userData.id,
 					first_name: first_name.value,
 					last_name: last_name.value,
 					phone: phone.value,
@@ -271,7 +263,7 @@ export default class UserSettings extends Vue {
 					region: region.value
 				}
 
-				await this.userModule.updateUserProfile(apiData as unknown as FormData)
+				await userModule.updateUserProfile(apiData as unknown as FormData)
 			} catch (e) {
 				console.log(e)
 			}
@@ -281,6 +273,7 @@ export default class UserSettings extends Vue {
 			validationSchema,
 			onSubmit,
 			errors,
+			userData,
 			first_name,
 			last_name,
 			phone,
@@ -295,22 +288,10 @@ export default class UserSettings extends Vue {
 		}
 	})
 
-	get isAuthenticated(): boolean {
-		return this.authModule.isAuthenticated
-	}
-
-	get availableCountries(): Array<CountryModel> {
-		return this.countryModule.getCountries
-	}
-
-	get regionsBasedOnAlpha(): Array<RegionsModel> {
-		return this.countryModule.getRegionsBasedOnAlpha
-	}
-
 	restRegions(e: HTMLElementEvent<HTMLTextAreaElement>): void {
 		const countryAlpha2Key = e.target?.value
 		this.countryModule.findRegionsBasedOnAlphaFromInput(countryAlpha2Key)
-		this.userData.region = 'choose'
+		this.myContext.userData.region = 'choose'
 	}
 }
 </script>

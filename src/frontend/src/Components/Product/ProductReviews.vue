@@ -76,20 +76,20 @@
 </template>
 
 <script lang="ts">
-import { Emitter } from 'mitt'
+import { PropType } from 'vue'
 import { AxiosResponse } from 'axios'
-import { inject, PropType } from 'vue'
 import { constant, times } from 'lodash'
+import { getModule } from 'vuex-module-decorators'
 import ProductModel from '@/State/Product/ProductModel'
 import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
-import { ProductEvents } from '@/Emitter/Type/Product/Events'
 import Pagination from '@/Components/Pagination/Pagination.vue'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 import { PaginationModel } from '@/State/Pagination/Model/PaginationModel'
 import ReviewProductCard from '@/Components/Reviews/ReviewProductCard.vue'
 import ProductReviewModel from '@/State/Product/Review/ProductReviewModel'
 import PaginatedComponent from '@/Components/Pagination/PaginatedComponent'
+import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
 import { PaginationRoutesEnum } from '@/State/Pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
@@ -113,7 +113,7 @@ const starHalfSvg =
 		},
 		userId: {
 			type: Number,
-			required: true
+			required: false
 		},
 		userToProductReview: {
 			type: Object as PropType<ProductReviewModel>
@@ -140,6 +140,7 @@ export default class ProductReviews
 	extends PaginatedComponent<ProductReviewModel>
 	implements PaginatedComponentInterface<ProductReviewModel>
 {
+	productReviewModule = getModule(ProductReviewModule)
 	clearPagination = true
 	product!: ProductModel
 	PaginationRoutesEnum = PaginationRoutesEnum
@@ -150,7 +151,6 @@ export default class ProductReviews
 	productReviewsCounter!: number
 	isAuthenticated = false
 	productReviewModuleNamespace!: PaginationNamespaceTypesEnum
-	emitter: Emitter<ProductEvents> | undefined = inject('emitter')
 
 	get shouldReviewsAppear(): boolean {
 		return (
@@ -161,8 +161,8 @@ export default class ProductReviews
 
 	mounted(): void {
 		this.fetchPaginationData<ProductReviewModel>().then(() => {
-			this.emitter?.emit('setProductReviewsAverage', this.product.review_average)
-			this.emitter?.emit('setProductReviewsCounter', this.product.review_counter)
+			this.productReviewModule.setProductReviewsAverage(this.product.review_average)
+			this.productReviewModule.setProductReviewsCounter(this.product.review_counter)
 		})
 	}
 

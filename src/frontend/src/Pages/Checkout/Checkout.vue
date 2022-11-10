@@ -286,7 +286,6 @@ import CheckoutPayWays from '@/Components/Checkout/CheckoutPayWays.vue'
 import { computed, ComputedRef, onBeforeMount, onUnmounted, ref } from 'vue'
 import StripeCardModule from '@/Libraries/Stripe/Components/StripeCardModule'
 import CheckoutOrderApiData from '@/State/Cart/Interface/CheckoutOrderApiData'
-import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
 import CheckoutProductContainer from '@/Components/Checkout/CheckoutProductContainer.vue'
 
 const toast = useToast()
@@ -318,7 +317,6 @@ export default class Checkout extends Vue {
 		const countryModule = getModule(CountryModule)
 		const userModule = getModule(UserModule)
 		const appModule = getModule(AppModule)
-		const productFavouriteModule = getModule(ProductFavouriteModule)
 
 		const isAuthenticated: ComputedRef<boolean> = computed(
 			() => authModule.isAuthenticated
@@ -342,12 +340,15 @@ export default class Checkout extends Vue {
 		payWayModule.setSelectedPayWay(new PayWayModel())
 
 		Promise.all([
-			countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserData),
-			productFavouriteModule.fetchUserFavouritesFromRemote(userModule.getUserData.id),
+			countryModule.fetchCountriesFromRemote(),
 			cartModule.cartTotalPriceForPayWayAction(
 				selectedPayWay.value as unknown as PayWayModel
 			)
 		])
+
+		if (isAuthenticated.value) {
+			countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserData)
+		}
 
 		const availableCountries: ComputedRef<Array<CountryModel>> = computed(
 			() => countryModule.getCountries

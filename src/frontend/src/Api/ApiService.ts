@@ -1,8 +1,11 @@
 import session from './Session'
+import AppModule from '@/State/App/AppModule'
+import { getModule } from 'vuex-module-decorators'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import { ApiGetData, ApiPatchData, ApiPostData, ApiPutData } from '@/Api/Type/ApiData'
 
 const baseUrl = '/api/v1'
+const appModule = getModule(AppModule)
 
 export default {
 	alternativeToken: null,
@@ -12,11 +15,11 @@ export default {
 	},
 
 	beforeRequest(): void {
-		console.log('beforeRequest')
+		appModule.setLoading(true)
 	},
 
 	afterResponse(): void {
-		console.log('afterResponse')
+		appModule.setLoading(false)
 	},
 
 	get(endpoint: string, data?: ApiGetData): Promise<unknown> {

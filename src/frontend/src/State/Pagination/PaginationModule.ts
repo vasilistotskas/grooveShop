@@ -264,7 +264,6 @@ export default class PaginationModule<TPaginatedModel> extends AppBaseModule {
 				this.context.commit('unsetResults', data.namespace)
 				console.log(e)
 			})
-			.finally(() => console.log('finally'))
 	}
 
 	@Action

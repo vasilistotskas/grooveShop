@@ -27,11 +27,6 @@
 				</form>
 				<div class="footer-safe-payments">
 					<span class="footer-safe-payments-text">Safe Payments</span>
-					<LottiePlayerMain
-						class="footer-safe-payments-lottie"
-						:icon-path="'/Lotties/safe_shield.json'"
-						:loop="false"
-					/>
 				</div>
 			</section>
 
@@ -119,15 +114,10 @@ import { useI18n } from 'vue-i18n'
 import grBundle from '@/Locales/Footer/gr.messages.json'
 import enBundle from '@/Locales/Footer/en_us.messages.json'
 import { AvailableLocalesEnum } from '@/Locales/LocaleEnum'
-import LottiePlayerMain from '@/Utilities/LottiePlayerMain.vue'
-import * as safe_shield from '@/Assets/Lotties/safe_shield.json'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 
 @Component({
-	name: 'Footer',
-	components: {
-		LottiePlayerMain
-	}
+	name: 'Footer'
 })
 export default class Footer extends Vue {
 	myContext = setup(() => {
@@ -140,10 +130,6 @@ export default class Footer extends Vue {
 		})
 		return { locale, t }
 	})
-
-	get getSafeShieldAnim(): object {
-		return safe_shield
-	}
 }
 </script>
 

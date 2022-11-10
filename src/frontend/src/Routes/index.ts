@@ -36,4 +36,8 @@ router.beforeEach((to, from, next) => {
 	new RouteModel().routeBeforeEach(to, from, next)
 })
 
+router.afterEach(() => {
+	new RouteModel().routeAfterEach()
+})
+
 export default router

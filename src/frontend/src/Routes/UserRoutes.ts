@@ -1,13 +1,19 @@
 import { RouteRecordRaw } from 'vue-router'
+import UserReviews from '@/Pages/User/UserReviews.vue'
+import UserAccount from '@/Pages/User/UserAccount.vue'
+import UserSettings from '@/Pages/User/UserSettings.vue'
+import UserPassword from '@/Pages/User/UserPassword.vue'
+import UserFavourites from '@/Pages/User/UserFavourites.vue'
 import { MainRoutePaths } from '@/Routes/Enum/MainRoutePaths'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
+import UserOrderHistory from '@/Pages/User/UserOrderHistory.vue'
 import BreadcrumbItemInterface from '@/Routes/Interface/BreadcrumbItemInterface'
 
 const userRoutes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.USER_ACCOUNT,
 		name: MainRouteNames.USER_ACCOUNT,
-		component: () => import('@/Pages/User/UserAccount.vue'),
+		component: UserAccount,
 		meta: {
 			requireLogin: true,
 			breadcrumb: [
@@ -23,7 +29,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 			{
 				path: MainRoutePaths.USER_ACCOUNT_ORDERS,
 				name: MainRouteNames.USER_ACCOUNT_ORDERS,
-				component: () => import('@/Pages/User/UserOrderHistory.vue'),
+				component: UserOrderHistory,
 				meta: {
 					breadcrumb: [
 						{
@@ -44,7 +50,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 			{
 				path: MainRoutePaths.USER_ACCOUNT_SETTINGS,
 				name: MainRouteNames.USER_ACCOUNT_SETTINGS,
-				component: () => import('@/Pages/User/UserSettings.vue'),
+				component: UserSettings,
 				meta: {
 					breadcrumb: [
 						{
@@ -65,7 +71,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 			{
 				path: MainRoutePaths.USER_ACCOUNT_FAVOURITES,
 				name: MainRouteNames.USER_ACCOUNT_FAVOURITES,
-				component: () => import('@/Pages/User/UserFavourites.vue'),
+				component: UserFavourites,
 				meta: {
 					breadcrumb: [
 						{
@@ -86,7 +92,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 			{
 				path: MainRoutePaths.USER_ACCOUNT_REVIEWS,
 				name: MainRouteNames.USER_ACCOUNT_REVIEWS,
-				component: () => import('@/Pages/User/UserReviews.vue'),
+				component: UserReviews,
 				meta: {
 					breadcrumb: [
 						{
@@ -107,7 +113,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 			{
 				path: MainRoutePaths.USER_ACCOUNT_PASSWORD,
 				name: MainRouteNames.USER_ACCOUNT_PASSWORD,
-				component: () => import('@/Pages/User/UserPassword.vue'),
+				component: UserPassword,
 				meta: {
 					breadcrumb: [
 						{

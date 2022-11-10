@@ -1,4 +1,8 @@
+import Blog from '@/Pages/Blog/Blog.vue'
 import { RouteRecordRaw } from 'vue-router'
+import BlogPost from '@/Pages/Blog/BlogPost.vue'
+import BlogAuthor from '@/Pages/Blog/BlogAuthor.vue'
+import BlogPostsByTag from '@/Pages/Blog/BlogPostsByTag.vue'
 import { MainRoutePaths } from '@/Routes/Enum/MainRoutePaths'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
 import BreadcrumbItemInterface from '@/Routes/Interface/BreadcrumbItemInterface'
@@ -7,7 +11,7 @@ const blogRoutes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.BLOG,
 		name: MainRouteNames.BLOG,
-		component: () => import('@/Pages/Blog/Blog.vue'),
+		component: Blog,
 		props: true,
 		meta: {
 			breadcrumb: [
@@ -23,7 +27,7 @@ const blogRoutes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.AUTHOR,
 		name: MainRouteNames.AUTHOR,
-		component: () => import('@/Pages/Blog/BlogAuthor.vue'),
+		component: BlogAuthor,
 		props: true,
 		meta: {
 			breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> =>
@@ -46,7 +50,7 @@ const blogRoutes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.POST,
 		name: MainRouteNames.POST,
-		component: () => import('@/Pages/Blog/BlogPost.vue'),
+		component: BlogPost,
 		props: true,
 		meta: {
 			breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> =>
@@ -69,7 +73,7 @@ const blogRoutes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.POSTS_BY_TAG,
 		name: MainRouteNames.POSTS_BY_TAG,
-		component: () => import('@/Pages/Blog/BlogPostsByTag.vue'),
+		component: BlogPostsByTag,
 		props: true,
 		meta: {
 			breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> =>

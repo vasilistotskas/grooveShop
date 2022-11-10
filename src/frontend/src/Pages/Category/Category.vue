@@ -1,13 +1,13 @@
 <template>
-	<div v-if="category" class="page-category mt-7 mb-5">
+	<div v-if="categoryModule.getCategory" class="page-category mt-7 mb-5">
 		<Breadcrumbs :bread-crumb-path="breadCrumbPath" />
 		<div class="container">
 			<div class="content-min-height">
 				<div class="col-12">
 					<GrooveImage
-						v-if="category.category_menu_main_banner_absolute_url"
-						:alt="category.name"
-						:file-name="category.category_menu_main_banner_filename"
+						v-if="categoryModule.getCategory.category_menu_main_banner_absolute_url"
+						:alt="categoryModule.getCategory.name"
+						:file-name="categoryModule.getCategory.category_menu_main_banner_filename"
 						:use-media-stream="true"
 						:img-type="ImageTypeOptions.CATEGORIES"
 						:img-width="1920"
@@ -54,9 +54,9 @@ import { getModule } from 'vuex-module-decorators'
 import { RouteLocationNormalized } from 'vue-router'
 import GrooveImage from '@/Utilities/GrooveImage.vue'
 import ProductModel from '@/State/Product/ProductModel'
-import CategoryModel from '@/State/Category/CategoryModel'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import CategoryModule from '@/State/Category/CategoryModule'
+import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
 import ProductCard from '@/Components/Product/ProductCard.vue'
 import Pagination from '@/Components/Pagination/Pagination.vue'
 import { Options as Component, setup } from 'vue-class-component'
@@ -98,8 +98,8 @@ export default class Category
 	meta = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
-				title: this.category?.name,
-				description: 'Category'
+				title: this.categoryModule.getCategory?.name,
+				description: this.categoryModule.getCategory?.description
 			}))
 		)
 		return { meta }
@@ -111,19 +111,14 @@ export default class Category
 		return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
 	}
 
-	get category(): CategoryModel {
-		return this.categoryModule.getCategory
-	}
-
 	created(): void {
 		this.$watch(
 			() => this.$route,
 			(to: RouteLocationNormalized, from: RouteLocationNormalized) => {
-				if (to.name === 'Category') {
-					this.fetchCategory()
+				if (to.name === MainRouteNames.CATEGORY) {
 					this.fetchPaginationData<ProductModel>()
 				}
-				if (to.path !== from.path && to.name === 'Category') {
+				if (to.path !== from.path && to.name === MainRouteNames.CATEGORY) {
 					this.paginationModule.unsetResults(this.paginationNamespace)
 					this.formEl?.classList.toggle('opened')
 					this.formEl?.setAttribute(
@@ -161,7 +156,9 @@ export default class Category
 			})
 		}
 
-		this.fetchCategory()
+		const categorySlug = this.$route.params.category_slug
+		this.categoryModule.fetchCategoryFromRemote(categorySlug)
+
 		this.fetchPaginationData<ProductModel>()
 	}
 
@@ -172,11 +169,6 @@ export default class Category
 			'aria-expanded',
 			this.formEl?.classList.contains('opened') as unknown as string
 		)
-	}
-
-	public fetchCategory(): void {
-		const categoryId = this.$route.params.category_slug
-		this.categoryModule.fetchCategoryFromRemote(categoryId as string)
 	}
 
 	fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {

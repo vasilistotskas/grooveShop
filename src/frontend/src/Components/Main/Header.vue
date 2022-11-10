@@ -3,71 +3,30 @@
 		<div class="preheader" :class="{ 'preheader--hidden': !showPreHeader }">
 			<p>
 				Groove
-				<a :href="backendBaseUrl">
+				<a :href="appModule.backendBaseUrl">
 					<span style="text-decoration: underline">Here</span>!</a
 				>
 			</p>
 		</div>
-		<Navbar
-			:cart-total-length="cartTotalLength"
-			:pre-head-hidden="!showPreHeader"
-			:navbar-menu-hidden="navbarMenuHidden"
-			:categories-tree-data="categoriesTreeData"
-			:is-authenticated="isAuthenticated"
-			:is-mobile="isMobile"
-		/>
+		<Navbar />
 	</header>
 </template>
 
 <script lang="ts">
+import AppModule from '@/State/App/AppModule'
+import { getModule } from 'vuex-module-decorators'
 import Navbar from '@/Components/Navbar/Navbar.vue'
 import { Options as Component, Vue } from 'vue-class-component'
-import { PropType } from 'vue'
-import CategoryModel from '@/State/Category/CategoryModel'
 
 @Component({
 	name: 'Header',
 	components: {
 		Navbar
-	},
-	props: {
-		cartTotalLength: {
-			type: Number,
-			default: 0
-		},
-		backendBaseUrl: {
-			type: String,
-			default: ''
-		},
-		navbarMenuHidden: {
-			type: Boolean,
-			default: false
-		},
-		isMobile: {
-			type: Boolean,
-			default: false
-		},
-		categoriesTreeData: {
-			type: Array as PropType<Array<CategoryModel>>
-		},
-		isAuthenticated: {
-			type: Boolean,
-			default: false
-		},
-		isLoading: {
-			type: Boolean,
-			default: true
-		}
 	}
 })
 export default class Header extends Vue {
-	cartTotalLength = 0
-	backendBaseUrl = ''
+	appModule = getModule(AppModule)
 	showPreHeader = true
-	navbarMenuHidden = false
-	isMobile = false
-	categoriesTreeData!: Array<CategoryModel>
-	isAuthenticated = false
 	lastScrollPosition = 0
 
 	mounted(): void {

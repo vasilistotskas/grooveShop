@@ -26,32 +26,27 @@
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
 import { useMeta } from 'vue-meta'
 import { AxiosResponse } from 'axios'
 import { computed } from '@vue/runtime-core'
+import { getModule } from 'vuex-module-decorators'
+import UserModule from '@/State/User/Profile/UserModule'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import ProductCard from '@/Components/Product/ProductCard.vue'
 import Pagination from '@/Components/Pagination/Pagination.vue'
 import { Options as Component, setup } from 'vue-class-component'
-import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 import UserFavouriteModel from '@/State/User/Favourite/UserFavouriteModel'
 import { PaginationModel } from '@/State/Pagination/Model/PaginationModel'
 import PaginatedComponent from '@/Components/Pagination/PaginatedComponent'
 import { PaginationRoutesEnum } from '@/State/Pagination/Enum/PaginationRoutesEnum'
+import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
 import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
 	name: 'UserFavourites',
 	extends: PaginatedComponent,
-	props: {
-		userData: {
-			type: Object as PropType<UserProfileModel>,
-			required: true
-		}
-	},
 	components: {
 		ProductCard,
 		Pagination
@@ -61,15 +56,16 @@ export default class UserFavourites
 	extends PaginatedComponent<UserFavouriteModel>
 	implements PaginatedComponentInterface<UserFavouriteModel>
 {
-	userData!: UserProfileModel
+	userModule = getModule(UserModule)
+	productFavouriteModule = getModule(ProductFavouriteModule)
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_FAVOURITES
 
 	meta = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
-				title: `${this.userData?.first_name} ${this.userData?.last_name} | Favourites`,
-				description: `${this.userData?.first_name} ${this.userData?.last_name} | Favourites`
+				title: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Favourites`,
+				description: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Favourites`
 			}))
 		)
 		return {
@@ -97,6 +93,9 @@ export default class UserFavourites
 			})
 		}
 
+		this.productFavouriteModule.fetchUserFavouritesFromRemote(
+			this.userModule.getUserData.id
+		)
 		this.fetchPaginationData<UserFavouriteModel>()
 	}
 
@@ -114,7 +113,7 @@ export default class UserFavourites
 	}
 
 	public buildEndPointUrlForPaginatedResults(): string {
-		const userId = this.userData.id
+		const userId = this.userModule.getUserData.id
 		return 'favourites/products' + `/${userId}`
 	}
 }

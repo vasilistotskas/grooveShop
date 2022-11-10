@@ -17,26 +17,6 @@
 					<div class="card-title">
 						<span v-if="product.name">{{ contentShorten(product.name) }}</span>
 					</div>
-					<div class="card-review-content">
-						<div class="card-review-content-stars">
-							<svg
-								v-for="(star, i) of backgroundStars(product.review_average)"
-								:key="i"
-								aria-hidden="true"
-								class="star star-background"
-								data-icon="star"
-								data-prefix="fas"
-								focusable="false"
-								role="img"
-								viewBox="0 0 576 512"
-								xmlns="http://www.w3.org/2000/svg"
-								v-html="star"
-							/>
-						</div>
-						<div class="card-review-content-count">
-							<span>({{ product.review_counter }})</span>
-						</div>
-					</div>
 					<div class="card-text">
 						<span class="card-text-price-from">
 							from <span class="card-text-price-num">${{ product.price }}</span>
@@ -60,12 +40,12 @@
 </template>
 
 <script lang="ts">
-import { Emitter } from 'mitt'
-import { inject, PropType } from 'vue'
+import { PropType } from 'vue'
 import { constant, times } from 'lodash'
 import { helpers } from '@/Helpers/main'
+import CartModule from '@/State/Cart/CartModule'
+import { getModule } from 'vuex-module-decorators'
 import GrooveImage from '@/Utilities/GrooveImage.vue'
-import { CartEvents } from '@/Emitter/Type/Cart/Events'
 import ProductModel from '@/State/Product/ProductModel'
 import { Options as Component, Vue } from 'vue-class-component'
 import { ImageTypeOptions } from '@/Helpers/MediaStream/ImageUrlEnum'
@@ -85,10 +65,10 @@ const starHalfSvg =
 	}
 })
 export default class ProductCard extends Vue {
+	cartModule = getModule(CartModule)
 	quantity = 1
 	product!: ProductModel
 	ImageTypeOptions = ImageTypeOptions
-	emitter: Emitter<CartEvents> | undefined = inject('emitter')
 
 	get disabled(): boolean {
 		return this.product?.active === 'False' || this.product?.stock <= 0
@@ -114,7 +94,7 @@ export default class ProductCard extends Vue {
 			quantity: this.quantity
 		}
 
-		this.emitter?.emit('addToCart', item)
+		this.cartModule.addToCart(item)
 	}
 
 	public contentShorten(productName: string): string {

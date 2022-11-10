@@ -33,6 +33,7 @@ export default defineConfig({
 		target: 'esnext',
 		outDir: './dist/',
 		assetsDir: './backend/static/js',
+		minify: 'terser',
 		rollupOptions: {
 			output: {
 				manualChunks(id) {

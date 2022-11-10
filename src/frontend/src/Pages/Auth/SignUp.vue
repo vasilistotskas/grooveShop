@@ -2,8 +2,8 @@
 	<div class="page-sign-up mt-7 mb-5">
 		<div class="container">
 			<Breadcrumbs :bread-crumb-path="breadCrumbPath" />
-			<template v-if="registrationLoading"> loading... </template>
-			<template v-else-if="!registrationCompleted">
+			<template v-if="signupModule.getRegistrationLoading"> loading... </template>
+			<template v-else-if="!signupModule.getRegistrationCompleted">
 				<div class="card sign-up-card">
 					<div class="card-body card-body-border-top">
 						<h1 class="plr-15 mb-3 mt-3">Sign Up</h1>
@@ -62,7 +62,7 @@
 										myContext.errors.confirmPassword
 									}}</span>
 								</div>
-								<span v-show="registrationError" class="error">
+								<span v-show="signupModule.getRegistrationError" class="error">
 									An error occurred while processing your request.
 								</span>
 								<button
@@ -202,25 +202,9 @@ export default class Register extends Vue {
 		return router.currentRoute.value.meta.breadcrumb
 	}
 
-	get registrationCompleted(): boolean {
-		return this.signupModule.getRegistrationCompleted
-	}
-
-	get registrationError(): boolean {
-		return this.signupModule.getRegistrationError
-	}
-
-	get registrationLoading(): boolean {
-		return this.signupModule.getRegistrationLoading
-	}
-
 	updated(): void {
 		const emailFromLocalStorage = this.signupModule.getRegistrationEmail
 		if (emailFromLocalStorage) this.activationEmailAtLocalStorage = true
-	}
-
-	clearRegistrationStatus(): void {
-		this.signupModule.clearRegistrationStatus()
 	}
 
 	activationEmailResend(): void {
@@ -238,7 +222,7 @@ export default class Register extends Vue {
 		from: RouteLocationNormalized,
 		next: NavigationGuardNext
 	) {
-		this.clearRegistrationStatus()
+		this.signupModule.clearRegistrationStatus()
 		next()
 	}
 }

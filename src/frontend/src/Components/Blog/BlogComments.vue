@@ -46,7 +46,8 @@ import BlogCommentCard from '@/Components/Blog/BlogCommentCard.vue'
 			required: true
 		},
 		userId: {
-			type: Number
+			type: Number,
+			required: false
 		},
 		blogPostComments: {
 			type: Array as PropType<Array<BlogCommentModel>>,

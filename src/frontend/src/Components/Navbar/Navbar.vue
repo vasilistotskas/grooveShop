@@ -17,23 +17,27 @@
 								:img-class="'main-logo img-fluid'"
 								:img-height="85"
 								:img-width="175"
-								loading="eager"
+								:loading="'eager'"
 								:img-fit="ImageFitOptions.outside"
 								:img-position="ImagePositionOptions.center"
 								:img-format="ImageFormatOptions.png"
+								:fetch-priority="'high'"
 							/>
 						</RouterLink>
 					</h1>
 				</div>
 
 				<div
-					v-if="categoriesTreeData"
-					:class="{ wrapper: categoriesTreeData.length === 0 }"
+					v-if="
+						categoryModule.getCategoriesTree &&
+						categoryModule.getCategoriesTree.length > 0
+					"
+					:class="{ wrapper: categoryModule.getCategoriesTree.length === 0 }"
 					class="navbar-categories-loading"
 				>
 					<div
 						:class="{
-							'content wrapper-cell': categoriesTreeData.length === 0
+							'content wrapper-cell': categoryModule.getCategoriesTree.length === 0
 						}"
 						class="products-header"
 						@click="menuToggle"
@@ -65,13 +69,9 @@
 
 				<div class="blog-header">
 					<RouterLink aria-label="Blog" class="btn-w-effect" title="Blog" to="/blog">
-						<font-awesome-icon v-if="isMobile" :icon="blogIcon" />
+						<font-awesome-icon v-if="appModule.isMobile" :icon="blogIcon" />
 						<font-awesome-icon v-else :icon="blogIcon" size="2x" />
 						<h3 class="navbar-blog-title">BLOG</h3>
-						<span class="line-1" />
-						<span class="line-2" />
-						<span class="line-3" />
-						<span class="line-4" />
 					</RouterLink>
 				</div>
 				<div class="search-header">
@@ -104,13 +104,13 @@
 				<ul class="navigation-header">
 					<li class="navigation-header-part">
 						<RouterLink
-							v-if="isAuthenticated"
+							v-if="authModule.isAuthenticated"
 							:to="{ name: 'Favourites' }"
 							aria-label="Favourites"
 							title="Favourites"
 						>
 							<font-awesome-icon
-								v-if="isMobile"
+								v-if="appModule.isMobile"
 								:icon="heartIcon"
 								:style="{ color: 'rgba(200,60,60,0.79)' }"
 							/>
@@ -122,19 +122,19 @@
 							/>
 						</RouterLink>
 						<RouterLink v-else aria-label="Log In" title="Log In" to="/log-in">
-							<font-awesome-icon v-if="isMobile" :icon="heartIcon" />
+							<font-awesome-icon v-if="appModule.isMobile" :icon="heartIcon" />
 							<font-awesome-icon v-else :icon="heartIcon" size="2x" />
 						</RouterLink>
 					</li>
 					<li class="navigation-header-part">
 						<RouterLink
-							v-if="isAuthenticated"
+							v-if="authModule.isAuthenticated"
 							aria-label="My Account"
 							title="My Account"
 							to="/user-account"
 						>
 							<font-awesome-icon
-								v-if="isMobile"
+								v-if="appModule.isMobile"
 								:icon="userIcon"
 								:style="{ color: 'rgba(200,60,60,0.79)' }"
 							/>
@@ -146,15 +146,15 @@
 							/>
 						</RouterLink>
 						<RouterLink v-else aria-label="Log In" title="Log In" to="/log-in">
-							<font-awesome-icon v-if="isMobile" :icon="userIcon" />
+							<font-awesome-icon v-if="appModule.isMobile" :icon="userIcon" />
 							<font-awesome-icon v-else :icon="userIcon" size="2x" />
 						</RouterLink>
 					</li>
 					<li class="navigation-header-part">
 						<RouterLink aria-label="Cart" title="Cart" to="/cart">
-							<font-awesome-icon v-if="isMobile" :icon="shoppingCartIcon" />
+							<font-awesome-icon v-if="appModule.isMobile" :icon="shoppingCartIcon" />
 							<font-awesome-icon v-else :icon="shoppingCartIcon" size="2x" />
-							<span class="cart-total-length">{{ cartTotalLength }}</span>
+							<span class="cart-total-length">{{ cartModule.getCartTotalLength }}</span>
 						</RouterLink>
 					</li>
 					<ThemeModeSwitcher />
@@ -163,11 +163,11 @@
 			<transition name="fade">
 				<NavbarCategories
 					v-if="
-						categoriesTreeData &&
-						Object.keys(categoriesTreeData).length > 0 &&
-						!navbarMenuHidden
+						categoryModule.getCategoriesTree &&
+						categoryModule.getCategoriesTree.length > 0 &&
+						!appModule.getNavbarMenuHidden
 					"
-					:categories-tree="categoriesTreeData"
+					:categories-tree="categoryModule.getCategoriesTree"
 					:main-toggle-button="$refs.mainToggleButton"
 					:navbar-products-button="$refs.navbarProductsButton"
 				/>
@@ -184,15 +184,17 @@ import {
 	ImagePositionOptions
 } from '@/Helpers/MediaStream/ImageUrlEnum'
 import router from '@/Routes'
-import { Emitter } from 'mitt'
 import { AxiosResponse } from 'axios'
-import { inject, PropType } from 'vue'
-import { AppEvents } from '@/Emitter/Type/App/Events'
+import AppModule from '@/State/App/AppModule'
+import CartModule from '@/State/Cart/CartModule'
+import { getModule } from 'vuex-module-decorators'
 import GrooveImage from '@/Utilities/GrooveImage.vue'
+import AuthModule from '@/State/Auth/Auth/AuthModule'
 import ProductModel from '@/State/Product/ProductModel'
+import UserModule from '@/State/User/Profile/UserModule'
 import { Options as Component } from 'vue-class-component'
-import CategoryModel from '@/State/Category/CategoryModel'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
+import CategoryModule from '@/State/Category/CategoryModule'
 import LocaleChanger from '@/Components/I18n/LocaleChanger.vue'
 import ThemeModeSwitcher from '@/Utilities/ThemeModeSwitcher.vue'
 import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog'
@@ -214,31 +216,6 @@ import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/Pagination
 		GrooveImage,
 		ThemeModeSwitcher,
 		LocaleChanger
-	},
-	props: {
-		cartTotalLength: {
-			type: Number,
-			default: 0
-		},
-		preHeadHidden: {
-			type: Boolean,
-			default: false
-		},
-		navbarMenuHidden: {
-			type: Boolean,
-			default: false
-		},
-		isMobile: {
-			type: Boolean,
-			default: false
-		},
-		categoriesTreeData: {
-			type: Array as PropType<Array<CategoryModel>>
-		},
-		isAuthenticated: {
-			type: Boolean,
-			default: false
-		}
 	}
 })
 export default class Navbar
@@ -249,17 +226,16 @@ export default class Navbar
 		mainToggleButton: HTMLElement
 		navbarProductsButton: HTMLElement
 	}
+	appModule = getModule(AppModule)
+	authModule = getModule(AuthModule)
+	cartModule = getModule(CartModule)
+	categoryModule = getModule(CategoryModule)
+	userModule = getModule(UserModule)
 	paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
 	endpointUrl = 'search-product'
 	searchQuery = {
 		query: ''
 	}
-	preHeadHidden = true
-	cartTotalLength = 0
-	navbarMenuHidden = false
-	isMobile = false
-	categoriesTreeData!: Array<CategoryModel>
-	isAuthenticated = false
 	blogIcon = faBlog
 	userIcon = faUser
 	heartIcon = faHeart
@@ -269,7 +245,6 @@ export default class Navbar
 	ImageFormatOptions = ImageFormatOptions
 	ImageFitOptions = ImageFitOptions
 	ImagePositionOptions = ImagePositionOptions
-	emitter: Emitter<AppEvents> | undefined = inject('emitter')
 
 	public menuToggle(): void {
 		this.$refs.mainToggleButton.classList.toggle('opened')
@@ -278,7 +253,7 @@ export default class Navbar
 			this.$refs.mainToggleButton.classList.contains('opened') as unknown as string
 		)
 
-		this.emitter?.emit('setNavbarMenuHidden', !this.navbarMenuHidden)
+		this.appModule.setNavbarMenuHidden(!this.appModule.getNavbarMenuHidden)
 	}
 
 	fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {

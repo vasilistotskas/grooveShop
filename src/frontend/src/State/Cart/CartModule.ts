@@ -18,7 +18,7 @@ const toast = useToast()
 	name: 'cart'
 })
 export default class CartModule extends AppBaseModule {
-	cart!: Array<CartItemModel>
+	cart: Array<CartItemModel> = []
 	cartTotalPriceForPayWay = 0
 
 	get getCart(): Array<CartItemModel> {
@@ -31,13 +31,14 @@ export default class CartModule extends AppBaseModule {
 
 	get getCartTotalLength(): number {
 		let totalLength = 0
-		for (let i = 0; i < this.cart?.length; i++) {
+		for (let i = 0; i < this.cart.length; i++) {
 			totalLength += this.cart[i].quantity
 		}
 		return totalLength
 	}
 
 	get getCartTotalPrice(): number {
+		if (!this.cart) return 0
 		return this.cart.reduce((acc: number, curVal: CartItemModel) => {
 			return (acc += curVal.product.price * curVal.quantity)
 		}, 0)

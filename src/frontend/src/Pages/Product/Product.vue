@@ -92,7 +92,7 @@
 								:style="{ color: '#53e24aeb' }"
 								size="lg"
 							/>
-							<span>{{ addToCartButtonText }}</span>
+							<span>{{ productModule.addToCartButtonText }}</span>
 						</button>
 						<FavouriteButton
 							:model="product"
@@ -100,7 +100,10 @@
 							:getter-type="'getIsCurrentProductInUserFavourites'"
 							:getter-params="{ productId: product.id }"
 							:dispatch-type="'toggleFavourite'"
-							:dispatch-params="{ productId: product.id, userId: userId }"
+							:dispatch-params="{
+								productId: product.id,
+								userId: userModule.getUserData?.id
+							}"
 							:use-store="true"
 						/>
 					</div>
@@ -108,9 +111,11 @@
 				<div class="product-page-grid-info-part-two">
 					<div class="product-page-grid-modal">
 						<ProductReview
-							:is-authenticated="isAuthenticated"
-							:user-has-already-reviewed-product="userHasAlreadyReviewedProduct"
-							:user-to-product-review="userToProductReview"
+							:is-authenticated="authModule.isAuthenticated"
+							:user-has-already-reviewed-product="
+								productReviewModule.getUserHasAlreadyReviewedProduct
+							"
+							:user-to-product-review="productReviewModule.getUserToProductReview"
 						/>
 					</div>
 				</div>
@@ -120,12 +125,12 @@
 	<ProductReviews
 		v-if="product?.id"
 		:product="product"
-		:user-id="userId"
-		:user-to-product-review="userToProductReview"
-		:product-reviews-average="productReviewsAverage"
-		:product-reviews-counter="productReviewsCounter"
-		:is-authenticated="isAuthenticated"
-		:product-review-module-namespace="productReviewModuleNamespace"
+		:user-id="userModule.getUserData?.id"
+		:user-to-product-review="productReviewModule.getUserToProductReview"
+		:product-reviews-average="productReviewModule.getProductReviewsAverage"
+		:product-reviews-counter="productReviewModule.getProductReviewsCounter"
+		:is-authenticated="authModule.isAuthenticated"
+		:product-review-module-namespace="productReviewModule.getNamespace"
 	/>
 </template>
 
@@ -135,7 +140,6 @@ import router from '@/Routes'
 import { Emitter } from 'mitt'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
-import { useToast } from 'vue-toastification'
 import CartModule from '@/State/Cart/CartModule'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
@@ -158,8 +162,6 @@ import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag'
 import { faShippingFast } from '@fortawesome/free-solid-svg-icons/faShippingFast'
 import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
-
-const toast = useToast()
 
 @Component({
 	name: 'Product',
@@ -187,6 +189,12 @@ export default class Product extends Vue {
 	productReviewModule = getModule(ProductReviewModule)
 	authModule = getModule(AuthModule)
 	emitter: Emitter<ProductEvents> | undefined = inject('emitter')
+	quantity = 1
+	ImageTypeOptions = ImageTypeOptions
+	cubesIcon = faCubes
+	shoppingBagIcon = faShoppingBag
+	truckPickupIcon = faShippingFast
+	warningTriangleIcon = faExclamationTriangle
 
 	meta = setup(() => {
 		const meta = useMeta(
@@ -198,59 +206,18 @@ export default class Product extends Vue {
 		return { meta }
 	})
 
-	quantity = 1
-
-	cubesIcon = faCubes
-	shoppingBagIcon = faShoppingBag
-	truckPickupIcon = faShippingFast
-	warningTriangleIcon = faExclamationTriangle
-
-	ImageTypeOptions = ImageTypeOptions
-
 	get breadCrumbPath() {
 		const currentRouteMetaBreadcrumb = router.currentRoute.value.meta
 			.breadcrumb as RouteMetaBreadcrumbFunction
 		return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
 	}
 
-	get isAuthenticated(): boolean {
-		return this.authModule.isAuthenticated
-	}
-
-	get productReviewModuleNamespace() {
-		return this.productReviewModule.getNamespace
-	}
-
 	get product(): ProductModel {
 		return this.productModule.getProductData
 	}
 
-	get addToCartButtonText(): string {
-		return this.productModule.addToCartButtonText
-	}
-
 	get disabled(): boolean {
 		return this.product?.active === 'False' || this.product?.stock <= 0
-	}
-
-	get userId(): number | undefined {
-		return this.userModule.getUserId
-	}
-
-	get userToProductReview(): ProductReviewModel {
-		return this.productReviewModule.getUserToProductReview
-	}
-
-	get productReviewsAverage(): number {
-		return this.productReviewModule.getProductReviewsAverage
-	}
-
-	get productReviewsCounter(): number {
-		return this.productReviewModule.getProductReviewsCounter
-	}
-
-	get userHasAlreadyReviewedProduct(): boolean {
-		return this.productReviewModule.getUserHasAlreadyReviewedProduct
 	}
 
 	unmounted() {
@@ -263,32 +230,15 @@ export default class Product extends Vue {
 			this.productModule.updateProductHits()
 			this.productReviewModule.fetchUserToProductReviewFromRemote({
 				productId: this.productModule.getProductData.id,
-				userId: this.userModule.getUserId
+				userId: this.userModule.getUserData?.id
 			})
-		})
-		this.emitter?.on('setProductReviewsAverage', (e) => {
-			this.productReviewModule.setProductReviewsAverage(e)
-		})
-		this.emitter?.on('setProductReviewsCounter', (e) => {
-			this.productReviewModule.setProductReviewsCounter(e)
-		})
-		this.emitter?.on('unsetUserToProductReview', () => {
-			this.productReviewModule.unsetUserToProductReview()
-		})
-		this.emitter?.on('unsetProductReviews', () => {
-			this.productReviewModule.unsetProductReviews()
 		})
 		this.emitter?.on('toggleReview', (e) => {
 			this.productReviewModule.toggleReview({
 				FormData: e,
 				IsAuthenticated: this.authModule.isAuthenticated,
 				productId: this.productModule.getProductData.id,
-				userId: this.userModule.getUserId
-			})
-		})
-		this.emitter?.on('deleteCurrentProductReview', (e) => {
-			this.productReviewModule.deleteCurrentProductReview(e).then(() => {
-				toast.success('Your Review has been deleted')
+				userId: this.userModule.getUserData?.id
 			})
 		})
 	}

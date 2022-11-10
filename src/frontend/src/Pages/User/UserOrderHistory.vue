@@ -26,15 +26,15 @@
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
 import { useMeta } from 'vue-meta'
 import { AxiosResponse } from 'axios'
 import { computed } from '@vue/runtime-core'
+import { getModule } from 'vuex-module-decorators'
+import UserModule from '@/State/User/Profile/UserModule'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import UserOrderModel from '@/State/User/Order/UserOrderModel'
 import Pagination from '@/Components/Pagination/Pagination.vue'
 import { Options as Component, setup } from 'vue-class-component'
-import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 import UserFavouriteModel from '@/State/User/Favourite/UserFavouriteModel'
 import { PaginationModel } from '@/State/Pagination/Model/PaginationModel'
@@ -47,12 +47,6 @@ import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/Pagination
 @Component({
 	name: 'UserOrderHistory',
 	extends: PaginatedComponent,
-	props: {
-		userData: {
-			type: Object as PropType<UserProfileModel>,
-			required: true
-		}
-	},
 	components: {
 		Pagination,
 		UserOrderHistoryContainer
@@ -62,15 +56,15 @@ export default class UserOrderHistory
 	extends PaginatedComponent<UserOrderModel>
 	implements PaginatedComponentInterface<UserOrderModel>
 {
+	userModule = getModule(UserModule)
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_ORDER_HISTORY
-	userData!: UserProfileModel
 
 	meta = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
-				title: `${this.userData?.first_name} ${this.userData?.last_name} | Order History`,
-				description: `${this.userData?.first_name} ${this.userData?.last_name} | Order History`
+				title: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Order History`,
+				description: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Order History`
 			}))
 		)
 		return {

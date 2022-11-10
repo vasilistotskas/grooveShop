@@ -8,10 +8,10 @@ stripe==3.5.0
 django-admin-thumbnails==0.2.6
 django-mptt==0.14.0
 django-js-asset==2.0.0
-strawberry-graphql-django==0.7.1
+strawberry-graphql-django==0.8
 django-redis==5.2.0
 celery==5.2.7
-Faker==15.2.0
+Faker==15.3.1
 django-environ==0.9.0
 django-tinymce==3.5.0
 gunicorn==20.1.0

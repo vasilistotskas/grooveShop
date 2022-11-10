@@ -7,8 +7,8 @@
 					<font-awesome-icon :icon="lockIcon" size="4x" />
 				</div>
 				<h1>Reset Password Confirm</h1>
-				<template v-if="resetLoading"> loading... </template>
-				<template v-else-if="!resetCompleted">
+				<template v-if="passwordModule.getResetLoading"> loading... </template>
+				<template v-else-if="!passwordModule.getResetCompleted">
 					<form
 						@submit="myContext.onSubmit"
 						class="_form"
@@ -63,7 +63,7 @@
 						</div>
 					</form>
 
-					<span v-show="resetError" class="error">
+					<span v-show="passwordModule.getResetError" class="error">
 						A error occurred while processing your request.
 					</span>
 				</template>
@@ -107,18 +107,6 @@ export default class PasswordRestConfirm extends Vue {
 
 	get breadCrumbPath() {
 		return router.currentRoute.value.meta.breadcrumb
-	}
-
-	get resetCompleted(): boolean {
-		return this.passwordModule.getResetCompleted
-	}
-
-	get resetError(): boolean {
-		return this.passwordModule.getResetError
-	}
-
-	get resetLoading(): boolean {
-		return this.passwordModule.getResetLoading
 	}
 
 	myContext = setup(() => {
@@ -172,10 +160,6 @@ export default class PasswordRestConfirm extends Vue {
 			meta
 		}
 	})
-
-	clearResetStatus(): void {
-		this.passwordModule.clearResetStatus()
-	}
 }
 </script>
 

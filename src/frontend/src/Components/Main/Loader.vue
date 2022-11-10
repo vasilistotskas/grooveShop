@@ -15,7 +15,7 @@
 				xmlns="http://www.w3.org/2000/svg"
 				xmlns:xlink="http://www.w3.org/1999/xlink"
 			>
-				<g style="opacity: 0.5">
+				<g>
 					<polygon
 						class="ldio-j8fbajw7p8s-st0"
 						points="41.5 62 30 62 24.2 72 30 82 41.5 82 47.3 72"

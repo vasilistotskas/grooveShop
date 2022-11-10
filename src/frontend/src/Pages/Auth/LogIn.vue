@@ -132,13 +132,11 @@ import { getModule } from 'vuex-module-decorators'
 import { toFormValidator } from '@vee-validate/zod'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
 import UserModule from '@/State/User/Profile/UserModule'
-import CountryModule from '@/State/Country/CountryModule'
 import LogInInputApi from '@/State/Auth/Interface/LogInInputApi'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
-import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
 
 @Component({
 	name: 'LogIn',
@@ -149,8 +147,6 @@ import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteMo
 export default class LogIn extends Vue {
 	userModule = getModule(UserModule)
 	authModule = getModule(AuthModule)
-	productFavouriteModule = getModule(ProductFavouriteModule)
-	countryModule = getModule(CountryModule)
 	googleIcon = faGoogle
 	facebookIcon = faFacebook
 
@@ -188,16 +184,7 @@ export default class LogIn extends Vue {
 				await this.authModule
 					.login(apiData)
 					.then(() => {
-						this.userModule.fetchUserDataFromRemote().then((response) => {
-							if (response) {
-								this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(
-									this.userModule.getUserData
-								)
-								this.productFavouriteModule.fetchUserFavouritesFromRemote(
-									response.data[0].user
-								)
-							}
-						})
+						this.userModule.fetchUserDataFromRemote()
 					})
 					.catch((error: Error) => {
 						console.log(error)

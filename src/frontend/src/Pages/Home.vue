@@ -4,14 +4,14 @@
 			<div class="home-top-grid-content">
 				<HomePageMainSlider
 					v-if="
-						homepageSlider &&
-						homepageSlider[0] &&
-						Object.keys(homepageSlider[0]).length > 0
+						sliderModule.getSlidersData &&
+						sliderModule.getSlidersData[0] &&
+						Object.keys(sliderModule.getSlidersData[0]).length > 0
 					"
 					:img-height="760"
 					:img-width="1200"
-					:slider="homepageSlider[0]"
-					:backend-base-url="backendBaseUrl"
+					:slider="sliderModule.getSlidersData[0]"
+					:backend-base-url="appModule.backendBaseUrl"
 					class="grid-item-swipper"
 				/>
 
@@ -19,28 +19,28 @@
 					<div class="grid-item-content-one">
 						<HomePageMainSlider
 							v-if="
-								homepageSlider &&
-								homepageSlider[1] &&
-								Object.keys(homepageSlider[1]).length > 0
+								sliderModule.getSlidersData &&
+								sliderModule.getSlidersData[1] &&
+								Object.keys(sliderModule.getSlidersData[1]).length > 0
 							"
 							:img-height="400"
 							:img-width="525"
-							:slider="homepageSlider[1]"
-							:backend-base-url="backendBaseUrl"
+							:slider="sliderModule.getSlidersData[1]"
+							:backend-base-url="appModule.backendBaseUrl"
 							class="grid-item-swipper"
 						/>
 					</div>
 					<div class="grid-item-content-two">
 						<HomePageMainSlider
 							v-if="
-								homepageSlider &&
-								homepageSlider[2] &&
-								Object.keys(homepageSlider[2]).length > 0
+								sliderModule.getSlidersData &&
+								sliderModule.getSlidersData[2] &&
+								Object.keys(sliderModule.getSlidersData[2]).length > 0
 							"
 							:img-height="400"
 							:img-width="525"
-							:slider="homepageSlider[2]"
-							:backend-base-url="backendBaseUrl"
+							:slider="sliderModule.getSlidersData[2]"
+							:backend-base-url="appModule.backendBaseUrl"
 							class="grid-item-swipper"
 						/>
 					</div>
@@ -51,7 +51,7 @@
 		<div class="home-usp-grid-container">
 			<div class="home-usp-grid-content mb-5">
 				<div class="grid-usp-item">
-					<font-awesome-icon v-if="isMobile" :icon="phoneIcon" />
+					<font-awesome-icon v-if="appModule.isMobile" :icon="phoneIcon" />
 					<font-awesome-icon v-else :icon="phoneIcon" size="3x" />
 					<span
 						>Lorem Ipsum
@@ -59,7 +59,7 @@
 					</span>
 				</div>
 				<div class="grid-usp-item">
-					<font-awesome-icon v-if="isMobile" :icon="envelopeIcon" />
+					<font-awesome-icon v-if="appModule.isMobile" :icon="envelopeIcon" />
 					<font-awesome-icon v-else :icon="envelopeIcon" size="3x" />
 					<span
 						>Lorem Ipsum
@@ -67,7 +67,7 @@
 					</span>
 				</div>
 				<div class="grid-usp-item">
-					<font-awesome-icon v-if="isMobile" :icon="commentIcon" />
+					<font-awesome-icon v-if="appModule.isMobile" :icon="commentIcon" />
 					<font-awesome-icon v-else :icon="commentIcon" size="3x" />
 					<span
 						>Lorem Ipsum
@@ -86,7 +86,7 @@
 				</div>
 				<div class="grid-content-six">
 					<ProductCard
-						v-for="product in LatestProducts"
+						v-for="product in productModule.getLatestProductData"
 						:key="product.id"
 						:product="product"
 						class="grid-item"
@@ -102,9 +102,7 @@ import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import AppModule from '@/State/App/AppModule'
 import { getModule } from 'vuex-module-decorators'
-import SliderModel from '@/State/Slider/SliderModel'
 import SliderModule from '@/State/Slider/SliderModule'
-import ProductModel from '@/State/Product/ProductModel'
 import ProductModule from '@/State/Product/ProductModule'
 import ProductCard from '@/Components/Product/ProductCard.vue'
 import { faPhone } from '@fortawesome/free-solid-svg-icons/faPhone'
@@ -138,29 +136,6 @@ export default class Home extends Vue {
 	phoneIcon = faPhone
 	envelopeIcon = faEnvelope
 	commentIcon = faComment
-
-	get isMobile(): boolean {
-		return this.appModule.isMobile
-	}
-
-	get LatestProducts(): Array<ProductModel> {
-		return this.productModule.getLatestProductData
-	}
-
-	get homepageSlider(): Array<SliderModel> {
-		return this.sliderModule.getSlidersData
-	}
-
-	get backendBaseUrl(): string | undefined {
-		return this.appModule.backendBaseUrl
-	}
-
-	created(): void {
-		Promise.all([
-			this.productModule.fetchLatestProductsFromRemote(),
-			this.sliderModule.fetchSlidersFromRemote()
-		])
-	}
 }
 </script>
 

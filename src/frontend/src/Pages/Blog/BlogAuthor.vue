@@ -13,12 +13,12 @@
 
 		<h3>Posts by {{ displayName }}</h3>
 		<BlogAuthorPostList
-			v-if="authorPostSet"
-			:posts="authorPostSet"
+			v-if="authorById.postSet && authorById.postSet.length > 0"
+			:posts="authorById.postSet"
 			:show-author="false"
 			:author="authorById"
-			:tags="tags"
-			:authors="authors"
+			:tags="blogModule.getTags"
+			:authors="blogModule.getAuthors"
 		/>
 	</div>
 </template>
@@ -29,8 +29,6 @@ import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import BlogModule from '@/State/Blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
-import BlogTagModel from '@/State/Blog/BlogTagModel'
-import BlogPostModel from '@/State/Blog/BlogPostModel'
 import BlogAuthorModel from '@/State/Blog/BlogAuthorModel'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import { Options as Component, setup, Vue } from 'vue-class-component'
@@ -65,18 +63,6 @@ export default class BlogAuthor extends Vue {
 
 	get authorById(): BlogAuthorModel {
 		return this.blogModule.getAuthorById
-	}
-
-	get authorPostSet(): Array<BlogPostModel> {
-		return this.authorById.postSet
-	}
-
-	get tags(): Array<BlogTagModel> {
-		return this.blogModule.getTags
-	}
-
-	get authors(): Array<BlogAuthorModel> {
-		return this.blogModule.getAuthors
 	}
 
 	get displayName(): string {

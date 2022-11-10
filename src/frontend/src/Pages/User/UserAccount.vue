@@ -94,7 +94,7 @@
 				</div>
 			</div>
 
-			<RouterView :key="$route.path" :route="$route" :user-data="userData" />
+			<RouterView :key="$route.path" :route="$route" />
 		</div>
 	</div>
 </template>
@@ -105,7 +105,6 @@ import router from '@/Routes'
 import { Emitter } from 'mitt'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
-import BlogModule from '@/State/Blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
 import UserModule from '@/State/User/Profile/UserModule'
@@ -137,7 +136,6 @@ export default class UserAccount extends Vue {
 	productFavouriteModule = getModule(ProductFavouriteModule)
 	productReviewModule = getModule(ProductReviewModule)
 	countryModule = getModule(CountryModule)
-	blogModule = getModule(BlogModule)
 	MainRouteNames = MainRouteNames
 	profileImageFilename = ''
 	cogsIcon = faCogs
@@ -163,12 +161,8 @@ export default class UserAccount extends Vue {
 		return router.currentRoute.value.meta.breadcrumb
 	}
 
-	get isAuthenticated(): boolean {
-		return this.authModule.isAuthenticated
-	}
-
 	get userData(): UserProfileModel {
-		if (this.isAuthenticated) {
+		if (this.authModule.isAuthenticated) {
 			return this.userModule.getUserData
 		}
 		return new UserProfileModel()
@@ -189,16 +183,6 @@ export default class UserAccount extends Vue {
 		return first_name + ' ' + last_name
 	}
 
-	initializeUserData(): void {
-		this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(
-			this.userModule.getUserData
-		)
-		this.productFavouriteModule.fetchUserFavouritesFromRemote(
-			this.userModule?.getUserData?.id
-		)
-		this.blogModule.fetchCommentsByUser(this.userModule?.getUserData?.email)
-	}
-
 	created(): void {
 		this.$watch(
 			() => this.userData,
@@ -210,8 +194,7 @@ export default class UserAccount extends Vue {
 	}
 
 	mounted(): void {
-		this.initializeUserData()
-		this.profileImageFilename = this.userData.main_image_filename
+		this.profileImageFilename = this.userData?.main_image_filename
 	}
 
 	logout(): void {
