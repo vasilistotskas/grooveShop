@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.7.0 (2022-11-10)
+### Feature
+* **Frontend:** Performance update ([`ae1d048`](https://github.com/vasilistotskas/grooveShop/commit/ae1d048c0ddf958245df6d23aeb66c7b362675a3))
+
 ## v0.6.0 (2022-11-06)
 ### Feature
 * **Frontend:** Introduce Emitter and tons of code improvements ([`2167ff7`](https://github.com/vasilistotskas/grooveShop/commit/2167ff7568b9930af7ae387f1ae4103f2e53d7cb))
