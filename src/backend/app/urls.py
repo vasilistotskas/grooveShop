@@ -34,6 +34,7 @@ urlpatterns = [
     path("api/v1/", include("backend.product_review.urls")),
     path("api/v1/", include("backend.order.urls")),
     path("api/v1/", include("backend.user.urls")),
+    path("api/v1/", include("backend.user_address.urls")),
     path("api/v1/", include("backend.country.urls")),
     path("api/v1/", include("backend.slider.urls")),
     path("api/v1/", include("backend.search.urls")),

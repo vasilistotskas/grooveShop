@@ -93,6 +93,7 @@ DJANGO_APPS = [
 ]
 PROJECT_APPS = [
     "backend.user",
+    "backend.user_address",
     "backend.core",
     "backend.product",
     "backend.product_review",
