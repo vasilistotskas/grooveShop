@@ -91,8 +91,9 @@ export default class CountryModule extends AppBaseModule {
 	async findRegionsBasedOnAlphaFromInput(
 		countryAlpha2Key: CountryModel['alpha_2']
 	): Promise<void> {
-		const country = <CountryModel>find(this.countries, ['alpha_2', countryAlpha2Key])
-		await this.context.commit('setSelectedCountry', country)
-		return this.context.commit('setRegionsBasedOnAlpha', country.regions)
+		const countries = this.context.getters['getCountries']
+		const selectedCountry = <CountryModel>find(countries, ['alpha_2', countryAlpha2Key])
+		await this.context.commit('setSelectedCountry', selectedCountry)
+		return this.context.commit('setRegionsBasedOnAlpha', selectedCountry.regions)
 	}
 }

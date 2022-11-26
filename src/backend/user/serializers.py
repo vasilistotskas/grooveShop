@@ -1,6 +1,4 @@
 from backend.helpers.image_resize import make_thumbnail
-from backend.user.models import Country
-from backend.user.models import Region
 from backend.user.models import UserProfile
 from django.contrib.auth import get_user_model
 from djoser.serializers import UserCreateSerializer
@@ -13,20 +11,6 @@ class UserCreationSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
         model = User
         fields = ("id", "email", "first_name", "last_name", "password")
-
-
-class RegionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Region
-        fields = "__all__"
-
-
-class CountrySerializer(serializers.ModelSerializer):
-    regions = RegionSerializer(source="region_set", required=False, many=True)
-
-    class Meta:
-        model = Country
-        fields = ["name", "alpha_2", "alpha_3", "iso_cc", "phone_code", "regions"]
 
 
 class UserProfileSerializer(serializers.ModelSerializer):

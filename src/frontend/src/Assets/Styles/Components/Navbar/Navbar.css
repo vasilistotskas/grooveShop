@@ -272,8 +272,9 @@
 	width: 100%;
 }
 .navigation-header
-	.navigation-header-part:not(.navigation-header
-		.navigation-header-part.toggle-dark-mode-part) {
+	.navigation-header-part:not(
+		.navigation-header .navigation-header-part.toggle-dark-mode-part
+	) {
 	position: relative;
 }
 .navigation-header .toggle-dark-mode-part {

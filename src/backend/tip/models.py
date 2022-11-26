@@ -16,7 +16,7 @@ class Tip(TimeStampMixinModel):
     )
     title = models.CharField(max_length=200)
     content = models.TextField(max_length=1000)
-    kind = models.CharField(max_length=10, choices=TIP_KINDS, default=True)
+    kind = models.CharField(max_length=10, choices=TIP_KINDS)
     icon = models.FileField(
         upload_to="uploads/tip/", validators=[validate_file_extension]
     )

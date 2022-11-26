@@ -1,5 +1,6 @@
 from typing import List
 
+from backend.core.models import PublishableModel
 from backend.core.models import TimeStampMixinModel
 from backend.core.models import UUIDModel
 from django.conf import settings
@@ -8,7 +9,7 @@ from django.db import models
 User: str = settings.AUTH_USER_MODEL
 
 
-class Review(TimeStampMixinModel, UUIDModel):
+class Review(TimeStampMixinModel, PublishableModel, UUIDModel):
     STATUS = (
         ("New", "New"),
         ("True", "True"),

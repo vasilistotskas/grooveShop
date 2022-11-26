@@ -1,11 +1,7 @@
 import json
 
-from backend.user.models import Country
-from backend.user.models import Region
 from backend.user.models import UserAccount
 from backend.user.models import UserProfile
-from backend.user.serializers import CountrySerializer
-from backend.user.serializers import RegionSerializer
 from backend.user.serializers import UserProfileSerializer
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
@@ -148,19 +144,6 @@ class UserProfileData(APIView):
         userprofile = UserProfile.objects.filter(user=request.user)
         serializer = UserProfileSerializer(userprofile, many=True)
         return Response(serializer.data)
-
-
-class CountriesList(generics.ListAPIView):
-    queryset = Country.objects.all()
-    serializer_class = CountrySerializer
-
-
-class CountryDetail(generics.ListAPIView):
-    serializer_class = RegionSerializer
-
-    def get_queryset(self):
-        alpha_2 = self.kwargs["alpha_2"]
-        return Region.objects.filter(alpha_2=alpha_2)
 
 
 class ClearAllUserSessions(APIView):

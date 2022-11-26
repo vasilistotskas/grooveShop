@@ -105,6 +105,8 @@ PROJECT_APPS = [
     "backend.seo",
     "backend.tip",
     "backend.vat",
+    "backend.country",
+    "backend.region",
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",

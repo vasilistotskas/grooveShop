@@ -2,6 +2,10 @@ import os
 from typing import Any
 from typing import List
 
+from backend.core.models import TimeStampMixinModel
+from backend.core.models import UUIDModel
+from backend.country.models import Country
+from backend.region.models import Region
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
@@ -71,45 +75,18 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-class Country(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    alpha_2 = models.CharField(max_length=2, primary_key=True, unique=True)
-    alpha_3 = models.CharField(max_length=3, unique=True)
-    iso_cc = models.PositiveSmallIntegerField(blank=True, null=True, unique=True)
-    phone_code = models.PositiveSmallIntegerField(blank=True, null=True, unique=True)
-    image_flag = models.ImageField(blank=True, null=True, upload_to="uploads/country/")
-
-    class Meta:
-        verbose_name_plural = "Countries"
-
-    def __str__(self):
-        return self.name
-
-
-class Region(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    alpha = models.CharField(max_length=10, primary_key=True, unique=True)
-    alpha_2 = models.ForeignKey(Country, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name_plural = "Regions"
-
-    def __str__(self):
-        return self.name
-
-
-class UserProfile(models.Model):
+class UserProfile(TimeStampMixinModel, UUIDModel):
     id = models.AutoField(primary_key=True)
     user = models.OneToOneField(
         User, related_name="userprofile", on_delete=models.CASCADE
     )
-    first_name = models.CharField(max_length=20, blank=True, null=True)
-    last_name = models.CharField(max_length=20, blank=True, null=True)
+    first_name = models.CharField(max_length=100, blank=True, null=True)
+    last_name = models.CharField(max_length=100, blank=True, null=True)
     phone = models.PositiveBigIntegerField(blank=True, null=True)
-    city = models.CharField(max_length=50, blank=True, null=True)
-    zipcode = models.CharField(max_length=75, blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
+    zipcode = models.CharField(max_length=100, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
-    place = models.CharField(max_length=50, blank=True, null=True)
+    place = models.CharField(max_length=100, blank=True, null=True)
     country = models.ForeignKey(
         Country, null=True, blank=True, default=None, on_delete=models.SET_NULL
     )

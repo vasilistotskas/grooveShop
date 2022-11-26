@@ -388,7 +388,7 @@ export default class Checkout extends Vue {
 			customerDetailsData = cloneDeep(userData.value)
 
 			if (isAuthenticated.value) {
-				if (customerDetailsData.country === '') {
+				if (customerDetailsData?.country === '') {
 					customerDetailsData.country = 'choose'
 					customerDetailsData.region = 'choose'
 				}

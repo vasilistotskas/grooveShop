@@ -1,8 +1,8 @@
 import os
 
 from backend.app.settings import BASE_DIR
-from backend.user.models import Country
-from backend.user.models import Region
+from backend.country.models import Country
+from backend.region.models import Region
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import BaseCommand
