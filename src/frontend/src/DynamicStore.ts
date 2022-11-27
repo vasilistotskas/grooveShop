@@ -3,6 +3,7 @@ import TipModule from '@/State/Tip/TipModule'
 import AppModule from '@/State/App/AppModule'
 import CartModule from '@/State/Cart/CartModule'
 import BlogModule from '@/State/Blog/BlogModule'
+import AddressModule from '@/State/Address/AddressModule'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
 import SearchModule from '@/State/Search/SearchModule'
 import SliderModule from '@/State/Slider/SliderModule'
@@ -41,6 +42,7 @@ export interface DynamicStoreType {
 	blog: BlogModule
 	payWay: PayWayModule
 	tip: TipModule
+	address: AddressModule
 }
 // Declare empty store first
 const store = new Vuex.Store<DynamicStoreType>({

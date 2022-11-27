@@ -1,12 +1,15 @@
-import { RouteRecordRaw } from 'vue-router'
 import UserReviews from '@/Pages/User/UserReviews.vue'
 import UserAccount from '@/Pages/User/UserAccount.vue'
 import UserSettings from '@/Pages/User/UserSettings.vue'
+import { RouteParams, RouteRecordRaw } from 'vue-router'
 import UserPassword from '@/Pages/User/UserPassword.vue'
+import UserAddresses from '@/Pages/User/UserAddresses.vue'
 import UserFavourites from '@/Pages/User/UserFavourites.vue'
 import { MainRoutePaths } from '@/Routes/Enum/MainRoutePaths'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
 import UserOrderHistory from '@/Pages/User/UserOrderHistory.vue'
+import UserAddressesNew from '@/Pages/User/UserAddressesNew.vue'
+import UserAddressesEdit from '@/Pages/User/UserAddressesEdit.vue'
 import BreadcrumbItemInterface from '@/Routes/Interface/BreadcrumbItemInterface'
 
 const userRoutes: Array<RouteRecordRaw> = [
@@ -41,7 +44,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 						{
 							name: 'User Orders',
 							to: {
-								full_path: 'User-account/orders'
+								full_path: 'user-account/orders'
 							}
 						}
 					] as Array<BreadcrumbItemInterface>
@@ -62,7 +65,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 						{
 							name: 'User Settings',
 							to: {
-								full_path: 'User-account/settings'
+								full_path: 'user-account/settings'
 							}
 						}
 					] as Array<BreadcrumbItemInterface>
@@ -83,7 +86,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 						{
 							name: 'User Favourites',
 							to: {
-								full_path: 'User-account/favourites'
+								full_path: 'user-account/favourites'
 							}
 						}
 					] as Array<BreadcrumbItemInterface>
@@ -104,7 +107,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 						{
 							name: 'User Reviews',
 							to: {
-								full_path: 'User-account/reviews'
+								full_path: 'user-account/reviews'
 							}
 						}
 					] as Array<BreadcrumbItemInterface>
@@ -125,10 +128,86 @@ const userRoutes: Array<RouteRecordRaw> = [
 						{
 							name: 'My Password',
 							to: {
-								full_path: 'User-account/Password'
+								full_path: 'user-account/Password'
 							}
 						}
 					] as Array<BreadcrumbItemInterface>
+				}
+			},
+			{
+				path: MainRoutePaths.USER_ACCOUNT_ADDRESSES,
+				name: MainRouteNames.USER_ACCOUNT_ADDRESSES,
+				component: UserAddresses,
+				meta: {
+					breadcrumb: [
+						{
+							name: 'User Account',
+							to: {
+								full_path: 'user-account'
+							}
+						},
+						{
+							name: 'My Addresses',
+							to: {
+								full_path: 'user-account/addresses'
+							}
+						}
+					] as Array<BreadcrumbItemInterface>
+				}
+			},
+			{
+				path: MainRoutePaths.USER_ACCOUNT_ADDRESSES_NEW,
+				name: MainRouteNames.USER_ACCOUNT_ADDRESSES_NEW,
+				component: UserAddressesNew,
+				meta: {
+					breadcrumb: [
+						{
+							name: 'User Account',
+							to: {
+								full_path: 'user-account'
+							}
+						},
+						{
+							name: 'My Addresses',
+							to: {
+								full_path: 'user-account/addresses'
+							}
+						},
+						{
+							name: 'New Address',
+							to: {
+								full_path: 'user-account/addresses/new'
+							}
+						}
+					] as Array<BreadcrumbItemInterface>
+				}
+			},
+			{
+				path: MainRoutePaths.USER_ACCOUNT_ADDRESSES_EDIT,
+				name: MainRouteNames.USER_ACCOUNT_ADDRESSES_EDIT,
+				component: UserAddressesEdit,
+				meta: {
+					breadcrumb: (route: RouteParams): Array<BreadcrumbItemInterface> =>
+						[
+							{
+								name: 'User Account',
+								to: {
+									full_path: 'user-account'
+								}
+							},
+							{
+								name: 'My Addresses',
+								to: {
+									full_path: 'user-account/addresses'
+								}
+							},
+							{
+								name: 'Edit Address',
+								to: {
+									full_path: `user-account/addresses/edit/${route.address_id}`
+								}
+							}
+						] as Array<BreadcrumbItemInterface>
 				}
 			}
 		]

@@ -58,7 +58,7 @@ export default {
 		}).finally(() => this.afterResponse())
 	},
 
-	patch(endpoint: string, data?: ApiPatchData): Promise<unknown> {
+	patch<T>(endpoint: string, data?: ApiPatchData<T>): Promise<unknown> {
 		this.beforeRequest()
 		return session({
 			url: `${baseUrl}/${endpoint}`,

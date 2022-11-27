@@ -7,7 +7,7 @@ export type ApiPutData = Record<
 	string,
 	string | number | boolean | readonly string[] | readonly number[] | readonly boolean[]
 >
-export type ApiPatchData =
+export type ApiPatchData<T = unknown> =
 	| Record<
 			string,
 			| string
@@ -18,3 +18,4 @@ export type ApiPatchData =
 			| readonly boolean[]
 	  >
 	| FormData
+	| T

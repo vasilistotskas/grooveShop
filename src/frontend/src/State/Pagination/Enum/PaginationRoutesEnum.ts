@@ -5,5 +5,6 @@ export enum PaginationRoutesEnum {
 	PRODUCT = 'Product',
 	SEARCH = 'Search',
 	FAVOURITES = 'Favourites',
-	REVIEWS = 'Reviews'
+	REVIEWS = 'Reviews',
+	ADDRESSES = 'Address'
 }

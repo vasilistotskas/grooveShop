@@ -46,7 +46,6 @@ import ProductReviewModel from '@/State/Product/Review/ProductReviewModel'
 import { PaginationModel } from '@/State/Pagination/Model/PaginationModel'
 import ReviewProductCard from '@/Components/Reviews/ReviewProductCard.vue'
 import PaginatedComponent from '@/Components/Pagination/PaginatedComponent'
-import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
 import { PaginationRoutesEnum } from '@/State/Pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
@@ -64,7 +63,6 @@ export default class UserReviews
 	implements PaginatedComponentInterface<ProductReviewModel>
 {
 	userModule = getModule(UserModule)
-	productReviewModule = getModule(ProductReviewModule)
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_REVIEWS
 
@@ -99,7 +97,6 @@ export default class UserReviews
 			})
 		}
 
-		this.productReviewModule.fetchCurrentUserReviews(this.userModule.getUserData.id)
 		this.fetchPaginationData<ProductReviewModel>()
 	}
 

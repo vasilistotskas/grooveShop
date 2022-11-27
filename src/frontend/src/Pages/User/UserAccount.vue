@@ -40,6 +40,15 @@
 						<span>Reviews</span>
 					</RouterLink>
 					<RouterLink
+						:to="{ name: 'Addresses' }"
+						aria-label="Addresses"
+						class="nav-link"
+						title="Addresses"
+					>
+						<font-awesome-icon :icon="cogsIcon" size="1x" />
+						<span>Addresses</span>
+					</RouterLink>
+					<RouterLink
 						:to="{ name: 'Settings' }"
 						aria-label="Settings"
 						class="nav-link"

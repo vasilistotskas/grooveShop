@@ -5,5 +5,6 @@ export enum PaginationNamespaceTypesEnum {
 	SEARCH_PRODUCTS = 'searchProducts',
 	USER_FAVOURITES = 'userFavourites',
 	USER_ORDER_HISTORY = 'userOrderHistory',
-	USER_REVIEWS = 'userReviews'
+	USER_REVIEWS = 'userReviews',
+	ADDRESS = 'address'
 }

@@ -40,7 +40,7 @@ const checkoutRoutes: Array<RouteRecordRaw> = [
 				{
 					name: 'Checkout',
 					to: {
-						full_path: 'Cart/checkout'
+						full_path: 'cart/checkout'
 					}
 				}
 			] as Array<BreadcrumbItemInterface>
@@ -61,7 +61,7 @@ const checkoutRoutes: Array<RouteRecordRaw> = [
 				{
 					name: 'Checkout Success',
 					to: {
-						full_path: 'Cart/success'
+						full_path: 'cart/success'
 					}
 				}
 			] as Array<BreadcrumbItemInterface>
@@ -82,7 +82,7 @@ const checkoutRoutes: Array<RouteRecordRaw> = [
 				{
 					name: 'Checkout Error',
 					to: {
-						full_path: 'Cart/error'
+						full_path: 'cart/error'
 					}
 				}
 			] as Array<BreadcrumbItemInterface>
