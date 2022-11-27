@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.9.0 (2022-11-27)
+### Feature
+* **Frontend:Address:** Frontend prototype implemented ([`daa987e`](https://github.com/vasilistotskas/grooveShop/commit/daa987e6caa79e12620f453fa00bb60db69daad0))
+
 ## v0.8.0 (2022-11-27)
 ### Feature
 * **Backend:Address:** Backend API for user multiple addresses support ([`1bd9d17`](https://github.com/vasilistotskas/grooveShop/commit/1bd9d1748ba1778234da14d99ea457cbe0c4049c))
