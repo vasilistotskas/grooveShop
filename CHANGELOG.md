@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.8.0 (2022-11-27)
+### Feature
+* **Backend:Address:** Backend API for user multiple addresses support ([`1bd9d17`](https://github.com/vasilistotskas/grooveShop/commit/1bd9d1748ba1778234da14d99ea457cbe0c4049c))
+* **Backend:** Separate country and region to apps ([`24bf22b`](https://github.com/vasilistotskas/grooveShop/commit/24bf22b7ea46d125554ad3ae53c5d8676a231e99))
+
 ## v0.7.0 (2022-11-10)
 ### Feature
 * **Frontend:** Performance update ([`ae1d048`](https://github.com/vasilistotskas/grooveShop/commit/ae1d048c0ddf958245df6d23aeb66c7b362675a3))
