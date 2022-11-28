@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.10.0 (2022-11-28)
+### Feature
+* **Address:Front:** Address create page ([`82832f7`](https://github.com/vasilistotskas/grooveShop/commit/82832f76119959c7008d284ae69d61077d3d1a44))
+
+### Fix
+* **Address:** Name to first_name ([`46aa971`](https://github.com/vasilistotskas/grooveShop/commit/46aa971896d481ce5d58852e1e1214594addd09e))
+
 ## v0.9.0 (2022-11-27)
 ### Feature
 * **Frontend:Address:** Frontend prototype implemented ([`daa987e`](https://github.com/vasilistotskas/grooveShop/commit/daa987e6caa79e12620f453fa00bb60db69daad0))
