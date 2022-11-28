@@ -43,7 +43,7 @@ class Address(TimeStampMixinModel, UUIDModel):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
-    name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     street = models.CharField(max_length=100)
     street_number = models.CharField(max_length=100)

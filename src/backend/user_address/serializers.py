@@ -11,7 +11,7 @@ class AddressSerializer(serializers.ModelSerializer):
             "updated_at",
             "uuid",
             "title",
-            "name",
+            "first_name",
             "last_name",
             "street",
             "street_number",
