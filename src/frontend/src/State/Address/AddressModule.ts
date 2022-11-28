@@ -20,7 +20,7 @@ const toast = useToast()
 })
 export default class AddressModule extends AppBaseModule {
 	namespace = PaginationNamespaceTypesEnum.ADDRESS
-	addresses!: Array<AddressModel>
+	addresses: Array<AddressModel> = []
 
 	get getNamespace(): PaginationNamespaceTypesEnum {
 		return this.namespace
@@ -58,7 +58,7 @@ export default class AddressModule extends AppBaseModule {
 			.patch(`address/${address.id}/`, address)
 			.then((response: AxiosResponse<AddressModel>) => {
 				const data = response.data
-				const addresses = cloneDeep(this.addresses)
+				const addresses = cloneDeep(this.context.getters['getAddresses'])
 				const index = addresses.findIndex(
 					(address: AddressModel) => address.id === data.id
 				)
@@ -72,15 +72,16 @@ export default class AddressModule extends AppBaseModule {
 	}
 
 	@Action
-	async createAddress(address: AddressModel): Promise<void> {
+	async createAddress(address: AddressModel): Promise<void | AddressModel> {
 		return await api
 			.post(`address/`, address)
 			.then((response: AxiosResponse<AddressModel>) => {
 				const data = response.data
-				const addresses = cloneDeep(this.addresses)
+				const addresses = cloneDeep(this.context.getters['getAddresses'])
 				addresses.push(data)
 				this.context.commit('setAddresses', addresses)
 				toast.success('Address created successfully')
+				return data
 			})
 			.catch((e: Error) => {
 				console.log(e)

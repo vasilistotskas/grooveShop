@@ -263,7 +263,7 @@ export default class UserSettings extends Vue {
 					region: region.value
 				}
 
-				await userModule.updateUserProfile(apiData as unknown as FormData)
+				await userModule.updateUserProfile(apiData)
 			} catch (e) {
 				console.log(e)
 			}

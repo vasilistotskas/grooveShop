@@ -8,8 +8,8 @@ import UserFavourites from '@/Pages/User/UserFavourites.vue'
 import { MainRoutePaths } from '@/Routes/Enum/MainRoutePaths'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
 import UserOrderHistory from '@/Pages/User/UserOrderHistory.vue'
-import UserAddressesNew from '@/Pages/User/UserAddressesNew.vue'
-import UserAddressesEdit from '@/Pages/User/UserAddressesEdit.vue'
+import UserAddressNew from '@/Pages/User/UserAddressNew.vue'
+import UserAddressEdit from '@/Pages/User/UserAddressEdit.vue'
 import BreadcrumbItemInterface from '@/Routes/Interface/BreadcrumbItemInterface'
 
 const userRoutes: Array<RouteRecordRaw> = [
@@ -156,9 +156,9 @@ const userRoutes: Array<RouteRecordRaw> = [
 				}
 			},
 			{
-				path: MainRoutePaths.USER_ACCOUNT_ADDRESSES_NEW,
-				name: MainRouteNames.USER_ACCOUNT_ADDRESSES_NEW,
-				component: UserAddressesNew,
+				path: MainRoutePaths.USER_ACCOUNT_ADDRESS_NEW,
+				name: MainRouteNames.USER_ACCOUNT_ADDRESS_NEW,
+				component: UserAddressNew,
 				meta: {
 					breadcrumb: [
 						{
@@ -176,16 +176,16 @@ const userRoutes: Array<RouteRecordRaw> = [
 						{
 							name: 'New Address',
 							to: {
-								full_path: 'user-account/addresses/new'
+								full_path: 'user-account/address/new'
 							}
 						}
 					] as Array<BreadcrumbItemInterface>
 				}
 			},
 			{
-				path: MainRoutePaths.USER_ACCOUNT_ADDRESSES_EDIT,
-				name: MainRouteNames.USER_ACCOUNT_ADDRESSES_EDIT,
-				component: UserAddressesEdit,
+				path: MainRoutePaths.USER_ACCOUNT_ADDRESS_EDIT,
+				name: MainRouteNames.USER_ACCOUNT_ADDRESS_EDIT,
+				component: UserAddressEdit,
 				meta: {
 					breadcrumb: (route: RouteParams): Array<BreadcrumbItemInterface> =>
 						[
@@ -204,7 +204,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 							{
 								name: 'Edit Address',
 								to: {
-									full_path: `user-account/addresses/edit/${route.address_id}`
+									full_path: `user-account/address/edit/${route.id}`
 								}
 							}
 						] as Array<BreadcrumbItemInterface>

@@ -5,6 +5,7 @@ import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import UserProfileModel from '@/State/User/Profile/UserProfileModel'
+import UserProfileApiData from '@/State/User/Interface/UserProfileApiData'
 
 const toast = useToast()
 
@@ -61,6 +62,7 @@ export default class UserModule extends AppBaseModule {
 					| readonly boolean[]
 			  >
 			| FormData
+			| UserProfileApiData
 	): Promise<void> {
 		const userId = await this.context.getters['getUserData'].id
 

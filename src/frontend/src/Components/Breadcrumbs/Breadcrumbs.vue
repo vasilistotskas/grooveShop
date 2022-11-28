@@ -15,7 +15,7 @@
 				<span class="breadcrumb__seperator">/</span>
 			</li>
 			<li
-				v-for="breadcrumb in breadCrumbPath"
+				v-for="breadcrumb in breadCrumbPathResolve"
 				:key="breadcrumb.id"
 				class="breadcrumb__item"
 			>
@@ -38,16 +38,27 @@
 <script lang="ts">
 import { PropType } from 'vue'
 import { Options as Component, Vue } from 'vue-class-component'
-import { RouteMetaBreadcrumb } from '@/Routes/Type/BreadcrumbItemType'
+import {
+	RouteMetaBreadcrumb,
+	RouteMetaBreadcrumbFunction
+} from '@/Routes/Type/BreadcrumbItemType'
+import router from '@/Routes'
 
 @Component({
 	name: 'Breadcrumbs',
 	props: {
-		breadCrumbPath: Array as PropType<RouteMetaBreadcrumb>
+		breadCrumbPath: [Array, Function] as PropType<RouteMetaBreadcrumb>
 	}
 })
 export default class Breadcrumbs extends Vue {
-	breadCrumbPath!: RouteMetaBreadcrumb
+	breadCrumbPath!: RouteMetaBreadcrumb | RouteMetaBreadcrumbFunction
+	get breadCrumbPathResolve() {
+		const currentRouteMetaBreadcrumb = router.currentRoute.value.meta.breadcrumb
+		if (typeof currentRouteMetaBreadcrumb === 'function') {
+			return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+		}
+		return this.breadCrumbPath
+	}
 }
 </script>
 

@@ -1,25 +1,16 @@
-<template>
-	<Breadcrumbs :bread-crumb-path="breadCrumbPath" />
-	TEST
-</template>
+<template>TEST</template>
 
 <script lang="ts">
-import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import UserModule from '@/State/User/Profile/UserModule'
-import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import { Options as Component, setup, Vue } from 'vue-class-component'
-import { RouteMetaBreadcrumbFunction } from '@/Routes/Type/BreadcrumbItemType'
 
 @Component({
-	name: 'UserAddressesEdit',
-	components: {
-		Breadcrumbs
-	}
+	name: 'UserAddressEdit'
 })
-export default class UserAddressesEdit extends Vue {
+export default class UserAddressEdit extends Vue {
 	userModule = getModule(UserModule)
 
 	meta = setup(() => {
@@ -33,15 +24,9 @@ export default class UserAddressesEdit extends Vue {
 			meta
 		}
 	})
-
-	get breadCrumbPath() {
-		const currentRouteMetaBreadcrumb = router.currentRoute.value.meta
-			.breadcrumb as RouteMetaBreadcrumbFunction
-		return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
-	}
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/User/UserAddressesEdit';
+@import '@/Assets/Styles/Pages/User/UserAddressEdit';
 </style>
