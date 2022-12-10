@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.11.0 (2022-12-10)
+### Feature
+* **Frontend:** Refactored and added new features ([`6cf3edb`](https://github.com/vasilistotskas/grooveShop/commit/6cf3edb6242b83537b672f7456224c9550a9a45d))
+
 ## v0.10.0 (2022-11-28)
 ### Feature
 * **Address:Front:** Address create page ([`82832f7`](https://github.com/vasilistotskas/grooveShop/commit/82832f76119959c7008d284ae69d61077d3d1a44))
