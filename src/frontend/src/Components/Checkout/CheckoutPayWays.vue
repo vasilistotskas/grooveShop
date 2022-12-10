@@ -112,5 +112,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Checkout/CheckoutPayWays';
+@import '@/Assets/Styles/Components/Checkout/CheckoutPayWays.scss';
 </style>

@@ -12,10 +12,7 @@
 				:media="props.post.mainImageAbsoluteUrl"
 				:hashtags="getPostTagsSeparated(post.tags)"
 			>
-				<font-awesome-icon
-					class="blog-share-actions-icon facebook"
-					:icon="FacebookIcon"
-				/>
+				<FontAwesomeIcon class="blog-share-actions-icon facebook" :icon="FacebookIcon" />
 			</ShareNetwork>
 		</div>
 
@@ -31,7 +28,7 @@
 				:media="props.post.mainImageAbsoluteUrl"
 				:hashtags="getPostTagsSeparated(post.tags)"
 			>
-				<font-awesome-icon class="blog-share-actions-icon twitter" :icon="TwitterIcon" />
+				<FontAwesomeIcon class="blog-share-actions-icon twitter" :icon="TwitterIcon" />
 			</ShareNetwork>
 		</div>
 
@@ -47,7 +44,7 @@
 				:media="props.post.mainImageAbsoluteUrl"
 				:hashtags="getPostTagsSeparated(post.tags)"
 			>
-				<font-awesome-icon class="blog-share-actions-icon viber" :icon="ViberIcon" />
+				<FontAwesomeIcon class="blog-share-actions-icon viber" :icon="ViberIcon" />
 			</ShareNetwork>
 		</div>
 
@@ -63,7 +60,7 @@
 				:media="props.post.mainImageAbsoluteUrl"
 				:hashtags="getPostTagsSeparated(post.tags)"
 			>
-				<font-awesome-icon class="blog-share-actions-icon email" :icon="EmailIcon" />
+				<FontAwesomeIcon class="blog-share-actions-icon email" :icon="EmailIcon" />
 			</ShareNetwork>
 		</div>
 
@@ -79,10 +76,7 @@
 				:media="props.post.mainImageAbsoluteUrl"
 				:hashtags="getPostTagsSeparated(post.tags)"
 			>
-				<font-awesome-icon
-					class="blog-share-actions-icon linkedin"
-					:icon="LinkedinIcon"
-				/>
+				<FontAwesomeIcon class="blog-share-actions-icon linkedin" :icon="LinkedinIcon" />
 			</ShareNetwork>
 		</div>
 
@@ -98,7 +92,7 @@
 				:media="props.post.mainImageAbsoluteUrl"
 				:hashtags="getPostTagsSeparated(post.tags)"
 			>
-				<font-awesome-icon
+				<FontAwesomeIcon
 					class="blog-share-actions-icon messenger"
 					:icon="MessengerIcon"
 				/>
@@ -117,7 +111,7 @@
 				:media="props.post.mainImageAbsoluteUrl"
 				:hashtags="getPostTagsSeparated(post.tags)"
 			>
-				<font-awesome-icon
+				<FontAwesomeIcon
 					class="blog-share-actions-icon pinterest"
 					:icon="PinterestIcon"
 				/>
@@ -136,7 +130,7 @@
 				:media="props.post.mainImageAbsoluteUrl"
 				:hashtags="getPostTagsSeparated(post.tags)"
 			>
-				<font-awesome-icon class="blog-share-actions-icon reddit" :icon="RedditIcon" />
+				<FontAwesomeIcon class="blog-share-actions-icon reddit" :icon="RedditIcon" />
 			</ShareNetwork>
 		</div>
 
@@ -152,7 +146,7 @@
 				:media="props.post.mainImageAbsoluteUrl"
 				:hashtags="getPostTagsSeparated(post.tags)"
 			>
-				<font-awesome-icon class="blog-share-actions-icon skype" :icon="SkypeIcon" />
+				<FontAwesomeIcon class="blog-share-actions-icon skype" :icon="SkypeIcon" />
 			</ShareNetwork>
 		</div>
 
@@ -168,7 +162,7 @@
 				:media="props.post.mainImageAbsoluteUrl"
 				:hashtags="getPostTagsSeparated(post.tags)"
 			>
-				<font-awesome-icon class="blog-share-actions-icon sms" :icon="SmsIcon" />
+				<FontAwesomeIcon class="blog-share-actions-icon sms" :icon="SmsIcon" />
 			</ShareNetwork>
 		</div>
 
@@ -184,10 +178,7 @@
 				:media="props.post.mainImageAbsoluteUrl"
 				:hashtags="getPostTagsSeparated(post.tags)"
 			>
-				<font-awesome-icon
-					class="blog-share-actions-icon telegram"
-					:icon="TelegramIcon"
-				/>
+				<FontAwesomeIcon class="blog-share-actions-icon telegram" :icon="TelegramIcon" />
 			</ShareNetwork>
 		</div>
 
@@ -203,7 +194,7 @@
 				:media="props.post.mainImageAbsoluteUrl"
 				:hashtags="getPostTagsSeparated(post.tags)"
 			>
-				<font-awesome-icon class="blog-share-actions-icon tumblr" :icon="TumblrIcon" />
+				<FontAwesomeIcon class="blog-share-actions-icon tumblr" :icon="TumblrIcon" />
 			</ShareNetwork>
 		</div>
 
@@ -219,10 +210,7 @@
 				:media="props.post.mainImageAbsoluteUrl"
 				:hashtags="getPostTagsSeparated(post.tags)"
 			>
-				<font-awesome-icon
-					class="blog-share-actions-icon whatsapp"
-					:icon="WhatsAppIcon"
-				/>
+				<FontAwesomeIcon class="blog-share-actions-icon whatsapp" :icon="WhatsAppIcon" />
 			</ShareNetwork>
 		</div>
 	</div>
@@ -294,5 +282,5 @@ const getCurrentPostUrl = router.resolve({
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Blog/BlogShareActions';
+@import '@/Assets/Styles/Components/Blog/BlogShareActions.scss';
 </style>

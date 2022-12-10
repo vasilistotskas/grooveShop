@@ -68,6 +68,7 @@ class Address(TimeStampMixinModel, UUIDModel):
 
     class Meta:
         verbose_name_plural = "User's Addresses"
+        ordering = ["-is_main", "id"]
 
     def __str__(self):
         return self.title

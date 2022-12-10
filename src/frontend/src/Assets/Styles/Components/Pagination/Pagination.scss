@@ -14,3 +14,8 @@
 	background-color: var(--cp-palette-main-primary);
 	color: var(--cp-palette-main-fifth);
 }
+
+.btn-outline-primary-one[disabled*='true'] {
+	pointer-events: none;
+	cursor: not-allowed;
+}

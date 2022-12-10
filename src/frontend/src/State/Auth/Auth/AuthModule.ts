@@ -152,7 +152,7 @@ export default class AuthModule extends AppBaseModule {
 	}
 
 	@Action
-	async clearAllAccountSessions(): Promise<void> {
+	async clearAllAccountSessions<T>(): Promise<T | void> {
 		return await api
 			.post('session/clear_all/', {})
 			.then(() => {

@@ -27,7 +27,6 @@
 
 <script lang="ts">
 import { useMeta } from 'vue-meta'
-import { AxiosResponse } from 'axios'
 import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import UserModule from '@/State/User/Profile/UserModule'
@@ -59,11 +58,11 @@ export default class UserFavourites
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_FAVOURITES
 
-	meta = setup(() => {
+	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
-				title: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Favourites`,
-				description: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Favourites`
+				title: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Favourites`,
+				description: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Favourites`
 			}))
 		)
 		return {
@@ -94,7 +93,7 @@ export default class UserFavourites
 		this.fetchPaginationData<UserFavouriteModel>()
 	}
 
-	fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
+	fetchPaginationData<T>(): Promise<void | PaginatedModel<T>> {
 		const paginationQuery = PaginationModel.createPaginationModel({
 			pageNumber: this.currentPageNumber,
 			endpointUrl: this.buildEndPointUrlForPaginatedResults(),
@@ -108,11 +107,11 @@ export default class UserFavourites
 	}
 
 	public buildEndPointUrlForPaginatedResults(): string {
-		const userId = this.userModule.getUserData.id
+		const userId = this.userModule.getUserProfile.id
 		return 'favourites/products' + `/${userId}`
 	}
 }
 </script>
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/User/UserSettings';
+@import '@/Assets/Styles/Pages/User/UserSettings.scss';
 </style>

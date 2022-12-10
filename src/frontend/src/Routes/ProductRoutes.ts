@@ -1,6 +1,4 @@
-import Product from '@/Pages/Product/Product.vue'
 import { RouteParams, RouteRecordRaw } from 'vue-router'
-import AllProducts from '@/Pages/Product/AllProducts.vue'
 import { MainRoutePaths } from '@/Routes/Enum/MainRoutePaths'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
 import BreadcrumbItemInterface from '@/Routes/Interface/BreadcrumbItemInterface'
@@ -9,7 +7,7 @@ const productRoutes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.ALL_PRODUCTS,
 		name: MainRouteNames.ALL_PRODUCTS,
-		component: AllProducts,
+		component: () => import('@/Pages/Product/AllProducts.vue'),
 		props: true,
 		meta: {
 			breadcrumb: [
@@ -25,7 +23,7 @@ const productRoutes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.PRODUCT,
 		name: MainRouteNames.PRODUCT,
-		component: Product,
+		component: () => import('@/Pages/Product/Product.vue'),
 		props: true,
 		meta: {
 			breadcrumb: (route: RouteParams): Array<BreadcrumbItemInterface> => [

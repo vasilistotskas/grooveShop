@@ -46,11 +46,11 @@
 					:model="blogModule.getPostBySlug"
 					:module="blogModule"
 					:getter-type="'getIsCurrentPostInUserFavourites'"
-					:getter-params="{ userEmail: userModule.getUserData.email }"
+					:getter-params="{ userEmail: userModule.getUserProfile.email }"
 					:dispatch-type="'toggleFavourite'"
 					:dispatch-params="{
 						postId: blogModule.getPostBySlug.id,
-						userId: userModule.getUserData.id
+						userId: userModule.getUserProfile.id
 					}"
 					:use-store="true"
 				/>
@@ -65,7 +65,7 @@
 	<BlogComments
 		v-if="blogModule.getPostBySlug && Object.keys(blogModule.getPostBySlug).length > 0"
 		:post="blogModule.getPostBySlug"
-		:user-id="userModule.getUserData.id"
+		:user-id="userModule.getUserProfile.id"
 		:blog-post-comments="blogModule.getCommentsByPost"
 		:comment-by-user-to-post="blogModule.getCommentByUserToPost"
 		:is-authenticated="authModule.isAuthenticated"
@@ -118,7 +118,7 @@ export default class BlogPost extends Vue {
 	ImageTypeOptions = ImageTypeOptions
 	emitter: Emitter<BlogPostEvents> | undefined = inject('emitter')
 
-	meta = setup(() => {
+	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
 				title: this.blogModule.getPostBySlug?.title,
@@ -138,19 +138,19 @@ export default class BlogPost extends Vue {
 		this.blogModule.fetchPostBySlugFromRemote()
 		this.blogModule.fetchCommentsByPost()
 		if (this.authModule.isAuthenticated) {
-			this.blogModule.fetchCommentByUserToPost(this.userModule.getUserData.email)
+			this.blogModule.fetchCommentByUserToPost(this.userModule.getUserProfile.email)
 		}
 
 		this.emitter?.on('updateCommentToPost', (e) => this.blogModule.updateCommentToPost(e))
 		this.emitter?.on('createCommentToPost', (e) => {
 			const payload = {
 				content: e.content,
-				userEmail: this.userModule.getUserData.email
+				userEmail: this.userModule.getUserProfile.email
 			}
 			return this.blogModule.createCommentToPost(payload)
 		})
 		this.emitter?.on('fetchCommentByUserToPost', () =>
-			this.blogModule.fetchCommentByUserToPost(this.userModule.getUserData.email)
+			this.blogModule.fetchCommentByUserToPost(this.userModule.getUserProfile.email)
 		)
 		this.emitter?.on('deleteCommentFromPost', () =>
 			this.blogModule.deleteCommentFromPost()
@@ -168,5 +168,5 @@ export default class BlogPost extends Vue {
 }
 </script>
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Blog/BlogPost';
+@import '@/Assets/Styles/Pages/Blog/BlogPost.scss';
 </style>

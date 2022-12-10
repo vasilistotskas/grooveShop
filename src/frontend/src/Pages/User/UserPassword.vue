@@ -74,16 +74,15 @@
 </template>
 
 <script lang="ts">
-import * as zod from 'zod'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
-import { useField, useForm } from 'vee-validate'
-import zodPassword from '@/Helpers/Zod/Password'
 import { getModule } from 'vuex-module-decorators'
 import { toFormValidator } from '@vee-validate/zod'
+import { ZodUserPassword } from '@/Zod/User/ZodUser'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
 import UserModule from '@/State/User/Profile/UserModule'
 import CountryModule from '@/State/Country/CountryModule'
+import { FieldContext, useField, useForm } from 'vee-validate'
 import PasswordModule from '@/State/Auth/Password/PasswordModule'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
@@ -105,42 +104,19 @@ export default class UserPassword extends Vue {
 	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
-				title: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Password`,
-				description: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Password`
+				title: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Password`,
+				description: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Password`
 			}))
 		)
 
-		const validationSchema = toFormValidator(
-			zod
-				.object({
-					current_password: zodPassword,
-					new_password: zodPassword,
-					re_new_password: zodPassword
-				})
-				.superRefine(({ current_password, new_password, re_new_password }, ctx) => {
-					if (new_password !== re_new_password) {
-						ctx.addIssue({
-							code: 'custom',
-							message: 'New password and re-new password must be the same',
-							path: ['re_new_password']
-						})
-					}
-					if (current_password === new_password) {
-						ctx.addIssue({
-							code: 'custom',
-							message: 'New password and current password must be different',
-							path: ['new_password']
-						})
-					}
-				})
-		)
+		const validationSchema = toFormValidator(ZodUserPassword)
 		const { handleSubmit, errors, submitCount } = useForm({
 			validationSchema
 		})
 
-		const { value: current_password } = useField('current_password')
-		const { value: new_password } = useField('new_password')
-		const { value: re_new_password } = useField('re_new_password')
+		const { value: current_password }: FieldContext<string> = useField('current_password')
+		const { value: new_password }: FieldContext<string> = useField('new_password')
+		const { value: re_new_password }: FieldContext<string> = useField('re_new_password')
 
 		const isTooManyAttempts = computed(() => {
 			return submitCount.value >= 10
@@ -185,8 +161,8 @@ export default class UserPassword extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Form/FormProvider';
-@import '@/Assets/Styles/Components/Form/FormBaseTextarea';
-@import '@/Assets/Styles/Components/Form/FormBaseInput';
-@import '@/Assets/Styles/Pages/User/UserPassword';
+@import '@/Assets/Styles/Components/Form/FormProvider.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseTextarea.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseInput.scss';
+@import '@/Assets/Styles/Pages/User/UserPassword.scss';
 </style>

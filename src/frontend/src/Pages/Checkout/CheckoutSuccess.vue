@@ -25,7 +25,7 @@ import { Options as Component, setup, Vue } from 'vue-class-component'
 	}
 })
 export default class CheckoutSuccess extends Vue {
-	meta = setup(() => {
+	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
 				title: 'Checkout Success',
@@ -42,5 +42,5 @@ export default class CheckoutSuccess extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Checkout/CheckoutSuccess';
+@import '@/Assets/Styles/Pages/Checkout/CheckoutSuccess.scss';
 </style>

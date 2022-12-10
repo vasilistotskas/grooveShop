@@ -24,7 +24,7 @@ import { Options as Component, setup, Vue } from 'vue-class-component'
 	}
 })
 export default class CheckoutError extends Vue {
-	meta = setup(() => {
+	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
 				title: 'Checkout Error',
@@ -41,5 +41,5 @@ export default class CheckoutError extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Checkout/CheckoutSuccess';
+@import '@/Assets/Styles/Pages/Checkout/CheckoutSuccess.scss';
 </style>

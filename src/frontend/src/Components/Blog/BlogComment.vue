@@ -4,7 +4,7 @@
 			<div class="blog-comment-container">
 				<div class="blog-comment-header">
 					<h1 class="blog-comment-header-title">Make a comment</h1>
-					<font-awesome-icon :icon="writeReviewIcon" size="lg" />
+					<FontAwesomeIcon :icon="writeReviewIcon" size="lg" />
 				</div>
 				<div class="blog-comment-body">
 					<h2 class="blog-comment-body-title">
@@ -108,5 +108,5 @@ export default class BlogComment extends Vue {
 </script>
 
 <style lang="scss">
-@import '@/Assets/Styles/Components/Blog/BlogComment';
+@import '@/Assets/Styles/Components/Blog/BlogComment.scss';
 </style>

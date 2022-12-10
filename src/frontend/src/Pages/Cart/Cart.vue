@@ -63,7 +63,7 @@ import { Options as Component, setup, Vue } from 'vue-class-component'
 export default class Cart extends Vue {
 	cartModule = getModule(CartModule)
 
-	meta = setup(() => {
+	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
 				title: 'Cart',
@@ -80,5 +80,5 @@ export default class Cart extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Cart/Cart';
+@import '@/Assets/Styles/Pages/Cart/Cart.scss';
 </style>

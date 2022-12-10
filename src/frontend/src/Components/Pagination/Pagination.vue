@@ -1,69 +1,84 @@
 <template>
 	<div class="col-12 mb-3 mt-3 pagination-grid-content">
 		<div class="pagination-buttons">
-			<button
+			<RouterLink
 				:disabled="isInFirstPage"
+				:to="{
+					name: route,
+					query: pageQueryFirst
+				}"
+				@click.native="onClickFirstPage"
 				aria-label="Go to first page"
 				class="btn-outline-primary-one"
 				title="Go to first page"
 				type="button"
-				@click="onClickFirstPage"
 			>
-				First
-			</button>
+				<span>First</span>
+			</RouterLink>
 
-			<button
+			<RouterLink
 				:disabled="isInFirstPage"
+				:to="{
+					name: route,
+					query: pageQueryPrevious
+				}"
+				@click.native="onClickPreviousPage"
 				aria-label="Go to previous page"
 				class="btn-outline-primary-one"
 				title="Go to previous page"
 				type="button"
-				@click="onClickPreviousPage"
 			>
-				Previous
-			</button>
+				<span>Previous</span>
+			</RouterLink>
 
-			<button
+			<RouterLink
 				v-for="page in pages"
 				:key="page.number"
+				:to="{ name: route, query: pageQuery(page.number) }"
 				:aria-label="`Go to page number ${page.number}`"
 				:class="{ active: isPageActive(page.number) }"
 				:disabled="page.isDisabled"
 				:title="`Go to page number ${page.number}`"
 				class="btn-outline-primary-one"
 				type="button"
-				@click="onClickPage(page.number)"
+				@click.native="onClickPage(page.number)"
 			>
-				{{ page.number }}
-			</button>
+				<span>{{ page.number }}</span>
+			</RouterLink>
 
-			<button
+			<RouterLink
 				:disabled="isInLastPage"
+				:to="{
+					name: route,
+					query: pageQueryNext
+				}"
+				@click.native="onClickNextPage"
 				aria-label="Go to next page"
 				class="btn-outline-primary-one"
 				title="Go to next page"
 				type="button"
-				@click="onClickNextPage"
 			>
-				Next
-			</button>
+				<span>Next</span>
+			</RouterLink>
 
-			<button
+			<RouterLink
 				:disabled="isInLastPage"
+				:to="{ name: route, query: pageQueryLast }"
+				@click.native="onClickLastPage"
 				aria-label="Go to last page"
 				class="btn-outline-primary-one"
 				title="Go to Last page"
 				type="button"
-				@click="onClickLastPage"
 			>
-				Last
-			</button>
+				<span>Last</span>
+			</RouterLink>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
 import router from '@/Routes'
+import { isEmpty } from 'lodash'
 import { LocationQueryValue } from 'vue-router'
 import { getModule } from 'vuex-module-decorators'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
@@ -171,6 +186,62 @@ export default class Pagination extends Vue {
 		return this.paginationModule.getCurrentQuery(this.namespace)
 	}
 
+	get pageQueryFirst() {
+		return {
+			query: this.params?.query,
+			page: 1
+		}
+	}
+
+	get pageQueryPrevious() {
+		if (this.currentPageNumber === 1) {
+			return {}
+		}
+		return {
+			query: this.params?.query,
+			page: this.currentPageNumber - 1
+		}
+	}
+
+	get pageQueryNext() {
+		if (this.currentPageNumber === this.totalPages) {
+			return {
+				query: this.params?.query,
+				page: this.currentPageNumber
+			}
+		}
+		return {
+			query: this.params?.query,
+			page: this.currentPageNumber + 1
+		}
+	}
+
+	get pageQueryLast() {
+		return {
+			query: this.params?.query,
+			page: this.totalPages
+		}
+	}
+
+	get getQueryParams(): QueryParamsType {
+		return isEmpty(this.currentPageQuery)
+			? { query: this.params?.query, page: '1' }
+			: this.currentPageQuery
+	}
+
+	created(): void {
+		this.initializeRouterQuery()
+		this.$watch(
+			() => this.$route,
+			(route) => {
+				this.paginationModule.setCurrentQuery({
+					queryParams: route.query,
+					namespace: this.namespace
+				})
+			}
+		)
+	}
+
 	mounted(): void {
 		this.initializeRouterQuery()
 	}
@@ -192,7 +263,7 @@ export default class Pagination extends Vue {
 		const paginationQuery = PaginationModel.createPaginationModel({
 			pageNumber: this.currentPageNumber,
 			endpointUrl: `${this.endpointUrl}`,
-			queryParams: this.currentPageQuery,
+			queryParams: this.getQueryParams,
 			method: ApiBaseMethods.GET
 		})
 
@@ -200,8 +271,6 @@ export default class Pagination extends Vue {
 			params: paginationQuery,
 			namespace: this.namespace
 		})
-
-		if (this.routerReplace) router.replace({ name: `${this.route}`, query: this.query })
 	}
 
 	onClickPreviousPage(): void {
@@ -213,7 +282,7 @@ export default class Pagination extends Vue {
 		const paginationQuery = PaginationModel.createPaginationModel({
 			pageNumber: this.currentPageNumber,
 			endpointUrl: `${this.endpointUrl}`,
-			queryParams: this.currentPageQuery,
+			queryParams: this.getQueryParams,
 			method: ApiBaseMethods.GET
 		})
 
@@ -221,8 +290,6 @@ export default class Pagination extends Vue {
 			params: paginationQuery,
 			namespace: this.namespace
 		})
-
-		if (this.routerReplace) router.replace({ name: `${this.route}`, query: this.query })
 	}
 
 	onClickPage(pageNumber: number) {
@@ -234,7 +301,7 @@ export default class Pagination extends Vue {
 		const paginationQuery = PaginationModel.createPaginationModel({
 			pageNumber: pageNumber,
 			endpointUrl: `${this.endpointUrl}`,
-			queryParams: this.currentPageQuery,
+			queryParams: this.getQueryParams,
 			method: ApiBaseMethods.GET
 		})
 
@@ -242,8 +309,6 @@ export default class Pagination extends Vue {
 			params: paginationQuery,
 			namespace: this.namespace
 		})
-
-		if (this.routerReplace) router.replace({ name: `${this.route}`, query: this.query })
 	}
 
 	onClickFirstPage(): void {
@@ -255,7 +320,7 @@ export default class Pagination extends Vue {
 		const paginationQuery = PaginationModel.createPaginationModel({
 			pageNumber: this.currentPageNumber,
 			endpointUrl: `${this.endpointUrl}`,
-			queryParams: this.currentPageQuery,
+			queryParams: this.getQueryParams,
 			method: ApiBaseMethods.GET
 		})
 
@@ -263,8 +328,6 @@ export default class Pagination extends Vue {
 			params: paginationQuery,
 			namespace: this.namespace
 		})
-
-		if (this.routerReplace) router.replace({ name: `${this.route}`, query: this.query })
 	}
 
 	onClickLastPage(): void {
@@ -276,7 +339,7 @@ export default class Pagination extends Vue {
 		const paginationQuery = PaginationModel.createPaginationModel({
 			pageNumber: this.totalPages,
 			endpointUrl: `${this.endpointUrl}`,
-			queryParams: this.currentPageQuery,
+			queryParams: this.getQueryParams,
 			method: ApiBaseMethods.GET
 		})
 
@@ -284,8 +347,13 @@ export default class Pagination extends Vue {
 			params: paginationQuery,
 			namespace: this.namespace
 		})
+	}
 
-		if (this.routerReplace) router.replace({ name: `${this.route}`, query: this.query })
+	pageQuery(pageNumber: number) {
+		return {
+			query: this.params?.query,
+			page: pageNumber
+		}
 	}
 
 	public initializeRouterQuery(): void {
@@ -303,5 +371,5 @@ export default class Pagination extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Pagination/Pagination';
+@import '@/Assets/Styles/Components/Pagination/Pagination.scss';
 </style>

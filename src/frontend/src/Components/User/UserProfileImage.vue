@@ -33,7 +33,7 @@
 							type="file"
 							@change="updateUserImage"
 						/>
-						<font-awesome-icon :icon="cameraIcon" size="3x" />
+						<FontAwesomeIcon :icon="cameraIcon" size="3x" />
 					</label>
 				</div>
 				<div class="profile-fullname-part">
@@ -103,5 +103,5 @@ export default class UserProfileImage extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/User/UserProfileImage';
+@import '@/Assets/Styles/Components/User/UserProfileImage.scss';
 </style>

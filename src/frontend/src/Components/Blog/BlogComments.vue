@@ -79,5 +79,5 @@ export default class BlogComments extends Vue {
 </script>
 
 <style lang="scss">
-@import '@/Assets/Styles/Components/Blog/BlogComments';
+@import '@/Assets/Styles/Components/Blog/BlogComments.scss';
 </style>

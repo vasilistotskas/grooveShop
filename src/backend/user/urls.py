@@ -3,7 +3,7 @@ from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
-    # Auth
+    # AuthCore
     path("login/", views.login_view, name="api-login"),
     path("logout/", views.logout_view, name="api-logout"),
     path("session/", views.session_view, name="api-session"),

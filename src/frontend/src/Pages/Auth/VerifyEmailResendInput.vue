@@ -9,7 +9,7 @@
 				<div class="form-group">
 					<div class="input-group-w-addon">
 						<span class="input-group-addon">
-							<font-awesome-icon :icon="envelopeIcon" />
+							<FontAwesomeIcon :icon="envelopeIcon" />
 						</span>
 						<input
 							id="email"
@@ -56,7 +56,7 @@ export default class VerifyEmailResendInput extends Vue {
 	email = ''
 	envelopeIcon = faEnvelope
 
-	meta = setup(() => {
+	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
 				title: 'Verify Email Resend',
@@ -82,5 +82,5 @@ export default class VerifyEmailResendInput extends Vue {
 </script>
 
 <style lang="scss">
-@import '@/Assets/Styles/Pages/Auth/VerifyEmailResendInput';
+@import '@/Assets/Styles/Pages/Auth/VerifyEmailResendInput.scss';
 </style>

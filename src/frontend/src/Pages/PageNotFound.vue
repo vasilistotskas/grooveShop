@@ -14,5 +14,5 @@ export default class PageNotFound extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/PageNotFound';
+@import '@/Assets/Styles/Pages/PageNotFound.scss';
 </style>

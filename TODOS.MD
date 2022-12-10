@@ -1,16 +1,8 @@
 # !!!! TODOS !!!!
--- tip an thelw na dw error 404 me debug afairw to route apo to front --
+### -- tip an thelw na dw error 404 me debug afairw to route apo to front -- ###
 ### ---BLOG MAIN PAGE--- ###
 
-### STRAWBERRY INPUTS NA TA SPASW SE : # filters , # order, # types, # input types, # partial input types
-
-# blog tips:
-    ---> Estimate Time: 14 Hours
-    tip title
-    tip content
-    tip type
-    tip icon
-    tip url
+### Django Sitemaps ###
 
 ### ---BLOG MAIN PAGE--- ###
     + one image field --> Estimate Time: 30 Mins

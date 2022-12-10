@@ -118,5 +118,5 @@ export default class ProductCard extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Product/ProductCard';
+@import '@/Assets/Styles/Components/Product/ProductCard.scss';
 </style>

@@ -1,4 +1,4 @@
 export default interface LogInInputApi {
-	email?: unknown
-	password?: unknown
+	email?: string
+	password?: string
 }

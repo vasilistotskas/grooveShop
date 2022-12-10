@@ -27,7 +27,6 @@
 
 <script lang="ts">
 import { useMeta } from 'vue-meta'
-import { AxiosResponse } from 'axios'
 import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import UserModule from '@/State/User/Profile/UserModule'
@@ -60,11 +59,11 @@ export default class UserOrderHistory
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_ORDER_HISTORY
 
-	meta = setup(() => {
+	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
-				title: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Order History`,
-				description: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Order History`
+				title: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Order History`,
+				description: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Order History`
 			}))
 		)
 		return {
@@ -95,7 +94,7 @@ export default class UserOrderHistory
 		this.fetchPaginationData<UserFavouriteModel>()
 	}
 
-	fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
+	fetchPaginationData<T>(): Promise<void | PaginatedModel<T>> {
 		const paginationQuery = PaginationModel.createPaginationModel({
 			pageNumber: this.currentPageNumber,
 			endpointUrl: `orders`,
@@ -111,5 +110,5 @@ export default class UserOrderHistory
 </script>
 
 <style lang="scss">
-@import '@/Assets/Styles/Pages/User/UserOrderHistory';
+@import '@/Assets/Styles/Pages/User/UserOrderHistory.scss';
 </style>

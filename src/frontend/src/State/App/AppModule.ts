@@ -1,4 +1,3 @@
-import { ComputedRef } from 'vue'
 import store from '@/DynamicStore'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import MetaData from '@/State/Common/Interface/MetaData'
@@ -15,7 +14,6 @@ export default class AppModule extends AppBaseModule {
 	loading = false
 	windowWidth: number = window.innerWidth
 	navbarMenuHidden = true
-	checkoutErrors!: ComputedRef
 
 	get getLoading(): boolean {
 		return this.loading
@@ -34,11 +32,8 @@ export default class AppModule extends AppBaseModule {
 	}
 
 	get isMobile(): boolean {
-		return this.windowWidth <= 990
-	}
-
-	get getCheckoutErrors(): ComputedRef {
-		return this.checkoutErrors
+		const media = window.matchMedia('pointer: coarse')
+		return media.matches
 	}
 
 	get getInstagramApiToken(): string | undefined {
@@ -58,11 +53,6 @@ export default class AppModule extends AppBaseModule {
 	@Mutation
 	setWindowWidth(width: number): void {
 		this.windowWidth = width
-	}
-
-	@Mutation
-	setCheckoutErrors(errors: ComputedRef): void {
-		this.checkoutErrors = errors
 	}
 
 	@Action

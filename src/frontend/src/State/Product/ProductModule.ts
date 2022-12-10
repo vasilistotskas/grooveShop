@@ -16,7 +16,7 @@ import { Module, Action, Mutation } from 'vuex-module-decorators'
 })
 export default class ProductModule extends AppBaseModule {
 	product!: ProductModel
-	latestProducts!: Array<ProductModel>
+	latestProducts: Array<ProductModel> = []
 
 	get getProductData(): ProductModel {
 		return this.product

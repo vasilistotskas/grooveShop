@@ -64,5 +64,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Form/FormSubmitButtons';
+@import '@/Assets/Styles/Components/Form/FormSubmitButtons.scss';
 </style>

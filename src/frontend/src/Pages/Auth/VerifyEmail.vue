@@ -54,7 +54,7 @@ export default class VerifyEmail extends Vue {
 	authModule = getModule(AuthModule)
 	signupModule = getModule(SignUpModule)
 
-	meta = setup(() => {
+	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
 				title: 'Verify Email',
@@ -98,5 +98,5 @@ export default class VerifyEmail extends Vue {
 </script>
 
 <style lang="scss">
-@import '@/Assets/Styles/Pages/Auth/VerifyEmail';
+@import '@/Assets/Styles/Pages/Auth/VerifyEmail.scss';
 </style>

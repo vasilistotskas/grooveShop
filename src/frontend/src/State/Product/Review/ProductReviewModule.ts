@@ -20,10 +20,10 @@ const toast = useToast()
 })
 export default class ProductReviewModule extends AppBaseModule {
 	namespace = PaginationNamespaceTypesEnum.USER_REVIEWS
-	productReviews!: Array<ProductReviewModel>
+	productReviews: Array<ProductReviewModel> = []
 	productReviewsAverage = 0
 	productReviewsCounter = 0
-	userReviews!: Array<ProductReviewModel>
+	userReviews: Array<ProductReviewModel> = []
 	userToProductReview!: ProductReviewModel
 
 	get getNamespace(): PaginationNamespaceTypesEnum {

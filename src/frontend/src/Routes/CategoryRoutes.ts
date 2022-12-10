@@ -1,5 +1,4 @@
 import { RouteRecordRaw } from 'vue-router'
-import Category from '@/Pages/Category/Category.vue'
 import { MainRoutePaths } from '@/Routes/Enum/MainRoutePaths'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
 import BreadcrumbItemInterface from '@/Routes/Interface/BreadcrumbItemInterface'
@@ -8,7 +7,7 @@ const categoryRoutes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.CATEGORY,
 		name: MainRouteNames.CATEGORY,
-		component: Category,
+		component: () => import('@/Pages/Category/Category.vue'),
 		props: true,
 		meta: {
 			breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> => [

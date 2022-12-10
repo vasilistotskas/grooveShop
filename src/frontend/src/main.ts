@@ -8,9 +8,13 @@ import store from '@/DynamicStore'
 import 'vue-toastification/dist/index.css'
 import VueSocialSharing from 'vue-social-sharing'
 import * as apolloProvider from '@/Apollo/ApolloProvider'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Toast, { PluginOptions, TYPE } from 'vue-toastification'
 import { createMetaManager, plugin as metaPlugin } from 'vue-meta'
+import {
+	FontAwesomeIcon,
+	FontAwesomeLayers,
+	FontAwesomeLayersText
+} from '@fortawesome/vue-fontawesome'
 
 const ToastOptions: PluginOptions = {
 	toastDefaults: {
@@ -38,7 +42,9 @@ const app = createApp(App)
 	.use(apolloProvider.provider)
 	.use(Toast, ToastOptions)
 	.use(VueSocialSharing)
-	.component('font-awesome-icon', FontAwesomeIcon)
+	.component('FontAwesomeIcon', FontAwesomeIcon)
+	.component('FontAwesomeLayers', FontAwesomeLayers)
+	.component('FontAwesomeLayersText', FontAwesomeLayersText)
 	.provide('emitter', emitter)
 
 app.config.globalProperties.emitter = emitter

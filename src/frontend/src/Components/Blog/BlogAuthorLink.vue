@@ -37,5 +37,5 @@ export default class BlogAuthorLink extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Blog/BlogAuthorLink';
+@import '@/Assets/Styles/Components/Blog/BlogAuthorLink.scss';
 </style>

@@ -9,7 +9,14 @@
 		<Header />
 
 		<section class="main-section">
-			<RouterView />
+			<Suspense>
+				<template #default>
+					<RouterView />
+				</template>
+				<template #fallback>
+					<span>Loading...</span>
+				</template>
+			</Suspense>
 		</section>
 
 		<Footer />
@@ -26,11 +33,11 @@ import Footer from '@/Components/Main/Footer.vue'
 import Header from '@/Components/Main/Header.vue'
 import Loader from '@/Components/Main/Loader.vue'
 import { getModule } from 'vuex-module-decorators'
+import SliderModule from '@/State/Slider/SliderModule'
+import ProductModule from '@/State/Product/ProductModule'
 import CategoryModule from '@/State/Category/CategoryModule'
 import SocialSidebar from '@/Components/Main/SocialSidebar.vue'
 import { Options as Component, setup, Vue } from 'vue-class-component'
-import ProductModule from '@/State/Product/ProductModule'
-import SliderModule from '@/State/Slider/SliderModule'
 
 @Component({
 	name: 'App',
@@ -43,11 +50,18 @@ import SliderModule from '@/State/Slider/SliderModule'
 })
 export default class App extends Vue {
 	appModule = getModule(AppModule)
-	categoryModule = getModule(CategoryModule)
-	productModule = getModule(ProductModule)
-	sliderModule = getModule(SliderModule)
 
-	meta = setup(() => {
+	myContext = setup(() => {
+		const categoryModule = getModule(CategoryModule)
+		const productModule = getModule(ProductModule)
+		const sliderModule = getModule(SliderModule)
+
+		Promise.all([
+			categoryModule.fetchCategoriesTreeFromRemote(),
+			productModule.fetchLatestProductsFromRemote(),
+			sliderModule.fetchSlidersFromRemote()
+		])
+
 		const meta = useMeta({
 			title: '',
 			htmlAttrs: { lang: 'en', amp: true }
@@ -59,14 +73,6 @@ export default class App extends Vue {
 
 	get version(): string {
 		return packageMeta.version
-	}
-
-	created(): void {
-		Promise.all([
-			this.categoryModule.fetchCategoriesTreeFromRemote(),
-			this.productModule.fetchLatestProductsFromRemote(),
-			this.sliderModule.fetchSlidersFromRemote()
-		])
 	}
 
 	mounted(): void {

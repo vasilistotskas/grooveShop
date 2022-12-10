@@ -4,7 +4,7 @@
 		<div class="card password-reset-card">
 			<div class="card-body card-body-border-top">
 				<div>
-					<font-awesome-icon :icon="lockIcon" size="4x" />
+					<FontAwesomeIcon :icon="lockIcon" size="4x" />
 				</div>
 				<h1>Reset Password Confirm</h1>
 				<template v-if="passwordModule.getResetLoading"> loading... </template>
@@ -79,15 +79,14 @@
 </template>
 
 <script lang="ts">
-import * as zod from 'zod'
 import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import { useRoute } from 'vue-router'
 import { computed } from '@vue/runtime-core'
-import { useField, useForm } from 'vee-validate'
-import zodPassword from '@/Helpers/Zod/Password'
 import { getModule } from 'vuex-module-decorators'
 import { toFormValidator } from '@vee-validate/zod'
+import { ZodResetPassword } from '@/Zod/Auth/ZodAuth'
+import { FieldContext, useField, useForm } from 'vee-validate'
 import PasswordModule from '@/State/Auth/Password/PasswordModule'
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
@@ -118,18 +117,13 @@ export default class PasswordRestConfirm extends Vue {
 		)
 
 		const router = useRoute()
-		const validationSchema = toFormValidator(
-			zod.object({
-				new_password: zodPassword,
-				password2: zodPassword
-			})
-		)
+		const validationSchema = toFormValidator(ZodResetPassword)
 		const { handleSubmit, errors, submitCount } = useForm({
 			validationSchema
 		})
 
-		const { value: new_password } = useField('new_password')
-		const { value: re_new_password } = useField('re_new_password')
+		const { value: new_password }: FieldContext<string> = useField('new_password')
+		const { value: re_new_password }: FieldContext<string> = useField('re_new_password')
 
 		const isTooManyAttempts = computed(() => {
 			return submitCount.value >= 10
@@ -164,8 +158,8 @@ export default class PasswordRestConfirm extends Vue {
 </script>
 
 <style lang="scss">
-@import '@/Assets/Styles/Components/Form/FormProvider';
-@import '@/Assets/Styles/Components/Form/FormBaseTextarea';
-@import '@/Assets/Styles/Components/Form/FormBaseInput';
-@import '@/Assets/Styles/Pages/Auth/PasswordResetConfirm';
+@import '@/Assets/Styles/Components/Form/FormProvider.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseTextarea.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseInput.scss';
+@import '@/Assets/Styles/Pages/Auth/PasswordResetConfirm.scss';
 </style>

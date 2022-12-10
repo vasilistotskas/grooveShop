@@ -12,5 +12,5 @@ export default class ToastRegisterActivationFail extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Toast/ToastRegisterActivationFail';
+@import '@/Assets/Styles/Components/Toast/ToastRegisterActivationFail.scss';
 </style>

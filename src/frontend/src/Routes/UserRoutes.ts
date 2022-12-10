@@ -16,7 +16,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.USER_ACCOUNT,
 		name: MainRouteNames.USER_ACCOUNT,
-		component: UserAccount,
+		component: () => import('@/Pages/User/UserAccount.vue'),
 		meta: {
 			requireLogin: true,
 			breadcrumb: [
@@ -32,7 +32,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 			{
 				path: MainRoutePaths.USER_ACCOUNT_ORDERS,
 				name: MainRouteNames.USER_ACCOUNT_ORDERS,
-				component: UserOrderHistory,
+				component: () => import('@/Pages/User/UserOrderHistory.vue'),
 				meta: {
 					breadcrumb: [
 						{
@@ -53,7 +53,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 			{
 				path: MainRoutePaths.USER_ACCOUNT_SETTINGS,
 				name: MainRouteNames.USER_ACCOUNT_SETTINGS,
-				component: UserSettings,
+				component: () => import('@/Pages/User/UserSettings.vue'),
 				meta: {
 					breadcrumb: [
 						{
@@ -74,7 +74,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 			{
 				path: MainRoutePaths.USER_ACCOUNT_FAVOURITES,
 				name: MainRouteNames.USER_ACCOUNT_FAVOURITES,
-				component: UserFavourites,
+				component: () => import('@/Pages/User/UserFavourites.vue'),
 				meta: {
 					breadcrumb: [
 						{
@@ -95,7 +95,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 			{
 				path: MainRoutePaths.USER_ACCOUNT_REVIEWS,
 				name: MainRouteNames.USER_ACCOUNT_REVIEWS,
-				component: UserReviews,
+				component: () => import('@/Pages/User/UserReviews.vue'),
 				meta: {
 					breadcrumb: [
 						{
@@ -116,7 +116,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 			{
 				path: MainRoutePaths.USER_ACCOUNT_PASSWORD,
 				name: MainRouteNames.USER_ACCOUNT_PASSWORD,
-				component: UserPassword,
+				component: () => import('@/Pages/User/UserPassword.vue'),
 				meta: {
 					breadcrumb: [
 						{
@@ -137,7 +137,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 			{
 				path: MainRoutePaths.USER_ACCOUNT_ADDRESSES,
 				name: MainRouteNames.USER_ACCOUNT_ADDRESSES,
-				component: UserAddresses,
+				component: () => import('@/Pages/User/UserAddresses.vue'),
 				meta: {
 					breadcrumb: [
 						{
@@ -158,7 +158,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 			{
 				path: MainRoutePaths.USER_ACCOUNT_ADDRESS_NEW,
 				name: MainRouteNames.USER_ACCOUNT_ADDRESS_NEW,
-				component: UserAddressNew,
+				component: () => import('@/Pages/User/UserAddressNew.vue'),
 				meta: {
 					breadcrumb: [
 						{
@@ -185,7 +185,7 @@ const userRoutes: Array<RouteRecordRaw> = [
 			{
 				path: MainRoutePaths.USER_ACCOUNT_ADDRESS_EDIT,
 				name: MainRouteNames.USER_ACCOUNT_ADDRESS_EDIT,
-				component: UserAddressEdit,
+				component: () => import('@/Pages/User/UserAddressEdit.vue'),
 				meta: {
 					breadcrumb: (route: RouteParams): Array<BreadcrumbItemInterface> =>
 						[

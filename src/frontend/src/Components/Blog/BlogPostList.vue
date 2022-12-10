@@ -67,5 +67,5 @@ export default class BlogPostList extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Blog/BlogPostList';
+@import '@/Assets/Styles/Components/Blog/BlogPostList.scss';
 </style>

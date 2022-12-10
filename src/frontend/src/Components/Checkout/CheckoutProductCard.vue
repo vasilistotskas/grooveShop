@@ -71,5 +71,5 @@ export default class CheckoutProductCard extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Checkout/Checkout';
+@import '@/Assets/Styles/Pages/Checkout/Checkout.scss';
 </style>

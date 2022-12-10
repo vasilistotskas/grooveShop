@@ -49,9 +49,9 @@
 									<label for="password" class="label mb-2">Confirm Password</label>
 									<div class="_container">
 										<input
-											v-model="myContext.confirmPassword"
-											id="confirmPassword"
-											name="confirmPassword"
+											v-model="myContext.re_password"
+											id="re_password"
+											name="re_password"
 											type="password"
 											class="_input"
 											placeholder="Confirm Password"
@@ -59,7 +59,7 @@
 										/>
 									</div>
 									<span class="validation-errors">{{
-										myContext.errors.confirmPassword
+										myContext.errors.re_password
 									}}</span>
 								</div>
 								<span v-show="signupModule.getRegistrationError" class="error">
@@ -107,15 +107,14 @@
 </template>
 
 <script lang="ts">
-import * as zod from 'zod'
 import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
-import { useField, useForm } from 'vee-validate'
-import zodPassword from '@/Helpers/Zod/Password'
+import { ZodSignup } from '@/Zod/Auth/ZodAuth'
 import { getModule } from 'vuex-module-decorators'
 import { toFormValidator } from '@vee-validate/zod'
 import SignUpModule from '@/State/Auth/SignUp/SignUpModule'
+import { FieldContext, useField, useForm } from 'vee-validate'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import SignUpInputApi from '@/State/Auth/Interface/SignUpInputApi'
 import { Options as Component, setup, Vue } from 'vue-class-component'
@@ -141,30 +140,14 @@ export default class Register extends Vue {
 			}))
 		)
 
-		const validationSchema = toFormValidator(
-			zod
-				.object({
-					email: zod.string().email(),
-					password: zodPassword,
-					confirmPassword: zodPassword
-				})
-				.superRefine(({ confirmPassword, password }, ctx) => {
-					if (confirmPassword !== password) {
-						ctx.addIssue({
-							code: 'custom',
-							message: 'The passwords did not match',
-							path: ['confirmPassword']
-						})
-					}
-				})
-		)
+		const validationSchema = toFormValidator(ZodSignup)
 		const { handleSubmit, errors, submitCount } = useForm({
 			validationSchema
 		})
 
-		const { value: email } = useField('email')
-		const { value: password } = useField('password')
-		const { value: confirmPassword } = useField('confirmPassword')
+		const { value: email }: FieldContext<string> = useField('email')
+		const { value: password }: FieldContext<string> = useField('password')
+		const { value: re_password }: FieldContext<string> = useField('re_password')
 
 		const isTooManyAttempts = computed(() => {
 			return submitCount.value >= 10
@@ -172,15 +155,16 @@ export default class Register extends Vue {
 
 		const onSubmit = handleSubmit(async () => {
 			try {
+				// @TODO: Add first name and last name
 				const apiData: SignUpInputApi = {
 					first_name: 'who',
 					last_name: 'me',
 					email: email.value,
 					password: password.value,
-					re_password: confirmPassword.value
+					re_password: re_password.value
 				}
 				await this.signupModule.setRegistrationEmail(apiData.email)
-				await this.signupModule.createAccount(apiData as FormData)
+				await this.signupModule.createAccount(apiData)
 			} catch (e) {
 				console.log(e)
 			}
@@ -192,7 +176,7 @@ export default class Register extends Vue {
 			errors,
 			email,
 			password,
-			confirmPassword,
+			re_password,
 			isTooManyAttempts,
 			meta
 		}
@@ -229,8 +213,8 @@ export default class Register extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Form/FormProvider';
-@import '@/Assets/Styles/Components/Form/FormBaseTextarea';
-@import '@/Assets/Styles/Components/Form/FormBaseInput';
-@import '@/Assets/Styles/Pages/Auth/SignUp';
+@import '@/Assets/Styles/Components/Form/FormProvider.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseTextarea.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseInput.scss';
+@import '@/Assets/Styles/Pages/Auth/SignUp.scss';
 </style>

@@ -3,11 +3,11 @@ import {
 	QueryParamsType
 } from '@/State/Pagination/Type/PaginationTypes'
 import router from '@/Routes'
-import { AxiosResponse } from 'axios'
 import { getModule } from 'vuex-module-decorators'
-import { Options as Component, Vue } from 'vue-class-component'
 import PaginationModule from '@/State/Pagination/PaginationModule'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
+import { Options as Component, setup, Vue } from 'vue-class-component'
+import { PaginationRoutesEnum } from '@/State/Pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
 
@@ -18,6 +18,7 @@ export default class PaginatedComponent<TPaginatedModel>
 	extends Vue
 	implements PaginatedComponentInterface<TPaginatedModel>
 {
+	PaginationNamespaceTypesEnum = PaginationNamespaceTypesEnum
 	clearPagination = false
 	paginationModule = getModule<PaginationModule<TPaginatedModel>>(PaginationModule)
 	protected paginationNamespace!: PaginationNamespaceTypesEnum
@@ -58,9 +59,7 @@ export default class PaginatedComponent<TPaginatedModel>
 		return 1
 	}
 
-	fetchPaginationData<T>():
-		| Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>>
-		| undefined {
+	fetchPaginationData<T>(): Promise<void | PaginatedModel<T>> | undefined {
 		return
 	}
 

@@ -47,7 +47,6 @@ import {
 } from '@/Helpers/MediaStream/ImageUrlEnum'
 import router from '@/Routes'
 import { useMeta } from 'vue-meta'
-import { AxiosResponse } from 'axios'
 import { computed } from '@vue/runtime-core'
 import AppModule from '@/State/App/AppModule'
 import { getModule } from 'vuex-module-decorators'
@@ -95,11 +94,14 @@ export default class Category
 	paginationNamespace = PaginationNamespaceTypesEnum.CATEGORY_PRODUCTS
 	PaginationRoutesEnum = PaginationRoutesEnum
 
-	meta = setup(() => {
+	myContext = setup(() => {
+		const categoryModule = getModule(CategoryModule)
+
+		// @TODO THIS NOT WORKING MUST FETCH IN HERE
 		const meta = useMeta(
 			computed(() => ({
-				title: this.categoryModule.getCategory?.name,
-				description: this.categoryModule.getCategory?.description
+				title: categoryModule.getCategory?.name,
+				description: categoryModule.getCategory?.description
 			}))
 		)
 		return { meta }
@@ -171,7 +173,7 @@ export default class Category
 		)
 	}
 
-	fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
+	fetchPaginationData<T>(): Promise<void | PaginatedModel<T>> {
 		const paginationQuery = PaginationModel.createPaginationModel({
 			pageNumber: this.currentPageNumber,
 			endpointUrl: this.buildEndPointUrlForPaginatedResults(),
@@ -192,5 +194,5 @@ export default class Category
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Category/Category';
+@import '@/Assets/Styles/Pages/Category/Category.scss';
 </style>

@@ -22,7 +22,5 @@ export default interface PaginatedComponentInterface<TPaginatedModel> {
 	readonly currentPageNumber: number
 	readonly currentPageQuery?: QueryParamsType
 
-	fetchPaginationData<T>():
-		| Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>>
-		| undefined
+	fetchPaginationData<T>(): Promise<void | PaginatedModel<T>> | undefined
 }

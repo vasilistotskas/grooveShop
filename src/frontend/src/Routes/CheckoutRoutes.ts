@@ -2,11 +2,8 @@ import { RouteRecordRaw } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import CartModule from '@/State/Cart/CartModule'
 import { getModule } from 'vuex-module-decorators'
-import Checkout from '@/Pages/Checkout/Checkout.vue'
 import { MainRoutePaths } from '@/Routes/Enum/MainRoutePaths'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
-import CheckoutError from '@/Pages/Checkout/CheckoutError.vue'
-import CheckoutSuccess from '@/Pages/Checkout/CheckoutSuccess.vue'
 import BreadcrumbItemInterface from '@/Routes/Interface/BreadcrumbItemInterface'
 
 const toast = useToast()
@@ -27,7 +24,7 @@ const checkoutRoutes: Array<RouteRecordRaw> = [
 		path: MainRoutePaths.CHECKOUT,
 		name: MainRouteNames.CHECKOUT,
 		beforeEnter: [checkCartTotalLength],
-		component: Checkout,
+		component: () => import('@/Pages/Checkout/Checkout.vue'),
 		meta: {
 			requireLogin: false,
 			breadcrumb: [
@@ -49,7 +46,7 @@ const checkoutRoutes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.CHECKOUT_SUCCESS,
 		name: MainRouteNames.CHECKOUT_SUCCESS,
-		component: CheckoutSuccess,
+		component: () => import('@/Pages/Checkout/CheckoutSuccess.vue'),
 		meta: {
 			breadcrumb: [
 				{
@@ -70,7 +67,7 @@ const checkoutRoutes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.CHECKOUT_ERROR,
 		name: MainRouteNames.CHECKOUT_ERROR,
-		component: CheckoutError,
+		component: () => import('@/Pages/Checkout/CheckoutError.vue'),
 		meta: {
 			breadcrumb: [
 				{

@@ -4,6 +4,7 @@ import api from '@/Api/ApiService'
 import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
+import SignUpInputApi from '@/State/Auth/Interface/SignUpInputApi'
 import ToastRegisterActivationFail from '@/Components/Toast/ToastRegisterActivationFail.vue'
 
 const toast = useToast()
@@ -16,7 +17,7 @@ const toast = useToast()
 	name: 'signup'
 })
 export default class SignUpModule extends AppBaseModule {
-	registrationEmail?: unknown
+	registrationEmail!: string
 	activationCompleted = false
 	activationError = false
 	activationLoading = false
@@ -25,7 +26,7 @@ export default class SignUpModule extends AppBaseModule {
 	registrationError = false
 	registrationLoading = false
 
-	get getRegistrationEmail(): unknown {
+	get getRegistrationEmail(): string {
 		return this.registrationEmail
 	}
 
@@ -58,13 +59,9 @@ export default class SignUpModule extends AppBaseModule {
 	}
 
 	@Mutation
-	setRegistrationEmail(email: unknown): void {
+	setRegistrationEmail(email: string): void {
 		this.registrationEmail = email
-		if (email !== undefined) {
-			if (typeof email === 'string') {
-				localStorage.setItem('registrationEmail', email)
-			}
-		}
+		localStorage.setItem('registrationEmail', email)
 	}
 
 	@Mutation
@@ -132,10 +129,10 @@ export default class SignUpModule extends AppBaseModule {
 	}
 
 	@Action
-	async createAccount(formData: FormData): Promise<void> {
+	async createAccount(data: SignUpInputApi): Promise<void> {
 		await this.context.commit('registrationBegin')
 		return await api
-			.post('djoser/users/', formData)
+			.post('djoser/users/', data)
 			.then(() => {
 				this.context.commit('registrationSuccess')
 				toast.success('Success, an activation link has been sent to your email!')

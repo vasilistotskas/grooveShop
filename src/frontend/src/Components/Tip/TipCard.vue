@@ -22,7 +22,7 @@
 				{{ contentShorten(tip.content) }}
 			</div>
 			<div class="tip-card-bottom">
-				<font-awesome-icon class="tip-card-bottom-icon" :icon="globeIcon" />
+				<FontAwesomeIcon class="tip-card-bottom-icon" :icon="globeIcon" />
 				<span class="tip-card-bottom-text">webpage</span>
 			</div>
 		</div>
@@ -81,5 +81,5 @@ export default class TipCard extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Tip/TipCard';
+@import '@/Assets/Styles/Components/Tip/TipCard.scss';
 </style>

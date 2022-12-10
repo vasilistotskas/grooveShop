@@ -1,8 +1,7 @@
 export default interface SignUpInputApi {
-	first_name?: unknown
-	last_name?: unknown
-	email?: unknown
-	password?: unknown
-	re_password?: unknown
-	confirmPassword?: unknown
+	first_name?: string
+	last_name?: string
+	email: string
+	password: string
+	re_password: string
 }

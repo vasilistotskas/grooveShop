@@ -4,7 +4,7 @@
 		class="_container"
 	>
 		<span v-if="inputWithAddOn" class="input-group-addon">
-			<font-awesome-icon :icon="inputWithAddOnIcon" size="lg" />
+			<FontAwesomeIcon :icon="inputWithAddOnIcon" size="lg" />
 		</span>
 		<input
 			v-model="value"
@@ -79,5 +79,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Form/FormBaseInput';
+@import '@/Assets/Styles/Components/Form/FormBaseInput.scss';
 </style>

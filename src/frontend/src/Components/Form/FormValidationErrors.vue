@@ -20,5 +20,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Form/FormValidationErrors';
+@import '@/Assets/Styles/Components/Form/FormValidationErrors.scss';
 </style>

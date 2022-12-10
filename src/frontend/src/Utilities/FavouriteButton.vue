@@ -6,8 +6,8 @@
 		type="button"
 		@click="favouriteHandle()"
 	>
-		<font-awesome-icon v-if="!isFavourite" :icon="icon" />
-		<font-awesome-icon v-else :icon="icon" :style="{ color: 'rgba(200,60,60,0.79)' }" />
+		<FontAwesomeIcon v-if="!isFavourite" :icon="icon" />
+		<FontAwesomeIcon v-else :icon="icon" :style="{ color: 'rgba(200,60,60,0.79)' }" />
 	</button>
 </template>
 
@@ -105,7 +105,7 @@ export default class FavouriteButton
 			return this.module[this.getterType]
 		}
 		const likes = this.model.likes
-		const userEmail = this.userModule.getUserData.email
+		const userEmail = this.userModule.getUserProfile.email
 
 		return some(likes, { email: userEmail })
 	}

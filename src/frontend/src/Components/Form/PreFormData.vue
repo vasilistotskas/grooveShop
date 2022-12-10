@@ -30,5 +30,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Form/PreFormData';
+@import '@/Assets/Styles/Components/Form/PreFormData.scss';
 </style>

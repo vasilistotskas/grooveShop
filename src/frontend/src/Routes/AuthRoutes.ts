@@ -1,14 +1,8 @@
-import LogIn from '@/Pages/Auth/LogIn.vue'
 import { RouteRecordRaw } from 'vue-router'
-import SignUp from '@/Pages/Auth/SignUp.vue'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
-import VerifyEmail from '@/Pages/Auth/VerifyEmail.vue'
-import PasswordReset from '@/Pages/Auth/PasswordReset.vue'
 import { MainRoutePaths } from '@/Routes/Enum/MainRoutePaths'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
-import PasswordResetConfirm from '@/Pages/Auth/PasswordResetConfirm.vue'
-import VerifyEmailResendInput from '@/Pages/Auth/VerifyEmailResendInput.vue'
 import BreadcrumbItemInterface from '@/Routes/Interface/BreadcrumbItemInterface'
 
 function checkAuthentication(to, from, next) {
@@ -25,7 +19,7 @@ const authRoutes: Array<RouteRecordRaw> = [
 		path: MainRoutePaths.LOGIN,
 		name: MainRouteNames.LOGIN,
 		beforeEnter: [checkAuthentication],
-		component: LogIn,
+		component: () => import('@/Pages/Auth/LogIn.vue'),
 		meta: {
 			breadcrumb: [
 				{
@@ -41,7 +35,7 @@ const authRoutes: Array<RouteRecordRaw> = [
 		path: MainRoutePaths.SIGNUP,
 		name: MainRouteNames.SIGNUP,
 		beforeEnter: [checkAuthentication],
-		component: SignUp,
+		component: () => import('@/Pages/Auth/SignUp.vue'),
 		meta: {
 			breadcrumb: [
 				{
@@ -56,7 +50,7 @@ const authRoutes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.VERIFY_EMAIL,
 		name: MainRouteNames.VERIFY_EMAIL,
-		component: VerifyEmail,
+		component: () => import('@/Pages/Auth/VerifyEmail.vue'),
 		meta: {
 			breadcrumb: [
 				{
@@ -71,7 +65,7 @@ const authRoutes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.VERIFY_EMAIL_RESEND_INPUT,
 		name: MainRouteNames.VERIFY_EMAIL_RESEND_INPUT,
-		component: VerifyEmailResendInput,
+		component: () => import('@/Pages/Auth/VerifyEmailResendInput.vue'),
 		meta: {
 			breadcrumb: [
 				{
@@ -86,7 +80,7 @@ const authRoutes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.PASSWORD_RESET,
 		name: MainRouteNames.PASSWORD_RESET,
-		component: PasswordReset,
+		component: () => import('@/Pages/Auth/PasswordReset.vue'),
 		meta: {
 			breadcrumb: [
 				{
@@ -101,7 +95,7 @@ const authRoutes: Array<RouteRecordRaw> = [
 	{
 		path: MainRoutePaths.PASSWORD_RESET_CONFIRM,
 		name: MainRouteNames.PASSWORD_RESET_CONFIRM,
-		component: PasswordResetConfirm,
+		component: () => import('@/Pages/Auth/PasswordResetConfirm.vue'),
 		meta: {
 			breadcrumb: [
 				{

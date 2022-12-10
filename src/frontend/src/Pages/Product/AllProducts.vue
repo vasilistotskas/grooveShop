@@ -32,7 +32,6 @@
 <script lang="ts">
 import router from '@/Routes'
 import { useMeta } from 'vue-meta'
-import { AxiosResponse } from 'axios'
 import { computed } from '@vue/runtime-core'
 import ProductModel from '@/State/Product/ProductModel'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
@@ -65,7 +64,7 @@ export default class AllProducts
 	PaginationRoutesEnum = PaginationRoutesEnum
 	MainRoutePaths = MainRoutePaths
 
-	meta = setup(() => {
+	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
 				title: 'Products',
@@ -102,7 +101,7 @@ export default class AllProducts
 		this.fetchPaginationData<ProductModel>()
 	}
 
-	fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
+	fetchPaginationData<T>(): Promise<void | PaginatedModel<T>> {
 		const paginationQuery = PaginationModel.createPaginationModel({
 			pageNumber: this.currentPageNumber,
 			endpointUrl: MainRoutePaths.ALL_PRODUCTS,
@@ -118,5 +117,5 @@ export default class AllProducts
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Product/AllProducts';
+@import '@/Assets/Styles/Pages/Product/AllProducts.scss';
 </style>

@@ -27,5 +27,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Form/FormLoadingIcon';
+@import '@/Assets/Styles/Components/Form/FormLoadingIcon.scss';
 </style>

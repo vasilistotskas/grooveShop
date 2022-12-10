@@ -157,13 +157,13 @@ export default class PasswordModule extends AppBaseModule {
 
 	@Action
 	async resetPasswordConfirm(data: ResetPasswordInputApi): Promise<void> {
-		const reset_data = {
+		const resetData = {
 			uid: data.uid,
 			token: data.token,
 			new_password: data.new_password
 		}
 		return await api
-			.post('djoser/users/reset_password_confirm/', reset_data)
+			.post('djoser/users/reset_password_confirm/', resetData)
 			.then(() => this.context.commit('passwordResetSuccess'))
 			.catch(() => {
 				this.context.commit('passwordResetFailure')

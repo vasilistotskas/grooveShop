@@ -18,7 +18,7 @@
 						class="nav-link"
 						title="Orders"
 					>
-						<font-awesome-icon :icon="truckIcon" size="1x" />
+						<FontAwesomeIcon :icon="truckIcon" size="1x" />
 						<span>Orders</span>
 					</RouterLink>
 					<RouterLink
@@ -27,7 +27,7 @@
 						class="nav-link"
 						title="Favourites"
 					>
-						<font-awesome-icon :icon="heartIcon" size="1x" />
+						<FontAwesomeIcon :icon="heartIcon" size="1x" />
 						<span>Favourites</span>
 					</RouterLink>
 					<RouterLink
@@ -36,7 +36,7 @@
 						class="nav-link"
 						title="Reviews"
 					>
-						<font-awesome-icon :icon="starIcon" size="1x" />
+						<FontAwesomeIcon :icon="starIcon" size="1x" />
 						<span>Reviews</span>
 					</RouterLink>
 					<RouterLink
@@ -45,7 +45,7 @@
 						class="nav-link"
 						title="Addresses"
 					>
-						<font-awesome-icon :icon="cogsIcon" size="1x" />
+						<FontAwesomeIcon :icon="cogsIcon" size="1x" />
 						<span>Addresses</span>
 					</RouterLink>
 					<RouterLink
@@ -54,7 +54,7 @@
 						class="nav-link"
 						title="Settings"
 					>
-						<font-awesome-icon :icon="cogsIcon" size="1x" />
+						<FontAwesomeIcon :icon="cogsIcon" size="1x" />
 						<span>Settings</span>
 					</RouterLink>
 					<RouterLink
@@ -63,7 +63,7 @@
 						class="nav-link"
 						title="Password"
 					>
-						<font-awesome-icon :icon="lockIcon" size="1x" />
+						<FontAwesomeIcon :icon="lockIcon" size="1x" />
 						<span>Password</span>
 					</RouterLink>
 				</div>
@@ -154,7 +154,7 @@ export default class UserAccount extends Vue {
 	lockIcon = faLock
 	emitter: Emitter<UserAccountEvents> | undefined = inject('emitter')
 
-	meta = setup(() => {
+	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
 				title: this.userData?.first_name + ' ' + this.userData?.last_name + ' | Account',
@@ -172,7 +172,7 @@ export default class UserAccount extends Vue {
 
 	get userData(): UserProfileModel {
 		if (this.authModule.isAuthenticated) {
-			return this.userModule.getUserData
+			return this.userModule.getUserProfile
 		}
 		return new UserProfileModel()
 	}
@@ -207,7 +207,7 @@ export default class UserAccount extends Vue {
 	}
 
 	logout(): void {
-		this.userModule.unsetUserData()
+		this.userModule.unsetUserProfile()
 		this.authModule.logout().then(() => {
 			this.productFavouriteModule.unsetFavourites()
 			this.productFavouriteModule.unsetUserFavourites()
@@ -221,5 +221,5 @@ export default class UserAccount extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/User/UserAccount';
+@import '@/Assets/Styles/Pages/User/UserAccount.scss';
 </style>

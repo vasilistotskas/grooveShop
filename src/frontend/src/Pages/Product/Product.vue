@@ -53,7 +53,7 @@
 
 					<div class="product-page-information mb-4">
 						<div v-if="product.stock > 0" class="product-page-information-availability">
-							<font-awesome-icon
+							<FontAwesomeIcon
 								:icon="cubesIcon"
 								:style="{ color: '#53e24aeb' }"
 								size="lg"
@@ -61,7 +61,7 @@
 							<span>Immediately available</span>
 						</div>
 						<div v-else class="product-page-information-availability unavailable">
-							<font-awesome-icon
+							<FontAwesomeIcon
 								:icon="warningTriangleIcon"
 								:style="{ color: '#FD0002e0' }"
 								size="lg"
@@ -69,7 +69,7 @@
 							<span>Out of stock</span>
 						</div>
 						<div class="product-page-information-delivery">
-							<font-awesome-icon
+							<FontAwesomeIcon
 								:icon="truckPickupIcon"
 								:style="{ color: '#1f8dfd' }"
 								size="lg"
@@ -87,7 +87,7 @@
 							type="button"
 							@click="addToCart()"
 						>
-							<font-awesome-icon
+							<FontAwesomeIcon
 								:icon="shoppingBagIcon"
 								:style="{ color: '#53e24aeb' }"
 								size="lg"
@@ -102,7 +102,7 @@
 							:dispatch-type="'toggleFavourite'"
 							:dispatch-params="{
 								productId: product.id,
-								userId: userModule.getUserData?.id
+								userId: userModule.getUserProfile?.id
 							}"
 							:use-store="true"
 						/>
@@ -125,7 +125,7 @@
 	<ProductReviews
 		v-if="product?.id"
 		:product="product"
-		:user-id="userModule.getUserData?.id"
+		:user-id="userModule.getUserProfile?.id"
 		:user-to-product-review="productReviewModule.getUserToProductReview"
 		:product-reviews-average="productReviewModule.getProductReviewsAverage"
 		:product-reviews-counter="productReviewModule.getProductReviewsCounter"
@@ -196,7 +196,7 @@ export default class Product extends Vue {
 	truckPickupIcon = faShippingFast
 	warningTriangleIcon = faExclamationTriangle
 
-	meta = setup(() => {
+	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
 				title: this.product?.name ?? '',
@@ -230,7 +230,7 @@ export default class Product extends Vue {
 			this.productModule.updateProductHits()
 			this.productReviewModule.fetchUserToProductReviewFromRemote({
 				productId: this.productModule.getProductData.id,
-				userId: this.userModule.getUserData?.id
+				userId: this.userModule.getUserProfile?.id
 			})
 		})
 		this.emitter?.on('toggleReview', (e) => {
@@ -238,7 +238,7 @@ export default class Product extends Vue {
 				FormData: e,
 				IsAuthenticated: this.authModule.isAuthenticated,
 				productId: this.productModule.getProductData.id,
-				userId: this.userModule.getUserData?.id
+				userId: this.userModule.getUserProfile?.id
 			})
 		})
 	}
@@ -259,5 +259,5 @@ export default class Product extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Product/Product';
+@import '@/Assets/Styles/Pages/Product/Product.scss';
 </style>

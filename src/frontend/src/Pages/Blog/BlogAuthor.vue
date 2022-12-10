@@ -45,7 +45,16 @@ import { RouteMetaBreadcrumbFunction } from '@/Routes/Type/BreadcrumbItemType'
 export default class BlogAuthor extends Vue {
 	blogModule = getModule(BlogModule)
 
-	meta = setup(() => {
+	myContext = setup(() => {
+		const blogModule = getModule(BlogModule)
+
+		Promise.all([
+			blogModule.fetchAuthorByIdFromRemote(),
+			blogModule.fetchTagsFromRemote(),
+			blogModule.fetchAuthorsFromRemote(),
+			blogModule.fetchCategoriesFromRemote()
+		])
+
 		const meta = useMeta(
 			computed(() => ({
 				title: this.displayName || 'Blog Author',
@@ -74,15 +83,6 @@ export default class BlogAuthor extends Vue {
 		)
 	}
 
-	created(): void {
-		Promise.all([
-			this.blogModule.fetchAuthorByIdFromRemote(),
-			this.blogModule.fetchTagsFromRemote(),
-			this.blogModule.fetchAuthorsFromRemote(),
-			this.blogModule.fetchCategoriesFromRemote()
-		])
-	}
-
 	updated(): void {
 		this.blogModule.fetchAuthorByIdFromRemote()
 	}
@@ -90,5 +90,5 @@ export default class BlogAuthor extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Blog/BlogAuthor';
+@import '@/Assets/Styles/Pages/Blog/BlogAuthor.scss';
 </style>

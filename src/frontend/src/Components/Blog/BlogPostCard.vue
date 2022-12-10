@@ -53,7 +53,7 @@
 				</div>
 
 				<div class="blog-post-card-body-actions-comment">
-					<font-awesome-icon
+					<FontAwesomeIcon
 						:style="{ color: 'rgba(200,60,60,0.79)' }"
 						:icon="commentIcon"
 					/>
@@ -157,5 +157,5 @@ export default class BlogPostCard extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Blog/BlogPostCard';
+@import '@/Assets/Styles/Components/Blog/BlogPostCard.scss';
 </style>

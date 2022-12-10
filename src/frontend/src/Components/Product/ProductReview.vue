@@ -10,7 +10,7 @@
 							<h5 id="exampleModalLabel" class="modal-title">
 								Write a review for product <strong>Adidas Shoes</strong>
 							</h5>
-							<font-awesome-icon :icon="writeReviewIcon" size="lg" />
+							<FontAwesomeIcon :icon="writeReviewIcon" size="lg" />
 						</div>
 						<div class="modal-body">
 							<!-- Product Rating -->
@@ -336,5 +336,5 @@ export default class ProductReview extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Product/ProductReview';
+@import '@/Assets/Styles/Pages/Product/ProductReview.scss';
 </style>

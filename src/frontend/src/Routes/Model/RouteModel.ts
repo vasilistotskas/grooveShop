@@ -43,7 +43,7 @@ export class RouteModel {
 		this.cartModule.initializeCart()
 		this.authModule.initialize().then(() => {
 			if (this.authModule.isAuthenticated) {
-				this.userModule.fetchUserDataFromRemote()
+				this.userModule.fetchUserProfileFromRemote()
 			}
 			if (
 				to.matched.some((record) => record.meta.requireLogin) &&

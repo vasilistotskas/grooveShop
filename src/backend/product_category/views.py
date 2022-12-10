@@ -7,7 +7,6 @@ from rest_framework import filters
 from rest_framework import generics
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 
 class CategoryDetail(GenericAPIView):
@@ -79,11 +78,3 @@ class CategoryTreeView(GenericAPIView):
         if children:
             result["children"] = children
         return result
-
-
-class CategoriesUnorganized(APIView):
-    @staticmethod
-    def get(request, format=None):
-        categories = Category.objects.all()
-        serializer = CategorySerializer(categories, many=True)
-        return Response(serializer.data)

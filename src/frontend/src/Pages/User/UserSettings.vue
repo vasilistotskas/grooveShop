@@ -168,15 +168,16 @@
 </template>
 
 <script lang="ts">
-import * as zod from 'zod'
+import { z } from 'zod'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
-import { useField, useForm } from 'vee-validate'
 import { getModule } from 'vuex-module-decorators'
 import { toFormValidator } from '@vee-validate/zod'
+import { ZodUserSettings } from '@/Zod/User/ZodUser'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
 import UserModule from '@/State/User/Profile/UserModule'
 import CountryModule from '@/State/Country/CountryModule'
+import { FieldContext, useField, useForm } from 'vee-validate'
 import { HTMLElementEvent } from '@/State/Common/Types/HelpingTypes'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import UserProfileApiData from '@/State/User/Interface/UserProfileApiData'
@@ -194,9 +195,9 @@ export default class UserSettings extends Vue {
 		const userModule = getModule(UserModule)
 
 		countryModule.fetchCountriesFromRemote()
-		countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserData)
+		countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserProfile)
 
-		const userData = userModule.getUserData
+		const userData = userModule.getUserProfile
 
 		const meta = useMeta(
 			computed(() => ({
@@ -205,20 +206,7 @@ export default class UserSettings extends Vue {
 			}))
 		)
 
-		const validationSchema = toFormValidator(
-			zod.object({
-				first_name: zod.string().min(3).max(100),
-				last_name: zod.string().min(3).max(100),
-				phone: zod
-					.number()
-					.positive({ message: 'Must be a positive phone' })
-					.int({ message: 'Must be an integer' }),
-				city: zod.string().min(3).max(100),
-				zipcode: zod.string().min(3).max(100),
-				address: zod.string().min(3).max(100),
-				place: zod.string().min(3).max(100)
-			})
-		)
+		const validationSchema = toFormValidator(ZodUserSettings)
 		const { handleSubmit, errors, submitCount } = useForm({
 			validationSchema,
 			initialValues: {
@@ -234,15 +222,15 @@ export default class UserSettings extends Vue {
 			}
 		})
 
-		const { value: first_name } = useField('first_name')
-		const { value: last_name } = useField('last_name')
-		const { value: phone } = useField('phone')
-		const { value: city } = useField('city')
-		const { value: zipcode } = useField('zipcode')
-		const { value: address } = useField('address')
-		const { value: place } = useField('place')
-		const { value: country } = useField('country')
-		const { value: region } = useField('region')
+		const { value: first_name }: FieldContext<string> = useField('first_name')
+		const { value: last_name }: FieldContext<string> = useField('last_name')
+		const { value: phone }: FieldContext<number> = useField('phone')
+		const { value: city }: FieldContext<string> = useField('city')
+		const { value: zipcode }: FieldContext<string> = useField('zipcode')
+		const { value: address }: FieldContext<string> = useField('address')
+		const { value: place }: FieldContext<string> = useField('place')
+		const { value: country }: FieldContext<string> = useField('country')
+		const { value: region }: FieldContext<string> = useField('region')
 
 		const isTooManyAttempts = computed(() => {
 			return submitCount.value >= 10
@@ -297,8 +285,8 @@ export default class UserSettings extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Form/FormProvider';
-@import '@/Assets/Styles/Components/Form/FormBaseTextarea';
-@import '@/Assets/Styles/Components/Form/FormBaseInput';
-@import '@/Assets/Styles/Pages/User/UserSettings';
+@import '@/Assets/Styles/Components/Form/FormProvider.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseTextarea.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseInput.scss';
+@import '@/Assets/Styles/Pages/User/UserSettings.scss';
 </style>

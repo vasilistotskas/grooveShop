@@ -21,7 +21,7 @@
 			<div class="blog-comments-card-date">
 				<span class="blog-comments-card-date-created">At : {{ comment.createdAt }} </span>
 				<span class="blog-comments-card-date-title">
-					<font-awesome-icon
+					<FontAwesomeIcon
 						:icon="checkCircleIcon"
 						:style="{ color: '#53e24aeb' }"
 						size="sm"
@@ -160,5 +160,5 @@ export default class BlogCommentCard extends Vue {
 </script>
 
 <style lang="scss">
-@import '@/Assets/Styles/Components/Blog/BlogCommentCard';
+@import '@/Assets/Styles/Components/Blog/BlogCommentCard.scss';
 </style>

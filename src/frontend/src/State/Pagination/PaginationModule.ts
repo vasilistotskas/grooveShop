@@ -202,7 +202,7 @@ export default class PaginationModule<TPaginatedModel> extends AppBaseModule {
 	async fetchPaginatedResults<T>(data: {
 		params: PaginationModel
 		namespace: PaginationNamespaceTypesEnum
-	}): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
+	}): Promise<void | PaginatedModel<T>> {
 		const ApiUrl = await this.context.dispatch('buildPaginatedApiUrl', data)
 
 		return await session({
@@ -213,7 +213,7 @@ export default class PaginationModule<TPaginatedModel> extends AppBaseModule {
 				Authorization: 'Token ' + this.getUserToken
 			}
 		})
-			.then((response: AxiosResponse<Partial<PaginatedModel<T>>>) => {
+			.then((response: AxiosResponse<PaginatedModel<T>>) => {
 				const results = response.data.results
 				const count = response.data.count
 				const nextPageUrl = response.data.links?.next
@@ -258,7 +258,7 @@ export default class PaginationModule<TPaginatedModel> extends AppBaseModule {
 					totalPages: totalPages,
 					namespace: data.namespace
 				})
-				return response
+				return response.data
 			})
 			.catch((e: Error) => {
 				this.context.commit('unsetResults', data.namespace)

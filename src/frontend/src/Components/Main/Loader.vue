@@ -206,5 +206,5 @@ export default class Loader extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Main/Loader';
+@import '@/Assets/Styles/Components/Main/Loader.scss';
 </style>

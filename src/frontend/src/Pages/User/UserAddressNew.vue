@@ -286,8 +286,8 @@ export default class UserAddressNew extends Vue {
 
 		const meta = useMeta(
 			computed(() => ({
-				title: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Address New`,
-				description: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Address New`
+				title: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Address New`,
+				description: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Address New`
 			}))
 		)
 		const validationSchema = toFormValidator(ZodAddress)
@@ -342,7 +342,7 @@ export default class UserAddressNew extends Vue {
 					phone: phone.value,
 					mobile_phone: mobile_phone.value,
 					notes: notes.value,
-					user: this.userModule.getUserData?.id,
+					user: this.userModule.getUserProfile?.id,
 					country: country.value,
 					region: region.value,
 					is_main: false
@@ -388,5 +388,5 @@ export default class UserAddressNew extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/User/UserAddressNew';
+@import '@/Assets/Styles/Pages/User/UserAddressNew.scss';
 </style>

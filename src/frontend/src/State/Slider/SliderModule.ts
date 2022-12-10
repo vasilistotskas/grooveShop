@@ -13,7 +13,7 @@ import { Module, Action, Mutation } from 'vuex-module-decorators'
 	name: 'slider'
 })
 export default class SliderModule extends AppBaseModule {
-	sliders!: Array<SliderModel>
+	sliders: Array<SliderModel> = []
 
 	get getSlidersData(): SliderModel[] {
 		return this.sliders

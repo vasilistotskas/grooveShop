@@ -9,7 +9,7 @@
 			<span class="sidebar-blog-title tags">Tags:</span>
 			<span v-for="tag in tags" :key="tag.id">
 				<RouterLink :title="tag.name" :to="`/tag/${tag.name}`" aria-label="Blog Tag">
-					<font-awesome-icon :icon="tagIcon" />
+					<FontAwesomeIcon :icon="tagIcon" />
 					{{ tag.name }}
 				</RouterLink>
 			</span>
@@ -25,7 +25,7 @@
 					:to="`/author/${author.user.email}`"
 					aria-label="Blog Author"
 				>
-					<font-awesome-icon :icon="authorIcon" />
+					<FontAwesomeIcon :icon="authorIcon" />
 					{{ displayName(author) }}
 				</RouterLink>
 			</span>
@@ -66,5 +66,5 @@ export default class BlogTagsSidebar extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Blog/BlogTagsSidebar';
+@import '@/Assets/Styles/Components/Blog/BlogTagsSidebar.scss';
 </style>

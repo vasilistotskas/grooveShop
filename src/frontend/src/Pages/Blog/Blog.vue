@@ -36,7 +36,18 @@ export default class Blog extends Vue {
 	blogModule = getModule(BlogModule)
 	tipModule = getModule(TipModule)
 
-	meta = setup(() => {
+	myContext = setup(() => {
+		const blogModule = getModule(BlogModule)
+		const tipModule = getModule(TipModule)
+
+		Promise.all([
+			blogModule.fetchPostsFromRemote(),
+			blogModule.fetchTagsFromRemote(),
+			blogModule.fetchAuthorsFromRemote(),
+			blogModule.fetchCategoriesFromRemote(),
+			tipModule.fetchTipsFromRemote()
+		])
+
 		const meta = useMeta(
 			computed(() => ({
 				title: 'Blog',
@@ -49,19 +60,9 @@ export default class Blog extends Vue {
 	get breadCrumbPath() {
 		return router.currentRoute.value.meta.breadcrumb
 	}
-
-	created(): void {
-		Promise.all([
-			this.blogModule.fetchPostsFromRemote(),
-			this.blogModule.fetchTagsFromRemote(),
-			this.blogModule.fetchAuthorsFromRemote(),
-			this.blogModule.fetchCategoriesFromRemote(),
-			this.tipModule.fetchTipsFromRemote()
-		])
-	}
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Blog/Blog';
+@import '@/Assets/Styles/Pages/Blog/Blog.scss';
 </style>

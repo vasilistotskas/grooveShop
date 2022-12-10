@@ -31,5 +31,5 @@ export default class LocaleChanger extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/I18n/LocaleChanger';
+@import '@/Assets/Styles/Components/I18n/LocaleChanger.scss';
 </style>

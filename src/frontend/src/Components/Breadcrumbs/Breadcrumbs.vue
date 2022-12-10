@@ -63,5 +63,5 @@ export default class Breadcrumbs extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Breadcrumbs/Breadcrumbs';
+@import '@/Assets/Styles/Components/Breadcrumbs/Breadcrumbs.scss';
 </style>

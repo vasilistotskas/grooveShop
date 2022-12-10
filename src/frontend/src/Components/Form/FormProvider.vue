@@ -41,5 +41,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Form/FormProvider';
+@import '@/Assets/Styles/Components/Form/FormProvider.scss';
 </style>

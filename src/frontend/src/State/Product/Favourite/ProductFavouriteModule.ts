@@ -13,8 +13,8 @@ import ProductFavouriteModel from '@/State/Product/Favourite/ProductFavouriteMod
 	name: 'productFavourite'
 })
 export default class ProductFavouriteModule extends AppBaseModule {
-	favourites!: Array<ProductFavouriteModel>
-	userFavourites!: Array<ProductFavouriteModel>
+	favourites: Array<ProductFavouriteModel> = []
+	userFavourites: Array<ProductFavouriteModel> = []
 
 	get getFavouriteData(): Array<ProductFavouriteModel> {
 		return this.favourites

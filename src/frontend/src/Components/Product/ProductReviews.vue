@@ -77,7 +77,6 @@
 
 <script lang="ts">
 import { PropType } from 'vue'
-import { AxiosResponse } from 'axios'
 import { constant, times } from 'lodash'
 import { getModule } from 'vuex-module-decorators'
 import ProductModel from '@/State/Product/ProductModel'
@@ -166,7 +165,7 @@ export default class ProductReviews
 		})
 	}
 
-	fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
+	fetchPaginationData<T>(): Promise<void | PaginatedModel<T>> {
 		const paginationQuery = PaginationModel.createPaginationModel({
 			pageNumber: this.currentPageNumber,
 			endpointUrl: this.buildEndPointUrlForPaginatedResults(),
@@ -201,5 +200,5 @@ export default class ProductReviews
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Product/Product';
+@import '@/Assets/Styles/Pages/Product/Product.scss';
 </style>

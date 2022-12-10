@@ -1,7 +1,7 @@
 <template>
 	<Breadcrumbs :bread-crumb-path="breadCrumbPath" />
 	<RouterLink
-		:to="{ name: 'NewAddress' }"
+		:to="{ name: MainRouteNames.USER_ACCOUNT_ADDRESS_NEW }"
 		aria-label="NewAddress"
 		class="nav-link"
 		title="NewAddress"
@@ -22,7 +22,7 @@
 		</div>
 		<Pagination
 			v-if="Object.keys(allPaginatedResults).length !== 0"
-			:endpoint-url="'addresses'"
+			:endpoint-url="'address'"
 			:max-visible-buttons="3"
 			:route="PaginationRoutesEnum.ADDRESSES"
 			:total-pages="allPaginatedResultsTotalPages"
@@ -37,19 +37,17 @@
 <script lang="ts">
 import router from '@/Routes'
 import { useMeta } from 'vue-meta'
-import { AxiosResponse } from 'axios'
+import { useRouter } from 'vue-router'
 import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
-import AddressModel from '@/State/Address/AddressModel'
+import { Address } from '@/Zod/Address/ZodAddress'
 import UserModule from '@/State/User/Profile/UserModule'
-import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
 import AddressCard from '@/Components/Address/AddressCard.vue'
 import Pagination from '@/Components/Pagination/Pagination.vue'
+import { UsePagination } from '@/State/Pagination/UsePagination'
 import { Options as Component, setup } from 'vue-class-component'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
-import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
-import { PaginationModel } from '@/State/Pagination/Model/PaginationModel'
 import PaginatedComponent from '@/Components/Pagination/PaginatedComponent'
 import { PaginationRoutesEnum } from '@/State/Pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
@@ -65,61 +63,35 @@ import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/Pagination
 	}
 })
 export default class UserAddresses
-	extends PaginatedComponent<AddressModel>
-	implements PaginatedComponentInterface<AddressModel>
+	extends PaginatedComponent<Address>
+	implements PaginatedComponentInterface<Address>
 {
 	userModule = getModule(UserModule)
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.ADDRESS
 	MainRouteNames = MainRouteNames
 
-	meta = setup(() => {
+	myContext = setup(() => {
+		const router = useRouter()
+		const userModule = getModule(UserModule)
+		const routerQueryParams = router.currentRoute.value.query
+		const paginationOptions = {
+			routerQueryParams: routerQueryParams,
+			namespace: PaginationNamespaceTypesEnum.ADDRESS,
+			endpointUrl: 'address'
+		}
+		UsePagination<Address>(paginationOptions)
+
 		const meta = useMeta(
 			computed(() => ({
-				title: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Addresses`,
-				description: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Addresses`
+				title: `${userModule.getUserProfile?.first_name} ${userModule.getUserProfile?.last_name} | Addresses`,
+				description: `${userModule.getUserProfile?.first_name} ${userModule.getUserProfile?.last_name} | Addresses`
 			}))
 		)
 		return {
 			meta
 		}
 	})
-
-	created(): void {
-		if (this.params.query) {
-			this.paginationModule.setCurrentQuery({
-				queryParams: this.params.query,
-				namespace: this.paginationNamespace
-			})
-		}
-
-		this.paginationModule.setCurrentPageNumber({
-			pageNumber: 1,
-			namespace: this.paginationNamespace
-		})
-
-		if (this.params.page) {
-			this.paginationModule.setCurrentPageNumber({
-				pageNumber: Number(this.params.page),
-				namespace: this.paginationNamespace
-			})
-		}
-
-		this.fetchPaginationData<AddressModel>()
-	}
-
-	fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
-		const paginationQuery = PaginationModel.createPaginationModel({
-			pageNumber: this.currentPageNumber,
-			endpointUrl: 'address',
-			method: ApiBaseMethods.GET
-		})
-
-		return this.paginationModule.fetchPaginatedResults({
-			params: paginationQuery,
-			namespace: this.paginationNamespace
-		})
-	}
 
 	get breadCrumbPath() {
 		return router.currentRoute.value.meta.breadcrumb
@@ -128,5 +100,5 @@ export default class UserAddresses
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/User/UserAddresses';
+@import '@/Assets/Styles/Pages/User/UserAddresses.scss';
 </style>

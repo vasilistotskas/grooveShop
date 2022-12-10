@@ -255,13 +255,11 @@ import {
 	StripeConstructorOptions,
 	StripeElementsOptions
 } from '@stripe/stripe-js'
-import * as zod from 'zod'
 import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import AppModule from '@/State/App/AppModule'
 import { useToast } from 'vue-toastification'
 import CartModule from '@/State/Cart/CartModule'
-import { useField, useForm } from 'vee-validate'
 import { cloneDeep, isEmpty, merge } from 'lodash'
 import { getModule } from 'vuex-module-decorators'
 import { toFormValidator } from '@vee-validate/zod'
@@ -273,9 +271,11 @@ import PayWayModule from '@/State/Payway/PayWayModule'
 import CountryModel from '@/State/Country/CountryModel'
 import RegionsModel from '@/State/Country/RegionsModel'
 import UserModule from '@/State/User/Profile/UserModule'
+import { ZodCheckout } from '@/Zod/Checkout/ZodCheckout'
 import CountryModule from '@/State/Country/CountryModule'
 import { PayWaysEnum } from '@/State/Payway/Enum/PayWaysEnum'
 import { StripeElement, StripeElements } from 'vue-stripe-js'
+import { FieldContext, useField, useForm } from 'vee-validate'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 import { HTMLElementEvent } from '@/State/Common/Types/HelpingTypes'
@@ -347,7 +347,7 @@ export default class Checkout extends Vue {
 		])
 
 		if (isAuthenticated.value) {
-			countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserData)
+			countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserProfile)
 		}
 
 		const availableCountries: ComputedRef<Array<CountryModel>> = computed(
@@ -368,7 +368,7 @@ export default class Checkout extends Vue {
 		)
 		const stripeResultToken = computed(() => stripeCardModule.getResultToken)
 		const userData: ComputedRef<UserProfileModel> = computed(() =>
-			isAuthenticated.value ? userModule.getUserData : new UserProfileModel()
+			isAuthenticated.value ? userModule.getUserProfile : new UserProfileModel()
 		)
 
 		let customerDetailsData = new UserProfileModel({
@@ -429,22 +429,7 @@ export default class Checkout extends Vue {
 			}
 		}
 
-		const validationSchema = toFormValidator(
-			zod.object({
-				address: zod.string().min(3).max(100),
-				city: zod.string().min(3).max(100),
-				email: zod.string().email({ message: 'Must be a valid email' }),
-				firstName: zod.string().min(3).max(100),
-				lastName: zod.string().min(3).max(100),
-				phone: zod
-					.number()
-					.positive({ message: 'Must be a positive phone' })
-					.int({ message: 'Must be an integer' }),
-				place: zod.string().min(3).max(100),
-				zipcode: zod.string().min(3).max(100),
-				customerNotes: zod.string().default('test')
-			})
-		)
+		const validationSchema = toFormValidator(ZodCheckout)
 
 		const breadCrumbPath = router.currentRoute.value.meta.breadcrumb
 
@@ -468,33 +453,35 @@ export default class Checkout extends Vue {
 			customerDetailsData.region = 'choose'
 		}
 
-		const { handleSubmit, errors } = useForm({
-			validationSchema,
-			initialValues: {
-				address: customerDetailsData?.address,
-				city: customerDetailsData?.city,
-				email: customerDetailsData?.email,
-				firstName: customerDetailsData?.first_name,
-				lastName: customerDetailsData?.last_name,
-				phone: customerDetailsData?.phone,
-				place: customerDetailsData?.place,
-				zipcode: customerDetailsData?.zipcode,
-				country: customerDetailsData.country,
-				region: customerDetailsData.region,
-				customerNotes: ''
-			}
+		const ZodCheckoutFormValuesObject = ZodCheckout.parse({
+			address: customerDetailsData.address,
+			city: customerDetailsData.city,
+			email: customerDetailsData.email,
+			firstName: customerDetailsData.first_name,
+			lastName: customerDetailsData.last_name,
+			phone: customerDetailsData.phone,
+			place: customerDetailsData.place,
+			zipcode: customerDetailsData.zipcode,
+			country: customerDetailsData.country,
+			region: customerDetailsData.region,
+			customerNotes: ''
 		})
 
-		const { value: address } = useField('address')
-		const { value: city } = useField('city')
-		const { value: email } = useField('email')
-		const { value: firstName } = useField('firstName')
-		const { value: lastName } = useField('lastName')
-		const { value: phone } = useField('phone')
-		const { value: place } = useField('place')
-		const { value: zipcode } = useField('zipcode')
-		const { value: country } = useField('country')
-		const { value: region } = useField('region')
+		const { handleSubmit, errors } = useForm({
+			validationSchema,
+			initialValues: ZodCheckoutFormValuesObject
+		})
+
+		const { value: address }: FieldContext<string> = useField('address')
+		const { value: city }: FieldContext<string> = useField('city')
+		const { value: email }: FieldContext<string> = useField('email')
+		const { value: firstName }: FieldContext<string> = useField('firstName')
+		const { value: lastName }: FieldContext<string> = useField('lastName')
+		const { value: phone }: FieldContext<number> = useField('phone')
+		const { value: place }: FieldContext<string> = useField('place')
+		const { value: zipcode }: FieldContext<string> = useField('zipcode')
+		const { value: country }: FieldContext<string> = useField('country')
+		const { value: region }: FieldContext<string> = useField('region')
 
 		const onSubmit = handleSubmit(async (values) => {
 			try {
@@ -516,7 +503,10 @@ export default class Checkout extends Vue {
 			}
 		})
 
-		function createOrder(values, items: Array<CartItemCheckoutModel>): void {
+		function createOrder(
+			values: typeof ZodCheckoutFormValuesObject,
+			items: Array<CartItemCheckoutModel>
+		): void {
 			const apiData: CheckoutOrderApiData = {
 				user_id: customerDetailsData.id ? customerDetailsData.id : userData.value.id,
 				pay_way: selectedPayWay.value.name,
@@ -599,8 +589,8 @@ export default class Checkout extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Form/FormProvider';
-@import '@/Assets/Styles/Components/Form/FormBaseTextarea';
-@import '@/Assets/Styles/Components/Form/FormBaseInput';
-@import '@/Assets/Styles/Pages/Checkout/Checkout';
+@import '@/Assets/Styles/Components/Form/FormProvider.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseTextarea.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseInput.scss';
+@import '@/Assets/Styles/Pages/Checkout/Checkout.scss';
 </style>

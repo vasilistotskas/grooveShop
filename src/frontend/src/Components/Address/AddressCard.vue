@@ -6,20 +6,20 @@
 
 <script lang="ts">
 import { PropType } from 'vue'
+import { Address } from '@/Zod/Address/ZodAddress'
 import { Options as Component, Vue } from 'vue-class-component'
-import AddressModel from '@/State/Address/AddressModel'
 
 @Component({
 	name: 'AddressCard',
 	props: {
-		address: Object as PropType<AddressModel>
+		address: Object as PropType<Address>
 	}
 })
 export default class AddressCard extends Vue {
-	address!: AddressModel
+	address!: Address
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Address/AddressCard';
+@import '@/Assets/Styles/Components/Address/AddressCard.scss';
 </style>

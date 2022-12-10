@@ -94,7 +94,7 @@
 							role="button"
 							title="Sign Up with Facebook"
 						>
-							<font-awesome-icon
+							<FontAwesomeIcon
 								:icon="facebookIcon"
 								:style="{ color: '#4267B2' }"
 								size="lg"
@@ -108,7 +108,7 @@
 							role="button"
 							title="Sign Up with Google"
 						>
-							<font-awesome-icon
+							<FontAwesomeIcon
 								:icon="googleIcon"
 								:style="{ color: '#DB4437' }"
 								size="lg"
@@ -122,31 +122,27 @@
 </template>
 
 <script lang="ts">
-import * as zod from 'zod'
 import router from '@/Routes'
 import { useMeta } from 'vue-meta'
+import AuthCore from '@/Core/AuthCore'
 import { computed } from '@vue/runtime-core'
-import { useField, useForm } from 'vee-validate'
-import zodPassword from '@/Helpers/Zod/Password'
-import { getModule } from 'vuex-module-decorators'
+import { ZodLogin } from '@/Zod/Auth/ZodAuth'
 import { toFormValidator } from '@vee-validate/zod'
-import AuthModule from '@/State/Auth/Auth/AuthModule'
-import UserModule from '@/State/User/Profile/UserModule'
+import { FieldContext, useField, useForm } from 'vee-validate'
 import LogInInputApi from '@/State/Auth/Interface/LogInInputApi'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
-import { Options as Component, setup, Vue } from 'vue-class-component'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
+import { mixins, Options as Component, setup } from 'vue-class-component'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
 
 @Component({
 	name: 'LogIn',
+	mixins: [AuthCore],
 	components: {
 		Breadcrumbs
 	}
 })
-export default class LogIn extends Vue {
-	userModule = getModule(UserModule)
-	authModule = getModule(AuthModule)
+export default class LogIn extends mixins(AuthCore) {
 	googleIcon = faGoogle
 	facebookIcon = faFacebook
 
@@ -158,18 +154,13 @@ export default class LogIn extends Vue {
 			}))
 		)
 
-		const validationSchema = toFormValidator(
-			zod.object({
-				email: zod.string().email(),
-				password: zodPassword
-			})
-		)
+		const validationSchema = toFormValidator(ZodLogin)
 		const { handleSubmit, errors, submitCount } = useForm({
 			validationSchema
 		})
 
-		const { value: email } = useField('email')
-		const { value: password } = useField('password')
+		const { value: email }: FieldContext<string> = useField('email')
+		const { value: password }: FieldContext<string> = useField('password')
 
 		const isTooManyAttempts = computed(() => {
 			return submitCount.value >= 10
@@ -184,7 +175,7 @@ export default class LogIn extends Vue {
 				await this.authModule
 					.login(apiData)
 					.then(() => {
-						this.userModule.fetchUserDataFromRemote()
+						this.userModule.fetchUserProfileFromRemote()
 					})
 					.catch((error: Error) => {
 						console.log(error)
@@ -212,8 +203,8 @@ export default class LogIn extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Form/FormProvider';
-@import '@/Assets/Styles/Components/Form/FormBaseTextarea';
-@import '@/Assets/Styles/Components/Form/FormBaseInput';
-@import '@/Assets/Styles/Pages/Auth/LogIn';
+@import '@/Assets/Styles/Components/Form/FormProvider.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseTextarea.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseInput.scss';
+@import '@/Assets/Styles/Pages/Auth/LogIn.scss';
 </style>

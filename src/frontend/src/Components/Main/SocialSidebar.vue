@@ -9,7 +9,7 @@
 				target="_blank"
 				title="Open Facebook"
 			>
-				<font-awesome-icon :icon="facebookIcon" :style="{ color: '#4267B2' }" size="lg" />
+				<FontAwesomeIcon :icon="facebookIcon" :style="{ color: '#4267B2' }" size="lg" />
 				<span>Facebook</span>
 			</a>
 		</li>
@@ -22,7 +22,7 @@
 				target="_blank"
 				title="Open Google"
 			>
-				<font-awesome-icon :icon="googleIcon" :style="{ color: '#DB4437' }" size="lg" />
+				<FontAwesomeIcon :icon="googleIcon" :style="{ color: '#DB4437' }" size="lg" />
 				<span>Google+</span>
 			</a>
 		</li>
@@ -35,7 +35,7 @@
 				target="_blank"
 				title="Open Twitter"
 			>
-				<font-awesome-icon :icon="twitterIcon" :style="{ color: '#1DA1F2' }" size="lg" />
+				<FontAwesomeIcon :icon="twitterIcon" :style="{ color: '#1DA1F2' }" size="lg" />
 				<span>Tweeter</span>
 			</a>
 		</li>
@@ -48,11 +48,7 @@
 				target="_blank"
 				title="Open Instagram"
 			>
-				<font-awesome-icon
-					:icon="instagramIcon"
-					:style="{ color: '#E1306C' }"
-					size="lg"
-				/>
+				<FontAwesomeIcon :icon="instagramIcon" :style="{ color: '#E1306C' }" size="lg" />
 				<span>Instagram</span>
 			</a>
 		</li>
@@ -65,7 +61,7 @@
 				target="_blank"
 				title="Open Linkedin"
 			>
-				<font-awesome-icon :icon="linkedinIcon" :style="{ color: '#4267B2' }" size="lg" />
+				<FontAwesomeIcon :icon="linkedinIcon" :style="{ color: '#4267B2' }" size="lg" />
 				<span>Linkedin</span>
 			</a>
 		</li>
@@ -78,7 +74,7 @@
 				target="_blank"
 				title="Open Github"
 			>
-				<font-awesome-icon :icon="githubIcon" :style="{ color: 'white' }" size="lg" />
+				<FontAwesomeIcon :icon="githubIcon" :style="{ color: 'white' }" size="lg" />
 				<span>Github</span>
 			</a>
 		</li>
@@ -108,5 +104,5 @@ export default class SocialSidebar extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Main/SocialSidebar';
+@import '@/Assets/Styles/Components/Main/SocialSidebar.scss';
 </style>

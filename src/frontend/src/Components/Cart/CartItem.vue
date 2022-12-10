@@ -23,7 +23,7 @@
 				type="button"
 				@click="cartModule.decrementQuantity(item)"
 			>
-				<font-awesome-icon :icon="minusIcon" size="lg" />
+				<FontAwesomeIcon :icon="minusIcon" size="lg" />
 			</a>
 			{{ item.quantity }}
 			<a
@@ -33,7 +33,7 @@
 				type="button"
 				@click="cartModule.incrementQuantity(item)"
 			>
-				<font-awesome-icon :icon="plusIcon" size="lg" />
+				<FontAwesomeIcon :icon="plusIcon" size="lg" />
 			</a>
 		</div>
 		<div class="grid-container-cart-item-four">${{ itemTotal.toFixed(2) }}</div>
@@ -44,7 +44,7 @@
 				type="button"
 				@click="cartModule.removeFromCart(item)"
 			>
-				<font-awesome-icon :icon="trashIcon" />
+				<FontAwesomeIcon :icon="trashIcon" />
 			</button>
 		</div>
 	</div>
@@ -92,5 +92,5 @@ export default class CartItem extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Cart/CartItem';
+@import '@/Assets/Styles/Components/Cart/CartItem.scss';
 </style>

@@ -4,7 +4,7 @@
 		class="_container"
 	>
 		<span v-if="textareaWithAddOn" class="textarea-group-addon">
-			<font-awesome-icon :icon="textareaWithAddOnIcon" size="lg" />
+			<FontAwesomeIcon :icon="textareaWithAddOnIcon" size="lg" />
 		</span>
 		<textarea
 			v-model="value"
@@ -94,5 +94,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Form/FormBaseTextarea';
+@import '@/Assets/Styles/Components/Form/FormBaseTextarea.scss';
 </style>

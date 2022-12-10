@@ -9,7 +9,7 @@
 
 				<Pagination
 					v-if="Object.keys(allPaginatedResults).length !== 0"
-					:endpoint-url="'Search-Product'"
+					:endpoint-url="'search-product'"
 					:max-visible-buttons="3"
 					:route="PaginationRoutesEnum.SEARCH"
 					:total-pages="allPaginatedResultsTotalPages"
@@ -32,7 +32,6 @@
 <script lang="ts">
 import router from '@/Routes'
 import { useMeta } from 'vue-meta'
-import { AxiosResponse } from 'axios'
 import { computed } from '@vue/runtime-core'
 import ProductModel from '@/State/Product/ProductModel'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
@@ -65,7 +64,7 @@ export default class Search
 	paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
 	endpointUrl = 'search-product'
 
-	meta = setup(() => {
+	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
 				title: this.query ? `Search: ${this.query}` : 'Search',
@@ -102,7 +101,7 @@ export default class Search
 		this.fetchPaginationData<ProductModel>()
 	}
 
-	fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
+	fetchPaginationData<T>(): Promise<void | PaginatedModel<T>> {
 		const paginationQuery = PaginationModel.createPaginationModel({
 			pageNumber: this.currentPageNumber,
 			endpointUrl: `${this.endpointUrl}`,
@@ -119,5 +118,5 @@ export default class Search
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Search/Search';
+@import '@/Assets/Styles/Pages/Search/Search.scss';
 </style>

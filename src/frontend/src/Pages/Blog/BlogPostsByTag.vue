@@ -35,7 +35,18 @@ export default class BlogPostsByTag extends Vue {
 	blogModule = getModule(BlogModule)
 	tipModule = getModule(TipModule)
 
-	meta = setup(() => {
+	myContext = setup(() => {
+		const blogModule = getModule(BlogModule)
+		const tipModule = getModule(TipModule)
+
+		Promise.all([
+			blogModule.fetchPostsFromRemote(),
+			blogModule.fetchTagsFromRemote(),
+			blogModule.fetchAuthorsFromRemote(),
+			blogModule.fetchCategoriesFromRemote(),
+			tipModule.fetchTipsFromRemote()
+		])
+
 		const meta = useMeta(
 			computed(() => ({
 				title: `Posts in #${router.currentRoute.value.params.tag}`,
@@ -51,16 +62,6 @@ export default class BlogPostsByTag extends Vue {
 		return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
 	}
 
-	created(): void {
-		Promise.all([
-			this.blogModule.fetchPostsFromRemote(),
-			this.blogModule.fetchTagsFromRemote(),
-			this.blogModule.fetchAuthorsFromRemote(),
-			this.blogModule.fetchCategoriesFromRemote(),
-			this.tipModule.fetchTipsFromRemote()
-		])
-	}
-
 	updated(): void {
 		this.blogModule.fetchPostsByTagFromRemote()
 	}
@@ -68,5 +69,5 @@ export default class BlogPostsByTag extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Blog/BlogPostsByTag';
+@import '@/Assets/Styles/Pages/Blog/BlogPostsByTag.scss';
 </style>

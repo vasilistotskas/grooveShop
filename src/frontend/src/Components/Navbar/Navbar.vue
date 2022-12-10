@@ -69,8 +69,8 @@
 
 				<div class="blog-header">
 					<RouterLink aria-label="Blog" class="btn-w-effect" title="Blog" to="/blog">
-						<font-awesome-icon v-if="appModule.isMobile" :icon="blogIcon" />
-						<font-awesome-icon v-else :icon="blogIcon" size="2x" />
+						<FontAwesomeIcon v-if="appModule.isMobile" :icon="blogIcon" />
+						<FontAwesomeIcon v-else :icon="blogIcon" size="2x" />
 						<h3 class="navbar-blog-title">BLOG</h3>
 					</RouterLink>
 				</div>
@@ -83,16 +83,14 @@
 							name="query"
 							placeholder="Search"
 							type="search"
-							@keyup.enter="fetchPaginationData()"
 						/>
 						<button
 							aria-label="search"
 							class="btn-outline-primary-main"
 							title="Search"
 							type="submit"
-							@click="fetchPaginationData()"
 						>
-							<font-awesome-icon
+							<FontAwesomeIcon
 								:icon="searchIcon"
 								:style="{ color: '#3b3b3b' }"
 								size="lg"
@@ -109,12 +107,12 @@
 							aria-label="Favourites"
 							title="Favourites"
 						>
-							<font-awesome-icon
+							<FontAwesomeIcon
 								v-if="appModule.isMobile"
 								:icon="heartIcon"
 								:style="{ color: 'rgba(200,60,60,0.79)' }"
 							/>
-							<font-awesome-icon
+							<FontAwesomeIcon
 								v-else
 								:icon="heartIcon"
 								:style="{ color: 'rgba(200,60,60,0.79)' }"
@@ -122,8 +120,8 @@
 							/>
 						</RouterLink>
 						<RouterLink v-else aria-label="Log In" title="Log In" to="/log-in">
-							<font-awesome-icon v-if="appModule.isMobile" :icon="heartIcon" />
-							<font-awesome-icon v-else :icon="heartIcon" size="2x" />
+							<FontAwesomeIcon v-if="appModule.isMobile" :icon="heartIcon" />
+							<FontAwesomeIcon v-else :icon="heartIcon" size="2x" />
 						</RouterLink>
 					</li>
 					<li class="navigation-header-part">
@@ -133,12 +131,12 @@
 							title="My Account"
 							to="/user-account"
 						>
-							<font-awesome-icon
+							<FontAwesomeIcon
 								v-if="appModule.isMobile"
 								:icon="userIcon"
 								:style="{ color: 'rgba(200,60,60,0.79)' }"
 							/>
-							<font-awesome-icon
+							<FontAwesomeIcon
 								v-else
 								:icon="userIcon"
 								:style="{ color: 'rgba(200,60,60,0.79)' }"
@@ -146,14 +144,14 @@
 							/>
 						</RouterLink>
 						<RouterLink v-else aria-label="Log In" title="Log In" to="/log-in">
-							<font-awesome-icon v-if="appModule.isMobile" :icon="userIcon" />
-							<font-awesome-icon v-else :icon="userIcon" size="2x" />
+							<FontAwesomeIcon v-if="appModule.isMobile" :icon="userIcon" />
+							<FontAwesomeIcon v-else :icon="userIcon" size="2x" />
 						</RouterLink>
 					</li>
 					<li class="navigation-header-part">
 						<RouterLink aria-label="Cart" title="Cart" to="/cart">
-							<font-awesome-icon v-if="appModule.isMobile" :icon="shoppingCartIcon" />
-							<font-awesome-icon v-else :icon="shoppingCartIcon" size="2x" />
+							<FontAwesomeIcon v-if="appModule.isMobile" :icon="shoppingCartIcon" />
+							<FontAwesomeIcon v-else :icon="shoppingCartIcon" size="2x" />
 							<span class="cart-total-length">{{ cartModule.getCartTotalLength }}</span>
 						</RouterLink>
 					</li>
@@ -177,40 +175,26 @@
 </template>
 
 <script lang="ts">
-import {
-	ImagePathOptions,
-	ImageFormatOptions,
-	ImageFitOptions,
-	ImagePositionOptions
-} from '@/Helpers/MediaStream/ImageUrlEnum'
-import router from '@/Routes'
-import { AxiosResponse } from 'axios'
-import AppModule from '@/State/App/AppModule'
+import AppCore from '@/Core/AppCore'
+import AuthCore from '@/Core/AuthCore'
+import ImageCore from '@/Core/ImageCore'
 import CartModule from '@/State/Cart/CartModule'
 import { getModule } from 'vuex-module-decorators'
 import GrooveImage from '@/Utilities/GrooveImage.vue'
-import AuthModule from '@/State/Auth/Auth/AuthModule'
-import ProductModel from '@/State/Product/ProductModel'
-import UserModule from '@/State/User/Profile/UserModule'
-import { Options as Component } from 'vue-class-component'
-import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import CategoryModule from '@/State/Category/CategoryModule'
 import LocaleChanger from '@/Components/I18n/LocaleChanger.vue'
 import ThemeModeSwitcher from '@/Utilities/ThemeModeSwitcher.vue'
 import { faBlog } from '@fortawesome/free-solid-svg-icons/faBlog'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
+import { mixins, Options as Component } from 'vue-class-component'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
-import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
 import NavbarCategories from '@/Components/Navbar/NavbarCategories.vue'
-import { PaginationModel } from '@/State/Pagination/Model/PaginationModel'
-import PaginatedComponent from '@/Components/Pagination/PaginatedComponent'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons/faShoppingCart'
-import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
-import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
 	name: 'Navbar',
+	mixins: [AppCore, AuthCore, ImageCore],
 	components: {
 		NavbarCategories,
 		GrooveImage,
@@ -218,20 +202,13 @@ import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/Pagination
 		LocaleChanger
 	}
 })
-export default class Navbar
-	extends PaginatedComponent<ProductModel>
-	implements PaginatedComponentInterface<ProductModel>
-{
+export default class Navbar extends mixins(AppCore, AuthCore, ImageCore) {
 	declare $refs: {
 		mainToggleButton: HTMLElement
 		navbarProductsButton: HTMLElement
 	}
-	appModule = getModule(AppModule)
-	authModule = getModule(AuthModule)
 	cartModule = getModule(CartModule)
 	categoryModule = getModule(CategoryModule)
-	userModule = getModule(UserModule)
-	paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
 	endpointUrl = 'search-product'
 	searchQuery = {
 		query: ''
@@ -241,10 +218,6 @@ export default class Navbar
 	heartIcon = faHeart
 	searchIcon = faSearch
 	shoppingCartIcon = faShoppingCart
-	ImagePathOptions = ImagePathOptions
-	ImageFormatOptions = ImageFormatOptions
-	ImageFitOptions = ImageFitOptions
-	ImagePositionOptions = ImagePositionOptions
 
 	public menuToggle(): void {
 		this.$refs.mainToggleButton.classList.toggle('opened')
@@ -255,40 +228,9 @@ export default class Navbar
 
 		this.appModule.setNavbarMenuHidden(!this.appModule.getNavbarMenuHidden)
 	}
-
-	fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
-		this.paginationModule.unsetResults(this.paginationNamespace)
-		this.paginationModule.setCurrentQuery({
-			queryParams: this.searchQuery,
-			namespace: this.paginationNamespace
-		})
-
-		const paginationQuery = PaginationModel.createPaginationModel({
-			pageNumber: this.currentPageNumber,
-			endpointUrl: `${this.endpointUrl}`,
-			queryParams: this.searchQuery,
-			method: ApiBaseMethods.GET
-		})
-
-		const results = this.paginationModule.fetchPaginatedResults<T>({
-			params: paginationQuery,
-			namespace: this.paginationNamespace
-		})
-
-		router.push({
-			path: '/Search',
-			query: {
-				...this.$route.query,
-				query: this.searchQuery.query,
-				page: this.currentPageNumber
-			}
-		})
-
-		return results
-	}
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Navbar/Navbar';
+@import '@/Assets/Styles/Components/Navbar/Navbar.scss';
 </style>

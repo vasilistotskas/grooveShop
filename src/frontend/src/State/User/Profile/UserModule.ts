@@ -17,31 +17,31 @@ const toast = useToast()
 	name: 'user'
 })
 export default class UserModule extends AppBaseModule {
-	data!: UserProfileModel
+	userProfile!: UserProfileModel
 
-	get getUserData(): UserProfileModel {
-		return this.data
+	get getUserProfile(): UserProfileModel {
+		return this.userProfile
 	}
 
 	@Mutation
-	setUserData(data: UserProfileModel): void {
-		this.data = data
+	setUserProfile(userProfile: UserProfileModel): void {
+		this.userProfile = userProfile
 	}
 
 	@Mutation
-	unsetUserData(): void {
-		this.data = new UserProfileModel()
+	unsetUserProfile(): void {
+		this.userProfile = new UserProfileModel()
 	}
 
 	@Action
-	async fetchUserDataFromRemote(): Promise<AxiosResponse<
+	async fetchUserProfileFromRemote(): Promise<AxiosResponse<
 		Array<UserProfileModel>
 	> | void> {
 		return await api
 			.get('userprofile/data')
 			.then(async (response: AxiosResponse<Array<UserProfileModel>>) => {
-				const data = response.data
-				this.context.commit('setUserData', data[0])
+				const userProfile = response.data
+				this.context.commit('setUserProfile', userProfile[0])
 				return response
 			})
 			.catch((e: Error) => {
@@ -50,26 +50,13 @@ export default class UserModule extends AppBaseModule {
 	}
 
 	@Action
-	async updateUserProfile(
-		data:
-			| Record<
-					string,
-					| string
-					| number
-					| boolean
-					| readonly string[]
-					| readonly number[]
-					| readonly boolean[]
-			  >
-			| FormData
-			| UserProfileApiData
-	): Promise<void> {
-		const userId = await this.context.getters['getUserData'].id
+	async updateUserProfile(data: FormData | UserProfileApiData): Promise<void> {
+		const userId = await this.context.getters['getUserProfile'].id
 
 		const response = await api
 			.patch(`userprofile/${userId}/`, data)
 			.then((response: AxiosResponse<UserProfileModel>) => {
-				this.context.commit('setUserData', response.data)
+				this.context.commit('setUserProfile', response.data)
 			})
 			.catch((e: Error) => {
 				console.log(e)

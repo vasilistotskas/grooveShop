@@ -26,7 +26,7 @@
 				aria-label="Close"
 				@click="closeModal"
 			>
-				<font-awesome-icon :icon="getExitModalIcon" size="2x" />
+				<FontAwesomeIcon :icon="getExitModalIcon" size="2x" />
 			</button>
 		</div>
 		<div class="cp-utilities-generic_modal">

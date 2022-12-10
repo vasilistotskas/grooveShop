@@ -21,15 +21,15 @@ import UserProfileModelGql from '@/State/User/Profile/UserProfileModelGql'
 	name: 'blog'
 })
 export default class BlogModule extends AppBaseModule {
-	posts!: Array<BlogPostModel>
-	tags!: Array<BlogTagModel>
-	authors!: Array<BlogAuthorModel>
-	categories!: Array<BlogCategoryModel>
-	postsByTag!: Array<BlogPostModel>
+	posts: Array<BlogPostModel> = []
+	tags: Array<BlogTagModel> = []
+	authors: Array<BlogAuthorModel> = []
+	categories: Array<BlogCategoryModel> = []
+	postsByTag: Array<BlogPostModel> = []
 	postBySlug!: BlogPostModel
 	author!: BlogAuthorModel
-	commentsByUser!: Array<BlogCommentModel>
-	commentsByPost!: Array<BlogCommentModel>
+	commentsByUser: Array<BlogCommentModel> = []
+	commentsByPost: Array<BlogCommentModel> = []
 	commentByUserToPost!: BlogCommentModel
 
 	get getPosts(): Array<BlogPostModel> {

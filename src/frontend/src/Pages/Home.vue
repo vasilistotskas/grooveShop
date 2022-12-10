@@ -51,24 +51,24 @@
 		<div class="home-usp-grid-container">
 			<div class="home-usp-grid-content mb-5">
 				<div class="grid-usp-item">
-					<font-awesome-icon v-if="appModule.isMobile" :icon="phoneIcon" />
-					<font-awesome-icon v-else :icon="phoneIcon" size="3x" />
+					<FontAwesomeIcon v-if="appModule.isMobile" :icon="phoneIcon" />
+					<FontAwesomeIcon v-else :icon="phoneIcon" size="3x" />
 					<span
 						>Lorem Ipsum
 						<span>Lorem Ipsum</span>
 					</span>
 				</div>
 				<div class="grid-usp-item">
-					<font-awesome-icon v-if="appModule.isMobile" :icon="envelopeIcon" />
-					<font-awesome-icon v-else :icon="envelopeIcon" size="3x" />
+					<FontAwesomeIcon v-if="appModule.isMobile" :icon="envelopeIcon" />
+					<FontAwesomeIcon v-else :icon="envelopeIcon" size="3x" />
 					<span
 						>Lorem Ipsum
 						<span>Lorem Ipsum</span>
 					</span>
 				</div>
 				<div class="grid-usp-item">
-					<font-awesome-icon v-if="appModule.isMobile" :icon="commentIcon" />
-					<font-awesome-icon v-else :icon="commentIcon" size="3x" />
+					<FontAwesomeIcon v-if="appModule.isMobile" :icon="commentIcon" />
+					<FontAwesomeIcon v-else :icon="commentIcon" size="3x" />
 					<span
 						>Lorem Ipsum
 						<span>Lorem Ipsum</span>
@@ -98,32 +98,35 @@
 </template>
 
 <script lang="ts">
+import AppCore from '@/Core/AppCore'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
-import AppModule from '@/State/App/AppModule'
 import { getModule } from 'vuex-module-decorators'
 import SliderModule from '@/State/Slider/SliderModule'
 import ProductModule from '@/State/Product/ProductModule'
 import ProductCard from '@/Components/Product/ProductCard.vue'
 import { faPhone } from '@fortawesome/free-solid-svg-icons/faPhone'
-import { Options as Component, setup, Vue } from 'vue-class-component'
 import { faComment } from '@fortawesome/free-solid-svg-icons/faComment'
+import { mixins, Options as Component, setup } from 'vue-class-component'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import HomePageMainSlider from '@/Components/Sliders/VueHorizontal/HomePageMainSlider.vue'
 
 @Component({
 	name: 'Home',
+	mixins: [AppCore],
 	components: {
 		ProductCard,
 		HomePageMainSlider
 	}
 })
-export default class Home extends Vue {
-	appModule = getModule(AppModule)
+export default class Home extends mixins(AppCore) {
 	productModule = getModule(ProductModule)
 	sliderModule = getModule(SliderModule)
+	phoneIcon = faPhone
+	envelopeIcon = faEnvelope
+	commentIcon = faComment
 
-	meta = setup(() => {
+	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
 				title: 'Deep Web Homepage',
@@ -132,13 +135,9 @@ export default class Home extends Vue {
 		)
 		return { meta }
 	})
-
-	phoneIcon = faPhone
-	envelopeIcon = faEnvelope
-	commentIcon = faComment
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Home';
+@import '@/Assets/Styles/Pages/Home.scss';
 </style>

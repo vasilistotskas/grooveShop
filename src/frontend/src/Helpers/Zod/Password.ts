@@ -1,6 +1,6 @@
-import * as zod from 'zod'
+import { z } from 'zod'
 
-const zodPassword = zod
+const zodPassword = z
 	.string()
 	.min(8, 'Password must be at least 8 characters')
 	.max(255, 'Password must be at most 255 characters')
@@ -14,7 +14,7 @@ const zodPassword = zod
 		return /[0-9]/.test(value)
 	}, 'Password must contain at least one number')
 	.refine((value) => {
-		return /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(value)
+		return /[!@#$%^&*()_+\-=\\[\]{};':"|,.<>/?]/.test(value)
 	}, 'Password must contain at least one special character')
 	.refine((value) => {
 		return !/\s/.test(value)

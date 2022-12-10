@@ -10,10 +10,10 @@
 					:key="review.id"
 					:class="{
 						'current-user-review-card':
-							review.userprofile.id === userModule.getUserData.id
+							review.userprofile.id === userModule.getUserProfile.id
 					}"
 					:review="review"
-					:user-id="userModule.getUserData.id"
+					:user-id="userModule.getUserProfile.id"
 					class="product-review-main-card"
 				/>
 			</div>
@@ -34,7 +34,6 @@
 
 <script lang="ts">
 import { useMeta } from 'vue-meta'
-import { AxiosResponse } from 'axios'
 import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import UserModule from '@/State/User/Profile/UserModule'
@@ -66,11 +65,11 @@ export default class UserReviews
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_REVIEWS
 
-	meta = setup(() => {
+	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
-				title: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Reviews`,
-				description: `${this.userModule.getUserData?.first_name} ${this.userModule.getUserData?.last_name} | Reviews`
+				title: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Reviews`,
+				description: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Reviews`
 			}))
 		)
 		return {
@@ -100,7 +99,7 @@ export default class UserReviews
 		this.fetchPaginationData<ProductReviewModel>()
 	}
 
-	fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
+	fetchPaginationData<T>(): Promise<void | PaginatedModel<T>> {
 		const paginationQuery = PaginationModel.createPaginationModel({
 			pageNumber: this.currentPageNumber,
 			endpointUrl: this.buildEndPointUrlForPaginatedResults(),
@@ -114,12 +113,12 @@ export default class UserReviews
 	}
 
 	public buildEndPointUrlForPaginatedResults(): string {
-		const userId = this.userModule.getUserData.id
+		const userId = this.userModule.getUserProfile.id
 		return `reviews/user/${userId}`
 	}
 }
 </script>
 
 <style lang="scss">
-@import '@/Assets/Styles/Pages/User/UserReviews';
+@import '@/Assets/Styles/Pages/User/UserReviews.scss';
 </style>

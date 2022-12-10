@@ -35,5 +35,5 @@ export default class TipSidebar extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Tip/TipSidebar';
+@import '@/Assets/Styles/Components/Tip/TipSidebar.scss';
 </style>

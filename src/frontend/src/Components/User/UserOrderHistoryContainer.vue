@@ -55,5 +55,5 @@ export default class UserOrderHistoryContainer extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/User/UserOrderHistory';
+@import '@/Assets/Styles/Pages/User/UserOrderHistory.scss';
 </style>

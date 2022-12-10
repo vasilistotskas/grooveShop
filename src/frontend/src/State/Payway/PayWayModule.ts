@@ -13,7 +13,7 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 	name: 'payWay'
 })
 export default class PayWayModule extends AppBaseModule {
-	activePayWays!: Array<PayWayModel>
+	activePayWays: Array<PayWayModel> = []
 	selectedPayWay!: PayWayModel
 
 	get getActivePayWays(): Array<PayWayModel> {

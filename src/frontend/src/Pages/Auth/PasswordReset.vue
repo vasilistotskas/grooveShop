@@ -4,7 +4,7 @@
 		<div class="card password-reset-card">
 			<div class="card-body card-body-border-top">
 				<div>
-					<font-awesome-icon :icon="lockIcon" size="4x" />
+					<FontAwesomeIcon :icon="lockIcon" size="4x" />
 				</div>
 				<h1>Forgot Password?</h1>
 				<p>You can reset your password here.</p>
@@ -14,7 +14,7 @@
 						<div class="form-group">
 							<div class="input-group-w-addon">
 								<span class="input-group-addon">
-									<font-awesome-icon :icon="envelopeIcon" />
+									<FontAwesomeIcon :icon="envelopeIcon" />
 								</span>
 								<input
 									id="email"
@@ -35,7 +35,7 @@
 						send email
 					</button>
 					<span v-show="emailError" class="error">
-						A error occured while processing your request.
+						A error occurred while processing your request.
 					</span>
 				</template>
 				<template v-else>
@@ -77,7 +77,7 @@ export default class PasswordReset extends Vue {
 	lockIcon = faLock
 	envelopeIcon = faEnvelope
 
-	meta = setup(() => {
+	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
 				title: 'Reset Password',
@@ -118,5 +118,5 @@ export default class PasswordReset extends Vue {
 </script>
 
 <style lang="scss">
-@import '@/Assets/Styles/Pages/Auth/PasswordReset';
+@import '@/Assets/Styles/Pages/Auth/PasswordReset.scss';
 </style>

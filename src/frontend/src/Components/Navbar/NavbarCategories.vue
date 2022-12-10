@@ -105,5 +105,5 @@ export default class NavbarCategories extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/Navbar/NavbarCategories';
+@import '@/Assets/Styles/Components/Navbar/NavbarCategories.scss';
 </style>

@@ -7,7 +7,7 @@
 			class="toggle-dark-mode-button"
 			@click="toggleThemeMode()"
 		>
-			<font-awesome-icon :icon="themeIconClass" size="lg" />
+			<FontAwesomeIcon :icon="themeIconClass" size="lg" />
 		</button>
 	</li>
 </template>
