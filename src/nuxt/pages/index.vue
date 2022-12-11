@@ -38,7 +38,7 @@ const cancelTooltip = () => {
   if (tt) tt.innerHTML = `Copy to clipboard`
 }
 const copyBash = () => {
-  const bash = 'git clone https://github.com/viandwi24/nuxt3-awesome-starter'
+  const bash = 'git clone https://github.com/vasilistotskas/grooveShop'
   navigator.clipboard.writeText(bash)
   tooltip.value = true
   const tt = document.querySelector('.tooltiptext')
@@ -91,7 +91,7 @@ const copyBash = () => {
               text="Github"
               type="secondary"
               class="font-extrabold"
-              href="https://github.com/viandwi24/nuxt3-awesome-starter"
+              href="https://github.com/vasilistotskas/grooveShop"
             />
           </div>
         </div>
@@ -124,7 +124,7 @@ const copyBash = () => {
               class="win-body rounded-b-lg bg-gray-200/90 dark:bg-slate-800/90 px-3 py-2 font-mono backdrop-filter backdrop-blur-lg"
             >
               <div>
-                $ git clone https://github.com/viandwi24/nuxt3-awesome-starter
+                $ git clone https://github.com/vasilistotskas/grooveShop
               </div>
             </div>
           </div>

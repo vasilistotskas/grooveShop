@@ -1,10 +1,10 @@
 {
-  "name": "nuxt3-awesome-starter",
+  "name": "nuxt",
   "version": "0.1.0",
   "description": "a Nuxt 3 starter template or boilerplate with a lot of useful features. Nuxt3 + Tailwindcss 3",
   "repository": {
     "type": "git",
-    "url": "git://github.com/viandwi24/nuxt3-awesome-starter"
+    "url": "git://github.com/vasilistotskas/grooveShop"
   },
   "author": "viandwi24",
   "license": "MIT",
