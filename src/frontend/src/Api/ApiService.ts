@@ -3,9 +3,9 @@ import AppModule from '@/State/App/AppModule'
 import { getModule } from 'vuex-module-decorators'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import { ApiGetData, ApiPatchData, ApiPostData, ApiPutData } from '@/Api/Type/ApiData'
+import { useStore } from 'vuex'
 
 const baseUrl = '/api/v1'
-const appModule = getModule(AppModule)
 
 export default {
 	alternativeToken: null,
@@ -15,10 +15,14 @@ export default {
 	},
 
 	beforeRequest(): void {
+		const store = useStore()
+		const appModule = getModule(AppModule, store)
 		appModule.setLoading(true)
 	},
 
 	afterResponse(): void {
+		const store = useStore()
+		const appModule = getModule(AppModule, store)
 		appModule.setLoading(false)
 	},
 

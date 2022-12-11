@@ -74,7 +74,6 @@
 
 <script lang="ts">
 import { inject } from 'vue'
-import router from '@/Routes'
 import { Emitter } from 'mitt'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
@@ -93,6 +92,7 @@ import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import { ImageTypeOptions } from '@/Helpers/MediaStream/ImageUrlEnum'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import { RouteMetaBreadcrumbFunction } from '@/Routes/Type/BreadcrumbItemType'
+import { useRouter } from 'vue-router'
 
 @Component({
 	name: 'BlogPost',
@@ -112,9 +112,10 @@ import { RouteMetaBreadcrumbFunction } from '@/Routes/Type/BreadcrumbItemType'
 	}
 })
 export default class BlogPost extends Vue {
-	blogModule = getModule(BlogModule)
-	authModule = getModule(AuthModule)
-	userModule = getModule(UserModule)
+	router = useRouter()
+	blogModule = getModule(BlogModule, this.$store)
+	authModule = getModule(AuthModule, this.$store)
+	userModule = getModule(UserModule, this.$store)
 	ImageTypeOptions = ImageTypeOptions
 	emitter: Emitter<BlogPostEvents> | undefined = inject('emitter')
 
@@ -129,9 +130,9 @@ export default class BlogPost extends Vue {
 	})
 
 	get breadCrumbPath() {
-		const currentRouteMetaBreadcrumb = router.currentRoute.value.meta
+		const currentRouteMetaBreadcrumb = this.router.currentRoute.value.meta
 			.breadcrumb as RouteMetaBreadcrumbFunction
-		return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+		return currentRouteMetaBreadcrumb(this.router.currentRoute.value.params)
 	}
 
 	created(): void {

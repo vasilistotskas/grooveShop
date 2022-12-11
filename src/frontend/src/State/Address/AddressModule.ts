@@ -1,5 +1,4 @@
 import { cloneDeep } from 'lodash'
-import store from '@/DynamicStore'
 import api from '@/Api/ApiService'
 import { AxiosResponse } from 'axios'
 import { useToast } from 'vue-toastification'
@@ -12,10 +11,7 @@ import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/Pagination
 const toast = useToast()
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'address'
 })
 export default class AddressModule extends AppBaseModule {

@@ -1,18 +1,13 @@
-import store from '@/DynamicStore'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import MetaData from '@/State/Common/Interface/MetaData'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'app'
 })
 export default class AppModule extends AppBaseModule {
 	loading = false
-	windowWidth: number = window.innerWidth
 	navbarMenuHidden = true
 
 	get getLoading(): boolean {
@@ -25,10 +20,6 @@ export default class AppModule extends AppBaseModule {
 
 	get backendBaseUrl(): string | undefined {
 		return process.env.VITE_APP_BASE_URL
-	}
-
-	get getWindowWidth(): number {
-		return this.windowWidth
 	}
 
 	get isMobile(): boolean {
@@ -48,11 +39,6 @@ export default class AppModule extends AppBaseModule {
 	@Mutation
 	setLoading(shouldBeLoad: boolean): void {
 		this.loading = shouldBeLoad
-	}
-
-	@Mutation
-	setWindowWidth(width: number): void {
-		this.windowWidth = width
 	}
 
 	@Action

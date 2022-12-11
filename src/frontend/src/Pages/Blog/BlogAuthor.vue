@@ -24,7 +24,6 @@
 </template>
 
 <script lang="ts">
-import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import BlogModule from '@/State/Blog/BlogModule'
@@ -34,6 +33,8 @@ import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import BlogAuthorPostList from '@/Components/Blog/BlogAuthorPostList.vue'
 import { RouteMetaBreadcrumbFunction } from '@/Routes/Type/BreadcrumbItemType'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 @Component({
 	name: 'BlogAuthor',
@@ -43,10 +44,12 @@ import { RouteMetaBreadcrumbFunction } from '@/Routes/Type/BreadcrumbItemType'
 	}
 })
 export default class BlogAuthor extends Vue {
-	blogModule = getModule(BlogModule)
+	router = useRouter()
+	blogModule = getModule(BlogModule, this.$store)
 
 	myContext = setup(() => {
-		const blogModule = getModule(BlogModule)
+		const store = useStore()
+		const blogModule = getModule(BlogModule, store)
 
 		Promise.all([
 			blogModule.fetchAuthorByIdFromRemote(),
@@ -65,9 +68,9 @@ export default class BlogAuthor extends Vue {
 	})
 
 	get breadCrumbPath() {
-		const currentRouteMetaBreadcrumb = router.currentRoute.value.meta
+		const currentRouteMetaBreadcrumb = this.router.currentRoute.value.meta
 			.breadcrumb as RouteMetaBreadcrumbFunction
-		return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+		return currentRouteMetaBreadcrumb(this.router.currentRoute.value.params)
 	}
 
 	get authorById(): BlogAuthorModel {

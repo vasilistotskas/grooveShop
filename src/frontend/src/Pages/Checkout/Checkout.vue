@@ -255,7 +255,6 @@ import {
 	StripeConstructorOptions,
 	StripeElementsOptions
 } from '@stripe/stripe-js'
-import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import AppModule from '@/State/App/AppModule'
 import { useToast } from 'vue-toastification'
@@ -287,6 +286,8 @@ import { computed, ComputedRef, onBeforeMount, onUnmounted, ref } from 'vue'
 import StripeCardModule from '@/Libraries/Stripe/Components/StripeCardModule'
 import CheckoutOrderApiData from '@/State/Cart/Interface/CheckoutOrderApiData'
 import CheckoutProductContainer from '@/Components/Checkout/CheckoutProductContainer.vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 const toast = useToast()
 
@@ -310,13 +311,15 @@ export default class Checkout extends Vue {
 				description: 'Checkout'
 			}))
 		)
-		const authModule = getModule(AuthModule)
-		const cartModule = getModule(CartModule)
-		const payWayModule = getModule(PayWayModule)
-		const stripeCardModule = getModule(StripeCardModule)
-		const countryModule = getModule(CountryModule)
-		const userModule = getModule(UserModule)
-		const appModule = getModule(AppModule)
+		const router = useRouter()
+		const store = useStore()
+		const authModule = getModule(AuthModule, store)
+		const cartModule = getModule(CartModule, store)
+		const payWayModule = getModule(PayWayModule, store)
+		const stripeCardModule = getModule(StripeCardModule, store)
+		const countryModule = getModule(CountryModule, store)
+		const userModule = getModule(UserModule, store)
+		const appModule = getModule(AppModule, store)
 
 		const isAuthenticated: ComputedRef<boolean> = computed(
 			() => authModule.isAuthenticated

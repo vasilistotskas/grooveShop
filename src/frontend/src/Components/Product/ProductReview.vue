@@ -127,7 +127,7 @@ export default class ProductReview extends Vue {
 	declare $refs: {
 		ratingBoard: HTMLElement
 	}
-	productReviewModule = getModule(ProductReviewModule)
+	productReviewModule = getModule(ProductReviewModule, this.$store)
 	name = ''
 	editingLocked = false
 	size = 16

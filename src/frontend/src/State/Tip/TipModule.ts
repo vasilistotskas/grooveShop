@@ -1,15 +1,11 @@
 import gql from 'graphql-tag'
-import store from '@/DynamicStore'
 import TipModel from '@/State/Tip/TipModel'
 import { clientApollo } from '@/Apollo/ApolloProvider'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import { Module, Action, Mutation } from 'vuex-module-decorators'
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'tip'
 })
 export default class TipModule extends AppBaseModule {

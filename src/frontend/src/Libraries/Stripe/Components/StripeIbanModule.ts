@@ -1,14 +1,10 @@
-import store from '@/DynamicStore'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import initStripeComponent from '@/Libraries/Stripe/Stripe'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import { StripeElement } from '@/Libraries/Stripe/StripeElement'
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'stripeIban'
 })
 export default class StripeIbanModule extends AppBaseModule {
@@ -16,7 +12,7 @@ export default class StripeIbanModule extends AppBaseModule {
 	ibanError!: any
 	ibanIsCompleted!: any
 	ibanEl!: any
-	stripeInstance = window as any
+	stripeInstance: any
 	notifyError!: (ev: any) => void
 
 	@Mutation

@@ -54,7 +54,7 @@ import GenericModalModel from '@/Utilities/Model/GenericModalModel'
 	extends: GenericModalModel
 })
 export default class CheckoutStripeModal extends GenericModalModel {
-	payWayModule = getModule(PayWayModule)
+	payWayModule = getModule(PayWayModule, this.$store)
 	closeModal(): void {
 		this.payWayModule.setSelectedPayWay(new PayWayModel())
 		this.isModalCurrentlyOpen = false

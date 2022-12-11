@@ -110,7 +110,6 @@
 
 <script lang="ts">
 import { inject } from 'vue'
-import router from '@/Routes'
 import { Emitter } from 'mitt'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
@@ -131,6 +130,7 @@ import UserProfileImage from '@/Components/User/UserProfileImage.vue'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
 import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
+import { useRouter } from 'vue-router'
 
 @Component({
 	name: 'UserAccount',
@@ -140,11 +140,12 @@ import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteMo
 	}
 })
 export default class UserAccount extends Vue {
-	authModule = getModule(AuthModule)
-	userModule = getModule(UserModule)
-	productFavouriteModule = getModule(ProductFavouriteModule)
-	productReviewModule = getModule(ProductReviewModule)
-	countryModule = getModule(CountryModule)
+	router = useRouter()
+	authModule = getModule(AuthModule, this.$store)
+	userModule = getModule(UserModule, this.$store)
+	productFavouriteModule = getModule(ProductFavouriteModule, this.$store)
+	productReviewModule = getModule(ProductReviewModule, this.$store)
+	countryModule = getModule(CountryModule, this.$store)
 	MainRouteNames = MainRouteNames
 	profileImageFilename = ''
 	cogsIcon = faCogs
@@ -167,7 +168,7 @@ export default class UserAccount extends Vue {
 	})
 
 	get breadCrumbPath() {
-		return router.currentRoute.value.meta.breadcrumb
+		return this.router.currentRoute.value.meta.breadcrumb
 	}
 
 	get userData(): UserProfileModel {
@@ -215,7 +216,7 @@ export default class UserAccount extends Vue {
 			this.productReviewModule.unsetUserReviews()
 			this.countryModule.unsetUserCountryData()
 		})
-		router.push('/')
+		this.router.push('/')
 	}
 }
 </script>

@@ -79,9 +79,8 @@
 </template>
 
 <script lang="ts">
-import router from '@/Routes'
 import { useMeta } from 'vue-meta'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import { toFormValidator } from '@vee-validate/zod'
@@ -100,12 +99,13 @@ import ResetPasswordInputApi from '@/State/Auth/Interface/ResetPasswordInputApi'
 	}
 })
 export default class PasswordRestConfirm extends Vue {
-	passwordModule = getModule(PasswordModule)
+	passwordModule = getModule(PasswordModule, this.$store)
 	submitButtonText = 'Reset Password'
 	lockIcon = faLock
+	router = useRouter()
 
 	get breadCrumbPath() {
-		return router.currentRoute.value.meta.breadcrumb
+		return this.router.currentRoute.value.meta.breadcrumb
 	}
 
 	myContext = setup(() => {

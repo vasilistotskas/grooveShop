@@ -1,4 +1,3 @@
-import store from '@/DynamicStore'
 import api from '@/Api/ApiService'
 import { AxiosResponse } from 'axios'
 import PayWayModel from '@/State/Payway/PayWayModel'
@@ -6,10 +5,7 @@ import AppBaseModule from '@/State/Common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'payWay'
 })
 export default class PayWayModule extends AppBaseModule {

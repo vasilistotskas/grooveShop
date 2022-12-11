@@ -35,7 +35,6 @@
 </template>
 
 <script lang="ts">
-import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import { useRouter } from 'vue-router'
 import { computed } from '@vue/runtime-core'
@@ -52,6 +51,7 @@ import PaginatedComponent from '@/Components/Pagination/PaginatedComponent'
 import { PaginationRoutesEnum } from '@/State/Pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
+import { useStore } from 'vuex'
 
 @Component({
 	name: 'UserAddresses',
@@ -66,14 +66,16 @@ export default class UserAddresses
 	extends PaginatedComponent<Address>
 	implements PaginatedComponentInterface<Address>
 {
-	userModule = getModule(UserModule)
+	router = useRouter()
+	userModule = getModule(UserModule, this.$store)
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.ADDRESS
 	MainRouteNames = MainRouteNames
 
 	myContext = setup(() => {
 		const router = useRouter()
-		const userModule = getModule(UserModule)
+		const store = useStore()
+		const userModule = getModule(UserModule, store)
 		const routerQueryParams = router.currentRoute.value.query
 		const paginationOptions = {
 			routerQueryParams: routerQueryParams,
@@ -94,7 +96,7 @@ export default class UserAddresses
 	})
 
 	get breadCrumbPath() {
-		return router.currentRoute.value.meta.breadcrumb
+		return this.router.currentRoute.value.meta.breadcrumb
 	}
 }
 </script>

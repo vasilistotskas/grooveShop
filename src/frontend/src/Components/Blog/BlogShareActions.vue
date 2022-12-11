@@ -238,9 +238,11 @@ import { faTelegram } from '@fortawesome/free-brands-svg-icons/faTelegram'
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp'
 import { faPinterest } from '@fortawesome/free-brands-svg-icons/faPinterest'
 import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons/faFacebookMessenger'
+import { useStore } from 'vuex'
 
 const router = useRouter()
-const appModule = getModule(AppModule)
+const store = useStore()
+const appModule = getModule(AppModule, store)
 
 const FacebookIcon = faFacebook
 const EmailIcon = faEnvelope

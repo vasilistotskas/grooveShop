@@ -65,7 +65,7 @@ const starHalfSvg =
 	}
 })
 export default class ProductCard extends Vue {
-	cartModule = getModule(CartModule)
+	cartModule = getModule(CartModule, this.$store)
 	quantity = 1
 	product!: ProductModel
 	ImageTypeOptions = ImageTypeOptions

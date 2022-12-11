@@ -3,9 +3,7 @@
 		<div class="preheader" :class="{ 'preheader--hidden': !showPreHeader }">
 			<p>
 				Groove
-				<a :href="appModule.backendBaseUrl">
-					<span style="text-decoration: underline">Here</span>!</a
-				>
+				<a :href="''"> <span style="text-decoration: underline">Here</span>!</a>
 			</p>
 		</div>
 		<Navbar />
@@ -13,8 +11,6 @@
 </template>
 
 <script lang="ts">
-import AppModule from '@/State/App/AppModule'
-import { getModule } from 'vuex-module-decorators'
 import Navbar from '@/Components/Navbar/Navbar.vue'
 import { Options as Component, Vue } from 'vue-class-component'
 
@@ -25,7 +21,6 @@ import { Options as Component, Vue } from 'vue-class-component'
 	}
 })
 export default class Header extends Vue {
-	appModule = getModule(AppModule)
 	showPreHeader = true
 	lastScrollPosition = 0
 

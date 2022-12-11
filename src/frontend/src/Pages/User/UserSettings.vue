@@ -181,18 +181,20 @@ import { FieldContext, useField, useForm } from 'vee-validate'
 import { HTMLElementEvent } from '@/State/Common/Types/HelpingTypes'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import UserProfileApiData from '@/State/User/Interface/UserProfileApiData'
+import { useStore } from 'vuex'
 
 @Component({
 	name: 'UserSettings'
 })
 export default class UserSettings extends Vue {
-	authModule = getModule(AuthModule)
-	countryModule = getModule(CountryModule)
+	authModule = getModule(AuthModule, this.$store)
+	countryModule = getModule(CountryModule, this.$store)
 	submitButtonText = 'Update'
 
 	myContext = setup(() => {
-		const countryModule = getModule(CountryModule)
-		const userModule = getModule(UserModule)
+		const store = useStore()
+		const countryModule = getModule(CountryModule, store)
+		const userModule = getModule(UserModule, store)
 
 		countryModule.fetchCountriesFromRemote()
 		countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserProfile)

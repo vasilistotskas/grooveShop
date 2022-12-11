@@ -1,23 +1,20 @@
-import router from '@/Routes'
 import api from '@/Api/ApiService'
-import store from '@/DynamicStore'
 import { useToast } from 'vue-toastification'
 import PayWayModel from '@/State/Payway/PayWayModel'
 import CartItemModel from '@/State/Cart/CartItemModel'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import CheckoutOrderApiData from '@/State/Cart/Interface/CheckoutOrderApiData'
+import { useRouter } from 'vue-router'
 
 const toast = useToast()
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'cart'
 })
 export default class CartModule extends AppBaseModule {
+	router = useRouter()
 	cart: Array<CartItemModel> = []
 	cartTotalPriceForPayWay = 0
 
@@ -127,7 +124,7 @@ export default class CartModule extends AppBaseModule {
 			.post<CheckoutOrderApiData>('checkout/', data)
 			.then(() => {
 				this.context.commit('clearCart')
-				router.push('/Cart/success')
+				this.router.push('/Cart/success')
 			})
 			.catch((e: Error) => {
 				console.log(e.message)

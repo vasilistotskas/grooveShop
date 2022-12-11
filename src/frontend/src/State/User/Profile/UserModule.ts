@@ -1,4 +1,3 @@
-import store from '@/DynamicStore'
 import api from '@/Api/ApiService'
 import { AxiosResponse } from 'axios'
 import { useToast } from 'vue-toastification'
@@ -10,10 +9,7 @@ import UserProfileApiData from '@/State/User/Interface/UserProfileApiData'
 const toast = useToast()
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'user'
 })
 export default class UserModule extends AppBaseModule {

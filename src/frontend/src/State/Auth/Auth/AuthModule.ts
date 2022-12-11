@@ -1,8 +1,7 @@
-import router from '@/Routes'
-import store from '@/DynamicStore'
 import api from '@/Api/ApiService'
 import session from '@/Api/Session'
 import { AxiosResponse } from 'axios'
+import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import LogInInputApi from '@/State/Auth/Interface/LogInInputApi'
@@ -11,13 +10,11 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 const toast = useToast()
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'auth'
 })
 export default class AuthModule extends AppBaseModule {
+	router = useRouter()
 	TOKEN_STORAGE_KEY = 'TOKEN_STORAGE_KEY'
 	isProduction = process.env.NODE_ENV === 'production'
 	isSessionAuthenticated = false
@@ -95,7 +92,7 @@ export default class AuthModule extends AppBaseModule {
 				const token: string = response.data.auth_token
 				this.context.commit('setToken', token)
 				this.context.commit('setSessionAuth', true)
-				router.push('/')
+				this.router.push('/')
 			})
 			.then(() => {
 				this.context.commit('logInSuccess')
@@ -163,6 +160,6 @@ export default class AuthModule extends AppBaseModule {
 			.catch((e: Error) => {
 				console.log(e)
 			})
-			.finally(() => router.push('/'))
+			.finally(() => this.router.push('/'))
 	}
 }

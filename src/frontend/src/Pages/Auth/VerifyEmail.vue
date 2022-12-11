@@ -34,7 +34,6 @@
 </template>
 
 <script lang="ts">
-import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
@@ -42,7 +41,7 @@ import AuthModule from '@/State/Auth/Auth/AuthModule'
 import SignUpModule from '@/State/Auth/SignUp/SignUpModule'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import { Options as Component, setup, Vue } from 'vue-class-component'
-import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
+import { NavigationGuardNext, RouteLocationNormalized, useRouter } from 'vue-router'
 
 @Component({
 	name: 'VerifyEmail',
@@ -51,8 +50,9 @@ import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 	}
 })
 export default class VerifyEmail extends Vue {
-	authModule = getModule(AuthModule)
-	signupModule = getModule(SignUpModule)
+	authModule = getModule(AuthModule, this.$store)
+	signupModule = getModule(SignUpModule, this.$store)
+	router = useRouter()
 
 	myContext = setup(() => {
 		const meta = useMeta(
@@ -65,7 +65,7 @@ export default class VerifyEmail extends Vue {
 	})
 
 	get breadCrumbPath() {
-		return router.currentRoute.value.meta.breadcrumb
+		return this.router.currentRoute.value.meta.breadcrumb
 	}
 
 	get reActivationMailSent(): boolean {
@@ -82,7 +82,7 @@ export default class VerifyEmail extends Vue {
 		if (email) {
 			this.signupModule.activationEmailResend(email)
 		} else {
-			router.push('/accounts/activate/verify_mail_resend')
+			this.router.push('/accounts/activate/verify_mail_resend')
 		}
 	}
 

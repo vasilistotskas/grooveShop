@@ -1,5 +1,4 @@
 import { find } from 'lodash'
-import store from '@/DynamicStore'
 import api from '@/Api/ApiService'
 import { AxiosResponse } from 'axios'
 import CountryModel from '@/State/Country/CountryModel'
@@ -9,11 +8,8 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 import UserProfileModel from '@/State/User/Profile/UserProfileModel'
 
 @Module({
-	dynamic: true,
-	namespaced: true,
-	store: store,
-	stateFactory: true,
-	name: 'country'
+	name: 'country',
+	namespaced: true
 })
 export default class CountryModule extends AppBaseModule {
 	countries: Array<CountryModel> = []

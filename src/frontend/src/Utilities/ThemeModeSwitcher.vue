@@ -20,19 +20,19 @@ import { Options as Component, Vue } from 'vue-class-component'
 import { faSun } from '@fortawesome/free-solid-svg-icons/faSun'
 import { faMoon } from '@fortawesome/free-solid-svg-icons/faMoon'
 import AppSettingsThemeModeOption from '@/State/App/AppSettingsThemeModeOption'
+import { useStore } from 'vuex'
 
 @Component({
 	name: 'ThemeModeSwitcher'
 })
 export default class ThemeModeSwitcher extends Vue {
-	settingsModule = getModule(AppSettingsModule)
 	sunIcon = faSun
 	moonIcon = faMoon
 
 	themeModeFromPreference: AppSettingsThemeModeOption = AppSettingsThemeModeOption.light
 
 	get getThemeMode(): AppSettingsThemeModeOption {
-		return this.settingsModule.getSettings?.themeMode
+		return AppSettingsThemeModeOption.dark
 	}
 
 	get themeModeFromLocalStorage(): AppSettingsThemeModeOption {
@@ -58,15 +58,15 @@ export default class ThemeModeSwitcher extends Vue {
 	}
 
 	created(): void {
-		window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-			this.themeModeFromPreference = e.matches
-				? AppSettingsThemeModeOption.dark
-				: AppSettingsThemeModeOption.light
-		})
-
-		if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-			this.themeModeFromPreference = AppSettingsThemeModeOption.dark
-		}
+		// window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+		// 	this.themeModeFromPreference = e.matches
+		// 		? AppSettingsThemeModeOption.dark
+		// 		: AppSettingsThemeModeOption.light
+		// })
+		//
+		// if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+		// 	this.themeModeFromPreference = AppSettingsThemeModeOption.dark
+		// }
 	}
 
 	mounted(): void {
@@ -77,11 +77,12 @@ export default class ThemeModeSwitcher extends Vue {
 		from: AppSettingsThemeModeOption,
 		to: AppSettingsThemeModeOption
 	): void {
-		const bodyElement = document.body
-		bodyElement.classList.remove(from)
-		bodyElement.classList.add(to)
+		// const bodyElement = document.body
+		// bodyElement.classList.remove(from)
+		// bodyElement.classList.add(to)
+		const store = useStore()
 
-		const appModule = getModule(AppModule)
+		const appModule = getModule(AppModule, store)
 		appModule.updateMetaTagElement({
 			metaName: 'color-scheme',
 			metaAttribute: 'content',
@@ -90,25 +91,25 @@ export default class ThemeModeSwitcher extends Vue {
 	}
 
 	private updateThemeModeFromLocalStorage(): void {
-		this.settingsModule
-			.toggleThemeModeFromPreference(this.themeModeFromLocalStorage)
-			.then((themeMode) => this.updateThemeMode(themeMode))
+		// this.settingsModule
+		// 	.toggleThemeModeFromPreference(this.themeModeFromLocalStorage)
+		// 	.then((themeMode) => this.updateThemeMode(themeMode))
 	}
 
 	private updateThemeModeFromPreference(): void {
-		if (AppSettingsThemeModeOption.no_theme === this.themeModeFromLocalStorage) {
-			this.settingsModule
-				.toggleThemeModeFromPreference(this.themeModeFromPreference)
-				.then((themeMode) => this.updateThemeMode(themeMode))
-		} else {
-			this.updateThemeModeFromLocalStorage()
-		}
+		// if (AppSettingsThemeModeOption.no_theme === this.themeModeFromLocalStorage) {
+		// 	this.settingsModule
+		// 		.toggleThemeModeFromPreference(this.themeModeFromPreference)
+		// 		.then((themeMode) => this.updateThemeMode(themeMode))
+		// } else {
+		// 	this.updateThemeModeFromLocalStorage()
+		// }
 	}
 
 	public toggleThemeMode(): void {
-		this.settingsModule.toggleThemeMode().then((themeMode) => {
-			return this.updateThemeMode(themeMode)
-		})
+		// this.settingsModule.toggleThemeMode().then((themeMode) => {
+		// 	return this.updateThemeMode(themeMode)
+		// })
 	}
 
 	private updateThemeMode(

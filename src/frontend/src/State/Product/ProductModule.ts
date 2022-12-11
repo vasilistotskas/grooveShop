@@ -1,20 +1,17 @@
 import { map } from 'lodash'
-import router from '@/Routes'
-import store from '@/DynamicStore'
 import api from '@/Api/ApiService'
 import { AxiosResponse } from 'axios'
 import ProductModel from '@/State/Product/ProductModel'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import { Module, Action, Mutation } from 'vuex-module-decorators'
+import { useRouter } from 'vue-router'
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'product'
 })
 export default class ProductModule extends AppBaseModule {
+	router = useRouter()
 	product!: ProductModel
 	latestProducts: Array<ProductModel> = []
 
@@ -44,8 +41,8 @@ export default class ProductModule extends AppBaseModule {
 
 	@Action
 	async fetchProductFromRemote(): Promise<void> {
-		const category_slug = router.currentRoute.value.params.category_slug
-		const product_slug = router.currentRoute.value.params.product_slug
+		const category_slug = this.router.currentRoute.value.params.category_slug
+		const product_slug = this.router.currentRoute.value.params.product_slug
 
 		return await api
 			.get(`products/${category_slug}/${product_slug}`)
@@ -74,8 +71,8 @@ export default class ProductModule extends AppBaseModule {
 
 	@Action
 	async updateProductHits(): Promise<unknown> {
-		const category_slug = router.currentRoute.value.params.category_slug
-		const product_slug = router.currentRoute.value.params.product_slug
+		const category_slug = this.router.currentRoute.value.params.category_slug
+		const product_slug = this.router.currentRoute.value.params.product_slug
 
 		if (!category_slug && product_slug) {
 			return Promise.resolve()

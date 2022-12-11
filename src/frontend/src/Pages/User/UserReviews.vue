@@ -61,7 +61,7 @@ export default class UserReviews
 	extends PaginatedComponent<ProductReviewModel>
 	implements PaginatedComponentInterface<ProductReviewModel>
 {
-	userModule = getModule(UserModule)
+	userModule = getModule(UserModule, this.$store)
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_REVIEWS
 

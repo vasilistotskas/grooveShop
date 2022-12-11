@@ -107,7 +107,6 @@
 </template>
 
 <script lang="ts">
-import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import { ZodSignup } from '@/Zod/Auth/ZodAuth'
@@ -118,7 +117,7 @@ import { FieldContext, useField, useForm } from 'vee-validate'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import SignUpInputApi from '@/State/Auth/Interface/SignUpInputApi'
 import { Options as Component, setup, Vue } from 'vue-class-component'
-import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
+import { NavigationGuardNext, RouteLocationNormalized, useRouter } from 'vue-router'
 import VerifyEmailResendInput from '@/Pages/Auth/VerifyEmailResendInput.vue'
 
 @Component({
@@ -129,8 +128,9 @@ import VerifyEmailResendInput from '@/Pages/Auth/VerifyEmailResendInput.vue'
 	}
 })
 export default class Register extends Vue {
-	signupModule = getModule(SignUpModule)
+	signupModule = getModule(SignUpModule, this.$store)
 	activationEmailAtLocalStorage = false
+	router = useRouter()
 
 	myContext = setup(() => {
 		const meta = useMeta(
@@ -183,7 +183,7 @@ export default class Register extends Vue {
 	})
 
 	get breadCrumbPath() {
-		return router.currentRoute.value.meta.breadcrumb
+		return this.router.currentRoute.value.meta.breadcrumb
 	}
 
 	updated(): void {
@@ -197,7 +197,7 @@ export default class Register extends Vue {
 		if (email) {
 			this.signupModule.activationEmailResend(email)
 		} else {
-			router.push('/accounts/activate/verify_mail_resend')
+			this.router.push('/accounts/activate/verify_mail_resend')
 		}
 	}
 

@@ -125,7 +125,7 @@ import { faCommentDots } from '@fortawesome/free-solid-svg-icons/faCommentDots'
 })
 export default class BlogPostCard extends Vue {
 	declare $refs
-	blogModule = getModule(BlogModule)
+	blogModule = getModule(BlogModule, this.$store)
 	ImageFitOptions = ImageFitOptions
 	ImagePositionOptions = ImagePositionOptions
 	post!: BlogPostModel

@@ -72,7 +72,6 @@
 </template>
 
 <script lang="ts">
-import router from '@/Routes'
 import { Emitter } from 'mitt'
 import { inject, PropType } from 'vue'
 import { onClickOutside } from '@vueuse/core'
@@ -81,6 +80,7 @@ import BlogCommentModel from '@/State/Blog/BlogCommentModel'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
 import { Options as Component, Vue } from 'vue-class-component'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
+import { useRouter } from 'vue-router'
 
 @Component({
 	name: 'BlogCommentCard',
@@ -110,6 +110,7 @@ export default class BlogCommentCard extends Vue {
 	checkCircleIcon = faCheckCircle
 	isAuthenticated = false
 	emitter: Emitter<BlogPostEvents> | undefined = inject('emitter')
+	router = useRouter()
 
 	updated(): void {
 		onClickOutside(this.$refs.userCommentActionTarget, () => {
@@ -134,11 +135,13 @@ export default class BlogCommentCard extends Vue {
 				comment.post.mainImageFilename.lastIndexOf('.')
 			) || comment.post.mainImageFilename
 
-		if (router.currentRoute.value.name === MainRouteNames.POST) {
+		if (this.router.currentRoute.value.name === MainRouteNames.POST) {
 			return 'url(' + comment.userProfile.mainImageAbsoluteUrl + ')'
 		}
 
-		if (router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT_BLOG_COMMENTS) {
+		if (
+			this.router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT_BLOG_COMMENTS
+		) {
 			return (
 				'url(' +
 				process.env.VITE_APP_BASE_URL +

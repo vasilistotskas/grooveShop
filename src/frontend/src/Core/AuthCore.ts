@@ -6,7 +6,4 @@ import { Options as Component, Vue } from 'vue-class-component'
 @Component({
 	name: 'AuthCore'
 })
-export default class AuthCore extends Vue {
-	authModule = getModule(AuthModule)
-	userModule = getModule(UserModule)
-}
+export default class AuthCore extends Vue {}

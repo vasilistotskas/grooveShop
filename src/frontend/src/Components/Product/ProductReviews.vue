@@ -139,7 +139,7 @@ export default class ProductReviews
 	extends PaginatedComponent<ProductReviewModel>
 	implements PaginatedComponentInterface<ProductReviewModel>
 {
-	productReviewModule = getModule(ProductReviewModule)
+	productReviewModule = getModule(ProductReviewModule, this.$store)
 	clearPagination = true
 	product!: ProductModel
 	PaginationRoutesEnum = PaginationRoutesEnum

@@ -136,7 +136,6 @@
 
 <script lang="ts">
 import { inject } from 'vue'
-import router from '@/Routes'
 import { Emitter } from 'mitt'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
@@ -162,6 +161,7 @@ import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag'
 import { faShippingFast } from '@fortawesome/free-solid-svg-icons/faShippingFast'
 import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
+import { useRouter } from 'vue-router'
 
 @Component({
 	name: 'Product',
@@ -182,12 +182,13 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExcla
 	}
 })
 export default class Product extends Vue {
-	userModule = getModule(UserModule)
-	productModule = getModule(ProductModule)
-	cartModule = getModule(CartModule)
-	productFavouriteModule = getModule(ProductFavouriteModule)
-	productReviewModule = getModule(ProductReviewModule)
-	authModule = getModule(AuthModule)
+	router = useRouter()
+	userModule = getModule(UserModule, this.$store)
+	productModule = getModule(ProductModule, this.$store)
+	cartModule = getModule(CartModule, this.$store)
+	productFavouriteModule = getModule(ProductFavouriteModule, this.$store)
+	productReviewModule = getModule(ProductReviewModule, this.$store)
+	authModule = getModule(AuthModule, this.$store)
 	emitter: Emitter<ProductEvents> | undefined = inject('emitter')
 	quantity = 1
 	ImageTypeOptions = ImageTypeOptions
@@ -207,9 +208,9 @@ export default class Product extends Vue {
 	})
 
 	get breadCrumbPath() {
-		const currentRouteMetaBreadcrumb = router.currentRoute.value.meta
+		const currentRouteMetaBreadcrumb = this.router.currentRoute.value.meta
 			.breadcrumb as RouteMetaBreadcrumbFunction
-		return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+		return currentRouteMetaBreadcrumb(this.router.currentRoute.value.params)
 	}
 
 	get product(): ProductModel {

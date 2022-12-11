@@ -267,21 +267,23 @@ import { HTMLElementEvent } from '@/State/Common/Types/HelpingTypes'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import { FloorChoicesEnum, LocationChoicesEnum } from '@/State/Address/Enum/AddressEnum'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 @Component({
 	name: 'UserAddressNew'
 })
 export default class UserAddressNew extends Vue {
-	userModule = getModule(UserModule)
-	addressModule = getModule(AddressModule)
-	countryModule = getModule(CountryModule)
+	userModule = getModule(UserModule, this.$store)
+	addressModule = getModule(AddressModule, this.$store)
+	countryModule = getModule(CountryModule, this.$store)
 	submitButtonText = 'Create'
 	FloorChoicesEnum = FloorChoicesEnum
 	LocationChoicesEnum = LocationChoicesEnum
 
 	myContext = setup(() => {
 		const router = useRouter()
-		const countryModule = getModule(CountryModule)
+		const store = useStore()
+		const countryModule = getModule(CountryModule, store)
 		countryModule.fetchCountriesFromRemote()
 
 		const meta = useMeta(

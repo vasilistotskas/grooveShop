@@ -4,11 +4,13 @@ import { ref, onMounted } from 'vue'
 import VueHorizontal from 'vue-horizontal'
 import AppModule from '@/State/App/AppModule'
 import { getModule } from 'vuex-module-decorators'
+import { useStore } from 'vuex'
 
 type InstagramDataType = Record<string, any>
 const instagramDataEmpty: InstagramDataType = {}
+const store = useStore()
 
-const appModule = getModule(AppModule)
+const appModule = getModule(AppModule, store)
 const props = defineProps({
 	count: Number,
 	pagination: Boolean,

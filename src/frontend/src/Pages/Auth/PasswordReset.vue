@@ -55,8 +55,8 @@
 </template>
 
 <script lang="ts">
-import router from '@/Routes'
 import { useMeta } from 'vue-meta'
+import { useRouter } from 'vue-router'
 import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import PasswordModule from '@/State/Auth/Password/PasswordModule'
@@ -72,7 +72,8 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 	}
 })
 export default class PasswordReset extends Vue {
-	passwordModule = getModule(PasswordModule)
+	router = useRouter()
+	passwordModule = getModule(PasswordModule, this.$store)
 	email = ''
 	lockIcon = faLock
 	envelopeIcon = faEnvelope
@@ -88,7 +89,7 @@ export default class PasswordReset extends Vue {
 	})
 
 	get breadCrumbPath() {
-		return router.currentRoute.value.meta.breadcrumb
+		return this.router.currentRoute.value.meta.breadcrumb
 	}
 
 	get emailCompleted(): boolean {

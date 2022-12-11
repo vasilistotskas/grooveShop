@@ -77,9 +77,8 @@
 </template>
 
 <script lang="ts">
-import router from '@/Routes'
 import { isEmpty } from 'lodash'
-import { LocationQueryValue } from 'vue-router'
+import { LocationQueryValue, useRouter } from 'vue-router'
 import { getModule } from 'vuex-module-decorators'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import { Options as Component, Vue } from 'vue-class-component'
@@ -122,10 +121,11 @@ import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/Pagination
 	}
 })
 export default class Pagination extends Vue {
-	paginationModule = getModule(PaginationModule)
+	router = useRouter()
+	paginationModule = getModule(PaginationModule, this.$store)
 	query?: Record<string, string | LocationQueryValue[] | number>
 	uri = window.location.search.substring(1)
-	params = router.currentRoute.value.query
+	params = this.router.currentRoute.value.query
 	maxVisibleButtons!: number
 	totalPages!: number
 	route!: string

@@ -1,6 +1,4 @@
-import router from '@/Routes'
 import gql from 'graphql-tag'
-import store from '@/DynamicStore'
 import { isEmpty, some } from 'lodash'
 import { ApolloQueryResult } from '@apollo/client'
 import BlogTagModel from '@/State/Blog/BlogTagModel'
@@ -12,15 +10,14 @@ import BlogCommentModel from '@/State/Blog/BlogCommentModel'
 import BlogCategoryModel from '@/State/Blog/BlogCategoryModel'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import UserProfileModelGql from '@/State/User/Profile/UserProfileModelGql'
+import { useRouter } from 'vue-router'
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'blog'
 })
 export default class BlogModule extends AppBaseModule {
+	router = useRouter()
 	posts: Array<BlogPostModel> = []
 	tags: Array<BlogTagModel> = []
 	authors: Array<BlogAuthorModel> = []
@@ -305,7 +302,7 @@ export default class BlogModule extends AppBaseModule {
 					}
 				`,
 				variables: {
-					tag: router.currentRoute.value.params.tag
+					tag: this.router.currentRoute.value.params.tag
 				}
 			})
 			const data = posts.data.postsByTag
@@ -322,7 +319,7 @@ export default class BlogModule extends AppBaseModule {
 			const post = await clientApollo.query({
 				query: gql`
           query {
-            postBySlug(slug: "${router.currentRoute.value.params.slug}") {
+            postBySlug(slug: "${this.router.currentRoute.value.params.slug}") {
               id
               title
               subtitle
@@ -372,7 +369,7 @@ export default class BlogModule extends AppBaseModule {
 			const author = await clientApollo.query({
 				query: gql`
           query {
-            authorById(pk: "${router.currentRoute.value.params.id}") {
+            authorById(pk: "${this.router.currentRoute.value.params.id}") {
               bio
               id
               user {

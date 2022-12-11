@@ -68,15 +68,15 @@ import { ImageTypeOptions } from '@/Helpers/MediaStream/ImageUrlEnum'
 	},
 	props: {
 		categoriesTree: Array as PropType<Array<CategoryModel>>,
-		mainToggleButton: HTMLElement,
-		navbarProductsButton: HTMLElement
+		mainToggleButton: typeof HTMLElement,
+		navbarProductsButton: typeof HTMLElement
 	}
 })
 export default class NavbarCategories extends Vue {
 	declare $refs: {
 		headerNavbarMenu: HTMLElement
 	}
-	appModule = getModule(AppModule)
+	appModule = getModule(AppModule, this.$store)
 	categoryBoxHovered: null | number = null
 	categoriesTree: Array<CategoryModel> = []
 	categories: Array<CategoryModel> = []

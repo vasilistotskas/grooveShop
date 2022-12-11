@@ -1,5 +1,4 @@
 import { cloneDeep } from 'lodash'
-import store from '@/DynamicStore'
 import AppSettings from '@/State/App/AppSettings'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
@@ -7,10 +6,7 @@ import AppSettingsUpdatable from '@/State/App/AppSettingsUpdatable'
 import AppSettingsThemeModeOption from '@/State/App/AppSettingsThemeModeOption'
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'settings'
 })
 export default class AppSettingsModule extends AppBaseModule {

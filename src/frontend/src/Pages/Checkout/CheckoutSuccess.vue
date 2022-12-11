@@ -12,11 +12,11 @@
 </template>
 
 <script lang="ts">
-import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import { Options as Component, setup, Vue } from 'vue-class-component'
+import { useRouter } from 'vue-router'
 
 @Component({
 	name: 'CheckoutSuccess',
@@ -25,6 +25,7 @@ import { Options as Component, setup, Vue } from 'vue-class-component'
 	}
 })
 export default class CheckoutSuccess extends Vue {
+	router = useRouter()
 	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
@@ -36,7 +37,7 @@ export default class CheckoutSuccess extends Vue {
 	})
 
 	get breadCrumbPath() {
-		return router.currentRoute.value.meta.breadcrumb
+		return this.router.currentRoute.value.meta.breadcrumb
 	}
 }
 </script>

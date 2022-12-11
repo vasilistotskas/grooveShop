@@ -1,22 +1,19 @@
-import router from '@/Routes'
-import store from '@/DynamicStore'
 import api from '@/Api/ApiService'
 import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import SignUpInputApi from '@/State/Auth/Interface/SignUpInputApi'
 import ToastRegisterActivationFail from '@/Components/Toast/ToastRegisterActivationFail.vue'
+import { useRouter } from 'vue-router'
 
 const toast = useToast()
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'signup'
 })
 export default class SignUpModule extends AppBaseModule {
+	router = useRouter()
 	registrationEmail!: string
 	activationCompleted = false
 	activationError = false
@@ -145,8 +142,8 @@ export default class SignUpModule extends AppBaseModule {
 
 	@Action
 	async activateAccount(): Promise<void> {
-		const uid = router.currentRoute.value.params.uid
-		const activationToken = router.currentRoute.value.params.token
+		const uid = this.router.currentRoute.value.params.uid
+		const activationToken = this.router.currentRoute.value.params.token
 
 		await this.context.commit('activationBegin')
 

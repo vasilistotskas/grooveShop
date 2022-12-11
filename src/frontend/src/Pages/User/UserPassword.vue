@@ -93,12 +93,12 @@ import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteMo
 	name: 'UserPassword'
 })
 export default class UserPassword extends Vue {
-	authModule = getModule(AuthModule)
-	passwordModule = getModule(PasswordModule)
-	productFavouriteModule = getModule(ProductFavouriteModule)
-	productReviewModule = getModule(ProductReviewModule)
-	countryModule = getModule(CountryModule)
-	userModule = getModule(UserModule)
+	authModule = getModule(AuthModule, this.$store)
+	passwordModule = getModule(PasswordModule, this.$store)
+	productFavouriteModule = getModule(ProductFavouriteModule, this.$store)
+	productReviewModule = getModule(ProductReviewModule, this.$store)
+	countryModule = getModule(CountryModule, this.$store)
+	userModule = getModule(UserModule, this.$store)
 	submitButtonText = 'Update'
 
 	myContext = setup(() => {

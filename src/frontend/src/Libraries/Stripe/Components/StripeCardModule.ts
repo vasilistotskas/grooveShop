@@ -1,14 +1,10 @@
-import store from '@/DynamicStore'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import initStripeComponent from '@/Libraries/Stripe/Stripe'
 import { StripeElement } from '@/Libraries/Stripe/StripeElement'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'stripeCard'
 })
 export default class StripeCardModule extends AppBaseModule {
@@ -17,7 +13,7 @@ export default class StripeCardModule extends AppBaseModule {
 	selector!: string
 	cbOnChange!: (ev) => void
 	cbError!: (ev) => void
-	stripeInstance = window as any
+	stripeInstance: any
 	stripeEl!: unknown
 	notifyError!: (ev: unknown) => void
 	cardNumberError!: unknown

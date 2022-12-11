@@ -122,7 +122,6 @@
 </template>
 
 <script lang="ts">
-import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import AuthCore from '@/Core/AuthCore'
 import { computed } from '@vue/runtime-core'
@@ -134,6 +133,7 @@ import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
 import { mixins, Options as Component, setup } from 'vue-class-component'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
+import { useRouter } from 'vue-router'
 
 @Component({
 	name: 'LogIn',
@@ -143,6 +143,7 @@ import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
 	}
 })
 export default class LogIn extends mixins(AuthCore) {
+	router = useRouter()
 	googleIcon = faGoogle
 	facebookIcon = faFacebook
 
@@ -197,7 +198,7 @@ export default class LogIn extends mixins(AuthCore) {
 	})
 
 	get breadCrumbPath() {
-		return router.currentRoute.value.meta.breadcrumb
+		return this.router.currentRoute.value.meta.breadcrumb
 	}
 }
 </script>

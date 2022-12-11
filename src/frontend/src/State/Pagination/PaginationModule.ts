@@ -10,7 +10,6 @@ import {
 	ShowPreviousButtonType,
 	TotalPagesType
 } from '@/State/Pagination/Type/PaginationTypes'
-import store from '@/DynamicStore'
 import session from '@/Api/Session'
 import { AxiosResponse } from 'axios'
 import AppBaseModule from '@/State/Common/AppBaseModule'
@@ -22,10 +21,7 @@ import PaginationDataInterface from '@/State/Pagination/Interface/PaginationData
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'pagination'
 })
 export default class PaginationModule<TPaginatedModel> extends AppBaseModule {

@@ -1,22 +1,19 @@
-import router from '@/Routes'
-import store from '@/DynamicStore'
 import api from '@/Api/ApiService'
 import { useToast } from 'vue-toastification'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 import ResetPasswordInputApi from '@/State/Auth/Interface/ResetPasswordInputApi'
 import UpdatePasswordInputApi from '@/State/Auth/Interface/UpdatePasswordInputApi'
+import { useRouter } from 'vue-router'
 
 const toast = useToast()
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'password'
 })
 export default class PasswordModule extends AppBaseModule {
+	router = useRouter()
 	emailCompleted = false
 	emailError = false
 	emailLoading = false
@@ -132,13 +129,13 @@ export default class PasswordModule extends AppBaseModule {
 			.post('djoser/users/set_password/', data)
 			.then(() => this.context.commit('passwordChangeSuccess'))
 			.then(() => {
-				router
+				this.router
 					.push('/log-in')
 					.then(() => toast.success('Password Updated, login to continue'))
 			})
 			.catch((e: Error) => {
 				this.context.commit('passwordChangeFailure')
-				router
+				this.router
 					.push('/User-account/Password')
 					.then(() => toast.error('Current Password is not correct'))
 				console.log(e)

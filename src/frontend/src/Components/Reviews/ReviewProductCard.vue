@@ -88,7 +88,6 @@
 </template>
 
 <script lang="ts">
-import router from '@/Routes'
 import { Emitter } from 'mitt'
 import { inject, PropType } from 'vue'
 import { constant, times } from 'lodash'
@@ -106,6 +105,7 @@ import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
 import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
+import { useRouter } from 'vue-router'
 
 const toast = useToast()
 
@@ -142,7 +142,8 @@ export default class ReviewProductCard
 	declare $refs: {
 		userReviewsActionTarget: HTMLElement
 	}
-	productReviewModule = getModule(ProductReviewModule)
+	router = useRouter()
+	productReviewModule = getModule(ProductReviewModule, this.$store)
 	MainRouteNames = MainRouteNames
 	review!: ProductReviewModel
 	userId = 0

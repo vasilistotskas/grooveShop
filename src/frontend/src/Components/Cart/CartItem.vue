@@ -79,7 +79,7 @@ export default class CartItem extends Vue {
 	minusIcon = faMinusCircle
 	plusIcon = faPlusCircle
 	ImageTypeOptions = ImageTypeOptions
-	cartModule = getModule(CartModule)
+	cartModule = getModule(CartModule, this.$store)
 
 	get itemTotal(): number {
 		return this.item.quantity * this.item.product.price

@@ -76,8 +76,8 @@ export default class FavouriteButton
 	extends Vue
 	implements FavouriteButtonInterface<VuexModule<DynamicStoreType>>
 {
-	userModule = getModule(UserModule)
-	authModule = getModule(AuthModule)
+	userModule = getModule(UserModule, this.$store)
+	authModule = getModule(AuthModule, this.$store)
 	model!: Record<string, never>
 	module!: VuexModule<VuexModule<DynamicStoreType, unknown>, unknown>
 	getterType!: string

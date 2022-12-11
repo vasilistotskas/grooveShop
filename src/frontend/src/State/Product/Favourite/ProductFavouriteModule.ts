@@ -1,4 +1,3 @@
-import store from '@/DynamicStore'
 import api from '@/Api/ApiService'
 import { AxiosResponse } from 'axios'
 import AppBaseModule from '@/State/Common/AppBaseModule'
@@ -6,10 +5,7 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 import ProductFavouriteModel from '@/State/Product/Favourite/ProductFavouriteModel'
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'productFavourite'
 })
 export default class ProductFavouriteModule extends AppBaseModule {

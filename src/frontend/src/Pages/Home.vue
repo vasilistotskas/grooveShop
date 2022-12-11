@@ -2,48 +2,9 @@
 	<div class="home">
 		<div class="container mt-9 mb-5">
 			<div class="home-top-grid-content">
-				<HomePageMainSlider
-					v-if="
-						sliderModule.getSlidersData &&
-						sliderModule.getSlidersData[0] &&
-						Object.keys(sliderModule.getSlidersData[0]).length > 0
-					"
-					:img-height="760"
-					:img-width="1200"
-					:slider="sliderModule.getSlidersData[0]"
-					:backend-base-url="appModule.backendBaseUrl"
-					class="grid-item-swipper"
-				/>
-
 				<div class="grid-item-right">
-					<div class="grid-item-content-one">
-						<HomePageMainSlider
-							v-if="
-								sliderModule.getSlidersData &&
-								sliderModule.getSlidersData[1] &&
-								Object.keys(sliderModule.getSlidersData[1]).length > 0
-							"
-							:img-height="400"
-							:img-width="525"
-							:slider="sliderModule.getSlidersData[1]"
-							:backend-base-url="appModule.backendBaseUrl"
-							class="grid-item-swipper"
-						/>
-					</div>
-					<div class="grid-item-content-two">
-						<HomePageMainSlider
-							v-if="
-								sliderModule.getSlidersData &&
-								sliderModule.getSlidersData[2] &&
-								Object.keys(sliderModule.getSlidersData[2]).length > 0
-							"
-							:img-height="400"
-							:img-width="525"
-							:slider="sliderModule.getSlidersData[2]"
-							:backend-base-url="appModule.backendBaseUrl"
-							class="grid-item-swipper"
-						/>
-					</div>
+					<div class="grid-item-content-one"></div>
+					<div class="grid-item-content-two"></div>
 				</div>
 			</div>
 		</div>
@@ -84,14 +45,7 @@
 						{{ $t('eshop.test3') }}
 					</h2>
 				</div>
-				<div class="grid-content-six">
-					<ProductCard
-						v-for="product in productModule.getLatestProductData"
-						:key="product.id"
-						:product="product"
-						class="grid-item"
-					/>
-				</div>
+				<div class="grid-content-six"></div>
 			</div>
 		</div>
 	</div>
@@ -99,15 +53,10 @@
 
 <script lang="ts">
 import AppCore from '@/Core/AppCore'
-import { useMeta } from 'vue-meta'
-import { computed } from '@vue/runtime-core'
-import { getModule } from 'vuex-module-decorators'
-import SliderModule from '@/State/Slider/SliderModule'
-import ProductModule from '@/State/Product/ProductModule'
 import ProductCard from '@/Components/Product/ProductCard.vue'
 import { faPhone } from '@fortawesome/free-solid-svg-icons/faPhone'
 import { faComment } from '@fortawesome/free-solid-svg-icons/faComment'
-import { mixins, Options as Component, setup } from 'vue-class-component'
+import { mixins, Options as Component } from 'vue-class-component'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import HomePageMainSlider from '@/Components/Sliders/VueHorizontal/HomePageMainSlider.vue'
 
@@ -120,21 +69,9 @@ import HomePageMainSlider from '@/Components/Sliders/VueHorizontal/HomePageMainS
 	}
 })
 export default class Home extends mixins(AppCore) {
-	productModule = getModule(ProductModule)
-	sliderModule = getModule(SliderModule)
 	phoneIcon = faPhone
 	envelopeIcon = faEnvelope
 	commentIcon = faComment
-
-	myContext = setup(() => {
-		const meta = useMeta(
-			computed(() => ({
-				title: 'Deep Web Homepage',
-				description: 'Deep Web Homepage'
-			}))
-		)
-		return { meta }
-	})
 }
 </script>
 

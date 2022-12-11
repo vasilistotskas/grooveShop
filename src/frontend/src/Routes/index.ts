@@ -1,43 +1,28 @@
-import routes from '@/Routes/MainRoutes'
-import authRoutes from '@/Routes/AuthRoutes'
-import userRoutes from '@/Routes/UserRoutes'
-import cartRoutes from '@/Routes/CartRoutes'
-import blogRoutes from '@/Routes/BlogRoutes'
-import searchRoutes from '@/Routes/SearchRoutes'
-import productRoutes from '@/Routes/ProductRoutes'
-import checkoutRoutes from '@/Routes/CheckoutRoutes'
-import categoryRoutes from '@/Routes/CategoryRoutes'
-import { RouteModel } from '@/Routes/Model/RouteModel'
-import { createRouter, createWebHistory } from 'vue-router'
+import {
+	createRouter as _createRouter,
+	createMemoryHistory,
+	createWebHistory
+} from 'vue-router'
 
-const router = createRouter({
-	history: createWebHistory(process.env.BASE_URL),
-	routes: [
-		...routes,
-		...authRoutes,
-		...userRoutes,
-		...cartRoutes,
-		...blogRoutes,
-		...searchRoutes,
-		...productRoutes,
-		...checkoutRoutes,
-		...categoryRoutes
-	],
-	scrollBehavior(to, from, savedPosition) {
-		if (savedPosition) {
-			return savedPosition
-		} else {
-			return { top: 0 }
-		}
+// Auto generates routes from vue files under ./pages
+// https://vitejs.dev/guide/features.html#glob-import
+const pages = import.meta.glob('./pages/*.vue')
+
+const routes = Object.keys(pages).map((path) => {
+	const name = path.match(/\.\/pages(.*)\.vue$/)[1].toLowerCase()
+	return {
+		path: name === '/home' ? '/' : name,
+		component: pages[path] // () => import('./pages/*.vue')
 	}
 })
 
-router.beforeEach((to, from, next) => {
-	new RouteModel().routeBeforeEach(to, from, next)
-})
-
-router.afterEach(() => {
-	new RouteModel().routeAfterEach()
-})
-
-export default router
+export function createRouter() {
+	return _createRouter({
+		// use appropriate history implementation for server/client
+		// import.meta.env.SSR is injected by Vite.
+		history: import.meta.env.SSR
+			? createMemoryHistory('/test/')
+			: createWebHistory('/test/'),
+		routes
+	})
+}

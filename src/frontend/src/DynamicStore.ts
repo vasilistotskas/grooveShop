@@ -1,4 +1,3 @@
-import Vuex from 'vuex'
 import TipModule from '@/State/Tip/TipModule'
 import AppModule from '@/State/App/AppModule'
 import CartModule from '@/State/Cart/CartModule'
@@ -20,6 +19,7 @@ import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
 import StripeCardModule from '@/Libraries/Stripe/Components/StripeCardModule'
 import StripeIbanModule from '@/Libraries/Stripe/Components/StripeIbanModule'
 import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
+import VueX from 'vuex'
 
 export interface DynamicStoreType {
 	app: AppModule
@@ -44,9 +44,29 @@ export interface DynamicStoreType {
 	tip: TipModule
 	address: AddressModule
 }
-// Declare empty store first
-const store = new Vuex.Store<DynamicStoreType>({
-	strict: true
-})
 
-export default store
+export default new VueX.Store({
+	modules: {
+		app: AppModule,
+		settings: AppSettingsModule,
+		category: CategoryModule,
+		product: ProductModule,
+		productFavourite: ProductFavouriteModule,
+		productReview: ProductReviewModule,
+		user: UserModule,
+		cart: CartModule,
+		search: SearchModule,
+		pagination: PaginationModule,
+		country: CountryModule,
+		slider: SliderModule,
+		stripeIban: StripeIbanModule,
+		stripeCard: StripeCardModule,
+		auth: AuthModule,
+		password: PasswordModule,
+		signup: SignUpModule,
+		blog: BlogModule,
+		payWay: PayWayModule,
+		tip: TipModule,
+		address: AddressModule
+	}
+})

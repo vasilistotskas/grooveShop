@@ -51,7 +51,7 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 	}
 })
 export default class VerifyEmailResendInput extends Vue {
-	signupModule = getModule(SignUpModule)
+	signupModule = getModule(SignUpModule, this.$store)
 	activationEmailAtLocalStorage = false
 	email = ''
 	envelopeIcon = faEnvelope

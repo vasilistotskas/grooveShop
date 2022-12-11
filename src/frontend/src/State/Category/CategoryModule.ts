@@ -1,5 +1,4 @@
 import { map } from 'lodash'
-import store from '@/DynamicStore'
 import api from '@/Api/ApiService'
 import { AxiosResponse } from 'axios'
 import AppBaseModule from '@/State/Common/AppBaseModule'
@@ -7,10 +6,7 @@ import CategoryModel from '@/State/Category/CategoryModel'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
 
 @Module({
-	dynamic: true,
 	namespaced: true,
-	store: store,
-	stateFactory: true,
 	name: 'category'
 })
 export default class CategoryModule extends AppBaseModule {

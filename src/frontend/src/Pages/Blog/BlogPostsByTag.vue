@@ -13,7 +13,6 @@
 </template>
 
 <script lang="ts">
-import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import TipModule from '@/State/Tip/TipModule'
@@ -23,6 +22,8 @@ import BlogPostList from '@/Components/Blog/BlogPostList.vue'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import { RouteMetaBreadcrumbFunction } from '@/Routes/Type/BreadcrumbItemType'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 @Component({
 	name: 'BlogPostsByTag',
@@ -32,12 +33,14 @@ import { RouteMetaBreadcrumbFunction } from '@/Routes/Type/BreadcrumbItemType'
 	}
 })
 export default class BlogPostsByTag extends Vue {
-	blogModule = getModule(BlogModule)
-	tipModule = getModule(TipModule)
+	router = useRouter()
+	blogModule = getModule(BlogModule, this.$store)
+	tipModule = getModule(TipModule, this.$store)
 
 	myContext = setup(() => {
-		const blogModule = getModule(BlogModule)
-		const tipModule = getModule(TipModule)
+		const store = useStore()
+		const blogModule = getModule(BlogModule, store)
+		const tipModule = getModule(TipModule, store)
 
 		Promise.all([
 			blogModule.fetchPostsFromRemote(),
@@ -49,7 +52,7 @@ export default class BlogPostsByTag extends Vue {
 
 		const meta = useMeta(
 			computed(() => ({
-				title: `Posts in #${router.currentRoute.value.params.tag}`,
+				title: `Posts in #${this.router.currentRoute.value.params.tag}`,
 				description: 'Blog Post'
 			}))
 		)
@@ -57,9 +60,9 @@ export default class BlogPostsByTag extends Vue {
 	})
 
 	get breadCrumbPath() {
-		const currentRouteMetaBreadcrumb = router.currentRoute.value.meta
+		const currentRouteMetaBreadcrumb = this.router.currentRoute.value.meta
 			.breadcrumb as RouteMetaBreadcrumbFunction
-		return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+		return currentRouteMetaBreadcrumb(this.router.currentRoute.value.params)
 	}
 
 	updated(): void {

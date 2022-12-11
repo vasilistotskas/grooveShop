@@ -42,7 +42,7 @@ import {
 	RouteMetaBreadcrumb,
 	RouteMetaBreadcrumbFunction
 } from '@/Routes/Type/BreadcrumbItemType'
-import router from '@/Routes'
+import { useRouter } from 'vue-router'
 
 @Component({
 	name: 'Breadcrumbs',
@@ -52,10 +52,11 @@ import router from '@/Routes'
 })
 export default class Breadcrumbs extends Vue {
 	breadCrumbPath!: RouteMetaBreadcrumb | RouteMetaBreadcrumbFunction
+	router = useRouter()
 	get breadCrumbPathResolve() {
-		const currentRouteMetaBreadcrumb = router.currentRoute.value.meta.breadcrumb
+		const currentRouteMetaBreadcrumb = this.router.currentRoute.value.meta.breadcrumb
 		if (typeof currentRouteMetaBreadcrumb === 'function') {
-			return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+			return currentRouteMetaBreadcrumb(this.router.currentRoute.value.params)
 		}
 		return this.breadCrumbPath
 	}

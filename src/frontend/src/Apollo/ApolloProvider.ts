@@ -1,5 +1,5 @@
 import { createApolloProvider } from '@vue/apollo-option'
-import { InMemoryCache, ApolloClient } from '@apollo/client/core'
+import { InMemoryCache, ApolloClient } from '@apollo/client/core/core.cjs'
 
 const cache = new InMemoryCache({
 	typePolicies: {

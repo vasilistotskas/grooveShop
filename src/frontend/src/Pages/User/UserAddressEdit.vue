@@ -267,22 +267,24 @@ import { FieldContext, useField, useForm } from 'vee-validate'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import { FloorChoicesEnum, LocationChoicesEnum } from '@/State/Address/Enum/AddressEnum'
 import { HTMLElementEvent } from '@/State/Common/Types/HelpingTypes'
+import { useStore } from 'vuex'
 
 @Component({
 	name: 'UserAddressEdit'
 })
 export default class UserAddressEdit extends Vue {
-	userModule = getModule(UserModule)
-	countryModule = getModule(CountryModule)
+	userModule = getModule(UserModule, this.$store)
+	countryModule = getModule(CountryModule, this.$store)
 	submitButtonText = 'Update'
 	FloorChoicesEnum = FloorChoicesEnum
 	LocationChoicesEnum = LocationChoicesEnum
 
 	myContext = setup(() => {
 		const router = useRouter()
-		const countryModule = getModule(CountryModule)
-		const addressModule = getModule(AddressModule)
-		const userModule = getModule(UserModule)
+		const store = useStore()
+		const countryModule = getModule(CountryModule, store)
+		const addressModule = getModule(AddressModule, store)
+		const userModule = getModule(UserModule, store)
 		const addressId = Number(router.currentRoute.value.params.id)
 
 		countryModule.fetchCountriesFromRemote()

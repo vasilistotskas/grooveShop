@@ -55,7 +55,7 @@ export default class UserOrderHistory
 	extends PaginatedComponent<UserOrderModel>
 	implements PaginatedComponentInterface<UserOrderModel>
 {
-	userModule = getModule(UserModule)
+	userModule = getModule(UserModule, this.$store)
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.USER_ORDER_HISTORY
 

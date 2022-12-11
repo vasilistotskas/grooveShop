@@ -30,7 +30,6 @@
 </template>
 
 <script lang="ts">
-import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import ProductModel from '@/State/Product/ProductModel'
@@ -45,6 +44,7 @@ import PaginatedComponent from '@/Components/Pagination/PaginatedComponent'
 import { PaginationRoutesEnum } from '@/State/Pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
+import { useRouter } from 'vue-router'
 
 @Component({
 	name: 'Search',
@@ -59,6 +59,7 @@ export default class Search
 	extends PaginatedComponent<ProductModel>
 	implements PaginatedComponentInterface<ProductModel>
 {
+	router = useRouter()
 	query: string | null = ''
 	PaginationRoutesEnum = PaginationRoutesEnum
 	paginationNamespace = PaginationNamespaceTypesEnum.SEARCH_PRODUCTS
@@ -75,7 +76,7 @@ export default class Search
 	})
 
 	get breadCrumbPath() {
-		return router.currentRoute.value.meta.breadcrumb
+		return this.router.currentRoute.value.meta.breadcrumb
 	}
 
 	mounted(): void {

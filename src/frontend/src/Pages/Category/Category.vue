@@ -45,12 +45,11 @@ import {
 	ImagePositionOptions,
 	ImageTypeOptions
 } from '@/Helpers/MediaStream/ImageUrlEnum'
-import router from '@/Routes'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import AppModule from '@/State/App/AppModule'
 import { getModule } from 'vuex-module-decorators'
-import { RouteLocationNormalized } from 'vue-router'
+import { RouteLocationNormalized, useRouter } from 'vue-router'
 import GrooveImage from '@/Utilities/GrooveImage.vue'
 import ProductModel from '@/State/Product/ProductModel'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
@@ -67,6 +66,7 @@ import { RouteMetaBreadcrumbFunction } from '@/Routes/Type/BreadcrumbItemType'
 import { PaginationRoutesEnum } from '@/State/Pagination/Enum/PaginationRoutesEnum'
 import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
+import { useStore } from 'vuex'
 
 @Component({
 	name: 'Category',
@@ -85,8 +85,9 @@ export default class Category
 	extends PaginatedComponent<ProductModel>
 	implements PaginatedComponentInterface<ProductModel>
 {
-	categoryModule = getModule(CategoryModule)
-	appModule = getModule(AppModule)
+	router = useRouter()
+	categoryModule = getModule(CategoryModule, this.$store)
+	appModule = getModule(AppModule, this.$store)
 	formEl = document.getElementById('burgerButton') as HTMLFormElement
 	ImageTypeOptions = ImageTypeOptions
 	ImageFitOptions = ImageFitOptions
@@ -95,7 +96,8 @@ export default class Category
 	PaginationRoutesEnum = PaginationRoutesEnum
 
 	myContext = setup(() => {
-		const categoryModule = getModule(CategoryModule)
+		const store = useStore()
+		const categoryModule = getModule(CategoryModule, store)
 
 		// @TODO THIS NOT WORKING MUST FETCH IN HERE
 		const meta = useMeta(
@@ -108,9 +110,9 @@ export default class Category
 	})
 
 	get breadCrumbPath() {
-		const currentRouteMetaBreadcrumb = router.currentRoute.value.meta
+		const currentRouteMetaBreadcrumb = this.router.currentRoute.value.meta
 			.breadcrumb as RouteMetaBreadcrumbFunction
-		return currentRouteMetaBreadcrumb(router.currentRoute.value.params)
+		return currentRouteMetaBreadcrumb(this.router.currentRoute.value.params)
 	}
 
 	created(): void {

@@ -40,6 +40,7 @@ import PayWayModel from '@/State/Payway/PayWayModel'
 import PayWayModule from '@/State/Payway/PayWayModule'
 import { PayWaysEnum } from '@/State/Payway/Enum/PayWaysEnum'
 import LottiePlayerMain from '@/Utilities/LottiePlayerMain.vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
 	name: 'CheckoutPayWays',
@@ -57,8 +58,9 @@ export default defineComponent({
 		}
 	},
 	async setup(props) {
-		const payWayModule = getModule(PayWayModule)
-		const cartModule = getModule(CartModule)
+		const store = useStore()
+		const payWayModule = getModule(PayWayModule, store)
+		const cartModule = getModule(CartModule, store)
 
 		const emitter: Emitter<Record<EventType, unknown>> | undefined = inject('emitter')
 
