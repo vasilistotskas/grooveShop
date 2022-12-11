@@ -137,3 +137,11 @@ class UserProfile(TimeStampMixinModel, UUIDModel):
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             UserProfile.objects.create(user=instance)
+
+
+class MySession(Session):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    last_activity = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = "my_session"

@@ -134,7 +134,9 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    "backend.user.middleware.AnonymousUserTrackingMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "backend.user.middleware.LastActivityTraceMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
@@ -153,6 +155,7 @@ APPEND_SLASH = os.environ.get("APPEND_SLASH")
 AUTH_USER_MODEL = "user.UserAccount"
 
 # Sessions and Cookies
+SESSION_ENGINE = "backend.app.session_backend"
 CSRF_COOKIE_SAMESITE = "Strict"
 SESSION_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_HTTPONLY = False  # False since we will grab it via universal-cookies
