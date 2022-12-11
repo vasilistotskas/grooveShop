@@ -1,0 +1,72 @@
+components:
+  language_switcher:
+    change_language: change language
+  theme_switcher:
+    theme: theme
+    change_theme: change theme
+pages:
+  index:
+    title: nuxt 3[]awesome[]starter
+  404:
+    title: page not found
+  blank:
+    nav: blank
+    title: blank page
+    description: this is a blank page
+    just_blank_page_with_title: just blank page with title
+  post:
+    nav: post
+    title: post
+    description: this is a post page
+  test:
+    nav: test
+    title: testing
+    description: this is a test page
+    counter: counter
+    increment: increment
+    decrement: decrement
+    reset: reset
+    identity: identity
+    full_name: fullName
+  getting-started:
+    nav: getting started
+    title: getting started
+    description: this is a getting started page
+  setting:
+    nav: setting
+    title: setting
+    description: this is a setting page
+    sections:
+      validate_username:
+        title: validate github profile
+        description: type your github username and click the button to validate.
+        footer: Learn more about
+        footer_button: validate
+        footer_link: github users api
+      bot_id:
+        title: bot id
+        description: This is your bot ID.
+        footer: Used when interacting with the bot.
+      protection_spam:
+        title: spam protection
+        description: toggle enable to remove the red border
+        footer: if enable we will secure your comments from spam
+      advanced_enable_advanced:
+        title: enable advanced settings
+        description: you can enable advanced settings to change the settings
+      advanced_dir_listing:
+        title: directory listing
+        description: if no index file is present within a directory, the directory contents will be displayed.
+  dashboard:
+    nav: dashboard
+    title: dashboard
+    index:
+      nav: home
+      title: home
+banners:
+  welcome: hello, welcome to %{app_name}!
+others:
+  learn_more: learn more
+  copy: copy
+  enabled: enabled
+  disabled: disabled

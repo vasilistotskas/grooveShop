@@ -1,0 +1,72 @@
+components:
+  language_switcher:
+    change_language: 言語を変更
+  theme_switcher:
+    theme: テーマ
+    change_theme: テーマを変更
+pages:
+  '404':
+    title: ページが見つかりません
+  index:
+    title: nuxt 3[]素晴らしい[]スターター
+  blank:
+    nav: 空欄
+    title: 空白ページ
+    description: これは空白のページです
+    just_blank_page_with_title: タイトルのある空白のページ
+  post:
+    nav: 役職
+    title: 役職
+    description: これは投稿ページです
+  test:
+    nav: テスト
+    title: テスト
+    description: これはテストページです
+    counter: カウンター
+    increment: インクリメント
+    decrement: デクリメント
+    reset: リセット
+    identity: 身元
+    full_name: フルネーム
+  getting-started:
+    nav: 入門
+    title: 入門
+    description: これは入門ページです
+  setting:
+    nav: 設定
+    title: 設定
+    description: 設定ページです
+    sections:
+      validate_username:
+        title: github プロファイルを検証する
+        description: github のユーザー名を入力し、ボタンをクリックして検証します。
+        footer: 詳しくはこちら
+        footer_button: 検証
+        footer_link: github ユーザー api
+      bot_id:
+        title: ボットid
+        description: これがボット id です。
+        footer: ボットと対話するときに使用されます。
+      protection_spam:
+        title: スパム保護
+        description: 有効に切り替えて、赤い枠を削除します
+        footer: 有効にすると、コメントをスパムから保護します
+      advanced_enable_advanced:
+        title: 詳細設定を有効にする
+        description: 詳細設定を有効にして設定を変更できます
+      advanced_dir_listing:
+        title: ディレクトリ一覧
+        description: ディレクトリ内にインデックス ファイルが存在しない場合は、ディレクトリの内容が表示されます。
+  dashboard:
+    nav: ダッシュボード
+    title: ダッシュボード
+    index:
+      nav: 家
+      title: 家
+banners:
+  welcome: こんにちは、%{app_name} へようこそ!
+others:
+  learn_more: もっと詳しく知る
+  copy: コピー
+  enabled: 有効
+  disabled: 無効

@@ -162,6 +162,21 @@ services:
     networks:
       - groovy-backbone
 
+  nuxt:
+    container_name: nuxt
+    image: node:lts
+    build:
+      context: .
+      dockerfile: docker/Nuxt.Dockerfile
+    volumes:
+      
+    restart: "always"
+    ports:
+      - "3030:3030"
+    depends_on:
+      - backend
+    networks:
+      - groovy-backbone
 #
 #  celery:
 #    container_name: celery
