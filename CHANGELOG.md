@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.11.1 (2022-12-12)
+### Fix
+* **Address:Frontend:** Edit page initial data and enum fixed ([`ee41295`](https://github.com/vasilistotskas/grooveShop/commit/ee4129590248e594d5e0b2a4643edf707ac417dd))
+
 ## v0.11.0 (2022-12-10)
 ### Feature
 * **Frontend:** Refactored and added new features ([`6cf3edb`](https://github.com/vasilistotskas/grooveShop/commit/6cf3edb6242b83537b672f7456224c9550a9a45d))
