@@ -18,7 +18,7 @@ gunicorn==20.1.0
 whitenoise==6.2.0
 django-filter==22.1
 django-debug-toolbar==3.8.1
-black==22.10.0
+black==22.12.0
 django-stubs==1.13.1
 django-stubs-ext==0.7.0
 python-semantic-release==7.32.2

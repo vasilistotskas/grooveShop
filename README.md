@@ -57,6 +57,7 @@
    -     Install virtualenv : pip install virtualenv
          Create virtual environment : virtualenv <env_name>
          Activate virtual environment : source <env_name>/bin/activate
+         Activate virtual environment : <env_name>/scripts/activate
          Deactivate virtual environment : deactivate
          Install requirements : pip install -r requirements.txt
          Install requirements for specific environment : pip install -r requirements/<env_name>.txt
