@@ -168,7 +168,6 @@
 </template>
 
 <script lang="ts">
-import { z } from 'zod'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'

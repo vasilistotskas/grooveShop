@@ -1,15 +1,6 @@
-import UserReviews from '@/Pages/User/UserReviews.vue'
-import UserAccount from '@/Pages/User/UserAccount.vue'
-import UserSettings from '@/Pages/User/UserSettings.vue'
 import { RouteParams, RouteRecordRaw } from 'vue-router'
-import UserPassword from '@/Pages/User/UserPassword.vue'
-import UserAddresses from '@/Pages/User/UserAddresses.vue'
-import UserFavourites from '@/Pages/User/UserFavourites.vue'
 import { MainRoutePaths } from '@/Routes/Enum/MainRoutePaths'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
-import UserOrderHistory from '@/Pages/User/UserOrderHistory.vue'
-import UserAddressNew from '@/Pages/User/UserAddressNew.vue'
-import UserAddressEdit from '@/Pages/User/UserAddressEdit.vue'
 import BreadcrumbItemInterface from '@/Routes/Interface/BreadcrumbItemInterface'
 
 const userRoutes: Array<RouteRecordRaw> = [

@@ -13,12 +13,15 @@
 		class="container"
 	>
 		<div class="product-listing-grid mb-4">
-			<AddressCard
+			<RouterLink
 				v-for="address in allPaginatedResults"
 				:key="address.id"
-				:address="address"
-				class="grid-item"
-			/>
+				:title="address.title"
+				:to="`/user-account/address/edit/${address.id}`"
+				aria-label="Address"
+			>
+				<AddressCard :address="address" class="grid-item" />
+			</RouterLink>
 		</div>
 		<Pagination
 			v-if="Object.keys(allPaginatedResults).length !== 0"

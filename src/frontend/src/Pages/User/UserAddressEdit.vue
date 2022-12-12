@@ -1,5 +1,6 @@
 <template>
 	<form
+		v-if="myContext.address"
 		@submit="myContext.onSubmit"
 		class="_form"
 		id="UserAddressForm"
@@ -128,9 +129,9 @@
 				>
 					<option disabled value="choose">Choose...</option>
 					<option
-						v-for="(floor, index) in Object.values(FloorChoicesEnum)"
+						v-for="(floor, index) in myContext.floorChoicesList"
 						:key="index"
-						:value="floor"
+						:value="index"
 					>
 						{{ floor }}
 					</option>
@@ -148,9 +149,9 @@
 				>
 					<option disabled value="choose">Choose...</option>
 					<option
-						v-for="(location_type, index) in Object.values(LocationChoicesEnum)"
+						v-for="(location_type, index) in myContext.locationChoicesList"
 						:key="index"
-						:value="location_type"
+						:value="index"
 					>
 						{{ location_type }}
 					</option>
@@ -254,6 +255,7 @@
 </template>
 
 <script lang="ts">
+import { onMounted } from 'vue'
 import { useMeta } from 'vue-meta'
 import { useRouter } from 'vue-router'
 import { computed } from '@vue/runtime-core'
@@ -264,9 +266,9 @@ import UserModule from '@/State/User/Profile/UserModule'
 import CountryModule from '@/State/Country/CountryModule'
 import AddressModule from '@/State/Address/AddressModule'
 import { FieldContext, useField, useForm } from 'vee-validate'
+import { HTMLElementEvent } from '@/State/Common/Types/HelpingTypes'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import { FloorChoicesEnum, LocationChoicesEnum } from '@/State/Address/Enum/AddressEnum'
-import { HTMLElementEvent } from '@/State/Common/Types/HelpingTypes'
 
 @Component({
 	name: 'UserAddressEdit'
@@ -286,7 +288,7 @@ export default class UserAddressEdit extends Vue {
 		const addressId = Number(router.currentRoute.value.params.id)
 
 		countryModule.fetchCountriesFromRemote()
-		addressModule.fetchAddressById(addressId)
+		const address = computed(() => addressModule.getAddress)
 
 		const meta = useMeta(
 			computed(() => ({
@@ -294,24 +296,36 @@ export default class UserAddressEdit extends Vue {
 				description: `${userModule.getUserProfile?.first_name} ${userModule.getUserProfile?.last_name} | Address Edit`
 			}))
 		)
+
 		const validationSchema = toFormValidator(ZodAddress)
-		const { handleSubmit, errors } = useForm({
-			validationSchema,
-			initialValues: {
-				title: addressModule.getAddress?.title,
-				first_name: addressModule.getAddress?.first_name,
-				last_name: addressModule.getAddress?.last_name,
-				street: addressModule.getAddress?.street,
-				street_number: addressModule.getAddress?.street_number,
-				city: addressModule.getAddress?.city,
-				zipcode: addressModule.getAddress?.zipcode,
-				floor: addressModule.getAddress?.floor,
-				location_type: addressModule.getAddress?.location_type,
-				phone: addressModule.getAddress?.phone,
-				mobile_phone: addressModule.getAddress?.mobile_phone,
-				notes: addressModule.getAddress?.notes,
-				country: addressModule.getAddress?.country,
-				region: addressModule.getAddress?.region
+		const { handleSubmit, errors, resetForm } = useForm({
+			validationSchema
+		})
+
+		onMounted(async () => {
+			const address = await addressModule.fetchAddressById(addressId)
+			if (address) {
+				if (address.country) {
+					await countryModule.findRegionsBasedOnAlphaFromInput(address.country)
+				}
+				resetForm({
+					values: {
+						title: address.title,
+						first_name: address.first_name,
+						last_name: address.last_name,
+						street: address.street,
+						street_number: address.street_number,
+						city: address.city,
+						zipcode: address.zipcode,
+						floor: address.floor,
+						location_type: address.location_type,
+						phone: address.phone,
+						mobile_phone: address.mobile_phone,
+						notes: address.notes,
+						country: address.country,
+						region: address.region
+					}
+				})
 			}
 		})
 
@@ -360,6 +374,14 @@ export default class UserAddressEdit extends Vue {
 			}
 		})
 
+		const locationChoicesList = Object.keys(LocationChoicesEnum).filter((element) => {
+			return isNaN(Number(element))
+		})
+
+		const floorChoicesList = Object.keys(FloorChoicesEnum).filter((element) => {
+			return isNaN(Number(element))
+		})
+
 		return {
 			meta,
 			title,
@@ -378,7 +400,10 @@ export default class UserAddressEdit extends Vue {
 			region,
 			validationSchema,
 			errors,
-			onSubmit
+			onSubmit,
+			address,
+			locationChoicesList,
+			floorChoicesList
 		}
 	})
 

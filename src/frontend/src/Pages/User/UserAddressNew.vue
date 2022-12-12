@@ -128,9 +128,9 @@
 				>
 					<option disabled value="choose">Choose...</option>
 					<option
-						v-for="(floor, index) in Object.values(FloorChoicesEnum)"
+						v-for="(floor, index) in Object.values(myContext.floorChoicesList)"
 						:key="index"
-						:value="floor"
+						:value="index"
 					>
 						{{ floor }}
 					</option>
@@ -148,9 +148,9 @@
 				>
 					<option disabled value="choose">Choose...</option>
 					<option
-						v-for="(location_type, index) in Object.values(LocationChoicesEnum)"
+						v-for="(location_type, index) in Object.values(myContext.locationChoicesList)"
 						:key="index"
-						:value="location_type"
+						:value="index"
 					>
 						{{ location_type }}
 					</option>
@@ -223,6 +223,7 @@
 						{{ country.name }}
 					</option>
 				</select>
+				<span class="validation-errors">{{ myContext.errors.country }}</span>
 			</div>
 
 			<div class="region">
@@ -242,6 +243,7 @@
 						{{ region.name }}
 					</option>
 				</select>
+				<span class="validation-errors">{{ myContext.errors.region }}</span>
 			</div>
 
 			<div class="button">
@@ -255,6 +257,7 @@
 
 <script lang="ts">
 import { useMeta } from 'vue-meta'
+import { useRouter } from 'vue-router'
 import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import { toFormValidator } from '@vee-validate/zod'
@@ -266,7 +269,6 @@ import { FieldContext, useField, useForm } from 'vee-validate'
 import { HTMLElementEvent } from '@/State/Common/Types/HelpingTypes'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import { FloorChoicesEnum, LocationChoicesEnum } from '@/State/Address/Enum/AddressEnum'
-import { useRouter } from 'vue-router'
 
 @Component({
 	name: 'UserAddressNew'
@@ -276,8 +278,6 @@ export default class UserAddressNew extends Vue {
 	addressModule = getModule(AddressModule)
 	countryModule = getModule(CountryModule)
 	submitButtonText = 'Create'
-	FloorChoicesEnum = FloorChoicesEnum
-	LocationChoicesEnum = LocationChoicesEnum
 
 	myContext = setup(() => {
 		const router = useRouter()
@@ -357,6 +357,14 @@ export default class UserAddressNew extends Vue {
 			}
 		})
 
+		const locationChoicesList = Object.keys(LocationChoicesEnum).filter((element) => {
+			return isNaN(Number(element))
+		})
+
+		const floorChoicesList = Object.keys(FloorChoicesEnum).filter((element) => {
+			return isNaN(Number(element))
+		})
+
 		return {
 			meta,
 			title,
@@ -375,7 +383,9 @@ export default class UserAddressNew extends Vue {
 			region,
 			validationSchema,
 			errors,
-			onSubmit
+			onSubmit,
+			locationChoicesList,
+			floorChoicesList
 		}
 	})
 
