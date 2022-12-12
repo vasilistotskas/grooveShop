@@ -56,8 +56,8 @@
   ### Virtual Environment :
    -     Install virtualenv : pip install virtualenv
          Create virtual environment : virtualenv <env_name>
-         Activate virtual environment : source <env_name>/bin/activate
-         Activate virtual environment : <env_name>/scripts/activate
+         (Case 1)Activate virtual environment : source <env_name>/bin/activate
+         (Case 2)Activate virtual environment : <env_name>/scripts/activate
          Deactivate virtual environment : deactivate
          Install requirements : pip install -r requirements.txt
          Install requirements for specific environment : pip install -r requirements/<env_name>.txt
@@ -98,6 +98,10 @@
         Create strawberry project : strawberry server
         Run strawberry server : strawberry server
         Run strawberry server for project schema : (src path) : strawberry server backend.core.graphql.schema:schema
+
+  ### pre-commit :
+  -     pre-commit install
+        git config --unset core.hooksPath
 
 ## SCSS:
   ### Lint :
