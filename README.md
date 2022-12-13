@@ -103,6 +103,13 @@
   -     pre-commit install
         git config --unset core.hooksPath
 
+  ### Anaconda :
+  -     Install anaconda : https://docs.anaconda.com/anaconda/install/
+        Create conda environment : conda create --name <env_name> python=3.10.7
+        Activate conda environment : conda activate <env_name>
+        Deactivate conda environment : conda deactivate
+        Create conda environment from yml file : conda env create -f environment.yml
+
 ## SCSS:
   ### Lint :
   -     Step 1: cd src/frontend
