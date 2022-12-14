@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.12.1 (2022-12-14)
+### Fix
+* **blog/views.py:** Check for authentication in update_likes method ([`97d7ce6`](https://github.com/vasilistotskas/grooveShop/commit/97d7ce6842cf764899e4d8c34d745c304a11490c))
+
 ## v0.12.0 (2022-12-14)
 ### Feature
 * **Blog:API:** Prototype of a better API concept ([`b727022`](https://github.com/vasilistotskas/grooveShop/commit/b727022a1748eb25dc94615f8195eb0387cdba55))
