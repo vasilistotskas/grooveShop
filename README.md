@@ -82,6 +82,9 @@
         pre-commit run --all-files
         black backend
 
+  ### PyLint :
+  -     pylint --load-plugins pylint_django --rcfile=C:\Dev\grooveShop\src\backend\app\settings.py C:\Dev\grooveShop\src\backend\app
+
   ### Poetry :
   -     Install poetry : curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
         Create poetry project : poetry new <project_name>

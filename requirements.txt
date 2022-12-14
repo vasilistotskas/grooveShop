@@ -24,3 +24,5 @@ django-stubs-ext==0.7.0
 python-semantic-release==7.32.2
 flake8==6.0.0
 coverage==6.5.0
+pylint-django==2.5.3
+pylint_celery==0.3

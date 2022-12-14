@@ -1,0 +1,16 @@
+[MESSAGES CONTROL]
+
+# Set the minimum pylint score required for a file to be considered "acceptable"
+min-similarity-lines = 80
+
+# Only show messages with the specified severity or higher
+report-level = 10
+
+# Enable the pylint-django and pylint-celery plugins
+load-plugins = pylint.extensions.bad_builtin, pylint.extensions.mccabe, pylint_celery, pylint_django
+
+# Disable some pylint warnings that are not relevant for Django projects
+disable = missing-docstring,unused-import,unused-variable,useless-super-delegation
+
+# Specify the location of your Django settings module
+django-settings-module = my_project.settings
