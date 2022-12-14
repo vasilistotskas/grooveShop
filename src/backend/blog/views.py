@@ -7,14 +7,16 @@ from backend.blog.serializers import PostSerializer
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework import viewsets
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
 
-class PostViewSet(viewsets.ModelViewSet):
+class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     pagination_class = PostPagination
@@ -69,10 +71,19 @@ class PostViewSet(viewsets.ModelViewSet):
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    @action(detail=True, methods=["post"])
+    @action(
+        detail=True,
+        methods=["post"],
+        permission_classes=[IsAuthenticated],
+        authentication_classes=[SessionAuthentication],
+    )
     def update_likes(self, request, pk=None):
+        if not request.user.is_authenticated:
+            return Response({"detail": "Forbidden."}, status=status.HTTP_403_FORBIDDEN)
+
         post = get_object_or_404(Post, pk=pk)
         user = request.user
+
         if post.likes.contains(user):
             post.likes.remove(user)
         else:
@@ -82,7 +93,7 @@ class PostViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-class CategoryViewSet(viewsets.ModelViewSet):
+class CategoryViewSet(ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     pagination_class = CategoryPagination
