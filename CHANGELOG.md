@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.12.0 (2022-12-14)
+### Feature
+* **Blog:API:** Prototype of a better API concept ([`b727022`](https://github.com/vasilistotskas/grooveShop/commit/b727022a1748eb25dc94615f8195eb0387cdba55))
+
 ## v0.11.1 (2022-12-12)
 ### Fix
 * **Address:Frontend:** Edit page initial data and enum fixed ([`ee41295`](https://github.com/vasilistotskas/grooveShop/commit/ee4129590248e594d5e0b2a4643edf707ac417dd))
