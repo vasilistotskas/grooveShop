@@ -308,6 +308,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
     "COERCE_DECIMAL_TO_STRING": os.environ.get("COERCE_DECIMAL_TO_STRING"),
+    "DEFAULT_PAGINATION_CLASS": "backend.helpers.paginator.CountPaginator",
+    "PAGE_SIZE": 100,
 }
 
 DJOSER = {
