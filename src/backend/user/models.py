@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import os
 from typing import Any
 from typing import List
@@ -20,7 +22,7 @@ User = settings.AUTH_USER_MODEL
 
 
 class UserAccountManager(BaseUserManager):
-    def create_user(self, email, password, **extra_fields):
+    def create_user(self, email, password, **extra_fields) -> UserAccount:
         """Create and save a user with the given username, email, and password."""
         if not email:
             raise ValueError("Users must have an email address")
@@ -30,7 +32,7 @@ class UserAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def _create_user(self, email, password, **extra_fields):
+    def _create_user(self, email, password, **extra_fields) -> UserAccount:
         """Create and save a user with the given username, email, and password."""
         if not email:
             raise ValueError("Users must have an email address")
@@ -40,7 +42,7 @@ class UserAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password, **extra_fields):
+    def create_superuser(self, email, password, **extra_fields) -> UserAccount:
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
@@ -64,7 +66,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD: str = "email"
     REQUIRED_FIELDS: List[str] = ["first_name", "last_name"]
 
-    def remove_all_sessions(self):
+    def remove_all_sessions(self) -> None:
         user_sessions: List[Any] = []
         for session in Session.objects.all():
             if str(self.pk) == session.get_decoded().get("_auth_user_id"):
@@ -107,7 +109,7 @@ class UserProfile(TimeStampMixinModel, UUIDModel):
         else:
             return "/backend/static/images/default.png"
 
-    def email(self):
+    def email(self) -> str:
         return self.user.email
 
     def main_image_absolute_url(self) -> str:
@@ -134,7 +136,7 @@ class UserProfile(TimeStampMixinModel, UUIDModel):
 
     # use Django signals to create user profile on user creation
     @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
+    def create_user_profile(sender, instance, created, **kwargs) -> None:
         if created:
             UserProfile.objects.create(user=instance)
 

@@ -29,5 +29,6 @@ class LastActivityTraceMiddleware:
 
         session = request.session
         session.last_activity = now()
+        print("session", session)
         session.save()
         return response

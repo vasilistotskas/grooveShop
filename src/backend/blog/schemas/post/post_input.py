@@ -1,15 +1,15 @@
 import strawberry.django
 import strawberry_django
-from backend.blog.models import Post
+from backend.blog.models.post import BlogPost
 from strawberry import auto
 
 
-@strawberry_django.input(Post)
+@strawberry_django.input(BlogPost)
 class PostLikesInput:
     id: auto
     user_id: strawberry.ID
 
 
-@strawberry_django.input(Post, partial=True)
+@strawberry_django.input(BlogPost, partial=True)
 class PostLikesPartialInput(PostLikesInput):
     pass

@@ -1,9 +1,9 @@
 import strawberry.django
 import strawberry_django
-from backend.blog.models import Category
+from backend.blog.models.category import BlogCategory
 
 
-@strawberry_django.type(Category)
+@strawberry_django.type(BlogCategory)
 class CategoryType:
     id: strawberry.ID
     name: str

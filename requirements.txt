@@ -23,7 +23,7 @@ django-stubs==1.13.1
 django-stubs-ext==0.7.0
 python-semantic-release==7.32.2
 flake8==6.0.0
-coverage==6.5.0
+coverage==7.0.0
 drf-spectacular==0.25.1
 pylint==2.15.9
 pre-commit==2.20.0

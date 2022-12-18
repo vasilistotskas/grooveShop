@@ -4,7 +4,7 @@ from typing import Optional
 
 import strawberry.django
 import strawberry_django
-from backend.blog.models import Post
+from backend.blog.models.post import BlogPost
 from backend.blog.schemas.post.post_type import PostType
 from backend.core.graphql.pagination import PageMeta
 from backend.core.graphql.pagination import PaginatedResponse
@@ -19,13 +19,13 @@ class Query:
         self, limit: int, cursor: Optional[str] = None
     ) -> PaginatedResponse[PostType]:
         pagination_base = PaginationBase()
-        post_data: QuerySet[Post] = Post.objects.all()
+        post_data: QuerySet[BlogPost] = BlogPost.objects.all()
         if cursor is not None:
             post_id = pagination_base.decode_cursor(cursor=cursor)
         else:
             post_id = 0
 
-        filtered_data: List[Post] = list(
+        filtered_data: List[BlogPost] = list(
             filter(
                 None,
                 list(map(lambda post: post if post.id >= post_id else None, post_data)),
@@ -78,7 +78,7 @@ class Query:
     @strawberry_django.field
     def posts_by_tag(self, tag: str) -> List[PostType]:
         post_type_list: List[PostType] = list(
-            Post.objects.prefetch_related("tags")
+            BlogPost.objects.prefetch_related("tags")
             .select_related("author")
             .filter(tags__name__iexact=tag)
         )
@@ -87,7 +87,7 @@ class Query:
     @strawberry_django.field
     def post_by_slug(self, slug: str) -> PostType:
         return (
-            Post.objects.prefetch_related("tags")
+            BlogPost.objects.prefetch_related("tags")
             .select_related("author")
             .get(slug=slug)
         )
@@ -95,7 +95,7 @@ class Query:
     @strawberry_django.field
     def posts_by_author_id(self, author_id: int) -> List[PostType]:
         post_type_list: List[PostType] = list(
-            Post.objects.prefetch_related("tags").filter(
+            BlogPost.objects.prefetch_related("tags").filter(
                 author__id=author_id,
             )
         )

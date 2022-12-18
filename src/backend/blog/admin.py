@@ -1,29 +1,29 @@
-from backend.blog.models import Author
-from backend.blog.models import Category
-from backend.blog.models import Comment
-from backend.blog.models import Post
-from backend.blog.models import Tag
+from backend.blog.models.author import BlogAuthor
+from backend.blog.models.category import BlogCategory
+from backend.blog.models.comment import BlogComment
+from backend.blog.models.post import BlogPost
+from backend.blog.models.tag import BlogTag
 from django.contrib import admin
 
 
-@admin.register(Author)
-class AuthorAdmin(admin.ModelAdmin):
-    model = Author
+@admin.register(BlogAuthor)
+class BlogAuthorAdmin(admin.ModelAdmin):
+    model = BlogAuthor
 
 
-@admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
-    model = Tag
+@admin.register(BlogTag)
+class BlogTagAdmin(admin.ModelAdmin):
+    model = BlogTag
 
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    model = Category
+@admin.register(BlogCategory)
+class BlogCategoryAdmin(admin.ModelAdmin):
+    model = BlogCategory
 
 
-@admin.register(Post)
-class PostAdmin(admin.ModelAdmin):
-    model = Post
+@admin.register(BlogPost)
+class BlogPostAdmin(admin.ModelAdmin):
+    model = BlogPost
 
     list_display = (
         "id",
@@ -60,7 +60,7 @@ class PostAdmin(admin.ModelAdmin):
     save_on_top = True
 
 
-@admin.register(Comment)
-class CommentAdmin(admin.ModelAdmin):
-    model = Comment
+@admin.register(BlogComment)
+class BlogCommentAdmin(admin.ModelAdmin):
+    model = BlogComment
     date_hierarchy = "created_at"

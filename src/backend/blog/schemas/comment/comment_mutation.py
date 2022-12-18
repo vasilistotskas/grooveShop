@@ -1,7 +1,7 @@
 from typing import List
 
 import strawberry.django
-from backend.blog.models import Comment
+from backend.blog.models.comment import BlogComment
 from backend.blog.schemas.comment.comment_input import CreateCommentInput
 from backend.blog.schemas.comment.comment_partial_input import (
     UpdateCommentLikesPartialInput,
@@ -27,7 +27,7 @@ class Mutation:
     def update_comment_likes(
         self, comment_id: strawberry.ID, user_id: strawberry.ID
     ) -> CommentType:
-        comment = Comment.objects.get(pk=comment_id)
+        comment = BlogComment.objects.get(pk=comment_id)
         user = User.objects.get(id=user_id)
         if comment.likes.contains(user):
             comment.likes.remove(user)

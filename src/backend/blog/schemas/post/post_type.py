@@ -3,7 +3,7 @@ from typing import List
 import strawberry.django
 import strawberry_django
 from backend.app import settings
-from backend.blog.models import Post
+from backend.blog.models.post import BlogPost
 from backend.blog.schemas.author.author_type import AuthorType
 from backend.blog.schemas.category.category_type import CategoryType
 from backend.blog.schemas.tag.tag_type import TagType
@@ -13,7 +13,7 @@ from strawberry import auto
 User = settings.AUTH_USER_MODEL
 
 
-@strawberry_django.type(Post)
+@strawberry_django.type(BlogPost)
 class PostType:
     id: strawberry.ID
     title: str

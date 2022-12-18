@@ -1,12 +1,8 @@
 from __future__ import annotations
 
-from backend.blog.models import Category
-from backend.blog.models import Post
-from backend.blog.paginators import CategoryPagination
-from backend.blog.paginators import PostPagination
-from backend.blog.serializers import BlogCategorySerializer
-from backend.blog.serializers import PostSerializer
-from django.shortcuts import get_object_or_404
+from backend.blog.models.post import BlogPost
+from backend.blog.paginators.post import BlogPostPagination
+from backend.blog.serializers.post import BlogPostSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
@@ -14,15 +10,16 @@ from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
+from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 
-class PostViewSet(ModelViewSet):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-    pagination_class = PostPagination
+class BlogPostViewSet(ModelViewSet):
+    queryset = BlogPost.objects.all()
+    serializer_class = BlogPostSerializer
+    pagination_class = BlogPostPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["id", "tags", "slug", "author"]
     ordering_fields = [
@@ -34,45 +31,40 @@ class PostViewSet(ModelViewSet):
         "published_at",
     ]
     ordering = ["-created_at"]
-    search_fields = ["title", "subtitle", "body", "id"]
+    search_fields = ["id", "title", "subtitle", "body"]
 
-    # This method creates a new post in the database
     def create(self, request, *args, **kwargs) -> Response | ValidationError:
-        serializer = PostSerializer(data=request.data)
+        serializer = BlogPostSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         raise ValidationError(serializer.errors)
 
-    # This method retrieves a specific post based on its id
     def retrieve(self, request, pk=None, *args, **kwargs) -> Response:
-        post = get_object_or_404(Post, pk=pk)
-        serializer = PostSerializer(post)
+        post = get_object_or_404(BlogPost, pk=pk)
+        serializer = BlogPostSerializer(post)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    # This method updates an existing post in the database
     def update(self, request, pk=None, *args, **kwargs) -> Response | ValidationError:
-        post = get_object_or_404(Post, pk=pk)
-        serializer = PostSerializer(post, data=request.data)
+        post = get_object_or_404(BlogPost, pk=pk)
+        serializer = BlogPostSerializer(post, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return ValidationError(serializer.errors)
 
-    # This method patches an existing post in the database
     def partial_update(
         self, request, pk=None, *args, **kwargs
     ) -> Response | ValidationError:
-        post = get_object_or_404(Post, pk=pk)
-        serializer = PostSerializer(post, data=request.data, partial=True)
+        post = get_object_or_404(BlogPost, pk=pk)
+        serializer = BlogPostSerializer(post, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return ValidationError(serializer.errors)
 
-    # This method deletes an existing post in the database
     def destroy(self, request, pk=None, *args, **kwargs):
-        post = get_object_or_404(Post, pk=pk)
+        post = get_object_or_404(BlogPost, pk=pk)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -86,7 +78,7 @@ class PostViewSet(ModelViewSet):
         if not request.user.is_authenticated:
             return Response({"detail": "Forbidden."}, status=status.HTTP_403_FORBIDDEN)
 
-        post = get_object_or_404(Post, pk=pk)
+        post = get_object_or_404(BlogPost, pk=pk)
         user = request.user
 
         if post.likes.contains(user):
@@ -96,14 +88,3 @@ class PostViewSet(ModelViewSet):
         post.save()
         serializer = self.get_serializer(post)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-class CategoryViewSet(ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = BlogCategorySerializer
-    pagination_class = CategoryPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
-    filterset_fields = ["id", "name"]
-    ordering_fields = ["id", "name"]
-    ordering = ["id"]
-    search_fields = ["name"]

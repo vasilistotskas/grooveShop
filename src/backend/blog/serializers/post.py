@@ -1,11 +1,10 @@
-from backend.blog.models import Category
-from backend.blog.models import Post
+from backend.blog.models.post import BlogPost
 from rest_framework import serializers
 
 
-class PostSerializer(serializers.ModelSerializer):
+class BlogPostSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Post
+        model = BlogPost
         fields = (
             "id",
             "title",
@@ -28,21 +27,4 @@ class PostSerializer(serializers.ModelSerializer):
             "number_of_likes",
             "number_of_comments",
             "get_post_tags_count",
-        )
-
-
-class BlogCategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = (
-            "id",
-            "name",
-            "slug",
-            "image",
-            "created_at",
-            "updated_at",
-            "sort_order",
-            "uuid",
-            "main_image_absolute_url",
-            "main_image_filename",
         )
