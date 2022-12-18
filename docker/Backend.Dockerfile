@@ -1,5 +1,5 @@
 # Base build
-FROM python:3.10.7-alpine3.16 as base
+FROM python:3.11-alpine as base
 
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
@@ -13,10 +13,10 @@ RUN python -m venv /py && \
 COPY ./requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
 
-FROM python:3.10.7-alpine3.16
+FROM python:3.11-alpine
 LABEL maintainer="groove.com"
 
-COPY --from=base /usr/local/lib/python3.10/site-packages/ /usr/local/lib/python3.10/site-packages/
+COPY --from=base /usr/local/lib/python3.11/site-packages/ /usr/local/lib/python3.11/site-packages/
 COPY --from=base /usr/local/bin/ /usr/local/bin/
 COPY ./src /src
 COPY ./scripts /scripts

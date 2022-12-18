@@ -37,7 +37,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.mypy_cache" />
       <excludeFolder url="file://$MODULE_DIR$/.git" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.10 (grooveShop)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.11 (grooveShop)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Google App Engine SDK" level="project" />
   </component>

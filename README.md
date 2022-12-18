@@ -52,7 +52,7 @@
 
 
 ## PYTHON
-  ### --- VERSION 3.10.7 ---
+  ### --- VERSION 3.11.0 ---
   ### Virtual Environment :
    -     Install virtualenv : pip install virtualenv
          Create virtual environment : virtualenv <env_name>
@@ -105,10 +105,13 @@
 
   ### Anaconda :
   -     Install anaconda : https://docs.anaconda.com/anaconda/install/
-        Create conda environment : conda create --name <env_name> python=3.10.7
+        Create conda environment : conda create --name <env_name> python=3.11.0
         Activate conda environment : conda activate <env_name>
         Deactivate conda environment : conda deactivate
         Create conda environment from yml file : conda env create -f environment.yml
+
+  ### DRF-Spectacular :
+  -     Generate schema : python manage.py spectacular --color --file schema.yml
 
 ## SCSS:
   ### Lint :
