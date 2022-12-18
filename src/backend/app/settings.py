@@ -118,7 +118,7 @@ THIRD_PARTY_APPS = [
     "tinymce",
     "django_filters",
     "strawberry.django",
-    "debug_toolbar",
+    "drf_spectacular",
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
@@ -139,7 +139,6 @@ MIDDLEWARE = [
     "backend.user.middleware.LastActivityTraceMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "backend.app.urls"
@@ -307,9 +306,18 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "COERCE_DECIMAL_TO_STRING": os.environ.get("COERCE_DECIMAL_TO_STRING"),
     "DEFAULT_PAGINATION_CLASS": "backend.helpers.paginator.CountPaginator",
     "PAGE_SIZE": 100,
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "GrooveShop API",
+    "DESCRIPTION": "GrooveShop API",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.AllowAny"],
 }
 
 DJOSER = {

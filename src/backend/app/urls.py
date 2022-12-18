@@ -8,6 +8,9 @@ from django.urls import include
 from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET
+from drf_spectacular.views import SpectacularAPIView
+from drf_spectacular.views import SpectacularRedocView
+from drf_spectacular.views import SpectacularSwaggerView
 from strawberry.django.views import AsyncGraphQLView
 from strawberry.django.views import GraphQLView
 
@@ -46,8 +49,20 @@ urlpatterns = [
     path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
     # admin html editor
     path("tinymce/", include("tinymce.urls")),  # vue urls
-    path("", include(front_urls)),  # debug toolbar
-    path("__debug__/", include("debug_toolbar.urls")),
+    # Spectacular
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    # Optional UI:
+    path(
+        "api/schema/swagger-ui/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
+    path(
+        "api/schema/redoc/",
+        SpectacularRedocView.as_view(url_name="schema"),
+        name="redoc",
+    ),
+    path("", include(front_urls)),
 ]
 
 urlpatterns += static(

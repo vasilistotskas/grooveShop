@@ -14,6 +14,8 @@ class UserCreationSerializer(UserCreateSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    email: str = serializers.EmailField(required=True)
+
     class Meta:
         model = UserProfile
         fields = [

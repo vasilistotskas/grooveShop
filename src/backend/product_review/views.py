@@ -16,6 +16,8 @@ class ProductReviews(generics.ListCreateAPIView):
 
     def get_queryset(self):
         # exclude current user review
+        if getattr(self, "swagger_fake_view", False):
+            return Review.objects.none()
         user = self.request.user
         product_id = self.kwargs["product_id"]
         if not user.is_anonymous:
@@ -69,6 +71,8 @@ class UserReviews(generics.ListAPIView):
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return Review.objects.none()
         user = self.request.user
         return Review.objects.filter(user=user)
 
@@ -87,6 +91,7 @@ class UserReviews(generics.ListAPIView):
 class UserToProductReview(APIView):
     authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = ReviewSerializer
 
     def get(self, request, user_id, product_id, format=None):
         try:

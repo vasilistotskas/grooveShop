@@ -16,6 +16,9 @@ from djoser.compat import get_user_email_field_name
 from djoser.conf import settings as djoser_settings
 from djoser.utils import ActionViewMixin
 from djoser.views import UserViewSet
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import OpenApiParameter
 from rest_framework import authentication
 from rest_framework import generics
 from rest_framework import permissions
@@ -70,16 +73,37 @@ class ResendActivationView(ActionViewMixin, generics.GenericAPIView):
         djoser_settings.EMAIL.activation(self.request, context).send(to)
 
 
+@extend_schema(
+    parameters=[
+        OpenApiParameter(
+            name="uid",
+            required=True,
+            type=OpenApiTypes.STR,
+            location="path",
+            description="uid",
+        ),
+        OpenApiParameter(
+            name="token",
+            required=True,
+            type=OpenApiTypes.STR,
+            location="path",
+            description="token",
+        ),
+    ]
+)
 class ActivateUser(UserViewSet):
     def get_serializer(self, *args, **kwargs):
         serializer_class = self.get_serializer_class()
         kwargs.setdefault("context", self.get_serializer_context())
-        kwargs["data"] = {"uid": self.kwargs["uid"], "token": self.kwargs["token"]}
 
         return serializer_class(*args, **kwargs)
 
     @action(["post"], detail=False)
     def activation(self, request, *args, **kwargs):
+        uid: str = self.kwargs["uid"]
+        token: str = self.kwargs["token"]
+        kwargs["data"] = {"uid": uid, "token": token}
+
         super().activation(request, *args, **kwargs)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -138,6 +162,7 @@ class UserProfileDetail(generics.RetrieveUpdateDestroyAPIView):
 class UserProfileData(APIView):
     authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserProfileSerializer
 
     @staticmethod
     def get(request, format=None):
@@ -147,6 +172,8 @@ class UserProfileData(APIView):
 
 
 class ClearAllUserSessions(APIView):
+    serializer_class = UserProfileSerializer
+
     def post(self, request, format=None):
         if not request.user.is_authenticated:
             return Response("Forbidden", status=status.HTTP_403_FORBIDDEN)

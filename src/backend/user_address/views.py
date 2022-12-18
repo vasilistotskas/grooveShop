@@ -16,6 +16,8 @@ class UserAddressList(generics.ListAPIView):
     serializer_class = AddressSerializer
 
     def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return Address.objects.none()
         user = self.request.user
         return Address.objects.filter(user=user)
 

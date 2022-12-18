@@ -106,14 +106,14 @@ class Post(TimeStampMixinModel, PublishableModel, UUIDModel):
         else:
             return ""
 
-    def number_of_likes(self):
+    def number_of_likes(self) -> int:
         return self.likes.count()
 
-    def number_of_comments(self):
+    def number_of_comments(self) -> int:
         post_id = self.id
         return Comment.objects.filter(post_id=post_id).count()
 
-    def get_post_tags_count(self):
+    def get_post_tags_count(self) -> int:
         post_id = self.id
         return Post.objects.get(id=post_id).tags.count()
 

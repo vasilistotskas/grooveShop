@@ -101,7 +101,7 @@ class UserProfile(TimeStampMixinModel, UUIDModel):
     def __str__(self):
         return "%s" % self.user.id
 
-    def get_user_profile_image_url(self):
+    def get_user_profile_image_url(self) -> str:
         if self.image and hasattr(self.image, "url"):
             return self.image.url
         else:
@@ -110,13 +110,13 @@ class UserProfile(TimeStampMixinModel, UUIDModel):
     def email(self):
         return self.user.email
 
-    def main_image_absolute_url(self):
+    def main_image_absolute_url(self) -> str:
         if self.image and hasattr(self.image, "url"):
             return settings.BACKEND_BASE_URL + self.image.url
         else:
             return "/backend/static/images/default.png"
 
-    def main_image_filename(self):
+    def main_image_filename(self) -> str:
         if self.image and hasattr(self.image, "url"):
             return os.path.basename(self.image.name)
         else:

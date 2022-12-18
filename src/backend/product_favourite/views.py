@@ -14,6 +14,7 @@ from rest_framework.views import APIView
 class FavouriteUserListIds(APIView):
     authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = FavouriteSerializer
 
     @staticmethod
     def filter_objects(user_id):
@@ -54,6 +55,8 @@ class FavouriteUserProductList(generics.ListAPIView):
     serializer_class = FavouriteProductSerializer
 
     def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return Favourite.objects.none()
         user = self.request.user
         return Favourite.objects.filter(user=user)
 
@@ -72,6 +75,7 @@ class FavouriteUserProductList(generics.ListAPIView):
 class FavouriteDelete(APIView):
     authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = FavouriteSerializer
 
     # One way to delete
     def delete(self, request, user_id, product_id, format=None):

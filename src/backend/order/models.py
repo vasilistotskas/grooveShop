@@ -3,6 +3,7 @@ from typing import Any
 from backend.core.models import SortableModel
 from backend.core.models import TimeStampMixinModel
 from backend.core.models import UUIDModel
+from backend.order.enum.pay_way_enum import PayWayEnum
 from backend.product.models import Product
 from django.conf import settings
 from django.db import models
@@ -13,20 +14,13 @@ User = settings.AUTH_USER_MODEL
 
 class PayWay(TimeStampMixinModel, SortableModel, UUIDModel):
 
-    PAY_WAYS = (
-        ("Credit Card", "Credit Card"),
-        ("Pay On Delivery", "Pay On Delivery"),
-        ("Pay On Store", "Pay On Store"),
-        ("PayPal", "PayPal"),
-    )
-
     PAY_WAY_STATUS = (
         ("True", "Active"),
         ("False", "Not Active"),
     )
 
     name = models.CharField(
-        primary_key=True, max_length=50, choices=PAY_WAYS, unique=True
+        primary_key=True, max_length=50, choices=PayWayEnum.choices(), unique=True
     )
     active = models.CharField(max_length=15, choices=PAY_WAY_STATUS, default=True)
     cost = models.DecimalField(max_digits=11, decimal_places=2, default=0.0)

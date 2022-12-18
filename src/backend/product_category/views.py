@@ -2,7 +2,7 @@ from backend.product.models import Product
 from backend.product.serializers import ProductSerializer
 from backend.product_category.models import Category
 from backend.product_category.paginators import CategoryProductsPagination
-from backend.product_category.serializers import CategorySerializer
+from backend.product_category.serializers import ProductCategorySerializer
 from rest_framework import filters
 from rest_framework import generics
 from rest_framework.generics import GenericAPIView
@@ -10,7 +10,7 @@ from rest_framework.response import Response
 
 
 class CategoryDetail(GenericAPIView):
-    serializer_class = CategorySerializer
+    serializer_class = ProductCategorySerializer
 
     def get_queryset(self):
         category_slug = self.kwargs["category_slug"]
@@ -58,7 +58,7 @@ class CategoryProductsList(generics.ListAPIView):
 
 
 class CategoryTreeView(GenericAPIView):
-    serializer_class = CategorySerializer
+    serializer_class = ProductCategorySerializer
 
     def get_queryset(self):
         return Category.objects.all()
