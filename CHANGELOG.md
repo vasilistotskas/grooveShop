@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.13.0 (2022-12-18)
+### Feature
+* **drf-spectacular:** Introduce drf-spectacular lib for API documentation ([`2b3a04f`](https://github.com/vasilistotskas/grooveShop/commit/2b3a04f511b005a3223c233a5a30b921d62eb755))
+
 ## v0.12.1 (2022-12-14)
 ### Fix
 * **blog/views.py:** Check for authentication in update_likes method ([`97d7ce6`](https://github.com/vasilistotskas/grooveShop/commit/97d7ce6842cf764899e4d8c34d745c304a11490c))
