@@ -1,6 +1,16 @@
 version: '3.3'
 
 services:
+  storefront_uinode_nuxt:
+    container_name: storefront_uinode_nuxt
+    build:
+      context: ./storefrontUINodeNuxt
+      dockerfile: ./docker/prod/StorefrontUINodeNuxtProd.Dockerfile
+    restart: "on-failure"
+    ports:
+      - "3000:3000"
+    networks:
+      - groovy-backbone
   backend:
     container_name: backend
     build:
