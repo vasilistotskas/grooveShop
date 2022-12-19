@@ -2,7 +2,7 @@ import os
 from typing import Union
 
 from backend.app.settings import BASE_DIR
-from backend.blog.models import Category
+from backend.blog.models.category import BlogCategory
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -13,23 +13,23 @@ class BlogCategoryTestCase(TestCase):
     image: Union[str, SimpleUploadedFile] = ""
 
     def setUp(self):
-        Category.objects.create(
+        BlogCategory.objects.create(
             name="name", slug="slug", description="description", image=self.image
         )
 
     def test___str__(self):
-        category = Category.objects.get(name="name")
+        category = BlogCategory.objects.get(name="name")
         self.assertEqual(str(category), category.name)
 
     def test_main_image_absolute_url(self):
-        category = Category.objects.get(name="name")
+        category = BlogCategory.objects.get(name="name")
         image: str = ""
         if category.image and hasattr(category.image, "url"):
             image = settings.BACKEND_BASE_URL + category.image.url
         self.assertEqual(category.main_image_absolute_url(), image)
 
     def test_get_main_image_filename(self):
-        category = Category.objects.get(name="name")
+        category = BlogCategory.objects.get(name="name")
         image: str = ""
         if category.image is not None:
             image = os.path.basename(category.image.name)

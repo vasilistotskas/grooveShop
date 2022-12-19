@@ -71,7 +71,7 @@ class Product(TimeStampMixinModel, SeoModel, UUIDModel):
 
     class Meta:
         app_label = "product"
-        ordering = ("-created_at",)
+        ordering = ("-id",)
 
     def __str__(self) -> str:
         return self.name

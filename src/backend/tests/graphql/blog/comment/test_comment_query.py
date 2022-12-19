@@ -1,7 +1,7 @@
-from backend.blog.models import Author
-from backend.blog.models import Category
-from backend.blog.models import Comment
-from backend.blog.models import Post
+from backend.blog.models.author import BlogAuthor
+from backend.blog.models.category import BlogCategory
+from backend.blog.models.comment import BlogComment
+from backend.blog.models.post import BlogPost
 from backend.tests.graphql.base import GRAPHQLBaseTestClass
 from django.contrib.auth import get_user_model
 
@@ -10,26 +10,26 @@ User = get_user_model()
 
 class CommentQueryTest(GRAPHQLBaseTestClass):
     user = None
-    author: Author
-    category: Category
-    post: Post
-    comment: Comment
+    author: BlogAuthor
+    category: BlogCategory
+    post: BlogPost
+    comment: BlogComment
 
     def setUp(self):
         self.user = User.objects.create_user(password="bar", email="email@email.com")
-        self.author = Author.objects.create(
+        self.author = BlogAuthor.objects.create(
             user_id=self.user.id, website="https://www.google.com", bio="bio"
         )
-        self.category = Category.objects.create(
+        self.category = BlogCategory.objects.create(
             name="name", slug="slug", description="description"
         )
-        self.post = Post.objects.create(
+        self.post = BlogPost.objects.create(
             title="title",
             subtitle="subtitle",
             category_id=self.category.id,
             author_id=self.author.id,
         )
-        self.comment = Comment.objects.create(
+        self.comment = BlogComment.objects.create(
             content="content", post_id=self.post.id, user_id=self.user.id
         )
         super(CommentQueryTest, self).setUp()
