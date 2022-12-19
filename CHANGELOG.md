@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.14.0 (2022-12-19)
+### Feature
+* **Backend:Blog:** Split blog module and implemented API for all blog entities ([`2650b0c`](https://github.com/vasilistotskas/grooveShop/commit/2650b0cf8c28b350313db888a14d163221860db4))
+
+### Fix
+* **Blog:Tests:** Property methods called as functions fixed ([`a6d5425`](https://github.com/vasilistotskas/grooveShop/commit/a6d5425dcab4a26680404cd1ac89553662a44e7f))
+* **Blog:Tests:** Blog tests fixed ([`7fa4692`](https://github.com/vasilistotskas/grooveShop/commit/7fa4692c5b2df86f27a4a34289c29f2cad1cc571))
+
 ## v0.13.0 (2022-12-18)
 ### Feature
 * **drf-spectacular:** Introduce drf-spectacular lib for API documentation ([`2b3a04f`](https://github.com/vasilistotskas/grooveShop/commit/2b3a04f511b005a3223c233a5a30b921d62eb755))
