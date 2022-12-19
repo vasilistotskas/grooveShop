@@ -28,14 +28,14 @@ class CategoryTypeTestCase(TestCase):
         image: str = ""
         if category.image and hasattr(category.image, "url"):
             image = settings.BACKEND_BASE_URL + category.image.url
-        self.assertEqual(category.main_image_absolute_url(), image)
+        self.assertEqual(category.main_image_absolute_url, image)
 
     def test_get_main_image_filename(self):
         category = BlogCategory.objects.get(name="name")
         image: str = ""
         if category.image is not None:
             image = os.path.basename(category.image.name)
-        self.assertEqual(category.main_image_filename(), image)
+        self.assertEqual(category.main_image_filename, image)
 
 
 class WithImage(CategoryTypeTestCase):

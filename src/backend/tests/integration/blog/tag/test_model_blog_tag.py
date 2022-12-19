@@ -12,4 +12,4 @@ class BlogTagTestCase(TestCase):
 
     def test_get_tag_posts_count(self):
         tag = BlogTag.objects.get(name="name")
-        self.assertEqual(tag.get_tag_posts_count(), 0)
+        self.assertEqual(tag.get_tag_posts_count, 0)

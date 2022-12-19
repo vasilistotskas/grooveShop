@@ -35,7 +35,7 @@ class BlogCommentTestCase(TestCase):
     def test_number_of_likes(self):
         post_id = BlogPost.objects.get(title="title").id
         comment = BlogComment.objects.get(post_id=post_id)
-        self.assertEqual(comment.number_of_likes(), 0)
+        self.assertEqual(comment.number_of_likes, 0)
 
 
 class WithContentBiggerThanFifty(BlogCommentTestCase):
