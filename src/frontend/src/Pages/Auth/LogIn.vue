@@ -1,214 +1,210 @@
 <template>
-  <div class="page-log-in mt-7 mb-5">
-    <div class="container">
-      <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
-      <div class="card login-card">
-        <div class="card-body card-body-border-top">
-          <FormProvider
-            :errors="formManager.errors"
-            :form="formManager.form"
-            title="Log In"
-            @submit="handleSubmit()"
-          >
-            <div class="container">
-              <div class="email mb-3">
-                <label :for="String(formManager.form.email.$uid)" class="label mb-2">Email</label>
-                <FormBaseInput
-                  :id="formManager.form.email.$uid"
-                  v-model="formManager.form.email.$value"
-                  :has-error="formManager.form.email.$hasError"
-                  :input-with-add-on="true"
-                  :input-with-add-on-icon="envelopeIcon"
-                  :validating="formManager.form.email.$validating"
-                  placeholder="Alice, Bob, Oscar"
-                  autocomplete="username"
-                />
-                <FormValidationErrors
-                  :errors="formManager.form.email.$errors"
-                  class="validation-errors"
-                />
-              </div>
-              <div class="password mb-4">
-                <label :for="String(formManager.form.password.$uid)" class="label mb-2"
-                  >Password</label
-                >
-                <FormBaseInput
-                  :id="formManager.form.password.$uid"
-                  v-model="formManager.form.password.$value"
-                  :has-error="formManager.form.password.$hasError"
-                  :input-with-add-on="true"
-                  :input-with-add-on-icon="keyIcon"
-                  type="password"
-                  autocomplete="current-password"
-                />
-                <FormValidationErrors :errors="formManager.form.password.$errors" />
-              </div>
-              <FormSubmitButtons
-                :submitting="formManager.submitting"
-                class="buttons mt-3 mb-3"
-                gap="2rem"
-                @reset="formManager.resetFields()"
-              />
-            </div>
+	<div class="page-log-in mt-7 mb-5">
+		<div class="container">
+			<Breadcrumbs :bread-crumb-path="breadCrumbPath" />
+			<div class="card login-card">
+				<div class="card-body card-body-border-top">
+					<h1 class="plr-15 mb-3 mt-3">Log In</h1>
+					<form
+						@submit="myContext.onSubmit"
+						class="_form"
+						id="logInForm"
+						name="logInForm"
+					>
+						<div class="container">
+							<div class="email mb-3">
+								<label for="email" class="label mb-2">Email</label>
+								<div class="_container">
+									<input
+										v-model="myContext.email"
+										id="email"
+										name="email"
+										type="email"
+										class="_input"
+										placeholder="Email"
+										autocomplete="email"
+									/>
+								</div>
+								<span class="validation-errors">{{ myContext.errors.email }}</span>
+							</div>
+							<div class="password mb-4">
+								<label for="password" class="label mb-2">Password</label>
+								<div class="_container">
+									<input
+										v-model="myContext.password"
+										id="password"
+										name="password"
+										type="password"
+										class="_input"
+										placeholder="Password"
+										autocomplete="current-password"
+									/>
+								</div>
+								<span class="validation-errors">{{ myContext.errors.password }}</span>
+							</div>
+							<button
+								v-if="!myContext.isTooManyAttempts"
+								class="btn btn-outline-primary-one green-bg"
+								title="Log In"
+							>
+								Log In
+							</button>
+							<span v-else>Too many attempts try again later</span>
+						</div>
 
-            <!-- 2 column grid layout for inline styling -->
-            <div class="login-grid-part-one mb-3">
-              <div class="grid-item-one">
-                <!-- Checkbox -->
-                <div class="form-check">
-                  <input
-                    id="form2Example3"
-                    checked
-                    class="form-check-input form-check-input-main"
-                    type="checkbox"
-                    value=""
-                  />
-                  <label class="form-check-label" for="form2Example3"> Remember me </label>
-                </div>
-              </div>
-              <div class="grid-item-two">
-                <!-- Simple link -->
-                <RouterLink title="Password Reset" to="/password_reset">
-                  Forgot password?
-                </RouterLink>
-              </div>
-            </div>
-          </FormProvider>
+						<div class="login-grid-part-one mb-3">
+							<div class="grid-item-one">
+								<div class="form-check">
+									<input
+										id="form2Example3"
+										checked
+										class="form-check-input form-check-input-main"
+										type="checkbox"
+										value=""
+									/>
+									<label class="form-check-label" for="form2Example3">
+										Remember me
+									</label>
+								</div>
+							</div>
+							<div class="grid-item-two">
+								<RouterLink title="Password Reset" to="/password_reset">
+									Forgot password?
+								</RouterLink>
+							</div>
+						</div>
+					</form>
 
-          <!-- Register buttons -->
-          <div class="login-register-field">
-            <p class="mb-1">
-              Not a member?
-              <RouterLink aria-label="Sign Up" title="Sign Up" to="/sign-up"> Register </RouterLink>
-            </p>
-            <p class="mb-3">or sign up with:</p>
-          </div>
+					<!-- Register buttons -->
+					<div class="login-register-field">
+						<p class="mb-1">
+							Not a member?
+							<RouterLink aria-label="Sign Up" title="Sign Up" to="/sign-up">
+								Register
+							</RouterLink>
+						</p>
+						<p class="mb-3">or sign up with:</p>
+					</div>
 
-          <div class="login-grid-part-socials mb-3">
-            <!-- Facebook -->
-            <a
-              class="btn btn-outline-primary btn-floating mx-1"
-              href="#!"
-              role="button"
-              title="Sign Up with Facebook"
-            >
-              <font-awesome-icon :icon="facebookIcon" :style="{ color: '#4267B2' }" size="lg" />
-            </a>
+					<div class="login-grid-part-socials mb-3">
+						<!-- Facebook -->
+						<a
+							class="btn btn-outline-primary btn-floating mx-1"
+							href="#!"
+							role="button"
+							title="Sign Up with Facebook"
+						>
+							<FontAwesomeIcon
+								:icon="facebookIcon"
+								:style="{ color: '#4267B2' }"
+								size="lg"
+							/>
+						</a>
 
-            <!-- Google -->
-            <a
-              class="btn btn-outline-primary btn-floating mx-1"
-              href="#!"
-              role="button"
-              title="Sign Up with Google"
-            >
-              <font-awesome-icon :icon="googleIcon" :style="{ color: '#DB4437' }" size="lg" />
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+						<!-- Google -->
+						<a
+							class="btn btn-outline-primary btn-floating mx-1"
+							href="#!"
+							role="button"
+							title="Sign Up with Google"
+						>
+							<FontAwesomeIcon
+								:icon="googleIcon"
+								:style="{ color: '#DB4437' }"
+								size="lg"
+							/>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">
 import router from '@/Routes'
-import session from '@/Api/Session'
-import { getModule } from 'vuex-module-decorators'
-import { required } from '@/Components/Form/Utils'
-import AuthModule from '@/State/Auth/Auth/AuthModule'
-import UserModule from '@/State/User/Profile/UserModule'
-import CountryModule from '@/State/Country/CountryModule'
-import FormProvider from '@/Components/Form/FormProvider.vue'
+import { useMeta } from 'vue-meta'
+import AuthCore from '@/Core/AuthCore'
+import { computed } from '@vue/runtime-core'
+import { ZodLogin } from '@/Zod/Auth/ZodAuth'
+import { toFormValidator } from '@vee-validate/zod'
+import { FieldContext, useField, useForm } from 'vee-validate'
 import LogInInputApi from '@/State/Auth/Interface/LogInInputApi'
-import { Options as Component, Vue } from 'vue-class-component'
-import { faKey } from '@fortawesome/free-solid-svg-icons/faKey'
-import FormBaseInput from '@/Components/Form/FormBaseInput.vue'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
-import { useValidation, ValidationError } from 'vue3-form-validation'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
-import FormSubmitButtons from '@/Components/Form/FormSubmitButtons.vue'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
+import { mixins, Options as Component, setup } from 'vue-class-component'
 import { faFacebook } from '@fortawesome/free-brands-svg-icons/faFacebook'
-import FormValidationErrors from '@/Components/Form/FormValidationErrors.vue'
-import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
-
-let { validateFields } = useValidation({})
 
 @Component({
-  name: 'LogIn',
-  components: {
-    FormProvider,
-    FormBaseInput,
-    FormSubmitButtons,
-    FormValidationErrors,
-    Breadcrumbs,
-  },
+	name: 'LogIn',
+	mixins: [AuthCore],
+	components: {
+		Breadcrumbs
+	}
 })
-export default class LogIn extends Vue {
-  userModule = getModule(UserModule)
-  authModule = getModule(AuthModule)
-  productFavouriteModule = getModule(ProductFavouriteModule)
-  countryModule = getModule(CountryModule)
+export default class LogIn extends mixins(AuthCore) {
+	googleIcon = faGoogle
+	facebookIcon = faFacebook
 
-  formManager = ({ validateFields } = useValidation({
-    email: {
-      $value: '',
-      $rules: [required('Email is required')],
-    },
-    password: {
-      $value: '',
-      $rules: [required('Password is required')],
-    },
-  }))
+	myContext = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: 'Log In',
+				description: 'Log In'
+			}))
+		)
 
-  keyIcon = faKey
-  googleIcon = faGoogle
-  envelopeIcon = faEnvelope
-  facebookIcon = faFacebook
+		const validationSchema = toFormValidator(ZodLogin)
+		const { handleSubmit, errors, submitCount } = useForm({
+			validationSchema
+		})
 
-  get breadCrumbPath() {
-    return router.currentRoute.value.meta.breadcrumb
-  }
+		const { value: email }: FieldContext<string> = useField('email')
+		const { value: password }: FieldContext<string> = useField('password')
 
-  mounted(): void {
-    document.title = 'Log In'
-  }
+		const isTooManyAttempts = computed(() => {
+			return submitCount.value >= 10
+		})
 
-  handleSubmit = async () => {
-    session.defaults.headers.common['Authorization'] = ''
-    localStorage.removeItem('token')
+		const onSubmit = handleSubmit(async () => {
+			try {
+				const apiData: LogInInputApi = {
+					email: email.value,
+					password: password.value
+				}
+				await this.authModule
+					.login(apiData)
+					.then(() => {
+						this.userModule.fetchUserProfileFromRemote()
+					})
+					.catch((error: Error) => {
+						console.log(error)
+					})
+			} catch (e) {
+				console.log(e)
+			}
+		})
 
-    try {
-      const formData: LogInInputApi = await validateFields()
-      const apiData: LogInInputApi = {
-        email: formData.email,
-        password: formData.password,
-      }
-      await this.authModule
-        .login(apiData)
-        .then(() => {
-          this.userModule.fetchUserDataFromRemote().then((response) => {
-            if (response) {
-              this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(
-                this.userModule.getUserData
-              )
-              this.productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
-            }
-          })
-        })
-        .catch((error: Error) => {
-          console.log(error)
-        })
-    } catch (e) {
-      if (e instanceof ValidationError) {
-        console.log(e.message)
-      }
-    }
-  }
+		return {
+			validationSchema,
+			onSubmit,
+			errors,
+			email,
+			password,
+			isTooManyAttempts,
+			meta
+		}
+	})
+
+	get breadCrumbPath() {
+		return router.currentRoute.value.meta.breadcrumb
+	}
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Auth/LogIn';
+@import '@/Assets/Styles/Components/Form/FormProvider.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseTextarea.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseInput.scss';
+@import '@/Assets/Styles/Pages/Auth/LogIn.scss';
 </style>

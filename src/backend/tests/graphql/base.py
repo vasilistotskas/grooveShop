@@ -6,7 +6,7 @@ from django.test import TestCase
 
 class GRAPHQLBaseTestClass(TestCase):
 
-    URL = "/my-graphql-url"
+    URL = "/graphql/"
 
     def setUp(self) -> None:
         self.client = Client()

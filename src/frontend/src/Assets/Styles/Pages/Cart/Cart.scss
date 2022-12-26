@@ -1,65 +1,65 @@
 .cart-grid-container {
-  background-color: var(--cp-palette-main-secondary);
-  border-radius: 10px;
-  display: grid;
-  grid-gap: 25px;
-  grid-template-rows: minmax(90px, 1fr);
-  padding: 15px 30px 30px;
+	background-color: var(--cp-palette-main-secondary);
+	border-radius: 10px;
+	display: grid;
+	grid-gap: 25px;
+	grid-template-rows: minmax(90px, 1fr);
+	padding: 15px 30px 30px;
 
-  h2 {
-    color: var(--cp-palette-main-fifth);
-  }
+	h2 {
+		color: var(--cp-palette-main-fifth);
+	}
 
-  .grid-container-item {
-    &-one {
-    }
+	.grid-container-item {
+		&-one {
+		}
 
-    &-two {
-      display: grid;
-      grid-gap: 10px;
-      grid-template-rows: minmax(50px, 1fr);
+		&-two {
+			display: grid;
+			grid-gap: 10px;
+			grid-template-rows: minmax(50px, 1fr);
 
-      .grid-container-table {
-        align-items: center;
-        display: grid;
-        grid-template-columns: 44% 19% 18% 19%;
-        justify-items: center;
+			.grid-container-table {
+				align-items: center;
+				display: grid;
+				grid-template-columns: 44% 19% 18% 19%;
+				justify-items: center;
 
-        div {
-          color: var(--cp-palette-main-fifth);
-          font-weight: 500;
-        }
-      }
-    }
+				div {
+					color: var(--cp-palette-main-fifth);
+					font-weight: 500;
+				}
+			}
+		}
 
-    &-three {
-      align-items: center;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      justify-content: center;
+		&-three {
+			align-items: center;
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			justify-content: center;
 
-      .grid-container-child-two {
-        align-self: end;
-        justify-self: end;
-      }
-    }
-  }
+			.grid-container-child-two {
+				align-self: end;
+				justify-self: end;
+			}
+		}
+	}
 
-  .grid-container-table-items {
-    display: grid;
-    grid-gap: 10px;
-  }
+	.grid-container-table-items {
+		display: grid;
+		grid-gap: 10px;
+	}
 }
 
 .grid-container-child-one {
-  color: var(--cp-palette-main-fifth);
+	color: var(--cp-palette-main-fifth);
 }
 
 .cart-empty {
-  align-content: center;
-  display: grid;
-  justify-content: center;
-  p {
-    font-size: 36px;
-  }
+	align-content: center;
+	display: grid;
+	justify-content: center;
+	p {
+		font-size: 36px;
+	}
 }

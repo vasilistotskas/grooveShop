@@ -12,6 +12,8 @@ class CountPaginator(pagination.PageNumberPagination):
                 },
                 "count": self.page.paginator.count,
                 "total_pages": self.page.paginator.num_pages,
+                "page_size": self.page.paginator.per_page,
+                "page": self.page.number,
                 "results": data,
             }
         )

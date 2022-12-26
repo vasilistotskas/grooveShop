@@ -1,6 +1,6 @@
 export type Nullable<T> = T | null
 export type HTMLElementEvent<T extends HTMLElement> = Event & {
-  target: T
-  // probably you might want to add the currentTarget as well
-  // currentTarget: T;
+	target: T
+	// probably you might want to add the currentTarget as well
+	// currentTarget: T;
 }

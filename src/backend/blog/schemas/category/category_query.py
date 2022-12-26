@@ -7,4 +7,4 @@ from backend.blog.schemas.category.category_type import CategoryType
 
 @strawberry.type
 class Query:
-    allCategories: List[CategoryType] = strawberry_django.field()
+    categories: List[CategoryType] = strawberry_django.field()

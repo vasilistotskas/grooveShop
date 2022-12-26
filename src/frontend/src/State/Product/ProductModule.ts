@@ -8,93 +8,83 @@ import AppBaseModule from '@/State/Common/AppBaseModule'
 import { Module, Action, Mutation } from 'vuex-module-decorators'
 
 @Module({
-  dynamic: true,
-  namespaced: true,
-  store: store,
-  stateFactory: true,
-  name: 'product',
+	dynamic: true,
+	namespaced: true,
+	store: store,
+	stateFactory: true,
+	name: 'product'
 })
 export default class ProductModule extends AppBaseModule {
-  product = new ProductModel()
-  latestProducts: Array<ProductModel> = []
-  product_id!: number
+	product!: ProductModel
+	latestProducts: Array<ProductModel> = []
 
-  get getProductData(): ProductModel {
-    return this.product
-  }
+	get getProductData(): ProductModel {
+		return this.product
+	}
 
-  get getProductId(): number {
-    return this.product_id
-  }
+	get getLatestProductData(): ProductModel[] {
+		return this.latestProducts
+	}
 
-  get getLatestProductData(): ProductModel[] {
-    return this.latestProducts
-  }
+	get addToCartButtonText(): string {
+		return this.product?.active === 'False' || this.product?.stock <= 0
+			? 'Out Of Stock'
+			: 'Add To Cart'
+	}
 
-  get addToCartButtonText(): string {
-    return this.product.active === 'False' || this.product.stock <= 0
-      ? 'Out Of Stock'
-      : 'Add To Cart'
-  }
+	@Mutation
+	setProduct(product: ProductModel): void {
+		this.product = product
+	}
 
-  @Mutation
-  setProduct(product: ProductModel): void {
-    this.product = product
-  }
+	@Mutation
+	setLatestProduct(latestProducts: ProductModel[]): void {
+		this.latestProducts = latestProducts
+	}
 
-  @Mutation
-  setProductId(productId: number): void {
-    this.product_id = productId
-  }
+	@Action
+	async fetchProductFromRemote(): Promise<void> {
+		const category_slug = router.currentRoute.value.params.category_slug
+		const product_slug = router.currentRoute.value.params.product_slug
 
-  @Mutation
-  setLatestProduct(latestProducts: ProductModel[]): void {
-    this.latestProducts = latestProducts
-  }
+		return await api
+			.get(`products/${category_slug}/${product_slug}`)
+			.then((response: AxiosResponse<ProductModel>) => {
+				const data = response.data
+				this.context.commit('setProduct', data)
+			})
+			.catch((e: Error) => {
+				console.log(e)
+			})
+	}
 
-  @Action
-  fetchProductFromRemote(): Promise<void> {
-    const category_slug = router.currentRoute.value.params.category_slug
-    const product_slug = router.currentRoute.value.params.product_slug
+	@Action
+	async fetchLatestProductsFromRemote(): Promise<void> {
+		return await api
+			.get('latest-products/')
+			.then((response: AxiosResponse<Array<ProductModel>>) => {
+				const data = response.data
+				const latestProduct = map(data, (rawProduct) => new ProductModel(rawProduct))
+				this.context.commit('setLatestProduct', latestProduct)
+			})
+			.catch((e: Error) => {
+				console.log(e)
+			})
+	}
 
-    return api
-      .get(`products/${category_slug}/${product_slug}`)
-      .then((response: AxiosResponse<ProductModel>) => {
-        const data = response.data
-        const product = new ProductModel(data)
-        this.context.commit('setProduct', product)
-        this.context.commit('setProductId', data.id)
-      })
-      .catch((e: Error) => {
-        console.log(e)
-      })
-  }
+	@Action
+	async updateProductHits(): Promise<unknown> {
+		const category_slug = router.currentRoute.value.params.category_slug
+		const product_slug = router.currentRoute.value.params.product_slug
 
-  @Action
-  fetchLatestProductsFromRemote(): Promise<void> {
-    return api
-      .get('latest-products/')
-      .then((response: AxiosResponse<Array<ProductModel>>) => {
-        const data = response.data
-        const latestProduct = map(data, (rawProduct) => new ProductModel(rawProduct))
-        this.context.commit('setLatestProduct', latestProduct)
-      })
-      .catch((e: Error) => {
-        console.log(e)
-      })
-  }
+		if (!category_slug && product_slug) {
+			return Promise.resolve()
+		}
 
-  @Action
-  updateProductHits(): Promise<unknown> {
-    const category_slug = router.currentRoute.value.params.category_slug
-    const product_slug = router.currentRoute.value.params.product_slug
-
-    if (!this.product) {
-      throw new Error()
-    }
-
-    return api.patch(`products/${category_slug}/${product_slug}/`).catch((e: Error) => {
-      console.log(e)
-    })
-  }
+		return await api
+			.patch(`products/${category_slug}/${product_slug}/`)
+			.catch((e: Error) => {
+				console.log(e)
+			})
+	}
 }

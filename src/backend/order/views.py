@@ -37,14 +37,14 @@ class Checkout(APIView):
             item.get("quantity") * item.get("product").price for item in items
         )
         pay_way_cost = 0
-        pay_way = PayWay.objects.get(name=PayWayEnum.CreditCard)
+        pay_way = PayWay.objects.get(name=PayWayEnum.choices().CreditCard)
         if pay_way.free_for_order_amount > paid_amount:
             pay_way_cost = pay_way.cost
         paid_amount += pay_way_cost
         return paid_amount
 
     def create_order(self, request, paid_amount, serializer, items, pay_way_name):
-        if pay_way_name == PayWayEnum.CreditCard:
+        if pay_way_name == PayWayEnum.choices().CreditCard:
             stripe.Charge.create(
                 amount=int(paid_amount * 100),
                 currency="USD",
@@ -88,6 +88,8 @@ class UserOrdersList(generics.ListAPIView):
     serializer_class = UserOrderSerializer
 
     def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return Order.objects.none()
         user = self.request.user
         return Order.objects.filter(user=user)
 

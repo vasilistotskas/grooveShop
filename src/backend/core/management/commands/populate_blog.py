@@ -2,10 +2,10 @@ import os
 from random import randrange
 
 from backend.app.settings import BASE_DIR
-from backend.blog.models import Author
-from backend.blog.models import Category
-from backend.blog.models import Post
-from backend.blog.models import Tag
+from backend.blog.models.author import BlogAuthor
+from backend.blog.models.category import BlogCategory
+from backend.blog.models.post import BlogPost
+from backend.blog.models.tag import BlogTag
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -22,14 +22,14 @@ class Command(BaseCommand):
         faker = Faker()
         for _ in range(5):
             name = faker.name()
-            Post.objects.create(
+            BlogPost.objects.create(
                 title=name,
                 subtitle=faker.text(20),
                 slug=slugify(name),
                 body=faker.text(100),
                 meta_description=faker.text(10),
                 is_published=True,
-                author=Author.objects.get(id=author_id),
+                author=BlogAuthor.objects.get(id=author_id),
                 image=img,
                 category_id=category_id,
             )
@@ -50,17 +50,17 @@ class Command(BaseCommand):
                 content_type="image/jpeg",
             )
 
-        author, created = Author.objects.get_or_create(
+        author, created = BlogAuthor.objects.get_or_create(
             defaults={"user_id": user_id, "website": website, "bio": bio}
         )
 
         try:
-            intermediate_category = Category.objects.get(
+            intermediate_category = BlogCategory.objects.get(
                 slug="intermediate",
             )
             self.create_posts(author.id, img, intermediate_category.id)
-        except Category.DoesNotExist:
-            intermediate_category = Category(
+        except BlogCategory.DoesNotExist:
+            intermediate_category = BlogCategory(
                 name="Intermediate",
                 slug="intermediate",
                 description=faker.text(100),
@@ -69,12 +69,12 @@ class Command(BaseCommand):
             self.create_posts(author.id, img, intermediate_category.id)
 
         try:
-            beginner_category = Category.objects.get(
+            beginner_category = BlogCategory.objects.get(
                 slug="beginner",
             )
             self.create_posts(author.id, img, beginner_category.id)
-        except Category.DoesNotExist:
-            beginner_category = Category(
+        except BlogCategory.DoesNotExist:
+            beginner_category = BlogCategory(
                 name="Beginner",
                 slug="beginner",
                 description=faker.text(100),
@@ -83,12 +83,12 @@ class Command(BaseCommand):
             self.create_posts(author.id, img, beginner_category.id)
 
         try:
-            master_category = Category.objects.get(
+            master_category = BlogCategory.objects.get(
                 slug="master",
             )
             self.create_posts(author.id, img, master_category.id)
-        except Category.DoesNotExist:
-            master_category = Category(
+        except BlogCategory.DoesNotExist:
+            master_category = BlogCategory(
                 name="Master",
                 slug="master",
                 description=faker.text(100),
@@ -97,7 +97,7 @@ class Command(BaseCommand):
             self.create_posts(author.id, img, master_category.id)
 
         for _ in range(2):
-            Tag.objects.create(
+            BlogTag.objects.create(
                 name=faker.name(),
             )
 

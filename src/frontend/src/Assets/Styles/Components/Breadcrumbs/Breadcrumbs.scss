@@ -1,82 +1,82 @@
 .breadcrumb {
-  background-color: transparent;
-  border: 0;
-  border-radius: 0.25rem;
-  display: flex;
-  flex-wrap: wrap;
-  font-size: 13px;
-  justify-content: center;
-  list-style: none;
-  margin-bottom: 0;
-  padding-bottom: 0;
-  padding-top: 0;
-  top: 0;
+	background-color: transparent;
+	border: 0;
+	border-radius: 0.25rem;
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 13px;
+	justify-content: center;
+	list-style: none;
+	margin-bottom: 0;
+	padding-bottom: 0;
+	padding-top: 0;
+	top: 0;
 
-  &__item {
-    cursor: pointer;
-    display: inline-flex;
+	&__item {
+		cursor: pointer;
+		display: inline-flex;
 
-    &:hover {
-      color: var(--cp-palette-main-fifth);
-    }
+		&:hover {
+			color: var(--cp-palette-main-fifth);
+		}
 
-    a {
-      color: var(--cp-palette-main-third);
-    }
+		a {
+			color: var(--cp-palette-main-third);
+		}
 
-    a.router-link-exact-active {
-      span.breadcrumb__title {
-        font-weight: 500;
-      }
-    }
+		a.router-link-exact-active {
+			span.breadcrumb__title {
+				font-weight: 500;
+			}
+		}
 
-    &:last-child {
-      span.breadcrumb__seperator {
-        display: none;
-      }
-    }
-  }
+		&:last-child {
+			span.breadcrumb__seperator {
+				display: none;
+			}
+		}
+	}
 
-  &__inner {
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    z-index: 2;
-  }
+	&__inner {
+		display: flex;
+		flex-direction: column;
+		margin: auto;
+		z-index: 2;
+	}
 
-  &__title {
-    font-size: 13px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+	&__title {
+		font-size: 13px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 
-  &__seperator {
-    margin-left: 8px;
-    margin-right: 8px;
-  }
+	&__seperator {
+		margin-left: 8px;
+		margin-right: 8px;
+	}
 }
 
 @media all and (max-width: 1000px) {
-  .breadcrumb {
-    height: 35px;
-  }
+	.breadcrumb {
+		height: 35px;
+	}
 
-  .breadcrumb__title {
-    font-size: 10px;
-  }
+	.breadcrumb__title {
+		font-size: 10px;
+	}
 
-  .breadcrumb__item {
-    padding: 0 30px;
-  }
+	.breadcrumb__item {
+		padding: 0 30px;
+	}
 }
 
 @media all and (max-width: 710px) {
-  .breadcrumb {
-    height: 30px;
-  }
+	.breadcrumb {
+		height: 30px;
+	}
 
-  .breadcrumb__item {
-    padding: 0 20px;
-  }
+	.breadcrumb__item {
+		padding: 0 20px;
+	}
 }

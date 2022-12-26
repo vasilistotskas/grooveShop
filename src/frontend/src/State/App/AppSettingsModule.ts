@@ -7,79 +7,95 @@ import AppSettingsUpdatable from '@/State/App/AppSettingsUpdatable'
 import AppSettingsThemeModeOption from '@/State/App/AppSettingsThemeModeOption'
 
 @Module({
-  dynamic: true,
-  namespaced: true,
-  store: store,
-  stateFactory: true,
-  name: 'settings',
+	dynamic: true,
+	namespaced: true,
+	store: store,
+	stateFactory: true,
+	name: 'settings'
 })
 export default class AppSettingsModule extends AppBaseModule {
-  settings = new AppSettings()
-  settingsUpdatable!: AppSettingsUpdatable
+	settings = new AppSettings()
+	settingsUpdatable!: AppSettingsUpdatable
 
-  get getSettings(): AppSettings {
-    return this.settings
-  }
+	get getSettings(): AppSettings {
+		return this.settings
+	}
 
-  get getSettingsUpdatable(): AppSettingsUpdatable {
-    return this.settingsUpdatable
-  }
+	get getSettingsUpdatable(): AppSettingsUpdatable {
+		return this.settingsUpdatable
+	}
 
-  @Action
-  async toggleThemeMode(): Promise<AppSettingsThemeModeOption> {
-    const currentThemeMode = this.context.getters['getSettings'].themeMode
-    const nextThemeMode =
-      currentThemeMode === AppSettingsThemeModeOption.light
-        ? AppSettingsThemeModeOption.dark
-        : AppSettingsThemeModeOption.light
-    await this.context.dispatch('updateSetting', { key: 'themeMode', value: nextThemeMode })
+	@Action
+	async toggleThemeMode(): Promise<AppSettingsThemeModeOption> {
+		const currentThemeMode = this.context.getters['getSettings']?.themeMode
 
-    localStorage.setItem('themeModeFromLocalStorage', nextThemeMode)
+		const nextThemeMode =
+			currentThemeMode === AppSettingsThemeModeOption.light
+				? AppSettingsThemeModeOption.dark
+				: AppSettingsThemeModeOption.light
 
-    return nextThemeMode
-  }
+		await this.context.dispatch('updateSetting', {
+			key: 'themeMode',
+			value: nextThemeMode
+		})
 
-  @Action
-  async toggleThemeModeFromPreference(
-    themeModePreference: AppSettingsThemeModeOption
-  ): Promise<AppSettingsThemeModeOption> {
-    const themeModeFromPreference = themeModePreference
+		localStorage.setItem('themeModeFromLocalStorage', nextThemeMode)
 
-    await this.context.dispatch('updateSetting', {
-      key: 'themeMode',
-      value: themeModeFromPreference,
-    })
-    return themeModeFromPreference
-  }
+		return nextThemeMode
+	}
 
-  @Action
-  async init(): Promise<void> {
-    await this.context.dispatch('createUpdatable')
-  }
+	@Action
+	async toggleThemeModeFromPreference(
+		themeModePreference: AppSettingsThemeModeOption
+	): Promise<AppSettingsThemeModeOption> {
+		const themeModeFromPreference = themeModePreference
 
-  @Action
-  async updateSetting({ key, value }: { key: keyof AppSettings; value: never }): Promise<void> {
-    const settings = cloneDeep(this.context.getters['getSettings']) as AppSettings
-    settings.themeMode = value
+		await this.context.dispatch('updateSetting', {
+			key: 'themeMode',
+			value: themeModeFromPreference
+		})
+		return themeModeFromPreference
+	}
 
-    this.context.commit('setSettings', settings)
-    await this.context.dispatch('createUpdatable')
-  }
+	@Action
+	async init(): Promise<void> {
+		await this.context.dispatch('createUpdatable')
+	}
 
-  @Action
-  async createUpdatable(): Promise<void> {
-    const settingsUpdatable = new AppSettingsUpdatable()
-    await settingsUpdatable.transformFromEntityBase(this.context.getters['getSettings'])
-    this.context.commit('setSettingsUpdatable', settingsUpdatable)
-  }
+	@Action
+	async updateSetting({
+		key,
+		value
+	}: {
+		key: keyof AppSettings
+		value: never
+	}): Promise<void> {
+		const settings = cloneDeep(this.context.getters['getSettings']) as AppSettings
 
-  @Mutation
-  setSettings(settings: AppSettings): void {
-    this.settings = settings
-  }
+		if (!settings) {
+			return
+		}
 
-  @Mutation
-  setSettingsUpdatable(settingsUpdatable: AppSettingsUpdatable): void {
-    this.settingsUpdatable = settingsUpdatable
-  }
+		settings.themeMode = value
+
+		this.context.commit('setSettings', settings)
+		await this.context.dispatch('createUpdatable')
+	}
+
+	@Action
+	async createUpdatable(): Promise<void> {
+		const settingsUpdatable = new AppSettingsUpdatable()
+		await settingsUpdatable.transformFromEntityBase(this.context.getters['getSettings'])
+		this.context.commit('setSettingsUpdatable', settingsUpdatable)
+	}
+
+	@Mutation
+	setSettings(settings: AppSettings): void {
+		this.settings = settings
+	}
+
+	@Mutation
+	setSettingsUpdatable(settingsUpdatable: AppSettingsUpdatable): void {
+		this.settingsUpdatable = settingsUpdatable
+	}
 }

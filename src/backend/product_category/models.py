@@ -68,8 +68,8 @@ class Category(MPTTModel, TimeStampMixinModel, SeoModel):
             return ""
 
     class Meta:
-        verbose_name_plural: str = "Categories"
-        ordering: tuple[str] = ("id",)
+        verbose_name_plural = "Categories"
+        ordering = ("id",)
 
     class MPTTMeta:
         order_insertion_by: list[str] = ["name"]

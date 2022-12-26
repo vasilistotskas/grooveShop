@@ -1,44 +1,45 @@
 <template>
-  <div>
-    <div
-      v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0"
-      class="container"
-    >
-      <div class="user-reviews-grid mb-4">
-        <ReviewProductCard
-          v-for="review in allPaginatedResults"
-          :key="review.id"
-          :class="{ 'current-user-review-card': review.user_id === userId }"
-          :review="review"
-          :user-id="userId"
-          class="product-review-main-card"
-        />
-      </div>
-      <Pagination
-        v-if="Object.keys(allPaginatedResults).length !== 0"
-        :endpoint-url="buildEndPointUrlForPaginatedResults()"
-        :max-visible-buttons="3"
-        :route="PaginationRoutesEnum.REVIEWS"
-        :total-pages="allPaginatedResultsTotalPages"
-        :namespace="paginationNamespace"
-      />
-    </div>
-    <div v-else class="user_profile-no-data">
-      <h1>NO REVIEWS</h1>
-    </div>
-  </div>
+	<div>
+		<div
+			v-if="allPaginatedResults && Object.keys(allPaginatedResults).length > 0"
+			class="container"
+		>
+			<div class="user-reviews-grid mb-4">
+				<ReviewProductCard
+					v-for="review in allPaginatedResults"
+					:key="review.id"
+					:class="{
+						'current-user-review-card':
+							review.userprofile.id === userModule.getUserProfile.id
+					}"
+					:review="review"
+					:user-id="userModule.getUserProfile.id"
+					class="product-review-main-card"
+				/>
+			</div>
+			<Pagination
+				v-if="Object.keys(allPaginatedResults).length !== 0"
+				:endpoint-url="buildEndPointUrlForPaginatedResults()"
+				:max-visible-buttons="3"
+				:route="PaginationRoutesEnum.REVIEWS"
+				:total-pages="allPaginatedResultsTotalPages"
+				:namespace="paginationNamespace"
+			/>
+		</div>
+		<div v-else class="user_profile-no-data">
+			<h1>NO REVIEWS</h1>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">
-import { PropType } from 'vue'
-import { AxiosResponse } from 'axios'
+import { useMeta } from 'vue-meta'
+import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import UserModule from '@/State/User/Profile/UserModule'
-import { Options as Component } from 'vue-class-component'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import Pagination from '@/Components/Pagination/Pagination.vue'
-import PaginationModule from '@/State/Pagination/PaginationModule'
-import UserProfileModel from '@/State/User/Profile/UserProfileModel'
+import { Options as Component, setup } from 'vue-class-component'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 import ProductReviewModel from '@/State/Product/Review/ProductReviewModel'
 import { PaginationModel } from '@/State/Pagination/Model/PaginationModel'
@@ -49,77 +50,75 @@ import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedC
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
 
 @Component({
-  name: 'UserReviews',
-  extends: PaginatedComponent,
-  components: {
-    ReviewProductCard,
-    Pagination,
-  },
-  props: {
-    userData: {
-      type: Object as PropType<UserProfileModel>,
-      required: true,
-    },
-  },
+	name: 'UserReviews',
+	extends: PaginatedComponent,
+	components: {
+		ReviewProductCard,
+		Pagination
+	}
 })
 export default class UserReviews
-  extends PaginatedComponent<ProductReviewModel>
-  implements PaginatedComponentInterface<ProductReviewModel>
+	extends PaginatedComponent<ProductReviewModel>
+	implements PaginatedComponentInterface<ProductReviewModel>
 {
-  userModule = getModule(UserModule)
-  paginationModule = getModule<PaginationModule<ProductReviewModel>>(PaginationModule)
-  userData = new UserProfileModel()
-  PaginationRoutesEnum = PaginationRoutesEnum
-  paginationNamespace = PaginationNamespaceTypesEnum.USER_REVIEWS
+	userModule = getModule(UserModule)
+	PaginationRoutesEnum = PaginationRoutesEnum
+	paginationNamespace = PaginationNamespaceTypesEnum.USER_REVIEWS
 
-  get userId(): number | undefined {
-    return this.userModule.getUserId
-  }
+	myContext = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Reviews`,
+				description: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Reviews`
+			}))
+		)
+		return {
+			meta
+		}
+	})
 
-  created(): void {
-    document.title = 'My Reviews'
+	created(): void {
+		if (this.params.query) {
+			this.paginationModule.setCurrentQuery({
+				queryParams: this.params.query,
+				namespace: this.paginationNamespace
+			})
+		}
+		this.paginationModule.setCurrentPageNumber({
+			pageNumber: 1,
+			namespace: this.paginationNamespace
+		})
 
-    if (this.params.query) {
-      this.paginationModule.setCurrentQuery({
-        queryParams: this.params.query,
-        namespace: this.paginationNamespace,
-      })
-    }
-    this.paginationModule.setCurrentPageNumber({
-      pageNumber: 1,
-      namespace: this.paginationNamespace,
-    })
+		if (this.params.page) {
+			this.paginationModule.setCurrentPageNumber({
+				pageNumber: Number(this.params.page),
+				namespace: this.paginationNamespace
+			})
+		}
 
-    if (this.params.page) {
-      this.paginationModule.setCurrentPageNumber({
-        pageNumber: Number(this.params.page),
-        namespace: this.paginationNamespace,
-      })
-    }
+		this.fetchPaginationData<ProductReviewModel>()
+	}
 
-    this.fetchPaginationData<ProductReviewModel>()
-  }
+	fetchPaginationData<T>(): Promise<void | PaginatedModel<T>> {
+		const paginationQuery = PaginationModel.createPaginationModel({
+			pageNumber: this.currentPageNumber,
+			endpointUrl: this.buildEndPointUrlForPaginatedResults(),
+			method: ApiBaseMethods.GET
+		})
 
-  fetchPaginationData<T>(): Promise<void | AxiosResponse<Partial<PaginatedModel<T>>>> {
-    const paginationQuery = PaginationModel.createPaginationModel({
-      pageNumber: this.currentPageNumber,
-      endpointUrl: this.buildEndPointUrlForPaginatedResults(),
-      method: ApiBaseMethods.GET,
-    })
+		return this.paginationModule.fetchPaginatedResults({
+			params: paginationQuery,
+			namespace: this.paginationNamespace
+		})
+	}
 
-    return this.paginationModule.fetchPaginatedResults({
-      params: paginationQuery,
-      namespace: this.paginationNamespace,
-    })
-  }
-
-  public buildEndPointUrlForPaginatedResults(): string {
-    const userId = this.userData.id
-    return `reviews/user/${userId}`
-  }
+	public buildEndPointUrlForPaginatedResults(): string {
+		const userId = this.userModule.getUserProfile.id
+		return `reviews/user/${userId}`
+	}
 }
 </script>
 
 <style lang="scss">
-@import '@/Assets/Styles/Pages/User/UserReviews';
+@import '@/Assets/Styles/Pages/User/UserReviews.scss';
 </style>

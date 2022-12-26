@@ -1,0 +1,13 @@
+name: grooveshop_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python>=3.10
+  - pip
+  - django
+  - psycopg2-binary
+  - whitenoise
+  - django-cors-headers
+  - pip:
+    - -r requirements.txt

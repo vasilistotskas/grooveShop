@@ -5,28 +5,31 @@ import AppSettingsThemeModeOption from '@/State/App/AppSettingsThemeModeOption'
 import EntityUpdatableItemFieldType from '@/State/Common/EntityUpdatableItemFieldType'
 
 export default class AppSettingsUpdatable extends EntityUpdatable<
-  AppSettingsUpdatable,
-  AppSettings
+	AppSettingsUpdatable,
+	AppSettings
 > {
-  themeMode!: EntityUpdatableItemFieldType<AppSettingsThemeModeOption, EntityUpdatableTypes>
+	themeMode!: EntityUpdatableItemFieldType<
+		AppSettingsThemeModeOption,
+		EntityUpdatableTypes
+	>
 
-  static makeEntityBase(entityUpdatable: AppSettingsUpdatable): AppSettings {
-    return new AppSettings({
-      themeMode: entityUpdatable.themeMode.value,
-    })
-  }
+	static makeEntityBase(entityUpdatable: AppSettingsUpdatable): AppSettings {
+		return new AppSettings({
+			themeMode: entityUpdatable.themeMode.value
+		})
+	}
 
-  public makeEntityBase(): AppSettings {
-    return AppSettingsUpdatable.makeEntityBase(this)
-  }
+	public makeEntityBase(): AppSettings {
+		return AppSettingsUpdatable.makeEntityBase(this)
+	}
 
-  public async transformFromEntityBase(entity: Partial<AppSettings>): Promise<void> {
-    this.setupInputFieldSimpleDropdown(
-      'themeMode',
-      'themeMode',
-      entity,
-      AppSettingsThemeModeOption as unknown as Record<string, never>,
-      'update.dynamic.themeMode'
-    )
-  }
+	public async transformFromEntityBase(entity: Partial<AppSettings>): Promise<void> {
+		this.setupInputFieldSimpleDropdown(
+			'themeMode',
+			'themeMode',
+			entity,
+			AppSettingsThemeModeOption as unknown as Record<string, never>,
+			'update.dynamic.themeMode'
+		)
+	}
 }

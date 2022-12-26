@@ -1,240 +1,220 @@
 <template>
-  <div class="page-sign-up mt-7 mb-5">
-    <div class="container">
-      <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
-      <template v-if="registrationLoading"> loading... </template>
-      <template v-else-if="!registrationCompleted">
-        <div class="card sign-up-card">
-          <div class="card-body card-body-border-top">
-            <FormProvider
-              :errors="formManager.errors"
-              :form="formManager.form"
-              title="Register"
-              @submit="handleSubmit()"
-            >
-              <div class="container">
-                <div class="email mb-3">
-                  <label :for="String(formManager.form.email.$uid)" class="label mb-2">Email</label>
-                  <FormBaseInput
-                    :id="formManager.form.email.$uid"
-                    v-model="formManager.form.email.$value"
-                    :has-error="formManager.form.email.$hasError"
-                    :input-with-add-on="true"
-                    :input-with-add-on-icon="envelopeIcon"
-                    :validating="formManager.form.email.$validating"
-                    placeholder="Alice, Bob, Oscar"
-                    autocomplete="username"
-                  />
-                  <FormValidationErrors
-                    :errors="formManager.form.email.$errors"
-                    class="validation-errors"
-                  />
-                </div>
-                <div class="password mb-3">
-                  <label :for="String(formManager.form.password.$uid)" class="label mb-2"
-                    >Password</label
-                  >
-                  <FormBaseInput
-                    :id="formManager.form.password.$uid"
-                    v-model="formManager.form.password.$value"
-                    :has-error="formManager.form.password.$hasError"
-                    :input-with-add-on="true"
-                    :input-with-add-on-icon="keyIcon"
-                    type="password"
-                    autocomplete="new-password"
-                  />
-                  <FormValidationErrors :errors="formManager.form.password.$errors" />
-                </div>
+	<div class="page-sign-up mt-7 mb-5">
+		<div class="container">
+			<Breadcrumbs :bread-crumb-path="breadCrumbPath" />
+			<template v-if="signupModule.getRegistrationLoading"> loading... </template>
+			<template v-else-if="!signupModule.getRegistrationCompleted">
+				<div class="card sign-up-card">
+					<div class="card-body card-body-border-top">
+						<h1 class="plr-15 mb-3 mt-3">Sign Up</h1>
+						<form
+							@submit="myContext.onSubmit"
+							class="_form"
+							id="SignUpForm"
+							name="SignUpForm"
+						>
+							<div class="container">
+								<div class="email mb-3">
+									<label for="email" class="label mb-2">Email</label>
+									<div class="_container">
+										<input
+											v-model="myContext.email"
+											id="email"
+											name="email"
+											type="email"
+											class="_input"
+											placeholder="Email"
+											autocomplete="email"
+										/>
+									</div>
+									<span class="validation-errors">{{ myContext.errors.email }}</span>
+								</div>
+								<div class="password mb-3">
+									<label for="password" class="label mb-2">Password</label>
+									<div class="_container">
+										<input
+											v-model="myContext.password"
+											id="password"
+											name="password"
+											type="password"
+											class="_input"
+											placeholder="Password"
+											autocomplete="current-password"
+										/>
+									</div>
+									<span class="validation-errors">{{ myContext.errors.password }}</span>
+								</div>
 
-                <div class="confirm-password mb-4">
-                  <label :for="String(formManager.form.confirmPassword.$uid)" class="label mb-2">
-                    Confirm Password
-                  </label>
-                  <FormBaseInput
-                    :id="formManager.form.confirmPassword.$uid"
-                    v-model="formManager.form.confirmPassword.$value"
-                    :has-error="formManager.form.confirmPassword.$hasError"
-                    :input-with-add-on="true"
-                    :input-with-add-on-icon="keyIcon"
-                    type="password"
-                    autocomplete="new-password"
-                  />
-                  <FormValidationErrors :errors="formManager.form.confirmPassword.$errors" />
-                </div>
-                <span v-show="registrationError" class="error">
-                  An error occured while processing your request.
-                </span>
-                <FormSubmitButtons
-                  :submitting="formManager.submitting"
-                  class="buttons"
-                  gap="2rem"
-                  @reset="formManager.resetFields()"
-                />
-              </div>
-              <p class="register-login-field mt-4 mb-4">
-                Or
-                <RouterLink aria-label="Log In" title="Log In" to="/log-in">
-                  click here
-                </RouterLink>
-                to log in!
-              </p>
-            </FormProvider>
-          </div>
-        </div>
-      </template>
-      <template v-else>
-        <div class="registration-complete-message container mt-5">
-          <div class="registration-complete-message-content">
-            <span>
-              Registration complete. You should receive an email shortly with instructions on how to
-              activate your account.
-            </span>
-            <p class="mt-3">
-              If you cant find email check your spam folder , if its not there click
-              <span class="registration-resend-action" @click="activationEmailResend">Here</span> to
-              receive new activation email.
-            </p>
-          </div>
-        </div>
-      </template>
-    </div>
-  </div>
+								<div class="confirm-password mb-4">
+									<label for="password" class="label mb-2">Confirm Password</label>
+									<div class="_container">
+										<input
+											v-model="myContext.re_password"
+											id="re_password"
+											name="re_password"
+											type="password"
+											class="_input"
+											placeholder="Confirm Password"
+											autocomplete="new-password"
+										/>
+									</div>
+									<span class="validation-errors">{{
+										myContext.errors.re_password
+									}}</span>
+								</div>
+								<span v-show="signupModule.getRegistrationError" class="error">
+									An error occurred while processing your request.
+								</span>
+								<button
+									v-if="!myContext.isTooManyAttempts"
+									class="btn btn-outline-primary-one green-bg"
+									title="Sign Up"
+								>
+									Sign Up
+								</button>
+								<span v-else>Too many attempts try again later</span>
+							</div>
+							<p class="register-login-field mt-4 mb-4">
+								Or
+								<RouterLink aria-label="Log In" title="Log In" to="/log-in">
+									click here
+								</RouterLink>
+								to log in!
+							</p>
+						</form>
+					</div>
+				</div>
+			</template>
+			<template v-else>
+				<div class="registration-complete-message container mt-5">
+					<div class="registration-complete-message-content">
+						<span>
+							Registration complete. You should receive an email shortly with instructions
+							on how to activate your account.
+						</span>
+						<p class="mt-3">
+							If you cant find email check your spam folder , if its not there click
+							<span class="registration-resend-action" @click="activationEmailResend"
+								>Here</span
+							>
+							to receive new activation email.
+						</p>
+					</div>
+				</div>
+			</template>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">
 import router from '@/Routes'
+import { useMeta } from 'vue-meta'
+import { computed } from '@vue/runtime-core'
+import { ZodSignup } from '@/Zod/Auth/ZodAuth'
 import { getModule } from 'vuex-module-decorators'
+import { toFormValidator } from '@vee-validate/zod'
 import SignUpModule from '@/State/Auth/SignUp/SignUpModule'
-import { min, email, equal } from '@/Components/Form/Utils'
-import FormProvider from '@/Components/Form/FormProvider.vue'
-import { Options as Component, Vue } from 'vue-class-component'
-import { faKey } from '@fortawesome/free-solid-svg-icons/faKey'
-import FormBaseInput from '@/Components/Form/FormBaseInput.vue'
+import { FieldContext, useField, useForm } from 'vee-validate'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
-import RegisterInputApi from '@/State/Auth/Interface/RegisterInputApi'
-import { useValidation, ValidationError } from 'vue3-form-validation'
-import FormSubmitButtons from '@/Components/Form/FormSubmitButtons.vue'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
+import SignUpInputApi from '@/State/Auth/Interface/SignUpInputApi'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 import VerifyEmailResendInput from '@/Pages/Auth/VerifyEmailResendInput.vue'
-import FormValidationErrors from '@/Components/Form/FormValidationErrors.vue'
-
-let { validateFields } = useValidation({})
 
 @Component({
-  name: 'Register',
-  components: {
-    FormProvider,
-    FormBaseInput,
-    FormSubmitButtons,
-    FormValidationErrors,
-    Breadcrumbs,
-    VerifyEmailResendInput,
-  },
+	name: 'Register',
+	components: {
+		Breadcrumbs,
+		VerifyEmailResendInput
+	}
 })
 export default class Register extends Vue {
-  signupModule = getModule(SignUpModule)
-  activationEmailAtLocalStorage = false
+	signupModule = getModule(SignUpModule)
+	activationEmailAtLocalStorage = false
 
-  formManager = ({ validateFields } = useValidation({
-    email: {
-      $value: '',
-      $rules: [email('Please enter a valid email address')],
-    },
-    password: {
-      $value: '',
-      $rules: [
-        min(8)('Password has to be longer than 7 characters'),
-        {
-          key: 'pw',
-          rule: equal('Passwords do not match'),
-        },
-      ],
-    },
-    confirmPassword: {
-      $value: '',
-      $rules: [
-        min(8)('Password has to be longer than 7 characters'),
-        {
-          key: 'pw',
-          rule: equal('Passwords do not match'),
-        },
-      ],
-    },
-  }))
+	myContext = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: 'Register',
+				description: 'Register'
+			}))
+		)
 
-  envelopeIcon = faEnvelope
-  keyIcon = faKey
+		const validationSchema = toFormValidator(ZodSignup)
+		const { handleSubmit, errors, submitCount } = useForm({
+			validationSchema
+		})
 
-  get breadCrumbPath() {
-    return router.currentRoute.value.meta.breadcrumb
-  }
+		const { value: email }: FieldContext<string> = useField('email')
+		const { value: password }: FieldContext<string> = useField('password')
+		const { value: re_password }: FieldContext<string> = useField('re_password')
 
-  get registrationCompleted(): boolean {
-    return this.signupModule.getRegistrationCompleted
-  }
+		const isTooManyAttempts = computed(() => {
+			return submitCount.value >= 10
+		})
 
-  get registrationError(): boolean {
-    return this.signupModule.getRegistrationError
-  }
+		const onSubmit = handleSubmit(async () => {
+			try {
+				// @TODO: Add first name and last name
+				const apiData: SignUpInputApi = {
+					first_name: 'who',
+					last_name: 'me',
+					email: email.value,
+					password: password.value,
+					re_password: re_password.value
+				}
+				await this.signupModule.setRegistrationEmail(apiData.email)
+				await this.signupModule.createAccount(apiData)
+			} catch (e) {
+				console.log(e)
+			}
+		})
 
-  get registrationLoading(): boolean {
-    return this.signupModule.getRegistrationLoading
-  }
+		return {
+			validationSchema,
+			onSubmit,
+			errors,
+			email,
+			password,
+			re_password,
+			isTooManyAttempts,
+			meta
+		}
+	})
 
-  mounted(): void {
-    document.title = 'Sign Up'
-  }
+	get breadCrumbPath() {
+		return router.currentRoute.value.meta.breadcrumb
+	}
 
-  updated(): void {
-    const emailFromLocalStorage = this.signupModule.getRegistrationEmail
-    if (emailFromLocalStorage) this.activationEmailAtLocalStorage = true
-  }
+	updated(): void {
+		const emailFromLocalStorage = this.signupModule.getRegistrationEmail
+		if (emailFromLocalStorage) this.activationEmailAtLocalStorage = true
+	}
 
-  clearRegistrationStatus(): void {
-    this.signupModule.clearRegistrationStatus()
-  }
+	activationEmailResend(): void {
+		const email = localStorage.getItem('registrationEmail')
 
-  activationEmailResend(): void {
-    const email = localStorage.getItem('registrationEmail')
+		if (email) {
+			this.signupModule.activationEmailResend(email)
+		} else {
+			router.push('/accounts/activate/verify_mail_resend')
+		}
+	}
 
-    if (email) {
-      this.signupModule.activationEmailResend(email)
-    } else {
-      router.push('/accounts/activate/verify_mail_resend')
-    }
-  }
-
-  handleSubmit = async () => {
-    try {
-      const formData: RegisterInputApi = await validateFields()
-      const apiData: RegisterInputApi = {
-        first_name: 'who',
-        last_name: 'me',
-        email: formData.email,
-        password: formData.password,
-        re_password: formData.confirmPassword,
-      }
-      await this.signupModule.setRegistrationEmail(apiData.email)
-      await this.signupModule.createAccount(apiData as FormData)
-    } catch (e) {
-      if (e instanceof ValidationError) {
-        console.log(e.message)
-      }
-    }
-  }
-
-  beforeRouteLeave(
-    to: RouteLocationNormalized,
-    from: RouteLocationNormalized,
-    next: NavigationGuardNext
-  ) {
-    this.clearRegistrationStatus()
-    next()
-  }
+	beforeRouteLeave(
+		to: RouteLocationNormalized,
+		from: RouteLocationNormalized,
+		next: NavigationGuardNext
+	) {
+		this.signupModule.clearRegistrationStatus()
+		next()
+	}
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Auth/SignUp';
+@import '@/Assets/Styles/Components/Form/FormProvider.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseTextarea.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseInput.scss';
+@import '@/Assets/Styles/Pages/Auth/SignUp.scss';
 </style>

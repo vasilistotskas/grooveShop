@@ -4,91 +4,91 @@ import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
 import BreadcrumbItemInterface from '@/Routes/Interface/BreadcrumbItemInterface'
 
 const blogRoutes: Array<RouteRecordRaw> = [
-  {
-    path: MainRoutePaths.BLOG,
-    name: MainRouteNames.BLOG,
-    component: () => import('@/Pages/Blog/Blog.vue'),
-    props: true,
-    meta: {
-      breadcrumb: [
-        {
-          name: 'Blog',
-          to: {
-            full_path: 'blog',
-          },
-        },
-      ] as Array<BreadcrumbItemInterface>,
-    },
-  },
-  {
-    path: MainRoutePaths.AUTHOR,
-    name: MainRouteNames.AUTHOR,
-    component: () => import('@/Pages/Blog/BlogAuthor.vue'),
-    props: true,
-    meta: {
-      breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> =>
-        [
-          {
-            name: 'Blog',
-            to: {
-              full_path: 'blog',
-            },
-          },
-          {
-            name: 'Author - ' + route.id,
-            to: {
-              full_path: 'author' + '/' + route.id,
-            },
-          },
-        ] as Array<BreadcrumbItemInterface>,
-    },
-  },
-  {
-    path: MainRoutePaths.POST,
-    name: MainRouteNames.POST,
-    component: () => import('@/Pages/Blog/BlogPost.vue'),
-    props: true,
-    meta: {
-      breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> =>
-        [
-          {
-            name: 'Blog',
-            to: {
-              full_path: 'blog',
-            },
-          },
-          {
-            name: 'Post - ' + route.slug,
-            to: {
-              full_path: 'post' + '/' + route.slug,
-            },
-          },
-        ] as Array<BreadcrumbItemInterface>,
-    },
-  },
-  {
-    path: MainRoutePaths.POSTS_BY_TAG,
-    name: MainRouteNames.POSTS_BY_TAG,
-    component: () => import('@/Pages/Blog/BlogPostsByTag.vue'),
-    props: true,
-    meta: {
-      breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> =>
-        [
-          {
-            name: 'Blog',
-            to: {
-              full_path: 'blog',
-            },
-          },
-          {
-            name: 'Tag - ' + route.tag,
-            to: {
-              full_path: 'tag' + '/' + route.tag,
-            },
-          },
-        ] as Array<BreadcrumbItemInterface>,
-    },
-  },
+	{
+		path: MainRoutePaths.BLOG,
+		name: MainRouteNames.BLOG,
+		component: () => import('@/Pages/Blog/Blog.vue'),
+		props: true,
+		meta: {
+			breadcrumb: [
+				{
+					name: 'Blog',
+					to: {
+						full_path: 'blog'
+					}
+				}
+			] as Array<BreadcrumbItemInterface>
+		}
+	},
+	{
+		path: MainRoutePaths.AUTHOR,
+		name: MainRouteNames.AUTHOR,
+		component: () => import('@/Pages/Blog/BlogAuthor.vue'),
+		props: true,
+		meta: {
+			breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> =>
+				[
+					{
+						name: 'Blog',
+						to: {
+							full_path: 'blog'
+						}
+					},
+					{
+						name: 'Author - ' + route.id,
+						to: {
+							full_path: 'author' + '/' + route.id
+						}
+					}
+				] as Array<BreadcrumbItemInterface>
+		}
+	},
+	{
+		path: MainRoutePaths.POST,
+		name: MainRouteNames.POST,
+		component: () => import('@/Pages/Blog/BlogPost.vue'),
+		props: true,
+		meta: {
+			breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> =>
+				[
+					{
+						name: 'Blog',
+						to: {
+							full_path: 'blog'
+						}
+					},
+					{
+						name: 'Post - ' + route.slug,
+						to: {
+							full_path: 'post' + '/' + route.slug
+						}
+					}
+				] as Array<BreadcrumbItemInterface>
+		}
+	},
+	{
+		path: MainRoutePaths.POSTS_BY_TAG,
+		name: MainRouteNames.POSTS_BY_TAG,
+		component: () => import('@/Pages/Blog/BlogPostsByTag.vue'),
+		props: true,
+		meta: {
+			breadcrumb: (route: Record<string, string>): Array<BreadcrumbItemInterface> =>
+				[
+					{
+						name: 'Blog',
+						to: {
+							full_path: 'blog'
+						}
+					},
+					{
+						name: 'Tag - ' + route.tag,
+						to: {
+							full_path: 'tag' + '/' + route.tag
+						}
+					}
+				] as Array<BreadcrumbItemInterface>
+		}
+	}
 ]
 
 export default blogRoutes

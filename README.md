@@ -21,7 +21,7 @@
    -     docker-compose run backend sh -c "python manage.py test backend/tests/"
 
    #### Run django tests with coverage and html through docker-compose :
-   -     docker-compose run backend sh -c "coverage run --source='.' manage.py test backend/tests/ && coverage report && coverage html"
+   -     docker-compose run backend sh -c "coverage run --omit=*/migrations/*,*/management/*,*/manage.py,*/setup.py,*/asgi.py,*/wsgi.py --source='.' manage.py test backend/tests/ && coverage report && coverage html"
 
    #### Run django coverage html through docker-compose :
    -     docker-compose run backend sh -c "coverage html"
@@ -52,11 +52,12 @@
 
 
 ## PYTHON
-  ### --- VERSION 3.10.7 ---
+  ### --- VERSION 3.11.0 ---
   ### Virtual Environment :
    -     Install virtualenv : pip install virtualenv
          Create virtual environment : virtualenv <env_name>
-         Activate virtual environment : source <env_name>/bin/activate
+         (Case 1)Activate virtual environment : source <env_name>/bin/activate
+         (Case 2)Activate virtual environment : <env_name>/scripts/activate
          Deactivate virtual environment : deactivate
          Install requirements : pip install -r requirements.txt
          Install requirements for specific environment : pip install -r requirements/<env_name>.txt
@@ -79,7 +80,6 @@
   -     Step 1: cd src
   -     AVAILABLE COMMANDS :
         pre-commit run --all-files
-        pylint backend
         black backend
 
   ### Poetry :
@@ -99,6 +99,20 @@
         Run strawberry server : strawberry server
         Run strawberry server for project schema : (src path) : strawberry server backend.core.graphql.schema:schema
 
+  ### pre-commit :
+  -     pre-commit install
+        git config --unset core.hooksPath
+
+  ### Anaconda :
+  -     Install anaconda : https://docs.anaconda.com/anaconda/install/
+        Create conda environment : conda create --name <env_name> python=3.11.0
+        Activate conda environment : conda activate <env_name>
+        Deactivate conda environment : conda deactivate
+        Create conda environment from yml file : conda env create -f environment.yml
+
+  ### DRF-Spectacular :
+  -     Generate schema : python manage.py spectacular --color --file schema.yml
+
 ## SCSS:
   ### Lint :
   -     Step 1: cd src/frontend
@@ -116,19 +130,24 @@
   ### Package.json :
   -  ### SCRIPTS
   -  #### VUE :
-        -     npm run serve-vue
-              npm run build-vue
-              npm run watch-vue
+        -     npm run serve:vue
+              npm run build:vue
+              npm run watch:vue
         - #### Lint :
-              npm run lint-vue
+              npm run lint:vue
   -  #### VITE :
-        -     npm run build-vite
-              npm run watch-vite
-              npm run build-dts-vite
+        -     npm run build:vite
+              npm run watch:vite
+              npm run dts:vite
               npm run dev
   -  #### LINT :
-        -     npm run lint
-              npm run lint:fix
+        -  ### SCSS
+        -     npm run lint:scss
+              npm run lint:scss:fix
+
+  -  ### FORMAT:
+        -     npm run lint:prettier
+              npm run lint:prettier:fix
 
   -  ### Packages Update
         -     npm install -g npm-check-updates

@@ -64,6 +64,7 @@ coverage.xml
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+django.log
 
 # Flask stuff:
 instance/
@@ -123,11 +124,6 @@ celerybeat.pid
 
 # mkdocs documentation
 /site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
 
 # Pyre type checker
 .pyre/
@@ -206,3 +202,6 @@ npm-debug.log
 *.njsproj
 *.sln
 *.sw?
+
+# Sass cache
+.sass-cache

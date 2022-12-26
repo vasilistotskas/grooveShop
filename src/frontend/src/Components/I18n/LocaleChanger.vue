@@ -1,11 +1,15 @@
 <template>
-  <div class="locale-changer">
-    <select v-model="$i18n.locale">
-      <option v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">
-        {{ locale }}
-      </option>
-    </select>
-  </div>
+	<div class="locale-changer">
+		<select v-model="$i18n.locale">
+			<option
+				v-for="locale in $i18n.availableLocales"
+				:key="`locale-${locale}`"
+				:value="locale"
+			>
+				{{ locale }}
+			</option>
+		</select>
+	</div>
 </template>
 
 <script lang="ts">
@@ -14,18 +18,18 @@ import { MessageSchema } from '@/Locales/LocaleType'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 
 @Component({
-  name: 'LocaleChanger',
+	name: 'LocaleChanger'
 })
 export default class LocaleChanger extends Vue {
-  myContext = setup(() => {
-    const { t, n } = useI18n<{ message: MessageSchema }>({
-      useScope: 'global',
-    })
-    return { t, n }
-  })
+	myContext = setup(() => {
+		const { t, n } = useI18n<{ message: MessageSchema }>({
+			useScope: 'global'
+		})
+		return { t, n }
+	})
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/I18n/LocaleChanger';
+@import '@/Assets/Styles/Components/I18n/LocaleChanger.scss';
 </style>

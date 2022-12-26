@@ -1,12 +1,8 @@
-from typing import Any
-from typing import List
-
 from backend.product_review import views
 from django.urls import path
-from django.urls import URLPattern
 from rest_framework.urlpatterns import format_suffix_patterns
 
-urlpatterns: List[URLPattern | URLPattern | Any] = [
+urlpatterns = [
     # all Reviews of current product , get and post
     path("reviews/product/<int:product_id>/", views.ProductReviews.as_view()),
     # all Reviews of current user , get

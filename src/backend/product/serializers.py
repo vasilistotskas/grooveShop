@@ -1,5 +1,6 @@
 from backend.product.models import Product
 from backend.product.models import ProductImages
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 
@@ -17,6 +18,7 @@ class ImagesSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField("get_product_images")
 
+    @extend_schema_field(serializers.ListSerializer(child=ImagesSerializer()))
     def get_product_images(self, product):
         qs = ProductImages.objects.filter(product=product)
         serializer = ImagesSerializer(qs, many=True)

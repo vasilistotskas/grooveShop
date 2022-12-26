@@ -7,6 +7,7 @@ from typing import Union
 from backend.core.models import SortableModel
 from backend.core.models import TimeStampMixinModel
 from backend.core.models import UUIDModel
+from backend.core.utils.translations import TranslationProxy
 from backend.helpers.image_resize import make_thumbnail
 from backend.product_favourite.models import Favourite
 from backend.product_review.models import Review
@@ -66,8 +67,11 @@ class Product(TimeStampMixinModel, SeoModel, UUIDModel):
     )
     hits = models.PositiveIntegerField(default=0)
 
+    translated = TranslationProxy()
+
     class Meta:
-        ordering: tuple[str] = ("-created_at",)
+        app_label = "product"
+        ordering = ("-id",)
 
     def __str__(self) -> str:
         return self.name

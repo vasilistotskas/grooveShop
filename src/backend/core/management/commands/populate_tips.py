@@ -1,3 +1,4 @@
+import datetime
 import os
 import random
 
@@ -7,6 +8,7 @@ from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import BaseCommand
+from django.utils import timezone
 from faker import Faker
 
 
@@ -32,7 +34,7 @@ class Command(BaseCommand):
                 kind=random.choice(tip_kinds),
                 icon=img,
                 url=settings.APP_BASE_URL,
-                created_at=faker.date_time(),
+                created_at=datetime.datetime.now(tz=timezone.utc),
                 active=True,
             )
         self.stdout.write(self.style.SUCCESS("Success"))

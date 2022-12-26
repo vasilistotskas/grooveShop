@@ -8,6 +8,8 @@ from rest_framework.views import APIView
 
 
 class LatestProductsList(APIView):
+    serializer_class = ProductSerializer
+
     def get(self, format=None):
         products = Product.objects.all()[0:5]
         serializer = ProductSerializer(products, many=True)
@@ -33,6 +35,8 @@ class ProductsAllResults(generics.ListAPIView):
 
 
 class ProductDetail(APIView):
+    serializer_class = ProductSerializer
+
     @staticmethod
     def get_object(category_slug, product_slug):
         try:

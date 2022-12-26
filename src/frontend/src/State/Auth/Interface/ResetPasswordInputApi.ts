@@ -1,6 +1,6 @@
 export default interface ResetPasswordInputApi {
-  password1?: string
-  password2?: string
-  uid?: string
-  token?: string
+	new_password: string
+	re_new_password: string
+	uid: string | string[]
+	token: string | string[]
 }

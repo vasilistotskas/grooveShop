@@ -5,6 +5,8 @@ from rest_framework.views import APIView
 
 
 class AllSliders(APIView):
+    serializer_class = SliderSerializer
+
     @staticmethod
     def get(request, format=None):
         sliders = Slider.objects.all()

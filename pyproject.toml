@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "src"
-version = "0.1.4"
+version = "0.14.0"
 description = "GrooveShop Backend"
 authors = [
     "Vasilis Totskas"
@@ -17,30 +17,28 @@ upload_to_release = true
 build_command = "pip install poetry && poetry build"
 
 [tool.poetry.dependencies]
-python = ">=3.8,<4.0.0"
-django = "4.1.1"
+python = ">=3.8.1,<4.0.0"
+django = "4.1.4"
 djangorestframework = "3.14.0"
 django-cors-headers = "3.13.0"
 djoser = "2.1.0"
-pillow = "9.2.0"
+pillow = "9.3.0"
 stripe = "3.5.0"
 django-admin-thumbnails = "0.2.6"
 django-mptt = "0.14.0"
 django-js-asset = "2.0.0"
-strawberry-graphql-django = "0.5.3"
-Faker = "15.0.0"
+strawberry-graphql-django = "0.8.2"
+Faker = "15.3.4"
 django-environ = "0.9.0"
 django-tinymce = "3.5.0"
 gunicorn = "20.1.0"
 django-filter = "22.1"
-django-debug-toolbar = "3.7.0"
-pylint-celery = "0.3"
-pylint-django = "2.5.3"
-django-stubs = "1.12.0"
-django-stubs-ext = "0.5.0"
-mypy = "0.981"
-flake8 = "5.0.4"
-python-semantic-release = "7.32.0"
+django-debug-toolbar = "3.8.1"
+django-stubs = "1.13.1"
+django-stubs-ext = "0.7.0"
+flake8 = "6.0.0"
+python-semantic-release = "7.32.2"
+coverage= "6.5.0"
 djangoql = "*"
 django-extensions = "*"
 django-redis = "*"
@@ -50,7 +48,6 @@ pytest-cov = "*"
 sentry-sdk = "*"
 shortuuid = "*"
 unittest-xml-reporting = "*"
-uwsgi = "*"
 werkzeug = "*"
 whitenoise = "*"
 
@@ -63,7 +60,6 @@ ipython = "*"
 bpython = "*"
 pudb = "*"
 django-stubs = "*"
-pylint = "2.15.3"
 black = "22.8.0"
 
 [tool.setuptools.packages.find]
@@ -72,15 +68,28 @@ include = ["backend*"]  # package names should match these glob patterns (["*"] 
 exclude = ["frontend*", "files*", "logs*"]  # exclude packages matching these glob patterns
 namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
 
-[[tool.mypy.overrides]]
-module = ["psycopg2.*", "celery.*", "debug_toolbar.*"]
-ignore_missing_imports = true
-
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
 
+[tool.coverage.paths]
+source = ["src/backend/*"]
+
 [tool.coverage.run]
+branch = true
 omit = [
-    "tests/*"
+    "*/migrations/*",
+    "*/management/*",
+    "*/manage.py",
+    "*/setup.py",
+    "*/asgi.py",
+    "*/wsgi.py",
 ]
+source = ["."]
+relative_files = true
+
+[tool.coverage.report]
+precision = 2
+skip_covered = true
+fail_under = 50
+show_missing = true

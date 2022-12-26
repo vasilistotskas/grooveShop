@@ -1,5 +1,5 @@
 export default interface MetaData {
-  metaAttribute: string
-  metaName: string
-  newValue: string
+	metaAttribute: string
+	metaName: string
+	newValue: string
 }

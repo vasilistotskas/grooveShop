@@ -1,197 +1,165 @@
 <template>
-  <div id="password-reset-confirm-view" class="container mt-7 mb-5">
-    <Breadcrumbs :bread-crumb-path="breadCrumbPath" />
-    <div class="card password-reset-card">
-      <div class="card-body card-body-border-top">
-        <div>
-          <font-awesome-icon :icon="lockIcon" size="4x" />
-        </div>
-        <h1>Reset Password Confirm</h1>
-        <template v-if="resetLoading"> loading... </template>
-        <template v-else-if="!resetCompleted">
-          <FormProvider
-            id="userPasswordForm"
-            :errors="formManager.errors"
-            :form="formManager.form"
-            name="userPasswordForm"
-            title=""
-            @submit="handleSubmit()"
-          >
-            <div class="grid-account-password-fields">
-              <div class="new_password">
-                <label :for="String(formManager.form.password1.$uid)" class="label"
-                  >New Password</label
-                >
-                <FormBaseInput
-                  :id="formManager.form.password1.$uid"
-                  v-model="formManager.form.password1.$value"
-                  :has-error="formManager.form.password1.$hasError"
-                  :placeholder="'New Password'"
-                  :validating="formManager.form.password1.$validating"
-                  :input-with-add-on="true"
-                  :input-with-add-on-icon="lockIcon"
-                  type="password"
-                />
-                <FormValidationErrors
-                  :errors="formManager.form.password1.$errors"
-                  class="validation-errors"
-                />
-              </div>
-              <div class="re_new_password">
-                <label :for="String(formManager.form.password2.$uid)" class="label"
-                  >Retype New Password</label
-                >
-                <FormBaseInput
-                  :id="formManager.form.password2.$uid"
-                  v-model="formManager.form.password2.$value"
-                  :has-error="formManager.form.password2.$hasError"
-                  :placeholder="'Retype New Password'"
-                  :validating="formManager.form.password2.$validating"
-                  :input-with-add-on="true"
-                  :input-with-add-on-icon="lockIcon"
-                  type="password"
-                />
-                <FormValidationErrors
-                  :errors="formManager.form.password2.$errors"
-                  class="validation-errors"
-                />
-              </div>
-              <div class="button">
-                <FormSubmitButtons
-                  :submit-text="submitButtonText"
-                  :submitting="formManager.submitting"
-                  class="buttons float-end"
-                  gap="2rem"
-                  @reset="formManager.resetFields()"
-                />
-              </div>
-            </div>
-          </FormProvider>
+	<div id="password-reset-confirm-view" class="container mt-7 mb-5">
+		<Breadcrumbs :bread-crumb-path="breadCrumbPath" />
+		<div class="card password-reset-card">
+			<div class="card-body card-body-border-top">
+				<div>
+					<FontAwesomeIcon :icon="lockIcon" size="4x" />
+				</div>
+				<h1>Reset Password Confirm</h1>
+				<template v-if="passwordModule.getResetLoading"> loading... </template>
+				<template v-else-if="!passwordModule.getResetCompleted">
+					<form
+						@submit="myContext.onSubmit"
+						class="_form"
+						id="userPasswordForm"
+						name="userPasswordForm"
+					>
+						<div class="grid-account-password-fields">
+							<div class="new_password">
+								<label for="new_password" class="label mb-2">New Password</label>
+								<div class="_container">
+									<input
+										v-model="myContext.new_password"
+										id="new_password"
+										name="new_password"
+										type="password"
+										class="_input"
+										placeholder="New Password"
+										autocomplete="new_password"
+									/>
+								</div>
+								<span class="validation-errors">{{ myContext.errors.new_password }}</span>
+							</div>
+							<div class="re_new_password">
+								<label for="re_new_password" class="label mb-2"
+									>Retype New Password</label
+								>
+								<div class="_container">
+									<input
+										v-model="myContext.re_new_password"
+										id="re_new_password"
+										name="re_new_password"
+										type="password"
+										class="_input"
+										placeholder="Retype New Password"
+										autocomplete="re_new_password"
+									/>
+								</div>
+								<span class="validation-errors">{{
+									myContext.errors.re_new_password
+								}}</span>
+							</div>
+							<div class="button">
+								<button
+									v-if="!myContext.isTooManyAttempts"
+									class="btn btn-outline-primary-one green-bg"
+									:title="submitButtonText"
+								>
+									{{ submitButtonText }}
+								</button>
+								<span v-else>Too many attempts try again later</span>
+							</div>
+						</div>
+					</form>
 
-          <span v-show="resetError" class="error">
-            A error occured while processing your request.
-          </span>
-        </template>
-        <template v-else>
-          <span>Your password has been reset.</span>
-          <RouterLink aria-label="Log In" title="Log In" to="/log-in">
-            return to login page
-          </RouterLink>
-        </template>
-      </div>
-    </div>
-  </div>
+					<span v-show="passwordModule.getResetError" class="error">
+						A error occurred while processing your request.
+					</span>
+				</template>
+				<template v-else>
+					<span>Your password has been reset.</span>
+					<RouterLink aria-label="Log In" title="Log In" to="/log-in">
+						return to login page
+					</RouterLink>
+				</template>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">
 import router from '@/Routes'
+import { useMeta } from 'vue-meta'
+import { useRoute } from 'vue-router'
+import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
-import { equal, min } from '@/Components/Form/Utils'
-import FormProvider from '@/Components/Form/FormProvider.vue'
-import { Options as Component, Vue } from 'vue-class-component'
-import FormBaseInput from '@/Components/Form/FormBaseInput.vue'
+import { toFormValidator } from '@vee-validate/zod'
+import { ZodResetPassword } from '@/Zod/Auth/ZodAuth'
+import { FieldContext, useField, useForm } from 'vee-validate'
 import PasswordModule from '@/State/Auth/Password/PasswordModule'
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
-import { useValidation, ValidationError } from 'vue3-form-validation'
-import FormSubmitButtons from '@/Components/Form/FormSubmitButtons.vue'
-import FormValidationErrors from '@/Components/Form/FormValidationErrors.vue'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 import ResetPasswordInputApi from '@/State/Auth/Interface/ResetPasswordInputApi'
 
-let { validateFields } = useValidation({} as ResetPasswordInputApi)
-
 @Component({
-  name: 'PasswordRestConfirm',
-  components: {
-    Breadcrumbs,
-    FormProvider,
-    FormBaseInput,
-    FormSubmitButtons,
-    FormValidationErrors,
-  },
+	name: 'PasswordRestConfirm',
+	components: {
+		Breadcrumbs
+	}
 })
 export default class PasswordRestConfirm extends Vue {
-  passwordModule = getModule(PasswordModule)
-  submitButtonText = 'Reset Password'
+	passwordModule = getModule(PasswordModule)
+	submitButtonText = 'Reset Password'
+	lockIcon = faLock
 
-  inputs = {
-    password1: '',
-    password2: '',
-    uid: '',
-    token: '',
-  } as ResetPasswordInputApi
+	get breadCrumbPath() {
+		return router.currentRoute.value.meta.breadcrumb
+	}
 
-  lockIcon = faLock
+	myContext = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: 'Password Reset Confirm',
+				description: 'Password Reset Confirm'
+			}))
+		)
 
-  formManager = ({ validateFields } = useValidation({
-    password1: {
-      $value: '',
-      $rules: [
-        min(8)('Password has to be longer than 7 characters'),
-        {
-          key: 'pw',
-          rule: equal('Passwords do not match'),
-        },
-      ],
-    },
-    password2: {
-      $value: '',
-      $rules: [
-        min(8)('Password has to be longer than 7 characters'),
-        {
-          key: 'pw',
-          rule: equal('Passwords do not match'),
-        },
-      ],
-    },
-  }))
+		const router = useRoute()
+		const validationSchema = toFormValidator(ZodResetPassword)
+		const { handleSubmit, errors, submitCount } = useForm({
+			validationSchema
+		})
 
-  get breadCrumbPath() {
-    return router.currentRoute.value.meta.breadcrumb
-  }
+		const { value: new_password }: FieldContext<string> = useField('new_password')
+		const { value: re_new_password }: FieldContext<string> = useField('re_new_password')
 
-  get resetCompleted(): boolean {
-    return this.passwordModule.getResetCompleted
-  }
+		const isTooManyAttempts = computed(() => {
+			return submitCount.value >= 10
+		})
 
-  get resetError(): boolean {
-    return this.passwordModule.getResetError
-  }
+		const onSubmit = handleSubmit(async () => {
+			try {
+				const apiData: ResetPasswordInputApi = {
+					new_password: new_password.value,
+					re_new_password: re_new_password.value,
+					uid: router.params.uid,
+					token: router.params.token
+				}
 
-  get resetLoading(): boolean {
-    return this.passwordModule.getResetLoading
-  }
+				await this.passwordModule.resetPasswordConfirm(apiData)
+			} catch (e) {
+				console.log(e)
+			}
+		})
 
-  mounted(): void {
-    document.title = 'Password Reset Confirm'
-    this.inputs.uid = this.$route.params.uid as string
-    this.inputs.token = this.$route.params.token as string
-  }
-
-  handleSubmit = async () => {
-    try {
-      const formData = await validateFields()
-      const apiData: ResetPasswordInputApi = {
-        password1: formData.password1,
-        password2: formData.password2,
-        uid: this.inputs.uid,
-        token: this.inputs.token,
-      }
-
-      await this.passwordModule.resetPasswordConfirm(apiData)
-    } catch (e) {
-      if (e instanceof ValidationError) {
-        console.log(e.message)
-      }
-    }
-  }
-
-  clearResetStatus(): void {
-    this.passwordModule.clearResetStatus()
-  }
+		return {
+			validationSchema,
+			onSubmit,
+			errors,
+			new_password,
+			re_new_password,
+			isTooManyAttempts,
+			meta
+		}
+	})
 }
 </script>
 
 <style lang="scss">
-@import '@/Assets/Styles/Pages/Auth/PasswordResetConfirm';
+@import '@/Assets/Styles/Components/Form/FormProvider.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseTextarea.scss';
+@import '@/Assets/Styles/Components/Form/FormBaseInput.scss';
+@import '@/Assets/Styles/Pages/Auth/PasswordResetConfirm.scss';
 </style>

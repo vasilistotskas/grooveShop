@@ -16,7 +16,7 @@ class Tip(TimeStampMixinModel):
     )
     title = models.CharField(max_length=200)
     content = models.TextField(max_length=1000)
-    kind = models.CharField(max_length=10, choices=TIP_KINDS, default=True)
+    kind = models.CharField(max_length=10, choices=TIP_KINDS)
     icon = models.FileField(
         upload_to="uploads/tip/", validators=[validate_file_extension]
     )
@@ -24,7 +24,7 @@ class Tip(TimeStampMixinModel):
     active = models.BooleanField(default=True)
 
     class Meta:
-        ordering: list[str] = ["-created_at"]
+        ordering = ["-created_at"]
 
     def image_tag(self):
         icon = self.icon

@@ -1,155 +1,143 @@
 <template>
-  <div class="home">
-    <div class="container mt-9 mb-5">
-      <div class="home-top-grid-content">
-        <HomePageMainSlider
-          v-if="homepageSlider[0] && Object.keys(homepageSlider[0]).length > 0"
-          :img-height="760"
-          :img-width="1200"
-          :slider="homepageSlider[0]"
-          class="grid-item-swipper"
-        />
+	<div class="home">
+		<div class="container mt-9 mb-5">
+			<div class="home-top-grid-content">
+				<HomePageMainSlider
+					v-if="
+						sliderModule.getSlidersData &&
+						sliderModule.getSlidersData[0] &&
+						Object.keys(sliderModule.getSlidersData[0]).length > 0
+					"
+					:img-height="760"
+					:img-width="1200"
+					:slider="sliderModule.getSlidersData[0]"
+					:backend-base-url="appModule.backendBaseUrl"
+					class="grid-item-swipper"
+				/>
 
-        <div class="grid-item-right">
-          <div class="grid-item-content-one">
-            <HomePageMainSlider
-              v-if="homepageSlider[1] && Object.keys(homepageSlider[1]).length > 0"
-              :img-height="400"
-              :img-width="525"
-              :slider="homepageSlider[1]"
-              class="grid-item-swipper"
-            />
-          </div>
-          <div class="grid-item-content-two">
-            <HomePageMainSlider
-              v-if="homepageSlider[2] && Object.keys(homepageSlider[2]).length > 0"
-              :img-height="400"
-              :img-width="525"
-              :slider="homepageSlider[2]"
-              class="grid-item-swipper"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+				<div class="grid-item-right">
+					<div class="grid-item-content-one">
+						<HomePageMainSlider
+							v-if="
+								sliderModule.getSlidersData &&
+								sliderModule.getSlidersData[1] &&
+								Object.keys(sliderModule.getSlidersData[1]).length > 0
+							"
+							:img-height="400"
+							:img-width="525"
+							:slider="sliderModule.getSlidersData[1]"
+							:backend-base-url="appModule.backendBaseUrl"
+							class="grid-item-swipper"
+						/>
+					</div>
+					<div class="grid-item-content-two">
+						<HomePageMainSlider
+							v-if="
+								sliderModule.getSlidersData &&
+								sliderModule.getSlidersData[2] &&
+								Object.keys(sliderModule.getSlidersData[2]).length > 0
+							"
+							:img-height="400"
+							:img-width="525"
+							:slider="sliderModule.getSlidersData[2]"
+							:backend-base-url="appModule.backendBaseUrl"
+							class="grid-item-swipper"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    <div class="home-usp-grid-container">
-      <div class="home-usp-grid-content mb-5">
-        <div class="grid-usp-item">
-          <font-awesome-icon v-if="isMobile" :icon="phoneIcon" />
-          <font-awesome-icon v-else :icon="phoneIcon" size="3x" />
-          <span
-            >Lorem Ipsum
-            <span>Lorem Ipsum</span>
-          </span>
-        </div>
-        <div class="grid-usp-item">
-          <font-awesome-icon v-if="isMobile" :icon="envelopeIcon" />
-          <font-awesome-icon v-else :icon="envelopeIcon" size="3x" />
-          <span
-            >Lorem Ipsum
-            <span>Lorem Ipsum</span>
-          </span>
-        </div>
-        <div class="grid-usp-item">
-          <font-awesome-icon v-if="isMobile" :icon="commentIcon" />
-          <font-awesome-icon v-else :icon="commentIcon" size="3x" />
-          <span
-            >Lorem Ipsum
-            <span>Lorem Ipsum</span>
-          </span>
-        </div>
-      </div>
-    </div>
+		<div class="home-usp-grid-container">
+			<div class="home-usp-grid-content mb-5">
+				<div class="grid-usp-item">
+					<FontAwesomeIcon v-if="appModule.isMobile" :icon="phoneIcon" />
+					<FontAwesomeIcon v-else :icon="phoneIcon" size="3x" />
+					<span
+						>Lorem Ipsum
+						<span>Lorem Ipsum</span>
+					</span>
+				</div>
+				<div class="grid-usp-item">
+					<FontAwesomeIcon v-if="appModule.isMobile" :icon="envelopeIcon" />
+					<FontAwesomeIcon v-else :icon="envelopeIcon" size="3x" />
+					<span
+						>Lorem Ipsum
+						<span>Lorem Ipsum</span>
+					</span>
+				</div>
+				<div class="grid-usp-item">
+					<FontAwesomeIcon v-if="appModule.isMobile" :icon="commentIcon" />
+					<FontAwesomeIcon v-else :icon="commentIcon" size="3x" />
+					<span
+						>Lorem Ipsum
+						<span>Lorem Ipsum</span>
+					</span>
+				</div>
+			</div>
+		</div>
 
-    <div class="product-listing-container">
-      <div class="container mb-5">
-        <div class="col-12">
-          <h2 class="mb-2">
-            {{ $t('eshop.test3') }}
-          </h2>
-        </div>
-        <div class="grid-content-six">
-          <ProductCard
-            v-for="product in LatestProducts"
-            :key="product.id"
-            :product="product"
-            class="grid-item"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
+		<div class="product-listing-container">
+			<div class="container mb-5">
+				<div class="col-12">
+					<h2 class="mb-2">
+						{{ $t('eshop.test3') }}
+					</h2>
+				</div>
+				<div class="grid-content-six">
+					<ProductCard
+						v-for="product in productModule.getLatestProductData"
+						:key="product.id"
+						:product="product"
+						class="grid-item"
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">
-import 'swiper/css'
+import AppCore from '@/Core/AppCore'
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
-import AppModule from '@/State/App/AppModule'
 import { getModule } from 'vuex-module-decorators'
-import SliderModel from '@/State/Slider/SliderModel'
 import SliderModule from '@/State/Slider/SliderModule'
-import ProductModel from '@/State/Product/ProductModel'
 import ProductModule from '@/State/Product/ProductModule'
 import ProductCard from '@/Components/Product/ProductCard.vue'
 import { faPhone } from '@fortawesome/free-solid-svg-icons/faPhone'
-import { Options as Component, setup, Vue } from 'vue-class-component'
 import { faComment } from '@fortawesome/free-solid-svg-icons/faComment'
+import { mixins, Options as Component, setup } from 'vue-class-component'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import HomePageMainSlider from '@/Components/Sliders/VueHorizontal/HomePageMainSlider.vue'
 
 @Component({
-  name: 'Home',
-  components: {
-    ProductCard,
-    HomePageMainSlider,
-  },
+	name: 'Home',
+	mixins: [AppCore],
+	components: {
+		ProductCard,
+		HomePageMainSlider
+	}
 })
-export default class Home extends Vue {
-  appModule = getModule(AppModule)
-  productModule = getModule(ProductModule)
-  sliderModule = getModule(SliderModule)
+export default class Home extends mixins(AppCore) {
+	productModule = getModule(ProductModule)
+	sliderModule = getModule(SliderModule)
+	phoneIcon = faPhone
+	envelopeIcon = faEnvelope
+	commentIcon = faComment
 
-  meta = setup(() =>
-    useMeta(
-      computed(() => ({
-        title: 'Deep Web Homepage',
-        description: 'Deep Web Homepage',
-      }))
-    )
-  )
-
-  mainSliderStyle = {
-    '--swiper-navigation-color': '#fff',
-    '--swiper-pagination-color': '#fff',
-  }
-
-  phoneIcon = faPhone
-  envelopeIcon = faEnvelope
-  commentIcon = faComment
-
-  get isMobile(): boolean {
-    return this.appModule.isMobile
-  }
-
-  get LatestProducts(): Array<ProductModel> {
-    return this.productModule.getLatestProductData
-  }
-
-  get homepageSlider(): Array<SliderModel> {
-    return this.sliderModule.getSlidersData
-  }
-
-  beforeCreate(): void {
-    Promise.all([
-      this.productModule.fetchLatestProductsFromRemote(),
-      this.sliderModule.fetchSlidersFromRemote,
-    ])
-  }
+	myContext = setup(() => {
+		const meta = useMeta(
+			computed(() => ({
+				title: 'Deep Web Homepage',
+				description: 'Deep Web Homepage'
+			}))
+		)
+		return { meta }
+	})
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Pages/Home';
+@import '@/Assets/Styles/Pages/Home.scss';
 </style>

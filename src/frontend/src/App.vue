@@ -1,95 +1,85 @@
 <template>
-  <Loader v-show="isLoading" id="mainLoader" />
-  <div id="wrapper">
-    <Header />
+	<metainfo>
+		<template #title="{ content }">{{
+			content ? `${content} | DeepWeb` : `DeepWeb`
+		}}</template>
+	</metainfo>
+	<Loader v-show="appModule.getLoading" id="mainLoader" />
+	<div id="wrapper">
+		<Header />
 
-    <section class="main-section">
-      <RouterView />
-    </section>
+		<section class="main-section">
+			<Suspense>
+				<template #default>
+					<RouterView />
+				</template>
+				<template #fallback>
+					<span>Loading...</span>
+				</template>
+			</Suspense>
+		</section>
 
-    <Footer />
+		<Footer />
 
-    <SocialSidebar />
-  </div>
+		<SocialSidebar />
+	</div>
 </template>
 
 <script lang="ts">
+import { useMeta } from 'vue-meta'
 import packageMeta from '@/../package.json'
 import AppModule from '@/State/App/AppModule'
-import CartModule from '@/State/Cart/CartModule'
-import BlogModule from '@/State/Blog/BlogModule'
 import Footer from '@/Components/Main/Footer.vue'
 import Header from '@/Components/Main/Header.vue'
 import Loader from '@/Components/Main/Loader.vue'
 import { getModule } from 'vuex-module-decorators'
-import AuthModule from '@/State/Auth/Auth/AuthModule'
-import UserModule from '@/State/User/Profile/UserModule'
-import CountryModule from '@/State/Country/CountryModule'
+import SliderModule from '@/State/Slider/SliderModule'
+import ProductModule from '@/State/Product/ProductModule'
 import CategoryModule from '@/State/Category/CategoryModule'
-import { Options as Component, Vue } from 'vue-class-component'
 import SocialSidebar from '@/Components/Main/SocialSidebar.vue'
-import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
+import { Options as Component, setup, Vue } from 'vue-class-component'
 
 @Component({
-  name: 'App',
-  components: {
-    Header,
-    Footer,
-    SocialSidebar,
-    Loader,
-  },
+	name: 'App',
+	components: {
+		Header,
+		Footer,
+		SocialSidebar,
+		Loader
+	}
 })
 export default class App extends Vue {
-  appModule = getModule(AppModule)
-  authModule = getModule(AuthModule)
-  cartModule = getModule(CartModule)
-  categoryModule = getModule(CategoryModule)
-  countryModule = getModule(CountryModule)
-  userModule = getModule(UserModule)
-  blogModule = getModule(BlogModule)
-  productFavouriteModule = getModule(ProductFavouriteModule)
+	appModule = getModule(AppModule)
 
-  get version(): string {
-    return packageMeta.version
-  }
+	myContext = setup(() => {
+		const categoryModule = getModule(CategoryModule)
+		const productModule = getModule(ProductModule)
+		const sliderModule = getModule(SliderModule)
 
-  get isLoading(): boolean {
-    return this.appModule.getLoading
-  }
+		Promise.all([
+			categoryModule.fetchCategoriesTreeFromRemote(),
+			productModule.fetchLatestProductsFromRemote(),
+			sliderModule.fetchSlidersFromRemote()
+		])
 
-  get isAuthenticated(): boolean {
-    return this.authModule.isAuthenticated
-  }
+		const meta = useMeta({
+			title: '',
+			htmlAttrs: { lang: 'en', amp: true }
+		})
+		return {
+			meta
+		}
+	})
 
-  initializeUserData(): void {
-    this.userModule.fetchUserDataFromRemote().then((response) => {
-      if (response) {
-        this.countryModule.findRegionsBasedOnAlphaForLoggedCustomer(this.userModule.getUserData)
-        this.productFavouriteModule.fetchUserFavouritesFromRemote(response.data[0].user)
-      }
-    })
-    this.blogModule.fetchCommentsByUser(this.userModule.getUserData.email)
-  }
+	get version(): string {
+		return packageMeta.version
+	}
 
-  created(): void {
-    Promise.all([
-      this.authModule.initialize(),
-      this.cartModule.initializeCart(),
-      this.cartModule.cartTotalPriceForPayWayAction(),
-      this.categoryModule.fetchCategoriesTreeFromRemote(),
-      this.countryModule.fetchCountriesFromRemote(),
-    ])
-
-    if (this.isAuthenticated) {
-      this.initializeUserData()
-    }
-  }
-
-  mounted(): void {
-    window.addEventListener('resize', () => {
-      this.appModule.setWindowWidth(window.innerWidth)
-    })
-  }
+	mounted(): void {
+		window.addEventListener('resize', () => {
+			this.appModule.setWindowWidth(window.innerWidth)
+		})
+	}
 }
 </script>
 

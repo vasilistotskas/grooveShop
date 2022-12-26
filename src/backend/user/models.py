@@ -1,7 +1,13 @@
+from __future__ import annotations
+
 import os
 from typing import Any
 from typing import List
 
+from backend.core.models import TimeStampMixinModel
+from backend.core.models import UUIDModel
+from backend.country.models import Country
+from backend.region.models import Region
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
@@ -16,7 +22,7 @@ User = settings.AUTH_USER_MODEL
 
 
 class UserAccountManager(BaseUserManager):
-    def create_user(self, email, password, **extra_fields):
+    def create_user(self, email, password, **extra_fields) -> UserAccount:
         """Create and save a user with the given username, email, and password."""
         if not email:
             raise ValueError("Users must have an email address")
@@ -26,7 +32,7 @@ class UserAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def _create_user(self, email, password, **extra_fields):
+    def _create_user(self, email, password, **extra_fields) -> UserAccount:
         """Create and save a user with the given username, email, and password."""
         if not email:
             raise ValueError("Users must have an email address")
@@ -36,7 +42,7 @@ class UserAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password, **extra_fields):
+    def create_superuser(self, email, password, **extra_fields) -> UserAccount:
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
@@ -60,7 +66,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD: str = "email"
     REQUIRED_FIELDS: List[str] = ["first_name", "last_name"]
 
-    def remove_all_sessions(self):
+    def remove_all_sessions(self) -> None:
         user_sessions: List[Any] = []
         for session in Session.objects.all():
             if str(self.pk) == session.get_decoded().get("_auth_user_id"):
@@ -71,45 +77,18 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-class Country(models.Model):
-    name = models.CharField(max_length=50, unique=True)
-    alpha_2 = models.CharField(max_length=2, primary_key=True, unique=True)
-    alpha_3 = models.CharField(max_length=3, unique=True)
-    iso_cc = models.PositiveSmallIntegerField(blank=True, null=True, unique=True)
-    phone_code = models.PositiveSmallIntegerField(blank=True, null=True, unique=True)
-    image_flag = models.ImageField(blank=True, null=True, upload_to="uploads/country/")
-
-    class Meta:
-        verbose_name_plural: str = "Countries"
-
-    def __str__(self):
-        return self.name
-
-
-class Region(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    alpha = models.CharField(max_length=10, primary_key=True, unique=True)
-    alpha_2 = models.ForeignKey(Country, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name_plural: str = "Regions"
-
-    def __str__(self):
-        return self.name
-
-
-class UserProfile(models.Model):
+class UserProfile(TimeStampMixinModel, UUIDModel):
     id = models.AutoField(primary_key=True)
     user = models.OneToOneField(
         User, related_name="userprofile", on_delete=models.CASCADE
     )
-    first_name = models.CharField(max_length=20, blank=True, null=True)
-    last_name = models.CharField(max_length=20, blank=True, null=True)
+    first_name = models.CharField(max_length=100, blank=True, null=True)
+    last_name = models.CharField(max_length=100, blank=True, null=True)
     phone = models.PositiveBigIntegerField(blank=True, null=True)
-    city = models.CharField(max_length=50, blank=True, null=True)
-    zipcode = models.PositiveIntegerField(blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
+    zipcode = models.CharField(max_length=100, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
-    place = models.CharField(max_length=50, blank=True, null=True)
+    place = models.CharField(max_length=100, blank=True, null=True)
     country = models.ForeignKey(
         Country, null=True, blank=True, default=None, on_delete=models.SET_NULL
     )
@@ -119,27 +98,27 @@ class UserProfile(models.Model):
     image = models.ImageField(blank=True, null=True, upload_to="uploads/users/")
 
     class Meta:
-        verbose_name_plural: str = "User's Profile"
+        verbose_name_plural = "User's Profile"
 
     def __str__(self):
         return "%s" % self.user.id
 
-    def get_user_profile_image_url(self):
+    def get_user_profile_image_url(self) -> str:
         if self.image and hasattr(self.image, "url"):
             return self.image.url
         else:
             return "/backend/static/images/default.png"
 
-    def email(self):
+    def email(self) -> str:
         return self.user.email
 
-    def main_image_absolute_url(self):
+    def main_image_absolute_url(self) -> str:
         if self.image and hasattr(self.image, "url"):
             return settings.BACKEND_BASE_URL + self.image.url
         else:
             return "/backend/static/images/default.png"
 
-    def main_image_filename(self):
+    def main_image_filename(self) -> str:
         if self.image and hasattr(self.image, "url"):
             return os.path.basename(self.image.name)
         else:
@@ -157,6 +136,14 @@ class UserProfile(models.Model):
 
     # use Django signals to create user profile on user creation
     @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
+    def create_user_profile(sender, instance, created, **kwargs) -> None:
         if created:
             UserProfile.objects.create(user=instance)
+
+
+class MySession(Session):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    last_activity = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = "my_session"

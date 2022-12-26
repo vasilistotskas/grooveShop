@@ -1,0 +1,889 @@
+[2022-09-29 21:49:02] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 18, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 501, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/local/lib/python3.10/subprocess.py", line 969, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.10/subprocess.py", line 1845, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+[2022-09-29 21:49:02] ERROR | log_message | django.server | "GET /api/v1/version/ HTTP/1.0" 500 132580
+[2022-09-29 21:51:03] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 18, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 501, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/local/lib/python3.10/subprocess.py", line 969, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.10/subprocess.py", line 1845, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+[2022-09-29 21:51:06] ERROR | log_message | django.server | "GET /api/v1/version/ HTTP/1.0" 500 132580
+[2022-09-29 21:51:06] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 18, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 501, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/local/lib/python3.10/subprocess.py", line 969, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.10/subprocess.py", line 1845, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+[2022-09-29 21:54:48] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 18, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 501, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/local/lib/python3.10/subprocess.py", line 969, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.10/subprocess.py", line 1845, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+[2022-09-29 21:54:48] ERROR | log_message | django.server | "GET /api/v1/version/ HTTP/1.0" 500 132582
+[2022-09-29 21:54:56] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 18, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 501, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/local/lib/python3.10/subprocess.py", line 969, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.10/subprocess.py", line 1845, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+[2022-09-29 21:54:56] ERROR | log_message | django.server | "GET /api/v1/version/ HTTP/1.0" 500 132582
+[2022-09-29 21:56:31] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 18, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 501, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/local/lib/python3.10/subprocess.py", line 969, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.10/subprocess.py", line 1845, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+[2022-09-29 22:00:09] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 18, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 501, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/local/lib/python3.10/subprocess.py", line 969, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.10/subprocess.py", line 1845, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+[2022-09-29 22:00:09] ERROR | log_message | django.server | "GET /api/v1/version/ HTTP/1.0" 500 132452
+[2022-09-29 22:18:22] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/src/backend/core/views.py", line 18, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 501, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/local/lib/python3.10/subprocess.py", line 969, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.10/subprocess.py", line 1845, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+[2022-09-29 22:59:26] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/src/backend/core/views.py", line 18, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 501, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/local/lib/python3.10/subprocess.py", line 969, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.10/subprocess.py", line 1845, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+[2022-09-30 10:59:18] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 18, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 501, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/local/lib/python3.10/subprocess.py", line 969, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.10/subprocess.py", line 1845, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+[2022-09-30 11:03:55] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 18, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 501, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/local/lib/python3.10/subprocess.py", line 969, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.10/subprocess.py", line 1845, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'opt/project'
+[2022-09-30 11:03:55] ERROR | log_message | django.server | "GET /api/v1/version/ HTTP/1.0" 500 132107
+[2022-09-30 11:07:49] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 18, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 501, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/local/lib/python3.10/subprocess.py", line 969, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.10/subprocess.py", line 1845, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'opt/project'
+[2022-09-30 11:09:32] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 18, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 501, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/local/lib/python3.10/subprocess.py", line 969, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.10/subprocess.py", line 1845, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+[2022-09-30 11:09:32] ERROR | log_message | django.server | "GET /api/v1/version/ HTTP/1.0" 500 132080
+[2022-09-30 11:10:48] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 18, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 501, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/local/lib/python3.10/subprocess.py", line 969, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.10/subprocess.py", line 1845, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: '.git'
+[2022-09-30 11:10:48] ERROR | log_message | django.server | "GET /api/v1/version/ HTTP/1.0" 500 132101
+[2022-09-30 11:26:02] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 18, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 524, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'log', '-1', '--pretty={"commit_hash": "%h", "full_commit_hash": "%H", "author_name": "%an", "commit_date": "%aD", "comment": "%s"}']' returned non-zero exit status 128.
+[2022-09-30 11:26:02] ERROR | log_message | django.server | "GET /api/v1/version/ HTTP/1.0" 500 112661
+[2022-09-30 11:28:16] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 23, in list
+    last_updated = time.strftime('%a, %-e %b %Y, %I:%M:%S %p (%Z)', time.localtime(os.path.getmtime('.git'))).strip()
+  File "/usr/local/lib/python3.10/genericpath.py", line 55, in getmtime
+    return os.stat(filename).st_mtime
+FileNotFoundError: [Errno 2] No such file or directory: '.git'
+[2022-09-30 11:28:16] ERROR | log_message | django.server | "GET /api/v1/version/ HTTP/1.0" 500 104278
+[2022-09-30 11:28:18] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 23, in list
+    last_updated = time.strftime('%a, %-e %b %Y, %I:%M:%S %p (%Z)', time.localtime(os.path.getmtime('.git'))).strip()
+  File "/usr/local/lib/python3.10/genericpath.py", line 55, in getmtime
+    return os.stat(filename).st_mtime
+FileNotFoundError: [Errno 2] No such file or directory: '.git'
+[2022-09-30 11:28:18] ERROR | log_message | django.server | "GET /api/v1/version/ HTTP/1.0" 500 104278
+[2022-09-30 11:28:19] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 23, in list
+    last_updated = time.strftime('%a, %-e %b %Y, %I:%M:%S %p (%Z)', time.localtime(os.path.getmtime('.git'))).strip()
+  File "/usr/local/lib/python3.10/genericpath.py", line 55, in getmtime
+    return os.stat(filename).st_mtime
+FileNotFoundError: [Errno 2] No such file or directory: '.git'
+[2022-09-30 11:28:19] ERROR | log_message | django.server | "GET /api/v1/version/ HTTP/1.0" 500 104278
+[2022-09-30 11:29:38] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 23, in list
+    last_updated = time.strftime('%a, %-e %b %Y, %I:%M:%S %p (%Z)', time.localtime(os.path.getmtime('.git'))).strip()
+  File "/usr/local/lib/python3.10/genericpath.py", line 55, in getmtime
+    return os.stat(filename).st_mtime
+FileNotFoundError: [Errno 2] No such file or directory: '.git'
+[2022-09-30 11:29:38] ERROR | log_message | django.server | "GET /api/v1/version/ HTTP/1.0" 500 104278
+[2022-09-30 11:45:04] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/src/backend/core/views.py", line 23, in list
+    last_updated = time.strftime('%a, %-e %b %Y, %I:%M:%S %p (%Z)', time.localtime(os.path.getmtime('.git'))).strip()
+  File "/usr/local/lib/python3.10/genericpath.py", line 55, in getmtime
+    return os.stat(filename).st_mtime
+FileNotFoundError: [Errno 2] No such file or directory: '.git'
+[2022-09-30 11:50:39] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/src/backend/core/views.py", line 23, in list
+    last_updated = time.strftime('%a, %-e %b %Y, %I:%M:%S %p (%Z)', time.localtime(os.path.getmtime('.git'))).strip()
+  File "/usr/local/lib/python3.10/genericpath.py", line 55, in getmtime
+    return os.stat(filename).st_mtime
+FileNotFoundError: [Errno 2] No such file or directory: '.git'
+[2022-09-30 12:08:32] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/src/backend/core/views.py", line 25, in list
+    last_updated: str = time.strftime('%a, %-e %b %Y, %I:%M:%S %p (%Z)', time.localtime(os.path.getmtime('.git'))).strip()
+  File "/usr/local/lib/python3.10/genericpath.py", line 55, in getmtime
+    return os.stat(filename).st_mtime
+FileNotFoundError: [Errno 2] No such file or directory: '.git'
+[2022-09-30 12:14:57] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 25, in list
+    last_updated: str = time.strftime('%a, %-e %b %Y, %I:%M:%S %p (%Z)', time.localtime(os.path.getmtime('.git'))).strip()
+  File "/usr/local/lib/python3.10/genericpath.py", line 55, in getmtime
+    return os.stat(filename).st_mtime
+FileNotFoundError: [Errno 2] No such file or directory: '.git'
+[2022-09-30 12:14:57] ERROR | log_message | django.server | "GET /api/v1/version/ HTTP/1.0" 500 105076
+[2022-09-30 12:15:48] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 25, in list
+    last_updated: str = time.strftime('%a, %-e %b %Y, %I:%M:%S %p (%Z)', time.localtime(os.path.getmtime('.git'))).strip()
+  File "/usr/local/lib/python3.10/genericpath.py", line 55, in getmtime
+    return os.stat(filename).st_mtime
+FileNotFoundError: [Errno 2] No such file or directory: '.git'
+[2022-09-30 12:15:48] ERROR | log_message | django.server | "GET /api/v1/version/ HTTP/1.0" 500 105355
+[2022-09-30 12:17:22] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 25, in list
+    last_updated: str = time.strftime('%a, %-e %b %Y, %I:%M:%S %p (%Z)', time.localtime(os.path.getmtime('.git'))).strip()
+  File "/usr/local/lib/python3.10/genericpath.py", line 55, in getmtime
+    return os.stat(filename).st_mtime
+FileNotFoundError: [Errno 2] No such file or directory: '.git'
+[2022-09-30 12:17:26] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/opt/project/src/backend/core/views.py", line 25, in list
+    last_updated: str = time.strftime('%a, %-e %b %Y, %I:%M:%S %p (%Z)', time.localtime(os.path.getmtime('.git'))).strip()
+  File "/usr/local/lib/python3.10/genericpath.py", line 55, in getmtime
+    return os.stat(filename).st_mtime
+FileNotFoundError: [Errno 2] No such file or directory: '.git'
+[2022-09-30 12:17:26] ERROR | log_message | django.server | "GET /api/v1/version/ HTTP/1.0" 500 105355
+[2022-09-30 12:50:50] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/src/backend/core/views.py", line 21, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 501, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/local/lib/python3.10/subprocess.py", line 969, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.10/subprocess.py", line 1845, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+[2022-09-30 12:50:52] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/src/backend/core/views.py", line 21, in list
+    git_identifier = subprocess.check_output(git_command, cwd=FILE_DIR).decode('utf-8').strip()
+  File "/usr/local/lib/python3.10/subprocess.py", line 420, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/usr/local/lib/python3.10/subprocess.py", line 501, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/usr/local/lib/python3.10/subprocess.py", line 969, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "/usr/local/lib/python3.10/subprocess.py", line 1845, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'git'
+[2022-09-30 13:08:05] ERROR | log_response | django.request | Internal Server Error: /api/v1/version/
+Traceback (most recent call last):
+  File "/py/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/py/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/py/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/py/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/src/backend/core/views.py", line 25, in list
+    last_updated: str = time.strftime('%a, %-e %b %Y, %I:%M:%S %p (%Z)', time.localtime(os.path.getmtime('.git'))).strip()
+  File "/usr/local/lib/python3.10/genericpath.py", line 55, in getmtime
+    return os.stat(filename).st_mtime
+FileNotFoundError: [Errno 2] No such file or directory: '.git'
+[2022-10-01 18:54:25] ERROR | log_response | django.request | Internal Server Error: /api/v1/category_products/1/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/generics.py", line 199, in get
+    return self.list(request, *args, **kwargs)
+  File "/src/backend/product_category/views.py", line 50, in list
+    queryset = self.filter_queryset(self.get_queryset())
+  File "/src/backend/product_category/views.py", line 43, in get_queryset
+    category = Category.objects.get(slug=category_slug)
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/query.py", line 650, in get
+    raise self.model.DoesNotExist(
+backend.product_category.models.Category.DoesNotExist: Category matching query does not exist.
+[2022-10-01 18:54:37] ERROR | log_response | django.request | Internal Server Error: /api/v1/category_products/2/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/generics.py", line 199, in get
+    return self.list(request, *args, **kwargs)
+  File "/src/backend/product_category/views.py", line 50, in list
+    queryset = self.filter_queryset(self.get_queryset())
+  File "/src/backend/product_category/views.py", line 43, in get_queryset
+    category = Category.objects.get(slug=category_slug)
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/query.py", line 650, in get
+    raise self.model.DoesNotExist(
+backend.product_category.models.Category.DoesNotExist: Category matching query does not exist.
+[2022-12-04 23:19:58] ERROR | log_response | django.request | Internal Server Error: /api/v1/reviews/review/1/398/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/src/backend/product_review/views.py", line 93, in get
+    review = Review.objects.get(user_id=user_id, product_id=product_id)
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/query.py", line 653, in get
+    raise self.model.MultipleObjectsReturned(
+backend.product_review.models.Review.MultipleObjectsReturned: get() returned more than one Review -- it returned 2!
+[2022-12-05 00:24:44] ERROR | log_response | django.request | Internal Server Error: /api/v1/reviews/review/1/398/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.10/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/views/generic/base.py", line 103, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/usr/local/lib/python3.10/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/src/backend/product_review/views.py", line 93, in get
+    review = Review.objects.get(user_id=user_id, product_id=product_id)
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/usr/local/lib/python3.10/site-packages/django/db/models/query.py", line 653, in get
+    raise self.model.MultipleObjectsReturned(
+backend.product_review.models.Review.MultipleObjectsReturned: get() returned more than one Review -- it returned 2!

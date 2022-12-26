@@ -12,7 +12,7 @@ class SeoModel(models.Model):
     )
 
     class Meta:
-        abstract: bool = True
+        abstract = True
 
 
 class SeoModelTranslation(Translation):

@@ -1,62 +1,62 @@
 .grid-blog-siderbar {
-  display: flex;
-  flex-direction: column;
-  grid-gap: 20px;
-  position: relative;
+	display: flex;
+	flex-direction: column;
+	grid-gap: 20px;
+	position: relative;
 
-  &-tags,
-  &-authors {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(2, 1fr);
+	&-tags,
+	&-authors {
+		display: grid;
+		grid-gap: 10px;
+		grid-template-columns: repeat(2, 1fr);
 
-    span {
-      align-self: center;
-      display: grid;
-      justify-self: start;
-      transition: all 0.3s ease-in-out;
-      width: 100%;
+		span {
+			align-self: center;
+			display: grid;
+			justify-self: start;
+			transition: all 0.3s ease-in-out;
+			width: 100%;
 
-      &:not(.sidebar-blog-title) {
-        border: 1px solid var(--cp-palette-main-third);
-        border-radius: 5px;
-        padding: 7px 12px;
+			&:not(.sidebar-blog-title) {
+				border: 1px solid var(--cp-palette-main-third);
+				border-radius: 5px;
+				padding: 7px 12px;
 
-        &:hover {
-          background: var(--cp-palette-main-secondary);
-          transition: all 0.3s ease-in-out;
+				&:hover {
+					background: var(--cp-palette-main-secondary);
+					transition: all 0.3s ease-in-out;
 
-          a {
-            transition: all 0.3s ease-in-out;
+					a {
+						transition: all 0.3s ease-in-out;
 
-            svg {
-              color: var(--cp-palette-main-primary);
-              transition: all 0.3s ease-in-out;
-            }
-          }
-        }
-      }
-    }
+						svg {
+							color: var(--cp-palette-main-primary);
+							transition: all 0.3s ease-in-out;
+						}
+					}
+				}
+			}
+		}
 
-    a {
-      font-size: 18px;
-    }
-  }
+		a {
+			font-size: 18px;
+		}
+	}
 
-  &-authors {
-    grid-template-columns: repeat(1, 1fr);
-  }
+	&-authors {
+		grid-template-columns: repeat(1, 1fr);
+	}
 
-  .sidebar-blog-title {
-    font-size: 26px;
-    font-weight: 500;
+	.sidebar-blog-title {
+		font-size: 26px;
+		font-weight: 500;
 
-    &.tags {
-      grid-column-start: span 2;
-    }
+		&.tags {
+			grid-column-start: span 2;
+		}
 
-    &.authors {
-      grid-column-start: auto;
-    }
-  }
+		&.authors {
+			grid-column-start: auto;
+		}
+	}
 }

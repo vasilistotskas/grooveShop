@@ -1,10 +1,8 @@
-import os
 from typing import List
 
 import strawberry.django
 import strawberry_django
 from backend.tip.models import Tip
-from django.conf import settings
 from strawberry import auto
 
 
@@ -18,23 +16,10 @@ class TipType:
     url: str
     created_at: auto
     active: bool
-
-    @strawberry_django.field
-    def main_image_absolute_url(self) -> str:
-        if self.icon and hasattr(self.icon, "url"):
-            icon = settings.BACKEND_BASE_URL + self.icon.url
-        else:
-            icon = ""
-        return icon
-
-    @strawberry_django.field
-    def main_image_filename(self) -> str:
-        if self.icon and hasattr(self.icon, "name"):
-            return os.path.basename(self.icon.name)
-        else:
-            return ""
+    main_image_absolute_url: str
+    main_image_filename: str
 
 
 @strawberry.type
 class Query:
-    allTips: List[TipType] = strawberry_django.field()
+    tips: List[TipType] = strawberry_django.field()

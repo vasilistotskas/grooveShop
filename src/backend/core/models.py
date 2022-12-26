@@ -17,18 +17,18 @@ class SortableModel(models.Model):
     sort_order = models.IntegerField(editable=False, db_index=True, null=True)
 
     class Meta:
-        abstract: bool = True
+        abstract = True
 
     def get_ordering_queryset(self) -> QuerySet[Any]:
         raise NotImplementedError("Unknown ordering queryset")
 
     @staticmethod
-    def get_max_sort_order(qs):
+    def get_max_sort_order(qs) -> int:
         existing_max = qs.aggregate(Max("sort_order"))
         existing_max = existing_max.get("sort_order__max")
         return existing_max
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         if self.pk is None:
             qs = self.get_ordering_queryset()
             existing_max = self.get_max_sort_order(qs)
@@ -37,7 +37,7 @@ class SortableModel(models.Model):
         super().save(*args, **kwargs)
 
     @transaction.atomic
-    def delete(self, *args, **kwargs):
+    def delete(self, *args, **kwargs) -> None:
         if self.sort_order is not None:
             qs = self.get_ordering_queryset()
             qs.filter(sort_order__gt=self.sort_order).update(
@@ -60,7 +60,7 @@ class UUIDModel(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
 
     class Meta:
-        abstract: bool = True
+        abstract = True
 
 
 class PublishedQuerySet(models.QuerySet):

@@ -1,12 +1,8 @@
-from typing import Any
-from typing import List
-
 from backend.product_favourite import views
 from django.urls import path
-from django.urls import URLPattern
 from rest_framework.urlpatterns import format_suffix_patterns
 
-urlpatterns: List[URLPattern | URLPattern | Any] = [
+urlpatterns = [
     path("favourites/<int:user_id>/", views.FavouriteUserListIds.as_view()),
     path(
         "favourites/delete/<int:user_id>/<int:product_id>/",

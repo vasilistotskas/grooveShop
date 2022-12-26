@@ -1,75 +1,75 @@
 .entypo {
-  transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 
-  svg {
-    height: auto;
-    padding: 10px;
-    transition: all 0.3s ease-in-out;
-    width: auto;
-  }
+	svg {
+		height: auto;
+		padding: 10px;
+		transition: all 0.3s ease-in-out;
+		width: auto;
+	}
 
-  &:hover {
-    transition: all 0.3s ease-in-out;
+	&:hover {
+		transition: all 0.3s ease-in-out;
 
-    svg {
-      background-color: var(--cp-palette-main-fourth);
-      box-shadow: 0 0 8px 1px #ffa1a1;
-      transform: scale(1.01);
-      transition: all 0.3s ease-in-out;
-    }
-  }
+		svg {
+			background-color: var(--cp-palette-main-fourth);
+			box-shadow: 0 0 8px 1px #ffa1a1;
+			transform: scale(1.01);
+			transition: all 0.3s ease-in-out;
+		}
+	}
 }
 
 #social-sidebar a[class*='twitter']:hover,
 #social-sidebar a[class*='twitter'] span,
 #social-sidebar a[class*='twitter'] span:before {
-  background: #00aced;
+	background: #00aced;
 }
 
 #social-sidebar a[class*='facebook']:hover,
 #social-sidebar a[class*='facebook'] span,
 #social-sidebar a[class*='facebook'] span:before {
-  background: #3b5998;
+	background: #3b5998;
 }
 
 #social-sidebar a[class*='gplus']:hover,
 #social-sidebar a[class*='gplus'] span,
 #social-sidebar a[class*='gplus'] span:before {
-  background: #e34429;
+	background: #e34429;
 }
 
 #social-sidebar a[class*='dribbble']:hover,
 #social-sidebar a[class*='dribbble'] span,
 #social-sidebar a[class*='dribbble'] span:before {
-  background: #ea4c89;
+	background: #ea4c89;
 }
 
 #social-sidebar a[class*='dropbox']:hover,
 #social-sidebar a[class*='dropbox'] span,
 #social-sidebar a[class*='dropbox'] span:before {
-  background: #8dc5f2;
+	background: #8dc5f2;
 }
 
 #social-sidebar a[class*='github']:hover,
 #social-sidebar a[class*='github'] span,
 #social-sidebar a[class*='github'] span:before {
-  background: #9c7a5b;
+	background: #9c7a5b;
 }
 
 #social-sidebar a[class*='evernote']:hover,
 #social-sidebar a[class*='evernote'] span,
 #social-sidebar a[class*='evernote'] span:before {
-  background: #6bb130;
+	background: #6bb130;
 }
 
 #social-sidebar a[class*='instagram']:hover,
 #social-sidebar a[class*='instagram'] span,
 #social-sidebar a[class*='instagram'] span:before {
-  background: #e1306c;
+	background: #e1306c;
 }
 
 #social-sidebar a[class*='linkedin']:hover,
 #social-sidebar a[class*='linkedin'] span,
 #social-sidebar a[class*='linkedin'] span:before {
-  background: #4267b2;
+	background: #4267b2;
 }

@@ -1,8 +1,8 @@
 enum EntityUpdatableInputTextOption {
-  LowerCase = 'toLowerCase',
-  UpperCase = 'toUpperCase',
-  StartCase = 'toStartCase',
-  Capitalize = 'toCapitalize',
+	LowerCase = 'toLowerCase',
+	UpperCase = 'toUpperCase',
+	StartCase = 'toStartCase',
+	Capitalize = 'toCapitalize'
 }
 
 export default EntityUpdatableInputTextOption

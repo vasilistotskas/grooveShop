@@ -30,7 +30,15 @@ BACKEND_BASE_URL = str(os.environ.get("BACKEND_BASE_URL"))
 APP_BASE_URL = str(os.environ.get("APP_BASE_URL"))
 VITE_APP_URL = str(os.environ.get("VITE_APP_URL"))
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "http://localhost:8001",
+    "http://localhost:3003",
+    "backend",
+    APP_BASE_URL,
+    VITE_APP_URL,
+]
 ALLOWED_HOSTS.extend(
     filter(
         None,
@@ -38,12 +46,23 @@ ALLOWED_HOSTS.extend(
     )
 )
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:8001",
+    "http://localhost:3003",
+    APP_BASE_URL,
+    VITE_APP_URL,
+]
 CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8001",
+    "http://localhost:3003",
     APP_BASE_URL,
     VITE_APP_URL,
 ]
 CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8001",
+    "http://localhost:3003",
     APP_BASE_URL,
     VITE_APP_URL,
 ]
@@ -74,6 +93,7 @@ DJANGO_APPS = [
 ]
 PROJECT_APPS = [
     "backend.user",
+    "backend.user_address",
     "backend.core",
     "backend.product",
     "backend.product_review",
@@ -86,6 +106,8 @@ PROJECT_APPS = [
     "backend.seo",
     "backend.tip",
     "backend.vat",
+    "backend.country",
+    "backend.region",
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",
@@ -96,7 +118,7 @@ THIRD_PARTY_APPS = [
     "tinymce",
     "django_filters",
     "strawberry.django",
-    "debug_toolbar",
+    "drf_spectacular",
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
@@ -112,10 +134,11 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
+    "backend.user.middleware.AnonymousUserTrackingMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "backend.user.middleware.LastActivityTraceMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "backend.app.urls"
@@ -131,6 +154,7 @@ APPEND_SLASH = os.environ.get("APPEND_SLASH")
 AUTH_USER_MODEL = "user.UserAccount"
 
 # Sessions and Cookies
+SESSION_ENGINE = "backend.app.session_backend"
 CSRF_COOKIE_SAMESITE = "Strict"
 SESSION_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_HTTPONLY = False  # False since we will grab it via universal-cookies
@@ -156,6 +180,8 @@ WSGI_APPLICATION = "backend.app.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+SYSTEM_ENV = os.environ.get("SYSTEM_ENV", None)
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -173,6 +199,18 @@ DATABASES = {
         },
     },
 }
+
+if SYSTEM_ENV == "GITHUB_WORKFLOW":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "postgres",
+            "USER": os.environ.get("DB_USER"),
+            "PASSWORD": os.environ.get("DB_PASS"),
+            "HOST": "127.0.0.1",
+            "PORT": "5432",
+        }
+    }
 
 # Cache
 CACHES = {
@@ -236,7 +274,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "backend/media")
 FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 
 STATICFILES_DIRS = (
-    os.path.join(FRONTEND_DIR, "dist/backend/static"),
     BASE_DIR.joinpath("frontend", "dist"),
     BASE_DIR.joinpath("files"),
 )
@@ -269,7 +306,18 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "COERCE_DECIMAL_TO_STRING": os.environ.get("COERCE_DECIMAL_TO_STRING"),
+    "DEFAULT_PAGINATION_CLASS": "backend.helpers.paginator.CountPaginator",
+    "PAGE_SIZE": 100,
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "GrooveShop API",
+    "DESCRIPTION": "GrooveShop API",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.AllowAny"],
 }
 
 DJOSER = {
