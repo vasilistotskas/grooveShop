@@ -1,0 +1,8 @@
+{
+  "root": true,
+  "extends": [
+    "eslint:recommended",
+    "plugin:nuxt/recommended",
+    "plugin:prettier/recommended"
+  ]
+}
