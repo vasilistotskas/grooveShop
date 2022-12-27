@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.15.0 (2022-12-27)
+### Feature
+* **backend:** Introduce new middleware for sessions and API for active logged in users count / activity refresh endpoints ([`98ef00d`](https://github.com/vasilistotskas/grooveShop/commit/98ef00dff2bfc58ee11ddc8c6a9201ea3c34d9b5))
+
 ## v0.14.0 (2022-12-19)
 ### Feature
 * **Backend:Blog:** Split blog module and implemented API for all blog entities ([`2650b0c`](https://github.com/vasilistotskas/grooveShop/commit/2650b0cf8c28b350313db888a14d163221860db4))
