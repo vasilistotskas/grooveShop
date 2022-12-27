@@ -11,44 +11,91 @@
       tailwind.config = {
         theme: {
           extend: {
-            colors: {
-              clifford: '#da373d',
+            gridTemplateColumns: {
+              'auto-1fr': 'auto 1fr',
+              '1fr-auto': '1fr auto',
+              'auto-auto': 'auto auto',
+              'auto-fill-150': 'repeat(auto-fill, minmax(150px, 1fr));',
+              '3fr-2fr': '3fr 2fr',
             }
           }
         }
       }
-  </script>
+    </script>
+    <style type="text/tailwindcss" lang="scss">
+      @layer utilities {
+        .messages {
+            display: grid;
+            position: fixed;
+            gap: 1rem;
+            top: 10px;
+            right: 10px;
+            z-index: 100;
+        }
+        .facebook {
+          background-color: rgb(59, 89, 152);
+        }
+        .google {
+          background-color: rgb(219, 68, 55);
+        }
+        .form-check-input:checked[type=checkbox] {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23fff' fill-rule='evenodd' d='M4.646 8.354a.5.5 0 01.708 0L7 10.293l2.646-2.647a.5.5 0 11.708.708l-3 3a.5.5 0 01-.708 0l-3-3a.5.5 0 010-.708z' clip-rule='evenodd'/%3E%3C/svg%3E");
+        }
+      }
+    </style>
   </head>
   <body>
     {% block body %}
 
     {% if messages %}
-    <div>
-      <strong>Messages:</strong>
-      <ul>
+      <div class="messages">
         {% for message in messages %}
-        <li>{{message}}</li>
+          <div class="message {% if message.tags %}{{ message.tags }}{% endif %} bg-blue-100 rounded-lg py-5 px-6 text-base text-blue-700 inline-flex items-center w-full" role="alert">
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info-circle" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"></path>
+            </svg>
+            {{message}}
+          </div>
         {% endfor %}
-      </ul>
-    </div>
+      </div>
     {% endif %}
 
-    <div>
-      <strong>Menu:</strong>
-      <ul>
-        {% if user.is_authenticated %}
-        <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-        <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
-        {% else %}
-        <li><a href="{% url 'account_login' %}">Sign In</a></li>
-        <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
-        {% endif %}
-      </ul>
+    <div class="bg-zinc-900 relative">
+      <div class="menu grid items-center justify-center px-4 pt-4 pb-4 bg-blue-600">
+        <nav class="grid items-center w-full relative max-w-3xl text-gray-100">
+          <ul class="grid grid-cols-auto-auto gap-10">
+            {% if user.is_authenticated %}
+              <li class="text-lg font-semibold"><a href="{% url 'account_email' %}">Change E-mail</a></li>
+              <li class="text-lg font-semibold"><a href="{% url 'account_logout' %}">Sign Out</a></li>
+            {% else %}
+              <li class="text-lg font-semibold"><a href="{% url 'account_login' %}">Sign In</a></li>
+              <li class="text-lg font-semibold"><a href="{% url 'account_signup' %}">Sign Up</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+      <div class="content text-gray-400">
+        {% block content %}
+        {% endblock %}
+        {% endblock %}
+        {% block extra_body %}
+        {% endblock %}
+      </div>
     </div>
-    {% block content %}
-    {% endblock %}
-    {% endblock %}
-    {% block extra_body %}
-    {% endblock %}
+
   </body>
+
+  <script>
+      // Select all messages
+      const messages = document.querySelectorAll('.messages .message');
+
+      // Hide each message after 3 seconds
+      messages.forEach(message => {
+        setTimeout(() => {
+          message.style.transition = 'opacity 1s ease-in-out';
+          message.style.opacity = 0;
+        }, 3000);
+      });
+  </script>
+
 </html>

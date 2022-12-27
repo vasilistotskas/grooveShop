@@ -122,7 +122,6 @@ THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "allauth.socialaccount.providers.auth0",
     "allauth.socialaccount.providers.facebook",
     "allauth.socialaccount.providers.google",
 ]
@@ -189,13 +188,6 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
-    "auth0": {
-        "APP": {
-            "client_id": os.environ.get("AUTH0_CLIENT_ID"),
-            "secret": os.environ.get("AUTH0_CLIENT_SECRET"),
-            "key": os.environ.get("AUTH0_CLIENT_KEY"),
-        }
-    },
     "facebook": {
         "APP": {
             "client_id": os.environ.get("FACEBOOK_CLIENT_ID"),

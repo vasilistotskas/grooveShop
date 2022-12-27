@@ -1,46 +1,93 @@
 {% extends "account/base.html" %}
 
 {% load i18n %}
+{% load form_filters %}
 {% load account socialaccount %}
-
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
 
-<h1>{% trans "Sign In" %}</h1>
+<h1 class="hidden">{% trans "Sign In" %}</h1>
 
 {% get_providers as socialaccount_providers %}
 
-{% if socialaccount_providers %}
-<p>{% blocktrans with site.name as site_name %}Please sign in with one
-of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-for a {{ site_name }} account and sign in below:{% endblocktrans %}</p>
+<section class="h-screen">
+  <div class="sm:px-6 lg:px-16 py-12 h-auto">
+    <div class="grid sm:grid-cols-1 lg:grid-cols-3fr-2fr gap-4 h-full g-6 text-gray-800">
+      <div class="md:w-full lg:w-9/12 grid items-center">
+        <img
+          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+          class="sm:w-9/12 lg:w-full"
+          alt="Phone image"
+        />
+      </div>
+      <div class="md:w-full lg:w-10/12 grid items-center p-6 border border-zinc-800 rounded">
+        <form class="login" method="POST" action="{% url 'account_login' %}">
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="mb-6">
+              {% if field.name == "login" or field.name == "password" %}
+                {{ field|add_class:"form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" }}
+                {{ field.errors }}
+              {% endif %}
+            </div>
+          {% endfor %}
+          <div class="flex justify-between items-center mb-6">
+            <div class="form-group form-check">
+              <input
+                type="checkbox"
+                name="remember"
+                class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                id="id_remember"
+              />
+              <label class="form-check-label inline-block text-gray-100" for="id_remember"
+                >{% trans "Remember me" %}</label
+              >
+            </div>
+            <a
+              href="{% url 'account_reset_password' %}"
+              class="text-gray-100 hover:text-gray-200 focus:text-gray-200 active:text-gray-300 duration-200 transition ease-in-out"
+            >
+              {% trans "Forgot Password?" %}
+            </a>
+          </div>
 
-<div class="socialaccount_ballot">
+          {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
 
-  <ul class="socialaccount_providers">
-    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-  </ul>
+          <button
+            type="submit"
+            class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full"
+            data-mdb-ripple="true"
+            data-mdb-ripple-color="light"
+          >
+            {% trans "Sign In" %}
+          </button>
 
-  <div class="login-or">{% trans 'or' %}</div>
+          <div
+            class="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5"
+          >
+            <p class="text-gray-100 text-center font-semibold mx-4 mb-0">{% trans 'OR' %}</p>
+          </div>
 
-</div>
+          {% if socialaccount_providers %}
+            <div class="socialaccount_ballot">
+              <ul class="socialaccount_providers">
+                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+              </ul>
+            </div>
 
-{% include "socialaccount/snippets/login_extra.html" %}
+            {% include "socialaccount/snippets/login_extra.html" %}
 
-{% else %}
-<p>{% blocktrans %}If you have not created an account yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
-{% endif %}
+            {% else %}
+              <p>{% blocktrans %}If you have not created an account yet, then please
+              <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+          {% endif %}
 
-<form class="login" method="POST" action="{% url 'account_login' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-  <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
-</form>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% endblock %}
