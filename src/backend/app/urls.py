@@ -13,6 +13,9 @@ from drf_spectacular.views import SpectacularRedocView
 from drf_spectacular.views import SpectacularSwaggerView
 from strawberry.django.views import AsyncGraphQLView
 from strawberry.django.views import GraphQLView
+from rest_framework import routers
+
+from backend.user.views import ActiveUserViewSet
 
 
 @require_GET
@@ -29,8 +32,12 @@ front_urls = [
     path("robots.txt", robots_txt),
 ]
 
+router = routers.SimpleRouter()
+router.register(r'active_users', ActiveUserViewSet, basename='active_users')
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/v1/", include(router.urls)),
     path("api/v1/", include("backend.product.urls")),
     path("api/v1/", include("backend.product_favourite.urls")),
     path("api/v1/", include("backend.product_category.urls")),

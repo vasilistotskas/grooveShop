@@ -134,9 +134,8 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "backend.user.middleware.AnonymousUserTrackingMiddleware",
+    "backend.user.middleware.SessionTraceMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "backend.user.middleware.LastActivityTraceMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]

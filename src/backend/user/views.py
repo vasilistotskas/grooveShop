@@ -1,8 +1,12 @@
 import json
+from datetime import timedelta
 
-from backend.user.models import UserAccount
+from django.utils.timezone import now
+from rest_framework.viewsets import ViewSet
+
+from backend.user.models import UserAccount, MySession
 from backend.user.models import UserProfile
-from backend.user.serializers import UserProfileSerializer
+from backend.user.serializers import UserProfileSerializer, UserSerializer
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login
@@ -185,3 +189,23 @@ class ClearAllUserSessions(APIView):
             raise Http404
 
         return Response("Success", status=status.HTTP_200_OK)
+
+
+class ActiveUserViewSet(ViewSet):
+    @action(detail=False, methods=["post"])
+    def refresh_last_activity(self, request):
+        session_key = request.session.session_key
+        try:
+            session = MySession.objects.get(session_key=session_key)
+            session.last_activity = now()
+            session.save()
+            return Response({"success": True})
+        except MySession.DoesNotExist:
+            return Response({"success": False}, status=status.HTTP_404_NOT_FOUND)
+
+    @action(detail=False, methods=["get"])
+    def active_users_count(self, request):
+        ten_minutes_ago = now() - timedelta(minutes=10)
+        active_sessions = MySession.objects.filter(last_activity__gte=ten_minutes_ago).exclude(user_id=None)
+        active_sessions_count = active_sessions.count()
+        return Response({"active_users_count": active_sessions_count})
