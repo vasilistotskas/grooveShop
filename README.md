@@ -83,7 +83,7 @@
         black backend
 
   ### Poetry :
-  -     Install poetry : curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+  -     Install poetry : curl -sSL https://install.python-poetry.org | python3 - OR (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
         Create poetry project : poetry new <project_name>
         Install dependencies : poetry install
         Update poetry lock file : poetry lock

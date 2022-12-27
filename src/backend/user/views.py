@@ -1,80 +1,32 @@
 import json
 from datetime import timedelta
 
-from django.utils.timezone import now
-from rest_framework.viewsets import ViewSet
-
-from backend.user.models import UserAccount, MySession
+from backend.user.models import MySession
+from backend.user.models import UserAccount
 from backend.user.models import UserProfile
-from backend.user.serializers import UserProfileSerializer, UserSerializer
+from backend.user.serializers import UserProfileSerializer
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.http import Http404
 from django.http import JsonResponse
+from django.utils.timezone import now
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
-from djoser.compat import get_user_email
-from djoser.compat import get_user_email_field_name
-from djoser.conf import settings as djoser_settings
-from djoser.utils import ActionViewMixin
-from djoser.views import UserViewSet
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema
 from drf_spectacular.utils import OpenApiParameter
 from rest_framework import authentication
 from rest_framework import generics
 from rest_framework import permissions
-from rest_framework import response
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ViewSet
 
 User = get_user_model()
-
-
-class ResendActivationView(ActionViewMixin, generics.GenericAPIView):
-    serializer_class = djoser_settings.SERIALIZERS.password_reset
-    permission_classes = [permissions.AllowAny]
-
-    _users = None
-
-    def _action(self, serializer):
-        if self.user_is_active(serializer.data["email"]):
-            return Response(
-                "User is already active", status=status.HTTP_400_BAD_REQUEST
-            )
-        for user in self.get_users(serializer.data["email"]):
-            self.send_activation_email(user)
-        return response.Response(status=status.HTTP_204_NO_CONTENT)
-
-    def get_users(self, email):
-        if self._users is None:
-            email_field_name = get_user_email_field_name(User)
-            users = User._default_manager.filter(
-                **{email_field_name + "__iexact": email}
-            )
-            self._users = [
-                u for u in users if not u.is_active and u.has_usable_password()
-            ]
-        return self._users
-
-    def user_is_active(self, email) -> bool:
-        email_field_name = get_user_email_field_name(User)
-        users = User._default_manager.filter(**{email_field_name + "__iexact": email})
-
-        for u in users:
-            if u.is_active:
-                return True
-
-        return False
-
-    def send_activation_email(self, user):
-        context = {"user": user}
-        to = [get_user_email(user)]
-        djoser_settings.EMAIL.activation(self.request, context).send(to)
 
 
 @extend_schema(
@@ -95,23 +47,6 @@ class ResendActivationView(ActionViewMixin, generics.GenericAPIView):
         ),
     ]
 )
-class ActivateUser(UserViewSet):
-    def get_serializer(self, *args, **kwargs):
-        serializer_class = self.get_serializer_class()
-        kwargs.setdefault("context", self.get_serializer_context())
-
-        return serializer_class(*args, **kwargs)
-
-    @action(["post"], detail=False)
-    def activation(self, request, *args, **kwargs):
-        uid: str = self.kwargs["uid"]
-        token: str = self.kwargs["token"]
-        kwargs["data"] = {"uid": uid, "token": token}
-
-        super().activation(request, *args, **kwargs)
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
 @require_POST
 def login_view(request):
     data = json.loads(request.body)
@@ -206,6 +141,8 @@ class ActiveUserViewSet(ViewSet):
     @action(detail=False, methods=["get"])
     def active_users_count(self, request):
         ten_minutes_ago = now() - timedelta(minutes=10)
-        active_sessions = MySession.objects.filter(last_activity__gte=ten_minutes_ago).exclude(user_id=None)
+        active_sessions = MySession.objects.filter(
+            last_activity__gte=ten_minutes_ago
+        ).exclude(user_id=None)
         active_sessions_count = active_sessions.count()
         return Response({"active_users_count": active_sessions_count})

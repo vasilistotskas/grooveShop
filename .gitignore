@@ -205,3 +205,4 @@ npm-debug.log
 
 # Sass cache
 .sass-cache
+!/venv/

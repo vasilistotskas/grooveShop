@@ -11,7 +11,7 @@ services:
       sh -c "python manage.py wait_for_db &&
              python manage.py migrate &&
              python manage.py collectstatic --noinput &&
-             gunicorn backend.app.wsgi:application --bind 0.0.0.0:8001"
+             gunicorn backend.app.wsgi:application --bind 0.0.0.0:8001 --reload"
     volumes:
       - ./src:/src
       - web-static:/src/backend/static

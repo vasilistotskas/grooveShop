@@ -1,4 +1,5 @@
 from backend.core.graphql.schema import schema
+from backend.user.views import ActiveUserViewSet
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -11,11 +12,9 @@ from django.views.decorators.http import require_GET
 from drf_spectacular.views import SpectacularAPIView
 from drf_spectacular.views import SpectacularRedocView
 from drf_spectacular.views import SpectacularSwaggerView
+from rest_framework import routers
 from strawberry.django.views import AsyncGraphQLView
 from strawberry.django.views import GraphQLView
-from rest_framework import routers
-
-from backend.user.views import ActiveUserViewSet
 
 
 @require_GET
@@ -33,7 +32,7 @@ front_urls = [
 ]
 
 router = routers.SimpleRouter()
-router.register(r'active_users', ActiveUserViewSet, basename='active_users')
+router.register(r"active_users", ActiveUserViewSet, basename="active_users")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -49,9 +48,8 @@ urlpatterns = [
     path("api/v1/", include("backend.slider.urls")),
     path("api/v1/", include("backend.search.urls")),
     path("api/v1/", include("backend.tip.urls")),
-    path("api/v1/", include("backend.blog.urls")),  # djoser api views
-    path("api/v1/djoser/", include("djoser.urls")),
-    path("api/v1/djoser/", include("djoser.urls.authtoken")),  # graphql
+    path("api/v1/", include("backend.blog.urls")),
+    path("accounts/", include("allauth.urls")),
     path("graphql/async", AsyncGraphQLView.as_view(schema=schema)),
     path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
     # admin html editor

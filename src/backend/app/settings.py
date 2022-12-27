@@ -90,6 +90,7 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
 ]
 PROJECT_APPS = [
     "backend.user",
@@ -113,12 +114,17 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
-    "djoser",
     "mptt",
     "tinymce",
     "django_filters",
     "strawberry.django",
     "drf_spectacular",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.auth0",
+    "allauth.socialaccount.providers.facebook",
+    "allauth.socialaccount.providers.google",
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
@@ -162,7 +168,7 @@ SESSION_COOKIE_HTTPONLY = True
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR.joinpath("frontend")],
+        "DIRS": [os.path.join(BASE_DIR, "backend/templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -174,6 +180,42 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to log in by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    "auth0": {
+        "APP": {
+            "client_id": os.environ.get("AUTH0_CLIENT_ID"),
+            "secret": os.environ.get("AUTH0_CLIENT_SECRET"),
+            "key": os.environ.get("AUTH0_CLIENT_KEY"),
+        }
+    },
+    "facebook": {
+        "APP": {
+            "client_id": os.environ.get("FACEBOOK_CLIENT_ID"),
+            "secret": os.environ.get("FACEBOOK_CLIENT_SECRET"),
+            "key": os.environ.get("FACEBOOK_CLIENT_KEY"),
+        }
+    },
+    "google": {
+        "APP": {
+            "client_id": os.environ.get("GOOGLE_CLIENT_ID"),
+            "secret": os.environ.get("GOOGLE_CLIENT_SECRET"),
+            "key": os.environ.get("GOOGLE_CLIENT_KEY"),
+        }
+    },
+}
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = "email"
 
 WSGI_APPLICATION = "backend.app.wsgi.application"
 
@@ -317,26 +359,6 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "SERVE_PERMISSIONS": ["rest_framework.permissions.AllowAny"],
-}
-
-DJOSER = {
-    "LOGIN_FIELD": "email",
-    "USER_CREATE_PASSWORD_RETYPE": True,
-    "USERNAME_CHANGED_EMAIL_CONFIRMATION": True,
-    "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
-    "SEND_CONFIRMATION_EMAIL": True,
-    "SET_USERNAME_RETYPE": True,
-    "SET_PASSWORD_RETYPE": True,
-    "PASSWORD_RESET_CONFIRM_URL": "password_reset/{uid}/{token}",
-    "USERNAME_RESET_CONFIRM_URL": "accounts/email/reset/confirm/{uid}/{token}",
-    "ACTIVATION_URL": "accounts/activate/{uid}/{token}",
-    "SEND_ACTIVATION_EMAIL": True,
-    "SERIALIZERS": {
-        "user_create": "backend.user.serializers.UserCreationSerializer",
-        "user": "backend.user.serializers.UserCreationSerializer",
-        "current_user": "backend.user.serializers.UserCreationSerializer",
-        "user_delete": "djoser.serializers.UserDeleteSerializer",
-    },
 }
 
 # logs

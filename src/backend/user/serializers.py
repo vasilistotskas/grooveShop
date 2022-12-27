@@ -1,16 +1,9 @@
 from backend.helpers.image_resize import make_thumbnail
 from backend.user.models import UserProfile
 from django.contrib.auth import get_user_model
-from djoser.serializers import UserCreateSerializer
 from rest_framework import serializers
 
 User = get_user_model()
-
-
-class UserCreationSerializer(UserCreateSerializer):
-    class Meta(UserCreateSerializer.Meta):
-        model = User
-        fields = ("id", "email", "first_name", "last_name", "password")
 
 
 class UserProfileSerializer(serializers.ModelSerializer):

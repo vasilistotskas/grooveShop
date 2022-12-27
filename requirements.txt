@@ -2,7 +2,6 @@ Django==4.1.4
 psycopg2-binary==2.9.5
 djangorestframework==3.14.0
 django-cors-headers==3.13.0
-djoser==2.1.0
 pillow==9.3.0
 stripe==3.5.0
 django-admin-thumbnails==0.2.6
@@ -23,7 +22,8 @@ django-stubs==1.13.1
 django-stubs-ext==0.7.0
 python-semantic-release==7.32.2
 flake8==6.0.0
-coverage==7.0.0
+coverage==7.0.1
 drf-spectacular==0.25.1
 pylint==2.15.9
-pre-commit==2.20.0
+pre-commit==2.21.0
+django-allauth==0.51.0

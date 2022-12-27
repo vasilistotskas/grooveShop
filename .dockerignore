@@ -19,3 +19,4 @@ src/backend/media/
 **/node_modules
 **/build
 **/dist
+/venv/
