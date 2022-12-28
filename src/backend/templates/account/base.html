@@ -1,8 +1,96 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta content="IE=edge" http-equiv="X-UA-Compatible" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+		/>
+		<meta content="width=device-width,initial-scale=1.0" name="viewport" />
+		<meta name="theme-color" content="#ffffff" />
+
+    <link
+			href="{% static 'favicon/apple-icon-57x57.png' %}"
+			rel="apple-touch-icon"
+			sizes="57x57"
+		/>
+		<link
+			href="{% static 'favicon/apple-icon-60x60.png' %}"
+			rel="apple-touch-icon"
+			sizes="60x60"
+		/>
+		<link
+			href="{% static 'favicon/apple-icon-72x72.png' %}"
+			rel="apple-touch-icon"
+			sizes="72x72"
+		/>
+		<link
+			href="{% static 'favicon/apple-icon-76x76.png' %}"
+			rel="apple-touch-icon"
+			sizes="76x76"
+		/>
+		<link
+			href="{% static 'favicon/apple-icon-114x114.png' %}"
+			rel="apple-touch-icon"
+			sizes="114x114"
+		/>
+		<link
+			href="{% static 'favicon/apple-icon-120x120.png' %}"
+			rel="apple-touch-icon"
+			sizes="120x120"
+		/>
+		<link
+			href="{% static 'favicon/apple-icon-144x144.png' %}"
+			rel="apple-touch-icon"
+			sizes="144x144"
+		/>
+		<link
+			href="{% static 'favicon/apple-icon-152x152.png' %}"
+			rel="apple-touch-icon"
+			sizes="152x152"
+		/>
+		<link
+			href="{% static 'favicon/apple-icon-180x180.png' %}"
+			rel="apple-touch-icon"
+			sizes="180x180"
+		/>
+		<link
+			href="{% static 'favicon/android-icon-192x192.png' %}"
+			rel="icon"
+			sizes="192x192"
+			type="image/png"
+		/>
+    <link
+			href="{% static 'favicon/favicon-16x16.png' %}"
+			rel="icon"
+			sizes="16x16"
+			type="image/png"
+		/>
+		<link
+			href="{% static 'favicon/favicon-32x32.png' %}"
+			rel="icon"
+			sizes="32x32"
+			type="image/png"
+		/>
+		<link
+			href="{% static 'favicon/favicon-96x96.png' %}"
+			rel="icon"
+			sizes="96x96"
+			type="image/png"
+		/>
+		<link
+			crossorigin="use-credentials"
+			href="{% static 'manifest.json' %}"
+			rel="manifest"
+		/>
+
+    <meta name="description" content="grooveShop Auth" />
+    <meta name="keywords" content="auth" />
+    <meta name="author" content="vasilistotskas" />
+
     <title>{% block head_title %}{% endblock %}</title>
     {% block extra_head %}
     {% endblock %}
@@ -17,7 +105,10 @@
               'auto-auto': 'auto auto',
               'auto-fill-150': 'repeat(auto-fill, minmax(150px, 1fr));',
               '3fr-2fr': '3fr 2fr',
-            }
+            },
+            spacing: {
+              '60px': '60px',
+            },
           }
         }
       }
@@ -60,9 +151,9 @@
       </div>
     {% endif %}
 
-    <div class="bg-zinc-900 relative">
-      <div class="menu grid items-center justify-center px-4 pt-4 pb-4 bg-blue-600">
-        <nav class="grid items-center w-full relative max-w-3xl text-gray-100">
+    <div class="h-full bg-zinc-900 relative">
+      <nav class="menu fixed z-50 grid items-center justify-center px-4 pt-4 pb-4 backdrop-opacity-10 backdrop-invert bg-blue-600/95 w-full">
+        <div class="grid items-center w-full relative max-w-3xl text-gray-100">
           <ul class="grid grid-cols-auto-auto gap-10">
             {% if user.is_authenticated %}
               <li class="text-lg font-semibold"><a href="{% url 'account_email' %}">Change E-mail</a></li>
@@ -72,14 +163,16 @@
               <li class="text-lg font-semibold"><a href="{% url 'account_signup' %}">Sign Up</a></li>
             {% endif %}
           </ul>
-        </nav>
-      </div>
-      <div class="content text-gray-400">
-        {% block content %}
-        {% endblock %}
-        {% endblock %}
-        {% block extra_body %}
-        {% endblock %}
+        </div>
+      </nav>
+      <div class="grid h-full min-h-screen max-w-screen-xl mx-auto text-gray-400">
+        <section class="h-auto grid items-center mt-60px">
+          {% block content %}
+          {% endblock %}
+          {% endblock %}
+          {% block extra_body %}
+          {% endblock %}
+        </section>
       </div>
     </div>
 

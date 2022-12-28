@@ -4,23 +4,26 @@
 {% load form_filters %}
 {% load account socialaccount %}
 
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
 {% block content %}
 
 <h1 class="hidden">{% trans "Sign In" %}</h1>
 
 {% get_providers as socialaccount_providers %}
 
-<section class="h-screen">
-  <div class="sm:px-6 lg:px-16 py-12 h-auto">
-    <div class="grid sm:grid-cols-1 lg:grid-cols-3fr-2fr gap-4 h-full g-6 text-gray-800">
-      <div class="md:w-full lg:w-9/12 grid items-center">
+  <div class="h-auto">
+    <div class="grid sm:grid-cols-1 lg:grid-cols-3fr-2fr sm:gap-6 lg:gap-24  h-full g-6 text-gray-800">
+      <div class="w-full grid items-center">
         <img
           src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
           class="sm:w-9/12 lg:w-full"
           alt="Phone image"
+          width="710px"
+          height="511px"
         />
       </div>
-      <div class="md:w-full lg:w-10/12 grid items-center p-6 border border-zinc-800 rounded">
+      <div class="w-full grid items-center p-12 border border-zinc-800 backdrop-opacity-10 backdrop-invert bg-zinc-900/90 rounded">
         <form class="login" method="POST" action="{% url 'account_login' %}">
           {% csrf_token %}
           {% for field in form %}
@@ -88,6 +91,6 @@
       </div>
     </div>
   </div>
-</section>
+
 
 {% endblock %}
