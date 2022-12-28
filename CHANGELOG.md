@@ -2,6 +2,15 @@
 
 <!--next-version-placeholder-->
 
+## v0.16.0 (2022-12-28)
+### Feature
+* **Auth:** Frontend ui for login view ready ([`e009312`](https://github.com/vasilistotskas/grooveShop/commit/e0093124c4cd15dcb0f70dc22f16c73a3e36f076))
+* **django-allauth:** Remove djoser and introduce django-allauth ([`6245111`](https://github.com/vasilistotskas/grooveShop/commit/6245111900c0d61b15cc997fa46a5ec012a764da))
+
+### Fix
+* **ci.yml:** Poetry version bump ([`e49bf93`](https://github.com/vasilistotskas/grooveShop/commit/e49bf9305ca0eaf7900aaa0cdb92d247346f20d6))
+* **Auth:** Auth seo improved , ui fixes ([`2af2965`](https://github.com/vasilistotskas/grooveShop/commit/2af29652f1240ac0838c135af47cfc682b86087f))
+
 ## v0.15.0 (2022-12-27)
 ### Feature
 * **backend:** Introduce new middleware for sessions and API for active logged in users count / activity refresh endpoints ([`98ef00d`](https://github.com/vasilistotskas/grooveShop/commit/98ef00dff2bfc58ee11ddc8c6a9201ea3c34d9b5))
