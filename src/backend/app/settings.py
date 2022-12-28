@@ -124,6 +124,7 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.facebook",
     "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.apple",
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
@@ -189,17 +190,38 @@ AUTHENTICATION_BACKENDS = [
 
 SOCIALACCOUNT_PROVIDERS = {
     "facebook": {
-        "APP": {
-            "client_id": os.environ.get("FACEBOOK_CLIENT_ID"),
-            "secret": os.environ.get("FACEBOOK_CLIENT_SECRET"),
-            "key": os.environ.get("FACEBOOK_CLIENT_KEY"),
-        }
+        "METHOD": "oauth2",
+        "SDK_URL": "//connect.facebook.net/{locale}/sdk.js",
+        "SCOPE": ["email", "public_profile"],
+        "AUTH_PARAMS": {"auth_type": "reauthenticate"},
+        "INIT_PARAMS": {"cookie": True},
+        "FIELDS": [
+            "id",
+            "first_name",
+            "last_name",
+            "middle_name",
+            "name",
+            "name_format",
+            "picture",
+            "short_name",
+        ],
+        "EXCHANGE_TOKEN": True,
+        "VERIFIED_EMAIL": False,
+        "LOCALE_FUNC": lambda request: "en_US",
+        "VERSION": "v15.0",
+        "GRAPH_API_URL": "https://graph.facebook.com/v15.0/",
     },
     "google": {
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {"access_type": "online"},
+        "OAUTH_PKCE_ENABLED": True,
+    },
+    "apple": {
         "APP": {
-            "client_id": os.environ.get("GOOGLE_CLIENT_ID"),
-            "secret": os.environ.get("GOOGLE_CLIENT_SECRET"),
-            "key": os.environ.get("GOOGLE_CLIENT_KEY"),
+            "client_id": os.environ.get("APPLE_CLIENT_ID"),
+            "secret": os.environ.get("APPLE_CLIENT_SECRET"),
+            "key": os.environ.get("APPLE_CLIENT_KEY"),
+            "certificate_key": os.environ.get("APPLE_CERTIFICATE_KEY"),
         }
     },
 }
@@ -208,6 +230,8 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_SIGNUP_REDIRECT_URL = "/user-account"
+LOGIN_REDIRECT_URL = "/user-account"
 
 WSGI_APPLICATION = "backend.app.wsgi.application"
 

@@ -14,32 +14,36 @@
 
   <div class="h-auto">
     <div class="grid sm:grid-cols-1 lg:grid-cols-3fr-2fr sm:gap-6 lg:gap-24  h-full g-6 text-gray-800">
-      <div class="w-full grid items-center">
+      <div class="w-full grid items-center justify-items-center">
         <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-          class="sm:w-9/12 lg:w-full"
+          src="/mediastream/static/images/websiteLogo_circle/420/420/outside/center/5/png"
+          class="w-auto"
           alt="Phone image"
-          width="710px"
-          height="511px"
+          width="420px"
+          height="420px"
         />
       </div>
-      <div class="w-full grid items-center p-12 border border-zinc-800 backdrop-opacity-10 backdrop-invert bg-zinc-900/90 rounded">
+      <div class="w-full grid p-12 rounded-lg shadow border md:mt-0 sm:max-w-md bg-zinc-800 border-gray-700">
         <form class="login" method="POST" action="{% url 'account_login' %}">
           {% csrf_token %}
-          {% for field in form %}
-            <div class="mb-6">
-              {% if field.name == "login" or field.name == "password" %}
-                {{ field|add_class:"form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" }}
-                {{ field.errors }}
-              {% endif %}
-            </div>
-          {% endfor %}
+          <div class="mb-6">
+            {{ form.login | add_class:"border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 :placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" }}
+            {{ form.login.errors | safe }}
+          </div>
+          <div class="mb-6">
+            {{ form.password | add_class:"border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 :placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" }}
+            {{ form.password.errors | safe }}
+          </div>
+          <div class="form-errors">
+            {{ form.non_field_errors | safe }}
+          </div>
           <div class="flex justify-between items-center mb-6">
             <div class="form-group form-check">
               <input
                 type="checkbox"
                 name="remember"
-                class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                aria-describedby="remember"
+                class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                 id="id_remember"
               />
               <label class="form-check-label inline-block text-gray-100" for="id_remember"
@@ -60,7 +64,7 @@
 
           <button
             type="submit"
-            class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full"
+            class="inline-block px-7 py-3 bg-primary text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out w-full"
             data-mdb-ripple="true"
             data-mdb-ripple-color="light"
           >

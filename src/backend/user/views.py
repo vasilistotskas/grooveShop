@@ -1,22 +1,14 @@
-import json
 from datetime import timedelta
 
 from backend.user.models import MySession
 from backend.user.models import UserAccount
 from backend.user.models import UserProfile
 from backend.user.serializers import UserProfileSerializer
-from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
-from django.contrib.auth import login
-from django.contrib.auth import logout
 from django.http import Http404
 from django.http import JsonResponse
 from django.utils.timezone import now
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.views.decorators.http import require_POST
-from drf_spectacular.types import OpenApiTypes
-from drf_spectacular.utils import extend_schema
-from drf_spectacular.utils import OpenApiParameter
 from rest_framework import authentication
 from rest_framework import generics
 from rest_framework import permissions
@@ -27,53 +19,6 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
 
 User = get_user_model()
-
-
-@extend_schema(
-    parameters=[
-        OpenApiParameter(
-            name="uid",
-            required=True,
-            type=OpenApiTypes.STR,
-            location="path",
-            description="uid",
-        ),
-        OpenApiParameter(
-            name="token",
-            required=True,
-            type=OpenApiTypes.STR,
-            location="path",
-            description="token",
-        ),
-    ]
-)
-@require_POST
-def login_view(request):
-    data = json.loads(request.body)
-    email = data.get("email")
-    password = data.get("password")
-
-    if email is None or password is None:
-        return JsonResponse(
-            {"detail": "Please provide email and password."}, status=400
-        )
-
-    user = authenticate(email=email, password=password)
-
-    if user is None:
-        return JsonResponse({"detail": "Invalid credentials."}, status=400)
-
-    login(request, user)
-    return JsonResponse({"detail": "Successfully logged in."})
-
-
-@require_POST
-def logout_view(request):
-    if not request.user.is_authenticated:
-        return JsonResponse({"detail": "You're not logged in."}, status=400)
-
-    logout(request)
-    return JsonResponse({"detail": "Successfully logged out."})
 
 
 @ensure_csrf_cookie

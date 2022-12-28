@@ -5,8 +5,6 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     # AuthCore
-    path("login/", views.login_view, name="api-login"),
-    path("logout/", views.logout_view, name="api-logout"),
     path("session/", views.session_view, name="api-session"),
     path("session/clear_all/", views.ClearAllUserSessions.as_view()),
     path("userprofile/<int:pk>/", views.UserProfileDetail.as_view()),
