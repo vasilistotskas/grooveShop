@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.17.0 (2022-12-28)
+### Feature
+* **Auth:** Remove useless code, sign up form UI ready, add apple for auth provider ([`a10ff49`](https://github.com/vasilistotskas/grooveShop/commit/a10ff4900f26e82d3ecbb821a3f1a70fa11623fd))
+
 ## v0.16.0 (2022-12-28)
 ### Feature
 * **Auth:** Frontend ui for login view ready ([`e009312`](https://github.com/vasilistotskas/grooveShop/commit/e0093124c4cd15dcb0f70dc22f16c73a3e36f076))
