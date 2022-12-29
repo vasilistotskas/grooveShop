@@ -1,8 +1,10 @@
+from __future__ import annotations
+
 from typing import Any
 from typing import Dict
 from typing import Tuple
-from typing import Union
 
+from backend.core.enum.core_enum import LangCodesEnum
 from django.db import models
 from django.utils.translation import get_language
 
@@ -37,18 +39,14 @@ class TranslationProxy:
 
 
 class Translation(models.Model):
-
-    LANG_CODES = (
-        ("en", "en-US"),
-        ("gr", "gr-GR"),
+    language_code = models.CharField(
+        max_length=35, choices=LangCodesEnum.choices(), unique=True
     )
-
-    language_code = models.CharField(max_length=35, choices=LANG_CODES, unique=True)
 
     class Meta:
         abstract = True
 
-    def get_translated_object_id(self) -> Tuple[str, Union[int, str]]:
+    def get_translated_object_id(self) -> Tuple[str, int | str]:
         raise NotImplementedError(
             "Models extending Translation should implement get_translated_object_id"
         )

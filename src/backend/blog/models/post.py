@@ -1,16 +1,12 @@
 import os
 
-from backend.blog.models.author import BlogAuthor
-from backend.blog.models.category import BlogCategory
-from backend.blog.models.tag import BlogTag
+from backend.blog.enum.blog_post_enum import PostStatusEnum
 from backend.core.models import PublishableModel
 from backend.core.models import TimeStampMixinModel
 from backend.core.models import UUIDModel
 from django.conf import settings
 from django.db import models
 from tinymce.models import HTMLField
-
-User = settings.AUTH_USER_MODEL
 
 
 class BlogPost(TimeStampMixinModel, PublishableModel, UUIDModel):
@@ -21,15 +17,27 @@ class BlogPost(TimeStampMixinModel, PublishableModel, UUIDModel):
     body = HTMLField()
     meta_description = models.CharField(max_length=150, blank=True, null=True)
     image = models.ImageField(upload_to="uploads/blog/", blank=True, null=True)
-
-    # Each post can receive likes from multiple users, and each user can like multiple posts
-    likes = models.ManyToManyField(User, related_name="post_like")
-
-    # Each post belong to one author and one category.
-    # Each post has many tags, and each tag has many posts.
-    category = models.ForeignKey(BlogCategory, on_delete=models.SET_NULL, null=True)
-    tags = models.ManyToManyField(BlogTag, related_name="post_tag", blank=True)
-    author = models.ForeignKey(BlogAuthor, on_delete=models.SET_NULL, null=True)
+    likes = models.ManyToManyField("user.UserAccount", related_name="blog_post_likes")
+    category = models.ForeignKey(
+        "blog.BlogCategory",
+        related_name="blog_post_category",
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+    tags = models.ManyToManyField(
+        "blog.BlogTag", related_name="blog_post_tags", blank=True
+    )
+    author = models.ForeignKey(
+        "blog.BlogAuthor",
+        related_name="blog_post_author",
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+    status = models.CharField(
+        max_length=20, choices=PostStatusEnum.choices(), default="draft"
+    )
+    featured = models.BooleanField(default=False)
+    view_count = models.IntegerField(default=0)
 
     class Meta:
         ordering = ["-published_at"]
@@ -57,7 +65,7 @@ class BlogPost(TimeStampMixinModel, PublishableModel, UUIDModel):
 
     @property
     def number_of_comments(self) -> int:
-        return self.blogcomment_set.count()
+        return self.blog_comment_post.count()
 
     @property
     def get_post_tags_count(self) -> int:

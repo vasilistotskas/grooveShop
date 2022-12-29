@@ -1,7 +1,6 @@
 from backend.order.models import Order
 from backend.order.models import OrderItem
-from backend.order.models import PayWay
-from backend.product.serializers import ProductSerializer
+from backend.product.serializers.product import ProductSerializer
 from rest_framework import serializers
 
 
@@ -14,6 +13,11 @@ class UserOrderItemSerializer(serializers.ModelSerializer):
             "price",
             "product",
             "quantity",
+            "created_at",
+            "updated_at",
+            "uuid",
+            "sort_order",
+            "get_total_price",
         )
 
 
@@ -36,6 +40,10 @@ class UserOrderSerializer(serializers.ModelSerializer):
             "customer_notes",
             "items",
             "paid_amount",
+            "created_at",
+            "updated_at",
+            "uuid",
+            "get_total_price",
         )
 
 
@@ -46,13 +54,12 @@ class OrderItemSerializer(serializers.ModelSerializer):
             "price",
             "product",
             "quantity",
+            "created_at",
+            "updated_at",
+            "uuid",
+            "sort_order",
+            "get_total_price",
         )
-
-
-class PayWaySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PayWay
-        fields = ("name", "active", "cost", "free_for_order_amount")
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -75,6 +82,10 @@ class OrderSerializer(serializers.ModelSerializer):
             "customer_notes",
             "stripe_token",
             "items",
+            "created_at",
+            "updated_at",
+            "uuid",
+            "get_total_price",
         )
 
     def create(self, validated_data):

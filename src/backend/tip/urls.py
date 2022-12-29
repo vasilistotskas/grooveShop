@@ -1,5 +1,23 @@
-from typing import List
+from backend.tip.views import TipViewSet
+from django.urls import path
+from rest_framework.urlpatterns import format_suffix_patterns
 
-app_name = "tip"
+urlpatterns = [
+    path(
+        "tip/",
+        TipViewSet.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "tip/<str:pk>/",
+        TipViewSet.as_view(
+            {
+                "get": "retrieve",
+                "put": "update",
+                "patch": "partial_update",
+                "delete": "destroy",
+            }
+        ),
+    ),
+]
 
-urlpatterns: List[str] = []
+urlpatterns = format_suffix_patterns(urlpatterns)

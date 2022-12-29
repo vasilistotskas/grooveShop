@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 environ.Env.read_env(os.path.join(BASE_DIR.parent, ".env"))
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
@@ -94,12 +94,8 @@ DJANGO_APPS = [
 ]
 PROJECT_APPS = [
     "backend.user",
-    "backend.user_address",
     "backend.core",
     "backend.product",
-    "backend.product_review",
-    "backend.product_category",
-    "backend.product_favourite",
     "backend.order",
     "backend.search",
     "backend.slider",
@@ -109,6 +105,8 @@ PROJECT_APPS = [
     "backend.vat",
     "backend.country",
     "backend.region",
+    "backend.pay_way",
+    "backend.session",
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",
@@ -140,7 +138,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "backend.user.middleware.SessionTraceMiddleware",
+    "backend.session.middleware.SessionTraceMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -159,7 +157,7 @@ APPEND_SLASH = os.environ.get("APPEND_SLASH")
 AUTH_USER_MODEL = "user.UserAccount"
 
 # Sessions and Cookies
-SESSION_ENGINE = "backend.app.session_backend"
+SESSION_ENGINE = "backend.session.session_backend"
 CSRF_COOKIE_SAMESITE = "Strict"
 SESSION_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_HTTPONLY = False  # False since we will grab it via universal-cookies
@@ -236,7 +234,7 @@ LOGIN_REDIRECT_URL = "/user-account"
 WSGI_APPLICATION = "backend.app.wsgi.application"
 
 # Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 SYSTEM_ENV = os.environ.get("SYSTEM_ENV", None)
 
 DATABASES = {
@@ -283,7 +281,7 @@ CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = "redis://redis:6379"
 
 # Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
+# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -301,7 +299,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
+# https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = os.environ.get("LANGUAGE_CODE")
 TIME_ZONE = os.environ.get("TIME_ZONE")
@@ -319,7 +317,7 @@ EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
+# https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "backend/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "backend/static")
@@ -357,7 +355,7 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

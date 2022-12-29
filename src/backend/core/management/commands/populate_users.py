@@ -1,10 +1,10 @@
 from backend.user.models import UserAccount
-from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.management import BaseCommand
 from faker import Faker
 
 fake = Faker()
-User = settings.AUTH_USER_MODEL
+User = get_user_model()
 
 
 class Command(BaseCommand):

@@ -36,3 +36,7 @@ class BlogCategory(TimeStampMixinModel, SortableModel, UUIDModel):
             return os.path.basename(self.image.name)
         else:
             return ""
+
+    @property
+    def get_category_posts_count(self) -> int:
+        return self.blog_post_category.count()

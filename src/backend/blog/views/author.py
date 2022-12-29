@@ -19,9 +19,18 @@ class BlogAuthorViewSet(ModelViewSet):
     pagination_class = BlogAuthorPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["id", "user"]
-    ordering_fields = ["id", "user"]
+    ordering_fields = ["id", "user", "-created_at"]
     ordering = ["id"]
     search_fields = ["id", "user"]
+
+    def list(self, request, *args, **kwargs) -> Response:
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = BlogAuthorSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = BlogAuthorSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs) -> Response | ValidationError:
         serializer = BlogAuthorSerializer(data=request.data)

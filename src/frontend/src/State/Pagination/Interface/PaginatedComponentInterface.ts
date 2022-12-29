@@ -5,7 +5,6 @@ import {
 	PaginationTotalPages,
 	QueryParamsType
 } from '@/State/Pagination/Type/PaginationTypes'
-import { AxiosResponse } from 'axios'
 import { LocationQuery } from 'vue-router'
 import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 

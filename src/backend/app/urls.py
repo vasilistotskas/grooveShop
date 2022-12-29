@@ -1,5 +1,5 @@
 from backend.core.graphql.schema import schema
-from backend.user.views import ActiveUserViewSet
+from backend.session.views import ActiveUserViewSet
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -38,17 +38,15 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/", include(router.urls)),
     path("api/v1/", include("backend.product.urls")),
-    path("api/v1/", include("backend.product_favourite.urls")),
-    path("api/v1/", include("backend.product_category.urls")),
-    path("api/v1/", include("backend.product_review.urls")),
     path("api/v1/", include("backend.order.urls")),
     path("api/v1/", include("backend.user.urls")),
-    path("api/v1/", include("backend.user_address.urls")),
     path("api/v1/", include("backend.country.urls")),
+    path("api/v1/", include("backend.region.urls")),
     path("api/v1/", include("backend.slider.urls")),
     path("api/v1/", include("backend.search.urls")),
     path("api/v1/", include("backend.tip.urls")),
     path("api/v1/", include("backend.blog.urls")),
+    path("api/v1/", include("backend.session.urls")),
     path("accounts/", include("allauth.urls")),
     path("graphql/async", AsyncGraphQLView.as_view(schema=schema)),
     path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),

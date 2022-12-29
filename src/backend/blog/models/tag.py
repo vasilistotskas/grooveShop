@@ -5,14 +5,9 @@ from django.db import models
 
 
 class BlogTag(TimeStampMixinModel, SortableModel, UUIDModel):
-    TAG_STATUS = (
-        ("True", "Active"),
-        ("False", "Not Active"),
-    )
-
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, unique=True)
-    active = models.CharField(max_length=15, choices=TAG_STATUS, default=True)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -22,4 +17,4 @@ class BlogTag(TimeStampMixinModel, SortableModel, UUIDModel):
 
     @property
     def get_tag_posts_count(self) -> int:
-        return self.post_tag.count()
+        return self.blog_post_tags.count()

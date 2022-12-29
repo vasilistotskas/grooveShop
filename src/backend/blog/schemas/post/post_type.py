@@ -2,15 +2,15 @@ from typing import List
 
 import strawberry.django
 import strawberry_django
-from backend.app import settings
 from backend.blog.models.post import BlogPost
 from backend.blog.schemas.author.author_type import AuthorType
 from backend.blog.schemas.category.category_type import CategoryType
 from backend.blog.schemas.tag.tag_type import TagType
 from backend.user.schemas.user.user_account_type import UserAccountType
+from django.contrib.auth import get_user_model
 from strawberry import auto
 
-User = settings.AUTH_USER_MODEL
+User = get_user_model()
 
 
 @strawberry_django.type(BlogPost)

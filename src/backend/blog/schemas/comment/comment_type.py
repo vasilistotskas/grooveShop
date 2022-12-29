@@ -2,13 +2,13 @@ from typing import List
 
 import strawberry.django
 import strawberry_django
-from backend.app import settings
 from backend.blog.models.comment import BlogComment
 from backend.blog.schemas.post.post_type import PostType
 from backend.user.schemas.user.user_account_type import UserAccountType
+from django.contrib.auth import get_user_model
 from strawberry import auto
 
-User = settings.AUTH_USER_MODEL
+User = get_user_model()
 
 
 @strawberry_django.type(BlogComment)

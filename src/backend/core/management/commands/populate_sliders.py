@@ -1,4 +1,3 @@
-import datetime
 import os
 
 from backend.app.settings import BASE_DIR
@@ -8,7 +7,7 @@ from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import BaseCommand
-from django.utils import timezone
+from django.utils.timezone import now
 from faker import Faker
 
 
@@ -46,8 +45,8 @@ class Command(BaseCommand):
                     discount=10,
                     button_label=faker.text(10),
                     show_button=True,
-                    date_start=datetime.datetime.now(tz=timezone.utc),
-                    date_end=datetime.datetime.now(tz=timezone.utc),
+                    date_start=now(),
+                    date_end=now(),
                     order_position=i,
                     image=img,
                 )

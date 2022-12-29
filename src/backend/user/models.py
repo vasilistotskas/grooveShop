@@ -6,8 +6,8 @@ from typing import List
 
 from backend.core.models import TimeStampMixinModel
 from backend.core.models import UUIDModel
-from backend.country.models import Country
-from backend.region.models import Region
+from backend.user.enum.address import FloorChoicesEnum
+from backend.user.enum.address import LocationChoicesEnum
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
@@ -77,10 +77,77 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
+class UserAddress(TimeStampMixinModel, UUIDModel):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(
+        "user.UserAccount", related_name="address_user", on_delete=models.CASCADE
+    )
+    title = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    street = models.CharField(max_length=100)
+    street_number = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    zipcode = models.CharField(max_length=100)
+    country = models.ForeignKey(
+        "country.Country",
+        related_name="address_country",
+        null=True,
+        blank=True,
+        default=None,
+        on_delete=models.SET_NULL,
+    )
+    region = models.ForeignKey(
+        "region.Region",
+        related_name="address_region",
+        null=True,
+        blank=True,
+        default=None,
+        on_delete=models.SET_NULL,
+    )
+    floor = models.CharField(
+        max_length=50,
+        choices=FloorChoicesEnum.choices(),
+        null=True,
+        blank=True,
+        default=None,
+    )
+    location_type = models.CharField(
+        max_length=100,
+        choices=LocationChoicesEnum.choices(),
+        null=True,
+        blank=True,
+        default=None,
+    )
+    phone = models.CharField(max_length=100, null=True, blank=True, default=None)
+    mobile_phone = models.CharField(max_length=100, null=True, blank=True, default=None)
+    notes = models.CharField(max_length=100, null=True, blank=True, default=None)
+    is_main = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = "User's Addresses"
+        ordering = ["-is_main", "id"]
+
+    def __str__(self):
+        return self.title
+
+    @classmethod
+    def get_user_addresses(cls, user) -> models.QuerySet:
+        return cls.objects.filter(user=user)
+
+    @classmethod
+    def get_main_address(cls, user) -> models.QuerySet:
+        return cls.objects.filter(user=user, is_main=True).first()
+
+    @classmethod
+    def get_user_address_count(cls, user) -> int:
+        return cls.objects.filter(user=user).count()
+
+
 class UserProfile(TimeStampMixinModel, UUIDModel):
     id = models.AutoField(primary_key=True)
     user = models.OneToOneField(
-        User, related_name="userprofile", on_delete=models.CASCADE
+        "user.UserAccount", related_name="user_profile_user", on_delete=models.CASCADE
     )
     first_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100, blank=True, null=True)
@@ -90,10 +157,20 @@ class UserProfile(TimeStampMixinModel, UUIDModel):
     address = models.CharField(max_length=100, blank=True, null=True)
     place = models.CharField(max_length=100, blank=True, null=True)
     country = models.ForeignKey(
-        Country, null=True, blank=True, default=None, on_delete=models.SET_NULL
+        "country.Country",
+        related_name="user_profile_country",
+        null=True,
+        blank=True,
+        default=None,
+        on_delete=models.SET_NULL,
     )
     region = models.ForeignKey(
-        Region, null=True, blank=True, default=None, on_delete=models.SET_NULL
+        "region.Region",
+        related_name="user_profile_region",
+        null=True,
+        blank=True,
+        default=None,
+        on_delete=models.SET_NULL,
     )
     image = models.ImageField(blank=True, null=True, upload_to="uploads/users/")
 
@@ -103,27 +180,32 @@ class UserProfile(TimeStampMixinModel, UUIDModel):
     def __str__(self):
         return "%s" % self.user.id
 
+    @property
     def get_user_profile_image_url(self) -> str:
         if self.image and hasattr(self.image, "url"):
             return self.image.url
         else:
             return "/backend/static/images/default.png"
 
+    @property
     def email(self) -> str:
         return self.user.email
 
+    @property
     def main_image_absolute_url(self) -> str:
         if self.image and hasattr(self.image, "url"):
             return settings.BACKEND_BASE_URL + self.image.url
         else:
             return "/backend/static/images/default.png"
 
+    @property
     def main_image_filename(self) -> str:
         if self.image and hasattr(self.image, "url"):
             return os.path.basename(self.image.name)
         else:
             return os.path.basename("/backend/static/images/default.png")
 
+    @property
     def image_tag(self):
         if self.image and hasattr(self.image, "url"):
             return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
@@ -139,11 +221,3 @@ class UserProfile(TimeStampMixinModel, UUIDModel):
     def create_user_profile(sender, instance, created, **kwargs) -> None:
         if created:
             UserProfile.objects.create(user=instance)
-
-
-class MySession(Session):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    last_activity = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        db_table = "my_session"

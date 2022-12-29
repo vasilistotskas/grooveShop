@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 import os
-from typing import Union
 
 import strawberry.django
 from backend.app.settings import BASE_DIR
@@ -16,7 +17,7 @@ class CategoryTypeTestCase(TestCase):
     name: str
     slug: auto
     description: str
-    image: Union[str, SimpleUploadedFile] = ""
+    image: str | SimpleUploadedFile = ""
 
     def setUp(self):
         BlogCategory.objects.create(
@@ -39,7 +40,7 @@ class CategoryTypeTestCase(TestCase):
 
 
 class WithImage(CategoryTypeTestCase):
-    image: Union[str, SimpleUploadedFile] = "uploads/blog/no_photo.jpg"
+    image: str | SimpleUploadedFile = "uploads/blog/no_photo.jpg"
     if not default_storage.exists(image):
         image_path = os.path.join(BASE_DIR, "files/images") + "/no_photo.jpg"
         image = SimpleUploadedFile(
@@ -50,4 +51,4 @@ class WithImage(CategoryTypeTestCase):
 
 
 class WithoutImage(CategoryTypeTestCase):
-    image: Union[str, SimpleUploadedFile] = ""
+    image: str | SimpleUploadedFile = ""

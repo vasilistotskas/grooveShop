@@ -19,9 +19,18 @@ class BlogTagViewSet(ModelViewSet):
     pagination_class = BlogTagPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["id", "name", "active"]
-    ordering_fields = ["id", "name", "active"]
+    ordering_fields = ["id", "name", "active", "-created_at"]
     ordering = ["id"]
-    search_fields = ["name"]
+    search_fields = ["id", "name"]
+
+    def list(self, request, *args, **kwargs) -> Response:
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = BlogTagSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = BlogTagSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs) -> Response | ValidationError:
         serializer = BlogTagSerializer(data=request.data)

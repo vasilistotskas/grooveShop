@@ -1,18 +1,17 @@
-import datetime
 import os
 from random import randrange
 
 from backend.app.settings import BASE_DIR
-from backend.product.models import Product
-from backend.product.models import ProductImages
-from backend.product_category.models import Category
-from backend.product_favourite.models import Favourite
+from backend.product.models.category import ProductCategory
+from backend.product.models.favourite import ProductFavourite
+from backend.product.models.product import Product
+from backend.product.models.product import ProductImages
 from backend.vat.models import Vat
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import BaseCommand
-from django.utils import timezone
 from django.utils.text import slugify
+from django.utils.timezone import now
 from faker import Faker
 
 
@@ -37,7 +36,7 @@ class Command(BaseCommand):
 
         for _ in range(2):
             name = faker.name()
-            category = Category.objects.create(
+            category = ProductCategory.objects.create(
                 name=name,
                 slug=slugify(name),
                 description=faker.text(10),
@@ -59,7 +58,7 @@ class Command(BaseCommand):
                         price=product_price,
                         active="True",
                         stock=100,
-                        created_at=datetime.datetime.now(tz=timezone.utc),
+                        created_at=now(),
                         vat_id=1,
                     )
                     i = i + 1
@@ -72,7 +71,7 @@ class Command(BaseCommand):
                     )
 
                     for _ in range(2):
-                        Favourite.objects.get_or_create(
+                        ProductFavourite.objects.get_or_create(
                             user_id=user_id, product_id=product.id
                         )
 

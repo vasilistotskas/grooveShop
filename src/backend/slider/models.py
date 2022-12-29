@@ -33,18 +33,21 @@ class Slider(TimeStampMixinModel, UUIDModel):
 
         super().save(*args, **kwargs)
 
+    @property
     def main_image_absolute_url(self) -> str:
         image: str = ""
         if self.image and hasattr(self.image, "url"):
             return settings.BACKEND_BASE_URL + self.image.url
         return image
 
+    @property
     def main_image_filename(self) -> str:
         if self.image and hasattr(self.image, "name"):
             return os.path.basename(self.image.name)
         else:
             return ""
 
+    @property
     def image_tag(self):
         thumbnail = self.thumbnail
         if thumbnail:
@@ -54,7 +57,9 @@ class Slider(TimeStampMixinModel, UUIDModel):
 
 class Slide(TimeStampMixinModel, SortableModel, UUIDModel):
     id = models.AutoField(primary_key=True)
-    slider = models.ForeignKey(Slider, related_name="items", on_delete=models.CASCADE)
+    slider = models.ForeignKey(
+        "slider.Slider", related_name="slide_slider", on_delete=models.CASCADE
+    )
     url = models.CharField(max_length=255, blank=True, null=True)
     title = models.CharField(max_length=40, blank=True, null=True)
     subtitle = models.CharField(max_length=40, blank=True, null=True)
@@ -78,7 +83,7 @@ class Slide(TimeStampMixinModel, SortableModel, UUIDModel):
         return "%s" % self.id
 
     def get_ordering_queryset(self):
-        return self.slider.items.all()
+        return self.slider.slide_slider.all()
 
     def save(self, *args, **kwargs):
         if self.image:
@@ -86,18 +91,21 @@ class Slide(TimeStampMixinModel, SortableModel, UUIDModel):
 
         super().save(*args, **kwargs)
 
+    @property
     def main_image_absolute_url(self) -> str:
         image: str = ""
         if self.image and hasattr(self.image, "url"):
             return settings.BACKEND_BASE_URL + self.image.url
         return image
 
+    @property
     def main_image_filename(self) -> str:
         if self.image and hasattr(self.image, "name"):
             return os.path.basename(self.image.name)
         else:
             return ""
 
+    @property
     def image_tag(self):
         thumbnail = self.thumbnail
         if thumbnail:

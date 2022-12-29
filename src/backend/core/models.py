@@ -1,9 +1,7 @@
-import datetime
 import uuid
 from gettext import gettext as _
 from typing import Any
 
-import pytz
 from django.db import models
 from django.db import transaction
 from django.db.models import F
@@ -11,6 +9,7 @@ from django.db.models import Max
 from django.db.models import Q
 from django.db.models import QuerySet
 from django.utils import timezone as tz
+from django.utils.timezone import now
 
 
 class SortableModel(models.Model):
@@ -65,7 +64,7 @@ class UUIDModel(models.Model):
 
 class PublishedQuerySet(models.QuerySet):
     def published(self):
-        today = datetime.datetime.now(pytz.UTC)
+        today = now()
         return self.filter(
             Q(published_at__lte=today) | Q(published_at__isnull=True),
             is_published=True,
@@ -84,6 +83,5 @@ class PublishableModel(models.Model):
     @property
     def is_visible(self):
         return self.is_published and (
-            self.published_at is None
-            or self.published_at <= datetime.datetime.now(pytz.UTC)
+            self.published_at is None or self.published_at <= now()
         )

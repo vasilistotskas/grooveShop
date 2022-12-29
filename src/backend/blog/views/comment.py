@@ -19,9 +19,18 @@ class BlogCommentViewSet(ModelViewSet):
     pagination_class = BlogCommentPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["id", "user", "post"]
-    ordering_fields = ["id", "user", "post"]
+    ordering_fields = ["id", "user", "post", "-created_at"]
     ordering = ["id"]
     search_fields = ["id", "user", "post"]
+
+    def list(self, request, *args, **kwargs) -> Response:
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = BlogCommentSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = BlogCommentSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs) -> Response | ValidationError:
         serializer = BlogCommentSerializer(data=request.data)

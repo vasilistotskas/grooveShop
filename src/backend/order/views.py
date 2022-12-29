@@ -1,17 +1,16 @@
 import stripe
 from backend.order.enum.pay_way_enum import PayWayEnum
 from backend.order.models import Order
-from backend.order.models import PayWay
 from backend.order.paginators import UserOrderListPagination
 from backend.order.serializers import OrderSerializer
-from backend.order.serializers import PayWaySerializer
 from backend.order.serializers import UserOrderSerializer
+from backend.pay_way.models import PayWay
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from rest_framework import authentication
 from rest_framework import generics
-from rest_framework import permissions
 from rest_framework import status
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -37,14 +36,14 @@ class Checkout(APIView):
             item.get("quantity") * item.get("product").price for item in items
         )
         pay_way_cost = 0
-        pay_way = PayWay.objects.get(name=PayWayEnum.choices().CreditCard)
+        pay_way = PayWay.objects.get(name=PayWayEnum.CREDIT_CARD)
         if pay_way.free_for_order_amount > paid_amount:
             pay_way_cost = pay_way.cost
         paid_amount += pay_way_cost
         return paid_amount
 
     def create_order(self, request, paid_amount, serializer, items, pay_way_name):
-        if pay_way_name == PayWayEnum.choices().CreditCard:
+        if pay_way_name == PayWayEnum.CREDIT_CARD:
             stripe.Charge.create(
                 amount=int(paid_amount * 100),
                 currency="USD",
@@ -82,8 +81,8 @@ class Checkout(APIView):
 
 
 class UserOrdersList(generics.ListAPIView):
-    authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
     pagination_class = UserOrderListPagination
     serializer_class = UserOrderSerializer
 
@@ -100,19 +99,6 @@ class UserOrdersList(generics.ListAPIView):
         if page is not None:
             serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
-
-
-class PayWayList(generics.ListAPIView):
-    serializer_class = PayWaySerializer
-
-    def get_queryset(self):
-        return PayWay.active_pay_ways_by_status(True)
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)

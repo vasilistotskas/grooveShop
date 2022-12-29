@@ -6,14 +6,14 @@ from backend.blog.models.author import BlogAuthor
 from backend.blog.models.category import BlogCategory
 from backend.blog.models.post import BlogPost
 from backend.blog.models.tag import BlogTag
-from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.management import BaseCommand
 from django.utils.text import slugify
 from faker import Faker
 
-User = settings.AUTH_USER_MODEL
+User = get_user_model()
 
 
 class Command(BaseCommand):

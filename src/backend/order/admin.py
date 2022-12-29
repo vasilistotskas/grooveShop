@@ -1,6 +1,5 @@
 from backend.order.models import Order
 from backend.order.models import OrderItem
-from backend.order.models import PayWay
 from django.contrib import admin
 
 
@@ -48,10 +47,5 @@ class OrderItemAdmin(admin.ModelAdmin):
     list_filter = ["order"]
 
 
-class PayWayAdmin(admin.ModelAdmin):
-    list_display = ["name", "active", "cost", "free_for_order_amount"]
-
-
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderItem, OrderItemAdmin)
-admin.site.register(PayWay, PayWayAdmin)

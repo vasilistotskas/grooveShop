@@ -7,9 +7,9 @@ from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
-    path("blog/posts/", BlogPostViewSet.as_view({"get": "list", "post": "create"})),
+    path("blog/post/", BlogPostViewSet.as_view({"get": "list", "post": "create"})),
     path(
-        "blog/posts/<int:pk>/",
+        "blog/post/<int:pk>/",
         BlogPostViewSet.as_view(
             {
                 "get": "retrieve",
@@ -20,15 +20,19 @@ urlpatterns = [
         ),
     ),
     path(
-        "blog/posts/<int:pk>/update_likes/",
+        "blog/post/<int:pk>/update_likes/",
         BlogPostViewSet.as_view({"post": "update_likes"}),
     ),
     path(
-        "blog/categories/",
+        "blog/post/<int:pk>/update_view_count/",
+        BlogPostViewSet.as_view({"post": "update_view_count"}),
+    ),
+    path(
+        "blog/category/",
         BlogCategoryViewSet.as_view({"get": "list", "post": "create"}),
     ),
     path(
-        "blog/categories/<int:pk>/",
+        "blog/category/<int:pk>/",
         BlogCategoryViewSet.as_view(
             {
                 "get": "retrieve",
@@ -38,9 +42,9 @@ urlpatterns = [
             }
         ),
     ),
-    path("blog/authors/", BlogAuthorViewSet.as_view({"get": "list", "post": "create"})),
+    path("blog/author/", BlogAuthorViewSet.as_view({"get": "list", "post": "create"})),
     path(
-        "blog/authors/<int:pk>/",
+        "blog/author/<int:pk>/",
         BlogAuthorViewSet.as_view(
             {
                 "get": "retrieve",
@@ -51,10 +55,10 @@ urlpatterns = [
         ),
     ),
     path(
-        "blog/comments/", BlogCommentViewSet.as_view({"get": "list", "post": "create"})
+        "blog/comment/", BlogCommentViewSet.as_view({"get": "list", "post": "create"})
     ),
     path(
-        "blog/comments/<int:pk>/",
+        "blog/comment/<int:pk>/",
         BlogCommentViewSet.as_view(
             {
                 "get": "retrieve",
@@ -64,9 +68,9 @@ urlpatterns = [
             }
         ),
     ),
-    path("blog/tags/", BlogTagViewSet.as_view({"get": "list", "post": "create"})),
+    path("blog/tag/", BlogTagViewSet.as_view({"get": "list", "post": "create"})),
     path(
-        "blog/tags/<int:pk>/",
+        "blog/tag/<int:pk>/",
         BlogTagViewSet.as_view(
             {
                 "get": "retrieve",

@@ -1,7 +1,12 @@
 from backend.user.models import UserAccount
+from backend.user.models import UserAddress
 from backend.user.models import UserProfile
-from backend.user_address.admin import AddressInline
 from django.contrib import admin
+
+
+class AddressInline(admin.TabularInline):
+    model = UserAddress
+    extra = 1
 
 
 class UserProfileAdmin(admin.ModelAdmin):

@@ -1,8 +1,8 @@
 <template>
 	<metainfo>
-		<template #title="{ content }">{{
-			content ? `${content} | DeepWeb` : `DeepWeb`
-		}}</template>
+		<template #title="{ content }"
+			>{{ content ? `${content} | DeepWeb` : `DeepWeb` }}
+		</template>
 	</metainfo>
 	<Loader v-show="appModule.getLoading" id="mainLoader" />
 	<div id="wrapper">

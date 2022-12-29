@@ -1,10 +1,9 @@
-import datetime
 from random import randrange
 
 from backend.order.models import Order
 from backend.order.models import OrderItem
 from django.core.management import BaseCommand
-from django.utils import timezone
+from django.utils.timezone import now
 from faker import Faker
 
 
@@ -23,7 +22,7 @@ class Command(BaseCommand):
                 zipcode=faker.zipcode(),
                 place=faker.text(5),
                 phone=faker.phone_number(),
-                created_at=datetime.datetime.now(tz=timezone.utc),
+                created_at=now(),
                 paid_amount=10.0,
                 stripe_token=faker.text(5),
             )
