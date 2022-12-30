@@ -26,4 +26,4 @@ coverage==7.0.1
 drf-spectacular==0.25.1
 pylint==2.15.9
 pre-commit==2.21.0
-django-allauth==0.51.0
+django-allauth==0.52.0

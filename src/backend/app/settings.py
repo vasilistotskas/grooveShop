@@ -122,7 +122,6 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.facebook",
     "allauth.socialaccount.providers.google",
-    "allauth.socialaccount.providers.apple",
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
@@ -213,14 +212,6 @@ SOCIALACCOUNT_PROVIDERS = {
         "SCOPE": ["profile", "email"],
         "AUTH_PARAMS": {"access_type": "online"},
         "OAUTH_PKCE_ENABLED": True,
-    },
-    "apple": {
-        "APP": {
-            "client_id": os.environ.get("APPLE_CLIENT_ID"),
-            "secret": os.environ.get("APPLE_CLIENT_SECRET"),
-            "key": os.environ.get("APPLE_CLIENT_KEY"),
-            "certificate_key": os.environ.get("APPLE_CERTIFICATE_KEY"),
-        }
     },
 }
 

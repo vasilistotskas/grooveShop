@@ -38,7 +38,7 @@ export default class UserModule extends AppBaseModule {
 		Array<UserProfileModel>
 	> | void> {
 		return await api
-			.get('userprofile/data')
+			.get('user/profile')
 			.then(async (response: AxiosResponse<Array<UserProfileModel>>) => {
 				const userProfile = response.data
 				this.context.commit('setUserProfile', userProfile[0])
@@ -54,7 +54,7 @@ export default class UserModule extends AppBaseModule {
 		const userId = await this.context.getters['getUserProfile'].id
 
 		const response = await api
-			.patch(`userprofile/${userId}/`, data)
+			.patch(`user/profile/${userId}/`, data)
 			.then((response: AxiosResponse<UserProfileModel>) => {
 				this.context.commit('setUserProfile', response.data)
 			})
