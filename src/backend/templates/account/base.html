@@ -204,11 +204,12 @@
     <div class="h-full bg-zinc-900 relative">
       <nav class="menu fixed z-50 grid items-center justify-center px-4 pt-4 pb-4 backdrop-opacity-10 backdrop-invert bg-primary/95 w-full">
         <div class="grid items-center w-full relative max-w-5xl text-gray-100">
-          <ul class="grid grid-cols-3 gap-10">
+          <ul class="grid grid-cols-4 gap-10">
             {% if user.is_authenticated %}
               <li class="text-lg font-semibold"><a class="font-medium text-gray-300 hover:underline text-primary-500" href="{% url 'account_email' %}">Change E-mail</a></li>
                 <li class="text-lg font-semibold"><a class="font-medium text-gray-300 hover:underline text-primary-500" href="{% url 'account_change_password' %}">Change Password</a></li>
-                <li class="text-lg font-semibold"><a class="font-medium text-gray-300 hover:underline text-primary-500" href="{% url 'account_logout' %}">Sign Out</a></li>
+              <li class="text-lg font-semibold"><a class="font-medium text-gray-300 hover:underline text-primary-500" href="{% url 'two-factor-setup' %}">Two Factor Authentication</a></li>
+              <li class="text-lg font-semibold"><a class="font-medium text-gray-300 hover:underline text-primary-500" href="{% url 'account_logout' %}">Sign Out</a></li>
             {% else %}
               <li class="text-lg font-semibold"><a class="font-medium text-gray-300 hover:underline text-primary-500" href="{% url 'account_login' %}">Sign In</a></li>
               <li class="text-lg font-semibold"><a class="font-medium text-gray-300 hover:underline text-primary-500" href="{% url 'account_signup' %}">Sign Up</a></li>

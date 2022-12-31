@@ -122,6 +122,12 @@ THIRD_PARTY_APPS = [
     "allauth.socialaccount",
     "allauth.socialaccount.providers.facebook",
     "allauth.socialaccount.providers.google",
+    # Configure the django-otp package.
+    "django_otp",
+    "django_otp.plugins.otp_totp",
+    "django_otp.plugins.otp_static",
+    # Enable two-factor auth.
+    "allauth_2fa",
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
@@ -139,10 +145,17 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "backend.session.middleware.SessionTraceMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django_otp.middleware.OTPMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # Reset login flow middleware. If this middleware is included, the login
+    # flow is reset if another page is loaded between login and successfully
+    # entering two-factor credentials.
+    "allauth_2fa.middleware.AllauthTwoFactorMiddleware",
 ]
 
+# Set the allauth adapter to be the 2FA adapter.
+ACCOUNT_ADAPTER = "allauth_2fa.adapter.OTPAdapter"
 ROOT_URLCONF = "backend.app.urls"
 
 # Site info

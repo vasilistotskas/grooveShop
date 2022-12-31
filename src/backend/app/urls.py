@@ -47,6 +47,7 @@ urlpatterns = [
     path("api/v1/", include("backend.tip.urls")),
     path("api/v1/", include("backend.blog.urls")),
     path("api/v1/", include("backend.session.urls")),
+    path("accounts/", include("allauth_2fa.urls")),
     path("accounts/", include("allauth.urls")),
     path("graphql/async", AsyncGraphQLView.as_view(schema=schema)),
     path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),

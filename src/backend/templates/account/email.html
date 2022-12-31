@@ -43,30 +43,38 @@
                             </div>
                         </form>
                     </div>
-                    {% if can_add_email %}
-                        <div class="grid border-t-2 border-white">
-                            <h2 class="m-0 grid p-4 items-center justify-items-center text-gray-300 text-lg font-black">{% trans "Add E-mail Address" %}</h2>
-                            <form method="post" action="{% url 'account_email' %}" class="add_email grid items-center justify-items-center justify-center">
-                                {% csrf_token %}
-                                <div>
-                                    <label for="id_email" class="block mb-2 text-sm font-medium text-white">{% trans "Your email" %}</label>
-                                    {{ form.email | add_class:"border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 :placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" }}
-                                    <div class="form-errors">
-                                        {{ form.email.errors | safe }}
-                                    </div>
-                                </div>
-                                {% if form.non_field_errors %}
-                                    <div class="form-errors">
-                                      {{ form.non_field_errors | safe }}
-                                    </div>
-                                {% endif %}
-                                <button class="w-full text-white ring-2 ring-primary outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 ring-primary-800" name="action_add" type="submit">{% trans "Add E-mail" %}</button>
-                            </form>
-                        </div>
-                    {% endif %}
+
                 </div>
             </div>
         </div>
+
+      {% if can_add_email %}
+        <div class="grid items-center justify-items-center w-full h-full g-6 text-gray-800 mt-5">
+          <div class="w-full rounded-lg shadow border md:mt-0 sm:max-w-2xl xl:p-0 bg-zinc-800 border-gray-700">
+            <div class="p-12 sm:p-8">
+              <div class="grid">
+                  <h2 class="m-0 grid p-4 items-center justify-items-center text-gray-300 text-lg font-black">{% trans "Add E-mail Address" %}</h2>
+                  <form method="post" action="{% url 'account_email' %}" class="add_email grid items-center">
+                      {% csrf_token %}
+                      <div>
+                          <label for="id_email" class="block mb-2 text-sm font-medium text-white">{% trans "Your email" %}</label>
+                          {{ form.email | add_class:"border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 :placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" }}
+                          <div class="form-errors">
+                              {{ form.email.errors | safe }}
+                          </div>
+                      </div>
+                      {% if form.non_field_errors %}
+                          <div class="form-errors">
+                            {{ form.non_field_errors | safe }}
+                          </div>
+                      {% endif %}
+                      <button class="w-full text-white ring-2 ring-primary outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 ring-primary-800" name="action_add" type="submit">{% trans "Add E-mail" %}</button>
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
 
     {% else %}
         <p class="grid items-center justify-items-center font-light text-gray-300"><strong>{% trans 'Warning:'%}</strong> {% trans "You currently do not have any e-mail address set up. You should really add an e-mail address so you can receive notifications, reset your password, etc." %}</p>
