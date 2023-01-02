@@ -83,7 +83,7 @@ class Slide(TimeStampMixinModel, SortableModel, UUIDModel):
         return "%s" % self.id
 
     def get_ordering_queryset(self):
-        return self.slider.slide_slider.all()
+        return Slide.objects.all()
 
     def save(self, *args, **kwargs):
         if self.image:

@@ -14,8 +14,6 @@ from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.sessions.models import Session
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.utils.safestring import mark_safe
 
 User = settings.AUTH_USER_MODEL
@@ -54,17 +52,42 @@ class UserAccountManager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class UserAccount(AbstractBaseUser, PermissionsMixin):
+class UserAccount(AbstractBaseUser, PermissionsMixin, UUIDModel, TimeStampMixinModel):
     email = models.EmailField(max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
+    phone = models.PositiveBigIntegerField(blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
+    zipcode = models.CharField(max_length=100, blank=True, null=True)
+    address = models.CharField(max_length=100, blank=True, null=True)
+    place = models.CharField(max_length=100, blank=True, null=True)
+    country = models.ForeignKey(
+        "country.Country",
+        related_name="user_account_country",
+        null=True,
+        blank=True,
+        default=None,
+        on_delete=models.SET_NULL,
+    )
+    region = models.ForeignKey(
+        "region.Region",
+        related_name="user_account_region",
+        null=True,
+        blank=True,
+        default=None,
+        on_delete=models.SET_NULL,
+    )
+    image = models.ImageField(blank=True, null=True, upload_to="uploads/users/")
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
     objects: UserAccountManager = UserAccountManager()
 
     USERNAME_FIELD: str = "email"
-    REQUIRED_FIELDS: List[str] = ["first_name", "last_name"]
+    REQUIRED_FIELDS: List[str] = []
+
+    def __str__(self):
+        return self.email
 
     def remove_all_sessions(self) -> None:
         user_sessions: List[Any] = []
@@ -73,8 +96,37 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
                 user_sessions.append(session.pk)
         return Session.objects.filter(pk__in=user_sessions).delete()
 
-    def __str__(self):
-        return self.email
+    @property
+    def get_user_account_image_url(self) -> str:
+        if self.image and hasattr(self.image, "url"):
+            return self.image.url
+        else:
+            return "/backend/static/images/default.png"
+
+    @property
+    def main_image_absolute_url(self) -> str:
+        if self.image and hasattr(self.image, "url"):
+            return settings.BACKEND_BASE_URL + self.image.url
+        else:
+            return "/backend/static/images/default.png"
+
+    @property
+    def main_image_filename(self) -> str:
+        if self.image and hasattr(self.image, "url"):
+            return os.path.basename(self.image.name)
+        else:
+            return os.path.basename("/backend/static/images/default.png")
+
+    @property
+    def image_tag(self):
+        if self.image and hasattr(self.image, "url"):
+            return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
+        else:
+            return mark_safe(
+                '<img src="{}" height="50"/>'.format(
+                    "/backend/static/images/default.png"
+                )
+            )
 
 
 class UserAddress(TimeStampMixinModel, UUIDModel):
@@ -142,82 +194,3 @@ class UserAddress(TimeStampMixinModel, UUIDModel):
     @classmethod
     def get_user_address_count(cls, user) -> int:
         return cls.objects.filter(user=user).count()
-
-
-class UserProfile(TimeStampMixinModel, UUIDModel):
-    id = models.AutoField(primary_key=True)
-    user = models.OneToOneField(
-        "user.UserAccount", related_name="user_profile_user", on_delete=models.CASCADE
-    )
-    first_name = models.CharField(max_length=100, blank=True, null=True)
-    last_name = models.CharField(max_length=100, blank=True, null=True)
-    phone = models.PositiveBigIntegerField(blank=True, null=True)
-    city = models.CharField(max_length=100, blank=True, null=True)
-    zipcode = models.CharField(max_length=100, blank=True, null=True)
-    address = models.CharField(max_length=100, blank=True, null=True)
-    place = models.CharField(max_length=100, blank=True, null=True)
-    country = models.ForeignKey(
-        "country.Country",
-        related_name="user_profile_country",
-        null=True,
-        blank=True,
-        default=None,
-        on_delete=models.SET_NULL,
-    )
-    region = models.ForeignKey(
-        "region.Region",
-        related_name="user_profile_region",
-        null=True,
-        blank=True,
-        default=None,
-        on_delete=models.SET_NULL,
-    )
-    image = models.ImageField(blank=True, null=True, upload_to="uploads/users/")
-
-    class Meta:
-        verbose_name_plural = "User's Profile"
-
-    def __str__(self):
-        return "%s" % self.user.id
-
-    @property
-    def get_user_profile_image_url(self) -> str:
-        if self.image and hasattr(self.image, "url"):
-            return self.image.url
-        else:
-            return "/backend/static/images/default.png"
-
-    @property
-    def email(self) -> str:
-        return self.user.email
-
-    @property
-    def main_image_absolute_url(self) -> str:
-        if self.image and hasattr(self.image, "url"):
-            return settings.BACKEND_BASE_URL + self.image.url
-        else:
-            return "/backend/static/images/default.png"
-
-    @property
-    def main_image_filename(self) -> str:
-        if self.image and hasattr(self.image, "url"):
-            return os.path.basename(self.image.name)
-        else:
-            return os.path.basename("/backend/static/images/default.png")
-
-    @property
-    def image_tag(self):
-        if self.image and hasattr(self.image, "url"):
-            return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
-        else:
-            return mark_safe(
-                '<img src="{}" height="50"/>'.format(
-                    "/backend/static/images/default.png"
-                )
-            )
-
-    # use Django signals to create user profile on user creation
-    @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs) -> None:
-        if created:
-            UserProfile.objects.create(user=instance)

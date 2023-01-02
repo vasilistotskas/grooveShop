@@ -6,7 +6,6 @@ from django.contrib.auth import get_user_model
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.exceptions import ValidationError
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
@@ -38,14 +37,14 @@ class UserAccountViewSet(ModelViewSet):
         serializer = UserAccountSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    def create(self, request, *args, **kwargs) -> Response | ValidationError:
+    def create(self, request, *args, **kwargs) -> Response:
         serializer = UserAccountSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def update(self, request, pk=None, *args, **kwargs) -> Response | ValidationError:
+    def update(self, request, pk=None, *args, **kwargs) -> Response:
         user = get_object_or_404(User, id=pk)
         serializer = UserAccountSerializer(user, data=request.data)
         if serializer.is_valid():
@@ -53,9 +52,7 @@ class UserAccountViewSet(ModelViewSet):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def partial_update(
-        self, request, pk=None, *args, **kwargs
-    ) -> Response | ValidationError:
+    def partial_update(self, request, pk=None, *args, **kwargs) -> Response:
         user = get_object_or_404(User, id=pk)
         serializer = UserAccountSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():

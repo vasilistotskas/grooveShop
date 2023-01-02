@@ -38,9 +38,6 @@
          docker-compose run backend sh -c "python manage.py populate_sliders"
          docker-compose run backend sh -c "python manage.py populate_tips"
 
-   #### Run django test through docker-compose :
-   -     docker-compose run backend sh -c "python manage.py test"
-
    #### Run docker compose for specific yml file :
    -     docker-compose -f <docker-compose-file.yml> up -d --build
 

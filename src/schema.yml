@@ -18,7 +18,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserProfile'
+                $ref: '#/components/schemas/UserAccount'
           description: ''
   /api/v1/active_users/refresh_last_activity/:
     post:
@@ -29,13 +29,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserProfile'
+              $ref: '#/components/schemas/UserAccount'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserProfile'
+              $ref: '#/components/schemas/UserAccount'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UserProfile'
+              $ref: '#/components/schemas/UserAccount'
         required: true
       security:
       - cookieAuth: []
@@ -46,7 +46,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserProfile'
+                $ref: '#/components/schemas/UserAccount'
           description: ''
   /api/v1/blog/author/:
     get:
@@ -2743,6 +2743,223 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedUserOrderList'
           description: ''
+  /api/v1/pay_way/:
+    get:
+      operationId: api_v1_pay_way_list
+      parameters:
+      - in: query
+        name: active
+        schema:
+          type: boolean
+      - in: query
+        name: cost
+        schema:
+          type: number
+      - in: query
+        name: free_for_order_amount
+        schema:
+          type: number
+      - in: query
+        name: name
+        schema:
+          type: string
+          enum:
+          - Credit Card
+          - Pay On Delivery
+          - Pay On Store
+          - PayPal
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: p
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPayWayList'
+          description: ''
+    post:
+      operationId: api_v1_pay_way_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PayWay'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PayWay'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PayWay'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayWay'
+          description: ''
+  /api/v1/pay_way/{name}/:
+    get:
+      operationId: api_v1_pay_way_retrieve
+      parameters:
+      - in: path
+        name: name
+        schema:
+          enum:
+          - Credit Card
+          - Pay On Delivery
+          - Pay On Store
+          - PayPal
+          type: string
+        description: A unique value identifying this pay way.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayWay'
+          description: ''
+    put:
+      operationId: api_v1_pay_way_update
+      parameters:
+      - in: path
+        name: name
+        schema:
+          enum:
+          - Credit Card
+          - Pay On Delivery
+          - Pay On Store
+          - PayPal
+          type: string
+        description: A unique value identifying this pay way.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PayWay'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PayWay'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PayWay'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayWay'
+          description: ''
+    patch:
+      operationId: api_v1_pay_way_partial_update
+      parameters:
+      - in: path
+        name: name
+        schema:
+          enum:
+          - Credit Card
+          - Pay On Delivery
+          - Pay On Store
+          - PayPal
+          type: string
+        description: A unique value identifying this pay way.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPayWay'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPayWay'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPayWay'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayWay'
+          description: ''
+    delete:
+      operationId: api_v1_pay_way_destroy
+      parameters:
+      - in: path
+        name: name
+        schema:
+          enum:
+          - Credit Card
+          - Pay On Delivery
+          - Pay On Store
+          - PayPal
+          type: string
+        description: A unique value identifying this pay way.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
   /api/v1/product/:
     get:
       operationId: api_v1_product_list
@@ -7218,14 +7435,10 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/user/profile/:
+  /api/v1/vat/:
     get:
-      operationId: api_v1_user_profile_list
+      operationId: api_v1_vat_list
       parameters:
-      - in: query
-        name: country
-        schema:
-          type: string
       - in: query
         name: id
         schema:
@@ -7255,57 +7468,53 @@ paths:
         schema:
           type: string
       - in: query
-        name: user__email
+        name: value
         schema:
-          type: string
-      - in: query
-        name: zipcode
-        schema:
-          type: string
+          type: number
       tags:
       - api
       security:
       - cookieAuth: []
+      - basicAuth: []
+      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedUserProfileList'
+                $ref: '#/components/schemas/PaginatedVatList'
           description: ''
     post:
-      operationId: api_v1_user_profile_create
+      operationId: api_v1_vat_create
       tags:
       - api
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserProfile'
+              $ref: '#/components/schemas/Vat'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserProfile'
+              $ref: '#/components/schemas/Vat'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UserProfile'
+              $ref: '#/components/schemas/Vat'
         required: true
       security:
       - cookieAuth: []
+      - basicAuth: []
+      - {}
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserProfile'
+                $ref: '#/components/schemas/Vat'
           description: ''
-  /api/v1/user/profile{format}:
+  /api/v1/vat{format}:
     get:
-      operationId: api_v1_user_profile_formatted_list
+      operationId: api_v1_vat_formatted_list
       parameters:
-      - in: query
-        name: country
-        schema:
-          type: string
       - in: path
         name: format
         schema:
@@ -7342,26 +7551,24 @@ paths:
         schema:
           type: string
       - in: query
-        name: user__email
+        name: value
         schema:
-          type: string
-      - in: query
-        name: zipcode
-        schema:
-          type: string
+          type: number
       tags:
       - api
       security:
       - cookieAuth: []
+      - basicAuth: []
+      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedUserProfileList'
+                $ref: '#/components/schemas/PaginatedVatList'
           description: ''
     post:
-      operationId: api_v1_user_profile_formatted_create
+      operationId: api_v1_vat_formatted_create
       parameters:
       - in: path
         name: format
@@ -7376,26 +7583,28 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserProfile'
+              $ref: '#/components/schemas/Vat'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserProfile'
+              $ref: '#/components/schemas/Vat'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UserProfile'
+              $ref: '#/components/schemas/Vat'
         required: true
       security:
       - cookieAuth: []
+      - basicAuth: []
+      - {}
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserProfile'
+                $ref: '#/components/schemas/Vat'
           description: ''
-  /api/v1/user/profile/{id}/:
+  /api/v1/vat/{id}/:
     get:
-      operationId: api_v1_user_profile_retrieve
+      operationId: api_v1_vat_retrieve
       parameters:
       - in: path
         name: id
@@ -7406,15 +7615,17 @@ paths:
       - api
       security:
       - cookieAuth: []
+      - basicAuth: []
+      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserProfile'
+                $ref: '#/components/schemas/Vat'
           description: ''
     put:
-      operationId: api_v1_user_profile_update
+      operationId: api_v1_vat_update
       parameters:
       - in: path
         name: id
@@ -7427,25 +7638,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserProfile'
+              $ref: '#/components/schemas/Vat'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserProfile'
+              $ref: '#/components/schemas/Vat'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UserProfile'
+              $ref: '#/components/schemas/Vat'
         required: true
       security:
       - cookieAuth: []
+      - basicAuth: []
+      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserProfile'
+                $ref: '#/components/schemas/Vat'
           description: ''
     patch:
-      operationId: api_v1_user_profile_partial_update
+      operationId: api_v1_vat_partial_update
       parameters:
       - in: path
         name: id
@@ -7458,24 +7671,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedUserProfile'
+              $ref: '#/components/schemas/PatchedVat'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedUserProfile'
+              $ref: '#/components/schemas/PatchedVat'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedUserProfile'
+              $ref: '#/components/schemas/PatchedVat'
       security:
       - cookieAuth: []
+      - basicAuth: []
+      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserProfile'
+                $ref: '#/components/schemas/Vat'
           description: ''
     delete:
-      operationId: api_v1_user_profile_destroy
+      operationId: api_v1_vat_destroy
       parameters:
       - in: path
         name: id
@@ -7486,12 +7701,14 @@ paths:
       - api
       security:
       - cookieAuth: []
+      - basicAuth: []
+      - {}
       responses:
         '204':
           description: No response body
-  /api/v1/user/profile/{id}{format}:
+  /api/v1/vat/{id}{format}:
     get:
-      operationId: api_v1_user_profile_formatted_retrieve
+      operationId: api_v1_vat_formatted_retrieve
       parameters:
       - in: path
         name: format
@@ -7509,15 +7726,17 @@ paths:
       - api
       security:
       - cookieAuth: []
+      - basicAuth: []
+      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserProfile'
+                $ref: '#/components/schemas/Vat'
           description: ''
     put:
-      operationId: api_v1_user_profile_formatted_update
+      operationId: api_v1_vat_formatted_update
       parameters:
       - in: path
         name: format
@@ -7537,25 +7756,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserProfile'
+              $ref: '#/components/schemas/Vat'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserProfile'
+              $ref: '#/components/schemas/Vat'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UserProfile'
+              $ref: '#/components/schemas/Vat'
         required: true
       security:
       - cookieAuth: []
+      - basicAuth: []
+      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserProfile'
+                $ref: '#/components/schemas/Vat'
           description: ''
     patch:
-      operationId: api_v1_user_profile_formatted_partial_update
+      operationId: api_v1_vat_formatted_partial_update
       parameters:
       - in: path
         name: format
@@ -7575,24 +7796,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedUserProfile'
+              $ref: '#/components/schemas/PatchedVat'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedUserProfile'
+              $ref: '#/components/schemas/PatchedVat'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedUserProfile'
+              $ref: '#/components/schemas/PatchedVat'
       security:
       - cookieAuth: []
+      - basicAuth: []
+      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserProfile'
+                $ref: '#/components/schemas/Vat'
           description: ''
     delete:
-      operationId: api_v1_user_profile_formatted_destroy
+      operationId: api_v1_vat_formatted_destroy
       parameters:
       - in: path
         name: format
@@ -7610,6 +7833,8 @@ paths:
       - api
       security:
       - cookieAuth: []
+      - basicAuth: []
+      - {}
       responses:
         '204':
           description: No response body
@@ -7948,6 +8173,13 @@ components:
       - 1
       - 2
       type: integer
+    NameEnum:
+      enum:
+      - Credit Card
+      - Pay On Delivery
+      - Pay On Store
+      - PayPal
+      type: string
     NullEnum:
       enum:
       - null
@@ -8187,6 +8419,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Country'
+    PaginatedPayWayList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?p=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?p=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PayWay'
     PaginatedProductCategoryList:
       type: object
       properties:
@@ -8407,7 +8659,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UserOrder'
-    PaginatedUserProfileList:
+    PaginatedVatList:
       type: object
       properties:
         count:
@@ -8426,7 +8678,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/UserProfile'
+            $ref: '#/components/schemas/Vat'
     PatchedBlogAuthor:
       type: object
       properties:
@@ -8663,6 +8915,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Region'
+    PatchedPayWay:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/NameEnum'
+        active:
+          type: boolean
+        cost:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+        free_for_order_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
     PatchedProduct:
       type: object
       properties:
@@ -8873,9 +9140,9 @@ components:
           type: string
           format: date-time
           readOnly: true
-        userprofile:
+        user_account:
           allOf:
-          - $ref: '#/components/schemas/UserProfile'
+          - $ref: '#/components/schemas/UserAccount'
           readOnly: true
     PatchedRegion:
       type: object
@@ -8909,6 +9176,8 @@ components:
         id:
           type: integer
           readOnly: true
+        slider:
+          type: integer
         url:
           type: string
           nullable: true
@@ -9019,6 +9288,7 @@ components:
         icon:
           type: string
           format: uri
+          nullable: true
         url:
           type: string
           maxLength: 200
@@ -9040,12 +9310,38 @@ components:
         last_name:
           type: string
           maxLength: 255
+        phone:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          nullable: true
+        city:
+          type: string
+          nullable: true
+          maxLength: 100
+        zipcode:
+          type: string
+          nullable: true
+          maxLength: 100
+        address:
+          type: string
+          nullable: true
+          maxLength: 100
+        place:
+          type: string
+          nullable: true
+          maxLength: 100
+        country:
+          type: string
+          nullable: true
+        region:
+          type: string
+          nullable: true
         is_active:
           type: boolean
         is_staff:
           type: boolean
-        userprofile:
-          $ref: '#/components/schemas/UserProfile'
     PatchedUserAddress:
       type: object
       properties:
@@ -9118,62 +9414,44 @@ components:
         region:
           type: string
           nullable: true
-    PatchedUserProfile:
+    PatchedVat:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        user:
-          type: integer
-        email:
+        created_at:
           type: string
-          format: email
-        country:
+          format: date-time
+        updated_at:
           type: string
-          nullable: true
-        first_name:
-          type: string
-          nullable: true
-          maxLength: 100
-        last_name:
-          type: string
-          nullable: true
-          maxLength: 100
-        phone:
-          type: integer
-          maximum: 9223372036854775807
-          minimum: 0
-          format: int64
-          nullable: true
-        city:
-          type: string
-          nullable: true
-          maxLength: 100
-        zipcode:
-          type: string
-          nullable: true
-          maxLength: 100
-        address:
-          type: string
-          nullable: true
-          maxLength: 100
-        place:
-          type: string
-          nullable: true
-          maxLength: 100
-        region:
-          type: string
-          nullable: true
-        main_image_absolute_url:
-          type: string
+          format: date-time
           readOnly: true
-        main_image_filename:
+        uuid:
           type: string
+          format: uuid
           readOnly: true
-        get_user_profile_image_url:
+        value:
           type: string
-          readOnly: true
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,1})?$
+    PayWay:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/NameEnum'
+        active:
+          type: boolean
+        cost:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+        free_for_order_amount:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+      required:
+      - name
     PayWayEnum:
       enum:
       - Credit Card
@@ -9427,17 +9705,17 @@ components:
           type: string
           format: date-time
           readOnly: true
-        userprofile:
+        user_account:
           allOf:
-          - $ref: '#/components/schemas/UserProfile'
+          - $ref: '#/components/schemas/UserAccount'
           readOnly: true
       required:
       - id
       - product_id
       - rate
       - updated_at
+      - user_account
       - user_id
-      - userprofile
     ProductReviewStatusEnum:
       enum:
       - New
@@ -9496,6 +9774,8 @@ components:
         id:
           type: integer
           readOnly: true
+        slider:
+          type: integer
         url:
           type: string
           nullable: true
@@ -9549,6 +9829,7 @@ components:
       - main_image_absolute_url
       - main_image_filename
       - order_position
+      - slider
     Slider:
       type: object
       properties:
@@ -9619,6 +9900,7 @@ components:
         icon:
           type: string
           format: uri
+          nullable: true
         url:
           type: string
           maxLength: 200
@@ -9626,7 +9908,6 @@ components:
           type: boolean
       required:
       - content
-      - icon
       - id
       - kind
       - title
@@ -9648,12 +9929,38 @@ components:
         last_name:
           type: string
           maxLength: 255
+        phone:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          nullable: true
+        city:
+          type: string
+          nullable: true
+          maxLength: 100
+        zipcode:
+          type: string
+          nullable: true
+          maxLength: 100
+        address:
+          type: string
+          nullable: true
+          maxLength: 100
+        place:
+          type: string
+          nullable: true
+          maxLength: 100
+        country:
+          type: string
+          nullable: true
+        region:
+          type: string
+          nullable: true
         is_active:
           type: boolean
         is_staff:
           type: boolean
-        userprofile:
-          $ref: '#/components/schemas/UserProfile'
       required:
       - email
       - first_name
@@ -9857,69 +10164,32 @@ components:
       - sort_order
       - updated_at
       - uuid
-    UserProfile:
+    Vat:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
-        user:
-          type: integer
-        email:
+        created_at:
           type: string
-          format: email
-        country:
+          format: date-time
+        updated_at:
           type: string
-          nullable: true
-        first_name:
-          type: string
-          nullable: true
-          maxLength: 100
-        last_name:
-          type: string
-          nullable: true
-          maxLength: 100
-        phone:
-          type: integer
-          maximum: 9223372036854775807
-          minimum: 0
-          format: int64
-          nullable: true
-        city:
-          type: string
-          nullable: true
-          maxLength: 100
-        zipcode:
-          type: string
-          nullable: true
-          maxLength: 100
-        address:
-          type: string
-          nullable: true
-          maxLength: 100
-        place:
-          type: string
-          nullable: true
-          maxLength: 100
-        region:
-          type: string
-          nullable: true
-        main_image_absolute_url:
-          type: string
+          format: date-time
           readOnly: true
-        main_image_filename:
+        uuid:
           type: string
+          format: uuid
           readOnly: true
-        get_user_profile_image_url:
+        value:
           type: string
-          readOnly: true
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,1})?$
       required:
-      - email
-      - get_user_profile_image_url
       - id
-      - main_image_absolute_url
-      - main_image_filename
-      - user
+      - updated_at
+      - uuid
+      - value
   securitySchemes:
     basicAuth:
       type: http

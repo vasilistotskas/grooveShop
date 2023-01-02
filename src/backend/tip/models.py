@@ -13,7 +13,10 @@ class Tip(TimeStampMixinModel):
     content = models.TextField(max_length=1000)
     kind = models.CharField(max_length=10, choices=TipKindEnum.choices())
     icon = models.FileField(
-        upload_to="uploads/tip/", validators=[validate_file_extension]
+        upload_to="uploads/tip/",
+        validators=[validate_file_extension],
+        null=True,
+        blank=True,
     )
     url = models.CharField(max_length=200)
     active = models.BooleanField(default=True)

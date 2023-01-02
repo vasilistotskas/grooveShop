@@ -7,7 +7,6 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import action
-from rest_framework.exceptions import ValidationError
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
@@ -42,35 +41,33 @@ class BlogPostViewSet(ModelViewSet):
         serializer = BlogPostSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def create(self, request, *args, **kwargs) -> Response | ValidationError:
+    def create(self, request, *args, **kwargs) -> Response:
         serializer = BlogPostSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        raise ValidationError(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, pk=None, *args, **kwargs) -> Response:
         post = get_object_or_404(BlogPost, pk=pk)
         serializer = BlogPostSerializer(post)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def update(self, request, pk=None, *args, **kwargs) -> Response | ValidationError:
+    def update(self, request, pk=None, *args, **kwargs) -> Response:
         post = get_object_or_404(BlogPost, pk=pk)
         serializer = BlogPostSerializer(post, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
-        return ValidationError(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def partial_update(
-        self, request, pk=None, *args, **kwargs
-    ) -> Response | ValidationError:
+    def partial_update(self, request, pk=None, *args, **kwargs) -> Response:
         post = get_object_or_404(BlogPost, pk=pk)
         serializer = BlogPostSerializer(post, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
-        return ValidationError(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, pk=None, *args, **kwargs):
         post = get_object_or_404(BlogPost, pk=pk)

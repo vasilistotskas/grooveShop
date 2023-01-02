@@ -86,8 +86,6 @@ class CommentQueryTest(GRAPHQLBaseTestClass):
 
         response_data = self.make_query(query)
 
-        print('response_data["data"]', response_data["data"])
-
         comment_content = response_data["data"]["commentsByUser"][0]["content"]
         post_id = response_data["data"]["commentsByUser"][0]["post"]["id"]
         user_id = response_data["data"]["commentsByUser"][0]["user"]["id"]
@@ -119,8 +117,6 @@ class CommentQueryTest(GRAPHQLBaseTestClass):
         )
 
         response_data = self.make_query(query)
-
-        print('response_data["data"]', response_data["data"])
 
         comment_content = response_data["data"]["commentByUserToPost"]["content"]
         post_id = response_data["data"]["commentByUserToPost"]["post"]["id"]

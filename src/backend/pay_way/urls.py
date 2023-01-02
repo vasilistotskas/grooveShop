@@ -7,7 +7,7 @@ urlpatterns = [
         PayWayViewSet.as_view({"get": "list", "post": "create"}),
     ),
     path(
-        "pay_way/<int:pk>/",
+        "pay_way/<str:pk>/",
         PayWayViewSet.as_view(
             {
                 "get": "retrieve",

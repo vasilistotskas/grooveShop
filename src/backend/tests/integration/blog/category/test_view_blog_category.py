@@ -1,0 +1,133 @@
+from __future__ import annotations
+
+import json
+import os
+
+from backend.app.settings import BASE_DIR
+from backend.blog.models.category import BlogCategory
+from backend.blog.serializers.category import BlogCategorySerializer
+from django.core.files.storage import default_storage
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import TestCase
+from rest_framework import status
+from rest_framework.test import APIClient
+
+
+class BlogCategoryViewSetTestCase(TestCase):
+    image: str | SimpleUploadedFile = ""
+    category: BlogCategory
+
+    def setUp(self):
+        self.category = BlogCategory.objects.create(
+            name="name", slug="slug", description="description", image=self.image
+        )
+        self.client = APIClient()
+
+    def test_list(self):
+        response = self.client.get("/api/v1/blog/category/")
+        categories = BlogCategory.objects.all()
+        serializer = BlogCategorySerializer(categories, many=True)
+        self.assertEqual(response.data["results"], serializer.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_create_valid(self):
+        payload = {"name": "name", "slug": "slug_one", "description": "description"}
+        response = self.client.post(
+            "/api/v1/blog/category/",
+            json.dumps(payload),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_create_invalid(self):
+        payload = {
+            "name": "",
+            "slug": "",
+            "description": "",
+        }
+        response = self.client.post(
+            "/api/v1/blog/category/",
+            json.dumps(payload),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_retrieve_valid(self):
+        response = self.client.get(f"/api/v1/blog/category/{self.category.id}/")
+        category = BlogCategory.objects.get(id=self.category.id)
+        serializer = BlogCategorySerializer(category)
+        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_retrieve_invalid(self):
+        invalid_id = BlogCategory.objects.latest("id").id + 1
+        response = self.client.get(f"/api/v1/blog/category/{invalid_id}/")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_update_valid(self):
+        payload = {
+            "name": "name",
+            "slug": "slug_two",
+            "description": "description",
+        }
+        response = self.client.put(
+            f"/api/v1/blog/category/{self.category.id}/",
+            json.dumps(payload),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_update_invalid(self):
+        payload = {"slug": ""}
+        response = self.client.put(
+            f"/api/v1/blog/category/{self.category.id}/",
+            json.dumps(payload),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_partial_update_valid(self):
+        payload = {
+            "name": "name",
+        }
+        response = self.client.patch(
+            f"/api/v1/blog/category/{self.category.id}/",
+            json.dumps(payload),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_partial_update_invalid(self):
+        payload = {
+            "slug": "",
+        }
+        response = self.client.patch(
+            f"/api/v1/blog/category/{self.category.id}/",
+            json.dumps(payload),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_destroy_valid(self):
+        response = self.client.delete(f"/api/v1/blog/category/{self.category.id}/")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_destroy_invalid(self):
+        invalid_id = BlogCategory.objects.latest("id").id + 1
+        response = self.client.delete(f"/api/v1/blog/category/{invalid_id}/")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+class WithImage(BlogCategoryViewSetTestCase):
+    image: str | SimpleUploadedFile = "uploads/products/no_photo.jpg"
+    if not default_storage.exists(image):
+        image_path = os.path.join(BASE_DIR, "files/images") + "/no_photo.jpg"
+        image = SimpleUploadedFile(
+            name="no_photo.jpg",
+            content=open(image_path, "rb").read(),
+            content_type="image/jpeg",
+        )
+
+
+class WithoutImage(BlogCategoryViewSetTestCase):
+    image: str | SimpleUploadedFile = ""

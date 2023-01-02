@@ -6,7 +6,6 @@ from backend.product.serializers.favourite import ProductFavouriteSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.exceptions import ValidationError
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
@@ -45,7 +44,7 @@ class ProductFavouriteViewSet(ModelViewSet):
         serializer = ProductFavouriteSerializer(queryset, many=True)
         return Response(serializer.data)
 
-    def create(self, request, *args, **kwargs) -> Response | ValidationError:
+    def create(self, request, *args, **kwargs) -> Response:
         serializer = ProductFavouriteSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -57,7 +56,7 @@ class ProductFavouriteViewSet(ModelViewSet):
         serializer = ProductFavouriteSerializer(favourite)
         return Response(serializer.data)
 
-    def update(self, request, pk=None, *args, **kwargs) -> Response | ValidationError:
+    def update(self, request, pk=None, *args, **kwargs) -> Response:
         favourite = get_object_or_404(ProductFavourite, id=pk)
         serializer = ProductFavouriteSerializer(favourite, data=request.data)
         if serializer.is_valid():
@@ -65,9 +64,7 @@ class ProductFavouriteViewSet(ModelViewSet):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def partial_update(
-        self, request, pk=None, *args, **kwargs
-    ) -> Response | ValidationError:
+    def partial_update(self, request, pk=None, *args, **kwargs) -> Response:
         favourite = get_object_or_404(ProductFavourite, id=pk)
         serializer = ProductFavouriteSerializer(
             favourite, data=request.data, partial=True

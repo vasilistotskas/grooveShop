@@ -46,6 +46,8 @@ urlpatterns = [
     path("api/v1/", include("backend.search.urls")),
     path("api/v1/", include("backend.tip.urls")),
     path("api/v1/", include("backend.blog.urls")),
+    path("api/v1/", include("backend.vat.urls")),
+    path("api/v1/", include("backend.pay_way.urls")),
     path("api/v1/", include("backend.session.urls")),
     path("accounts/", include("allauth_2fa.urls")),
     path("accounts/", include("allauth.urls")),

@@ -5,7 +5,6 @@ from datetime import timedelta
 from backend.session.models import MySession
 from backend.user.models import UserAccount
 from backend.user.serializers.account import UserAccountSerializer
-from backend.user.serializers.profile import UserProfileSerializer
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.utils.timezone import now
@@ -46,7 +45,7 @@ class ClearAllUserSessions(GenericAPIView):
 
 
 class ActiveUserViewSet(ViewSet):
-    serializer_class = UserProfileSerializer
+    serializer_class = UserAccountSerializer
 
     @action(detail=False, methods=["post"])
     def refresh_last_activity(self, request):

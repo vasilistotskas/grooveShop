@@ -8,6 +8,7 @@ class SlideSerializer(serializers.ModelSerializer):
         model = Slide
         fields = (
             "id",
+            "slider",
             "url",
             "title",
             "subtitle",

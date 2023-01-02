@@ -5,7 +5,6 @@ from backend.vat.paginators import VatPagination
 from backend.vat.serializers import VatSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.exceptions import ValidationError
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
@@ -32,35 +31,33 @@ class VatViewSet(ModelViewSet):
         serializer = VatSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def create(self, request, *args, **kwargs) -> Response | ValidationError:
+    def create(self, request, *args, **kwargs) -> Response:
         serializer = VatSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        raise ValidationError(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, pk=None, *args, **kwargs) -> Response:
         vat = get_object_or_404(Vat, pk=pk)
         serializer = VatSerializer(vat)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def update(self, request, pk=None, *args, **kwargs) -> Response | ValidationError:
+    def update(self, request, pk=None, *args, **kwargs) -> Response:
         vat = get_object_or_404(Vat, pk=pk)
         serializer = VatSerializer(vat, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
-        return ValidationError(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def partial_update(
-        self, request, pk=None, *args, **kwargs
-    ) -> Response | ValidationError:
+    def partial_update(self, request, pk=None, *args, **kwargs) -> Response:
         vat = get_object_or_404(Vat, pk=pk)
         serializer = VatSerializer(vat, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
-        return ValidationError(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, pk=None, *args, **kwargs) -> Response:
         vat = get_object_or_404(Vat, pk=pk)

@@ -8,7 +8,6 @@ from backend.product.serializers.product import ProductSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.exceptions import ValidationError
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
@@ -41,7 +40,7 @@ class ProductCategoryViewSet(ModelViewSet):
             data.append(self.recursive_node_to_dict(n))
         return Response(data)
 
-    def create(self, request, *args, **kwargs) -> Response | ValidationError:
+    def create(self, request, *args, **kwargs) -> Response:
         serializer = ProductCategorySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -53,7 +52,7 @@ class ProductCategoryViewSet(ModelViewSet):
         serializer = ProductCategorySerializer(category)
         return Response(serializer.data)
 
-    def update(self, request, pk=None, *args, **kwargs) -> Response | ValidationError:
+    def update(self, request, pk=None, *args, **kwargs) -> Response:
         category = get_object_or_404(ProductCategory, id=pk)
         serializer = ProductCategorySerializer(category, data=request.data)
         if serializer.is_valid():
@@ -61,9 +60,7 @@ class ProductCategoryViewSet(ModelViewSet):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def partial_update(
-        self, request, pk=None, *args, **kwargs
-    ) -> Response | ValidationError:
+    def partial_update(self, request, pk=None, *args, **kwargs) -> Response:
         category = get_object_or_404(ProductCategory, id=pk)
         serializer = ProductCategorySerializer(
             category, data=request.data, partial=True
