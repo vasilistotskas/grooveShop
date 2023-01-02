@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.18.0 (2023-01-02)
+### Feature
+* **Testing:** Implemented API tests for apps (country, pay_way, product, region, slider, tip, user) ([`f99d098`](https://github.com/vasilistotskas/grooveShop/commit/f99d09852467ce1efb1a1f973ca8a5dd442051fa))
+* **Two Factor Auth:** Added two factor auth library and implemented UI ([`aa7ff88`](https://github.com/vasilistotskas/grooveShop/commit/aa7ff8820fd94fb607c05825c0d7665bd9068b26))
+
+### Fix
+* **pyproject.toml:** Version fix ([`5350a50`](https://github.com/vasilistotskas/grooveShop/commit/5350a5086d0a517960fe07ada3a432616cc1c548))
+
 ## v0.17.1 (2022-12-30)
 ### Fix
 * **Auth:** Ui improvements ([`11f1791`](https://github.com/vasilistotskas/grooveShop/commit/11f17918ba490088f16aadb6ffee512e6e33553d))
