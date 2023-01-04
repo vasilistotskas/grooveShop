@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.19.0 (2023-01-04)
+### Feature
+* **Testing:** Implemented API tests for apps (product, product categories, product favourites, product reviews) ([`67a69b1`](https://github.com/vasilistotskas/grooveShop/commit/67a69b138a0667866db5d03813f9abc01421ecee))
+
 ## v0.18.0 (2023-01-02)
 ### Feature
 * **Testing:** Implemented API tests for apps (country, pay_way, product, region, slider, tip, user) ([`f99d098`](https://github.com/vasilistotskas/grooveShop/commit/f99d09852467ce1efb1a1f973ca8a5dd442051fa))
