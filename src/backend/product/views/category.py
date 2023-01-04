@@ -1,13 +1,10 @@
 from __future__ import annotations
 
 from backend.product.models.category import ProductCategory
-from backend.product.models.product import Product
 from backend.product.paginators.category import ProductCategoryPagination
 from backend.product.serializers.category import ProductCategorySerializer
-from backend.product.serializers.product import ProductSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
@@ -34,11 +31,14 @@ class ProductCategoryViewSet(ModelViewSet):
     ]
 
     def list(self, request, *args, **kwargs) -> Response:
-        root_nodes = self.get_queryset().get_cached_trees()
+        queryset = self.get_queryset().get_cached_trees()
+        page = self.paginate_queryset(queryset)
         data = []
-        for n in root_nodes:
+        for n in queryset:
             data.append(self.recursive_node_to_dict(n))
-        return Response(data)
+        if page is not None:
+            return self.get_paginated_response(data)
+        return Response(data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs) -> Response:
         serializer = ProductCategorySerializer(data=request.data)
@@ -74,15 +74,6 @@ class ProductCategoryViewSet(ModelViewSet):
         category = get_object_or_404(ProductCategory, id=pk)
         category.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-    @action(detail=True, methods=["get"])
-    def category_products(self, request, pk=None, *args, **kwargs) -> Response:
-        category = get_object_or_404(ProductCategory, id=pk)
-        products = Product.objects.filter(
-            category__in=category.get_descendants(include_self=True)
-        )
-        serializer = ProductSerializer(products, many=True)
-        return Response(serializer.data)
 
     def recursive_node_to_dict(self, node):
         result = self.get_serializer(instance=node).data

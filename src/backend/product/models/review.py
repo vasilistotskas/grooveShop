@@ -19,11 +19,12 @@ class ProductReview(TimeStampMixinModel, PublishableModel, UUIDModel):
     comment = models.CharField(max_length=250, blank=True)
     rate = models.PositiveSmallIntegerField(choices=RateChoicesEnum.choices())
     status = models.CharField(
-        max_length=10, choices=StatusEnum.choices(), default="True"
+        max_length=10, choices=StatusEnum.choices(), default=StatusEnum.NEW
     )
 
     class Meta:
         verbose_name_plural = "Product Reviews"
+        unique_together = (("product", "user"),)
         ordering = ["-updated_at"]
 
     def __str__(self):

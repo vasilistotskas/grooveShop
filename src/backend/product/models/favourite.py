@@ -14,6 +14,8 @@ class ProductFavourite(TimeStampMixinModel, UUIDModel):
 
     class Meta:
         verbose_name_plural = "Favourite Products"
+        unique_together = (("user", "product"),)
+        ordering = ["-updated_at"]
 
     def __str__(self):
         return self.user.email

@@ -26,10 +26,6 @@ urlpatterns = [
         "product/<int:pk>/update_product_hits/",
         ProductViewSet.as_view({"post": "update_product_hits"}),
     ),
-    path(
-        "product/<str:category_slug>/<str:product_slug>/",
-        ProductViewSet.as_view({"get": "category_product"}),
-    ),
     # Category
     path(
         "product/category/",
@@ -45,10 +41,6 @@ urlpatterns = [
                 "delete": "destroy",
             }
         ),
-    ),
-    path(
-        "product/category/<int:pk>/category_products/",
-        ProductCategoryViewSet.as_view({"get": "category_products"}),
     ),
     # Favourite
     path(

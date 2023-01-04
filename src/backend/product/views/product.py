@@ -4,7 +4,6 @@ from backend.product.models.product import Product
 from backend.product.paginators.product import ProductPagination
 from backend.product.serializers.product import ProductSerializer
 from django_filters.rest_framework import DjangoFilterBackend
-from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter
@@ -75,23 +74,3 @@ class ProductViewSet(ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    @extend_schema(
-        operation_id="api_v1_product_category_retrieve_1",
-    )
-    @action(
-        detail=True,
-        methods=["get"],
-        url_path="product/<str:category_slug>/<str:product_slug>",
-    )
-    def category_product(
-        self, request, category_slug: str, product_slug: str, *args, **kwargs
-    ) -> Response:
-        try:
-            product = Product.objects.filter(category__slug=category_slug).get(
-                slug=product_slug
-            )
-        except Product.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = ProductSerializer(product)
-        return Response(serializer.data, status=status.HTTP_200_OK)
