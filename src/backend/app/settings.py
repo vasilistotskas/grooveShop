@@ -169,7 +169,7 @@ APPEND_SLASH = os.environ.get("APPEND_SLASH")
 AUTH_USER_MODEL = "user.UserAccount"
 
 # Sessions and Cookies
-SESSION_ENGINE = "backend.session.session_backend"
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 CSRF_COOKIE_SAMESITE = "Strict"
 SESSION_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_HTTPONLY = False  # False since we will grab it via universal-cookies

@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from datetime import timedelta
 
-from backend.session.models import MySession
 from backend.user.models import UserAccount
 from backend.user.serializers.account import UserAccountSerializer
 from django.contrib.auth import get_user_model
+from django.core.cache import cache
 from django.http import JsonResponse
 from django.utils.timezone import now
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -49,20 +49,24 @@ class ActiveUserViewSet(ViewSet):
 
     @action(detail=False, methods=["post"])
     def refresh_last_activity(self, request):
-        session_key = request.session.session_key
         try:
-            session = MySession.objects.get(session_key=session_key)
+            session = request.session
             session.last_activity = now()
             session.save()
             return Response({"success": True})
-        except MySession.DoesNotExist:
+        except AttributeError:
             return Response({"success": False}, status=status.HTTP_404_NOT_FOUND)
 
     @action(detail=False, methods=["get"])
     def active_users_count(self, request):
-        ten_minutes_ago = now() - timedelta(minutes=10)
-        active_sessions = MySession.objects.filter(
-            last_activity__gte=ten_minutes_ago
-        ).exclude(user_id=None)
-        active_sessions_count = active_sessions.count()
-        return Response({"active_users_count": active_sessions_count})
+        active_users = 0
+        for key in cache.keys("user*"):
+            cache_session = cache.get(key)
+            if cache_session.get("last_activity") and cache_session.get("user"):
+                user = cache_session.get("user")
+                last_activity = cache_session.get("last_activity")
+                if (
+                    now() - last_activity < timedelta(minutes=5)
+                ) and user.is_authenticated:
+                    active_users += 1
+        return Response({"active_users": active_users})

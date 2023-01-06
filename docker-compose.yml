@@ -108,6 +108,15 @@ services:
     networks:
       - groovy-backbone
 
+  redisinsight:
+    image: 'redislabs/redisinsight:latest'
+    container_name: redisinsight
+    restart: always
+    ports:
+      - '13333:8001'
+    networks:
+      - groovy-backbone
+
   service-media_stream:
     container_name: service-media_stream
     image: service-manager-media-stream:${SERVICE_MANAGER_IMAGE_REV}
