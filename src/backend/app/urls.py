@@ -1,12 +1,17 @@
+from backend.core import caches
 from backend.core.graphql.schema import schema
+from backend.product.sitemaps.category import ProductCategorySitemap
+from backend.product.sitemaps.product import ProductSitemap
 from backend.session.views import ActiveUserViewSet
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.sitemaps import views as sitemaps_views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.http import HttpResponse
 from django.urls import include
 from django.urls import path
+from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET
 from drf_spectacular.views import SpectacularAPIView
@@ -15,6 +20,8 @@ from drf_spectacular.views import SpectacularSwaggerView
 from rest_framework import routers
 from strawberry.django.views import AsyncGraphQLView
 from strawberry.django.views import GraphQLView
+
+app_name = "app"
 
 
 @require_GET
@@ -33,6 +40,11 @@ front_urls = [
 
 router = routers.SimpleRouter()
 router.register(r"active_users", ActiveUserViewSet, basename="active_users")
+
+sitemaps = {
+    "product": ProductSitemap,
+    "product_category": ProductCategorySitemap,
+}
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -54,6 +66,18 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("graphql/async", AsyncGraphQLView.as_view(schema=schema)),
     path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
+    # Sitemaps
+    path(
+        "sitemap.xml",
+        cache_page(caches.ONE_WEEK)(sitemaps_views.index),
+        {"sitemaps": sitemaps, "sitemap_url_name": "sitemaps"},
+    ),
+    path(
+        "sitemap-<section>.xml",
+        cache_page(caches.ONE_WEEK)(sitemaps_views.sitemap),
+        {"sitemaps": sitemaps},
+        name="sitemaps",
+    ),
     # admin html editor
     path("tinymce/", include("tinymce.urls")),  # vue urls
     # Spectacular

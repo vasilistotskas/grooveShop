@@ -58,7 +58,7 @@ class ProductCategory(MPTTModel, TimeStampMixinModel, SeoModel):
 
     @property
     def absolute_url(self) -> str:
-        return "/".join(
+        return "/" + "/".join(
             [x["slug"] for x in self.get_ancestors(include_self=True).values()]
         )
 
