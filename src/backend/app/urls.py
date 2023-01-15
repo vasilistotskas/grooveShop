@@ -1,3 +1,6 @@
+from backend.blog.sitemaps.author import BlogAuthorSitemap
+from backend.blog.sitemaps.category import BlogCategorySitemap
+from backend.blog.sitemaps.post import BlogPostSitemap
 from backend.core import caches
 from backend.core.graphql.schema import schema
 from backend.product.sitemaps.category import ProductCategorySitemap
@@ -44,6 +47,9 @@ router.register(r"active_users", ActiveUserViewSet, basename="active_users")
 sitemaps = {
     "product": ProductSitemap,
     "product_category": ProductCategorySitemap,
+    "blog_post": BlogPostSitemap,
+    "blog_category": BlogCategorySitemap,
+    "blog_author": BlogAuthorSitemap,
 }
 
 urlpatterns = [
@@ -74,7 +80,7 @@ urlpatterns = [
     ),
     path(
         "sitemap-<section>.xml",
-        cache_page(caches.ONE_WEEK)(sitemaps_views.sitemap),
+        sitemaps_views.sitemap,
         {"sitemaps": sitemaps},
         name="sitemaps",
     ),

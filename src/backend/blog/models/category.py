@@ -40,3 +40,7 @@ class BlogCategory(TimeStampMixinModel, SortableModel, UUIDModel):
     @property
     def get_category_posts_count(self) -> int:
         return self.blog_post_category.count()
+
+    @property
+    def absolute_url(self) -> str:
+        return f"/blog/category/{self.slug}"

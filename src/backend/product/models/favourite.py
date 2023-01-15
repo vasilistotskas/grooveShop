@@ -21,5 +21,5 @@ class ProductFavourite(TimeStampMixinModel, UUIDModel):
         return self.user.email
 
     @property
-    def absolute_url(self):
+    def absolute_url(self) -> str:
         return f"//{self.id}/"

@@ -11,3 +11,7 @@ class BlogAuthor(TimeStampMixinModel, UUIDModel):
 
     def __str__(self):
         return self.user.email
+
+    @property
+    def absolute_url(self) -> str:
+        return f"/blog/author/{self.id}"

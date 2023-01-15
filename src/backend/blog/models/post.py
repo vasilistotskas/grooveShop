@@ -70,3 +70,7 @@ class BlogPost(TimeStampMixinModel, PublishableModel, UUIDModel):
     @property
     def get_post_tags_count(self) -> int:
         return self.tags.count()
+
+    @property
+    def absolute_url(self) -> str:
+        return f"/blog/{self.slug}"
