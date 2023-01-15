@@ -333,10 +333,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "backend/media")
 # Vue project location
 FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
 
-STATICFILES_DIRS = (
-    BASE_DIR.joinpath("frontend", "dist"),
-    BASE_DIR.joinpath("files"),
-)
+STATICFILES_DIRS = (BASE_DIR.joinpath("files"),)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 # graphql schema
