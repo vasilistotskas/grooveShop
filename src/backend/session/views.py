@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import timedelta
 
+from backend.core import caches
 from backend.user.models import UserAccount
 from backend.user.serializers.account import UserAccountSerializer
 from django.contrib.auth import get_user_model
@@ -60,8 +61,8 @@ class ActiveUserViewSet(ViewSet):
     @action(detail=False, methods=["get"])
     def active_users_count(self, request):
         active_users = 0
-        for key in cache.keys("user*"):
-            cache_session = cache.get(key)
+        for key in cache.keys(caches.SESSION + "*"):
+            cache_session = caches.get(key)
             if cache_session.get("last_activity") and cache_session.get("user"):
                 user = cache_session.get("user")
                 last_activity = cache_session.get("last_activity")

@@ -49,6 +49,7 @@ urlpatterns = [
     path("api/v1/", include("backend.vat.urls")),
     path("api/v1/", include("backend.pay_way.urls")),
     path("api/v1/", include("backend.session.urls")),
+    path("api/v1/", include("backend.cart.urls")),
     path("accounts/", include("allauth_2fa.urls")),
     path("accounts/", include("allauth.urls")),
     path("graphql/async", AsyncGraphQLView.as_view(schema=schema)),

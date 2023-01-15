@@ -132,7 +132,7 @@ class Product(TimeStampMixinModel, SeoModel, UUIDModel):
 
     @property
     def final_price(self) -> Decimal:
-        return self.price - self.discount_value
+        return self.price + self.vat_value - self.discount_value
 
     @property
     def main_image_absolute_url(self) -> str:

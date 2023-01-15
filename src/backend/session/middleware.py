@@ -1,6 +1,7 @@
 import logging
 
-from django.core.cache import cache
+from backend.cart.service import CartService
+from backend.core import caches
 from django.utils.timezone import now
 
 logger = logging.getLogger(__name__)
@@ -21,26 +22,36 @@ class SessionTraceMiddleware:
         if has_key is None:
             request.session["cached_session_key"] = request.session.session_key
 
+        if hasattr(request, "session") and not hasattr(
+            request.session, "pre_log_in_cart_id"
+        ):
+            cart_service = CartService(request)
+            pre_log_in_cart_id = cart_service.cart.id
+            request.session["pre_log_in_cart_id"] = pre_log_in_cart_id
+
         request.session["last_activity"] = now()
+        request.session["referer"] = request.META.get("HTTP_REFERER", None)
         request.session.save()
 
         try:
-            cache.add(
-                "user." + request.session.session_key,
+            caches.add(
+                caches.SESSION + request.session.session_key,
                 {
                     "last_activity": request.session["last_activity"],
                     "user": request.session["user"],
+                    "referer": request.META.get("HTTP_REFERER", None),
                 },
-                timeout=60 * 60 * 24 * 7,
+                caches.ONE_HOUR,
             )
         except AttributeError:
-            cache.set(
-                "user." + request.session.session_key,
+            caches.set(
+                caches.SESSION + request.session.session_key,
                 {
                     "last_activity": request.session["last_activity"],
                     "user": request.session["user"],
+                    "referer": request.META.get("HTTP_REFERER", None),
                 },
-                timeout=60 * 60 * 24 * 7,
+                caches.ONE_HOUR,
             )
 
         logger.info(

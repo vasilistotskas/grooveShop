@@ -71,8 +71,15 @@ class Command(BaseCommand):
                     )
 
                     for _ in range(2):
-                        ProductFavourite.objects.get_or_create(
-                            user_id=user_id, product_id=product.id
-                        )
+                        try:
+                            ProductFavourite.objects.get(
+                                user_id=user_id,
+                                product_id=product.id,
+                            )
+                        except ProductFavourite.DoesNotExist:
+                            ProductFavourite.objects.create(
+                                user_id=user_id,
+                                product_id=product.id,
+                            )
 
         self.stdout.write(self.style.SUCCESS("Success"))

@@ -107,6 +107,7 @@ PROJECT_APPS = [
     "backend.region",
     "backend.pay_way",
     "backend.session",
+    "backend.cart",
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",
