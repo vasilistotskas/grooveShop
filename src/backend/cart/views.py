@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from backend.cart.models import CartItem
 from backend.cart.serializers import CartItemSerializer
 from backend.cart.serializers import CartSerializer
 from backend.cart.service import CartService
@@ -52,6 +53,8 @@ class CartItemViewSet(ModelViewSet):
     serializer_class = CartItemSerializer
 
     def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return CartItem.objects.none()
         service = CartService(self.request)
         return service.cart_items
 

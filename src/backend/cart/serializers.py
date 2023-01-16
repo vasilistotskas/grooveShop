@@ -7,6 +7,7 @@ from rest_framework import serializers
 class CartItemSerializer(serializers.ModelSerializer):
     cart = serializers.SerializerMethodField("get_cart_id")
 
+    @extend_schema_field(serializers.IntegerField)
     def get_cart_id(self, obj):
         cart = self.context.get("cart")
         return cart.id

@@ -2253,6 +2253,547 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/cart/:
+    get:
+      operationId: api_v1_cart_retrieve
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+          description: ''
+    put:
+      operationId: api_v1_cart_update
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cart'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Cart'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Cart'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+          description: ''
+    patch:
+      operationId: api_v1_cart_partial_update
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCart'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCart'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCart'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+          description: ''
+    delete:
+      operationId: api_v1_cart_destroy
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/v1/cart{format}:
+    get:
+      operationId: api_v1_cart_formatted_retrieve
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+          description: ''
+    put:
+      operationId: api_v1_cart_formatted_update
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cart'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Cart'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Cart'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+          description: ''
+    patch:
+      operationId: api_v1_cart_formatted_partial_update
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCart'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCart'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCart'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+          description: ''
+    delete:
+      operationId: api_v1_cart_formatted_destroy
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/v1/cart/item/:
+    get:
+      operationId: api_v1_cart_item_list
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCartItemList'
+          description: ''
+    post:
+      operationId: api_v1_cart_item_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItem'
+          description: ''
+  /api/v1/cart/item{format}:
+    get:
+      operationId: api_v1_cart_item_formatted_list
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCartItemList'
+          description: ''
+    post:
+      operationId: api_v1_cart_item_formatted_create
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItem'
+          description: ''
+  /api/v1/cart/item/{id}:
+    get:
+      operationId: api_v1_cart_item_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItem'
+          description: ''
+    put:
+      operationId: api_v1_cart_item_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItem'
+          description: ''
+    patch:
+      operationId: api_v1_cart_item_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCartItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCartItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCartItem'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItem'
+          description: ''
+    delete:
+      operationId: api_v1_cart_item_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/v1/cart/item/{id}{format}:
+    get:
+      operationId: api_v1_cart_item_formatted_retrieve
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItem'
+          description: ''
+    put:
+      operationId: api_v1_cart_item_formatted_update
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItem'
+          description: ''
+    patch:
+      operationId: api_v1_cart_item_formatted_partial_update
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCartItem'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCartItem'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCartItem'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItem'
+          description: ''
+    delete:
+      operationId: api_v1_cart_item_formatted_destroy
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
   /api/v1/checkout/:
     post:
       operationId: api_v1_checkout_create
@@ -3131,67 +3672,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Product'
           description: ''
-  /api/v1/product/{category_slug}/{product_slug}/:
-    get:
-      operationId: api_v1_product_category_retrieve_1
-      parameters:
-      - in: path
-        name: category_slug
-        schema:
-          type: string
-        required: true
-      - in: path
-        name: product_slug
-        schema:
-          type: string
-        required: true
-      tags:
-      - api
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Product'
-          description: ''
-  /api/v1/product/{category_slug}/{product_slug}{format}:
-    get:
-      operationId: api_v1_product_category_retrieve_1_2
-      parameters:
-      - in: path
-        name: category_slug
-        schema:
-          type: string
-        required: true
-      - in: path
-        name: format
-        schema:
-          type: string
-          enum:
-          - .json
-        required: true
-      - in: path
-        name: product_slug
-        schema:
-          type: string
-        required: true
-      tags:
-      - api
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Product'
-          description: ''
   /api/v1/product/{id}/:
     get:
       operationId: api_v1_product_retrieve
@@ -3914,57 +4394,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/product/category/{id}/category_products/:
-    get:
-      operationId: api_v1_product_category_category_products_retrieve
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - api
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductCategory'
-          description: ''
-  /api/v1/product/category/{id}/category_products{format}:
-    get:
-      operationId: api_v1_product_category_category_products_formatted_retrieve
-      parameters:
-      - in: path
-        name: format
-        schema:
-          type: string
-          enum:
-          - .json
-        required: true
-      - in: path
-        name: id
-        schema:
-          type: integer
-        required: true
-      tags:
-      - api
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductCategory'
-          description: ''
   /api/v1/product/favourite/:
     get:
       operationId: api_v1_product_favourite_list
@@ -4031,6 +4460,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/ProductFavourite'
+        required: true
       security:
       - cookieAuth: []
       responses:
@@ -4121,6 +4551,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/ProductFavourite'
+        required: true
       security:
       - cookieAuth: []
       responses:
@@ -4171,6 +4602,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/ProductFavourite'
+        required: true
       security:
       - cookieAuth: []
       responses:
@@ -4280,6 +4712,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/ProductFavourite'
+        required: true
       security:
       - cookieAuth: []
       responses:
@@ -8101,6 +8534,80 @@ components:
       - sort_order
       - updated_at
       - uuid
+    Cart:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          type: integer
+          nullable: true
+        total_price:
+          type: number
+          format: double
+          readOnly: true
+        total_discount_value:
+          type: number
+          format: double
+          readOnly: true
+        total_vat_value:
+          type: number
+          format: double
+          readOnly: true
+        total_items:
+          type: integer
+          readOnly: true
+        total_items_unique:
+          type: integer
+          readOnly: true
+        cart_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItem'
+          readOnly: true
+      required:
+      - cart_items
+      - id
+      - total_discount_value
+      - total_items
+      - total_items_unique
+      - total_price
+      - total_vat_value
+    CartItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        cart:
+          type: integer
+          readOnly: true
+        product:
+          type: integer
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        total_price:
+          type: number
+          format: double
+          readOnly: true
+        total_discount_value:
+          type: number
+          format: double
+          readOnly: true
+        product_discount_percent:
+          type: number
+          format: double
+          readOnly: true
+      required:
+      - cart
+      - id
+      - product
+      - product_discount_percent
+      - total_discount_value
+      - total_price
     Country:
       type: object
       properties:
@@ -8399,6 +8906,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BlogTag'
+    PaginatedCartItemList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItem'
     PaginatedCountryList:
       type: object
       properties:
@@ -8889,6 +9416,65 @@ components:
         get_tag_posts_count:
           type: integer
           readOnly: true
+    PatchedCart:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          type: integer
+          nullable: true
+        total_price:
+          type: number
+          format: double
+          readOnly: true
+        total_discount_value:
+          type: number
+          format: double
+          readOnly: true
+        total_vat_value:
+          type: number
+          format: double
+          readOnly: true
+        total_items:
+          type: integer
+          readOnly: true
+        total_items_unique:
+          type: integer
+          readOnly: true
+        cart_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItem'
+          readOnly: true
+    PatchedCartItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        cart:
+          type: integer
+          readOnly: true
+        product:
+          type: integer
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        total_price:
+          type: number
+          format: double
+          readOnly: true
+        total_discount_value:
+          type: number
+          format: double
+          readOnly: true
+        product_discount_percent:
+          type: number
+          format: double
+          readOnly: true
     PatchedCountry:
       type: object
       properties:
@@ -9103,12 +9689,10 @@ components:
         id:
           type: integer
           readOnly: true
-        user_id:
+        user:
           type: integer
-          readOnly: true
-        product_id:
+        product:
           type: integer
-          readOnly: true
     PatchedProductReview:
       type: object
       properties:
@@ -9116,13 +9700,9 @@ components:
           type: integer
           readOnly: true
         product:
-          $ref: '#/components/schemas/Product'
-        product_id:
           type: integer
-          readOnly: true
-        user_id:
+        user:
           type: integer
-          readOnly: true
         comment:
           type: string
           maxLength: 250
@@ -9139,10 +9719,6 @@ components:
         updated_at:
           type: string
           format: date-time
-          readOnly: true
-        user_account:
-          allOf:
-          - $ref: '#/components/schemas/UserAccount'
           readOnly: true
     PatchedRegion:
       type: object
@@ -9664,16 +10240,14 @@ components:
         id:
           type: integer
           readOnly: true
-        user_id:
+        user:
           type: integer
-          readOnly: true
-        product_id:
+        product:
           type: integer
-          readOnly: true
       required:
       - id
-      - product_id
-      - user_id
+      - product
+      - user
     ProductReview:
       type: object
       properties:
@@ -9681,13 +10255,9 @@ components:
           type: integer
           readOnly: true
         product:
-          $ref: '#/components/schemas/Product'
-        product_id:
           type: integer
-          readOnly: true
-        user_id:
+        user:
           type: integer
-          readOnly: true
         comment:
           type: string
           maxLength: 250
@@ -9705,17 +10275,12 @@ components:
           type: string
           format: date-time
           readOnly: true
-        user_account:
-          allOf:
-          - $ref: '#/components/schemas/UserAccount'
-          readOnly: true
       required:
       - id
-      - product_id
+      - product
       - rate
       - updated_at
-      - user_account
-      - user_id
+      - user
     ProductReviewStatusEnum:
       enum:
       - New
