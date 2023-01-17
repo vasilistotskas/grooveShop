@@ -29,6 +29,17 @@
       <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration/blog" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration/vat" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration/country" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration/pay_way" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration/product" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration/product/category" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration/product/favourite" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration/product/product" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration/product/review" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration/region" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration/slider" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration/tip" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/backend/tests/integration/user" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/src/backend/media" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
