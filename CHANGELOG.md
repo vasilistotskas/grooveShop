@@ -2,6 +2,17 @@
 
 <!--next-version-placeholder-->
 
+## v0.20.0 (2023-01-17)
+### Feature
+* **Sitemaps:** Implemented Sitemaps for blog post , category and author ([`1bf212d`](https://github.com/vasilistotskas/grooveShop/commit/1bf212d2251399846593d1dd458b8508e3460770))
+* **Sitemaps:** Implemented Sitemaps for product and product category ([`2233ec8`](https://github.com/vasilistotskas/grooveShop/commit/2233ec804ce5a16f97439b9d955cb2e9273b9f5c))
+* **Cart:** Implemented cart application ([`0f0d532`](https://github.com/vasilistotskas/grooveShop/commit/0f0d532e96b6bffc7316913fbff9d70e142caf85))
+* **Sessions:** Move sessions in redis db ([`78cd9af`](https://github.com/vasilistotskas/grooveShop/commit/78cd9afc4877e6d32bbf0c3776eae4f276f41b6e))
+
+### Fix
+* **Spectacular:** Minor fixes for cart api spectacular generator ([`259cff2`](https://github.com/vasilistotskas/grooveShop/commit/259cff248ebb065d1bd859f01c8b19dbc224296c))
+* **settings.py:** Remove front dist from static file dirs ([`1d52857`](https://github.com/vasilistotskas/grooveShop/commit/1d52857a90278045f038a63ff4e6961270519989))
+
 ## v0.19.0 (2023-01-04)
 ### Feature
 * **Testing:** Implemented API tests for apps (product, product categories, product favourites, product reviews) ([`67a69b1`](https://github.com/vasilistotskas/grooveShop/commit/67a69b138a0667866db5d03813f9abc01421ecee))
