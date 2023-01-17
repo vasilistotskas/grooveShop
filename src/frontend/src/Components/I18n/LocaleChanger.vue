@@ -14,18 +14,22 @@
 
 <script lang="ts">
 import { useI18n } from 'vue-i18n'
-import { MessageSchema } from '@/Locales/LocaleType'
 import { Options as Component, setup, Vue } from 'vue-class-component'
+import { DefineDateTimeFormat, MessageSchema, NumberSchema } from '@/Locales/LocaleType'
 
 @Component({
 	name: 'LocaleChanger'
 })
 export default class LocaleChanger extends Vue {
 	myContext = setup(() => {
-		const { t, n } = useI18n<{ message: MessageSchema }>({
+		const { t, d, n } = useI18n<{
+			message: MessageSchema
+			datetime: DefineDateTimeFormat
+			number: NumberSchema
+		}>({
 			useScope: 'global'
 		})
-		return { t, n }
+		return { t, d, n }
 	})
 }
 </script>

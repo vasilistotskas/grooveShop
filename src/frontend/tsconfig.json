@@ -25,9 +25,9 @@
 		"paths": {
 			"@/*": ["src/*"]
 		},
-		"typeRoots": ["node_modules/@types", "typings.d.ts", "env.d.ts"]
+		"typeRoots": ["node_modules/@types", "typings.d.ts"]
 	},
 	"include": ["./src/**/*"],
-	"files": ["typings.d.ts", "env.d.ts"],
+	"files": ["typings.d.ts"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

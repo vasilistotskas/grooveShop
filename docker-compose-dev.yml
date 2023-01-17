@@ -151,7 +151,6 @@ services:
       - ./src/frontend/.prettierrc.yaml:/frontend/.prettierrc.yaml
       - ./src/frontend/src/Apollo/ApolloProvider.ts:/frontend/src/Apollo/ApolloProvider.ts
       - ./src/frontend/babel.config.cjs:/frontend/babel.config.cjs
-      - ./src/frontend/env.d.ts:/frontend/env.d.ts
       - ./src/frontend/index.html:/frontend/index.html
       - ./src/frontend/package.json:/frontend/package.json
       - ./src/frontend/package-lock.json:/frontend/package-lock.json
