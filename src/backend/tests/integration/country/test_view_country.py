@@ -71,11 +71,11 @@ class CountryViewSetTestCase(TestCase):
 
     def test_update_valid(self):
         payload = {
-            "alpha_2": "CY",
-            "alpha_3": "CYP",
-            "name": "Cyprus",
-            "iso_cc": 196,
-            "phone_code": 357,
+            "alpha_2": "GR",
+            "alpha_3": "GRC",
+            "name": "Greece",
+            "iso_cc": 300,
+            "phone_code": 30,
         }
 
         response = self.client.put(

@@ -87,7 +87,7 @@ class RegionViewSetTestCase(TestCase):
             phone_code=357,
         )
         payload = {
-            "alpha": "CY-III",
+            "alpha": "GR-I",
             "alpha_2": country.pk,
             "name": "Central Cyprus",
         }

@@ -64,10 +64,10 @@ class PayWayViewSetTestCase(TestCase):
 
     def test_update_valid(self):
         payload = {
-            "name": "Pay On Store",
+            "name": "Credit Card",
             "active": True,
-            "cost": 7,
-            "free_for_order_amount": 70,
+            "cost": 5,
+            "free_for_order_amount": 50,
         }
         response = self.client.put(
             f"/api/v1/pay_way/{self.pay_way.pk}/",
