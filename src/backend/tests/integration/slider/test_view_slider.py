@@ -28,18 +28,18 @@ class SliderViewSetTestCase(TestCase):
         self.assertEqual(response.data["results"], serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    # def test_create_valid(self):
-    #     payload = {
-    #         "name": "test_one",
-    #         "url": "http://localhost:8010/",
-    #         "title": "test_one",
-    #         "description": "test_one",
-    #     }
-    #     response = self.client.post(
-    #         "/api/v1/slider/", json.dumps(payload), content_type='application/json'
-    #     )
-    #
-    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    def test_create_valid(self):
+        payload = {
+            "name": "test_one",
+            "url": "http://localhost:8010/",
+            "title": "test_one",
+            "description": "test_one",
+        }
+        response = self.client.post(
+            "/api/v1/slider/", json.dumps(payload), content_type="application/json"
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_create_invalid(self):
         payload = {
