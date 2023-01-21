@@ -12,6 +12,8 @@ ONE_MONTH = ONE_DAY * 30
 ONE_YEAR = ONE_DAY * 365
 
 SESSION = "session"
+USER = "user"
+CLEAR_SESSIONS_FOR_NONE_USERS_TASK = "clear_sessions_for_none_users_task"
 
 
 def set(key: str, data, duration: int, *args, **kwargs) -> None:

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from datetime import timedelta
 
 from backend.core import caches
@@ -40,7 +41,7 @@ class ClearAllUserSessions(GenericAPIView):
             return Response("Forbidden", status=status.HTTP_403_FORBIDDEN)
 
         user = get_object_or_404(UserAccount, email=self.request.user)
-        UserAccount.remove_all_sessions(user)
+        UserAccount.remove_all_sessions(user, request)
 
         return Response("Success", status=status.HTTP_200_OK)
 
@@ -61,13 +62,16 @@ class ActiveUserViewSet(ViewSet):
     @action(detail=False, methods=["get"])
     def active_users_count(self, request):
         active_users = 0
-        for key in cache.keys(caches.SESSION + "*"):
-            cache_session = caches.get(key)
-            if cache_session.get("last_activity") and cache_session.get("user"):
-                user = cache_session.get("user")
-                last_activity = cache_session.get("last_activity")
-                if (
-                    now() - last_activity < timedelta(minutes=5)
-                ) and user.is_authenticated:
-                    active_users += 1
+        for key in cache.keys(caches.USER + "_*"):
+            if key.split("_")[1] != "NONE":
+                cache_session = caches.get(key)
+                if cache_session.get("last_activity") and cache_session.get("user"):
+                    user_serialized = json.loads(cache_session.get("user"))
+                    user_pk = user_serialized[0]["pk"]
+                    user = get_object_or_404(User, pk=user_pk)
+                    last_activity = cache_session.get("last_activity")
+                    if (
+                        now() - last_activity < timedelta(minutes=5)
+                    ) and user.is_authenticated:
+                        active_users += 1
         return Response({"active_users": active_users})

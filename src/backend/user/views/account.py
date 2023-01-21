@@ -11,6 +11,7 @@ from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 User = get_user_model()
@@ -64,3 +65,12 @@ class UserAccountViewSet(ModelViewSet):
         user = get_object_or_404(User, id=pk)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class UserAccountSessionView(APIView):
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs) -> Response:
+        serializer = UserAccountSerializer(request.user)
+        return Response(serializer.data)

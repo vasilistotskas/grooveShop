@@ -4,6 +4,7 @@ import os
 from typing import Any
 from typing import List
 
+from backend.core import caches
 from backend.core.models import TimeStampMixinModel
 from backend.core.models import UUIDModel
 from backend.user.enum.address import FloorChoicesEnum
@@ -13,7 +14,9 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.sessions.models import Session
+from django.core.cache import cache
 from django.db import models
+from django.http import HttpRequest
 from django.utils.safestring import mark_safe
 
 User = settings.AUTH_USER_MODEL
@@ -89,12 +92,20 @@ class UserAccount(AbstractBaseUser, PermissionsMixin, UUIDModel, TimeStampMixinM
     def __str__(self):
         return self.email
 
-    def remove_all_sessions(self) -> None:
+    def remove_all_sessions(self, request: HttpRequest) -> None:
+        # Session DB
         user_sessions: List[Any] = []
         for session in Session.objects.all():
             if str(self.pk) == session.get_decoded().get("_auth_user_id"):
                 user_sessions.append(session.pk)
-        return Session.objects.filter(pk__in=user_sessions).delete()
+        Session.objects.filter(pk__in=user_sessions).delete()
+
+        # Session Cache
+        user_cache_keys = cache.keys(f"{caches.USER}_*{self.pk}_*")
+        for key in user_cache_keys:
+            caches.delete(key)
+
+        return None
 
     @property
     def get_user_account_image_url(self) -> str:

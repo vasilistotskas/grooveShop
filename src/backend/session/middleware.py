@@ -2,6 +2,7 @@ import logging
 
 from backend.cart.service import CartService
 from backend.core import caches
+from django.core.serializers import serialize
 from django.utils.timezone import now
 
 logger = logging.getLogger(__name__)
@@ -13,14 +14,20 @@ class SessionTraceMiddleware:
 
     def __call__(self, request):
         response = self.get_response(request)
+
+        user = None
+        json_user = None
+
         if hasattr(request, "user") and request.user.is_authenticated:
-            request.session["user"] = request.user
+            json_user = serialize(
+                "json",
+                [
+                    request.user,
+                ],
+            )
+            request.session["user"] = json_user
         else:
             request.session["user"] = None
-
-        has_key = request.session.get("cached_session_key", None)
-        if has_key is None:
-            request.session["cached_session_key"] = request.session.session_key
 
         if hasattr(request, "session") and not hasattr(
             request.session, "pre_log_in_cart_id"
@@ -33,23 +40,25 @@ class SessionTraceMiddleware:
         request.session["referer"] = request.META.get("HTTP_REFERER", None)
         request.session.save()
 
-        try:
-            caches.add(
-                caches.SESSION + request.session.session_key,
+        if hasattr(request, "user") and request.user.is_authenticated:
+            caches.set(
+                caches.USER + "_" + str(request.user.id),
                 {
                     "last_activity": request.session["last_activity"],
-                    "user": request.session["user"],
+                    "user": json_user,
                     "referer": request.META.get("HTTP_REFERER", None),
+                    "session_key": request.session.session_key,
                 },
                 caches.ONE_HOUR,
             )
-        except AttributeError:
+        else:
             caches.set(
-                caches.SESSION + request.session.session_key,
+                caches.USER + "_" + "NONE" + "_" + request.session.session_key,
                 {
                     "last_activity": request.session["last_activity"],
-                    "user": request.session["user"],
+                    "user": user,
                     "referer": request.META.get("HTTP_REFERER", None),
+                    "session_key": request.session.session_key,
                 },
                 caches.ONE_HOUR,
             )

@@ -1,3 +1,4 @@
+from backend.user.views.account import UserAccountSessionView
 from backend.user.views.account import UserAccountViewSet
 from backend.user.views.address import UserAddressViewSet
 from django.urls import path
@@ -18,6 +19,10 @@ urlpatterns = [
                 "delete": "destroy",
             }
         ),
+    ),
+    path(
+        "user/account/session/",
+        UserAccountSessionView.as_view(),
     ),
     # Address
     path(

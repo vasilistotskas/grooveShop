@@ -130,6 +130,8 @@ THIRD_PARTY_APPS = [
     "django_otp.plugins.otp_static",
     # Enable two-factor auth.
     "allauth_2fa",
+    "django_celery_beat",
+    "django_celery_results",
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
@@ -284,7 +286,17 @@ CACHES = {
 
 # Celery
 CELERY_BROKER_URL = "redis://redis:6379"
-CELERY_RESULT_BACKEND = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "django-db"
+CELERY_CACHE_BACKEND = "django-cache"
+CELERY_ENABLE_UTC = False
+CELERY_TIMEZONE = os.environ.get("TIME_ZONE")
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_EXTENDED = True
+
+# Celery Beat
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
