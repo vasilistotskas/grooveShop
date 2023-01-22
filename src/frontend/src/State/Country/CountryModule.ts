@@ -6,7 +6,8 @@ import CountryModel from '@/State/Country/CountryModel'
 import RegionsModel from '@/State/Country/RegionsModel'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import UserProfileModel from '@/State/User/Profile/UserProfileModel'
+import UserAccountModel from '@/State/User/Account/UserAccountModel'
+import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 
 @Module({
 	dynamic: true,
@@ -62,7 +63,7 @@ export default class CountryModule extends AppBaseModule {
 	async fetchCountriesFromRemote(): Promise<void> {
 		return await api
 			.get('countries/')
-			.then((response: AxiosResponse<Array<CountryModel>>) => {
+			.then((response: AxiosResponse<PaginatedModel<CountryModel>>) => {
 				const data = response.data
 				this.context.commit('setCountries', data)
 			})
@@ -73,12 +74,12 @@ export default class CountryModule extends AppBaseModule {
 
 	@Action
 	async findRegionsBasedOnAlphaForLoggedCustomer(
-		UserProfileModel: UserProfileModel
+		UserAccountModel: UserAccountModel
 	): Promise<void> {
-		if (UserProfileModel.country) {
+		if (UserAccountModel.country) {
 			const countries = this.context.getters['getCountries']
 			const result = countries.find((country: CountryModel) => {
-				return country.alpha_2 === UserProfileModel.country
+				return country.alpha_2 === UserAccountModel.country
 			})
 			if (result) {
 				await this.context.commit('setSelectedCountry', result)

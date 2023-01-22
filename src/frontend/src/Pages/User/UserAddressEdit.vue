@@ -262,7 +262,7 @@ import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import { toFormValidator } from '@vee-validate/zod'
 import { ZodAddress } from '@/Zod/Address/ZodAddress'
-import UserModule from '@/State/User/Profile/UserModule'
+import UserModule from '@/State/User/Account/UserModule'
 import CountryModule from '@/State/Country/CountryModule'
 import AddressModule from '@/State/Address/AddressModule'
 import { FieldContext, useField, useForm } from 'vee-validate'
@@ -292,8 +292,8 @@ export default class UserAddressEdit extends Vue {
 
 		const meta = useMeta(
 			computed(() => ({
-				title: `${userModule.getUserProfile?.first_name} ${userModule.getUserProfile?.last_name} | Address Edit`,
-				description: `${userModule.getUserProfile?.first_name} ${userModule.getUserProfile?.last_name} | Address Edit`
+				title: `${userModule.getUserAccount?.first_name} ${userModule.getUserAccount?.last_name} | Address Edit`,
+				description: `${userModule.getUserAccount?.first_name} ${userModule.getUserAccount?.last_name} | Address Edit`
 			}))
 		)
 
@@ -360,7 +360,7 @@ export default class UserAddressEdit extends Vue {
 					phone: phone.value,
 					mobile_phone: mobile_phone.value,
 					notes: notes.value,
-					user: userModule.getUserProfile?.id,
+					user: userModule.getUserAccount?.id,
 					country: country.value,
 					region: region.value,
 					is_main: false

@@ -1,7 +1,7 @@
 import EntityBase from '@/State/Common/EntityBase'
 import BlogPostModel from '@/State/Blog/BlogPostModel'
-import UserModelGql from '@/State/User/Profile/UserModelGql'
-import UserProfileModelGql from '@/State/User/Profile/UserProfileModelGql'
+import UserModelGql from '@/State/User/Account/UserModelGql'
+import UserAccountModelGql from '@/State/User/Account/UserAccountModelGql'
 
 export default class BlogCommentModel extends EntityBase {
 	id!: number
@@ -9,7 +9,7 @@ export default class BlogCommentModel extends EntityBase {
 	createdAt!: string
 	isApproved!: boolean
 	user!: UserModelGql
-	userProfile!: UserProfileModelGql
+	userAccount!: UserAccountModelGql
 	post!: BlogPostModel
 	numberOfLikes!: number
 

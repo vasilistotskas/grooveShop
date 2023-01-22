@@ -11,7 +11,6 @@ class UserAccountSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
             "phone",
-            "email",
             "city",
             "zipcode",
             "address",
@@ -20,4 +19,6 @@ class UserAccountSerializer(serializers.ModelSerializer):
             "region",
             "is_active",
             "is_staff",
+            "main_image_absolute_url",
+            "main_image_filename",
         ]

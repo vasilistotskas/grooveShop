@@ -1,3 +1,3 @@
 export type UserAccountEvents = {
-	updateUserProfile: FormData
+	updateUserAccount: FormData
 }

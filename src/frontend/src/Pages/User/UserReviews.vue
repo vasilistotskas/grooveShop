@@ -10,10 +10,10 @@
 					:key="review.id"
 					:class="{
 						'current-user-review-card':
-							review.userprofile.id === userModule.getUserProfile.id
+							review.useraccount.id === userModule.getUserAccount.id
 					}"
 					:review="review"
-					:user-id="userModule.getUserProfile.id"
+					:user-id="userModule.getUserAccount.id"
 					class="product-review-main-card"
 				/>
 			</div>
@@ -36,7 +36,7 @@
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
-import UserModule from '@/State/User/Profile/UserModule'
+import UserModule from '@/State/User/Account/UserModule'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import Pagination from '@/Components/Pagination/Pagination.vue'
 import { Options as Component, setup } from 'vue-class-component'
@@ -68,8 +68,8 @@ export default class UserReviews
 	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
-				title: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Reviews`,
-				description: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Reviews`
+				title: `${this.userModule.getUserAccount?.first_name} ${this.userModule.getUserAccount?.last_name} | Reviews`,
+				description: `${this.userModule.getUserAccount?.first_name} ${this.userModule.getUserAccount?.last_name} | Reviews`
 			}))
 		)
 		return {
@@ -113,7 +113,7 @@ export default class UserReviews
 	}
 
 	public buildEndPointUrlForPaginatedResults(): string {
-		const userId = this.userModule.getUserProfile.id
+		const userId = this.userModule.getUserAccount.id
 		return `reviews/user/${userId}`
 	}
 }

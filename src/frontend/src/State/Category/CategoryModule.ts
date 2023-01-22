@@ -5,6 +5,7 @@ import { AxiosResponse } from 'axios'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import CategoryModel from '@/State/Category/CategoryModel'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
+import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 
 @Module({
 	dynamic: true,
@@ -15,14 +16,14 @@ import { Action, Module, Mutation } from 'vuex-module-decorators'
 })
 export default class CategoryModule extends AppBaseModule {
 	category!: CategoryModel
-	categoriesTree: Array<CategoryModel> = []
+	categories: Array<CategoryModel> = []
 
 	get getCategory(): CategoryModel {
 		return this.category
 	}
 
-	get getCategoriesTree(): Array<CategoryModel> {
-		return this.categoriesTree
+	get getCategories(): Array<CategoryModel> {
+		return this.categories
 	}
 
 	@Mutation
@@ -31,18 +32,18 @@ export default class CategoryModule extends AppBaseModule {
 	}
 
 	@Mutation
-	setCategoriesTree(categories: Array<CategoryModel>): void {
-		this.categoriesTree = categories
+	setCategories(categories: Array<CategoryModel>): void {
+		this.categories = categories
 	}
 
 	@Action
-	async fetchCategoriesTreeFromRemote(): Promise<void> {
+	async fetchCategoriesFromRemote(): Promise<void> {
 		return await api
-			.get('categories/categoriesTree/')
-			.then((response: AxiosResponse<Array<CategoryModel>>) => {
+			.get('product/category/')
+			.then((response: AxiosResponse<PaginatedModel<CategoryModel>>) => {
 				const data = response.data
-				const categories = map(data, (rawCategory) => new CategoryModel(rawCategory))
-				this.context.commit('setCategoriesTree', categories)
+				const categories = data.results
+				this.context.commit('setCategories', categories)
 			})
 			.catch((e: Error) => {
 				console.log(e)
@@ -50,11 +51,11 @@ export default class CategoryModule extends AppBaseModule {
 	}
 
 	@Action
-	async fetchCategoryFromRemote(categorySlug: CategoryModel['slug']): Promise<void> {
+	async fetchCategoryFromRemote(categorySlug: string): Promise<void> {
 		return await api
-			.get(`categories/${categorySlug}/`)
-			.then((response: AxiosResponse<Array<CategoryModel>>) => {
-				const data = response.data[0]
+			.get(`category/${categorySlug}/`)
+			.then((response: AxiosResponse<CategoryModel>) => {
+				const data = response.data
 				this.context.commit('setCategory', data)
 			})
 			.catch((e: Error) => {

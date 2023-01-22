@@ -4,6 +4,7 @@ import { AxiosResponse } from 'axios'
 import SliderModel from '@/State/Slider/SliderModel'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import { Module, Action, Mutation } from 'vuex-module-decorators'
+import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 
 @Module({
 	dynamic: true,
@@ -27,8 +28,8 @@ export default class SliderModule extends AppBaseModule {
 	@Action
 	async fetchSlidersFromRemote(): Promise<void> {
 		return await api
-			.get('sliders/all/')
-			.then((response: AxiosResponse<SliderModel>) => {
+			.get('slider/')
+			.then((response: AxiosResponse<PaginatedModel<SliderModel>>) => {
 				const data = response.data
 				this.context.commit('setSliders', data)
 			})

@@ -29,15 +29,15 @@
 
 				<div
 					v-if="
-						categoryModule.getCategoriesTree &&
-						categoryModule.getCategoriesTree.length > 0
+						categoryModule.getCategories &&
+						categoryModule.getCategories.length > 0
 					"
-					:class="{ wrapper: categoryModule.getCategoriesTree.length === 0 }"
+					:class="{ wrapper: categoryModule.getCategories.length === 0 }"
 					class="navbar-categories-loading"
 				>
 					<div
 						:class="{
-							'content wrapper-cell': categoryModule.getCategoriesTree.length === 0
+							'content wrapper-cell': categoryModule.getCategories.length === 0
 						}"
 						class="products-header"
 						@click="menuToggle"
@@ -161,11 +161,11 @@
 			<transition name="fade">
 				<NavbarCategories
 					v-if="
-						categoryModule.getCategoriesTree &&
-						categoryModule.getCategoriesTree.length > 0 &&
+						categoryModule.getCategories &&
+						categoryModule.getCategories.length > 0 &&
 						!appModule.getNavbarMenuHidden
 					"
-					:categories-tree="categoryModule.getCategoriesTree"
+					:categories-tree="categoryModule.getCategories"
 					:main-toggle-button="$refs.mainToggleButton"
 					:navbar-products-button="$refs.navbarProductsButton"
 				/>

@@ -175,7 +175,7 @@ export default class LogIn extends mixins(AuthCore) {
 				await this.authModule
 					.login(apiData)
 					.then(() => {
-						this.userModule.fetchUserProfileFromRemote()
+						this.userModule.fetchUserAccountFromRemote()
 					})
 					.catch((error: Error) => {
 						console.log(error)

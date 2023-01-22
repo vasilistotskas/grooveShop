@@ -102,7 +102,7 @@
 							:dispatch-type="'toggleFavourite'"
 							:dispatch-params="{
 								productId: product.id,
-								userId: userModule.getUserProfile?.id
+								userId: userModule.getUserAccount?.id
 							}"
 							:use-store="true"
 						/>
@@ -125,7 +125,7 @@
 	<ProductReviews
 		v-if="product?.id"
 		:product="product"
-		:user-id="userModule.getUserProfile?.id"
+		:user-id="userModule.getUserAccount?.id"
 		:user-to-product-review="productReviewModule.getUserToProductReview"
 		:product-reviews-average="productReviewModule.getProductReviewsAverage"
 		:product-reviews-counter="productReviewModule.getProductReviewsCounter"
@@ -145,7 +145,7 @@ import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
 import GrooveImage from '@/Utilities/GrooveImage.vue'
 import ProductModel from '@/State/Product/ProductModel'
-import UserModule from '@/State/User/Profile/UserModule'
+import UserModule from '@/State/User/Account/UserModule'
 import ProductModule from '@/State/Product/ProductModule'
 import { ProductEvents } from '@/Emitter/Type/Product/Events'
 import FavouriteButton from '@/Utilities/FavouriteButton.vue'
@@ -230,7 +230,7 @@ export default class Product extends Vue {
 			this.productModule.updateProductHits()
 			this.productReviewModule.fetchUserToProductReviewFromRemote({
 				productId: this.productModule.getProductData.id,
-				userId: this.userModule.getUserProfile?.id
+				userId: this.userModule.getUserAccount?.id
 			})
 		})
 		this.emitter?.on('toggleReview', (e) => {
@@ -238,7 +238,7 @@ export default class Product extends Vue {
 				FormData: e,
 				IsAuthenticated: this.authModule.isAuthenticated,
 				productId: this.productModule.getProductData.id,
-				userId: this.userModule.getUserProfile?.id
+				userId: this.userModule.getUserAccount?.id
 			})
 		})
 	}

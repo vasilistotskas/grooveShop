@@ -1,4 +1,4 @@
-export default interface UserProfileApiData {
+export default interface UserAccountApiData {
 	user_id: number
 	first_name: string
 	last_name: string

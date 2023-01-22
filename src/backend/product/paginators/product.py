@@ -1,5 +1,5 @@
-from backend.helpers.paginator import CountPaginator
+from backend.helpers.paginator import LimitOffsetPaginator
 
 
-class ProductPagination(CountPaginator):
+class ProductPagination(LimitOffsetPaginator):
     page_size = 16

@@ -1,6 +1,6 @@
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
-import UserModule from '@/State/User/Profile/UserModule'
+import UserModule from '@/State/User/Account/UserModule'
 import { Options as Component, Vue } from 'vue-class-component'
 
 @Component({

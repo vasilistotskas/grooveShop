@@ -11,7 +11,7 @@ import BlogAuthorModel from '@/State/Blog/BlogAuthorModel'
 import BlogCommentModel from '@/State/Blog/BlogCommentModel'
 import BlogCategoryModel from '@/State/Blog/BlogCategoryModel'
 import { Action, Module, Mutation } from 'vuex-module-decorators'
-import UserProfileModelGql from '@/State/User/Profile/UserProfileModelGql'
+import UserAccountModelGql from '@/State/User/Account/UserAccountModelGql'
 
 @Module({
 	dynamic: true,
@@ -396,14 +396,14 @@ export default class BlogModule extends AppBaseModule {
 	}
 
 	@Action
-	async fetchUserProfileByUserId(
+	async fetchUserAccountByUserId(
 		userId: number
-	): Promise<UserProfileModelGql | undefined> {
+	): Promise<UserAccountModelGql | undefined> {
 		try {
-			const userProfile = await clientApollo.query({
+			const userAccount = await clientApollo.query({
 				query: gql`
 					query ($userId: Int!) {
-						userProfileByUserId(userId: $userId) {
+						userAccountByUserId(userId: $userId) {
 							mainImageAbsoluteUrl
 							mainImageFilename
 						}
@@ -413,7 +413,7 @@ export default class BlogModule extends AppBaseModule {
 					userId: userId
 				}
 			})
-			return userProfile.data.userProfileByUserId
+			return userAccount.data.userAccountByUserId
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
@@ -528,49 +528,49 @@ export default class BlogModule extends AppBaseModule {
 
 			const fetchedComments = comments.data.commentsByPost
 
-			const commentsMergedWithUserProfile: Array<BlogCommentModel> =
-				await this.context.dispatch('getCommentsMergedWithUserProfile', fetchedComments)
+			const commentsMergedWithUserAccount: Array<BlogCommentModel> =
+				await this.context.dispatch('getCommentsMergedWithUserAccount', fetchedComments)
 
-			this.context.commit('setCommentsByPost', commentsMergedWithUserProfile)
+			this.context.commit('setCommentsByPost', commentsMergedWithUserAccount)
 
-			return commentsMergedWithUserProfile
+			return commentsMergedWithUserAccount
 		} catch (error) {
 			console.log(JSON.stringify(error, null, 2))
 		}
 	}
 
 	@Action
-	async getCommentsMergedWithUserProfile(
+	async getCommentsMergedWithUserAccount(
 		fetchedComments: Array<BlogCommentModel>
 	): Promise<Array<BlogCommentModel>> {
-		const commentsMergedWithUserProfile: Array<BlogCommentModel> = []
+		const commentsMergedWithUserAccount: Array<BlogCommentModel> = []
 
 		for (const comment of fetchedComments) {
-			const userProfile = {
-				userProfile: await this.context.dispatch(
-					'fetchUserProfileByUserId',
+			const userAccount = {
+				userAccount: await this.context.dispatch(
+					'fetchUserAccountByUserId',
 					Number(comment.user.id)
 				)
 			}
 
-			const dataMerged = { ...comment, ...userProfile }
-			commentsMergedWithUserProfile.push(dataMerged)
+			const dataMerged = { ...comment, ...userAccount }
+			commentsMergedWithUserAccount.push(dataMerged)
 		}
 
-		return commentsMergedWithUserProfile
+		return commentsMergedWithUserAccount
 	}
 
 	@Action
-	async getCommentMergedWithUserProfile(
+	async getCommentMergedWithUserAccount(
 		commentData: BlogCommentModel
 	): Promise<BlogCommentModel> {
-		const userProfile = {
-			userProfile: await this.context.dispatch(
-				'fetchUserProfileByUserId',
+		const userAccount = {
+			userAccount: await this.context.dispatch(
+				'fetchUserAccountByUserId',
 				Number(commentData.user.id)
 			)
 		}
-		return { ...commentData, ...userProfile }
+		return { ...commentData, ...userAccount }
 	}
 
 	@Action
@@ -594,7 +594,7 @@ export default class BlogModule extends AppBaseModule {
 			const commentData = comment.data.commentByUserToPost
 
 			const dataMerged = await this.context.dispatch(
-				'getCommentMergedWithUserProfile',
+				'getCommentMergedWithUserAccount',
 				commentData
 			)
 
@@ -651,7 +651,7 @@ export default class BlogModule extends AppBaseModule {
 			const commentData = comment.data.createComment
 
 			const dataMerged = await this.context.dispatch(
-				'getCommentMergedWithUserProfile',
+				'getCommentMergedWithUserAccount',
 				commentData
 			)
 
@@ -704,7 +704,7 @@ export default class BlogModule extends AppBaseModule {
 			const commentData = comment.data.updateComment.comment
 
 			const dataMerged = await this.context.dispatch(
-				'getCommentMergedWithUserProfile',
+				'getCommentMergedWithUserAccount',
 				commentData
 			)
 

@@ -8,7 +8,7 @@ class CartItemSerializer(serializers.ModelSerializer):
     cart = serializers.SerializerMethodField("get_cart_id")
 
     @extend_schema_field(serializers.IntegerField)
-    def get_cart_id(self, obj):
+    def get_cart_id(self) -> int:
         cart = self.context.get("cart")
         return cart.id
 
@@ -38,7 +38,7 @@ class CartSerializer(serializers.ModelSerializer):
     cart_items = serializers.SerializerMethodField("get_cart_items")
 
     @extend_schema_field(serializers.ListSerializer(child=CartItemSerializer()))
-    def get_cart_items(self, cart):
+    def get_cart_items(self, cart: Cart) -> CartItemSerializer:
         qs = CartItem.objects.filter(cart=cart)
         serializer = CartItemSerializer(qs, many=True, context=self.context)
         return serializer.data

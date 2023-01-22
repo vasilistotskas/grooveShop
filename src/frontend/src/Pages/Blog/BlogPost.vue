@@ -46,11 +46,11 @@
 					:model="blogModule.getPostBySlug"
 					:module="blogModule"
 					:getter-type="'getIsCurrentPostInUserFavourites'"
-					:getter-params="{ userEmail: userModule.getUserProfile.email }"
+					:getter-params="{ userEmail: userModule.getUserAccount.email }"
 					:dispatch-type="'toggleFavourite'"
 					:dispatch-params="{
 						postId: blogModule.getPostBySlug.id,
-						userId: userModule.getUserProfile.id
+						userId: userModule.getUserAccount.id
 					}"
 					:use-store="true"
 				/>
@@ -65,7 +65,7 @@
 	<BlogComments
 		v-if="blogModule.getPostBySlug && Object.keys(blogModule.getPostBySlug).length > 0"
 		:post="blogModule.getPostBySlug"
-		:user-id="userModule.getUserProfile.id"
+		:user-id="userModule.getUserAccount.id"
 		:blog-post-comments="blogModule.getCommentsByPost"
 		:comment-by-user-to-post="blogModule.getCommentByUserToPost"
 		:is-authenticated="authModule.isAuthenticated"
@@ -82,7 +82,7 @@ import BlogModule from '@/State/Blog/BlogModule'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
 import GrooveImage from '@/Utilities/GrooveImage.vue'
-import UserModule from '@/State/User/Profile/UserModule'
+import UserModule from '@/State/User/Account/UserModule'
 import DateTimeFormatOptions = Intl.DateTimeFormatOptions
 import { BlogPostEvents } from '@/Emitter/Type/Blog/Events'
 import BlogComment from '@/Components/Blog/BlogComment.vue'
@@ -138,19 +138,19 @@ export default class BlogPost extends Vue {
 		this.blogModule.fetchPostBySlugFromRemote()
 		this.blogModule.fetchCommentsByPost()
 		if (this.authModule.isAuthenticated) {
-			this.blogModule.fetchCommentByUserToPost(this.userModule.getUserProfile.email)
+			this.blogModule.fetchCommentByUserToPost(this.userModule.getUserAccount.email)
 		}
 
 		this.emitter?.on('updateCommentToPost', (e) => this.blogModule.updateCommentToPost(e))
 		this.emitter?.on('createCommentToPost', (e) => {
 			const payload = {
 				content: e.content,
-				userEmail: this.userModule.getUserProfile.email
+				userEmail: this.userModule.getUserAccount.email
 			}
 			return this.blogModule.createCommentToPost(payload)
 		})
 		this.emitter?.on('fetchCommentByUserToPost', () =>
-			this.blogModule.fetchCommentByUserToPost(this.userModule.getUserProfile.email)
+			this.blogModule.fetchCommentByUserToPost(this.userModule.getUserAccount.email)
 		)
 		this.emitter?.on('deleteCommentFromPost', () =>
 			this.blogModule.deleteCommentFromPost()

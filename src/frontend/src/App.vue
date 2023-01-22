@@ -57,7 +57,7 @@ export default class App extends Vue {
 		const sliderModule = getModule(SliderModule)
 
 		Promise.all([
-			categoryModule.fetchCategoriesTreeFromRemote(),
+			categoryModule.fetchCategoriesFromRemote(),
 			productModule.fetchLatestProductsFromRemote(),
 			sliderModule.fetchSlidersFromRemote()
 		])

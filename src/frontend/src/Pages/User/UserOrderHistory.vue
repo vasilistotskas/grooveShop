@@ -29,7 +29,7 @@
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
-import UserModule from '@/State/User/Profile/UserModule'
+import UserModule from '@/State/User/Account/UserModule'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import UserOrderModel from '@/State/User/Order/UserOrderModel'
 import Pagination from '@/Components/Pagination/Pagination.vue'
@@ -62,8 +62,8 @@ export default class UserOrderHistory
 	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
-				title: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Order History`,
-				description: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Order History`
+				title: `${this.userModule.getUserAccount?.first_name} ${this.userModule.getUserAccount?.last_name} | Order History`,
+				description: `${this.userModule.getUserAccount?.first_name} ${this.userModule.getUserAccount?.last_name} | Order History`
 			}))
 		)
 		return {

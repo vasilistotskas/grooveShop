@@ -1,6 +1,6 @@
 import EntityBase from '@/State/Common/EntityBase'
 
-export default class UserProfileModel extends EntityBase {
+export default class UserAccountModel extends EntityBase {
 	id!: number
 	user!: number
 	address!: string | null
@@ -11,13 +11,13 @@ export default class UserProfileModel extends EntityBase {
 	last_name!: string | null
 	main_image_absolute_url!: string
 	main_image_filename!: string
-	get_user_profile_image_url!: string
+	main_image_url!: string
 	phone!: number | null
 	place!: string | null
 	region!: string | null
 	zipcode!: string | null
 
-	constructor(data?: Partial<UserProfileModel>) {
+	constructor(data?: Partial<UserAccountModel>) {
 		super(data)
 	}
 }

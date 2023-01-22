@@ -270,14 +270,14 @@ import CartItemModel from '@/State/Cart/CartItemModel'
 import PayWayModule from '@/State/Payway/PayWayModule'
 import CountryModel from '@/State/Country/CountryModel'
 import RegionsModel from '@/State/Country/RegionsModel'
-import UserModule from '@/State/User/Profile/UserModule'
+import UserModule from '@/State/User/Account/UserModule'
 import { ZodCheckout } from '@/Zod/Checkout/ZodCheckout'
 import CountryModule from '@/State/Country/CountryModule'
 import { PayWaysEnum } from '@/State/Payway/Enum/PayWaysEnum'
 import { StripeElement, StripeElements } from 'vue-stripe-js'
 import { FieldContext, useField, useForm } from 'vee-validate'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
-import UserProfileModel from '@/State/User/Profile/UserProfileModel'
+import UserAccountModel from '@/State/User/Account/UserAccountModel'
 import { HTMLElementEvent } from '@/State/Common/Types/HelpingTypes'
 import CheckoutStripeModal from '@/Utilities/CheckoutStripeModal.vue'
 import CartItemCheckoutModel from '@/State/Cart/CartItemCheckoutModel'
@@ -347,7 +347,7 @@ export default class Checkout extends Vue {
 		])
 
 		if (isAuthenticated.value) {
-			countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserProfile)
+			countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserAccount)
 		}
 
 		const availableCountries: ComputedRef<Array<CountryModel>> = computed(
@@ -367,11 +367,11 @@ export default class Checkout extends Vue {
 			() => cartModule.getCartTotalPriceForPayWay
 		)
 		const stripeResultToken = computed(() => stripeCardModule.getResultToken)
-		const userData: ComputedRef<UserProfileModel> = computed(() =>
-			isAuthenticated.value ? userModule.getUserProfile : new UserProfileModel()
+		const userData: ComputedRef<UserAccountModel> = computed(() =>
+			isAuthenticated.value ? userModule.getUserAccount : new UserAccountModel()
 		)
 
-		let customerDetailsData = new UserProfileModel({
+		let customerDetailsData = new UserAccountModel({
 			address: '',
 			city: '',
 			email: '',

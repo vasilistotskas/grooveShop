@@ -174,12 +174,12 @@ import { getModule } from 'vuex-module-decorators'
 import { toFormValidator } from '@vee-validate/zod'
 import { ZodUserSettings } from '@/Zod/User/ZodUser'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
-import UserModule from '@/State/User/Profile/UserModule'
+import UserModule from '@/State/User/Account/UserModule'
 import CountryModule from '@/State/Country/CountryModule'
 import { FieldContext, useField, useForm } from 'vee-validate'
 import { HTMLElementEvent } from '@/State/Common/Types/HelpingTypes'
 import { Options as Component, setup, Vue } from 'vue-class-component'
-import UserProfileApiData from '@/State/User/Interface/UserProfileApiData'
+import UserAccountApiData from '@/State/User/Interface/UserAccountApiData'
 
 @Component({
 	name: 'UserSettings'
@@ -194,9 +194,9 @@ export default class UserSettings extends Vue {
 		const userModule = getModule(UserModule)
 
 		countryModule.fetchCountriesFromRemote()
-		countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserProfile)
+		countryModule.findRegionsBasedOnAlphaForLoggedCustomer(userModule.getUserAccount)
 
-		const userData = userModule.getUserProfile
+		const userData = userModule.getUserAccount
 
 		const meta = useMeta(
 			computed(() => ({
@@ -237,7 +237,7 @@ export default class UserSettings extends Vue {
 
 		const onSubmit = handleSubmit(async () => {
 			try {
-				const apiData: UserProfileApiData = {
+				const apiData: UserAccountApiData = {
 					user_id: userData.id,
 					first_name: first_name.value,
 					last_name: last_name.value,
@@ -250,7 +250,7 @@ export default class UserSettings extends Vue {
 					region: region.value
 				}
 
-				await userModule.updateUserProfile(apiData)
+				await userModule.updateUserAccount(apiData)
 			} catch (e) {
 				console.log(e)
 			}

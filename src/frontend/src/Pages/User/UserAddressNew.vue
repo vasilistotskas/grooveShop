@@ -262,7 +262,7 @@ import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import { toFormValidator } from '@vee-validate/zod'
 import { ZodAddress } from '@/Zod/Address/ZodAddress'
-import UserModule from '@/State/User/Profile/UserModule'
+import UserModule from '@/State/User/Account/UserModule'
 import CountryModule from '@/State/Country/CountryModule'
 import AddressModule from '@/State/Address/AddressModule'
 import { FieldContext, useField, useForm } from 'vee-validate'
@@ -286,8 +286,8 @@ export default class UserAddressNew extends Vue {
 
 		const meta = useMeta(
 			computed(() => ({
-				title: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Address New`,
-				description: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Address New`
+				title: `${this.userModule.getUserAccount?.first_name} ${this.userModule.getUserAccount?.last_name} | Address New`,
+				description: `${this.userModule.getUserAccount?.first_name} ${this.userModule.getUserAccount?.last_name} | Address New`
 			}))
 		)
 		const validationSchema = toFormValidator(ZodAddress)
@@ -342,7 +342,7 @@ export default class UserAddressNew extends Vue {
 					phone: phone.value,
 					mobile_phone: mobile_phone.value,
 					notes: notes.value,
-					user: this.userModule.getUserProfile?.id,
+					user: this.userModule.getUserAccount?.id,
 					country: country.value,
 					region: region.value,
 					is_main: false

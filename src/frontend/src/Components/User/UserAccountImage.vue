@@ -67,7 +67,7 @@ import { Options as Component, Vue } from 'vue-class-component'
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
 
 @Component({
-	name: 'UserProfileImage',
+	name: 'UserAccountImage',
 	components: {
 		GrooveImage
 	},
@@ -82,7 +82,7 @@ import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera'
 		}
 	}
 })
-export default class UserProfileImage extends Vue {
+export default class UserAccountImage extends Vue {
 	src = ''
 	fullname = ''
 	profileImageHovering = false
@@ -97,11 +97,11 @@ export default class UserProfileImage extends Vue {
 	updateUserImage(): void {
 		const formEl = document.getElementById('uploadImageForm') as HTMLFormElement
 		const data = new FormData(formEl)
-		this.emitter?.emit('updateUserProfile', data)
+		this.emitter?.emit('updateUserAccount', data)
 	}
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/Assets/Styles/Components/User/UserProfileImage.scss';
+@import '@/Assets/Styles/Components/User/UserAccountImage.scss';
 </style>

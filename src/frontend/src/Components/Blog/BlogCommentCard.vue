@@ -135,7 +135,7 @@ export default class BlogCommentCard extends Vue {
 			) || comment.post.mainImageFilename
 
 		if (router.currentRoute.value.name === MainRouteNames.POST) {
-			return 'url(' + comment.userProfile.mainImageAbsoluteUrl + ')'
+			return 'url(' + comment.userAccount.mainImageAbsoluteUrl + ')'
 		}
 
 		if (router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT_BLOG_COMMENTS) {

@@ -67,7 +67,7 @@ import { ImageTypeOptions } from '@/Helpers/MediaStream/ImageUrlEnum'
 		GrooveImage
 	},
 	props: {
-		categoriesTree: Array as PropType<Array<CategoryModel>>,
+		categories: Array as PropType<Array<CategoryModel>>,
 		mainToggleButton: HTMLElement,
 		navbarProductsButton: HTMLElement
 	}
@@ -78,14 +78,12 @@ export default class NavbarCategories extends Vue {
 	}
 	appModule = getModule(AppModule)
 	categoryBoxHovered: null | number = null
-	categoriesTree: Array<CategoryModel> = []
 	categories: Array<CategoryModel> = []
 	mainToggleButton!: HTMLElement
 	navbarProductsButton!: HTMLElement
 	ImageTypeOptions = ImageTypeOptions
 
 	mounted(): void {
-		this.categories = cloneDeep(this.categoriesTree)
 		onClickOutside(this.$refs.headerNavbarMenu, (e) => {
 			if (!e.composedPath().includes(this.navbarProductsButton)) {
 				this.menuOpenHandle()

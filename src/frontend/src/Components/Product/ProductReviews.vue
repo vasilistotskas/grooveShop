@@ -54,7 +54,7 @@
 						v-for="review in allPaginatedResults"
 						:key="review.id"
 						:review="review"
-						:class="{ 'current-user-review-card': review.userprofile.id === userId }"
+						:class="{ 'current-user-review-card': review.useraccount.id === userId }"
 						:route="PaginationRoutesEnum.REVIEWS"
 						:user-id="userId"
 						:product-review-module-namespace="productReviewModuleNamespace"

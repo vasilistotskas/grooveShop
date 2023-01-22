@@ -80,7 +80,7 @@ import { getModule } from 'vuex-module-decorators'
 import { toFormValidator } from '@vee-validate/zod'
 import { ZodUserPassword } from '@/Zod/User/ZodUser'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
-import UserModule from '@/State/User/Profile/UserModule'
+import UserModule from '@/State/User/Account/UserModule'
 import CountryModule from '@/State/Country/CountryModule'
 import { FieldContext, useField, useForm } from 'vee-validate'
 import PasswordModule from '@/State/Auth/Password/PasswordModule'
@@ -104,8 +104,8 @@ export default class UserPassword extends Vue {
 	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
-				title: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Password`,
-				description: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Password`
+				title: `${this.userModule.getUserAccount?.first_name} ${this.userModule.getUserAccount?.last_name} | Password`,
+				description: `${this.userModule.getUserAccount?.first_name} ${this.userModule.getUserAccount?.last_name} | Password`
 			}))
 		)
 

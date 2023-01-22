@@ -4,7 +4,7 @@ from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 
-class ImagesSerializer(serializers.ModelSerializer):
+class ProductImagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImages
         fields = (
@@ -18,10 +18,10 @@ class ImagesSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField("get_product_images")
 
-    @extend_schema_field(serializers.ListSerializer(child=ImagesSerializer()))
-    def get_product_images(self, product):
+    @extend_schema_field(serializers.ListSerializer(child=ProductImagesSerializer()))
+    def get_product_images(self, product: Product) -> ProductImagesSerializer:
         qs = ProductImages.objects.filter(product=product)
-        serializer = ImagesSerializer(qs, many=True)
+        serializer = ProductImagesSerializer(qs, many=True)
         return serializer.data
 
     class Meta:

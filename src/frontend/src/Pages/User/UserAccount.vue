@@ -5,7 +5,7 @@
 	>
 		<Breadcrumbs :bread-crumb-path="breadCrumbPath" />
 		<div class="user-account-page-main-part">
-			<UserProfileImage
+			<UserAccountImage
 				v-model="profileImageFilename"
 				:fullname="fullname"
 				:src="profileImageFilename"
@@ -116,7 +116,7 @@ import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
-import UserModule from '@/State/User/Profile/UserModule'
+import UserModule from '@/State/User/Account/UserModule'
 import CountryModule from '@/State/Country/CountryModule'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
 import { UserAccountEvents } from '@/Emitter/Type/User/Events'
@@ -126,8 +126,8 @@ import { faLock } from '@fortawesome/free-solid-svg-icons/faLock'
 import Breadcrumbs from '@/Components/Breadcrumbs/Breadcrumbs.vue'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import { faTruck } from '@fortawesome/free-solid-svg-icons/faTruck'
-import UserProfileModel from '@/State/User/Profile/UserProfileModel'
-import UserProfileImage from '@/Components/User/UserProfileImage.vue'
+import UserAccountModel from '@/State/User/Account/UserAccountModel'
+import UserAccountImage from '@/Components/User/UserAccountImage.vue'
 import { Options as Component, setup, Vue } from 'vue-class-component'
 import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
 import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteModule'
@@ -135,7 +135,7 @@ import ProductFavouriteModule from '@/State/Product/Favourite/ProductFavouriteMo
 @Component({
 	name: 'UserAccount',
 	components: {
-		UserProfileImage,
+		UserAccountImage,
 		Breadcrumbs
 	}
 })
@@ -170,11 +170,11 @@ export default class UserAccount extends Vue {
 		return router.currentRoute.value.meta.breadcrumb
 	}
 
-	get userData(): UserProfileModel {
+	get userData(): UserAccountModel {
 		if (this.authModule.isAuthenticated) {
-			return this.userModule.getUserProfile
+			return this.userModule.getUserAccount
 		}
-		return new UserProfileModel()
+		return new UserAccountModel()
 	}
 
 	get fullname(): string {
@@ -195,11 +195,11 @@ export default class UserAccount extends Vue {
 	created(): void {
 		this.$watch(
 			() => this.userData,
-			(image: UserProfileModel) => {
+			(image: UserAccountModel) => {
 				this.profileImageFilename = image.main_image_filename
 			}
 		)
-		this.emitter?.on('updateUserProfile', (e) => this.userModule.updateUserProfile(e))
+		this.emitter?.on('updateUserAccount', (e) => this.userModule.updateUserAccount(e))
 	}
 
 	mounted(): void {
@@ -207,7 +207,7 @@ export default class UserAccount extends Vue {
 	}
 
 	logout(): void {
-		this.userModule.unsetUserProfile()
+		this.userModule.unsetUserAccount()
 		this.authModule.logout().then(() => {
 			this.productFavouriteModule.unsetFavourites()
 			this.productFavouriteModule.unsetUserFavourites()

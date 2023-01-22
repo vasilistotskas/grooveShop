@@ -16,7 +16,7 @@ import { isEmpty, some } from 'lodash'
 import { useToast } from 'vue-toastification'
 import { DynamicStoreType } from '@/DynamicStore'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
-import UserModule from '@/State/User/Profile/UserModule'
+import UserModule from '@/State/User/Account/UserModule'
 import { getModule, VuexModule } from 'vuex-module-decorators'
 import { Options as Component, Vue } from 'vue-class-component'
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
@@ -105,7 +105,7 @@ export default class FavouriteButton
 			return this.module[this.getterType]
 		}
 		const likes = this.model.likes
-		const userEmail = this.userModule.getUserProfile.email
+		const userEmail = this.userModule.getUserAccount.email
 
 		return some(likes, { email: userEmail })
 	}

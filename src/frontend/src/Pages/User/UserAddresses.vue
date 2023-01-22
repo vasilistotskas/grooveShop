@@ -44,7 +44,7 @@ import { useRouter } from 'vue-router'
 import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
 import { Address } from '@/Zod/Address/ZodAddress'
-import UserModule from '@/State/User/Profile/UserModule'
+import UserModule from '@/State/User/Account/UserModule'
 import { MainRouteNames } from '@/Routes/Enum/MainRouteNames'
 import AddressCard from '@/Components/Address/AddressCard.vue'
 import Pagination from '@/Components/Pagination/Pagination.vue'
@@ -87,8 +87,8 @@ export default class UserAddresses
 
 		const meta = useMeta(
 			computed(() => ({
-				title: `${userModule.getUserProfile?.first_name} ${userModule.getUserProfile?.last_name} | Addresses`,
-				description: `${userModule.getUserProfile?.first_name} ${userModule.getUserProfile?.last_name} | Addresses`
+				title: `${userModule.getUserAccount?.first_name} ${userModule.getUserAccount?.last_name} | Addresses`,
+				description: `${userModule.getUserAccount?.first_name} ${userModule.getUserAccount?.last_name} | Addresses`
 			}))
 		)
 		return {

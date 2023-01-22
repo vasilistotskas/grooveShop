@@ -51,7 +51,7 @@
 				<span> {{ review.comment }} </span>
 			</div>
 		</div>
-		<div v-if="review.userprofile.id === userId" class="user-review-product-actions">
+		<div v-if="review.useraccount.id === userId" class="user-review-product-actions">
 			<a
 				:title="`Review Settings of ${review.product.name}`"
 				class="user-review-product-settings"
@@ -77,7 +77,7 @@
 							:title="`Delete Review of ${review.product.name}`"
 							data-method="delete"
 							rel="nofollow"
-							@click="deleteReview(review.userprofile.id, review.product_id)"
+							@click="deleteReview(review.useraccount.id, review.product_id)"
 							>Delete</a
 						>
 					</div>
@@ -159,19 +159,19 @@ export default class ReviewProductCard
 	}
 
 	get reviewProductCardClass(): string {
-		return this.review.userprofile.id === this.userId ? 'current-user-review-card' : ''
+		return this.review.useraccount.id === this.userId ? 'current-user-review-card' : ''
 	}
 
 	get getReviewTitle(): string {
 		if (router.currentRoute.value.name === MainRouteNames.PRODUCT) {
 			if (
-				this.review.userprofile.first_name === null &&
-				this.review.userprofile.last_name === null
+				this.review.useraccount.first_name === null &&
+				this.review.useraccount.last_name === null
 			) {
 				return 'Anonymous'
 			}
 			const reviewUserName =
-				this.review.userprofile.first_name + ' ' + this.review.userprofile.last_name
+				this.review.useraccount.first_name + ' ' + this.review.useraccount.last_name
 
 			return `Review of ${reviewUserName}`
 		}
@@ -197,7 +197,7 @@ export default class ReviewProductCard
 			) || review.product.main_image_filename
 
 		if (router.currentRoute.value.name === MainRouteNames.PRODUCT) {
-			return 'url(' + review.userprofile.main_image_absolute_url + ')'
+			return 'url(' + review.useraccount.main_image_absolute_url + ')'
 		}
 
 		if (router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT_REVIEWS) {

@@ -1,5 +1,6 @@
 from backend.slider.models import Slide
 from backend.slider.models import Slider
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 
@@ -26,7 +27,11 @@ class SlideSerializer(serializers.ModelSerializer):
 
 
 class SliderSerializer(serializers.ModelSerializer):
-    slides = SlideSerializer(source="slide_set", many=True, read_only=True)
+    slides = serializers.SerializerMethodField("get_slides")
+
+    @extend_schema_field(serializers.ListSerializer(child=SlideSerializer()))
+    def get_slides(self, obj: Slider) -> SlideSerializer:
+        return SlideSerializer(obj.slide_slider.all(), many=True).data
 
     class Meta:
         model = Slider

@@ -6,6 +6,8 @@ import { AxiosResponse } from 'axios'
 import ProductModel from '@/State/Product/ProductModel'
 import AppBaseModule from '@/State/Common/AppBaseModule'
 import { Module, Action, Mutation } from 'vuex-module-decorators'
+import { PaginationResults } from '@/State/Pagination/Type/PaginationTypes'
+import PaginatedModel from '@/State/Pagination/Model/PaginatedModel'
 
 @Module({
 	dynamic: true,
@@ -61,9 +63,9 @@ export default class ProductModule extends AppBaseModule {
 	@Action
 	async fetchLatestProductsFromRemote(): Promise<void> {
 		return await api
-			.get('latest-products/')
-			.then((response: AxiosResponse<Array<ProductModel>>) => {
-				const data = response.data
+			.get('product/?limit=5')
+			.then((response: AxiosResponse<PaginatedModel<ProductModel>>) => {
+				const data = response.data.results
 				const latestProduct = map(data, (rawProduct) => new ProductModel(rawProduct))
 				this.context.commit('setLatestProduct', latestProduct)
 			})

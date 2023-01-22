@@ -10,7 +10,7 @@ import { useToast } from 'vue-toastification'
 import CartModule from '@/State/Cart/CartModule'
 import { getModule } from 'vuex-module-decorators'
 import AuthModule from '@/State/Auth/Auth/AuthModule'
-import UserModule from '@/State/User/Profile/UserModule'
+import UserModule from '@/State/User/Account/UserModule'
 import AppModule from '@/State/App/AppModule'
 
 const toast = useToast()
@@ -43,7 +43,7 @@ export class RouteModel {
 		this.cartModule.initializeCart()
 		this.authModule.initialize().then(() => {
 			if (this.authModule.isAuthenticated) {
-				this.userModule.fetchUserProfileFromRemote()
+				this.userModule.fetchUserAccountFromRemote()
 			}
 			if (
 				to.matched.some((record) => record.meta.requireLogin) &&

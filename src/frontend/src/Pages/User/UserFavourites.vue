@@ -29,7 +29,7 @@
 import { useMeta } from 'vue-meta'
 import { computed } from '@vue/runtime-core'
 import { getModule } from 'vuex-module-decorators'
-import UserModule from '@/State/User/Profile/UserModule'
+import UserModule from '@/State/User/Account/UserModule'
 import { ApiBaseMethods } from '@/Api/Enums/ApiBaseMethods'
 import ProductCard from '@/Components/Product/ProductCard.vue'
 import Pagination from '@/Components/Pagination/Pagination.vue'
@@ -61,8 +61,8 @@ export default class UserFavourites
 	myContext = setup(() => {
 		const meta = useMeta(
 			computed(() => ({
-				title: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Favourites`,
-				description: `${this.userModule.getUserProfile?.first_name} ${this.userModule.getUserProfile?.last_name} | Favourites`
+				title: `${this.userModule.getUserAccount?.first_name} ${this.userModule.getUserAccount?.last_name} | Favourites`,
+				description: `${this.userModule.getUserAccount?.first_name} ${this.userModule.getUserAccount?.last_name} | Favourites`
 			}))
 		)
 		return {
@@ -107,7 +107,7 @@ export default class UserFavourites
 	}
 
 	public buildEndPointUrlForPaginatedResults(): string {
-		const userId = this.userModule.getUserProfile.id
+		const userId = this.userModule.getUserAccount.id
 		return 'favourites/products' + `/${userId}`
 	}
 }
