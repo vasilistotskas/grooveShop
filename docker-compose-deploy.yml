@@ -9,9 +9,10 @@ services:
     restart: always
     command: >
       sh -c "python manage.py wait_for_db &&
+             python manage.py makemigrations &&
              python manage.py migrate &&
              python manage.py collectstatic --noinput &&
-             gunicorn backend.app.wsgi:application --bind 0.0.0.0:8001"
+             gunicorn backend.app.wsgi:application --bind 0.0.0.0:8001 --timeout 120 --workers=3 --threads=3 --worker-connections=1000 --reload"
     volumes:
       - ./src:/src
       - web-static:/src/backend/static
@@ -47,6 +48,144 @@ services:
       - redis
     ports:
       - "8001:8001"
+    networks:
+      - groovy-backbone
+
+  celery_worker:
+    container_name: celery_worker
+    build:
+      context: .
+      dockerfile: docker/Backend.Dockerfile
+    restart: always
+    command: >
+      sh -c "python manage.py wait_for_db &&
+             celery -A backend.app worker -l info --logfile=./src/logs/celery.log"
+    volumes:
+      - ./src:/src
+      - web-static:/src/backend/static
+      - web-media:/src/backend/media
+      - web-files:/src/backend/files
+      - web-logs:/src/backend/logs
+    environment:
+      - DEBUG=${DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+      - APPEND_SLASH=${APPEND_SLASH}
+      - BACKEND_BASE_URL=${BACKEND_BASE_URL}
+      - APP_BASE_URL=${APP_BASE_URL}
+      - VITE_APP_URL=${VITE_APP_URL}
+      - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - EMAIL_BACKEND=${EMAIL_BACKEND}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
+      - LANGUAGE_CODE=${LANGUAGE_CODE}
+      - TIME_ZONE=${TIME_ZONE}
+      - USE_I18N=${USE_I18N}
+      - USE_L10N=${USE_L10N}
+      - USE_TZ=${USE_TZ}
+    depends_on:
+      - backend
+      - redis
+    networks:
+      - groovy-backbone
+
+  celery_beat:
+    container_name: celery_beat
+    build:
+      context: .
+      dockerfile: docker/Backend.Dockerfile
+    restart: always
+    command: >
+      sh -c "python manage.py wait_for_db &&
+             celery -A backend.app beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler"
+    volumes:
+      - ./src:/src
+      - web-static:/src/backend/static
+      - web-media:/src/backend/media
+      - web-files:/src/backend/files
+      - web-logs:/src/backend/logs
+    environment:
+      - DEBUG=${DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+      - APPEND_SLASH=${APPEND_SLASH}
+      - BACKEND_BASE_URL=${BACKEND_BASE_URL}
+      - APP_BASE_URL=${APP_BASE_URL}
+      - VITE_APP_URL=${VITE_APP_URL}
+      - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - EMAIL_BACKEND=${EMAIL_BACKEND}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
+      - LANGUAGE_CODE=${LANGUAGE_CODE}
+      - TIME_ZONE=${TIME_ZONE}
+      - USE_I18N=${USE_I18N}
+      - USE_L10N=${USE_L10N}
+      - USE_TZ=${USE_TZ}
+    depends_on:
+      - celery_worker
+      - redis
+      - backend
+      - db
+    networks:
+      - groovy-backbone
+
+  celery_flower:
+    container_name: celery_flower
+    build:
+      context: .
+      dockerfile: docker/Backend.Dockerfile
+    restart: always
+    command: >
+      sh -c "python manage.py wait_for_db &&
+             celery -A backend.app flower --port=5555 --broker=redis://redis:6379/0"
+    ports:
+      - "5555:5555"
+    volumes:
+      - ./src:/src
+      - web-static:/src/backend/static
+      - web-media:/src/backend/media
+      - web-files:/src/backend/files
+      - web-logs:/src/backend/logs
+    environment:
+      - DEBUG=${DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+      - APPEND_SLASH=${APPEND_SLASH}
+      - BACKEND_BASE_URL=${BACKEND_BASE_URL}
+      - APP_BASE_URL=${APP_BASE_URL}
+      - VITE_APP_URL=${VITE_APP_URL}
+      - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - EMAIL_BACKEND=${EMAIL_BACKEND}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
+      - LANGUAGE_CODE=${LANGUAGE_CODE}
+      - TIME_ZONE=${TIME_ZONE}
+      - USE_I18N=${USE_I18N}
+      - USE_L10N=${USE_L10N}
+      - USE_TZ=${USE_TZ}
+    depends_on:
+      - celery_worker
     networks:
       - groovy-backbone
 
@@ -152,25 +291,6 @@ services:
       - backend
     networks:
       - groovy-backbone
-
-#
-#  celery:
-#    container_name: celery
-#    image: celery
-#    build:
-#      context: .
-#      dockerfile: docker/Backend.Dockerfile
-#    restart: always
-#    command: celery -A app worker -l info
-#    volumes:
-#      - ./app:/app
-#    environment:
-#      - SECRET_KEY=${SECRET_KEY}
-#      - DEBUG=${DEBUG}
-#    depends_on:
-#      - db
-#      - redis
-#      - app
 
 volumes:
   postgres_data:
