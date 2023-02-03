@@ -18,7 +18,7 @@ build_command = "pip install poetry && poetry build"
 
 [tool.poetry.dependencies]
 python = ">=3.8.1,<4.0.0"
-django = "4.1.5"
+django = "4.1.6"
 djangorestframework = "3.14.0"
 django-cors-headers = "3.13.0"
 django-allauth = "0.52.0"
