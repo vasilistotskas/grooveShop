@@ -80,7 +80,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin, UUIDModel, TimeStampMixinM
         default=None,
         on_delete=models.SET_NULL,
     )
-    image = models.ImageField(blank=True, null=True, upload_to="uploads/users/")
+    image = models.ImageField(upload_to="uploads/users/", blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 

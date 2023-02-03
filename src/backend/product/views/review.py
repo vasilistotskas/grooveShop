@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from backend.core.api.views import BaseExpandView
 from backend.product.models.review import ProductReview
 from backend.product.paginators.review import ProductReviewPagination
 from backend.product.serializers.review import ProductReviewSerializer
@@ -13,7 +14,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 
-class ProductReviewViewSet(ModelViewSet):
+class ProductReviewViewSet(BaseExpandView, ModelViewSet):
     queryset = ProductReview.objects.all()
     serializer_class = ProductReviewSerializer
     pagination_class = ProductReviewPagination
@@ -36,13 +37,13 @@ class ProductReviewViewSet(ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
         if page is not None:
-            serializer = ProductReviewSerializer(page, many=True)
+            serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
-        serializer = ProductReviewSerializer(queryset, many=True)
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
     def create(self, request, *args, **kwargs) -> Response:
-        serializer = ProductReviewSerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -50,12 +51,12 @@ class ProductReviewViewSet(ModelViewSet):
 
     def retrieve(self, request, pk=None, *args, **kwargs) -> Response:
         review = get_object_or_404(ProductReview, id=pk)
-        serializer = ProductReviewSerializer(review)
+        serializer = self.get_serializer(review)
         return Response(serializer.data)
 
     def update(self, request, pk=None, *args, **kwargs) -> Response:
         review = get_object_or_404(ProductReview, id=pk)
-        serializer = ProductReviewSerializer(review, data=request.data)
+        serializer = self.get_serializer(review, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -63,7 +64,7 @@ class ProductReviewViewSet(ModelViewSet):
 
     def partial_update(self, request, pk=None, *args, **kwargs) -> Response:
         review = get_object_or_404(ProductReview, id=pk)
-        serializer = ProductReviewSerializer(review, data=request.data, partial=True)
+        serializer = self.get_serializer(review, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

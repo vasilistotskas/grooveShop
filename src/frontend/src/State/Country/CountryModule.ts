@@ -62,7 +62,7 @@ export default class CountryModule extends AppBaseModule {
 	@Action
 	async fetchCountriesFromRemote(): Promise<void> {
 		return await api
-			.get('countries/')
+			.get('category/')
 			.then((response: AxiosResponse<PaginatedModel<CountryModel>>) => {
 				const data = response.data
 				this.context.commit('setCountries', data)

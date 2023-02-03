@@ -9,7 +9,6 @@ class BlogCategorySerializer(serializers.ModelSerializer):
             "id",
             "name",
             "slug",
-            "image",
             "created_at",
             "updated_at",
             "sort_order",

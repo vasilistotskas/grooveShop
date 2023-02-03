@@ -36,13 +36,13 @@ class BlogPostViewSet(ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
         if page is not None:
-            serializer = BlogPostSerializer(page, many=True)
+            serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
-        serializer = BlogPostSerializer(queryset, many=True)
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs) -> Response:
-        serializer = BlogPostSerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -50,12 +50,12 @@ class BlogPostViewSet(ModelViewSet):
 
     def retrieve(self, request, pk=None, *args, **kwargs) -> Response:
         post = get_object_or_404(BlogPost, pk=pk)
-        serializer = BlogPostSerializer(post)
+        serializer = self.get_serializer(post)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def update(self, request, pk=None, *args, **kwargs) -> Response:
         post = get_object_or_404(BlogPost, pk=pk)
-        serializer = BlogPostSerializer(post, data=request.data)
+        serializer = self.get_serializer(post, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -63,7 +63,7 @@ class BlogPostViewSet(ModelViewSet):
 
     def partial_update(self, request, pk=None, *args, **kwargs) -> Response:
         post = get_object_or_404(BlogPost, pk=pk)
-        serializer = BlogPostSerializer(post, data=request.data, partial=True)
+        serializer = self.get_serializer(post, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

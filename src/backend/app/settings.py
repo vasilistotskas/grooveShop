@@ -30,6 +30,11 @@ BACKEND_BASE_URL = str(os.environ.get("BACKEND_BASE_URL"))
 APP_BASE_URL = str(os.environ.get("APP_BASE_URL"))
 VITE_APP_URL = str(os.environ.get("VITE_APP_URL"))
 
+if DEBUG:
+    BASE_URL = "http://localhost:8001"
+else:
+    BASE_URL = BACKEND_BASE_URL
+
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",

@@ -29,13 +29,13 @@ class SliderViewSet(ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
         if page is not None:
-            serializer = SliderSerializer(page, many=True)
+            serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
-        serializer = SliderSerializer(queryset, many=True)
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs) -> Response:
-        serializer = SliderSerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -43,12 +43,12 @@ class SliderViewSet(ModelViewSet):
 
     def retrieve(self, request, pk=None, *args, **kwargs) -> Response:
         slider = get_object_or_404(Slider, pk=pk)
-        serializer = SliderSerializer(slider)
+        serializer = self.get_serializer(slider)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def update(self, request, pk=None, *args, **kwargs) -> Response:
         slider = get_object_or_404(Slider, pk=pk)
-        serializer = SliderSerializer(slider, data=request.data)
+        serializer = self.get_serializer(slider, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -56,7 +56,7 @@ class SliderViewSet(ModelViewSet):
 
     def partial_update(self, request, pk=None, *args, **kwargs) -> Response:
         slider = get_object_or_404(Slider, pk=pk)
-        serializer = SliderSerializer(slider, data=request.data, partial=True)
+        serializer = self.get_serializer(slider, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -82,13 +82,13 @@ class SlideViewSet(ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
         if page is not None:
-            serializer = SlideSerializer(page, many=True)
+            serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
-        serializer = SlideSerializer(queryset, many=True)
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs) -> Response:
-        serializer = SlideSerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -96,12 +96,12 @@ class SlideViewSet(ModelViewSet):
 
     def retrieve(self, request, pk=None, *args, **kwargs) -> Response:
         slide = get_object_or_404(Slide, pk=pk)
-        serializer = SlideSerializer(slide)
+        serializer = self.get_serializer(slide)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def update(self, request, pk=None, *args, **kwargs) -> Response:
         slide = get_object_or_404(Slide, pk=pk)
-        serializer = SlideSerializer(slide, data=request.data)
+        serializer = self.get_serializer(slide, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -109,7 +109,7 @@ class SlideViewSet(ModelViewSet):
 
     def partial_update(self, request, pk=None, *args, **kwargs) -> Response:
         slide = get_object_or_404(Slide, pk=pk)
-        serializer = SlideSerializer(slide, data=request.data, partial=True)
+        serializer = self.get_serializer(slide, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

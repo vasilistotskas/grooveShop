@@ -6,7 +6,6 @@ import os
 from backend.app.settings import BASE_DIR
 from backend.blog.models.category import BlogCategory
 from backend.blog.serializers.category import BlogCategorySerializer
-from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from rest_framework import status
@@ -56,6 +55,8 @@ class BlogCategoryViewSetTestCase(TestCase):
         response = self.client.get(f"/api/v1/blog/category/{self.category.id}/")
         category = BlogCategory.objects.get(id=self.category.id)
         serializer = BlogCategorySerializer(category)
+        print("response.data", response.data)
+        print("serializer.data", serializer.data)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -119,14 +120,17 @@ class BlogCategoryViewSetTestCase(TestCase):
 
 
 class WithImage(BlogCategoryViewSetTestCase):
-    image: str | SimpleUploadedFile = "uploads/products/no_photo.jpg"
-    if not default_storage.exists(image):
+    image: str | SimpleUploadedFile = "uploads/blog/no_photo.jpg"
+
+    def setUp(self):
+        super().setUp()
         image_path = os.path.join(BASE_DIR, "files/images") + "/no_photo.jpg"
-        image = SimpleUploadedFile(
-            name="no_photo.jpg",
-            content=open(image_path, "rb").read(),
-            content_type="image/jpeg",
-        )
+        with open(image_path, "rb") as image:
+            self.image = SimpleUploadedFile(
+                name="no_photo.jpg", content=image.read(), content_type="image/jpeg"
+            )
+        self.category.image = self.image
+        self.category.save()
 
 
 class WithoutImage(BlogCategoryViewSetTestCase):

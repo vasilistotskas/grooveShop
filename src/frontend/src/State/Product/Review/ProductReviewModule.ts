@@ -67,7 +67,7 @@ export default class ProductReviewModule extends AppBaseModule {
 		}
 
 		productReviews.forEach(function (item, i) {
-			if (item.user_id === data.userId) {
+			if (item.user.id === data.userId) {
 				productReviews.splice(i, 1)
 				productReviews.unshift(item)
 			}
@@ -151,7 +151,7 @@ export default class ProductReviewModule extends AppBaseModule {
 	@Action
 	async fetchCurrentUserReviews<T>(userId: number): Promise<void> {
 		return await api
-			.get(`reviews/user/${userId}/`)
+			.get(`product/review/?user_id=${userId}/`)
 			.then((response: AxiosResponse<PaginatedModel<T>>) => {
 				const data = response.data
 				this.context.commit('setUserReviews', data)
@@ -167,7 +167,7 @@ export default class ProductReviewModule extends AppBaseModule {
 		userId: number | undefined
 	): Promise<void> {
 		return await api
-			.get(`reviews/product/${productId}/`)
+			.get(`product/review/?product_id=${productId}`)
 			.then((response: AxiosResponse<PaginatedModel<ProductReviewModel>>) => {
 				const data = response.data
 				this.context.commit('setProductReviews', { productReviews: data, userId: userId })
@@ -183,7 +183,7 @@ export default class ProductReviewModule extends AppBaseModule {
 		productId: number
 	}): Promise<void> {
 		return await api
-			.post(`reviews/product/${data.productId}/`, data.FormData)
+			.post(`product/review/`, data.FormData)
 			.then((response: AxiosResponse<PaginatedModel<T>>) => {
 				const responseData = response.data
 				this.context.commit('createUserToProductReview', responseData)
@@ -203,7 +203,7 @@ export default class ProductReviewModule extends AppBaseModule {
 			return new ProductReviewModel()
 		}
 		return await api
-			.get(`reviews/review/${data.userId}/${data.productId}/`)
+			.get(`product/review/?user_id=${data.userId}&product_id=${data.productId}`)
 			.then((response: AxiosResponse<ProductReviewModel>) => {
 				const data = response.data
 				if (!data) {
@@ -220,11 +220,10 @@ export default class ProductReviewModule extends AppBaseModule {
 	@Action
 	async updateCurrentProductReview(data: {
 		FormData: FormData
-		productId: number
-		userId: number
+		reviewId: number
 	}): Promise<void> {
 		return await api
-			.patch(`reviews/review/${data.userId}/${data.productId}/`, data.FormData)
+			.patch(`product/review/${data.reviewId}/`, data.FormData)
 			.then((response: AxiosResponse<ProductReviewModel>) => {
 				const responseData = response.data
 				this.context.commit('setUserToProductReview', responseData)
@@ -238,7 +237,7 @@ export default class ProductReviewModule extends AppBaseModule {
 	@Action
 	async deleteCurrentProductReview(data: Record<string, number>): Promise<void> {
 		return await api
-			.delete(`reviews/review/${data.userId}/${data.productId}/`)
+			.delete(`product/review/${data.reviewId}/`)
 			.then(() => {
 				this.context.commit('unsetUserToProductReview')
 			})

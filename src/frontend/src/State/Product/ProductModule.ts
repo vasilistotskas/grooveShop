@@ -50,9 +50,9 @@ export default class ProductModule extends AppBaseModule {
 		const product_slug = router.currentRoute.value.params.product_slug
 
 		return await api
-			.get(`products/${category_slug}/${product_slug}`)
-			.then((response: AxiosResponse<ProductModel>) => {
-				const data = response.data
+			.get(`product/?slug=${product_slug}`)
+			.then((response: AxiosResponse<PaginatedModel<ProductModel>>) => {
+				const data = response.data.results[0]
 				this.context.commit('setProduct', data)
 			})
 			.catch((e: Error) => {
@@ -76,15 +76,10 @@ export default class ProductModule extends AppBaseModule {
 
 	@Action
 	async updateProductHits(): Promise<unknown> {
-		const category_slug = router.currentRoute.value.params.category_slug
-		const product_slug = router.currentRoute.value.params.product_slug
-
-		if (!category_slug && product_slug) {
-			return Promise.resolve()
-		}
+		const productId = this.context.getters['getProductData'].id
 
 		return await api
-			.patch(`products/${category_slug}/${product_slug}/`)
+			.post(`product/${productId}/update_product_hits/`, {})
 			.catch((e: Error) => {
 				console.log(e)
 			})

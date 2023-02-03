@@ -26,13 +26,13 @@ class PayWayViewSet(ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
         if page is not None:
-            serializer = PayWaySerializer(page, many=True)
+            serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
-        serializer = PayWaySerializer(queryset, many=True)
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs) -> Response:
-        serializer = PayWaySerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -40,12 +40,12 @@ class PayWayViewSet(ModelViewSet):
 
     def retrieve(self, request, pk=None, *args, **kwargs) -> Response:
         pay_way = get_object_or_404(PayWay, pk=pk)
-        serializer = PayWaySerializer(pay_way)
+        serializer = self.get_serializer(pay_way)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def update(self, request, pk=None, *args, **kwargs) -> Response:
         pay_way = get_object_or_404(PayWay, pk=pk)
-        serializer = PayWaySerializer(pay_way, data=request.data)
+        serializer = self.get_serializer(pay_way, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -53,7 +53,7 @@ class PayWayViewSet(ModelViewSet):
 
     def partial_update(self, request, pk=None, *args, **kwargs) -> Response:
         pay_way = get_object_or_404(PayWay, pk=pk)
-        serializer = PayWaySerializer(pay_way, data=request.data, partial=True)
+        serializer = self.get_serializer(pay_way, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

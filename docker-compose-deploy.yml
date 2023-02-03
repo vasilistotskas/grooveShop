@@ -151,11 +151,12 @@ services:
     restart: always
     command: >
       sh -c "python manage.py wait_for_db &&
-             celery -A backend.app flower --port=5555 --broker=redis://redis:6379/0"
+             celery -A backend.app --broker=redis://redis:6379/0 flower --port=5555"
     ports:
       - "5555:5555"
     volumes:
       - ./src:/src
+      - .env:/.env
       - web-static:/src/backend/static
       - web-media:/src/backend/media
       - web-files:/src/backend/files

@@ -27,13 +27,13 @@ class RegionViewSet(ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
         if page is not None:
-            serializer = RegionSerializer(page, many=True)
+            serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
-        serializer = RegionSerializer(queryset, many=True)
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs) -> Response:
-        serializer = RegionSerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -41,12 +41,12 @@ class RegionViewSet(ModelViewSet):
 
     def retrieve(self, request, pk=None, *args, **kwargs) -> Response:
         region = get_object_or_404(Region, pk=pk)
-        serializer = RegionSerializer(region)
+        serializer = self.get_serializer(region)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def update(self, request, pk=None, *args, **kwargs) -> Response:
         region = get_object_or_404(Region, pk=pk)
-        serializer = RegionSerializer(region, data=request.data)
+        serializer = self.get_serializer(region, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -54,7 +54,7 @@ class RegionViewSet(ModelViewSet):
 
     def partial_update(self, request, pk=None, *args, **kwargs) -> Response:
         region = get_object_or_404(Region, pk=pk)
-        serializer = RegionSerializer(region, data=request.data, partial=True)
+        serializer = self.get_serializer(region, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -73,5 +73,5 @@ class RegionViewSet(ModelViewSet):
         self, request, pk=None, *args, **kwargs
     ) -> Response:
         regions = Region.objects.filter(country__alpha_2=pk)
-        serializer = RegionSerializer(regions, many=True)
+        serializer = self.get_serializer(regions, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

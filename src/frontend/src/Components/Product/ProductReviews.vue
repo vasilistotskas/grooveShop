@@ -54,7 +54,7 @@
 						v-for="review in allPaginatedResults"
 						:key="review.id"
 						:review="review"
-						:class="{ 'current-user-review-card': review.useraccount.id === userId }"
+						:class="{ 'current-user-review-card': review.user.id === userId }"
 						:route="PaginationRoutesEnum.REVIEWS"
 						:user-id="userId"
 						:product-review-module-namespace="productReviewModuleNamespace"
@@ -169,7 +169,10 @@ export default class ProductReviews
 		const paginationQuery = PaginationModel.createPaginationModel({
 			pageNumber: this.currentPageNumber,
 			endpointUrl: this.buildEndPointUrlForPaginatedResults(),
-			method: ApiBaseMethods.GET
+			method: ApiBaseMethods.GET,
+      queryParams: {
+        product_id: this.product.id
+      }
 		})
 
 		return this.paginationModule.fetchPaginatedResults({
@@ -179,8 +182,8 @@ export default class ProductReviews
 	}
 
 	public buildEndPointUrlForPaginatedResults(): string {
-		const product_id: number = this.product.id
-		return `reviews/product/${product_id}`
+		const product_id = this.product.id
+		return `product/review/`
 	}
 
 	public isOddNumber(num: number) {

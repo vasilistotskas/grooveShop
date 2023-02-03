@@ -63,10 +63,10 @@ export default class AddressModule extends AppBaseModule {
 	}
 
 	@Action
-	async fetchAddressById(id: number): Promise<void | PaginatedModel<Address>> {
+	async fetchAddressById(id: number): Promise<void | Address> {
 		return await api
 			.get(`address/${id}/`)
-			.then((response: AxiosResponse<PaginatedModel<Address>>) => {
+			.then((response: AxiosResponse<Address>) => {
 				const data = response.data
 				this.context.commit('setAddress', data)
 				return data

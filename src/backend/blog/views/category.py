@@ -26,13 +26,13 @@ class BlogCategoryViewSet(ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
         if page is not None:
-            serializer = BlogCategorySerializer(page, many=True)
+            serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
-        serializer = BlogCategorySerializer(queryset, many=True)
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs) -> Response:
-        serializer = BlogCategorySerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -40,12 +40,13 @@ class BlogCategoryViewSet(ModelViewSet):
 
     def retrieve(self, request, pk=None, *args, **kwargs) -> Response:
         category = get_object_or_404(BlogCategory, pk=pk)
-        serializer = BlogCategorySerializer(category)
+        serializer = self.get_serializer(category)
+        print("BlogCategoryViewSet - serializer.data", serializer.data)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def update(self, request, pk=None, *args, **kwargs) -> Response:
         category = get_object_or_404(BlogCategory, pk=pk)
-        serializer = BlogCategorySerializer(category, data=request.data)
+        serializer = self.get_serializer(category, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -53,7 +54,7 @@ class BlogCategoryViewSet(ModelViewSet):
 
     def partial_update(self, request, pk=None, *args, **kwargs) -> Response:
         category = get_object_or_404(BlogCategory, pk=pk)
-        serializer = BlogCategorySerializer(category, data=request.data, partial=True)
+        serializer = self.get_serializer(category, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

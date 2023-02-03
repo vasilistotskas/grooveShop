@@ -5,16 +5,16 @@ import os
 from backend.app.settings import BASE_DIR
 from backend.blog.models.category import BlogCategory
 from django.conf import settings
-from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 
 
 class BlogCategoryTestCase(TestCase):
     image: str | SimpleUploadedFile = ""
+    category: BlogCategory
 
     def setUp(self):
-        BlogCategory.objects.create(
+        self.category = BlogCategory.objects.create(
             name="name", slug="slug", description="description", image=self.image
         )
 
@@ -38,14 +38,17 @@ class BlogCategoryTestCase(TestCase):
 
 
 class WithImage(BlogCategoryTestCase):
-    image: str | SimpleUploadedFile = "uploads/products/no_photo.jpg"
-    if not default_storage.exists(image):
+    image: str | SimpleUploadedFile = "uploads/blog/no_photo.jpg"
+
+    def setUp(self):
+        super().setUp()
         image_path = os.path.join(BASE_DIR, "files/images") + "/no_photo.jpg"
-        image = SimpleUploadedFile(
-            name="no_photo.jpg",
-            content=open(image_path, "rb").read(),
-            content_type="image/jpeg",
-        )
+        with open(image_path, "rb") as image:
+            self.image = SimpleUploadedFile(
+                name="no_photo.jpg", content=image.read(), content_type="image/jpeg"
+            )
+        self.category.image = self.image
+        self.category.save()
 
 
 class WithoutImage(BlogCategoryTestCase):

@@ -51,7 +51,7 @@ export default class CategoryModule extends AppBaseModule {
 	}
 
 	@Action
-	async fetchCategoryFromRemote(categorySlug: string): Promise<void> {
+	async fetchCategoryFromRemote(categorySlug: string | string[]): Promise<void> {
 		return await api
 			.get(`category/${categorySlug}/`)
 			.then((response: AxiosResponse<CategoryModel>) => {

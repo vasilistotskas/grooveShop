@@ -10,7 +10,7 @@
 					:key="review.id"
 					:class="{
 						'current-user-review-card':
-							review.useraccount.id === userModule.getUserAccount.id
+							review.user.id === userModule.getUserAccount.id
 					}"
 					:review="review"
 					:user-id="userModule.getUserAccount.id"
@@ -114,7 +114,7 @@ export default class UserReviews
 
 	public buildEndPointUrlForPaginatedResults(): string {
 		const userId = this.userModule.getUserAccount.id
-		return `reviews/user/${userId}`
+		return `product/review/?user_id=${userId}/`
 	}
 }
 </script>

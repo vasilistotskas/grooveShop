@@ -9,7 +9,6 @@ from backend.blog.models.post import BlogPost
 from backend.blog.models.tag import BlogTag
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.files.storage import default_storage
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 
@@ -17,6 +16,7 @@ User = get_user_model()
 
 
 class BlogPostTestCase(TestCase):
+    post: BlogPost
     image: str | SimpleUploadedFile = ""
 
     def setUp(self):
@@ -27,7 +27,7 @@ class BlogPostTestCase(TestCase):
         category = BlogCategory.objects.create(
             name="name", slug="slug", description="description"
         )
-        post = BlogPost.objects.create(
+        self.post = BlogPost.objects.create(
             title="title",
             slug="slug",
             author_id=author.id,
@@ -35,7 +35,7 @@ class BlogPostTestCase(TestCase):
             image=self.image,
         )
         tag = BlogTag.objects.create(name="name")
-        post.tags.add(tag)
+        self.post.tags.add(tag)
 
     def test___str__(self):
         post = BlogPost.objects.get(title="title")
@@ -69,14 +69,17 @@ class BlogPostTestCase(TestCase):
 
 
 class WithImage(BlogPostTestCase):
-    image: str | SimpleUploadedFile = "uploads/products/no_photo.jpg"
-    if not default_storage.exists(image):
+    image: str | SimpleUploadedFile = "uploads/blog/no_photo.jpg"
+
+    def setUp(self):
+        super().setUp()
         image_path = os.path.join(BASE_DIR, "files/images") + "/no_photo.jpg"
-        image = SimpleUploadedFile(
-            name="no_photo.jpg",
-            content=open(image_path, "rb").read(),
-            content_type="image/jpeg",
-        )
+        with open(image_path, "rb") as image:
+            self.image = SimpleUploadedFile(
+                name="no_photo.jpg", content=image.read(), content_type="image/jpeg"
+            )
+        self.post.image = self.image
+        self.post.save()
 
 
 class WithoutImage(BlogPostTestCase):

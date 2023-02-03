@@ -3513,22 +3513,28 @@ paths:
         name: id
         schema:
           type: integer
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
       - in: query
         name: name
         schema:
           type: string
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
       - name: ordering
         required: false
         in: query
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
       - in: query
         name: price
         schema:
@@ -3537,6 +3543,10 @@ paths:
         required: false
         in: query
         description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: slug
         schema:
           type: string
       tags:
@@ -3598,22 +3608,28 @@ paths:
         name: id
         schema:
           type: integer
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
       - in: query
         name: name
         schema:
           type: string
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
       - name: ordering
         required: false
         in: query
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: page
-        required: false
-        in: query
-        description: A page number within the paginated result set.
-        schema:
-          type: integer
       - in: query
         name: price
         schema:
@@ -3622,6 +3638,10 @@ paths:
         required: false
         in: query
         description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: slug
         schema:
           type: string
       tags:
@@ -7403,6 +7423,42 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/user/account/session/:
+    get:
+      operationId: api_v1_user_account_session_retrieve
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAccount'
+          description: ''
+  /api/v1/user/account/session{format}:
+    get:
+      operationId: api_v1_user_account_session_formatted_retrieve
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAccount'
+          description: ''
   /api/v1/user/address/:
     get:
       operationId: api_v1_user_address_list
@@ -8649,24 +8705,6 @@ components:
       - 6
       - 7
       type: integer
-    Images:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        is_main:
-          type: boolean
-        product_image_absolute_url:
-          type: string
-          readOnly: true
-        product_image_filename:
-          type: string
-          readOnly: true
-      required:
-      - id
-      - product_image_absolute_url
-      - product_image_filename
     KindEnum:
       enum:
       - success
@@ -9016,12 +9054,12 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?page=4
+          example: http://api.example.org/accounts/?offset=400&limit=100
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?page=2
+          example: http://api.example.org/accounts/?offset=200&limit=100
         results:
           type: array
           items:
@@ -9627,7 +9665,7 @@ components:
         images:
           type: array
           items:
-            $ref: '#/components/schemas/Images'
+            $ref: '#/components/schemas/ProductImages'
           readOnly: true
     PatchedProductCategory:
       type: object
@@ -9918,6 +9956,12 @@ components:
           type: boolean
         is_staff:
           type: boolean
+        main_image_absolute_url:
+          type: string
+          readOnly: true
+        main_image_filename:
+          type: string
+          readOnly: true
     PatchedUserAddress:
       type: object
       properties:
@@ -10146,7 +10190,7 @@ components:
         images:
           type: array
           items:
-            $ref: '#/components/schemas/Images'
+            $ref: '#/components/schemas/ProductImages'
           readOnly: true
       required:
       - absolute_url
@@ -10248,6 +10292,24 @@ components:
       - id
       - product
       - user
+    ProductImages:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        is_main:
+          type: boolean
+        product_image_absolute_url:
+          type: string
+          readOnly: true
+        product_image_filename:
+          type: string
+          readOnly: true
+      required:
+      - id
+      - product_image_absolute_url
+      - product_image_filename
     ProductReview:
       type: object
       properties:
@@ -10526,11 +10588,19 @@ components:
           type: boolean
         is_staff:
           type: boolean
+        main_image_absolute_url:
+          type: string
+          readOnly: true
+        main_image_filename:
+          type: string
+          readOnly: true
       required:
       - email
       - first_name
       - id
       - last_name
+      - main_image_absolute_url
+      - main_image_filename
     UserAddress:
       type: object
       properties:

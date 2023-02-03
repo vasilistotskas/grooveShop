@@ -51,7 +51,7 @@
 				<span> {{ review.comment }} </span>
 			</div>
 		</div>
-		<div v-if="review.useraccount.id === userId" class="user-review-product-actions">
+		<div v-if="review.user.id === userId" class="user-review-product-actions">
 			<a
 				:title="`Review Settings of ${review.product.name}`"
 				class="user-review-product-settings"
@@ -77,7 +77,7 @@
 							:title="`Delete Review of ${review.product.name}`"
 							data-method="delete"
 							rel="nofollow"
-							@click="deleteReview(review.useraccount.id, review.product_id)"
+							@click="deleteReview(review.user.id, review.product.id)"
 							>Delete</a
 						>
 					</div>
@@ -106,6 +106,7 @@ import ProductReviewModule from '@/State/Product/Review/ProductReviewModule'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
 import PaginatedComponentInterface from '@/State/Pagination/Interface/PaginatedComponentInterface'
 import { PaginationNamespaceTypesEnum } from '@/State/Pagination/Enum/PaginationNamespaceTypesEnum'
+import UserModule from '@/State/User/Account/UserModule'
 
 const toast = useToast()
 
@@ -143,6 +144,7 @@ export default class ReviewProductCard
 		userReviewsActionTarget: HTMLElement
 	}
 	productReviewModule = getModule(ProductReviewModule)
+	userModule = getModule(UserModule)
 	MainRouteNames = MainRouteNames
 	review!: ProductReviewModel
 	userId = 0
@@ -159,24 +161,21 @@ export default class ReviewProductCard
 	}
 
 	get reviewProductCardClass(): string {
-		return this.review.useraccount.id === this.userId ? 'current-user-review-card' : ''
+		return this.review.user.id === this.userId ? 'current-user-review-card' : ''
 	}
 
 	get getReviewTitle(): string {
+		const user = this.review.user
 		if (router.currentRoute.value.name === MainRouteNames.PRODUCT) {
-			if (
-				this.review.useraccount.first_name === null &&
-				this.review.useraccount.last_name === null
-			) {
+			if (user.first_name === null && user.last_name === null) {
 				return 'Anonymous'
 			}
-			const reviewUserName =
-				this.review.useraccount.first_name + ' ' + this.review.useraccount.last_name
+			const reviewUserName = user.first_name + ' ' + user.last_name
 
 			return `Review of ${reviewUserName}`
 		}
 		if (router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT_REVIEWS) {
-			return `Review of ${this.review.product.name}`
+			return `Review of ${this.review.product}`
 		}
 		return ''
 	}
@@ -197,7 +196,7 @@ export default class ReviewProductCard
 			) || review.product.main_image_filename
 
 		if (router.currentRoute.value.name === MainRouteNames.PRODUCT) {
-			return 'url(' + review.useraccount.main_image_absolute_url + ')'
+			return 'url(' + review.user.main_image_absolute_url + ')'
 		}
 
 		if (router.currentRoute.value.name === MainRouteNames.USER_ACCOUNT_REVIEWS) {
@@ -237,15 +236,8 @@ export default class ReviewProductCard
 
 		if (confirm('Are you sure you want to delete your rating?')) {
 			this.productReviewModule.deleteCurrentProductReview(data).then(() => {
-				let path = ''
-				if (router.currentRoute.value.name === 'Product') {
-					path = 'product'
-				}
-				if (router.currentRoute.value.name === 'Reviews') {
-					path = 'user'
-				}
 				const paginationQuery: PaginationModel = PaginationModel.createPaginationModel({
-					endpointUrl: `reviews/${path}/${data.productId}`,
+					endpointUrl: `product/review/?product_id=${data.productId}`,
 					queryParams: {
 						page: this.paginationModule.getCurrentPageNumber(
 							this.productReviewModuleNamespace

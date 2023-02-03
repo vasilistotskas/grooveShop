@@ -12,7 +12,6 @@ class BlogPostSerializer(serializers.ModelSerializer):
             "slug",
             "body",
             "meta_description",
-            "image",
             "likes",
             "category",
             "tags",

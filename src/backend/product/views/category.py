@@ -41,7 +41,7 @@ class ProductCategoryViewSet(ModelViewSet):
         return Response(data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs) -> Response:
-        serializer = ProductCategorySerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -49,12 +49,12 @@ class ProductCategoryViewSet(ModelViewSet):
 
     def retrieve(self, request, pk=None, *args, **kwargs) -> Response:
         category = get_object_or_404(ProductCategory, id=pk)
-        serializer = ProductCategorySerializer(category)
+        serializer = self.get_serializer(category)
         return Response(serializer.data)
 
     def update(self, request, pk=None, *args, **kwargs) -> Response:
         category = get_object_or_404(ProductCategory, id=pk)
-        serializer = ProductCategorySerializer(category, data=request.data)
+        serializer = self.get_serializer(category, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -62,9 +62,7 @@ class ProductCategoryViewSet(ModelViewSet):
 
     def partial_update(self, request, pk=None, *args, **kwargs) -> Response:
         category = get_object_or_404(ProductCategory, id=pk)
-        serializer = ProductCategorySerializer(
-            category, data=request.data, partial=True
-        )
+        serializer = self.get_serializer(category, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
