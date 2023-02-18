@@ -60,11 +60,13 @@ class BlogCommentViewSetTestCase(TestCase):
             category_id=category.id,
             author_id=author.id,
         )
+        post.likes.add(user)
 
         payload = {
             "content": "content",
             "post": post.id,
             "user": user.id,
+            "likes": [user.id],
         }
         response = self.client.post(
             "/api/v1/blog/comment/",
@@ -118,6 +120,7 @@ class BlogCommentViewSetTestCase(TestCase):
             "content": "content",
             "post": post.id,
             "user": user.id,
+            "likes": [user.id],
         }
         response = self.client.put(
             f"/api/v1/blog/comment/{self.comment.id}/",

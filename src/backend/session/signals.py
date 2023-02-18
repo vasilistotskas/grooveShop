@@ -34,10 +34,14 @@ def update_session_user_log_in(sender, request, user, **kwargs):
             ],
         )
 
+        last_activity = None
+        if hasattr(request, "session") and hasattr(request.session, "last_activity"):
+            last_activity = request.session["last_activity"]
+
         caches.set(
             caches.USER + "_" + str(user.id),
             {
-                "last_activity": request.session["last_activity"],
+                "last_activity": last_activity,
                 "user": json_user,
                 "cart_id": cart_id,
                 "referer": request.META.get("HTTP_REFERER", None),

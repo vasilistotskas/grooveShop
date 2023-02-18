@@ -3,6 +3,7 @@ from __future__ import annotations
 from backend.blog.models.author import BlogAuthor
 from backend.blog.paginators.author import BlogAuthorPagination
 from backend.blog.serializers.author import BlogAuthorSerializer
+from backend.core.api.views import BaseExpandView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.filters import OrderingFilter
@@ -12,7 +13,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 
-class BlogAuthorViewSet(ModelViewSet):
+class BlogAuthorViewSet(BaseExpandView, ModelViewSet):
     queryset = BlogAuthor.objects.all()
     serializer_class = BlogAuthorSerializer
     pagination_class = BlogAuthorPagination

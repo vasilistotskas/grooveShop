@@ -17,7 +17,9 @@ class BlogPost(TimeStampMixinModel, PublishableModel, UUIDModel):
     body = HTMLField()
     meta_description = models.CharField(max_length=150, blank=True, null=True)
     image = models.ImageField(upload_to="uploads/blog/", blank=True, null=True)
-    likes = models.ManyToManyField("user.UserAccount", related_name="blog_post_likes")
+    likes = models.ManyToManyField(
+        "user.UserAccount", related_name="blog_post_likes", blank=True
+    )
     category = models.ForeignKey(
         "blog.BlogCategory",
         related_name="blog_post_category",

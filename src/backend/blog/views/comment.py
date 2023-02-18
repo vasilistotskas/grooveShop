@@ -3,6 +3,7 @@ from __future__ import annotations
 from backend.blog.models.comment import BlogComment
 from backend.blog.paginators.comment import BlogCommentPagination
 from backend.blog.serializers.comment import BlogCommentSerializer
+from backend.core.api.views import BaseExpandView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.filters import OrderingFilter
@@ -12,7 +13,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 
-class BlogCommentViewSet(ModelViewSet):
+class BlogCommentViewSet(BaseExpandView, ModelViewSet):
     queryset = BlogComment.objects.all()
     serializer_class = BlogCommentSerializer
     pagination_class = BlogCommentPagination

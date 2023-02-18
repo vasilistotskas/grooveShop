@@ -3,6 +3,7 @@ from __future__ import annotations
 from backend.blog.models.post import BlogPost
 from backend.blog.paginators.post import BlogPostPagination
 from backend.blog.serializers.post import BlogPostSerializer
+from backend.core.api.views import BaseExpandView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
@@ -15,7 +16,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 
-class BlogPostViewSet(ModelViewSet):
+class BlogPostViewSet(BaseExpandView, ModelViewSet):
     queryset = BlogPost.objects.all()
     serializer_class = BlogPostSerializer
     pagination_class = BlogPostPagination

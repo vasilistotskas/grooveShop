@@ -40,7 +40,7 @@ class BlogAuthorViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_create_invalid(self):
-        payload = {"user": self.user.id, "website": "", "bio": ""}
+        payload = {"user": "INVALID", "website": "", "bio": ""}
         response = self.client.post(
             "/api/v1/blog/author/", json.dumps(payload), content_type="application/json"
         )

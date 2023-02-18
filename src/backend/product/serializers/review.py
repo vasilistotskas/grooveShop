@@ -1,9 +1,13 @@
+from typing import Dict
+from typing import Type
+
 from backend.core.api.serializers import BaseExpandSerializer
 from backend.product.models.product import Product
 from backend.product.models.review import ProductReview
 from backend.product.serializers.product import ProductSerializer
 from backend.user.models import UserAccount
 from backend.user.serializers.account import UserAccountSerializer
+from rest_framework import serializers
 from rest_framework.relations import PrimaryKeyRelatedField
 
 
@@ -24,7 +28,7 @@ class ProductReviewSerializer(BaseExpandSerializer):
             "updated_at",
         )
 
-    def get_expand_fields(self):
+    def get_expand_fields(self) -> Dict[str, Type[serializers.ModelSerializer]]:
         return {
             "product": ProductSerializer,
             "user": UserAccountSerializer,

@@ -41,7 +41,6 @@ class BlogCategoryViewSet(ModelViewSet):
     def retrieve(self, request, pk=None, *args, **kwargs) -> Response:
         category = get_object_or_404(BlogCategory, pk=pk)
         serializer = self.get_serializer(category)
-        print("BlogCategoryViewSet - serializer.data", serializer.data)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def update(self, request, pk=None, *args, **kwargs) -> Response:

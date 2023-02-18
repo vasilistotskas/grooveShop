@@ -16,7 +16,6 @@ django-tinymce==3.5.0
 gunicorn==20.1.0
 whitenoise==6.3.0
 django-filter==22.1
-django-debug-toolbar==3.8.1
 black==23.1.0
 django-stubs==1.14.0
 django-stubs-ext==0.7.0

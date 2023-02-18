@@ -5,6 +5,7 @@ import json
 from backend.blog.models.author import BlogAuthor
 from backend.blog.models.category import BlogCategory
 from backend.blog.models.post import BlogPost
+from backend.blog.models.tag import BlogTag
 from backend.blog.serializers.post import BlogPostSerializer
 from django.contrib.auth import get_user_model
 from django.test import TestCase
@@ -49,6 +50,7 @@ class BlogPostViewSetTestCase(TestCase):
         author = BlogAuthor.objects.create(
             user_id=user.id, website="https://www.google.com", bio="bio_one"
         )
+        tag = BlogTag.objects.create(name="name", active=True)
         payload = {
             "slug": "slug_one",
             "title": "title_one",
@@ -57,12 +59,12 @@ class BlogPostViewSetTestCase(TestCase):
             "category": category.id,
             "author": author.id,
             "likes": [user.id],
+            "tags": [tag.id],
         }
 
         response = self.client.post(
             "/api/v1/blog/post/", json.dumps(payload), content_type="application/json"
         )
-
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_create_invalid(self):
@@ -99,6 +101,7 @@ class BlogPostViewSetTestCase(TestCase):
         author = BlogAuthor.objects.create(
             user_id=user.id, website="https://www.google.com", bio="bio_two"
         )
+        tag = BlogTag.objects.create(name="name_two", active=True)
         payload = {
             "slug": "slug_two",
             "title": "title_two",
@@ -107,6 +110,7 @@ class BlogPostViewSetTestCase(TestCase):
             "category": category.id,
             "author": author.id,
             "likes": [user.id],
+            "tags": [tag.id],
         }
         response = self.client.put(
             f"/api/v1/blog/post/{self.post.id}/",

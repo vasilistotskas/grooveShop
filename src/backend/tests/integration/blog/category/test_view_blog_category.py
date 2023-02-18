@@ -55,8 +55,6 @@ class BlogCategoryViewSetTestCase(TestCase):
         response = self.client.get(f"/api/v1/blog/category/{self.category.id}/")
         category = BlogCategory.objects.get(id=self.category.id)
         serializer = BlogCategorySerializer(category)
-        print("response.data", response.data)
-        print("serializer.data", serializer.data)
         self.assertEqual(response.data, serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
