@@ -22,6 +22,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 STRIPE_SECRET_KEY = "sk_test_wKFGpTy9h1zpwqo0wNxRNlK400dNnJS7L5"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get("DEBUG", 0)))
+SYSTEM_ENV = os.environ.get("SYSTEM_ENV", None)
 
 if "celery" in sys.argv[0]:
     DEBUG = False
@@ -148,7 +149,6 @@ STRAWBERRY_DJANGO = {
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -162,6 +162,9 @@ MIDDLEWARE = [
     # entering two-factor credentials.
     "allauth_2fa.middleware.AllauthTwoFactorMiddleware",
 ]
+
+if SYSTEM_ENV != "GITHUB_WORKFLOW":
+    MIDDLEWARE.append("django.contrib.sessions.middleware.SessionMiddleware")
 
 # Set the allauth adapter to be the 2FA adapter.
 ACCOUNT_ADAPTER = "allauth_2fa.adapter.OTPAdapter"
@@ -248,7 +251,6 @@ WSGI_APPLICATION = "backend.app.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-SYSTEM_ENV = os.environ.get("SYSTEM_ENV", None)
 
 DATABASES = {
     "default": {
