@@ -2,7 +2,6 @@
 	"compilerOptions": {
 		"target": "ESNext",
 		"module": "ESNext",
-		// if i set true using vite i have problem with vue-class-component
 		"useDefineForClassFields": false,
 		"strict": true,
 		"jsx": "preserve",

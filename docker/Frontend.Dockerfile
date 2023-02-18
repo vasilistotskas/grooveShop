@@ -6,6 +6,8 @@ RUN rm -rf ./node_modules
 RUN rm -rf ./build
 RUN rm -rf ./dist
 
-RUN npm install && npm run build:vite
+RUN npm install && \
+    npm ci && \
+    npm run build:vite
 
 ENTRYPOINT npm run dev

@@ -6,9 +6,16 @@ RUN python -m venv /py && \
     apk add --update --no-cache postgresql-client && \
     apk add --update --no-cache libffi-dev && \
     apk add --update --no-cache jpeg-dev zlib-dev && \
+    apk add --update --no-cache libc-dev && \
+    apk add --update --no-cache gcc && \
+    apk add --update --no-cache freetype-dev && \
+    apk add --update --no-cache libjpeg-turbo-dev && \
+    apk add --update --no-cache libpng-dev && \
     apk add --update --no-cache --virtual .tmp-deps \
         build-base postgresql-dev musl-dev linux-headers && \
     apk del .tmp-deps
+
+# install libfreetype6
 
 COPY ./requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt

@@ -1,5 +1,6 @@
 import { Store } from '@/store'
 import { RouteMetaBreadcrumb } from '@/Routes/Type/BreadcrumbItemType'
+import { VueI18n } from 'vue-i18n'
 
 declare module '*.md' {
 	const value: string
@@ -9,6 +10,8 @@ declare module '*.md' {
 declare module '@vue/runtime-core' {
 	interface ComponentCustomProperties {
 		$store: Store
+		$i18n: VueI18n
+		$t: VueI18n['t']
 	}
 }
 

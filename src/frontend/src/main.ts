@@ -35,7 +35,7 @@ const metaManager = createMetaManager()
 
 const app = createApp(App)
 	.use(store)
-	.use(router, axios)
+	.use(router)
 	.use(metaManager)
 	.use(metaPlugin)
 	.use(i18n)
@@ -46,9 +46,10 @@ const app = createApp(App)
 	.component('FontAwesomeLayers', FontAwesomeLayers)
 	.component('FontAwesomeLayersText', FontAwesomeLayersText)
 	.provide('emitter', emitter)
+	.provide('axios', axios)
 
 app.config.globalProperties.emitter = emitter
-
+app.config.globalProperties.$axios = axios
 router.isReady().then(() => {
 	app.mount('#app')
 })
