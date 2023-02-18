@@ -1,4 +1,5 @@
 import logging
+import os
 
 from backend.cart.service import CartService
 from backend.core import caches
@@ -13,6 +14,10 @@ class SessionTraceMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
+        # Check for the SYSTEM_ENV variable
+        if os.environ.get("SYSTEM_ENV") == "GITHUB_WORKFLOW":
+            return self.get_response(request)
+
         response = self.get_response(request)
 
         user = None

@@ -149,6 +149,7 @@ STRAWBERRY_DJANGO = {
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -163,8 +164,6 @@ MIDDLEWARE = [
     "allauth_2fa.middleware.AllauthTwoFactorMiddleware",
 ]
 
-if SYSTEM_ENV != "GITHUB_WORKFLOW":
-    MIDDLEWARE.append("django.contrib.sessions.middleware.SessionMiddleware")
 
 # Set the allauth adapter to be the 2FA adapter.
 ACCOUNT_ADAPTER = "allauth_2fa.adapter.OTPAdapter"

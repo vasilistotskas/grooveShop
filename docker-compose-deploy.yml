@@ -43,6 +43,7 @@ services:
       - USE_I18N=${USE_I18N}
       - USE_L10N=${USE_L10N}
       - USE_TZ=${USE_TZ}
+      - SYSTEM_ENV=${SYSTEM_ENV}
     depends_on:
       - db
       - redis
@@ -90,6 +91,7 @@ services:
       - USE_I18N=${USE_I18N}
       - USE_L10N=${USE_L10N}
       - USE_TZ=${USE_TZ}
+      - SYSTEM_ENV=${SYSTEM_ENV}
     depends_on:
       - backend
       - redis
@@ -135,6 +137,7 @@ services:
       - USE_I18N=${USE_I18N}
       - USE_L10N=${USE_L10N}
       - USE_TZ=${USE_TZ}
+      - SYSTEM_ENV=${SYSTEM_ENV}
     depends_on:
       - celery_worker
       - redis
@@ -185,6 +188,7 @@ services:
       - USE_I18N=${USE_I18N}
       - USE_L10N=${USE_L10N}
       - USE_TZ=${USE_TZ}
+      - SYSTEM_ENV=${SYSTEM_ENV}
     depends_on:
       - celery_worker
     networks:
