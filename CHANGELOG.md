@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.21.1 (2023-02-19)
+### Fix
+* **Front:** Minor fixes ([`e49780f`](https://github.com/vasilistotskas/grooveShop/commit/e49780fc3fbfe72429bc7cf600e8c983a03a59de))
+
 ## v0.21.0 (2023-02-19)
 ### Feature
 * **Django:Admin:** Implement mixin ExportActionMixin and model ExportModelAdmin for admin.py usage (Prototype in Product Model) and disable testing in CI. ([`89d7c0a`](https://github.com/vasilistotskas/grooveShop/commit/89d7c0a9cc38b2b0ebc90430b446a499e871c057))
