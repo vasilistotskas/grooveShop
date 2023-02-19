@@ -1,4 +1,5 @@
 import admin_thumbnails
+from backend.core.admin import ExportModelAdmin
 from backend.product.models.category import ProductCategory
 from backend.product.models.favourite import ProductFavourite
 from backend.product.models.product import Product
@@ -22,6 +23,7 @@ def category_update_action(category):
     return category_update
 
 
+@admin.register(ProductCategory)
 class CategoryAdmin(DraggableMPTTAdmin):
     mptt_indent_field = "name"
     list_display = (
@@ -66,6 +68,7 @@ class CategoryAdmin(DraggableMPTTAdmin):
     )
 
 
+@admin.register(ProductFavourite)
 class FavouriteAdmin(admin.ModelAdmin):
     list_display = ["user", "product"]
 
@@ -78,11 +81,8 @@ class ProductImageInline(admin.TabularInline):
     extra = 1
 
 
-class AppendActionException(BaseException):
-    pass
-
-
-class ProductAdmin(admin.ModelAdmin):
+@admin.register(Product)
+class ProductAdmin(ExportModelAdmin):
     list_display = [
         "id",
         "name",
@@ -114,6 +114,11 @@ class ProductAdmin(admin.ModelAdmin):
         "STATUS",
     )
 
+    actions = [
+        "export_csv",
+        "export_xml",
+    ]
+
 
 @admin.register(ProductTranslation)
 class ProductTranslationAdmin(admin.ModelAdmin):
@@ -139,6 +144,7 @@ class ProductTranslationAdmin(admin.ModelAdmin):
     save_on_top = True
 
 
+@admin.register(ProductReview)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ["comment", "status", "created_at"]
     list_filter = ["status"]
@@ -181,9 +187,3 @@ class ReviewAdmin(admin.ModelAdmin):
         "short_description",
         "Mark selected comments as unpublished",
     )
-
-
-admin.site.register(Product, ProductAdmin)
-admin.site.register(ProductCategory, CategoryAdmin)
-admin.site.register(ProductFavourite, FavouriteAdmin)
-admin.site.register(ProductReview, ReviewAdmin)
