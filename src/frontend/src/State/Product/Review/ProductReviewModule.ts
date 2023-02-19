@@ -204,8 +204,8 @@ export default class ProductReviewModule extends AppBaseModule {
 		}
 		return await api
 			.get(`product/review/?user_id=${data.userId}&product_id=${data.productId}`)
-			.then((response: AxiosResponse<ProductReviewModel>) => {
-				const data = response.data
+			.then((response: AxiosResponse<PaginatedModel<ProductReviewModel>>) => {
+				const data = response.data.results[0]
 				if (!data) {
 					this.context.commit('setUserToProductReview', new ProductReviewModel())
 					return

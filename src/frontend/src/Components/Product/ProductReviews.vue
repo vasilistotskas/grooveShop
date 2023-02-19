@@ -170,9 +170,9 @@ export default class ProductReviews
 			pageNumber: this.currentPageNumber,
 			endpointUrl: this.buildEndPointUrlForPaginatedResults(),
 			method: ApiBaseMethods.GET,
-      queryParams: {
-        product_id: this.product.id
-      }
+			queryParams: {
+				product_id: this.product.id
+			}
 		})
 
 		return this.paginationModule.fetchPaginatedResults({
@@ -182,7 +182,6 @@ export default class ProductReviews
 	}
 
 	public buildEndPointUrlForPaginatedResults(): string {
-		const product_id = this.product.id
 		return `product/review/`
 	}
 

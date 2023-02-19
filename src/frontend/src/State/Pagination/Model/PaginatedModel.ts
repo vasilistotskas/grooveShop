@@ -12,6 +12,8 @@ export default class PaginatedModel<T> extends EntityBase {
 	}
 	results!: PaginationResults<T>
 	total_pages!: PaginationTotalPages
+	page_size!: number
+	page!: number
 
 	public constructor(data?: Partial<PaginatedModel<T>>) {
 		super(data)
