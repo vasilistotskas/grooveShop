@@ -2,6 +2,17 @@
 
 <!--next-version-placeholder-->
 
+## v0.21.0 (2023-02-19)
+### Feature
+* **Django:Admin:** Implement mixin ExportActionMixin and model ExportModelAdmin for admin.py usage (Prototype in Product Model) and disable testing in CI. ([`89d7c0a`](https://github.com/vasilistotskas/grooveShop/commit/89d7c0a9cc38b2b0ebc90430b446a499e871c057))
+* **Celery:** Introduce Celery for automate tasks and cronjobs ([`3774067`](https://github.com/vasilistotskas/grooveShop/commit/377406786734cc52c5ce2d1424c07f8b691152e1))
+
+### Fix
+* **settings:** Dont use session middleware in github workflows ([`b84aff3`](https://github.com/vasilistotskas/grooveShop/commit/b84aff31c10aef2889600a93e4e678f010350b64))
+* **settings:** Dont use session middleware in github workflows ([`f4e0ade`](https://github.com/vasilistotskas/grooveShop/commit/f4e0ade91104c3d70ce888bc4f6f7b22048f3fcd))
+* **Backend:** General fixes ([`5874ca5`](https://github.com/vasilistotskas/grooveShop/commit/5874ca5d4a3a39216dbe1d6f1a74717161cabba3))
+* **Testing:** Fix broken tests and enable github workflows ci testing ([`8b629c1`](https://github.com/vasilistotskas/grooveShop/commit/8b629c11552bf115d037a9fcea4283f9dc6c2a9b))
+
 ## v0.20.0 (2023-01-17)
 ### Feature
 * **Sitemaps:** Implemented Sitemaps for blog post , category and author ([`1bf212d`](https://github.com/vasilistotskas/grooveShop/commit/1bf212d2251399846593d1dd458b8508e3460770))
