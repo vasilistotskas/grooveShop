@@ -60,7 +60,7 @@
          Install requirements for specific environment : pip install -r requirements/<env_name>.txt
 
   ### Django :
-  -     Install django : pip install djang
+  -     Install django : pip install django
         Create django project : django-admin startproject <project_name>
         Create django app : python manage.py startapp <app_name>
         Run django db migrations : python manage.py makemigrations

@@ -2,8 +2,6 @@
 ### -- tip an thelw na dw error 404 me debug afairw to route apo to front -- ###
 ### ---BLOG MAIN PAGE--- ###
 
-### Django Sitemaps ###
-
 ### ---BLOG MAIN PAGE--- ###
     + one image field --> Estimate Time: 30 Mins
     blog listing - slider with selected posts --> Estimate Time: 12 Hours
