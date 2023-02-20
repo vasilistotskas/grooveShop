@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+// locale
+const localePath = useLocalePath()
+
 const props = defineProps({
 	text: {
 		type: String,
@@ -70,7 +73,7 @@ const onClick = (event: MouseEvent) => {
 	<NuxtLink
 		v-if="to"
 		tag="a"
-		:to="to"
+		:to="localePath(to)"
 		:class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"
 	>
 		<slot>{{ text }}</slot>

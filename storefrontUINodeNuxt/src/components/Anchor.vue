@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+// locale
+const localePath = useLocalePath()
 // micro compiler
 const props = defineProps({
 	text: {
@@ -24,7 +26,7 @@ const to = toRef(props, 'to')
 	<NuxtLink
 		v-if="to"
 		tag="a"
-		:to="to"
+		:to="localePath(to)"
 		:class="`transition-colors duration-300 dark:hover:text-white hover:text-gray-900 hover:underline`"
 	>
 		<slot>{{ text }}</slot>

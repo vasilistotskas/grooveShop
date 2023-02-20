@@ -1,7 +1,5 @@
 FROM node:18.12.1-alpine as construction
 
-RUN npm install -g pnpm
-
 COPY ./docker/dev/docker_entrypoint.sh /app/docker_entrypoint.sh
 
 RUN mkdir -p /mnt/app && \

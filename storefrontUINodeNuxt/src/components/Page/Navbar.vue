@@ -64,7 +64,7 @@ const menus = computed((): IMenuItem[] => [
 					</ul>
 				</nav>
 				<div
-					class="flex space-x-4 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2]"
+					class="flex space-x-4 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2] text-gray-600 dark:text-gray-300"
 				>
 					<LanguageSwitcher />
 					<ThemeSwitcher />

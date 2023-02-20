@@ -224,6 +224,7 @@ services:
     depends_on:
       - backend
       - service-media_stream
+      - storefront_uinode_nuxt
     restart: always
     networks:
       - groovy-backbone
@@ -294,6 +295,8 @@ services:
       - ./storefrontUINodeNuxt/src/.env.development
     ports:
       - "3000:3000"
+    depends_on:
+      - backend
     networks:
       - groovy-backbone
 

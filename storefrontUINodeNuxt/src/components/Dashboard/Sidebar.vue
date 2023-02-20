@@ -8,6 +8,7 @@ export default defineComponent({
 	},
 	setup() {
 		const sidebar = ref(null)
+		const localePath = useLocalePath()
 
 		onMounted(() => {
 			// const { onScroll } = useSticky(sidebar.value, -1000)
@@ -15,7 +16,8 @@ export default defineComponent({
 		})
 
 		return {
-			sidebar
+			sidebar,
+			localePath
 		}
 	}
 })
@@ -33,7 +35,7 @@ export default defineComponent({
 			<ul>
 				<li v-for="i in 29" :key="i">
 					<Anchor
-						:to="{ name: 'dashboard' }"
+						:to="localePath('dashboard')"
 						class="group flex items-center mb-4 hover:no-underline"
 					>
 						<div

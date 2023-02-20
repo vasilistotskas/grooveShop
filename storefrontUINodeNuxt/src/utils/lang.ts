@@ -1,46 +1,57 @@
+import { LocaleObject } from '@nuxtjs/i18n/dist/runtime/composables'
 import { useI18n } from 'vue-i18n'
 
 export interface ILocales {
-	[key: string]: {
-		name: string
-		iso: string
-		flag: string
-	}
+	[key: string]: LocaleObject
 }
 
 export const availableLocales: ILocales = {
 	en: {
+		code: 'en',
 		name: 'English',
+		file: 'en.yml',
 		iso: 'en',
 		flag: '🇺🇸'
 	},
 	el: {
+		code: 'el',
 		name: 'Ελληνικά',
+		file: 'el.yml',
 		iso: 'el',
 		flag: '🇬🇷'
 	},
 	de: {
+		code: 'de',
 		name: 'Deutsch',
+		file: 'de.yml',
 		iso: 'de',
 		flag: '🇩🇪'
 	},
 	id: {
+		code: 'id',
 		name: 'Bahasa',
+		file: 'id.yml',
 		iso: 'id',
 		flag: '🇮🇩'
 	},
 	ja: {
+		code: 'ja',
 		name: '日本語',
+		file: 'ja.yml',
 		iso: 'ja',
 		flag: '🇯🇵'
 	},
 	ko: {
+		code: 'ko',
 		name: '한국어',
+		file: 'ko.yml',
 		iso: 'ko',
 		flag: '🇰🇷'
 	},
 	zh: {
+		code: 'zh',
 		name: '简体中文',
+		file: 'zh.yml',
 		iso: 'zh',
 		flag: '🇨🇳'
 	}

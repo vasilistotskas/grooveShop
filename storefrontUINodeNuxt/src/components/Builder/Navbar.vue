@@ -7,6 +7,9 @@ const navbar = ref(null)
 const showDrawer = useState<boolean>('navbar.showDrawer', () => false)
 const showOptions = useState<boolean>('navbar.showOptions', () => false)
 
+// locale
+const localePath = useLocalePath()
+
 // lifecycle
 let timer: NodeJS.Timer
 onMounted(() => {
@@ -83,7 +86,7 @@ const toggleOptions = (show?: boolean) => {
 						<NuxtLink
 							tag="a"
 							class="mr-3 flex-none overflow-hidden md:w-auto text-md font-bold text-gray-900 dark:text-gray-200"
-							:to="{ name: 'index' }"
+							:to="localePath('index')"
 						>
 							<span class="sr-only">home</span>
 							<span class="flex items-center">

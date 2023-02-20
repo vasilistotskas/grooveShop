@@ -222,6 +222,7 @@ services:
       - "8010:8010"
     depends_on:
       - backend
+      - storefront_uinode_nuxt
     restart: always
     networks:
       - groovy-backbone
@@ -290,6 +291,8 @@ services:
       - ./storefrontUINodeNuxt/src/.env.production
     ports:
       - "3000:3000"
+    depends_on:
+      - backend
     networks:
       - groovy-backbone
 

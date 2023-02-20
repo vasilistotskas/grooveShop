@@ -20,7 +20,7 @@ pages:
     description: αυτή είναι μια σελίδα ανάρτησης
   test:
     nav: δοκιμή
-    title: δοκιμή
+    title: δοκιμές
     description: αυτή είναι μια δοκιμαστική σελίδα
     counter: μετρητής
     increment: αύξηση

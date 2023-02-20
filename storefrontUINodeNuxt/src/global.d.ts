@@ -1,5 +1,5 @@
-import { IntlifyModuleOptions } from '@intlify/nuxt3'
 import { VueUseNuxtOptions } from '@vueuse/nuxt'
+import { NuxtI18nOptions } from "@nuxtjs/i18n";
 
 declare module '@nuxt/schema' {
 	interface AppConfigInput {
@@ -13,8 +13,8 @@ declare module '@nuxt/schema' {
 
 declare module 'nuxt/config' {
 	interface NuxtConfig {
-		intlify?: IntlifyModuleOptions
 		vueuse?: VueUseNuxtOptions
+    i18n?: NuxtI18nOptions
 	}
 }
 

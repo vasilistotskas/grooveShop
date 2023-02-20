@@ -28,7 +28,7 @@ export default defineNuxtConfig({
 	// modules
 	modules: [
 		'unplugin-icons/nuxt',
-		'@intlify/nuxt3',
+		'@nuxtjs/i18n',
 		'@pinia/nuxt',
 		'@vueuse/nuxt',
 		'@nuxt/devtools'
@@ -64,12 +64,64 @@ export default defineNuxtConfig({
 	},
 
 	// localization - i18n config
-	intlify: {
-		localeDir: 'locales',
+	i18n: {
+		locales: [
+			{
+				code: 'en',
+				name: 'English',
+				file: 'en.yml',
+				iso: 'en',
+				flag: '🇺🇸'
+			},
+			{
+				code: 'de',
+				name: 'Deutsch',
+				file: 'de.yml',
+				iso: 'de',
+				flag: '🇩🇪'
+			},
+			{
+				code: 'el',
+				name: 'Ελληνικά',
+				file: 'el.yml',
+				iso: 'el',
+				flag: '🇬🇷'
+			},
+			{
+				code: 'id',
+				name: 'Bahasa',
+				file: 'id.yml',
+				iso: 'id',
+				flag: '🇮🇩'
+			},
+			{
+				code: 'ja',
+				name: '日本語',
+				file: 'ja.yml',
+				iso: 'ja',
+				flag: '🇯🇵'
+			},
+			{
+				code: 'ko',
+				name: '한국어',
+				file: 'ko.yml',
+				iso: 'ko',
+				flag: '🇰🇷'
+			},
+			{
+				code: 'zh',
+				name: '简体中文',
+				file: 'zh.yml',
+				iso: 'zh',
+				flag: '🇨🇳'
+			}
+		],
+		defaultLocale: 'en',
+		langDir: 'locales/',
 		vueI18n: {
+			availableLocales: ['en', 'de', 'el', 'id', 'ja', 'ko', 'zh'],
 			locale: 'en',
-			fallbackLocale: 'en',
-			availableLocales: ['en', 'de', 'el', 'id', 'ja', 'ko']
+			fallbackLocale: 'en'
 		}
 	},
 

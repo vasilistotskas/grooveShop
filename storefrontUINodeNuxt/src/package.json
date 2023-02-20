@@ -36,15 +36,15 @@
 		"@babel/core": "^7.20.12",
 		"@headlessui/vue": "^1.7.10",
 		"@iconify/json": "^2.2.25",
-		"@intlify/nuxt3": "^0.2.4",
 		"@nuxt/devtools": "^0.1.4",
 		"@nuxt/test-utils-edge": "3.2.3-rc.0-27944210.3a832ba",
 		"@nuxtjs/eslint-config": "^12.0.0",
 		"@nuxtjs/eslint-config-typescript": "^12.0.0",
+		"@nuxtjs/i18n": "^8.0.0-beta.9",
 		"@pinia/nuxt": "^0.4.6",
+		"@tailwindcss/typography": "0.5.9",
 		"@vueuse/core": "^9.13.0",
 		"@vueuse/nuxt": "^9.13.0",
-		"@tailwindcss/typography": "0.5.9",
 		"autoprefixer": "^10.4.13",
 		"eslint": "^8.34.0",
 		"eslint-config-prettier": "^8.6.0",
@@ -74,7 +74,7 @@
 	},
 	"lint-staged": {
 		"**/*.{js,ts,vue,html}": [
-			"pnpm lint:fix"
+			"npm lint:fix"
 		]
 	},
 	"engines": {
