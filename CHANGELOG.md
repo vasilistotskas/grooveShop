@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.22.0 (2023-02-20)
+### Feature
+* **Nuxt3:** Nuxt 3 Boilerplate init ([`169bf3e`](https://github.com/vasilistotskas/grooveShop/commit/169bf3ef207d1ca47eff4990537c2dde67a5b781))
+
 ## v0.21.1 (2023-02-19)
 ### Fix
 * **Front:** Minor fixes ([`e49780f`](https://github.com/vasilistotskas/grooveShop/commit/e49780fc3fbfe72429bc7cf600e8c983a03a59de))
