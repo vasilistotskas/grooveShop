@@ -282,6 +282,21 @@ services:
     networks:
       - groovy-backbone
 
+  storefront_uinode_nuxt:
+    container_name: storefront_uinode_nuxt
+    build:
+      context: ./storefrontUINodeNuxt
+      dockerfile: ./docker/dev/StorefrontUINodeNuxtDev.Dockerfile
+    restart: "no"
+    volumes:
+      - ./storefrontUINodeNuxt/src:/mnt/app
+    env_file:
+      - ./storefrontUINodeNuxt/src/.env
+    ports:
+      - "3000:3000"
+    networks:
+      - groovy-backbone
+
   frontend:
     container_name: frontend
     image: node:lts

@@ -1,0 +1,17 @@
+{
+	// https://v3.nuxtjs.org/concepts/typescript
+	"extends": "./.nuxt/tsconfig.json",
+	"compilerOptions": {
+		"outDir": "./.output",
+		"strict": true,
+		"skipLibCheck": true,
+		"types": [
+			"@vueuse/nuxt",
+			"@intlify/nuxt3",
+			"@pinia/nuxt",
+			"unplugin-icons/types/vue"
+		],
+		"typeRoots": ["node_modules/@types", "global.d.ts", "components.d.ts"]
+	},
+	"files": ["global.d.ts", "components.d.ts"]
+}
