@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.23.0 (2023-02-20)
+### Feature
+* **I18N:** Remove intlify and use nuxtjs/i18n package + remove pnpm from docker and use npm ([`e136f06`](https://github.com/vasilistotskas/grooveShop/commit/e136f06d45fd712abfbe29abf665dd673694a62e))
+
 ## v0.22.0 (2023-02-20)
 ### Feature
 * **Nuxt3:** Nuxt 3 Boilerplate init ([`169bf3e`](https://github.com/vasilistotskas/grooveShop/commit/169bf3ef207d1ca47eff4990537c2dde67a5b781))
