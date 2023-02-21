@@ -1,5 +1,5 @@
 import { VueUseNuxtOptions } from '@vueuse/nuxt'
-import { NuxtI18nOptions } from "@nuxtjs/i18n";
+import { NuxtI18nOptions } from '@nuxtjs/i18n'
 
 declare module '@nuxt/schema' {
 	interface AppConfigInput {
@@ -14,7 +14,7 @@ declare module '@nuxt/schema' {
 declare module 'nuxt/config' {
 	interface NuxtConfig {
 		vueuse?: VueUseNuxtOptions
-    i18n?: NuxtI18nOptions
+		i18n?: NuxtI18nOptions
 	}
 }
 

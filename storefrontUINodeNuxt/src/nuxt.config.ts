@@ -53,7 +53,16 @@ export default defineNuxtConfig({
 					})
 				]
 			})
-		]
+		],
+		server: {
+			// hmr: {
+			// 	protocol: 'ws',
+			// 	host: 'localhost'
+			// },
+			watch: {
+				usePolling: process.env.NODE_ENV !== 'production'
+			}
+		}
 	},
 
 	// app config

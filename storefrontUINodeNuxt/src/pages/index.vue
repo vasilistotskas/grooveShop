@@ -119,7 +119,7 @@ const copyBash = () => {
 						<div
 							class="win-body rounded-b-lg bg-gray-200/90 dark:bg-slate-800/90 px-3 py-2 font-mono backdrop-filter backdrop-blur-lg"
 						>
-							<div>
+							<div class="text-gray-600 dark:text-gray-300">
 								$ git clone
 								https://github.com/vasilistotskas/grooveShop/storefrontUINodeNuxt
 							</div>
