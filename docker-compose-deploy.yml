@@ -291,6 +291,7 @@ services:
       - ./storefrontUINodeNuxt/src/.env.production
     ports:
       - "3000:3000"
+      - "24678:24678"
     depends_on:
       - backend
     networks:
