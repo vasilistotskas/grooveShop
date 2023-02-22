@@ -1,5 +1,5 @@
 export default defineAppConfig({
-	name: 'Nuxt 3',
+	name: 'DeepWeb',
 	author: {
 		name: 'vasilistotskas',
 		link: 'https://github.com/vasilistotskas'

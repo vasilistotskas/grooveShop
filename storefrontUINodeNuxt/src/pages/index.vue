@@ -79,7 +79,7 @@ const copyBash = () => {
 					<div class="flex space-x-4 ml-4 mt-10 justify-center md:justify-start">
 						<Button
 							size="lg"
-							text="Nuxt 3"
+							text="DeepWeb"
 							class="font-extrabold"
 							href="https://v3.nuxtjs.org"
 						/>
@@ -102,7 +102,9 @@ const copyBash = () => {
 								<div class="w-3 h-3 bg-green-500 rounded-full" />
 								<div class="w-3 h-3 bg-yellow-500 rounded-full" />
 							</div>
-							<div class="flex-1 font-bold text-center pr-12 text-sm">BASH</div>
+							<div class="flex-1 font-bold text-center pr-12 text-sm">
+								<span class="text-gray-600 dark:text-gray-300">BASH</span>
+							</div>
 							<div class="text-sm flex justify-center items-center">
 								<div class="tooltip">
 									<button

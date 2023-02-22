@@ -55,10 +55,11 @@ export default defineNuxtConfig({
 			})
 		],
 		server: {
-			// hmr: {
-			// 	protocol: 'ws',
-			// 	host: 'localhost'
-			// },
+			hmr: {
+				protocol: process.env.NODE_ENV === 'production' ? 'wss' : 'ws',
+				clientPort: process.env.NODE_ENV === 'production' ? 443 : 24678,
+				path: 'hmr/'
+			},
 			watch: {
 				usePolling: process.env.NODE_ENV !== 'production'
 			}

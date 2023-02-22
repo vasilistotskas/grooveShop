@@ -8,7 +8,7 @@ pages:
   '404':
     title: η σελίδα δεν βρέθηκε
   index:
-    title: nuxt 3[]καταπληκτική[]μίζα
+    title: DeepWeb[]καταπληκτική[]μίζα
   blank:
     nav: κενό
     title: κενή σελίδα

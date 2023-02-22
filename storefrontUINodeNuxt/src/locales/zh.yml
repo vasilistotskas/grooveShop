@@ -8,7 +8,7 @@ pages:
   '404':
     title: 找不到网页
   index:
-    title: nuxt 3[]awesome[]starter
+    title: DeepWeb[]awesome[]starter
   blank:
     nav: 空白的
     title: 空白页

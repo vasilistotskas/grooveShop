@@ -9,7 +9,7 @@ const app = useAppConfig() as AppConfigInput
 		<section class="max-w-8xl mx-auto px-4 lg:px-8 flex-1 flex w-full space-x-20">
 			<div class="w-full py-4 text-center md:text-left">
 				<div class="mb-1">
-					{{ app.name }}
+					<span class="text-gray-600 dark:text-gray-300">{{ app.name }}</span>
 				</div>
 				<div class="text-xs text-gray-600 dark:text-gray-400">
 					Copyright © 2022 <a :href="app.author.link">{{ app.author.name }}</a

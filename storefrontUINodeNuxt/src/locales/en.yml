@@ -6,7 +6,7 @@ components:
     change_theme: change theme
 pages:
   index:
-    title: nuxt 3[]awesome[]starter
+    title: DeepWeb[]awesome[]starter
   404:
     title: page not found
   blank:
@@ -60,7 +60,7 @@ pages:
       nav: home
       title: home
 banners:
-  welcome: hello, welcome to %{app_name}!
+  welcome: Welcome to %{app_name}!
 others:
   learn_more: learn more
   copy: copy

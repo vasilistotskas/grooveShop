@@ -12,7 +12,7 @@
 
 ## v0.22.0 (2023-02-20)
 ### Feature
-* **Nuxt3:** Nuxt 3 Boilerplate init ([`169bf3e`](https://github.com/vasilistotskas/grooveShop/commit/169bf3ef207d1ca47eff4990537c2dde67a5b781))
+* **Nuxt3:** DeepWeb Boilerplate init ([`169bf3e`](https://github.com/vasilistotskas/grooveShop/commit/169bf3ef207d1ca47eff4990537c2dde67a5b781))
 
 ## v0.21.1 (2023-02-19)
 ### Fix
