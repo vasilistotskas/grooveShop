@@ -291,8 +291,6 @@ services:
     restart: "no"
     volumes:
       - ./storefrontUINodeNuxt/src:/mnt/app
-    env_file:
-      - ./storefrontUINodeNuxt/src/.env
     ports:
       - "3000:3000"
       - "24678:24678"
