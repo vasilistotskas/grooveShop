@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.23.1 (2023-02-22)
+### Fix
+* **Nuxt:** Remove env_file from docker-compose file ([`08d1479`](https://github.com/vasilistotskas/grooveShop/commit/08d14798de53f0a1eafa821e12e38b4bb08814f4))
+
 ## v0.23.0 (2023-02-20)
 ### Feature
 * **I18N:** Remove intlify and use nuxtjs/i18n package + remove pnpm from docker and use npm ([`e136f06`](https://github.com/vasilistotskas/grooveShop/commit/e136f06d45fd712abfbe29abf665dd673694a62e))
