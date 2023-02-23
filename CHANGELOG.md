@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.25.0 (2023-02-23)
+### Feature
+* **Nuxt:** Vue toastification lib added as plugin, some minor fixes ([`96748d8`](https://github.com/vasilistotskas/grooveShop/commit/96748d8d2f1a10ad6ff1b472e6612abc4b330806))
+
 ## v0.24.0 (2023-02-23)
 ### Feature
 * **Nuxt:** NuxtImage and GenericModal Implemented ([`770e155`](https://github.com/vasilistotskas/grooveShop/commit/770e1550f730fbeea3fda76878acd628d2ecac1c))
