@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.24.0 (2023-02-23)
+### Feature
+* **Nuxt:** NuxtImage and GenericModal Implemented ([`770e155`](https://github.com/vasilistotskas/grooveShop/commit/770e1550f730fbeea3fda76878acd628d2ecac1c))
+
 ## v0.23.1 (2023-02-22)
 ### Fix
 * **Nuxt:** Remove env_file from docker-compose file ([`08d1479`](https://github.com/vasilistotskas/grooveShop/commit/08d14798de53f0a1eafa821e12e38b4bb08814f4))
