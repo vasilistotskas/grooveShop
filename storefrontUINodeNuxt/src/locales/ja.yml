@@ -8,7 +8,7 @@ pages:
   '404':
     title: ページが見つかりません
   index:
-    title: DeepWeb[]素晴らしい[]スターター
+    title: ディープウェブ[]素晴らしい[]スターター
   blank:
     nav: 空欄
     title: 空白ページ
@@ -60,7 +60,7 @@ pages:
       nav: 家
       title: 家
 banners:
-  welcome: こんにちは、%{app_name} へようこそ!
+  welcome: '%{app_name} へようこそ!'
 others:
   learn_more: もっと詳しく知る
   copy: コピー

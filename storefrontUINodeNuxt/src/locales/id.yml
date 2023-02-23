@@ -8,7 +8,7 @@ pages:
   '404':
     title: halaman tidak ditemukan
   index:
-    title: DeepWeb[]mengagumkan[]pemula
+    title: deepweb[]mengagumkan[]pemula
   blank:
     nav: kosong
     title: halaman kosong
@@ -62,7 +62,7 @@ pages:
       nav: rumah
       title: rumah
 banners:
-  welcome: halo, selamat datang di %{app_name}!
+  welcome: selamat datang di %{app_name}!
 others:
   learn_more: belajarlah lagi
   copy: menyalin

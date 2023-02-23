@@ -8,7 +8,7 @@ pages:
   '404':
     title: seite nicht gefunden
   index:
-    title: DeepWeb[]super[]starter
+    title: deepweb[]fantastischer[]starter
   blank:
     nav: leer
     title: leere seite
@@ -68,7 +68,7 @@ pages:
       nav: heim
       title: heim
 banners:
-  welcome: hallo, willkommen bei %{app_name}!
+  welcome: willkommen bei %{app_name}!
 others:
   learn_more: lern mehr
   copy: kopieren

@@ -74,16 +74,6 @@ const props = defineProps({
 		required: false,
 		default: 'modal-close'
 	},
-	modalOpenedTriggerHandlerId: {
-		type: String,
-		required: false,
-		default: 'modal-opened'
-	},
-	modalClosedTriggerHandlerId: {
-		type: String,
-		required: false,
-		default: 'modal-closed'
-	},
 	exitModalIconClass: {
 		type: String,
 		required: false,

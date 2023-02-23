@@ -8,21 +8,8 @@ export interface IMenuItem {
 	route?: any
 }
 
-const navbarModal = ref(null)
-const emit = defineEmits(['modal-open-navbarModal', 'modal-close-navbarModal'])
-const openModal = () => {
-	window.dispatchEvent(
-		new CustomEvent('modal-open-navbarModal', { detail: 'navbarModal' })
-	)
-	emit('modal-open-navbarModal')
-}
-const onModalOpened = () => {
-	console.log('onModalOpened')
-}
-const onModalClosed = () => {
-	console.log('onModalClosed')
-}
 const { t } = useLang()
+const toast = useToast()
 const app = useAppConfig() as AppConfigInput
 const menus = computed((): IMenuItem[] => [
 	{ type: 'link', text: t('pages.blank.nav'), route: { name: 'blank' } },
@@ -35,6 +22,22 @@ const menus = computed((): IMenuItem[] => [
 		route: { name: 'dashboard' }
 	}
 ])
+const navbarModal = ref(null)
+const emit = defineEmits(['modal-open-navbarModal', 'modal-close-navbarModal'])
+const openModal = () => {
+	window.dispatchEvent(
+		new CustomEvent('modal-open-navbarModal', { detail: 'navbarModal' })
+	)
+	emit('modal-open-navbarModal')
+}
+const onModalOpened = () => {
+	console.log('onModalOpened')
+	toast.success('onModalOpened')
+}
+const onModalClosed = () => {
+	console.log('onModalClosed')
+	toast.success('onModalClosed')
+}
 </script>
 
 <template>

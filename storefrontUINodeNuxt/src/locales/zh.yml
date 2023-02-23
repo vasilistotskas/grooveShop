@@ -8,7 +8,7 @@ pages:
   '404':
     title: 找不到网页
   index:
-    title: DeepWeb[]awesome[]starter
+    title: deepweb[]awesome[]starter
   blank:
     nav: 空白的
     title: 空白页
@@ -60,7 +60,7 @@ pages:
       nav: 家
       title: 家
 banners:
-  welcome: 您好，欢迎使用 %{app_name}！
+  welcome: 欢迎使用 %{app_name}！
 others:
   learn_more: 了解更多
   copy: 复制

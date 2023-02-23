@@ -8,7 +8,7 @@ pages:
   '404':
     title: 페이지를 찾을 수 없음
   index:
-    title: DeepWeb[]awesome[]스타터
+    title: deepweb[]awesome[]스타터
   blank:
     nav: 공백
     title: 빈 페이지
@@ -60,7 +60,7 @@ pages:
       nav: 집
       title: 집
 banners:
-  welcome: 안녕하세요, %{app_name}에 오신 것을 환영합니다!
+  welcome: '%{app_name}에 오신 것을 환영합니다!'
 others:
   learn_more: 더 알아보기
   copy: 복사

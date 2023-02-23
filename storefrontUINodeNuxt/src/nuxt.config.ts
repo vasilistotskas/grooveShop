@@ -1,12 +1,19 @@
 import UnpluginComponentsVite from 'unplugin-vue-components/vite'
 import IconsResolver from 'unplugin-icons/resolver'
-// @ts-ignore
-import { NuxtConfig } from '@nuxt/schema-edge'
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
 	// server side rendering mode
 	ssr: true,
+
+	runtimeConfig: {
+		// The private keys which are only available server-side
+		apiSecret: '123',
+		// Keys within public are also exposed client-side
+		public: {
+			apiBase: '/api/v1'
+		}
+	},
 
 	// typescripts
 	typescript: {
@@ -73,6 +80,12 @@ export default defineNuxtConfig({
 
 	// app config
 	app: {
+		head: {
+			charset: 'utf-16',
+			viewport: 'width=500, initial-scale=1',
+			title: process.env.NUXT_APP_TITLE,
+			meta: [{ name: 'description', content: process.env.NUXT_APP_DESCRIPTION }]
+		},
 		// global transition
 		pageTransition: { name: 'page', mode: 'out-in' },
 		layoutTransition: { name: 'layout', mode: 'out-in' }
