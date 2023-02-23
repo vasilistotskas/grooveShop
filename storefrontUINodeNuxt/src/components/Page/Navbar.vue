@@ -8,6 +8,20 @@ export interface IMenuItem {
 	route?: any
 }
 
+const navbarModal = ref(null)
+const emit = defineEmits(['modal-open-navbarModal', 'modal-close-navbarModal'])
+const openModal = () => {
+	window.dispatchEvent(
+		new CustomEvent('modal-open-navbarModal', { detail: 'navbarModal' })
+	)
+	emit('modal-open-navbarModal')
+}
+const onModalOpened = () => {
+	console.log('onModalOpened')
+}
+const onModalClosed = () => {
+	console.log('onModalClosed')
+}
 const { t } = useLang()
 const app = useAppConfig() as AppConfigInput
 const menus = computed((): IMenuItem[] => [
@@ -24,6 +38,39 @@ const menus = computed((): IMenuItem[] => [
 </script>
 
 <template>
+	<GenericModal
+		ref="navbarModal"
+		unique-id="navbarModal"
+		exit-modal-icon-class="fa fa-times"
+		modal-open-trigger-handler-id="modal-open-navbarModal"
+		modal-close-trigger-handler-id="modal-close-navbarModal"
+		max-width="700px"
+		max-height="100%"
+		width="auto"
+		height="auto"
+		@modal-opened="onModalOpened"
+		@modal-closed="onModalClosed"
+	>
+		<template #header>
+			<div>
+				<h2 class="text-2xl font-bold">Header</h2>
+			</div>
+		</template>
+		<template #body>
+			<div>
+				<p>Body</p>
+			</div>
+		</template>
+		<template #footer>
+			<div>
+				<p>Footer</p>
+			</div>
+		</template>
+	</GenericModal>
+
+	<!-- button that opens the modal  -->
+	<button class="text-white" @click="openModal">Open Modal</button>
+
 	<BuilderNavbar>
 		<template #banner>
 			<div class="text-white text-xs text-center py-1 px-4 lg:px-8 capitalize">
@@ -39,6 +86,7 @@ const menus = computed((): IMenuItem[] => [
 					role="navigation"
 				>
 					<ul class="flex items-center space-x-8">
+						<li></li>
 						<li v-for="(item, i) in menus" :key="i">
 							<Anchor
 								v-if="item.type === 'link'"

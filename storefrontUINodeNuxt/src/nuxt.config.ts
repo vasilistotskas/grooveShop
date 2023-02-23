@@ -14,6 +14,10 @@ export default defineNuxtConfig({
 		typeCheck: true
 	},
 
+	devtools: {
+		enabled: process.env.NODE_ENV !== 'production'
+	},
+
 	// css
 	css: ['~/assets/sass/vendor.scss', '~/assets/sass/app.scss'],
 
@@ -31,7 +35,8 @@ export default defineNuxtConfig({
 		'@nuxtjs/i18n',
 		'@pinia/nuxt',
 		'@vueuse/nuxt',
-		'@nuxt/devtools'
+		'@nuxt/devtools',
+		'@nuxt/image-edge'
 	],
 
 	// experimental features
@@ -146,4 +151,4 @@ export default defineNuxtConfig({
 			autoprefixer: {}
 		}
 	}
-}) as NuxtConfig
+})

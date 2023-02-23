@@ -1,12 +1,28 @@
+<script lang="ts" setup>
+const consoleLogImageLoaded = () => {
+	console.log('Image loaded')
+}
+</script>
+
 <template>
 	<BuilderNavbar>
 		<template #menu>
 			<div class="relative hidden lg:flex items-center ml-auto">
 				<div class="flex items-center justify-center">
 					<img
-						class="w-6 h-6 rounded-full"
+						class="rounded-full"
 						src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
 						alt="Avatar of Jonathan Reinink"
+					/>
+					<nuxt-img
+						preload
+						loading="lazy"
+						class="rounded-full"
+						src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+						alt="Avatar of Jonathan Reinink"
+						sizes="sm:100vw md:50vw lg:400px"
+						format="webp"
+						@load="consoleLogImageLoaded"
 					/>
 					<span class="ml-2 text-sm font-semibold">Alfian</span>
 					<IconUil:angle-down />

@@ -1,0 +1,281 @@
+<script lang="ts" setup>
+const props = defineProps({
+	shouldModalStartInOpenState: {
+		type: Boolean,
+		required: false,
+		default: false
+	},
+	uniqueId: {
+		type: String,
+		required: true
+	},
+	closeBtnColor: {
+		type: String,
+		required: false,
+		default: '#9A9A9B'
+	},
+	hasHeader: {
+		type: Boolean,
+		required: false,
+		default: true
+	},
+	hasFooter: {
+		type: Boolean,
+		required: false,
+		default: true
+	},
+	openDispatchEvent: {
+		type: String,
+		required: false,
+		default: 'modal-open'
+	},
+	closeDispatchEvent: {
+		type: String,
+		required: false,
+		default: 'modal-close'
+	},
+	width: {
+		type: String,
+		required: false,
+		default: '100%'
+	},
+	height: {
+		type: String,
+		required: false,
+		default: '100%'
+	},
+	maxWidth: {
+		type: String,
+		required: false,
+		default: '1190px'
+	},
+	maxHeight: {
+		type: String,
+		required: false,
+		default: '680px'
+	},
+	overflow: {
+		type: String,
+		required: false,
+		default: 'unset'
+	},
+	gap: {
+		type: String,
+		required: false,
+		default: 'unset'
+	},
+	modalOpenTriggerHandlerId: {
+		type: String,
+		required: false,
+		default: 'modal-open'
+	},
+	modalCloseTriggerHandlerId: {
+		type: String,
+		required: false,
+		default: 'modal-close'
+	},
+	modalOpenedTriggerHandlerId: {
+		type: String,
+		required: false,
+		default: 'modal-opened'
+	},
+	modalClosedTriggerHandlerId: {
+		type: String,
+		required: false,
+		default: 'modal-closed'
+	},
+	exitModalIconClass: {
+		type: String,
+		required: false,
+		default: 'lni lni-close'
+	},
+	position: {
+		type: String,
+		default: 'fixed'
+	},
+	backgroundBlur: {
+		type: String,
+		required: false,
+		default: 'blur(1rem)'
+	}
+})
+
+const isModalCurrentlyOpen = ref(props.shouldModalStartInOpenState)
+const getMyId = computed(() => `modal-${props.uniqueId}`)
+
+const emits = defineEmits(['modalOpened', 'modalClosed'])
+const openModal = () => {
+	isModalCurrentlyOpen.value = true
+	emits('modalOpened')
+}
+const closeModal = () => {
+	isModalCurrentlyOpen.value = false
+	emits('modalClosed')
+}
+
+onMounted(() => {
+	isModalCurrentlyOpen.value = props.shouldModalStartInOpenState
+	window.addEventListener(props.modalOpenTriggerHandlerId, () => {
+		openModal()
+	})
+	window.addEventListener(props.modalCloseTriggerHandlerId, () => {
+		closeModal()
+	})
+})
+</script>
+
+<template>
+	<Teleport to="body">
+		<div
+			:class="`cp-utilities-generic_modal-wrapper ${
+				isModalCurrentlyOpen ? 'open' : 'closed'
+			}`"
+		>
+			<div
+				class="cp-utilities-generic_modal-overlay"
+				:style="`backdrop-filter:${backgroundBlur};`"
+				@click="closeModal"
+			>
+				<svg
+					class="cp-utilities-generic_modal-overlay-static"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<filter :id="getMyId">
+						<feTurbulence
+							type="fractalNoise"
+							baseFrequency="0.68"
+							numOctaves="1"
+							stitchTiles="stitch"
+						/>
+					</filter>
+					<rect width="100%" height="100%" :filter="`url(#${getMyId})`" />
+				</svg>
+			</div>
+			<button
+				:style="`color: ${closeBtnColor}`"
+				class="cp-utilities-generic_modal-overlay-close"
+				type="button"
+				aria-label="Close"
+				@click="closeModal"
+			>
+				<IconEntypo:circle-with-cross></IconEntypo:circle-with-cross>
+			</button>
+			<div
+				class="cp-utilities-generic_modal"
+				:style="`position:${position}; width:${width}; height:${height}; max-height: ${maxHeight};
+          max-width: ${maxWidth}; overflow: ${overflow}; gap: ${gap};`"
+			>
+				<div v-if="hasHeader" class="cp-utilities-generic_modal-header">
+					<slot name="header" />
+				</div>
+				<div class="cp-utilities-generic_modal-body">
+					<slot name="body" />
+				</div>
+				<div v-if="hasFooter" class="cp-utilities-generic_modal-footer">
+					<slot name="footer" />
+				</div>
+			</div>
+		</div>
+	</Teleport>
+</template>
+
+<style lang="scss">
+$transitional-profile-1: all 0.2s ease-out;
+
+.cp-utilities-generic_modal {
+	visibility: hidden;
+	content-visibility: hidden;
+	z-index: 9002;
+
+	&-wrapper {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		transition: $transitional-profile-1;
+		pointer-events: none;
+		user-select: none;
+		display: grid;
+		align-items: center;
+		align-content: center;
+		justify-items: center;
+		justify-content: center;
+		z-index: 9000;
+		&.open {
+			opacity: 1;
+			pointer-events: auto;
+			user-select: initial;
+
+			.cp-utilities-generic_modal {
+				visibility: visible;
+				content-visibility: visible;
+				display: grid;
+				align-items: center;
+				width: 100%;
+				height: 100%;
+				max-height: 680px;
+				max-width: 1190px;
+				padding: 1rem;
+				background: white;
+				border-radius: 10px;
+				@media screen and (max-width: 1200px) {
+					max-height: unset;
+				}
+				@media screen and (max-width: 767px) {
+					max-width: 100% !important;
+					padding: 0;
+				}
+			}
+		}
+	}
+	&-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 1;
+		z-index: 1001;
+		transition: $transitional-profile-1;
+
+		&-static {
+			width: 100%;
+			height: 100%;
+			opacity: 0.23;
+		}
+
+		&-close {
+			background: white;
+			border-radius: 20px;
+			border: none;
+			position: absolute;
+			top: 1rem;
+			right: 1rem;
+			cursor: pointer;
+			color: #ef1b1b;
+			z-index: 9999;
+			transition: $transitional-profile-1;
+			span {
+				i {
+					font-weight: 900;
+				}
+			}
+			&:hover {
+				transform: scale(1.5);
+			}
+			&:active {
+				transform: scale(0.8);
+			}
+		}
+	}
+	&-body {
+		display: grid;
+		transition: all 0.5s ease;
+	}
+	&-header {
+		position: relative;
+	}
+}
+</style>

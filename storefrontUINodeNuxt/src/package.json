@@ -37,6 +37,7 @@
 		"@headlessui/vue": "^1.7.10",
 		"@iconify/json": "^2.2.26",
 		"@nuxt/devtools": "^0.1.6",
+		"@nuxt/image-edge": "^1.0.0-27919678.2f5b64b",
 		"@nuxt/test-utils-edge": "3.2.3-rc.0-27949872.7479d46",
 		"@nuxtjs/eslint-config": "^12.0.0",
 		"@nuxtjs/eslint-config-typescript": "^12.0.0",

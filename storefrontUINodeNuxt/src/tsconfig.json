@@ -5,7 +5,14 @@
 		"outDir": "./.output",
 		"strict": true,
 		"skipLibCheck": true,
-		"types": ["@vueuse/nuxt", "@nuxtjs/i18n", "@pinia/nuxt", "unplugin-icons/types/vue"],
+		"types": [
+			"@vueuse/nuxt",
+			"@nuxtjs/i18n",
+			"@pinia/nuxt",
+			"@nuxt/image-edge",
+			"@nuxt/devtools",
+			"unplugin-icons/types/vue"
+		],
 		"typeRoots": ["node_modules/@types", "global.d.ts", "components.d.ts"]
 	},
 	"files": ["global.d.ts", "components.d.ts"]
