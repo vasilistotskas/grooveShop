@@ -1,28 +1,20 @@
+from typing import Dict
+from typing import Type
+
+from backend.core.api.serializers import BaseExpandSerializer
+from backend.product.models.category import ProductCategory
 from backend.product.models.product import Product
 from backend.product.models.product import ProductImages
-from drf_spectacular.utils import extend_schema_field
+from backend.product.serializers.category import ProductCategorySerializer
+from backend.vat.models import Vat
+from backend.vat.serializers import VatSerializer
 from rest_framework import serializers
+from rest_framework.relations import PrimaryKeyRelatedField
 
 
-class ProductImagesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProductImages
-        fields = (
-            "id",
-            "is_main",
-            "product_image_absolute_url",
-            "product_image_filename",
-        )
-
-
-class ProductSerializer(serializers.ModelSerializer):
-    images = serializers.SerializerMethodField("get_product_images")
-
-    @extend_schema_field(serializers.ListSerializer(child=ProductImagesSerializer()))
-    def get_product_images(self, product: Product) -> ProductImagesSerializer:
-        qs = ProductImages.objects.filter(product=product)
-        serializer = ProductImagesSerializer(qs, many=True)
-        return serializer.data
+class ProductSerializer(BaseExpandSerializer):
+    category = PrimaryKeyRelatedField(queryset=ProductCategory.objects.all())
+    vat = PrimaryKeyRelatedField(queryset=Vat.objects.all())
 
     class Meta:
         model = Product
@@ -45,6 +37,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "weight",
             "seo_title",
             "seo_description",
+            "seo_keywords",
             "uuid",
             "discount_percent",
             "discount_value",
@@ -55,5 +48,33 @@ class ProductSerializer(serializers.ModelSerializer):
             "main_image_filename",
             "review_average",
             "review_counter",
-            "images",
         )
+
+    def get_expand_fields(self) -> Dict[str, Type[serializers.ModelSerializer]]:
+        return {"category": ProductCategorySerializer, "vat": VatSerializer}
+
+
+class ProductImagesSerializer(BaseExpandSerializer):
+    product = PrimaryKeyRelatedField(queryset=Product.objects.all())
+
+    class Meta:
+        model = ProductImages
+        fields = (
+            "id",
+            "title",
+            "product",
+            "image",
+            "thumbnail",
+            "is_main",
+            "product_image_absolute_url",
+            "product_image_filename",
+            "created_at",
+            "updated_at",
+            "uuid",
+            "sort_order",
+        )
+
+    def get_expand_fields(self) -> Dict[str, Type[serializers.ModelSerializer]]:
+        return {
+            "product": ProductSerializer,
+        }

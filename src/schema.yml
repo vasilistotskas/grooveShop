@@ -27,13 +27,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserAccount'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/UserAccount'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserAccount'
+          application/json:
             schema:
               $ref: '#/components/schemas/UserAccount'
         required: true
@@ -103,13 +103,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogAuthor'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogAuthor'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogAuthor'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogAuthor'
         required: true
@@ -194,13 +194,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogAuthor'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogAuthor'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogAuthor'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogAuthor'
         required: true
@@ -249,13 +249,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogAuthor'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogAuthor'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogAuthor'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogAuthor'
         required: true
@@ -282,13 +282,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedBlogAuthor'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedBlogAuthor'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBlogAuthor'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedBlogAuthor'
       security:
@@ -367,13 +367,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogAuthor'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogAuthor'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogAuthor'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogAuthor'
         required: true
@@ -407,13 +407,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedBlogAuthor'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedBlogAuthor'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBlogAuthor'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedBlogAuthor'
       security:
@@ -506,13 +506,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogCategory'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogCategory'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogCategory'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogCategory'
         required: true
@@ -597,13 +597,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogCategory'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogCategory'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogCategory'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogCategory'
         required: true
@@ -652,13 +652,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogCategory'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogCategory'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogCategory'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogCategory'
         required: true
@@ -685,13 +685,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedBlogCategory'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedBlogCategory'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBlogCategory'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedBlogCategory'
       security:
@@ -770,13 +770,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogCategory'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogCategory'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogCategory'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogCategory'
         required: true
@@ -810,13 +810,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedBlogCategory'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedBlogCategory'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBlogCategory'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedBlogCategory'
       security:
@@ -913,13 +913,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogComment'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogComment'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogComment'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogComment'
         required: true
@@ -1008,13 +1008,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogComment'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogComment'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogComment'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogComment'
         required: true
@@ -1063,13 +1063,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogComment'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogComment'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogComment'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogComment'
         required: true
@@ -1096,13 +1096,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedBlogComment'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedBlogComment'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBlogComment'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedBlogComment'
       security:
@@ -1181,13 +1181,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogComment'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogComment'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogComment'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogComment'
         required: true
@@ -1221,13 +1221,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedBlogComment'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedBlogComment'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBlogComment'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedBlogComment'
       security:
@@ -1332,13 +1332,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogPost'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogPost'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogPost'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogPost'
         required: true
@@ -1435,13 +1435,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogPost'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogPost'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogPost'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogPost'
         required: true
@@ -1490,13 +1490,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogPost'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogPost'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogPost'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogPost'
         required: true
@@ -1523,13 +1523,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedBlogPost'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedBlogPost'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBlogPost'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedBlogPost'
       security:
@@ -1608,13 +1608,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogPost'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogPost'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogPost'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogPost'
         required: true
@@ -1648,13 +1648,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedBlogPost'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedBlogPost'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBlogPost'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedBlogPost'
       security:
@@ -1705,13 +1705,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogPost'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogPost'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogPost'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogPost'
         required: true
@@ -1746,13 +1746,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogPost'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogPost'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogPost'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogPost'
         required: true
@@ -1780,13 +1780,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogPost'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogPost'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogPost'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogPost'
         required: true
@@ -1821,13 +1821,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogPost'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogPost'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogPost'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogPost'
         required: true
@@ -1901,13 +1901,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogTag'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogTag'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogTag'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogTag'
         required: true
@@ -1996,13 +1996,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogTag'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogTag'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogTag'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogTag'
         required: true
@@ -2051,13 +2051,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogTag'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogTag'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogTag'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogTag'
         required: true
@@ -2084,13 +2084,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedBlogTag'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedBlogTag'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBlogTag'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedBlogTag'
       security:
@@ -2169,13 +2169,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogTag'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/BlogTag'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BlogTag'
+          application/json:
             schema:
               $ref: '#/components/schemas/BlogTag'
         required: true
@@ -2209,13 +2209,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedBlogTag'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedBlogTag'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedBlogTag'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedBlogTag'
       security:
@@ -2275,13 +2275,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Cart'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Cart'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Cart'
+          application/json:
             schema:
               $ref: '#/components/schemas/Cart'
       security:
@@ -2301,13 +2301,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedCart'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedCart'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCart'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedCart'
       security:
@@ -2370,13 +2370,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Cart'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Cart'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Cart'
+          application/json:
             schema:
               $ref: '#/components/schemas/Cart'
       security:
@@ -2404,13 +2404,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedCart'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedCart'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCart'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedCart'
       security:
@@ -2472,13 +2472,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CartItem'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/CartItem'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+          application/json:
             schema:
               $ref: '#/components/schemas/CartItem'
         required: true
@@ -2537,13 +2537,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CartItem'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/CartItem'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+          application/json:
             schema:
               $ref: '#/components/schemas/CartItem'
         required: true
@@ -2592,13 +2592,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CartItem'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/CartItem'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+          application/json:
             schema:
               $ref: '#/components/schemas/CartItem'
         required: true
@@ -2625,13 +2625,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedCartItem'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedCartItem'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCartItem'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedCartItem'
       security:
@@ -2710,13 +2710,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CartItem'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/CartItem'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CartItem'
+          application/json:
             schema:
               $ref: '#/components/schemas/CartItem'
         required: true
@@ -2750,13 +2750,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedCartItem'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedCartItem'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCartItem'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedCartItem'
       security:
@@ -2801,13 +2801,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Order'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Order'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/json:
             schema:
               $ref: '#/components/schemas/Order'
         required: true
@@ -2889,13 +2889,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Country'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Country'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Country'
+          application/json:
             schema:
               $ref: '#/components/schemas/Country'
         required: true
@@ -2992,13 +2992,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Country'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Country'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Country'
+          application/json:
             schema:
               $ref: '#/components/schemas/Country'
         required: true
@@ -3049,13 +3049,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Country'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Country'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Country'
+          application/json:
             schema:
               $ref: '#/components/schemas/Country'
         required: true
@@ -3083,13 +3083,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedCountry'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedCountry'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCountry'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedCountry'
       security:
@@ -3171,13 +3171,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Country'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Country'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Country'
+          application/json:
             schema:
               $ref: '#/components/schemas/Country'
         required: true
@@ -3212,13 +3212,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedCountry'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedCountry'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCountry'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedCountry'
       security:
@@ -3352,13 +3352,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PayWay'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PayWay'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PayWay'
+          application/json:
             schema:
               $ref: '#/components/schemas/PayWay'
         required: true
@@ -3419,13 +3419,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PayWay'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PayWay'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PayWay'
+          application/json:
             schema:
               $ref: '#/components/schemas/PayWay'
         required: true
@@ -3458,13 +3458,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedPayWay'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedPayWay'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPayWay'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedPayWay'
       security:
@@ -3568,13 +3568,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Product'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Product'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/json:
             schema:
               $ref: '#/components/schemas/Product'
         required: true
@@ -3671,13 +3671,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Product'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Product'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/json:
             schema:
               $ref: '#/components/schemas/Product'
         required: true
@@ -3726,13 +3726,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Product'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Product'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/json:
             schema:
               $ref: '#/components/schemas/Product'
         required: true
@@ -3759,13 +3759,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedProduct'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedProduct'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProduct'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedProduct'
       security:
@@ -3844,13 +3844,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Product'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Product'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/json:
             schema:
               $ref: '#/components/schemas/Product'
         required: true
@@ -3884,13 +3884,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedProduct'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedProduct'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProduct'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedProduct'
       security:
@@ -3941,13 +3941,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Product'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Product'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/json:
             schema:
               $ref: '#/components/schemas/Product'
         required: true
@@ -3982,13 +3982,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Product'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Product'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Product'
+          application/json:
             schema:
               $ref: '#/components/schemas/Product'
         required: true
@@ -4039,10 +4039,6 @@ paths:
         description: A search term.
         schema:
           type: string
-      - in: query
-        name: tags
-        schema:
-          type: string
       tags:
       - api
       security:
@@ -4062,13 +4058,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProductCategory'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/ProductCategory'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductCategory'
+          application/json:
             schema:
               $ref: '#/components/schemas/ProductCategory'
         required: true
@@ -4126,10 +4122,6 @@ paths:
         description: A search term.
         schema:
           type: string
-      - in: query
-        name: tags
-        schema:
-          type: string
       tags:
       - api
       security:
@@ -4157,13 +4149,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProductCategory'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/ProductCategory'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductCategory'
+          application/json:
             schema:
               $ref: '#/components/schemas/ProductCategory'
         required: true
@@ -4212,13 +4204,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProductCategory'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/ProductCategory'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductCategory'
+          application/json:
             schema:
               $ref: '#/components/schemas/ProductCategory'
         required: true
@@ -4245,13 +4237,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedProductCategory'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedProductCategory'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductCategory'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedProductCategory'
       security:
@@ -4330,13 +4322,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProductCategory'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/ProductCategory'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductCategory'
+          application/json:
             schema:
               $ref: '#/components/schemas/ProductCategory'
         required: true
@@ -4370,13 +4362,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedProductCategory'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedProductCategory'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductCategory'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedProductCategory'
       security:
@@ -4471,13 +4463,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProductFavourite'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/ProductFavourite'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductFavourite'
+          application/json:
             schema:
               $ref: '#/components/schemas/ProductFavourite'
         required: true
@@ -4562,13 +4554,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProductFavourite'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/ProductFavourite'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductFavourite'
+          application/json:
             schema:
               $ref: '#/components/schemas/ProductFavourite'
         required: true
@@ -4613,13 +4605,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProductFavourite'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/ProductFavourite'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductFavourite'
+          application/json:
             schema:
               $ref: '#/components/schemas/ProductFavourite'
         required: true
@@ -4644,13 +4636,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedProductFavourite'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedProductFavourite'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductFavourite'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedProductFavourite'
       security:
@@ -4723,13 +4715,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProductFavourite'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/ProductFavourite'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductFavourite'
+          application/json:
             schema:
               $ref: '#/components/schemas/ProductFavourite'
         required: true
@@ -4761,13 +4753,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedProductFavourite'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedProductFavourite'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductFavourite'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedProductFavourite'
       security:
@@ -4860,13 +4852,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProductReview'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/ProductReview'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductReview'
+          application/json:
             schema:
               $ref: '#/components/schemas/ProductReview'
         required: true
@@ -4954,13 +4946,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProductReview'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/ProductReview'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductReview'
+          application/json:
             schema:
               $ref: '#/components/schemas/ProductReview'
         required: true
@@ -5008,13 +5000,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProductReview'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/ProductReview'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductReview'
+          application/json:
             schema:
               $ref: '#/components/schemas/ProductReview'
         required: true
@@ -5040,13 +5032,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedProductReview'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedProductReview'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductReview'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedProductReview'
       security:
@@ -5123,13 +5115,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProductReview'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/ProductReview'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductReview'
+          application/json:
             schema:
               $ref: '#/components/schemas/ProductReview'
         required: true
@@ -5162,13 +5154,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedProductReview'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedProductReview'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductReview'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedProductReview'
       security:
@@ -5263,13 +5255,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Region'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Region'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Region'
+          application/json:
             schema:
               $ref: '#/components/schemas/Region'
         required: true
@@ -5358,13 +5350,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Region'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Region'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Region'
+          application/json:
             schema:
               $ref: '#/components/schemas/Region'
         required: true
@@ -5415,13 +5407,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Region'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Region'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Region'
+          application/json:
             schema:
               $ref: '#/components/schemas/Region'
         required: true
@@ -5449,13 +5441,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedRegion'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedRegion'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRegion'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedRegion'
       security:
@@ -5537,13 +5529,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Region'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Region'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Region'
+          application/json:
             schema:
               $ref: '#/components/schemas/Region'
         required: true
@@ -5578,13 +5570,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedRegion'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedRegion'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRegion'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedRegion'
       security:
@@ -5748,13 +5740,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserAccount'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/UserAccount'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserAccount'
+          application/json:
             schema:
               $ref: '#/components/schemas/UserAccount'
         required: true
@@ -5782,13 +5774,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserAccount'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/UserAccount'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserAccount'
+          application/json:
             schema:
               $ref: '#/components/schemas/UserAccount'
         required: true
@@ -5860,13 +5852,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Slide'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Slide'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Slide'
+          application/json:
             schema:
               $ref: '#/components/schemas/Slide'
         required: true
@@ -5955,13 +5947,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Slide'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Slide'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Slide'
+          application/json:
             schema:
               $ref: '#/components/schemas/Slide'
         required: true
@@ -6010,13 +6002,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Slide'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Slide'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Slide'
+          application/json:
             schema:
               $ref: '#/components/schemas/Slide'
         required: true
@@ -6043,13 +6035,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedSlide'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedSlide'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSlide'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedSlide'
       security:
@@ -6128,13 +6120,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Slide'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Slide'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Slide'
+          application/json:
             schema:
               $ref: '#/components/schemas/Slide'
         required: true
@@ -6168,13 +6160,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedSlide'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedSlide'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSlide'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedSlide'
       security:
@@ -6267,13 +6259,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Slider'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Slider'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Slider'
+          application/json:
             schema:
               $ref: '#/components/schemas/Slider'
         required: true
@@ -6358,13 +6350,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Slider'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Slider'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Slider'
+          application/json:
             schema:
               $ref: '#/components/schemas/Slider'
         required: true
@@ -6413,13 +6405,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Slider'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Slider'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Slider'
+          application/json:
             schema:
               $ref: '#/components/schemas/Slider'
         required: true
@@ -6446,13 +6438,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedSlider'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedSlider'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSlider'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedSlider'
       security:
@@ -6531,13 +6523,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Slider'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Slider'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Slider'
+          application/json:
             schema:
               $ref: '#/components/schemas/Slider'
         required: true
@@ -6571,13 +6563,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedSlider'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedSlider'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSlider'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedSlider'
       security:
@@ -6683,13 +6675,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Tip'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Tip'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tip'
+          application/json:
             schema:
               $ref: '#/components/schemas/Tip'
         required: true
@@ -6787,13 +6779,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Tip'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Tip'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tip'
+          application/json:
             schema:
               $ref: '#/components/schemas/Tip'
         required: true
@@ -6842,13 +6834,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Tip'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Tip'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tip'
+          application/json:
             schema:
               $ref: '#/components/schemas/Tip'
         required: true
@@ -6875,13 +6867,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedTip'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedTip'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTip'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedTip'
       security:
@@ -6960,13 +6952,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Tip'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Tip'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Tip'
+          application/json:
             schema:
               $ref: '#/components/schemas/Tip'
         required: true
@@ -7000,13 +6992,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedTip'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedTip'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTip'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedTip'
       security:
@@ -7097,13 +7089,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserAccount'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/UserAccount'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserAccount'
+          application/json:
             schema:
               $ref: '#/components/schemas/UserAccount'
         required: true
@@ -7184,13 +7176,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserAccount'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/UserAccount'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserAccount'
+          application/json:
             schema:
               $ref: '#/components/schemas/UserAccount'
         required: true
@@ -7235,13 +7227,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserAccount'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/UserAccount'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserAccount'
+          application/json:
             schema:
               $ref: '#/components/schemas/UserAccount'
         required: true
@@ -7266,13 +7258,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedUserAccount'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedUserAccount'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserAccount'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedUserAccount'
       security:
@@ -7345,13 +7337,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserAccount'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/UserAccount'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserAccount'
+          application/json:
             schema:
               $ref: '#/components/schemas/UserAccount'
         required: true
@@ -7383,13 +7375,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedUserAccount'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedUserAccount'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserAccount'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedUserAccount'
       security:
@@ -7555,13 +7547,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserAddress'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/UserAddress'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserAddress'
+          application/json:
             schema:
               $ref: '#/components/schemas/UserAddress'
         required: true
@@ -7685,13 +7677,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserAddress'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/UserAddress'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserAddress'
+          application/json:
             schema:
               $ref: '#/components/schemas/UserAddress'
         required: true
@@ -7736,13 +7728,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserAddress'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/UserAddress'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserAddress'
+          application/json:
             schema:
               $ref: '#/components/schemas/UserAddress'
         required: true
@@ -7767,13 +7759,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedUserAddress'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedUserAddress'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserAddress'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedUserAddress'
       security:
@@ -7846,13 +7838,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserAddress'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/UserAddress'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserAddress'
+          application/json:
             schema:
               $ref: '#/components/schemas/UserAddress'
         required: true
@@ -7884,13 +7876,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedUserAddress'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedUserAddress'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserAddress'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedUserAddress'
       security:
@@ -7979,13 +7971,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Vat'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Vat'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Vat'
+          application/json:
             schema:
               $ref: '#/components/schemas/Vat'
         required: true
@@ -8070,13 +8062,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Vat'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Vat'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Vat'
+          application/json:
             schema:
               $ref: '#/components/schemas/Vat'
         required: true
@@ -8125,13 +8117,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Vat'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Vat'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Vat'
+          application/json:
             schema:
               $ref: '#/components/schemas/Vat'
         required: true
@@ -8158,13 +8150,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedVat'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedVat'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedVat'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedVat'
       security:
@@ -8243,13 +8235,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Vat'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Vat'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Vat'
+          application/json:
             schema:
               $ref: '#/components/schemas/Vat'
         required: true
@@ -8283,13 +8275,13 @@ paths:
       - api
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedVat'
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchedVat'
           multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedVat'
+          application/json:
             schema:
               $ref: '#/components/schemas/PatchedVat'
       security:
@@ -8377,10 +8369,6 @@ components:
           type: string
           maxLength: 50
           pattern: ^[-a-zA-Z0-9_]+$
-        image:
-          type: string
-          format: uri
-          nullable: true
         created_at:
           type: string
           format: date-time
@@ -8428,10 +8416,8 @@ components:
             type: integer
         user:
           type: integer
-          nullable: true
         post:
           type: integer
-          nullable: true
         created_at:
           type: string
           format: date-time
@@ -8449,6 +8435,7 @@ components:
       required:
       - content
       - id
+      - likes
       - number_of_likes
       - post
       - updated_at
@@ -8477,24 +8464,18 @@ components:
           type: string
           nullable: true
           maxLength: 150
-        image:
-          type: string
-          format: uri
-          nullable: true
         likes:
           type: array
           items:
             type: integer
         category:
           type: integer
-          nullable: true
         tags:
           type: array
           items:
             type: integer
         author:
           type: integer
-          nullable: true
         status:
           $ref: '#/components/schemas/BlogPostStatusEnum'
         featured:
@@ -8536,7 +8517,9 @@ components:
           type: integer
           readOnly: true
       required:
+      - author
       - body
+      - category
       - get_post_tags_count
       - id
       - likes
@@ -8545,6 +8528,7 @@ components:
       - number_of_comments
       - number_of_likes
       - slug
+      - tags
       - title
       - updated_at
       - uuid
@@ -8689,11 +8673,30 @@ components:
         regions:
           type: array
           items:
-            $ref: '#/components/schemas/Region'
+            type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        sort_order:
+          type: integer
+          readOnly: true
+          nullable: true
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
       required:
       - alpha_2
       - alpha_3
       - name
+      - regions
+      - sort_order
+      - updated_at
+      - uuid
     FloorEnum:
       enum:
       - 0
@@ -9284,10 +9287,6 @@ components:
           type: string
           maxLength: 50
           pattern: ^[-a-zA-Z0-9_]+$
-        image:
-          type: string
-          format: uri
-          nullable: true
         created_at:
           type: string
           format: date-time
@@ -9326,10 +9325,8 @@ components:
             type: integer
         user:
           type: integer
-          nullable: true
         post:
           type: integer
-          nullable: true
         created_at:
           type: string
           format: date-time
@@ -9367,24 +9364,18 @@ components:
           type: string
           nullable: true
           maxLength: 150
-        image:
-          type: string
-          format: uri
-          nullable: true
         likes:
           type: array
           items:
             type: integer
         category:
           type: integer
-          nullable: true
         tags:
           type: array
           items:
             type: integer
         author:
           type: integer
-          nullable: true
         status:
           $ref: '#/components/schemas/BlogPostStatusEnum'
         featured:
@@ -9538,7 +9529,22 @@ components:
         regions:
           type: array
           items:
-            $ref: '#/components/schemas/Region'
+            type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        sort_order:
+          type: integer
+          readOnly: true
+          nullable: true
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
     PatchedPayWay:
       type: object
       properties:
@@ -9554,6 +9560,21 @@ components:
           type: string
           format: decimal
           pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        sort_order:
+          type: integer
+          readOnly: true
+          nullable: true
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
     PatchedProduct:
       type: object
       properties:
@@ -9569,7 +9590,6 @@ components:
           pattern: ^[-a-zA-Z0-9_]+$
         category:
           type: integer
-          nullable: true
         absolute_url:
           type: string
           readOnly: true
@@ -9583,7 +9603,6 @@ components:
           nullable: true
         vat:
           type: integer
-          nullable: true
         vat_percent:
           oneOf:
           - type: number
@@ -9626,6 +9645,10 @@ components:
           type: string
           nullable: true
           maxLength: 300
+        seo_keywords:
+          type: string
+          nullable: true
+          maxLength: 255
         uuid:
           type: string
           format: uuid
@@ -9665,8 +9688,7 @@ components:
         images:
           type: array
           items:
-            $ref: '#/components/schemas/ProductImages'
-          readOnly: true
+            type: integer
     PatchedProductCategory:
       type: object
       properties:
@@ -9704,11 +9726,6 @@ components:
         parent:
           type: integer
           nullable: true
-        tags:
-          type: string
-          nullable: true
-          description: SEO keywords
-          maxLength: 100
         level:
           type: integer
           readOnly: true
@@ -9721,6 +9738,29 @@ components:
         recursive_product_count:
           type: integer
           readOnly: true
+        seo_title:
+          type: string
+          nullable: true
+          maxLength: 70
+        seo_description:
+          type: string
+          nullable: true
+          maxLength: 300
+        seo_keywords:
+          type: string
+          nullable: true
+          maxLength: 255
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
     PatchedProductFavourite:
       type: object
       properties:
@@ -9731,6 +9771,17 @@ components:
           type: integer
         product:
           type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
     PatchedProductReview:
       type: object
       properties:
@@ -9758,16 +9809,27 @@ components:
           type: string
           format: date-time
           readOnly: true
+        published_at:
+          type: string
+          format: date-time
+          nullable: true
+        is_published:
+          type: boolean
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
     PatchedRegion:
       type: object
       properties:
         alpha:
           type: string
           maxLength: 10
-        sort_order:
-          type: integer
-          readOnly: true
-          nullable: true
+        alpha_2:
+          type: string
+        name:
+          type: string
+          maxLength: 100
         created_at:
           type: string
           format: date-time
@@ -9775,15 +9837,14 @@ components:
           type: string
           format: date-time
           readOnly: true
+        sort_order:
+          type: integer
+          readOnly: true
+          nullable: true
         uuid:
           type: string
           format: uuid
           readOnly: true
-        name:
-          type: string
-          maxLength: 100
-        alpha_2:
-          type: string
     PatchedSlide:
       type: object
       properties:
@@ -9838,6 +9899,21 @@ components:
           type: string
           format: uri
           nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        sort_order:
+          type: integer
+          readOnly: true
+          nullable: true
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
     PatchedSlider:
       type: object
       properties:
@@ -9876,21 +9952,10 @@ components:
         slides:
           type: array
           items:
-            $ref: '#/components/schemas/Slide'
-          readOnly: true
+            type: integer
     PatchedTip:
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-          readOnly: true
         title:
           type: string
           maxLength: 200
@@ -9908,6 +9973,21 @@ components:
           maxLength: 200
         active:
           type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        sort_order:
+          type: integer
+          readOnly: true
+          nullable: true
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
     PatchedUserAccount:
       type: object
       properties:
@@ -9961,6 +10041,26 @@ components:
           readOnly: true
         main_image_filename:
           type: string
+          readOnly: true
+        is_superuser:
+          type: boolean
+          title: Superuser status
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
+        last_login:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        uuid:
+          type: string
+          format: uuid
           readOnly: true
     PatchedUserAddress:
       type: object
@@ -10030,16 +10130,18 @@ components:
           type: integer
         country:
           type: string
-          nullable: true
         region:
           type: string
-          nullable: true
     PatchedVat:
       type: object
       properties:
         id:
           type: integer
           readOnly: true
+        value:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,1})?$
         created_at:
           type: string
           format: date-time
@@ -10051,10 +10153,6 @@ components:
           type: string
           format: uuid
           readOnly: true
-        value:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,1})?$
     PayWay:
       type: object
       properties:
@@ -10070,8 +10168,26 @@ components:
           type: string
           format: decimal
           pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        sort_order:
+          type: integer
+          readOnly: true
+          nullable: true
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
       required:
       - name
+      - sort_order
+      - updated_at
+      - uuid
     PayWayEnum:
       enum:
       - Credit Card
@@ -10094,7 +10210,6 @@ components:
           pattern: ^[-a-zA-Z0-9_]+$
         category:
           type: integer
-          nullable: true
         absolute_url:
           type: string
           readOnly: true
@@ -10108,7 +10223,6 @@ components:
           nullable: true
         vat:
           type: integer
-          nullable: true
         vat_percent:
           oneOf:
           - type: number
@@ -10151,6 +10265,10 @@ components:
           type: string
           nullable: true
           maxLength: 300
+        seo_keywords:
+          type: string
+          nullable: true
+          maxLength: 255
         uuid:
           type: string
           format: uuid
@@ -10190,10 +10308,10 @@ components:
         images:
           type: array
           items:
-            $ref: '#/components/schemas/ProductImages'
-          readOnly: true
+            type: integer
       required:
       - absolute_url
+      - category
       - discount_value
       - final_price
       - id
@@ -10208,6 +10326,7 @@ components:
       - slug
       - updated_at
       - uuid
+      - vat
       - vat_percent
       - vat_value
     ProductCategory:
@@ -10247,11 +10366,6 @@ components:
         parent:
           type: integer
           nullable: true
-        tags:
-          type: string
-          nullable: true
-          description: SEO keywords
-          maxLength: 100
         level:
           type: integer
           readOnly: true
@@ -10263,6 +10377,29 @@ components:
           readOnly: true
         recursive_product_count:
           type: integer
+          readOnly: true
+        seo_title:
+          type: string
+          nullable: true
+          maxLength: 70
+        seo_description:
+          type: string
+          nullable: true
+          maxLength: 300
+        seo_keywords:
+          type: string
+          nullable: true
+          maxLength: 255
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        uuid:
+          type: string
+          format: uuid
           readOnly: true
       required:
       - absolute_url
@@ -10278,6 +10415,8 @@ components:
       - recursive_product_count
       - slug
       - tree_id
+      - updated_at
+      - uuid
     ProductFavourite:
       type: object
       properties:
@@ -10288,28 +10427,23 @@ components:
           type: integer
         product:
           type: integer
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
       required:
       - id
       - product
+      - updated_at
       - user
-    ProductImages:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        is_main:
-          type: boolean
-        product_image_absolute_url:
-          type: string
-          readOnly: true
-        product_image_filename:
-          type: string
-          readOnly: true
-      required:
-      - id
-      - product_image_absolute_url
-      - product_image_filename
+      - uuid
     ProductReview:
       type: object
       properties:
@@ -10337,12 +10471,23 @@ components:
           type: string
           format: date-time
           readOnly: true
+        published_at:
+          type: string
+          format: date-time
+          nullable: true
+        is_published:
+          type: boolean
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
       required:
       - id
       - product
       - rate
       - updated_at
       - user
+      - uuid
     ProductReviewStatusEnum:
       enum:
       - New
@@ -10368,10 +10513,11 @@ components:
         alpha:
           type: string
           maxLength: 10
-        sort_order:
-          type: integer
-          readOnly: true
-          nullable: true
+        alpha_2:
+          type: string
+        name:
+          type: string
+          maxLength: 100
         created_at:
           type: string
           format: date-time
@@ -10379,15 +10525,14 @@ components:
           type: string
           format: date-time
           readOnly: true
+        sort_order:
+          type: integer
+          readOnly: true
+          nullable: true
         uuid:
           type: string
           format: uuid
           readOnly: true
-        name:
-          type: string
-          maxLength: 100
-        alpha_2:
-          type: string
       required:
       - alpha
       - alpha_2
@@ -10449,6 +10594,21 @@ components:
           type: string
           format: uri
           nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        sort_order:
+          type: integer
+          readOnly: true
+          nullable: true
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
       required:
       - date_end
       - date_start
@@ -10457,6 +10617,9 @@ components:
       - main_image_filename
       - order_position
       - slider
+      - sort_order
+      - updated_at
+      - uuid
     Slider:
       type: object
       properties:
@@ -10495,8 +10658,7 @@ components:
         slides:
           type: array
           items:
-            $ref: '#/components/schemas/Slide'
-          readOnly: true
+            type: integer
       required:
       - id
       - main_image_absolute_url
@@ -10506,16 +10668,6 @@ components:
     Tip:
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-          readOnly: true
         title:
           type: string
           maxLength: 200
@@ -10533,13 +10685,29 @@ components:
           maxLength: 200
         active:
           type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        sort_order:
+          type: integer
+          readOnly: true
+          nullable: true
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
       required:
       - content
-      - id
       - kind
+      - sort_order
       - title
       - updated_at
       - url
+      - uuid
     UserAccount:
       type: object
       properties:
@@ -10594,6 +10762,26 @@ components:
         main_image_filename:
           type: string
           readOnly: true
+        is_superuser:
+          type: boolean
+          title: Superuser status
+          description: Designates that this user has all permissions without explicitly
+            assigning them.
+        last_login:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
       required:
       - email
       - first_name
@@ -10601,6 +10789,8 @@ components:
       - last_name
       - main_image_absolute_url
       - main_image_filename
+      - updated_at
+      - uuid
     UserAddress:
       type: object
       properties:
@@ -10669,15 +10859,15 @@ components:
           type: integer
         country:
           type: string
-          nullable: true
         region:
           type: string
-          nullable: true
       required:
       - city
+      - country
       - first_name
       - id
       - last_name
+      - region
       - street
       - street_number
       - title
@@ -10805,6 +10995,10 @@ components:
         id:
           type: integer
           readOnly: true
+        value:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,1})?$
         created_at:
           type: string
           format: date-time
@@ -10816,10 +11010,6 @@ components:
           type: string
           format: uuid
           readOnly: true
-        value:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,1})?$
       required:
       - id
       - updated_at

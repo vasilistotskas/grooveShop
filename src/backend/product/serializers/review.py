@@ -26,6 +26,9 @@ class ProductReviewSerializer(BaseExpandSerializer):
             "status",
             "created_at",
             "updated_at",
+            "published_at",
+            "is_published",
+            "uuid",
         )
 
     def get_expand_fields(self) -> Dict[str, Type[serializers.ModelSerializer]]:

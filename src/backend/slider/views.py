@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from backend.core.api.views import BaseExpandView
 from backend.slider.models import Slide
 from backend.slider.models import Slider
 from backend.slider.paginators import SlidePagination
@@ -68,7 +69,7 @@ class SliderViewSet(ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class SlideViewSet(ModelViewSet):
+class SlideViewSet(BaseExpandView, ModelViewSet):
     queryset = Slide.objects.all()
     serializer_class = SlideSerializer
     pagination_class = SlidePagination

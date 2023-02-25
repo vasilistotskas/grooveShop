@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from backend.core.api.views import BaseExpandView
 from backend.product.models.favourite import ProductFavourite
 from backend.product.paginators.favourite import ProductFavouritePagination
 from backend.product.serializers.favourite import ProductFavouriteSerializer
@@ -14,7 +15,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 
-class ProductFavouriteViewSet(ModelViewSet):
+class ProductFavouriteViewSet(BaseExpandView, ModelViewSet):
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = ProductFavourite.objects.all()

@@ -1,6 +1,7 @@
 import os
 
 from backend.core.models import TimeStampMixinModel
+from backend.core.models import UUIDModel
 from backend.product.models.product import Product
 from backend.seo.models import SeoModel
 from django.conf import settings
@@ -10,7 +11,7 @@ from mptt.models import MPTTModel
 from tinymce.models import HTMLField
 
 
-class ProductCategory(MPTTModel, TimeStampMixinModel, SeoModel):
+class ProductCategory(MPTTModel, UUIDModel, TimeStampMixinModel, SeoModel):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(unique=True)
@@ -26,9 +27,6 @@ class ProductCategory(MPTTModel, TimeStampMixinModel, SeoModel):
     )
     parent = TreeForeignKey(
         "self", blank=True, null=True, related_name="children", on_delete=models.CASCADE
-    )
-    tags = models.CharField(
-        max_length=100, null=True, blank=True, help_text="SEO keywords"
     )
 
     class Meta:

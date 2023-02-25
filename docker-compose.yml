@@ -52,147 +52,147 @@ services:
     networks:
       - groovy-backbone
 
-  celery_worker:
-    container_name: celery_worker
-    build:
-      context: .
-      dockerfile: docker/Backend.Dockerfile
-    restart: always
-    command: >
-      sh -c "python manage.py wait_for_db &&
-             celery -A backend.app worker -l info --logfile=./src/logs/celery.log"
-    volumes:
-      - ./src:/src
-      - web-static:/src/backend/static
-      - web-media:/src/backend/media
-      - web-files:/src/backend/files
-      - web-logs:/src/backend/logs
-    environment:
-      - DEBUG=${DEBUG}
-      - SECRET_KEY=${SECRET_KEY}
-      - APPEND_SLASH=${APPEND_SLASH}
-      - BACKEND_BASE_URL=${BACKEND_BASE_URL}
-      - APP_BASE_URL=${APP_BASE_URL}
-      - VITE_APP_URL=${VITE_APP_URL}
-      - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
-      - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASS}
-      - EMAIL_BACKEND=${EMAIL_BACKEND}
-      - EMAIL_HOST=${EMAIL_HOST}
-      - EMAIL_PORT=${EMAIL_PORT}
-      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
-      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
-      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
-      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
-      - LANGUAGE_CODE=${LANGUAGE_CODE}
-      - TIME_ZONE=${TIME_ZONE}
-      - USE_I18N=${USE_I18N}
-      - USE_L10N=${USE_L10N}
-      - USE_TZ=${USE_TZ}
-      - SYSTEM_ENV=${SYSTEM_ENV}
-    depends_on:
-      - backend
-      - redis
-    networks:
-      - groovy-backbone
-
-  celery_beat:
-    container_name: celery_beat
-    build:
-      context: .
-      dockerfile: docker/Backend.Dockerfile
-    restart: always
-    command: >
-      sh -c "python manage.py wait_for_db &&
-             celery -A backend.app beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler"
-    volumes:
-      - ./src:/src
-      - web-static:/src/backend/static
-      - web-media:/src/backend/media
-      - web-files:/src/backend/files
-      - web-logs:/src/backend/logs
-    environment:
-      - DEBUG=${DEBUG}
-      - SECRET_KEY=${SECRET_KEY}
-      - APPEND_SLASH=${APPEND_SLASH}
-      - BACKEND_BASE_URL=${BACKEND_BASE_URL}
-      - APP_BASE_URL=${APP_BASE_URL}
-      - VITE_APP_URL=${VITE_APP_URL}
-      - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
-      - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASS}
-      - EMAIL_BACKEND=${EMAIL_BACKEND}
-      - EMAIL_HOST=${EMAIL_HOST}
-      - EMAIL_PORT=${EMAIL_PORT}
-      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
-      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
-      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
-      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
-      - LANGUAGE_CODE=${LANGUAGE_CODE}
-      - TIME_ZONE=${TIME_ZONE}
-      - USE_I18N=${USE_I18N}
-      - USE_L10N=${USE_L10N}
-      - USE_TZ=${USE_TZ}
-      - SYSTEM_ENV=${SYSTEM_ENV}
-    depends_on:
-      - celery_worker
-      - redis
-      - backend
-      - db
-    networks:
-      - groovy-backbone
-
-  celery_flower:
-    container_name: celery_flower
-    build:
-      context: .
-      dockerfile: docker/Backend.Dockerfile
-    restart: always
-    command: >
-      sh -c "python manage.py wait_for_db &&
-             celery -A backend.app --broker=redis://redis:6379/0 flower --port=5555"
-    ports:
-      - "5555:5555"
-    volumes:
-      - ./src:/src
-      - .env:/.env
-      - web-static:/src/backend/static
-      - web-media:/src/backend/media
-      - web-files:/src/backend/files
-      - web-logs:/src/backend/logs
-    environment:
-      - DEBUG=${DEBUG}
-      - SECRET_KEY=${SECRET_KEY}
-      - APPEND_SLASH=${APPEND_SLASH}
-      - BACKEND_BASE_URL=${BACKEND_BASE_URL}
-      - APP_BASE_URL=${APP_BASE_URL}
-      - VITE_APP_URL=${VITE_APP_URL}
-      - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
-      - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASS}
-      - EMAIL_BACKEND=${EMAIL_BACKEND}
-      - EMAIL_HOST=${EMAIL_HOST}
-      - EMAIL_PORT=${EMAIL_PORT}
-      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
-      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
-      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
-      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
-      - LANGUAGE_CODE=${LANGUAGE_CODE}
-      - TIME_ZONE=${TIME_ZONE}
-      - USE_I18N=${USE_I18N}
-      - USE_L10N=${USE_L10N}
-      - USE_TZ=${USE_TZ}
-      - SYSTEM_ENV=${SYSTEM_ENV}
-    depends_on:
-      - celery_worker
-    networks:
-      - groovy-backbone
+#  celery_worker:
+#    container_name: celery_worker
+#    build:
+#      context: .
+#      dockerfile: docker/Backend.Dockerfile
+#    restart: always
+#    command: >
+#      sh -c "python manage.py wait_for_db &&
+#             celery -A backend.app worker -l info --logfile=./src/logs/celery.log"
+#    volumes:
+#      - ./src:/src
+#      - web-static:/src/backend/static
+#      - web-media:/src/backend/media
+#      - web-files:/src/backend/files
+#      - web-logs:/src/backend/logs
+#    environment:
+#      - DEBUG=${DEBUG}
+#      - SECRET_KEY=${SECRET_KEY}
+#      - APPEND_SLASH=${APPEND_SLASH}
+#      - BACKEND_BASE_URL=${BACKEND_BASE_URL}
+#      - APP_BASE_URL=${APP_BASE_URL}
+#      - VITE_APP_URL=${VITE_APP_URL}
+#      - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
+#      - DB_HOST=${DB_HOST}
+#      - DB_NAME=${DB_NAME}
+#      - DB_USER=${DB_USER}
+#      - DB_PASS=${DB_PASS}
+#      - EMAIL_BACKEND=${EMAIL_BACKEND}
+#      - EMAIL_HOST=${EMAIL_HOST}
+#      - EMAIL_PORT=${EMAIL_PORT}
+#      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+#      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+#      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+#      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
+#      - LANGUAGE_CODE=${LANGUAGE_CODE}
+#      - TIME_ZONE=${TIME_ZONE}
+#      - USE_I18N=${USE_I18N}
+#      - USE_L10N=${USE_L10N}
+#      - USE_TZ=${USE_TZ}
+#      - SYSTEM_ENV=${SYSTEM_ENV}
+#    depends_on:
+#      - backend
+#      - redis
+#    networks:
+#      - groovy-backbone
+#
+#  celery_beat:
+#    container_name: celery_beat
+#    build:
+#      context: .
+#      dockerfile: docker/Backend.Dockerfile
+#    restart: always
+#    command: >
+#      sh -c "python manage.py wait_for_db &&
+#             celery -A backend.app beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler"
+#    volumes:
+#      - ./src:/src
+#      - web-static:/src/backend/static
+#      - web-media:/src/backend/media
+#      - web-files:/src/backend/files
+#      - web-logs:/src/backend/logs
+#    environment:
+#      - DEBUG=${DEBUG}
+#      - SECRET_KEY=${SECRET_KEY}
+#      - APPEND_SLASH=${APPEND_SLASH}
+#      - BACKEND_BASE_URL=${BACKEND_BASE_URL}
+#      - APP_BASE_URL=${APP_BASE_URL}
+#      - VITE_APP_URL=${VITE_APP_URL}
+#      - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
+#      - DB_HOST=${DB_HOST}
+#      - DB_NAME=${DB_NAME}
+#      - DB_USER=${DB_USER}
+#      - DB_PASS=${DB_PASS}
+#      - EMAIL_BACKEND=${EMAIL_BACKEND}
+#      - EMAIL_HOST=${EMAIL_HOST}
+#      - EMAIL_PORT=${EMAIL_PORT}
+#      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+#      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+#      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+#      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
+#      - LANGUAGE_CODE=${LANGUAGE_CODE}
+#      - TIME_ZONE=${TIME_ZONE}
+#      - USE_I18N=${USE_I18N}
+#      - USE_L10N=${USE_L10N}
+#      - USE_TZ=${USE_TZ}
+#      - SYSTEM_ENV=${SYSTEM_ENV}
+#    depends_on:
+#      - celery_worker
+#      - redis
+#      - backend
+#      - db
+#    networks:
+#      - groovy-backbone
+#
+#  celery_flower:
+#    container_name: celery_flower
+#    build:
+#      context: .
+#      dockerfile: docker/Backend.Dockerfile
+#    restart: always
+#    command: >
+#      sh -c "python manage.py wait_for_db &&
+#             celery -A backend.app --broker=redis://redis:6379/0 flower --port=5555"
+#    ports:
+#      - "5555:5555"
+#    volumes:
+#      - ./src:/src
+#      - .env:/.env
+#      - web-static:/src/backend/static
+#      - web-media:/src/backend/media
+#      - web-files:/src/backend/files
+#      - web-logs:/src/backend/logs
+#    environment:
+#      - DEBUG=${DEBUG}
+#      - SECRET_KEY=${SECRET_KEY}
+#      - APPEND_SLASH=${APPEND_SLASH}
+#      - BACKEND_BASE_URL=${BACKEND_BASE_URL}
+#      - APP_BASE_URL=${APP_BASE_URL}
+#      - VITE_APP_URL=${VITE_APP_URL}
+#      - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
+#      - DB_HOST=${DB_HOST}
+#      - DB_NAME=${DB_NAME}
+#      - DB_USER=${DB_USER}
+#      - DB_PASS=${DB_PASS}
+#      - EMAIL_BACKEND=${EMAIL_BACKEND}
+#      - EMAIL_HOST=${EMAIL_HOST}
+#      - EMAIL_PORT=${EMAIL_PORT}
+#      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+#      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+#      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+#      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
+#      - LANGUAGE_CODE=${LANGUAGE_CODE}
+#      - TIME_ZONE=${TIME_ZONE}
+#      - USE_I18N=${USE_I18N}
+#      - USE_L10N=${USE_L10N}
+#      - USE_TZ=${USE_TZ}
+#      - SYSTEM_ENV=${SYSTEM_ENV}
+#    depends_on:
+#      - celery_worker
+#    networks:
+#      - groovy-backbone
 
 
   db:
@@ -299,37 +299,37 @@ services:
     networks:
       - groovy-backbone
 
-  frontend:
-    container_name: frontend
-    image: node:lts
-    build:
-      context: .
-      dockerfile: docker/Frontend.Dockerfile
-    volumes:
-      - ./src/frontend/var:/frontend/var
-      - ./src/frontend/env:/frontend/env
-      - ./src/frontend/public:/frontend/public
-      - ./src/frontend/src:/frontend/src
-      - ./src/frontend/.eslintrc.cjs:/frontend/.eslintrc.cjs
-      - ./src/frontend/.prettierrc.yaml:/frontend/.prettierrc.yaml
-      - ./src/frontend/src/Apollo/ApolloProvider.ts:/frontend/src/Apollo/ApolloProvider.ts
-      - ./src/frontend/babel.config.cjs:/frontend/babel.config.cjs
-      - ./src/frontend/index.html:/frontend/index.html
-      - ./src/frontend/package.json:/frontend/package.json
-      - ./src/frontend/package-lock.json:/frontend/package-lock.json
-      - ./src/frontend/tsconfig.json:/frontend/tsconfig.json
-      - ./src/frontend/tsconfig.node.json:/frontend/tsconfig.node.json
-      - ./src/frontend/typings.d.ts:/frontend/typings.d.ts
-      - ./src/frontend/vite.config.ts:/frontend/vite.config.ts
-      - ./src/frontend/vue.config.cjs:/frontend/vue.config.cjs
-      - /src/node_modules
-    restart: "always"
-    ports:
-      - "8011:8011"
-    depends_on:
-      - backend
-    networks:
-      - groovy-backbone
+#  frontend:
+#    container_name: frontend
+#    image: node:lts
+#    build:
+#      context: .
+#      dockerfile: docker/Frontend.Dockerfile
+#    volumes:
+#      - ./src/frontend/var:/frontend/var
+#      - ./src/frontend/env:/frontend/env
+#      - ./src/frontend/public:/frontend/public
+#      - ./src/frontend/src:/frontend/src
+#      - ./src/frontend/.eslintrc.cjs:/frontend/.eslintrc.cjs
+#      - ./src/frontend/.prettierrc.yaml:/frontend/.prettierrc.yaml
+#      - ./src/frontend/src/Apollo/ApolloProvider.ts:/frontend/src/Apollo/ApolloProvider.ts
+#      - ./src/frontend/babel.config.cjs:/frontend/babel.config.cjs
+#      - ./src/frontend/index.html:/frontend/index.html
+#      - ./src/frontend/package.json:/frontend/package.json
+#      - ./src/frontend/package-lock.json:/frontend/package-lock.json
+#      - ./src/frontend/tsconfig.json:/frontend/tsconfig.json
+#      - ./src/frontend/tsconfig.node.json:/frontend/tsconfig.node.json
+#      - ./src/frontend/typings.d.ts:/frontend/typings.d.ts
+#      - ./src/frontend/vite.config.ts:/frontend/vite.config.ts
+#      - ./src/frontend/vue.config.cjs:/frontend/vue.config.cjs
+#      - /src/node_modules
+#    restart: "always"
+#    ports:
+#      - "8011:8011"
+#    depends_on:
+#      - backend
+#    networks:
+#      - groovy-backbone
 
 volumes:
   postgres_data:

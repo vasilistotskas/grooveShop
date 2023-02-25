@@ -5,4 +5,15 @@ from rest_framework import serializers
 class TipSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tip
-        fields = "__all__"
+        fields = (
+            "title",
+            "content",
+            "kind",
+            "icon",
+            "url",
+            "active",
+            "created_at",
+            "updated_at",
+            "sort_order",
+            "uuid",
+        )

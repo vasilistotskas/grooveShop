@@ -8,10 +8,14 @@ export default defineNuxtConfig({
 
 	runtimeConfig: {
 		// The private keys which are only available server-side
-		apiSecret: '123',
+		apiSecret: process.env.NUXT_APP_PRIVATE_API_SECRET,
+
 		// Keys within public are also exposed client-side
 		public: {
-			apiBase: '/api/v1'
+			domainName: process.env.NUXT_APP_PUBLIC_DOMAIN_NAME,
+			canonicalUrl: process.env.NUXT_APP_PUBLIC_CANONICAL_URL,
+			baseUrl: process.env.NUXT_APP_PUBLIC_BASE_URL,
+			apiBaseUrl: process.env.NUXT_APP_PUBLIC_API_BASE_URL
 		}
 	},
 
@@ -22,14 +26,14 @@ export default defineNuxtConfig({
 	},
 
 	devtools: {
-		enabled: process.env.NODE_ENV !== 'production'
+		enabled: true
 	},
 
 	// css
 	css: ['~/assets/sass/vendor.scss', '~/assets/sass/app.scss'],
 
 	// plugins
-	plugins: ['~/plugins/navbar.ts'],
+	plugins: ['~/plugins/navbar.ts', '~/plugins/auth.ts'],
 
 	// build
 	build: {
@@ -46,9 +50,18 @@ export default defineNuxtConfig({
 		'@nuxt/image-edge'
 	],
 
+	pinia: {
+		autoImports: [
+			// automatically imports `defineStore`
+			'defineStore', // import { defineStore } from 'pinia'
+			['defineStore', 'definePiniaStore'] // import { defineStore as definePiniaStore } from 'pinia'
+		]
+	},
+
 	// experimental features
 	experimental: {
-		reactivityTransform: false
+		reactivityTransform: false,
+		componentIslands: true
 	},
 
 	// auto import components
@@ -65,17 +78,17 @@ export default defineNuxtConfig({
 					})
 				]
 			})
-		],
-		server: {
-			hmr: {
-				protocol: process.env.NODE_ENV === 'production' ? 'wss' : 'ws',
-				clientPort: process.env.NODE_ENV === 'production' ? 443 : 24678,
-				path: 'hmr/'
-			},
-			watch: {
-				usePolling: process.env.NODE_ENV !== 'production'
-			}
-		}
+		]
+		// server: {
+		// 	hmr: {
+		// 		protocol: process.env.NODE_ENV === 'production' ? 'wss' : 'ws',
+		// 		clientPort: process.env.NODE_ENV === 'production' ? 443 : 24678,
+		// 		path: 'hmr/'
+		// 	},
+		// 	watch: {
+		// 		usePolling: process.env.NODE_ENV !== 'production'
+		// 	}
+		// }
 	},
 
 	// app config

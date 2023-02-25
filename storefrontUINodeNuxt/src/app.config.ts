@@ -1,7 +1,14 @@
 export default defineAppConfig({
 	name: 'DeepWeb',
+	description: 'DeepWeb Description',
 	author: {
 		name: 'vasilistotskas',
-		link: 'https://github.com/vasilistotskas'
+		github_url: 'https://github.com/vasilistotskas'
+	},
+	public: {
+		domainName: 'localhost',
+		canonicalUrl: 'http://www.localhost:8010',
+		baseUrl: 'http://localhost:8010',
+		apiBaseUrl: 'http://localhost:8010/api/v1'
 	}
 })

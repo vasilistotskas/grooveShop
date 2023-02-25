@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import json
 
+from backend.product.models.category import ProductCategory
 from backend.product.models.product import Product
 from backend.product.serializers.product import ProductSerializer
+from backend.vat.models import Vat
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
@@ -34,6 +36,12 @@ class ProductViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_valid(self):
+        category = ProductCategory.objects.create(
+            name="test",
+            slug="test",
+            description="test",
+        )
+        vat = Vat.objects.create(value=20)
         payload = {
             "name": "test_one",
             "slug": "test_one",
@@ -44,6 +52,8 @@ class ProductViewSetTestCase(TestCase):
             "discount_percent": 0.00,
             "hits": 0,
             "weight": 0.00,
+            "category": category.pk,
+            "vat": vat.pk,
         }
         response = self.client.post(
             "/api/v1/product/", json.dumps(payload), content_type="application/json"
@@ -80,6 +90,12 @@ class ProductViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_update_valid(self):
+        category = ProductCategory.objects.create(
+            name="test_two",
+            slug="test_two",
+            description="test_two",
+        )
+        vat = Vat.objects.create(value=25)
         payload = {
             "name": "test_one",
             "slug": "test_one",
@@ -90,6 +106,8 @@ class ProductViewSetTestCase(TestCase):
             "discount_percent": 0.00,
             "hits": 0,
             "weight": 0.00,
+            "category": category.pk,
+            "vat": vat.pk,
         }
         response = self.client.put(
             f"/api/v1/product/{self.product.pk}/",

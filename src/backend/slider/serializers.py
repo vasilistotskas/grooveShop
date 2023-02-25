@@ -1,10 +1,32 @@
+from typing import Dict
+from typing import Type
+
+from backend.core.api.serializers import BaseExpandSerializer
 from backend.slider.models import Slide
 from backend.slider.models import Slider
-from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
+from rest_framework.relations import PrimaryKeyRelatedField
 
 
-class SlideSerializer(serializers.ModelSerializer):
+class SliderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Slider
+        fields = (
+            "id",
+            "name",
+            "url",
+            "title",
+            "description",
+            "main_image_absolute_url",
+            "main_image_filename",
+            "thumbnail",
+            "video",
+        )
+
+
+class SlideSerializer(BaseExpandSerializer):
+    slider = PrimaryKeyRelatedField(queryset=Slider.objects.all())
+
     class Meta:
         model = Slide
         fields = (
@@ -23,27 +45,13 @@ class SlideSerializer(serializers.ModelSerializer):
             "main_image_absolute_url",
             "main_image_filename",
             "thumbnail",
+            "created_at",
+            "updated_at",
+            "sort_order",
+            "uuid",
         )
 
-
-class SliderSerializer(serializers.ModelSerializer):
-    slides = serializers.SerializerMethodField("get_slides")
-
-    @extend_schema_field(serializers.ListSerializer(child=SlideSerializer()))
-    def get_slides(self, obj: Slider) -> SlideSerializer:
-        return SlideSerializer(obj.slide_slider.all(), many=True).data
-
-    class Meta:
-        model = Slider
-        fields = (
-            "id",
-            "name",
-            "url",
-            "title",
-            "description",
-            "main_image_absolute_url",
-            "main_image_filename",
-            "thumbnail",
-            "video",
-            "slides",
-        )
+    def get_expand_fields(self) -> Dict[str, Type[serializers.ModelSerializer]]:
+        return {
+            "slider": SliderSerializer,
+        }

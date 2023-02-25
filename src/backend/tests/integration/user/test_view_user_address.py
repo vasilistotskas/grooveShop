@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 
+from backend.country.models import Country
+from backend.region.models import Region
 from backend.user.models import UserAccount
 from backend.user.models import UserAddress
 from backend.user.serializers.address import UserAddressSerializer
@@ -40,6 +42,18 @@ class UserAddressViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_valid(self):
+        country = Country.objects.create(
+            alpha_2="CY",
+            alpha_3="CYP",
+            name="Cyprus",
+            iso_cc=123,
+            phone_code=423,
+        )
+        region = Region.objects.create(
+            alpha="CY-I",
+            alpha_2=country,
+            name="Cyprus Region",
+        )
         payload = {
             "user": self.user.pk,
             "title": "test_one",
@@ -50,6 +64,8 @@ class UserAddressViewSetTestCase(TestCase):
             "city": "test_one",
             "zipcode": "test_one",
             "is_main": True,
+            "country": country.pk,
+            "region": region.pk,
         }
         response = self.client.post(
             "/api/v1/user/address/",
@@ -90,6 +106,18 @@ class UserAddressViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_update_valid(self):
+        country = Country.objects.create(
+            alpha_2="GR",
+            alpha_3="GRC",
+            name="Greece",
+            iso_cc=300,
+            phone_code=30,
+        )
+        region = Region.objects.create(
+            alpha="GR-I",
+            alpha_2=country,
+            name="Central Greece",
+        )
         payload = {
             "user": self.user.pk,
             "title": "test_one",
@@ -100,12 +128,15 @@ class UserAddressViewSetTestCase(TestCase):
             "city": "test_one",
             "zipcode": "test_one",
             "is_main": True,
+            "country": country.pk,
+            "region": region.pk,
         }
         response = self.client.put(
             f"/api/v1/user/address/{self.user_address.pk}/",
             json.dumps(payload),
             content_type="application/json",
         )
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_update_invalid(self):

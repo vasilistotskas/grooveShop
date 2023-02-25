@@ -5,7 +5,7 @@ from rest_framework import serializers
 class UserAccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAccount
-        fields = [
+        fields = (
             "id",
             "email",
             "first_name",
@@ -21,4 +21,10 @@ class UserAccountSerializer(serializers.ModelSerializer):
             "is_staff",
             "main_image_absolute_url",
             "main_image_filename",
-        ]
+            "is_superuser",
+            "last_login",
+            "is_active",
+            "created_at",
+            "updated_at",
+            "uuid",
+        )

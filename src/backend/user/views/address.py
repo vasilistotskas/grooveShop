@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from backend.core.api.views import BaseExpandView
 from backend.user.models import UserAddress
 from backend.user.paginators.address import UserAddressPagination
 from backend.user.serializers.address import UserAddressSerializer
@@ -14,7 +15,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 
-class UserAddressViewSet(ModelViewSet):
+class UserAddressViewSet(BaseExpandView, ModelViewSet):
     authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = UserAddress.objects.all()

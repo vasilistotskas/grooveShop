@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from backend.core.api.views import BaseExpandView
 from backend.region.models import Region
 from backend.region.paginators import RegionPagination
 from backend.region.serializers import RegionSerializer
@@ -13,7 +14,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 
-class RegionViewSet(ModelViewSet):
+class RegionViewSet(BaseExpandView, ModelViewSet):
     queryset = Region.objects.all()
     serializer_class = RegionSerializer
     pagination_class = RegionPagination

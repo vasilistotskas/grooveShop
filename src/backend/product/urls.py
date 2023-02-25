@@ -1,5 +1,6 @@
 from backend.product.views.category import ProductCategoryViewSet
 from backend.product.views.favourite import ProductFavouriteViewSet
+from backend.product.views.product import ProductImagesViewSet
 from backend.product.views.product import ProductViewSet
 from backend.product.views.review import ProductReviewViewSet
 from django.urls import path
@@ -66,6 +67,22 @@ urlpatterns = [
     path(
         "product/review/<int:pk>/",
         ProductReviewViewSet.as_view(
+            {
+                "get": "retrieve",
+                "put": "update",
+                "patch": "partial_update",
+                "delete": "destroy",
+            }
+        ),
+    ),
+    # Images
+    path(
+        "product/images/",
+        ProductImagesViewSet.as_view({"get": "list", "post": "create"}),
+    ),
+    path(
+        "product/images/<int:pk>/",
+        ProductImagesViewSet.as_view(
             {
                 "get": "retrieve",
                 "put": "update",

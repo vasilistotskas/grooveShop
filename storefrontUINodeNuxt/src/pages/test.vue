@@ -98,6 +98,9 @@ const identity = useIdentity()
 					</div>
 				</div>
 			</PageSection>
+			<PageSection>
+				<FormValidation> </FormValidation>
+			</PageSection>
 		</PageBody>
 	</PageWrapper>
 </template>

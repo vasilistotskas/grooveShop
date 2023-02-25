@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { GlobalEvents } from '~/events/global'
+
 const props = defineProps({
 	shouldModalStartInOpenState: {
 		type: Boolean,
@@ -74,6 +76,16 @@ const props = defineProps({
 		required: false,
 		default: 'modal-close'
 	},
+	modalOpenedTriggerHandlerId: {
+		type: String,
+		required: false,
+		default: 'modal-opened'
+	},
+	modalClosedTriggerHandlerId: {
+		type: String,
+		required: false,
+		default: 'modal-closed'
+	},
 	exitModalIconClass: {
 		type: String,
 		required: false,
@@ -94,23 +106,30 @@ const isModalCurrentlyOpen = ref(props.shouldModalStartInOpenState)
 const getMyId = computed(() => `modal-${props.uniqueId}`)
 
 const emits = defineEmits(['modalOpened', 'modalClosed'])
-const openModal = () => {
+const bus = useEventBus<string>(GlobalEvents.GENERIC_MODAL)
+
+function openModal() {
 	isModalCurrentlyOpen.value = true
-	emits('modalOpened')
+	bus.emit(props.modalOpenedTriggerHandlerId)
 }
-const closeModal = () => {
+
+function closeModal() {
 	isModalCurrentlyOpen.value = false
-	emits('modalClosed')
+	bus.emit(props.modalClosedTriggerHandlerId)
 }
+
+bus.on((event: string) => {
+	console.log('event', event)
+	if (event === props.modalOpenTriggerHandlerId) {
+		openModal()
+	}
+	if (event === props.modalCloseTriggerHandlerId) {
+		closeModal()
+	}
+})
 
 onMounted(() => {
 	isModalCurrentlyOpen.value = props.shouldModalStartInOpenState
-	window.addEventListener(props.modalOpenTriggerHandlerId, () => {
-		openModal()
-	})
-	window.addEventListener(props.modalCloseTriggerHandlerId, () => {
-		closeModal()
-	})
 })
 </script>
 

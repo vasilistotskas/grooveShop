@@ -14,7 +14,7 @@ class CartItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CartItem
-        fields = [
+        fields = (
             "id",
             "cart",
             "product",
@@ -22,7 +22,7 @@ class CartItemSerializer(serializers.ModelSerializer):
             "total_price",
             "total_discount_value",
             "product_discount_percent",
-        ]
+        )
 
     def create(self, validated_data):
         cart = self.context.get("cart")
@@ -45,7 +45,7 @@ class CartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cart
-        fields = [
+        fields = (
             "id",
             "user",
             "total_price",
@@ -54,4 +54,4 @@ class CartSerializer(serializers.ModelSerializer):
             "total_items",
             "total_items_unique",
             "cart_items",
-        ]
+        )

@@ -1,13 +1,21 @@
 import { VueUseNuxtOptions } from '@vueuse/nuxt'
 import { NuxtI18nOptions } from '@nuxtjs/i18n'
-import { ModuleOptions } from '@nuxt/devtools'
+import { ModuleOptions as DevToolsModuleOptions } from '@nuxt/devtools'
+import { ModuleOptions as PiniaModuleOptions } from '@pinia/nuxt'
 
 declare module '@nuxt/schema' {
 	interface AppConfigInput {
-		name: string
+		name: string | undefined
+		description: string | undefined
 		author: {
-			name: string
-			link: string
+			name: string | undefined
+			github_url: string | undefined
+		}
+		public: {
+			domainName: string | undefined
+			canonicalUrl: string | undefined
+			baseUrl: string | undefined
+			apiBaseUrl: string | undefined
 		}
 	}
 }
@@ -16,7 +24,8 @@ declare module 'nuxt/config' {
 	interface NuxtConfig {
 		vueuse?: VueUseNuxtOptions
 		i18n?: NuxtI18nOptions
-		devtools?: ModuleOptions
+		devtools?: DevToolsModuleOptions
+		pinia?: PiniaModuleOptions
 	}
 }
 

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { AppConfigInput } from '@nuxt/schema'
+import { GlobalEvents } from '~/events/global'
 
 export interface IMenuItem {
 	type: 'link' | 'button'
@@ -9,7 +10,6 @@ export interface IMenuItem {
 }
 
 const { t } = useLang()
-const toast = useToast()
 const app = useAppConfig() as AppConfigInput
 const menus = computed((): IMenuItem[] => [
 	{ type: 'link', text: t('pages.blank.nav'), route: { name: 'blank' } },
@@ -23,20 +23,16 @@ const menus = computed((): IMenuItem[] => [
 	}
 ])
 const navbarModal = ref(null)
-const emit = defineEmits(['modal-open-navbarModal', 'modal-close-navbarModal'])
+const bus = useEventBus<string>(GlobalEvents.GENERIC_MODAL)
+
 const openModal = () => {
-	window.dispatchEvent(
-		new CustomEvent('modal-open-navbarModal', { detail: 'navbarModal' })
-	)
-	emit('modal-open-navbarModal')
+	bus.emit('modal-open-navbarModal')
 }
 const onModalOpened = () => {
 	console.log('onModalOpened')
-	toast.success('onModalOpened')
 }
 const onModalClosed = () => {
 	console.log('onModalClosed')
-	toast.success('onModalClosed')
 }
 </script>
 

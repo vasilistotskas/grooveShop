@@ -1,6 +1,8 @@
 import os
 
+from backend.core.models import SortableModel
 from backend.core.models import TimeStampMixinModel
+from backend.core.models import UUIDModel
 from backend.tip.enum.tip_enum import TipKindEnum
 from backend.tip.validators import validate_file_extension
 from django.conf import settings
@@ -8,7 +10,7 @@ from django.db import models
 from django.utils.safestring import mark_safe
 
 
-class Tip(TimeStampMixinModel):
+class Tip(TimeStampMixinModel, SortableModel, UUIDModel):
     title = models.CharField(max_length=200)
     content = models.TextField(max_length=1000)
     kind = models.CharField(max_length=10, choices=TipKindEnum.choices())
@@ -23,6 +25,9 @@ class Tip(TimeStampMixinModel):
 
     class Meta:
         ordering = ["-created_at"]
+
+    def get_ordering_queryset(self):
+        return Tip.objects.all()
 
     @property
     def image_tag(self):

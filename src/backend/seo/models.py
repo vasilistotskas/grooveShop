@@ -10,6 +10,9 @@ class SeoModel(models.Model):
     seo_description = models.CharField(
         max_length=300, blank=True, null=True, validators=[MaxLengthValidator(300)]
     )
+    seo_keywords = models.CharField(
+        max_length=255, blank=True, null=True, validators=[MaxLengthValidator(255)]
+    )
 
     class Meta:
         abstract = True
@@ -21,6 +24,9 @@ class SeoModelTranslation(Translation):
     )
     seo_description = models.CharField(
         max_length=300, blank=True, null=True, validators=[MaxLengthValidator(300)]
+    )
+    seo_keywords = models.CharField(
+        max_length=255, blank=True, null=True, validators=[MaxLengthValidator(255)]
     )
 
     class Meta:
