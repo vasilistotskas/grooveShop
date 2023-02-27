@@ -22,10 +22,11 @@ services:
     environment:
       - DEBUG=${DEBUG}
       - SECRET_KEY=${SECRET_KEY}
+      - SITE_NAME=${SITE_NAME}
       - APPEND_SLASH=${APPEND_SLASH}
       - BACKEND_BASE_URL=${BACKEND_BASE_URL}
       - APP_BASE_URL=${APP_BASE_URL}
-      - VITE_APP_URL=${VITE_APP_URL}
+      - NUXT_BASE_URL=${NUXT_BASE_URL}
       - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
@@ -70,10 +71,11 @@ services:
     environment:
       - DEBUG=${DEBUG}
       - SECRET_KEY=${SECRET_KEY}
+      - SITE_NAME=${SITE_NAME}
       - APPEND_SLASH=${APPEND_SLASH}
       - BACKEND_BASE_URL=${BACKEND_BASE_URL}
       - APP_BASE_URL=${APP_BASE_URL}
-      - VITE_APP_URL=${VITE_APP_URL}
+      - NUXT_BASE_URL=${NUXT_BASE_URL}
       - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
@@ -116,10 +118,11 @@ services:
     environment:
       - DEBUG=${DEBUG}
       - SECRET_KEY=${SECRET_KEY}
+      - SITE_NAME=${SITE_NAME}
       - APPEND_SLASH=${APPEND_SLASH}
       - BACKEND_BASE_URL=${BACKEND_BASE_URL}
       - APP_BASE_URL=${APP_BASE_URL}
-      - VITE_APP_URL=${VITE_APP_URL}
+      - NUXT_BASE_URL=${NUXT_BASE_URL}
       - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
@@ -167,10 +170,11 @@ services:
     environment:
       - DEBUG=${DEBUG}
       - SECRET_KEY=${SECRET_KEY}
+      - SITE_NAME=${SITE_NAME}
       - APPEND_SLASH=${APPEND_SLASH}
       - BACKEND_BASE_URL=${BACKEND_BASE_URL}
       - APP_BASE_URL=${APP_BASE_URL}
-      - VITE_APP_URL=${VITE_APP_URL}
+      - NUXT_BASE_URL=${NUXT_BASE_URL}
       - COERCE_DECIMAL_TO_STRING=${COERCE_DECIMAL_TO_STRING}
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
@@ -294,38 +298,6 @@ services:
     ports:
       - "3000:3000"
       - "24678:24678"
-    depends_on:
-      - backend
-    networks:
-      - groovy-backbone
-
-  frontend:
-    container_name: frontend
-    image: node:lts
-    build:
-      context: .
-      dockerfile: docker/Frontend.Dockerfile
-    volumes:
-      - ./src/frontend/var:/frontend/var
-      - ./src/frontend/env:/frontend/env
-      - ./src/frontend/public:/frontend/public
-      - ./src/frontend/src:/frontend/src
-      - ./src/frontend/.eslintrc.cjs:/frontend/.eslintrc.cjs
-      - ./src/frontend/.prettierrc.yaml:/frontend/.prettierrc.yaml
-      - ./src/frontend/src/Apollo/ApolloProvider.ts:/frontend/src/Apollo/ApolloProvider.ts
-      - ./src/frontend/babel.config.cjs:/frontend/babel.config.cjs
-      - ./src/frontend/index.html:/frontend/index.html
-      - ./src/frontend/package.json:/frontend/package.json
-      - ./src/frontend/package-lock.json:/frontend/package-lock.json
-      - ./src/frontend/tsconfig.json:/frontend/tsconfig.json
-      - ./src/frontend/tsconfig.node.json:/frontend/tsconfig.node.json
-      - ./src/frontend/typings.d.ts:/frontend/typings.d.ts
-      - ./src/frontend/vite.config.ts:/frontend/vite.config.ts
-      - ./src/frontend/vue.config.cjs:/frontend/vue.config.cjs
-      - /src/node_modules
-    restart: "always"
-    ports:
-      - "8011:8011"
     depends_on:
       - backend
     networks:

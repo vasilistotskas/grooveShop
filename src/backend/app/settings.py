@@ -29,54 +29,25 @@ if "celery" in sys.argv[0]:
 
 BACKEND_BASE_URL = str(os.environ.get("BACKEND_BASE_URL"))
 APP_BASE_URL = str(os.environ.get("APP_BASE_URL"))
-VITE_APP_URL = str(os.environ.get("VITE_APP_URL"))
+NUXT_BASE_URL = str(os.environ.get("NUXT_BASE_URL"))
+BASE_URL = BACKEND_BASE_URL
 
-if DEBUG:
-    BASE_URL = "http://localhost:8001"
-else:
-    BASE_URL = BACKEND_BASE_URL
-
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    "http://localhost:8001",
-    "http://localhost:3003",
-    "backend",
-    APP_BASE_URL,
-    VITE_APP_URL,
-]
+ALLOWED_HOSTS = [APP_BASE_URL]
 ALLOWED_HOSTS.extend(
     filter(
         None,
-        os.environ.get("ALLOWED_HOSTS", "").split(","),
+        os.environ.get("ALLOWED_HOSTS", "127.0.0.1").split(),
     )
 )
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = [
-    "http://localhost:8001",
-    "http://localhost:3003",
-    APP_BASE_URL,
-    VITE_APP_URL,
-]
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:8001",
-    "http://localhost:3003",
-    APP_BASE_URL,
-    VITE_APP_URL,
-]
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8001",
-    "http://localhost:3003",
-    APP_BASE_URL,
-    VITE_APP_URL,
-]
-
+CORS_ORIGIN_WHITELIST = [APP_BASE_URL, BACKEND_BASE_URL, NUXT_BASE_URL]
+CSRF_TRUSTED_ORIGINS = [APP_BASE_URL, BACKEND_BASE_URL, NUXT_BASE_URL]
+CORS_ALLOWED_ORIGINS = [APP_BASE_URL, BACKEND_BASE_URL, NUXT_BASE_URL]
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
-
 
 if DEBUG:
     import socket  # only if you haven't already imported this
@@ -170,7 +141,7 @@ ACCOUNT_ADAPTER = "allauth_2fa.adapter.OTPAdapter"
 ROOT_URLCONF = "backend.app.urls"
 
 # Site info
-SITE_NAME = "DeepWeb"
+SITE_NAME = os.environ.get("SITE_NAME", "Site Name")
 SITE_ID = 1
 
 # Slash append
@@ -183,7 +154,7 @@ AUTH_USER_MODEL = "user.UserAccount"
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 CSRF_COOKIE_SAMESITE = "Strict"
 SESSION_COOKIE_SAMESITE = "Strict"
-CSRF_COOKIE_HTTPONLY = False  # False since we will grab it via universal-cookies
+CSRF_COOKIE_HTTPONLY = False
 SESSION_COOKIE_HTTPONLY = True
 
 TEMPLATES = [
@@ -349,9 +320,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "backend/static")
 MEDIA_URL = "backend/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "backend/media")
 
-# Vue project location
-FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
-
 STATICFILES_DIRS = (BASE_DIR.joinpath("files"),)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
@@ -406,6 +374,10 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "SERVE_PERMISSIONS": ["rest_framework.permissions.AllowAny"],
+    "POSTPROCESSING_HOOKS": [
+        "drf_spectacular.contrib.djangorestframework_camel_case.camelize_serializer_fields",
+        "drf_spectacular.hooks.postprocess_schema_enums",
+    ],
 }
 
 # logs
