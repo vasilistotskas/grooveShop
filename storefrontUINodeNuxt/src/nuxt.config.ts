@@ -58,7 +58,8 @@ export default defineNuxtConfig({
 		autoImports: [
 			// automatically imports `defineStore`
 			'defineStore', // import { defineStore } from 'pinia'
-			['defineStore', 'definePiniaStore'] // import { defineStore as definePiniaStore } from 'pinia'
+			['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia',
+			'storeToRefs' // import { storeToRefs } from 'pinia'
 		]
 	},
 
@@ -82,23 +83,31 @@ export default defineNuxtConfig({
 					})
 				]
 			})
-		]
-		// server: {
-		// 	hmr: {
-		// 		protocol: process.env.NODE_ENV === 'production' ? 'wss' : 'ws',
-		// 		clientPort: process.env.NODE_ENV === 'production' ? 443 : 24678,
-		// 		path: 'hmr/'
-		// 	},
-		// 	watch: {
-		// 		usePolling: process.env.NODE_ENV !== 'production'
-		// 	}
-		// }
+		],
+		server: {
+			hmr: {
+				protocol: process.env.NODE_ENV === 'production' ? 'wss' : 'ws',
+				clientPort: 24678,
+				path: 'hmr/'
+			},
+			watch: {
+				usePolling: process.env.NODE_ENV !== 'production'
+			}
+		}
+	},
+
+	// nitro
+	nitro: {
+		compressPublicAssets: true,
+		prerender: {
+			crawlLinks: true
+		}
 	},
 
 	// app config
 	app: {
 		head: {
-			charset: 'utf-16',
+			charset: 'utf-8',
 			viewport: 'width=500, initial-scale=1',
 			title: process.env.NUXT_APP_TITLE,
 			meta: [{ name: 'description', content: process.env.NUXT_APP_DESCRIPTION }]

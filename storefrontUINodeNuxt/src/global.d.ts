@@ -25,7 +25,13 @@ declare module 'nuxt/config' {
 		vueuse?: VueUseNuxtOptions
 		i18n?: NuxtI18nOptions
 		devtools?: DevToolsModuleOptions
-		pinia?: PiniaModuleOptions
+		pinia?: PiniaModuleOptions,
+    nitro?: {
+      compressPublicAssets: boolean
+      prerender: {
+        crawlLinks: boolean
+      }
+    }
 	}
 }
 

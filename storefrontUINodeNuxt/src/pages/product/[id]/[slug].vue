@@ -1,13 +1,14 @@
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
 import { useProductStore } from '~/stores/product/product'
 import { capitalize } from '~/utils/str'
 
 const route = useRoute()
 const productId = route.params.id
-const { product, loading, error } = storeToRefs(useProductStore())
-const { fetchProduct } = useProductStore()
-fetchProduct(productId)
+const store = useProductStore()
+const { product } = storeToRefs(store)
+const { pending, error } = useLazyAsyncData('product', () =>
+	store.fetchProduct(productId)
+)
 
 definePageMeta({
 	layout: 'page'
@@ -30,10 +31,16 @@ useHead(() => ({
 <template>
 	<PageWrapper class="flex flex-col">
 		<PageHeader>
-			<PageTitle :text="$t('pages.product.title')" class="capitalize" />
+			<PageTitle :text="product?.name" class="capitalize" />
 		</PageHeader>
 		<PageBody>
-			<div></div>
+			<LoadingSkeleton v-if="pending"></LoadingSkeleton>
+			<template v-else-if="error">
+				<div>Error</div>
+			</template>
+			<template v-else>
+				<div>{{ product }}</div>
+			</template>
 		</PageBody>
 	</PageWrapper>
 </template>

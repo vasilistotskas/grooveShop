@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
 import { useCategoryStore } from '~/stores/product/category'
 
 const route = useRoute()

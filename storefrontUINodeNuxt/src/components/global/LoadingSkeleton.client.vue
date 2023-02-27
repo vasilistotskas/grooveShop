@@ -1,27 +1,76 @@
+<script lang="ts" setup>
+defineProps({
+	showImage: {
+		type: Boolean,
+		default: true
+	},
+	imageWidth: {
+		type: [Number, String],
+		default: '100%'
+	},
+	imageHeight: {
+		type: [Number, String],
+		default: '100%'
+	},
+	isCircle: {
+		type: Boolean,
+		default: false
+	},
+	showHeading: {
+		type: Boolean,
+		default: true
+	},
+	showParagraph: {
+		type: Boolean,
+		default: true
+	},
+	showFooter: {
+		type: Boolean,
+		default: true
+	}
+})
+</script>
+
 <template>
 	<div class="container">
 		<a id="card-link" class="card" target="_blank">
 			<div class="card__header">
-				<div>
-					<img id="logo-img" class="header__img skeleton" alt="" />
+				<div v-if="showImage">
+					<img
+						id="logo-img"
+						class="header__img skeleton"
+						alt="Loading image"
+						src=""
+						:style="{ borderRadius: isCircle ? '50%' : 'none' }"
+						:width="imageWidth"
+						:height="imageHeight"
+					/>
 				</div>
-				<h3 id="card-title" class="card__header header__title">
-					<div class="skeleton skeleton-text"></div>
-					<div class="skeleton skeleton-text"></div>
+				<h3 v-if="showHeading" id="card-title" class="card__header header__title">
+					<span class="skeleton skeleton-text"></span>
+					<span class="skeleton skeleton-text"></span>
 				</h3>
 			</div>
 
 			<div class="card__body">
-				<div id="card-details" class="card__body body__text">
+				<div v-if="showParagraph" id="card-details" class="card__body body__text">
 					<div class="skeleton skeleton-text skeleton-text__body"></div>
 				</div>
 
-				<div class="card__body body__img">
-					<img id="cover-img" class="skeleton" alt="" />
+				<div v-if="showImage" class="card__body body__img">
+					<img
+						id="cover-img"
+						class="skeleton"
+						alt="Loading image"
+						src=""
+						:style="{ borderRadius: isCircle ? '50%' : 'none' }"
+						:width="imageWidth"
+						:height="imageHeight"
+					/>
 				</div>
 			</div>
 
-			<div id="card-footer" class="card__footer">
+			<div v-if="showFooter" id="card-footer" class="card__footer">
 				<div class="skeleton skeleton-text skeleton-footer"></div>
 			</div>
 		</a>
@@ -113,25 +162,6 @@ img[alt] {
 
 	&:hover {
 		border-color: rgba(82, 88, 102, 0.4);
-	}
-}
-
-ion-icon {
-	font-size: 1.5rem;
-	color: #525866;
-	cursor: pointer;
-	transition: color 0.2s ease;
-
-	&:hover {
-		&:nth-of-type(1) {
-			color: #15ce5c;
-		}
-		&:nth-of-type(2) {
-			color: #15ce5c;
-		}
-		&:nth-of-type(3) {
-			color: #fa6620;
-		}
 	}
 }
 

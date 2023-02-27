@@ -9563,9 +9563,12 @@ components:
       type: object
       properties:
         price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000
+          minimum: -1000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
         product:
           type: integer
         quantity:
@@ -10320,13 +10323,19 @@ components:
         active:
           type: boolean
         cost:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
         freeForOrderAmount:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
         createdAt:
           type: string
           format: date-time
@@ -10364,9 +10373,12 @@ components:
           type: string
           nullable: true
         price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
           nullable: true
         vat:
           type: integer
@@ -10400,9 +10412,12 @@ components:
         active:
           type: boolean
         weight:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
           title: Weight (kg)
         seoTitle:
           type: string
@@ -10421,9 +10436,12 @@ components:
           format: uuid
           readOnly: true
         discountPercent:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
         discountValue:
           type: number
           format: double
@@ -10675,9 +10693,12 @@ components:
           nullable: true
           maxLength: 255
         discount:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
         buttonLabel:
           type: string
           nullable: true
@@ -10940,9 +10961,12 @@ components:
           type: integer
           readOnly: true
         value:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,1})?$
+          type: number
+          format: double
+          maximum: 10000000000
+          minimum: -10000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
         createdAt:
           type: string
           format: date-time
@@ -10962,13 +10986,19 @@ components:
         active:
           type: boolean
         cost:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
         freeForOrderAmount:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
         createdAt:
           type: string
           format: date-time
@@ -11018,9 +11048,12 @@ components:
           type: string
           nullable: true
         price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
           nullable: true
         vat:
           type: integer
@@ -11054,9 +11087,12 @@ components:
         active:
           type: boolean
         weight:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
           title: Weight (kg)
         seoTitle:
           type: string
@@ -11075,9 +11111,12 @@ components:
           format: uuid
           readOnly: true
         discountPercent:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
         discountValue:
           type: number
           format: double
@@ -11411,9 +11450,12 @@ components:
           nullable: true
           maxLength: 255
         discount:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
         buttonLabel:
           type: string
           nullable: true
@@ -11758,9 +11800,12 @@ components:
           items:
             $ref: '#/components/schemas/UserOrderItem'
         paidAmount:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000
+          minimum: -1000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
           nullable: true
         createdAt:
           type: string
@@ -11795,9 +11840,12 @@ components:
       type: object
       properties:
         price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000
+          minimum: -1000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
         product:
           $ref: '#/components/schemas/Product'
         quantity:
@@ -11837,9 +11885,12 @@ components:
           type: integer
           readOnly: true
         value:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,1})?$
+          type: number
+          format: double
+          maximum: 10000000000
+          minimum: -10000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
         createdAt:
           type: string
           format: date-time
