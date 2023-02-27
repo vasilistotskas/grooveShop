@@ -9,7 +9,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from rest_framework import generics
 from rest_framework import status
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -81,7 +80,6 @@ class Checkout(APIView):
 
 
 class UserOrdersList(generics.ListAPIView):
-    authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
     pagination_class = UserOrderListPagination
     serializer_class = UserOrderSerializer

@@ -22,6 +22,7 @@ services:
     environment:
       - DEBUG=${DEBUG}
       - SECRET_KEY=${SECRET_KEY}
+      - APP_MAIN_HOST_NAME=${APP_MAIN_HOST_NAME}
       - SITE_NAME=${SITE_NAME}
       - APPEND_SLASH=${APPEND_SLASH}
       - BACKEND_BASE_URL=${BACKEND_BASE_URL}
@@ -71,6 +72,7 @@ services:
 #    environment:
 #      - DEBUG=${DEBUG}
 #      - SECRET_KEY=${SECRET_KEY}
+#      - APP_MAIN_HOST_NAME=${APP_MAIN_HOST_NAME}
 #      - SITE_NAME=${SITE_NAME}
 #      - APPEND_SLASH=${APPEND_SLASH}
 #      - BACKEND_BASE_URL=${BACKEND_BASE_URL}
@@ -119,6 +121,7 @@ services:
 #      - DEBUG=${DEBUG}
 #      - DEBUG=${DEBUG}
 #      - SECRET_KEY=${SECRET_KEY}
+#      - APP_MAIN_HOST_NAME=${APP_MAIN_HOST_NAME}
 #      - SITE_NAME=${SITE_NAME}
 #      - APPEND_SLASH=${APPEND_SLASH}
 #      - BACKEND_BASE_URL=${BACKEND_BASE_URL}
@@ -171,6 +174,7 @@ services:
 #    environment:
 #      - DEBUG=${DEBUG}
 #      - SECRET_KEY=${SECRET_KEY}
+#      - APP_MAIN_HOST_NAME=${APP_MAIN_HOST_NAME}
 #      - SITE_NAME=${SITE_NAME}
 #      - APPEND_SLASH=${APPEND_SLASH}
 #      - BACKEND_BASE_URL=${BACKEND_BASE_URL}

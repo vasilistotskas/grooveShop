@@ -30,13 +30,14 @@ if "celery" in sys.argv[0]:
 BACKEND_BASE_URL = str(os.environ.get("BACKEND_BASE_URL"))
 APP_BASE_URL = str(os.environ.get("APP_BASE_URL"))
 NUXT_BASE_URL = str(os.environ.get("NUXT_BASE_URL"))
+APP_MAIN_HOST_NAME = str(os.environ.get("APP_MAIN_HOST_NAME"))
 BASE_URL = BACKEND_BASE_URL
 
-ALLOWED_HOSTS = [APP_BASE_URL]
+ALLOWED_HOSTS = [APP_MAIN_HOST_NAME]
 ALLOWED_HOSTS.extend(
     filter(
         None,
-        os.environ.get("ALLOWED_HOSTS", "127.0.0.1").split(),
+        os.environ.get("ALLOWED_HOSTS", "127.0.0.1").split(","),
     )
 )
 
@@ -349,6 +350,11 @@ TINYMCE_DEFAULT_CONFIG = {
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ],
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "COERCE_DECIMAL_TO_STRING": os.environ.get("COERCE_DECIMAL_TO_STRING"),
@@ -369,11 +375,21 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "GrooveShop API",
-    "DESCRIPTION": "GrooveShop API",
+    "TITLE": os.environ.get("DJANG0_SPECTACULAR_SETTINGS_TITLE"),
+    "DESCRIPTION": os.environ.get("DJANG0_SPECTACULAR_SETTINGS_DESCRIPTION"),
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
-    "SERVE_PERMISSIONS": ["rest_framework.permissions.AllowAny"],
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAuthenticated"],
+    "AUTHENTICATION_WHITELIST": [
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+    "SERVE_AUTHENTICATION": [
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
     "POSTPROCESSING_HOOKS": [
         "drf_spectacular.contrib.djangorestframework_camel_case.camelize_serializer_fields",
         "drf_spectacular.hooks.postprocess_schema_enums",

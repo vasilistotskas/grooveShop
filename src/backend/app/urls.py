@@ -13,6 +13,7 @@ from drf_spectacular.views import SpectacularAPIView
 from drf_spectacular.views import SpectacularRedocView
 from drf_spectacular.views import SpectacularSwaggerView
 from rest_framework import routers
+from rest_framework.authtoken import views
 from strawberry.django.views import AsyncGraphQLView
 from strawberry.django.views import GraphQLView
 
@@ -38,6 +39,7 @@ router.register(r"active_users", ActiveUserViewSet, basename="active_users")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/v1/api-token-auth/", views.obtain_auth_token),
     path("api/v1/", include(router.urls)),
     path("api/v1/", include("backend.product.urls")),
     path("api/v1/", include("backend.order.urls")),
@@ -54,6 +56,7 @@ urlpatterns = [
     path("api/v1/", include("backend.cart.urls")),
     path("accounts/", include("allauth_2fa.urls")),
     path("accounts/", include("allauth.urls")),
+    # GraphQL Experimental
     path("graphql/async", AsyncGraphQLView.as_view(schema=schema)),
     path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
     # admin html editor
