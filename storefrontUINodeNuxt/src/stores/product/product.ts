@@ -1,7 +1,5 @@
 import { Product } from '~/zod/product/product'
 
-const config = useRuntimeConfig()
-
 export interface ProductState {
 	products: Product[]
 	product: Product | null
@@ -24,6 +22,7 @@ export const useProductStore = defineStore({
 	},
 	actions: {
 		async fetchProducts() {
+			const config = useRuntimeConfig()
 			this.products = []
 			this.loading = true
 			try {
@@ -42,6 +41,7 @@ export const useProductStore = defineStore({
 			}
 		},
 		async fetchProduct(productId: string | string[]) {
+			const config = useRuntimeConfig()
 			this.product = null
 			this.loading = true
 			try {
@@ -59,7 +59,8 @@ export const useProductStore = defineStore({
 				this.loading = false
 			}
 		},
-		async updateProductHits(productId: string | string[]) {
+		updateProductHits: async function (productId: string | string[]) {
+			const config = useRuntimeConfig()
 			try {
 				await fetch(
 					`${config.public.apiBaseUrl}/product/${productId}/update_product_hits`,

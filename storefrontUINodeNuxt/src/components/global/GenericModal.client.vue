@@ -105,7 +105,6 @@ const props = defineProps({
 const isModalCurrentlyOpen = ref(props.shouldModalStartInOpenState)
 const getMyId = computed(() => `modal-${props.uniqueId}`)
 
-const emits = defineEmits(['modalOpened', 'modalClosed'])
 const bus = useEventBus<string>(GlobalEvents.GENERIC_MODAL)
 
 function openModal() {
@@ -119,7 +118,6 @@ function closeModal() {
 }
 
 bus.on((event: string) => {
-	console.log('event', event)
 	if (event === props.modalOpenTriggerHandlerId) {
 		openModal()
 	}

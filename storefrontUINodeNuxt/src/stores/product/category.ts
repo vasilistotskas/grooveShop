@@ -1,7 +1,5 @@
 import { Category } from '~/zod/product/category'
 
-const config = useRuntimeConfig()
-
 export interface CategoryState {
 	categories: Category[]
 	category: Category | null
@@ -24,6 +22,7 @@ export const useCategoryStore = defineStore({
 	},
 	actions: {
 		async fetchCategories() {
+			const config = useRuntimeConfig()
 			this.categories = []
 			this.loading = true
 			try {
@@ -42,6 +41,7 @@ export const useCategoryStore = defineStore({
 			}
 		},
 		async fetchCategory(categoryId: string | string[]) {
+			const config = useRuntimeConfig()
 			this.category = null
 			this.loading = true
 			try {

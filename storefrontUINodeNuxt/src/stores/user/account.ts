@@ -1,7 +1,5 @@
 import { Account } from '~/zod/user/account'
 
-const config = useRuntimeConfig()
-
 export interface AccountState {
 	account: Account | null
 	loading: boolean
@@ -22,6 +20,7 @@ export const useAccountStore = defineStore({
 	},
 	actions: {
 		async fetchAccount() {
+      const config = useRuntimeConfig()
 			this.account = null
 			this.loading = true
 			try {

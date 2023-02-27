@@ -30,14 +30,18 @@ export default defineNuxtConfig({
 	},
 
 	// css
-	css: ['~/assets/sass/vendor.scss', '~/assets/sass/app.scss'],
+	css: [
+		'~/assets/sass/vendor.scss',
+		'~/assets/sass/app.scss',
+		'vue-toastification/dist/index.css'
+	],
 
 	// plugins
 	plugins: ['~/plugins/navbar.ts', '~/plugins/auth.ts'],
 
 	// build
 	build: {
-		transpile: ['@headlessui/vue']
+		transpile: ['@headlessui/vue', 'vue-toastification']
 	},
 
 	// modules
