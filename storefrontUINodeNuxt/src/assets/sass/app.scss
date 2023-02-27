@@ -24,6 +24,10 @@
 ::-webkit-scrollbar-thumb:hover {
 	background-color: theme('colors.slate.400');
 }
+html {
+  min-width: 360px;
+  scroll-behavior: smooth;
+}
 html.dark {
 	::-webkit-scrollbar-track {
 		background: theme('colors.slate.800');

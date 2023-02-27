@@ -3,9 +3,13 @@ import { useProductStore } from '~/stores/product/product'
 import { capitalize } from '~/utils/str'
 
 const route = useRoute()
-const productId = route.params.id
+const config = useRuntimeConfig()
 const store = useProductStore()
 const { product } = storeToRefs(store)
+
+const productId = route.params.id
+const fullPath = config.public.baseUrl + route.fullPath
+
 const { pending, error } = useLazyAsyncData('product', () =>
 	store.fetchProduct(productId)
 )
@@ -23,6 +27,50 @@ useHead(() => ({
 		{
 			name: 'keywords',
 			content: product.value?.seoKeywords || ''
+		},
+		{
+			property: 'og:title',
+			content: product.value?.seoTitle || ''
+		},
+		{
+			property: 'og:description',
+			content: product.value?.seoDescription || ''
+		},
+		{
+			property: 'og:image',
+			content: ''
+		},
+		{
+			property: 'og:url',
+			content: fullPath
+		},
+		{
+			property: 'og:type',
+			content: 'website'
+		},
+		{
+			property: 'og:site_name',
+			content: 'Groove Shop'
+		},
+		{
+			property: 'twitter:card',
+			content: 'summary_large_image'
+		},
+		{
+			property: 'twitter:title',
+			content: product.value?.seoTitle || ''
+		},
+		{
+			property: 'twitter:description',
+			content: product.value?.seoDescription || ''
+		},
+		{
+			property: 'twitter:image',
+			content: ''
+		},
+		{
+			property: 'twitter:url',
+			content: fullPath
 		}
 	]
 }))

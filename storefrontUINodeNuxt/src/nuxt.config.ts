@@ -108,9 +108,68 @@ export default defineNuxtConfig({
 	app: {
 		head: {
 			charset: 'utf-8',
-			viewport: 'width=500, initial-scale=1',
+			viewport: 'width=device-width, initial-scale=1',
 			title: process.env.NUXT_APP_TITLE,
-			meta: [{ name: 'description', content: process.env.NUXT_APP_DESCRIPTION }]
+			meta: [
+				{ name: 'robots', content: 'index, follow' },
+				{ name: 'description', content: process.env.NUXT_APP_DESCRIPTION },
+				{ name: 'theme-color', content: '#ffffff' },
+				{ name: 'msapplication-TileColor', content: '#ffffff' },
+				{ name: 'msapplication-config', content: '/assets/favicon/browserconfig.xml' },
+				{
+					name: 'google-site-verification',
+					content: process.env.NUXT_APP_GOOGLE_SITE_VERIFICATION
+				},
+
+				{ property: 'og:title', content: process.env.NUXT_APP_TITLE },
+				{ property: 'og:description', content: process.env.NUXT_APP_DESCRIPTION },
+				{ property: 'og:type', content: 'website' },
+				{ property: 'og:url', content: process.env.NUXT_APP_PUBLIC_CANONICAL_URL },
+				{
+					property: 'og:image',
+					content: `${process.env.NUXT_APP_PUBLIC_CANONICAL_URL}/images/websiteLogo_circle.png`
+				},
+				{ property: 'og:site_name', content: process.env.NUXT_APP_TITLE },
+
+				{ name: 'twitter:card', content: 'summary_large_image' },
+				{ name: 'twitter:site', content: '@' + process.env.NUXT_APP_TWITTER_USERNAME },
+				{ name: 'twitter:creator', content: '@' + process.env.NUXT_APP_TWITTER_USERNAME },
+				{ name: 'twitter:title', content: process.env.NUXT_APP_TITLE },
+				{ name: 'twitter:description', content: process.env.NUXT_APP_DESCRIPTION },
+				{
+					name: 'twitter:image',
+					content: `${process.env.NUXT_APP_PUBLIC_CANONICAL_URL}/images/websiteLogo_circle.png`
+				}
+			],
+			link: [
+				{
+					rel: 'shortcut icon',
+					type: 'image/x-icon',
+					href: '/assets/favicon/favicon.ico'
+				},
+				{
+					rel: 'apple-touch-icon',
+					sizes: '180x180',
+					href: '/assets/favicon/apple-touch-icon.png'
+				},
+				{
+					rel: 'icon',
+					type: 'image/png',
+					sizes: '32x32',
+					href: '/assets/favicon/favicon-32x32.png'
+				},
+				{
+					rel: 'icon',
+					type: 'image/png',
+					sizes: '16x16',
+					href: '/assets/favicon/favicon-16x16.png'
+				},
+				{
+					rel: 'mask-icon',
+					href: '/assets/favicon/safari-pinned-tab.svg',
+					color: '#5bbad5'
+				}
+			]
 		},
 		// global transition
 		pageTransition: { name: 'page', mode: 'out-in' },
