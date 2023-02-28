@@ -40,7 +40,7 @@ const translateFile = async (file, locale) => {
 			const nextParent = parentKey ? `${parentKey}.${key}` : key
 			if (typeof value === 'string') {
 				translatedRes[`${nextParent}`] = await translate(value, {
-					to: locale.lang || 'en'
+					to: locale.lang || 'en-US'
 				})
 			} else if (typeof value === 'object') {
 				await eachCurrLevel(value, `${nextParent}`)
@@ -76,8 +76,8 @@ const translateFile = async (file, locale) => {
 // vars
 const cwd = process.cwd()
 const localePath = path.join(cwd, getArg(0, './locales'))
-const engLocale = path.join(localePath, getArg(1, 'en.yml'))
-const listLocaleToTranslate = getFiles(localePath).filter((l) => l.lang !== 'en')
+const engLocale = path.join(localePath, 'en-US.yml')
+const listLocaleToTranslate = getFiles(localePath).filter((l) => l.lang !== 'en-US')
 
 // main funcs
 async function main() {
@@ -92,6 +92,8 @@ async function main() {
 	console.log(`Starting translate with engine "${translate.engine}"...`)
 	for (const locale of listLocaleToTranslate) {
 		console.log(`Translating ${locale.lang}...`)
+		// remove region code
+		locale.lang = locale.lang.split('-').shift()
 		try {
 			// load file
 			const file = yaml.load(fs.readFileSync(engLocale, 'utf8'))

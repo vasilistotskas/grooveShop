@@ -44,20 +44,21 @@ const localeSetting = useState<string>('locale.setting')
 			>
 				<ListboxOption
 					v-for="lang in availableLocales"
-					:key="lang.iso"
-					:value="lang.iso"
+					:key="lang.code"
+					:value="lang.code"
 					:class="{
 						'py-2 px-2 flex items-center cursor-pointer': true,
-						'text-sky-500 bg-gray-100 dark:bg-gray-600/30': localeSetting === lang.iso,
-						'hover:bg-gray-50 dark:hover:bg-gray-700/30': localeSetting !== lang.iso
+						'text-sky-500 bg-gray-100 dark:bg-gray-600/30': localeSetting === lang.code,
+						'hover:bg-gray-50 dark:hover:bg-gray-700/30': localeSetting !== lang.code
 					}"
+					@change="$i18n.locale = lang.code"
 				>
 					<span class="text-sm mr-2">
 						{{ lang.flag }}
 					</span>
 					<span class="flex-1 truncate">
 						{{ lang.name }}
-						<span class="text-xs">({{ lang.iso }})</span>
+						<span class="text-xs">({{ lang.code }})</span>
 					</span>
 				</ListboxOption>
 			</ListboxOptions>
@@ -69,11 +70,12 @@ const localeSetting = useState<string>('locale.setting')
 		>
 			<option
 				v-for="lang in availableLocales"
-				:key="lang.iso"
-				:value="lang.iso"
+				:key="lang.code"
+				:value="lang.code"
 				class="flex items-center space-x-2"
+				@change="$i18n.locale = lang.code"
 			>
-				{{ lang.flag }} {{ lang.name }} ({{ lang.iso }})
+				{{ lang.flag }} {{ lang.name }} ({{ lang.code }})
 			</option>
 		</select>
 	</div>

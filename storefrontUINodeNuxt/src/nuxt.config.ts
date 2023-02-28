@@ -185,60 +185,69 @@ export default defineNuxtConfig({
 
 	// localization - i18n config
 	i18n: {
+		strategy: 'prefix_and_default',
+		defaultLocale: 'en',
+		debug: process.env.NODE_ENV !== 'production',
+		langDir: 'locales/',
+		detectBrowserLanguage: {
+			useCookie: true,
+			redirectOn: 'root',
+			cookieKey: 'i18n_redirected',
+			alwaysRedirect: true
+		},
 		locales: [
 			{
 				code: 'en',
 				name: 'English',
-				file: 'en.yml',
-				iso: 'en',
+				file: 'en-US.yml',
+				iso: 'en-US',
 				flag: '🇺🇸'
 			},
 			{
 				code: 'de',
 				name: 'Deutsch',
-				file: 'de.yml',
-				iso: 'de',
+				file: 'de-DE.yml',
+				iso: 'de-DE',
 				flag: '🇩🇪'
 			},
 			{
 				code: 'el',
 				name: 'Ελληνικά',
-				file: 'el.yml',
-				iso: 'el',
+				file: 'el-GR.yml',
+				iso: 'el-GR',
 				flag: '🇬🇷'
 			},
 			{
 				code: 'id',
 				name: 'Bahasa',
-				file: 'id.yml',
-				iso: 'id',
+				file: 'id-ID.yml',
+				iso: 'id-ID',
 				flag: '🇮🇩'
 			},
 			{
 				code: 'ja',
 				name: '日本語',
-				file: 'ja.yml',
-				iso: 'ja',
+				file: 'ja-JP.yml',
+				iso: 'ja-JP',
 				flag: '🇯🇵'
 			},
 			{
 				code: 'ko',
 				name: '한국어',
-				file: 'ko.yml',
-				iso: 'ko',
+				file: 'ko-KR.yml',
+				iso: 'ko-KR',
 				flag: '🇰🇷'
 			},
 			{
 				code: 'zh',
 				name: '简体中文',
-				file: 'zh.yml',
-				iso: 'zh',
+				file: 'zh-CN.yml',
+				iso: 'zh-CN',
 				flag: '🇨🇳'
 			}
 		],
-		defaultLocale: 'en',
-		langDir: 'locales/',
 		vueI18n: {
+			legacy: false,
 			availableLocales: ['en', 'de', 'el', 'id', 'ja', 'ko', 'zh'],
 			locale: 'en',
 			fallbackLocale: 'en'

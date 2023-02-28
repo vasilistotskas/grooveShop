@@ -6,61 +6,62 @@ export interface ILocales {
 }
 
 export const availableLocales: ILocales = {
-	en: {
+	'en-US': {
 		code: 'en',
 		name: 'English',
-		file: 'en.yml',
-		iso: 'en',
+		file: 'en-US.yml',
+		iso: 'en-US',
 		flag: '🇺🇸'
 	},
-	el: {
+	'el-GR': {
 		code: 'el',
 		name: 'Ελληνικά',
-		file: 'el.yml',
-		iso: 'el',
+		file: 'el-GR.yml',
+		iso: 'el-GR',
 		flag: '🇬🇷'
 	},
-	de: {
+	'de-DE': {
 		code: 'de',
 		name: 'Deutsch',
-		file: 'de.yml',
-		iso: 'de',
+		file: 'de-DE.yml',
+		iso: 'de-DE',
 		flag: '🇩🇪'
 	},
-	id: {
+	'id-ID': {
 		code: 'id',
 		name: 'Bahasa',
 		file: 'id.yml',
-		iso: 'id',
+		iso: 'id-ID',
 		flag: '🇮🇩'
 	},
-	ja: {
+	'ja-JP': {
 		code: 'ja',
 		name: '日本語',
 		file: 'ja.yml',
-		iso: 'ja',
+		iso: 'ja-JP',
 		flag: '🇯🇵'
 	},
-	ko: {
+	'ko-KR': {
 		code: 'ko',
 		name: '한국어',
 		file: 'ko.yml',
-		iso: 'ko',
+		iso: 'ko-KR',
 		flag: '🇰🇷'
 	},
-	zh: {
+	'zh-CN': {
 		code: 'zh',
 		name: '简体中文',
 		file: 'zh.yml',
-		iso: 'zh',
+		iso: 'zh-CN',
 		flag: '🇨🇳'
 	}
 }
 
 export function LanguageManager() {
 	// composable
-	const { locale } = useI18n()
-	const localeUserSetting = useCookie('locale')
+	const { locale, setLocale } = useI18n()
+	const switchLocalePath = useSwitchLocalePath()
+	const localeUserSetting = useCookie('i18n_redirected')
 
 	// methods
 	const getSystemLocale = (): string => {
@@ -80,6 +81,8 @@ export function LanguageManager() {
 	watch(localeSetting, (localeSetting) => {
 		localeUserSetting.value = localeSetting
 		locale.value = localeSetting
+		setLocale(locale.value)
+		switchLocalePath(locale.value)
 	})
 
 	// init locale

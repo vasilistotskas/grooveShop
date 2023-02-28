@@ -20,7 +20,7 @@ export const useAccountStore = defineStore({
 	},
 	actions: {
 		async fetchAccount() {
-      const config = useRuntimeConfig()
+			const config = useRuntimeConfig()
 			this.account = null
 			this.loading = true
 			try {
