@@ -30,9 +30,7 @@ class Order(TimeStampMixinModel, UUIDModel):
     place = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
-    paid_amount = models.DecimalField(
-        max_digits=8, decimal_places=2, blank=True, null=True
-    )
+    paid_amount = models.DecimalField(max_digits=8, decimal_places=2)
     customer_notes = models.TextField(blank=True, null=True)
     stripe_token = models.CharField(max_length=100, blank=True, null=True)
 
