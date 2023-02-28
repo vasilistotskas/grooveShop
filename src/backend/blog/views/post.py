@@ -6,7 +6,6 @@ from backend.blog.serializers.post import BlogPostSerializer
 from backend.core.api.views import BaseExpandView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
@@ -75,12 +74,7 @@ class BlogPostViewSet(BaseExpandView, ModelViewSet):
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    @action(
-        detail=True,
-        methods=["post"],
-        permission_classes=[IsAuthenticated],
-        authentication_classes=[SessionAuthentication],
-    )
+    @action(detail=True, methods=["post"], permission_classes=[IsAuthenticated])
     def update_likes(self, request, pk=None) -> Response:
         if not request.user.is_authenticated:
             return Response(

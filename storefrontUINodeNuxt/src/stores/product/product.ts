@@ -1,21 +1,15 @@
 import { Product } from '~/zod/product/product'
 
-const config = useRuntimeConfig()
-
 export interface ProductState {
 	products: Product[]
 	product: Product | null
-	loading: boolean
-	error: string | null
 }
 
 export const useProductStore = defineStore({
 	id: 'product',
 	state: (): ProductState => ({
 		products: [] as Product[],
-		product: null as Product | null,
-		loading: false,
-		error: null as string | null
+		product: null as Product | null
 	}),
 	getters: {
 		getProductById: (state) => (id: number) => {
@@ -23,43 +17,30 @@ export const useProductStore = defineStore({
 		}
 	},
 	actions: {
-		async fetchProducts() {
+		async fetchProducts(): Promise<void> {
+			const config = useRuntimeConfig()
 			this.products = []
-			this.loading = true
 			try {
 				this.products = await fetch(`${config.public.apiBaseUrl}/product`).then(
 					(response) => response.json()
 				)
 			} catch (error) {
-				if (error instanceof TypeError) {
-					this.error = error.message
-				}
-				if (error instanceof Error) {
-					this.error = error.message
-				}
-			} finally {
-				this.loading = false
+				console.log('error', error)
 			}
 		},
-		async fetchProduct(productId: string | string[]) {
+		async fetchProduct(productId: string | string[]): Promise<void> {
+			const config = useRuntimeConfig()
 			this.product = null
-			this.loading = true
 			try {
 				this.product = await fetch(
 					`${config.public.apiBaseUrl}/product/${productId}`
 				).then((response) => response.json())
 			} catch (error) {
-				if (error instanceof TypeError) {
-					this.error = error.message
-				}
-				if (error instanceof Error) {
-					this.error = error.message
-				}
-			} finally {
-				this.loading = false
+				console.log('error', error)
 			}
 		},
-		async updateProductHits(productId: string | string[]) {
+		updateProductHits: async function (productId: string | string[]): Promise<void> {
+			const config = useRuntimeConfig()
 			try {
 				await fetch(
 					`${config.public.apiBaseUrl}/product/${productId}/update_product_hits`,
@@ -68,12 +49,7 @@ export const useProductStore = defineStore({
 					}
 				)
 			} catch (error) {
-				if (error instanceof TypeError) {
-					this.error = error.message
-				}
-				if (error instanceof Error) {
-					this.error = error.message
-				}
+				console.log('error', error)
 			}
 		}
 	}

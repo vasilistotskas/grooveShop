@@ -10,6 +10,7 @@ export interface IMenuItem {
 }
 
 const { t } = useLang()
+const toast = useToast()
 const app = useAppConfig() as AppConfigInput
 const menus = computed((): IMenuItem[] => [
 	{ type: 'link', text: t('pages.blank.nav'), route: { name: 'blank' } },
@@ -28,12 +29,14 @@ const bus = useEventBus<string>(GlobalEvents.GENERIC_MODAL)
 const openModal = () => {
 	bus.emit('modal-open-navbarModal')
 }
-const onModalOpened = () => {
-	console.log('onModalOpened')
-}
-const onModalClosed = () => {
-	console.log('onModalClosed')
-}
+bus.on((event: string) => {
+	if (event === 'modal-opened-navbarModal') {
+		toast.success('Modal opened')
+	}
+	if (event === 'modal-closed-navbarModal') {
+		toast.error('Modal closed')
+	}
+})
 </script>
 
 <template>
@@ -43,12 +46,12 @@ const onModalClosed = () => {
 		exit-modal-icon-class="fa fa-times"
 		modal-open-trigger-handler-id="modal-open-navbarModal"
 		modal-close-trigger-handler-id="modal-close-navbarModal"
+		modal-opened-trigger-handler-id="modal-opened-navbarModal"
+		modal-closed-trigger-handler-id="modal-closed-navbarModal"
 		max-width="700px"
 		max-height="100%"
 		width="auto"
 		height="auto"
-		@modal-opened="onModalOpened"
-		@modal-closed="onModalClosed"
 	>
 		<template #header>
 			<div>

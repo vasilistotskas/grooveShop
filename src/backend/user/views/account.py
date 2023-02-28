@@ -5,7 +5,6 @@ from backend.user.serializers.account import UserAccountSerializer
 from django.contrib.auth import get_user_model
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
@@ -18,7 +17,6 @@ User = get_user_model()
 
 
 class UserAccountViewSet(ModelViewSet):
-    authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserAccountSerializer
@@ -68,7 +66,6 @@ class UserAccountViewSet(ModelViewSet):
 
 
 class UserAccountSessionView(APIView):
-    authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = UserAccountSerializer
 

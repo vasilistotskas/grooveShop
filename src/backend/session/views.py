@@ -12,7 +12,6 @@ from django.http import JsonResponse
 from django.utils.timezone import now
 from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import status
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import action
 from rest_framework.generics import GenericAPIView
 from rest_framework.generics import get_object_or_404
@@ -32,7 +31,6 @@ def session_view(request):
 
 
 class ClearAllUserSessions(GenericAPIView):
-    authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = UserAccountSerializer
 

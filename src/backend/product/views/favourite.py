@@ -6,7 +6,6 @@ from backend.product.paginators.favourite import ProductFavouritePagination
 from backend.product.serializers.favourite import ProductFavouriteSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
@@ -16,7 +15,6 @@ from rest_framework.viewsets import ModelViewSet
 
 
 class ProductFavouriteViewSet(BaseExpandView, ModelViewSet):
-    authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = ProductFavourite.objects.all()
     serializer_class = ProductFavouriteSerializer

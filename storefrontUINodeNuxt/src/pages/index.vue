@@ -108,6 +108,7 @@ const copyBash = () => {
 							<div class="text-sm flex justify-center items-center">
 								<div class="tooltip">
 									<button
+										title="Copy to clipboard"
 										class="text-gray-100 flex justify-center items-center"
 										@click="copyBash"
 										@mouseout="cancelTooltip"

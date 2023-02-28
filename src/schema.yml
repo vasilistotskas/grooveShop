@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
-  title: GrooveShop API
+  title: DeepWeb API
   version: 1.0.0
-  description: GrooveShop API
+  description: DeepWeb API Documentation
 paths:
   /api/v1/active_users/active_users_count/:
     get:
@@ -10,8 +10,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -38,8 +39,9 @@ paths:
               $ref: '#/components/schemas/UserAccount'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -47,6 +49,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserAccount'
+          description: ''
+  /api/v1/api-token-auth/:
+    post:
+      operationId: api_v1_api_token_auth_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
           description: ''
   /api/v1/blog/author/:
     get:
@@ -87,8 +117,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -114,8 +145,9 @@ paths:
               $ref: '#/components/schemas/BlogAuthor'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -170,8 +202,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -205,8 +238,9 @@ paths:
               $ref: '#/components/schemas/BlogAuthor'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -227,8 +261,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -260,8 +295,9 @@ paths:
               $ref: '#/components/schemas/BlogAuthor'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -292,8 +328,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedBlogAuthor'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -313,8 +350,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -338,8 +376,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -378,8 +417,9 @@ paths:
               $ref: '#/components/schemas/BlogAuthor'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -417,8 +457,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedBlogAuthor'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -445,8 +486,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -490,8 +532,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -517,8 +560,9 @@ paths:
               $ref: '#/components/schemas/BlogCategory'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -573,8 +617,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -608,8 +653,9 @@ paths:
               $ref: '#/components/schemas/BlogCategory'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -630,8 +676,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -663,8 +710,9 @@ paths:
               $ref: '#/components/schemas/BlogCategory'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -695,8 +743,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedBlogCategory'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -716,8 +765,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -741,8 +791,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -781,8 +832,9 @@ paths:
               $ref: '#/components/schemas/BlogCategory'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -820,8 +872,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedBlogCategory'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -848,8 +901,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -897,8 +951,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -924,8 +979,9 @@ paths:
               $ref: '#/components/schemas/BlogComment'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -984,8 +1040,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1019,8 +1076,9 @@ paths:
               $ref: '#/components/schemas/BlogComment'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -1041,8 +1099,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1074,8 +1133,9 @@ paths:
               $ref: '#/components/schemas/BlogComment'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1106,8 +1166,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedBlogComment'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1127,8 +1188,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -1152,8 +1214,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1192,8 +1255,9 @@ paths:
               $ref: '#/components/schemas/BlogComment'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1231,8 +1295,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedBlogComment'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1259,8 +1324,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -1316,8 +1382,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1343,8 +1410,9 @@ paths:
               $ref: '#/components/schemas/BlogPost'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -1411,8 +1479,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1446,8 +1515,9 @@ paths:
               $ref: '#/components/schemas/BlogPost'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -1468,8 +1538,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1501,8 +1572,9 @@ paths:
               $ref: '#/components/schemas/BlogPost'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1533,8 +1605,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedBlogPost'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1554,8 +1627,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -1579,8 +1653,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1619,8 +1694,9 @@ paths:
               $ref: '#/components/schemas/BlogPost'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1658,8 +1734,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedBlogPost'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1686,8 +1763,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -1716,8 +1794,9 @@ paths:
               $ref: '#/components/schemas/BlogPost'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1757,8 +1836,9 @@ paths:
               $ref: '#/components/schemas/BlogPost'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1791,8 +1871,9 @@ paths:
               $ref: '#/components/schemas/BlogPost'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1832,8 +1913,9 @@ paths:
               $ref: '#/components/schemas/BlogPost'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1885,8 +1967,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -1912,8 +1995,9 @@ paths:
               $ref: '#/components/schemas/BlogTag'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -1972,8 +2056,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2007,8 +2092,9 @@ paths:
               $ref: '#/components/schemas/BlogTag'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -2029,8 +2115,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2062,8 +2149,9 @@ paths:
               $ref: '#/components/schemas/BlogTag'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2094,8 +2182,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedBlogTag'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2115,8 +2204,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -2140,8 +2230,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2180,8 +2271,9 @@ paths:
               $ref: '#/components/schemas/BlogTag'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2219,8 +2311,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedBlogTag'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2247,8 +2340,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -2259,8 +2353,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2285,8 +2380,9 @@ paths:
             schema:
               $ref: '#/components/schemas/Cart'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2311,8 +2407,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedCart'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2326,8 +2423,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -2346,8 +2444,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2380,8 +2479,9 @@ paths:
             schema:
               $ref: '#/components/schemas/Cart'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2414,8 +2514,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedCart'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2437,8 +2538,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -2456,8 +2558,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2483,8 +2586,9 @@ paths:
               $ref: '#/components/schemas/CartItem'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -2513,8 +2617,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2548,8 +2653,9 @@ paths:
               $ref: '#/components/schemas/CartItem'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -2570,8 +2676,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2603,8 +2710,9 @@ paths:
               $ref: '#/components/schemas/CartItem'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2635,8 +2743,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedCartItem'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2656,8 +2765,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -2681,8 +2791,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2721,8 +2832,9 @@ paths:
               $ref: '#/components/schemas/CartItem'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2760,8 +2872,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedCartItem'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2788,8 +2901,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -2812,8 +2926,9 @@ paths:
               $ref: '#/components/schemas/Order'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2873,8 +2988,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -2900,8 +3016,9 @@ paths:
               $ref: '#/components/schemas/Country'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -2968,8 +3085,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3003,8 +3121,9 @@ paths:
               $ref: '#/components/schemas/Country'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -3026,8 +3145,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3060,8 +3180,9 @@ paths:
               $ref: '#/components/schemas/Country'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3093,8 +3214,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedCountry'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3115,8 +3237,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -3141,8 +3264,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3182,8 +3306,9 @@ paths:
               $ref: '#/components/schemas/Country'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3222,8 +3347,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedCountry'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3251,8 +3377,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -3276,7 +3403,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -3336,8 +3465,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3363,8 +3493,9 @@ paths:
               $ref: '#/components/schemas/PayWay'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -3391,8 +3522,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3430,8 +3562,9 @@ paths:
               $ref: '#/components/schemas/PayWay'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3468,8 +3601,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedPayWay'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3495,8 +3629,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -3552,8 +3687,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3579,8 +3715,9 @@ paths:
               $ref: '#/components/schemas/Product'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -3647,8 +3784,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3682,8 +3820,9 @@ paths:
               $ref: '#/components/schemas/Product'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -3704,8 +3843,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3737,8 +3877,9 @@ paths:
               $ref: '#/components/schemas/Product'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3769,8 +3910,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedProduct'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3790,8 +3932,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -3815,8 +3958,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3855,8 +3999,9 @@ paths:
               $ref: '#/components/schemas/Product'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3894,8 +4039,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedProduct'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3922,8 +4068,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -3952,8 +4099,9 @@ paths:
               $ref: '#/components/schemas/Product'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -3993,8 +4141,9 @@ paths:
               $ref: '#/components/schemas/Product'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -4042,8 +4191,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -4069,8 +4219,9 @@ paths:
               $ref: '#/components/schemas/ProductCategory'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -4125,8 +4276,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -4160,8 +4312,9 @@ paths:
               $ref: '#/components/schemas/ProductCategory'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -4182,8 +4335,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -4215,8 +4369,9 @@ paths:
               $ref: '#/components/schemas/ProductCategory'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -4247,8 +4402,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedProductCategory'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -4268,8 +4424,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -4293,8 +4450,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -4333,8 +4491,9 @@ paths:
               $ref: '#/components/schemas/ProductCategory'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -4372,8 +4531,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedProductCategory'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -4400,8 +4560,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -4449,7 +4610,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4474,7 +4637,9 @@ paths:
               $ref: '#/components/schemas/ProductFavourite'
         required: true
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -4532,7 +4697,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4565,7 +4732,9 @@ paths:
               $ref: '#/components/schemas/ProductFavourite'
         required: true
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -4585,7 +4754,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4616,7 +4787,9 @@ paths:
               $ref: '#/components/schemas/ProductFavourite'
         required: true
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4646,7 +4819,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedProductFavourite'
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4665,7 +4840,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -4688,7 +4865,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4726,7 +4905,9 @@ paths:
               $ref: '#/components/schemas/ProductFavourite'
         required: true
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4763,7 +4944,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedProductFavourite'
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -4789,7 +4972,432 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/product/images/:
+    get:
+      operationId: api_v1_product_images_list
+      parameters:
+      - in: query
+        name: id
+        schema:
+          type: integer
+      - in: query
+        name: is_main
+        schema:
+          type: boolean
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: product
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProductImagesList'
+          description: ''
+    post:
+      operationId: api_v1_product_images_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductImages'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductImages'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductImages'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImages'
+          description: ''
+  /api/v1/product/images{format}:
+    get:
+      operationId: api_v1_product_images_formatted_list
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      - in: query
+        name: id
+        schema:
+          type: integer
+      - in: query
+        name: is_main
+        schema:
+          type: boolean
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - in: query
+        name: product
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProductImagesList'
+          description: ''
+    post:
+      operationId: api_v1_product_images_formatted_create
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductImages'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductImages'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductImages'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImages'
+          description: ''
+  /api/v1/product/images/{id}/:
+    get:
+      operationId: api_v1_product_images_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImages'
+          description: ''
+    put:
+      operationId: api_v1_product_images_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductImages'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductImages'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductImages'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImages'
+          description: ''
+    patch:
+      operationId: api_v1_product_images_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProductImages'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductImages'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProductImages'
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImages'
+          description: ''
+    delete:
+      operationId: api_v1_product_images_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/v1/product/images/{id}{format}:
+    get:
+      operationId: api_v1_product_images_formatted_retrieve
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImages'
+          description: ''
+    put:
+      operationId: api_v1_product_images_formatted_update
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductImages'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductImages'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductImages'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImages'
+          description: ''
+    patch:
+      operationId: api_v1_product_images_formatted_partial_update
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedProductImages'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedProductImages'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedProductImages'
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductImages'
+          description: ''
+    delete:
+      operationId: api_v1_product_images_formatted_destroy
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
       responses:
         '204':
           description: No response body
@@ -4836,8 +5444,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -4863,8 +5472,9 @@ paths:
               $ref: '#/components/schemas/ProductReview'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -4922,8 +5532,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -4957,8 +5568,9 @@ paths:
               $ref: '#/components/schemas/ProductReview'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -4978,8 +5590,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -5011,8 +5624,9 @@ paths:
               $ref: '#/components/schemas/ProductReview'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5042,8 +5656,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedProductReview'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5062,8 +5677,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -5086,8 +5702,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -5126,8 +5743,9 @@ paths:
               $ref: '#/components/schemas/ProductReview'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5164,8 +5782,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedProductReview'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5191,8 +5810,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -5239,8 +5859,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -5266,8 +5887,9 @@ paths:
               $ref: '#/components/schemas/Region'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -5326,8 +5948,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -5361,8 +5984,9 @@ paths:
               $ref: '#/components/schemas/Region'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -5384,8 +6008,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -5418,8 +6043,9 @@ paths:
               $ref: '#/components/schemas/Region'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -5451,8 +6077,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedRegion'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -5473,8 +6100,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -5499,8 +6127,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -5540,8 +6169,9 @@ paths:
               $ref: '#/components/schemas/Region'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -5580,8 +6210,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedRegion'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -5609,8 +6240,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -5628,8 +6260,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -5658,8 +6291,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -5687,8 +6321,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -5723,8 +6358,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -5751,7 +6387,9 @@ paths:
               $ref: '#/components/schemas/UserAccount'
         required: true
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5785,7 +6423,9 @@ paths:
               $ref: '#/components/schemas/UserAccount'
         required: true
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -5836,8 +6476,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -5863,8 +6504,9 @@ paths:
               $ref: '#/components/schemas/Slide'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -5923,8 +6565,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -5958,8 +6601,9 @@ paths:
               $ref: '#/components/schemas/Slide'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -5980,8 +6624,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6013,8 +6658,9 @@ paths:
               $ref: '#/components/schemas/Slide'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6045,8 +6691,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedSlide'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6066,8 +6713,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -6091,8 +6739,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6131,8 +6780,9 @@ paths:
               $ref: '#/components/schemas/Slide'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6170,8 +6820,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedSlide'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6198,8 +6849,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -6243,8 +6895,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6270,8 +6923,9 @@ paths:
               $ref: '#/components/schemas/Slider'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -6326,8 +6980,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6361,8 +7016,9 @@ paths:
               $ref: '#/components/schemas/Slider'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -6383,8 +7039,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6416,8 +7073,9 @@ paths:
               $ref: '#/components/schemas/Slider'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6448,8 +7106,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedSlider'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6469,8 +7128,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -6494,8 +7154,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6534,8 +7195,9 @@ paths:
               $ref: '#/components/schemas/Slider'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6573,8 +7235,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedSlider'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6601,8 +7264,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -6659,8 +7323,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6686,8 +7351,9 @@ paths:
               $ref: '#/components/schemas/Tip'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -6755,8 +7421,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6790,8 +7457,9 @@ paths:
               $ref: '#/components/schemas/Tip'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -6812,8 +7480,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6845,8 +7514,9 @@ paths:
               $ref: '#/components/schemas/Tip'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6877,8 +7547,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedTip'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6898,8 +7569,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -6923,8 +7595,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -6963,8 +7636,9 @@ paths:
               $ref: '#/components/schemas/Tip'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -7002,8 +7676,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedTip'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -7030,8 +7705,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -7075,7 +7751,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7100,7 +7778,9 @@ paths:
               $ref: '#/components/schemas/UserAccount'
         required: true
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -7154,7 +7834,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7187,7 +7869,9 @@ paths:
               $ref: '#/components/schemas/UserAccount'
         required: true
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -7207,7 +7891,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7238,7 +7924,9 @@ paths:
               $ref: '#/components/schemas/UserAccount'
         required: true
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7268,7 +7956,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUserAccount'
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7287,7 +7977,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -7310,7 +8002,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7348,7 +8042,9 @@ paths:
               $ref: '#/components/schemas/UserAccount'
         required: true
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7385,7 +8081,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUserAccount'
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7411,7 +8109,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -7421,7 +8121,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7443,7 +8145,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7533,7 +8237,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7558,7 +8264,9 @@ paths:
               $ref: '#/components/schemas/UserAddress'
         required: true
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -7655,7 +8363,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7688,7 +8398,9 @@ paths:
               $ref: '#/components/schemas/UserAddress'
         required: true
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '201':
           content:
@@ -7708,7 +8420,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7739,7 +8453,9 @@ paths:
               $ref: '#/components/schemas/UserAddress'
         required: true
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7769,7 +8485,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUserAddress'
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7788,7 +8506,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -7811,7 +8531,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7849,7 +8571,9 @@ paths:
               $ref: '#/components/schemas/UserAddress'
         required: true
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7886,7 +8610,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedUserAddress'
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '200':
           content:
@@ -7912,7 +8638,9 @@ paths:
       tags:
       - api
       security:
+      - basicAuth: []
       - cookieAuth: []
+      - tokenAuth: []
       responses:
         '204':
           description: No response body
@@ -7955,8 +8683,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -7982,8 +8711,9 @@ paths:
               $ref: '#/components/schemas/Vat'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -8038,8 +8768,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -8073,8 +8804,9 @@ paths:
               $ref: '#/components/schemas/Vat'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '201':
@@ -8095,8 +8827,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -8128,8 +8861,9 @@ paths:
               $ref: '#/components/schemas/Vat'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -8160,8 +8894,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedVat'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -8181,8 +8916,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
@@ -8206,8 +8942,9 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -8246,8 +8983,9 @@ paths:
               $ref: '#/components/schemas/Vat'
         required: true
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -8285,8 +9023,9 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchedVat'
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '200':
@@ -8313,14 +9052,31 @@ paths:
       tags:
       - api
       security:
-      - cookieAuth: []
       - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
       - {}
       responses:
         '204':
           description: No response body
 components:
   schemas:
+    AuthToken:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        token:
+          type: string
+          readOnly: true
+      required:
+      - password
+      - token
+      - username
     BlankEnum:
       enum:
       - ''
@@ -8340,10 +9096,10 @@ components:
         bio:
           type: string
           nullable: true
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -8353,7 +9109,7 @@ components:
           readOnly: true
       required:
       - id
-      - updated_at
+      - updatedAt
       - user
       - uuid
     BlogCategory:
@@ -8369,14 +9125,14 @@ components:
           type: string
           maxLength: 50
           pattern: ^[-a-zA-Z0-9_]+$
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        sort_order:
+        sortOrder:
           type: integer
           readOnly: true
           nullable: true
@@ -8384,20 +9140,20 @@ components:
           type: string
           format: uuid
           readOnly: true
-        main_image_absolute_url:
+        mainImageAbsoluteUrl:
           type: string
           readOnly: true
-        main_image_filename:
+        mainImageFilename:
           type: string
           readOnly: true
       required:
       - id
-      - main_image_absolute_url
-      - main_image_filename
+      - mainImageAbsoluteUrl
+      - mainImageFilename
       - name
       - slug
-      - sort_order
-      - updated_at
+      - sortOrder
+      - updatedAt
       - uuid
     BlogComment:
       type: object
@@ -8408,7 +9164,7 @@ components:
         content:
           type: string
           maxLength: 1000
-        is_approved:
+        isApproved:
           type: boolean
         likes:
           type: array
@@ -8418,10 +9174,10 @@ components:
           type: integer
         post:
           type: integer
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -8429,16 +9185,16 @@ components:
           type: string
           format: uuid
           readOnly: true
-        number_of_likes:
+        numberOfLikes:
           type: integer
           readOnly: true
       required:
       - content
       - id
       - likes
-      - number_of_likes
+      - numberOfLikes
       - post
-      - updated_at
+      - updatedAt
       - user
       - uuid
     BlogPost:
@@ -8460,7 +9216,7 @@ components:
           pattern: ^[-a-zA-Z0-9_]+$
         body:
           type: string
-        meta_description:
+        metaDescription:
           type: string
           nullable: true
           maxLength: 150
@@ -8480,57 +9236,57 @@ components:
           $ref: '#/components/schemas/BlogPostStatusEnum'
         featured:
           type: boolean
-        view_count:
+        viewCount:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        published_at:
+        publishedAt:
           type: string
           format: date-time
           nullable: true
-        is_published:
+        isPublished:
           type: boolean
         uuid:
           type: string
           format: uuid
           readOnly: true
-        main_image_absolute_url:
+        mainImageAbsoluteUrl:
           type: string
           readOnly: true
-        main_image_filename:
+        mainImageFilename:
           type: string
           readOnly: true
-        number_of_likes:
+        numberOfLikes:
           type: integer
           readOnly: true
-        number_of_comments:
+        numberOfComments:
           type: integer
           readOnly: true
-        get_post_tags_count:
+        getPostTagsCount:
           type: integer
           readOnly: true
       required:
       - author
       - body
       - category
-      - get_post_tags_count
+      - getPostTagsCount
       - id
       - likes
-      - main_image_absolute_url
-      - main_image_filename
-      - number_of_comments
-      - number_of_likes
+      - mainImageAbsoluteUrl
+      - mainImageFilename
+      - numberOfComments
+      - numberOfLikes
       - slug
       - tags
       - title
-      - updated_at
+      - updatedAt
       - uuid
     BlogPostStatusEnum:
       enum:
@@ -8549,14 +9305,14 @@ components:
           maxLength: 50
         active:
           type: boolean
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        sort_order:
+        sortOrder:
           type: integer
           readOnly: true
           nullable: true
@@ -8564,15 +9320,15 @@ components:
           type: string
           format: uuid
           readOnly: true
-        get_tag_posts_count:
+        getTagPostsCount:
           type: integer
           readOnly: true
       required:
-      - get_tag_posts_count
+      - getTagPostsCount
       - id
       - name
-      - sort_order
-      - updated_at
+      - sortOrder
+      - updatedAt
       - uuid
     Cart:
       type: object
@@ -8583,37 +9339,37 @@ components:
         user:
           type: integer
           nullable: true
-        total_price:
+        totalPrice:
           type: number
           format: double
           readOnly: true
-        total_discount_value:
+        totalDiscountValue:
           type: number
           format: double
           readOnly: true
-        total_vat_value:
+        totalVatValue:
           type: number
           format: double
           readOnly: true
-        total_items:
+        totalItems:
           type: integer
           readOnly: true
-        total_items_unique:
+        totalItemsUnique:
           type: integer
           readOnly: true
-        cart_items:
+        cartItems:
           type: array
           items:
             $ref: '#/components/schemas/CartItem'
           readOnly: true
       required:
-      - cart_items
+      - cartItems
       - id
-      - total_discount_value
-      - total_items
-      - total_items_unique
-      - total_price
-      - total_vat_value
+      - totalDiscountValue
+      - totalItems
+      - totalItemsUnique
+      - totalPrice
+      - totalVatValue
     CartItem:
       type: object
       properties:
@@ -8629,15 +9385,15 @@ components:
           type: integer
           maximum: 2147483647
           minimum: 0
-        total_price:
+        totalPrice:
           type: number
           format: double
           readOnly: true
-        total_discount_value:
+        totalDiscountValue:
           type: number
           format: double
           readOnly: true
-        product_discount_percent:
+        productDiscountPercent:
           type: number
           format: double
           readOnly: true
@@ -8645,43 +9401,39 @@ components:
       - cart
       - id
       - product
-      - product_discount_percent
-      - total_discount_value
-      - total_price
+      - productDiscountPercent
+      - totalDiscountValue
+      - totalPrice
     Country:
       type: object
       properties:
         name:
           type: string
           maxLength: 50
-        alpha_2:
+        alpha2:
           type: string
           maxLength: 2
-        alpha_3:
+        alpha3:
           type: string
           maxLength: 3
-        iso_cc:
+        isoCc:
           type: integer
           maximum: 32767
           minimum: 0
           nullable: true
-        phone_code:
+        phoneCode:
           type: integer
           maximum: 32767
           minimum: 0
           nullable: true
-        regions:
-          type: array
-          items:
-            type: string
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        sort_order:
+        sortOrder:
           type: integer
           readOnly: true
           nullable: true
@@ -8690,12 +9442,11 @@ components:
           format: uuid
           readOnly: true
       required:
-      - alpha_2
-      - alpha_3
+      - alpha2
+      - alpha3
       - name
-      - regions
-      - sort_order
-      - updated_at
+      - sortOrder
+      - updatedAt
       - uuid
     FloorEnum:
       enum:
@@ -8740,14 +9491,14 @@ components:
         user:
           type: integer
           nullable: true
-        pay_way:
+        payWay:
           allOf:
           - $ref: '#/components/schemas/PayWayEnum'
           nullable: true
-        first_name:
+        firstName:
           type: string
           maxLength: 100
-        last_name:
+        lastName:
           type: string
           maxLength: 100
         email:
@@ -8768,10 +9519,10 @@ components:
         phone:
           type: string
           maxLength: 100
-        customer_notes:
+        customerNotes:
           type: string
           nullable: true
-        stripe_token:
+        stripeToken:
           type: string
           nullable: true
           maxLength: 100
@@ -8779,10 +9530,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrderItem'
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -8790,7 +9541,7 @@ components:
           type: string
           format: uuid
           readOnly: true
-        get_total_price:
+        getTotalPrice:
           type: number
           format: double
           readOnly: true
@@ -8798,33 +9549,36 @@ components:
       - address
       - city
       - email
-      - first_name
-      - get_total_price
+      - firstName
+      - getTotalPrice
       - id
       - items
-      - last_name
+      - lastName
       - phone
       - place
-      - updated_at
+      - updatedAt
       - uuid
       - zipcode
     OrderItem:
       type: object
       properties:
         price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000
+          minimum: -1000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
         product:
           type: integer
         quantity:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -8832,20 +9586,20 @@ components:
           type: string
           format: uuid
           readOnly: true
-        sort_order:
+        sortOrder:
           type: integer
           readOnly: true
           nullable: true
-        get_total_price:
+        getTotalPrice:
           type: number
           format: double
           readOnly: true
       required:
-      - get_total_price
+      - getTotalPrice
       - price
       - product
-      - sort_order
-      - updated_at
+      - sortOrder
+      - updatedAt
       - uuid
     PaginatedBlogAuthorList:
       type: object
@@ -9047,6 +9801,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProductFavourite'
+    PaginatedProductImagesList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductImages'
     PaginatedProductList:
       type: object
       properties:
@@ -9263,10 +10037,10 @@ components:
         bio:
           type: string
           nullable: true
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -9287,14 +10061,14 @@ components:
           type: string
           maxLength: 50
           pattern: ^[-a-zA-Z0-9_]+$
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        sort_order:
+        sortOrder:
           type: integer
           readOnly: true
           nullable: true
@@ -9302,10 +10076,10 @@ components:
           type: string
           format: uuid
           readOnly: true
-        main_image_absolute_url:
+        mainImageAbsoluteUrl:
           type: string
           readOnly: true
-        main_image_filename:
+        mainImageFilename:
           type: string
           readOnly: true
     PatchedBlogComment:
@@ -9317,7 +10091,7 @@ components:
         content:
           type: string
           maxLength: 1000
-        is_approved:
+        isApproved:
           type: boolean
         likes:
           type: array
@@ -9327,10 +10101,10 @@ components:
           type: integer
         post:
           type: integer
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -9338,7 +10112,7 @@ components:
           type: string
           format: uuid
           readOnly: true
-        number_of_likes:
+        numberOfLikes:
           type: integer
           readOnly: true
     PatchedBlogPost:
@@ -9360,7 +10134,7 @@ components:
           pattern: ^[-a-zA-Z0-9_]+$
         body:
           type: string
-        meta_description:
+        metaDescription:
           type: string
           nullable: true
           maxLength: 150
@@ -9380,40 +10154,40 @@ components:
           $ref: '#/components/schemas/BlogPostStatusEnum'
         featured:
           type: boolean
-        view_count:
+        viewCount:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        published_at:
+        publishedAt:
           type: string
           format: date-time
           nullable: true
-        is_published:
+        isPublished:
           type: boolean
         uuid:
           type: string
           format: uuid
           readOnly: true
-        main_image_absolute_url:
+        mainImageAbsoluteUrl:
           type: string
           readOnly: true
-        main_image_filename:
+        mainImageFilename:
           type: string
           readOnly: true
-        number_of_likes:
+        numberOfLikes:
           type: integer
           readOnly: true
-        number_of_comments:
+        numberOfComments:
           type: integer
           readOnly: true
-        get_post_tags_count:
+        getPostTagsCount:
           type: integer
           readOnly: true
     PatchedBlogTag:
@@ -9427,14 +10201,14 @@ components:
           maxLength: 50
         active:
           type: boolean
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        sort_order:
+        sortOrder:
           type: integer
           readOnly: true
           nullable: true
@@ -9442,7 +10216,7 @@ components:
           type: string
           format: uuid
           readOnly: true
-        get_tag_posts_count:
+        getTagPostsCount:
           type: integer
           readOnly: true
     PatchedCart:
@@ -9454,25 +10228,25 @@ components:
         user:
           type: integer
           nullable: true
-        total_price:
+        totalPrice:
           type: number
           format: double
           readOnly: true
-        total_discount_value:
+        totalDiscountValue:
           type: number
           format: double
           readOnly: true
-        total_vat_value:
+        totalVatValue:
           type: number
           format: double
           readOnly: true
-        total_items:
+        totalItems:
           type: integer
           readOnly: true
-        total_items_unique:
+        totalItemsUnique:
           type: integer
           readOnly: true
-        cart_items:
+        cartItems:
           type: array
           items:
             $ref: '#/components/schemas/CartItem'
@@ -9492,15 +10266,15 @@ components:
           type: integer
           maximum: 2147483647
           minimum: 0
-        total_price:
+        totalPrice:
           type: number
           format: double
           readOnly: true
-        total_discount_value:
+        totalDiscountValue:
           type: number
           format: double
           readOnly: true
-        product_discount_percent:
+        productDiscountPercent:
           type: number
           format: double
           readOnly: true
@@ -9510,34 +10284,30 @@ components:
         name:
           type: string
           maxLength: 50
-        alpha_2:
+        alpha2:
           type: string
           maxLength: 2
-        alpha_3:
+        alpha3:
           type: string
           maxLength: 3
-        iso_cc:
+        isoCc:
           type: integer
           maximum: 32767
           minimum: 0
           nullable: true
-        phone_code:
+        phoneCode:
           type: integer
           maximum: 32767
           minimum: 0
           nullable: true
-        regions:
-          type: array
-          items:
-            type: string
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        sort_order:
+        sortOrder:
           type: integer
           readOnly: true
           nullable: true
@@ -9553,21 +10323,27 @@ components:
         active:
           type: boolean
         cost:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
-        free_for_order_amount:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
-        created_at:
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
+        freeForOrderAmount:
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        sort_order:
+        sortOrder:
           type: integer
           readOnly: true
           nullable: true
@@ -9590,32 +10366,35 @@ components:
           pattern: ^[-a-zA-Z0-9_]+$
         category:
           type: integer
-        absolute_url:
+        absoluteUrl:
           type: string
           readOnly: true
         description:
           type: string
           nullable: true
         price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
           nullable: true
         vat:
           type: integer
-        vat_percent:
+        vatPercent:
           oneOf:
           - type: number
             format: double
           - type: integer
           readOnly: true
-        vat_value:
+        vatValue:
           oneOf:
           - type: number
             format: double
           - type: integer
           readOnly: true
-        final_price:
+        finalPrice:
           type: number
           format: double
           readOnly: true
@@ -9623,7 +10402,7 @@ components:
           type: integer
           maximum: 2147483647
           minimum: 0
-        likes_counter:
+        likesCounter:
           type: integer
           readOnly: true
         stock:
@@ -9633,19 +10412,22 @@ components:
         active:
           type: boolean
         weight:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
           title: Weight (kg)
-        seo_title:
+        seoTitle:
           type: string
           nullable: true
           maxLength: 70
-        seo_description:
+        seoDescription:
           type: string
           nullable: true
           maxLength: 300
-        seo_keywords:
+        seoKeywords:
           type: string
           nullable: true
           maxLength: 255
@@ -9653,42 +10435,41 @@ components:
           type: string
           format: uuid
           readOnly: true
-        discount_percent:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
-        discount_value:
+        discountPercent:
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
+        discountValue:
           type: number
           format: double
           readOnly: true
-        price_save_percent:
+        priceSavePercent:
           type: number
           format: double
           readOnly: true
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        main_image_absolute_url:
+        mainImageAbsoluteUrl:
           type: string
           readOnly: true
-        main_image_filename:
+        mainImageFilename:
           type: string
           readOnly: true
-        review_average:
+        reviewAverage:
           type: number
           format: double
           readOnly: true
-        review_counter:
+        reviewCounter:
           type: integer
           readOnly: true
-        images:
-          type: array
-          items:
-            type: integer
     PatchedProductCategory:
       type: object
       properties:
@@ -9705,22 +10486,22 @@ components:
         description:
           type: string
           nullable: true
-        category_menu_image_one_absolute_url:
+        categoryMenuImageOneAbsoluteUrl:
           type: string
           readOnly: true
-        category_menu_image_one_filename:
+        categoryMenuImageOneFilename:
           type: string
           readOnly: true
-        category_menu_image_two_absolute_url:
+        categoryMenuImageTwoAbsoluteUrl:
           type: string
           readOnly: true
-        category_menu_image_two_filename:
+        categoryMenuImageTwoFilename:
           type: string
           readOnly: true
-        category_menu_main_banner_absolute_url:
+        categoryMenuMainBannerAbsoluteUrl:
           type: string
           readOnly: true
-        category_menu_main_banner_filename:
+        categoryMenuMainBannerFilename:
           type: string
           readOnly: true
         parent:
@@ -9729,31 +10510,31 @@ components:
         level:
           type: integer
           readOnly: true
-        tree_id:
+        treeId:
           type: integer
           readOnly: true
-        absolute_url:
+        absoluteUrl:
           type: string
           readOnly: true
-        recursive_product_count:
+        recursiveProductCount:
           type: integer
           readOnly: true
-        seo_title:
+        seoTitle:
           type: string
           nullable: true
           maxLength: 70
-        seo_description:
+        seoDescription:
           type: string
           nullable: true
           maxLength: 300
-        seo_keywords:
+        seoKeywords:
           type: string
           nullable: true
           maxLength: 255
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -9771,10 +10552,10 @@ components:
           type: integer
         product:
           type: integer
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -9782,6 +10563,48 @@ components:
           type: string
           format: uuid
           readOnly: true
+    PatchedProductImages:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 50
+        product:
+          type: integer
+        image:
+          type: string
+          format: uri
+          nullable: true
+        thumbnail:
+          type: string
+          format: uri
+          nullable: true
+        isMain:
+          type: boolean
+        productImageAbsoluteUrl:
+          type: string
+          readOnly: true
+        productImageFilename:
+          type: string
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
+        sortOrder:
+          type: integer
+          readOnly: true
+          nullable: true
     PatchedProductReview:
       type: object
       properties:
@@ -9802,18 +10625,18 @@ components:
           maximum: 32767
         status:
           $ref: '#/components/schemas/ProductReviewStatusEnum'
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        published_at:
+        publishedAt:
           type: string
           format: date-time
           nullable: true
-        is_published:
+        isPublished:
           type: boolean
         uuid:
           type: string
@@ -9825,19 +10648,19 @@ components:
         alpha:
           type: string
           maxLength: 10
-        alpha_2:
+        alpha2:
           type: string
         name:
           type: string
           maxLength: 100
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        sort_order:
+        sortOrder:
           type: integer
           readOnly: true
           nullable: true
@@ -9870,43 +10693,46 @@ components:
           nullable: true
           maxLength: 255
         discount:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
-        button_label:
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
+        buttonLabel:
           type: string
           nullable: true
           maxLength: 10
-        show_button:
+        showButton:
           type: boolean
-        date_start:
+        dateStart:
           type: string
           format: date-time
-        date_end:
+        dateEnd:
           type: string
           format: date-time
-        order_position:
+        orderPosition:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
-        main_image_absolute_url:
+        mainImageAbsoluteUrl:
           type: string
           readOnly: true
-        main_image_filename:
+        mainImageFilename:
           type: string
           readOnly: true
         thumbnail:
           type: string
           format: uri
           nullable: true
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        sort_order:
+        sortOrder:
           type: integer
           readOnly: true
           nullable: true
@@ -9935,10 +10761,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
-        main_image_absolute_url:
+        mainImageAbsoluteUrl:
           type: string
           readOnly: true
-        main_image_filename:
+        mainImageFilename:
           type: string
           readOnly: true
         thumbnail:
@@ -9949,10 +10775,6 @@ components:
           type: string
           format: uri
           nullable: true
-        slides:
-          type: array
-          items:
-            type: integer
     PatchedTip:
       type: object
       properties:
@@ -9973,14 +10795,14 @@ components:
           maxLength: 200
         active:
           type: boolean
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        sort_order:
+        sortOrder:
           type: integer
           readOnly: true
           nullable: true
@@ -9998,10 +10820,10 @@ components:
           type: string
           format: email
           maxLength: 255
-        first_name:
+        firstName:
           type: string
           maxLength: 255
-        last_name:
+        lastName:
           type: string
           maxLength: 255
         phone:
@@ -10032,29 +10854,29 @@ components:
         region:
           type: string
           nullable: true
-        is_active:
+        isActive:
           type: boolean
-        is_staff:
+        isStaff:
           type: boolean
-        main_image_absolute_url:
+        mainImageAbsoluteUrl:
           type: string
           readOnly: true
-        main_image_filename:
+        mainImageFilename:
           type: string
           readOnly: true
-        is_superuser:
+        isSuperuser:
           type: boolean
           title: Superuser status
           description: Designates that this user has all permissions without explicitly
             assigning them.
-        last_login:
+        lastLogin:
           type: string
           format: date-time
           nullable: true
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -10068,10 +10890,10 @@ components:
         id:
           type: integer
           readOnly: true
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -10082,16 +10904,16 @@ components:
         title:
           type: string
           maxLength: 100
-        first_name:
+        firstName:
           type: string
           maxLength: 100
-        last_name:
+        lastName:
           type: string
           maxLength: 100
         street:
           type: string
           maxLength: 100
-        street_number:
+        streetNumber:
           type: string
           maxLength: 100
         city:
@@ -10106,7 +10928,7 @@ components:
           - $ref: '#/components/schemas/FloorEnum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
-        location_type:
+        locationType:
           nullable: true
           oneOf:
           - $ref: '#/components/schemas/LocationTypeEnum'
@@ -10116,7 +10938,7 @@ components:
           type: string
           nullable: true
           maxLength: 100
-        mobile_phone:
+        mobilePhone:
           type: string
           nullable: true
           maxLength: 100
@@ -10124,7 +10946,7 @@ components:
           type: string
           nullable: true
           maxLength: 100
-        is_main:
+        isMain:
           type: boolean
         user:
           type: integer
@@ -10139,13 +10961,16 @@ components:
           type: integer
           readOnly: true
         value:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,1})?$
-        created_at:
+          type: number
+          format: double
+          maximum: 10000000000
+          minimum: -10000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -10161,21 +10986,27 @@ components:
         active:
           type: boolean
         cost:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
-        free_for_order_amount:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
-        created_at:
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
+        freeForOrderAmount:
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        sort_order:
+        sortOrder:
           type: integer
           readOnly: true
           nullable: true
@@ -10185,8 +11016,8 @@ components:
           readOnly: true
       required:
       - name
-      - sort_order
-      - updated_at
+      - sortOrder
+      - updatedAt
       - uuid
     PayWayEnum:
       enum:
@@ -10210,32 +11041,35 @@ components:
           pattern: ^[-a-zA-Z0-9_]+$
         category:
           type: integer
-        absolute_url:
+        absoluteUrl:
           type: string
           readOnly: true
         description:
           type: string
           nullable: true
         price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
           nullable: true
         vat:
           type: integer
-        vat_percent:
+        vatPercent:
           oneOf:
           - type: number
             format: double
           - type: integer
           readOnly: true
-        vat_value:
+        vatValue:
           oneOf:
           - type: number
             format: double
           - type: integer
           readOnly: true
-        final_price:
+        finalPrice:
           type: number
           format: double
           readOnly: true
@@ -10243,7 +11077,7 @@ components:
           type: integer
           maximum: 2147483647
           minimum: 0
-        likes_counter:
+        likesCounter:
           type: integer
           readOnly: true
         stock:
@@ -10253,19 +11087,22 @@ components:
         active:
           type: boolean
         weight:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
           title: Weight (kg)
-        seo_title:
+        seoTitle:
           type: string
           nullable: true
           maxLength: 70
-        seo_description:
+        seoDescription:
           type: string
           nullable: true
           maxLength: 300
-        seo_keywords:
+        seoKeywords:
           type: string
           nullable: true
           maxLength: 255
@@ -10273,62 +11110,60 @@ components:
           type: string
           format: uuid
           readOnly: true
-        discount_percent:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
-        discount_value:
+        discountPercent:
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
+        discountValue:
           type: number
           format: double
           readOnly: true
-        price_save_percent:
+        priceSavePercent:
           type: number
           format: double
           readOnly: true
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        main_image_absolute_url:
+        mainImageAbsoluteUrl:
           type: string
           readOnly: true
-        main_image_filename:
+        mainImageFilename:
           type: string
           readOnly: true
-        review_average:
+        reviewAverage:
           type: number
           format: double
           readOnly: true
-        review_counter:
+        reviewCounter:
           type: integer
           readOnly: true
-        images:
-          type: array
-          items:
-            type: integer
       required:
-      - absolute_url
+      - absoluteUrl
       - category
-      - discount_value
-      - final_price
+      - discountValue
+      - finalPrice
       - id
-      - images
-      - likes_counter
-      - main_image_absolute_url
-      - main_image_filename
+      - likesCounter
+      - mainImageAbsoluteUrl
+      - mainImageFilename
       - name
-      - price_save_percent
-      - review_average
-      - review_counter
+      - priceSavePercent
+      - reviewAverage
+      - reviewCounter
       - slug
-      - updated_at
+      - updatedAt
       - uuid
       - vat
-      - vat_percent
-      - vat_value
+      - vatPercent
+      - vatValue
     ProductCategory:
       type: object
       properties:
@@ -10345,22 +11180,22 @@ components:
         description:
           type: string
           nullable: true
-        category_menu_image_one_absolute_url:
+        categoryMenuImageOneAbsoluteUrl:
           type: string
           readOnly: true
-        category_menu_image_one_filename:
+        categoryMenuImageOneFilename:
           type: string
           readOnly: true
-        category_menu_image_two_absolute_url:
+        categoryMenuImageTwoAbsoluteUrl:
           type: string
           readOnly: true
-        category_menu_image_two_filename:
+        categoryMenuImageTwoFilename:
           type: string
           readOnly: true
-        category_menu_main_banner_absolute_url:
+        categoryMenuMainBannerAbsoluteUrl:
           type: string
           readOnly: true
-        category_menu_main_banner_filename:
+        categoryMenuMainBannerFilename:
           type: string
           readOnly: true
         parent:
@@ -10369,31 +11204,31 @@ components:
         level:
           type: integer
           readOnly: true
-        tree_id:
+        treeId:
           type: integer
           readOnly: true
-        absolute_url:
+        absoluteUrl:
           type: string
           readOnly: true
-        recursive_product_count:
+        recursiveProductCount:
           type: integer
           readOnly: true
-        seo_title:
+        seoTitle:
           type: string
           nullable: true
           maxLength: 70
-        seo_description:
+        seoDescription:
           type: string
           nullable: true
           maxLength: 300
-        seo_keywords:
+        seoKeywords:
           type: string
           nullable: true
           maxLength: 255
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -10402,20 +11237,20 @@ components:
           format: uuid
           readOnly: true
       required:
-      - absolute_url
-      - category_menu_image_one_absolute_url
-      - category_menu_image_one_filename
-      - category_menu_image_two_absolute_url
-      - category_menu_image_two_filename
-      - category_menu_main_banner_absolute_url
-      - category_menu_main_banner_filename
+      - absoluteUrl
+      - categoryMenuImageOneAbsoluteUrl
+      - categoryMenuImageOneFilename
+      - categoryMenuImageTwoAbsoluteUrl
+      - categoryMenuImageTwoFilename
+      - categoryMenuMainBannerAbsoluteUrl
+      - categoryMenuMainBannerFilename
       - id
       - level
       - name
-      - recursive_product_count
+      - recursiveProductCount
       - slug
-      - tree_id
-      - updated_at
+      - treeId
+      - updatedAt
       - uuid
     ProductFavourite:
       type: object
@@ -10427,10 +11262,10 @@ components:
           type: integer
         product:
           type: integer
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -10441,8 +11276,58 @@ components:
       required:
       - id
       - product
-      - updated_at
+      - updatedAt
       - user
+      - uuid
+    ProductImages:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 50
+        product:
+          type: integer
+        image:
+          type: string
+          format: uri
+          nullable: true
+        thumbnail:
+          type: string
+          format: uri
+          nullable: true
+        isMain:
+          type: boolean
+        productImageAbsoluteUrl:
+          type: string
+          readOnly: true
+        productImageFilename:
+          type: string
+          readOnly: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
+        sortOrder:
+          type: integer
+          readOnly: true
+          nullable: true
+      required:
+      - id
+      - product
+      - productImageAbsoluteUrl
+      - productImageFilename
+      - sortOrder
+      - updatedAt
       - uuid
     ProductReview:
       type: object
@@ -10464,18 +11349,18 @@ components:
           maximum: 32767
         status:
           $ref: '#/components/schemas/ProductReviewStatusEnum'
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        published_at:
+        publishedAt:
           type: string
           format: date-time
           nullable: true
-        is_published:
+        isPublished:
           type: boolean
         uuid:
           type: string
@@ -10485,7 +11370,7 @@ components:
       - id
       - product
       - rate
-      - updated_at
+      - updatedAt
       - user
       - uuid
     ProductReviewStatusEnum:
@@ -10513,19 +11398,19 @@ components:
         alpha:
           type: string
           maxLength: 10
-        alpha_2:
+        alpha2:
           type: string
         name:
           type: string
           maxLength: 100
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        sort_order:
+        sortOrder:
           type: integer
           readOnly: true
           nullable: true
@@ -10535,10 +11420,10 @@ components:
           readOnly: true
       required:
       - alpha
-      - alpha_2
+      - alpha2
       - name
-      - sort_order
-      - updated_at
+      - sortOrder
+      - updatedAt
       - uuid
     Slide:
       type: object
@@ -10565,43 +11450,46 @@ components:
           nullable: true
           maxLength: 255
         discount:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,9}(?:\.\d{0,2})?$
-        button_label:
+          type: number
+          format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
+        buttonLabel:
           type: string
           nullable: true
           maxLength: 10
-        show_button:
+        showButton:
           type: boolean
-        date_start:
+        dateStart:
           type: string
           format: date-time
-        date_end:
+        dateEnd:
           type: string
           format: date-time
-        order_position:
+        orderPosition:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
-        main_image_absolute_url:
+        mainImageAbsoluteUrl:
           type: string
           readOnly: true
-        main_image_filename:
+        mainImageFilename:
           type: string
           readOnly: true
         thumbnail:
           type: string
           format: uri
           nullable: true
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        sort_order:
+        sortOrder:
           type: integer
           readOnly: true
           nullable: true
@@ -10610,15 +11498,15 @@ components:
           format: uuid
           readOnly: true
       required:
-      - date_end
-      - date_start
+      - dateEnd
+      - dateStart
       - id
-      - main_image_absolute_url
-      - main_image_filename
-      - order_position
+      - mainImageAbsoluteUrl
+      - mainImageFilename
+      - orderPosition
       - slider
-      - sort_order
-      - updated_at
+      - sortOrder
+      - updatedAt
       - uuid
     Slider:
       type: object
@@ -10641,10 +11529,10 @@ components:
           type: string
           nullable: true
           maxLength: 255
-        main_image_absolute_url:
+        mainImageAbsoluteUrl:
           type: string
           readOnly: true
-        main_image_filename:
+        mainImageFilename:
           type: string
           readOnly: true
         thumbnail:
@@ -10655,16 +11543,11 @@ components:
           type: string
           format: uri
           nullable: true
-        slides:
-          type: array
-          items:
-            type: integer
       required:
       - id
-      - main_image_absolute_url
-      - main_image_filename
+      - mainImageAbsoluteUrl
+      - mainImageFilename
       - name
-      - slides
     Tip:
       type: object
       properties:
@@ -10685,14 +11568,14 @@ components:
           maxLength: 200
         active:
           type: boolean
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
-        sort_order:
+        sortOrder:
           type: integer
           readOnly: true
           nullable: true
@@ -10703,9 +11586,9 @@ components:
       required:
       - content
       - kind
-      - sort_order
+      - sortOrder
       - title
-      - updated_at
+      - updatedAt
       - url
       - uuid
     UserAccount:
@@ -10718,10 +11601,10 @@ components:
           type: string
           format: email
           maxLength: 255
-        first_name:
+        firstName:
           type: string
           maxLength: 255
-        last_name:
+        lastName:
           type: string
           maxLength: 255
         phone:
@@ -10752,29 +11635,29 @@ components:
         region:
           type: string
           nullable: true
-        is_active:
+        isActive:
           type: boolean
-        is_staff:
+        isStaff:
           type: boolean
-        main_image_absolute_url:
+        mainImageAbsoluteUrl:
           type: string
           readOnly: true
-        main_image_filename:
+        mainImageFilename:
           type: string
           readOnly: true
-        is_superuser:
+        isSuperuser:
           type: boolean
           title: Superuser status
           description: Designates that this user has all permissions without explicitly
             assigning them.
-        last_login:
+        lastLogin:
           type: string
           format: date-time
           nullable: true
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -10784,12 +11667,12 @@ components:
           readOnly: true
       required:
       - email
-      - first_name
+      - firstName
       - id
-      - last_name
-      - main_image_absolute_url
-      - main_image_filename
-      - updated_at
+      - lastName
+      - mainImageAbsoluteUrl
+      - mainImageFilename
+      - updatedAt
       - uuid
     UserAddress:
       type: object
@@ -10797,10 +11680,10 @@ components:
         id:
           type: integer
           readOnly: true
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -10811,16 +11694,16 @@ components:
         title:
           type: string
           maxLength: 100
-        first_name:
+        firstName:
           type: string
           maxLength: 100
-        last_name:
+        lastName:
           type: string
           maxLength: 100
         street:
           type: string
           maxLength: 100
-        street_number:
+        streetNumber:
           type: string
           maxLength: 100
         city:
@@ -10835,7 +11718,7 @@ components:
           - $ref: '#/components/schemas/FloorEnum'
           - $ref: '#/components/schemas/BlankEnum'
           - $ref: '#/components/schemas/NullEnum'
-        location_type:
+        locationType:
           nullable: true
           oneOf:
           - $ref: '#/components/schemas/LocationTypeEnum'
@@ -10845,7 +11728,7 @@ components:
           type: string
           nullable: true
           maxLength: 100
-        mobile_phone:
+        mobilePhone:
           type: string
           nullable: true
           maxLength: 100
@@ -10853,7 +11736,7 @@ components:
           type: string
           nullable: true
           maxLength: 100
-        is_main:
+        isMain:
           type: boolean
         user:
           type: integer
@@ -10864,14 +11747,14 @@ components:
       required:
       - city
       - country
-      - first_name
+      - firstName
       - id
-      - last_name
+      - lastName
       - region
       - street
-      - street_number
+      - streetNumber
       - title
-      - updated_at
+      - updatedAt
       - user
       - uuid
       - zipcode
@@ -10881,10 +11764,10 @@ components:
         id:
           type: integer
           readOnly: true
-        first_name:
+        firstName:
           type: string
           maxLength: 100
-        last_name:
+        lastName:
           type: string
           maxLength: 100
         email:
@@ -10905,26 +11788,29 @@ components:
         phone:
           type: string
           maxLength: 100
-        stripe_token:
+        stripeToken:
           type: string
           nullable: true
           maxLength: 100
-        customer_notes:
+        customerNotes:
           type: string
           nullable: true
         items:
           type: array
           items:
             $ref: '#/components/schemas/UserOrderItem'
-        paid_amount:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
+        paidAmount:
+          type: number
+          format: double
+          maximum: 1000000
+          minimum: -1000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
           nullable: true
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -10932,7 +11818,7 @@ components:
           type: string
           format: uuid
           readOnly: true
-        get_total_price:
+        getTotalPrice:
           type: number
           format: double
           readOnly: true
@@ -10940,33 +11826,36 @@ components:
       - address
       - city
       - email
-      - first_name
-      - get_total_price
+      - firstName
+      - getTotalPrice
       - id
       - items
-      - last_name
+      - lastName
       - phone
       - place
-      - updated_at
+      - updatedAt
       - uuid
       - zipcode
     UserOrderItem:
       type: object
       properties:
         price:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,6}(?:\.\d{0,2})?$
+          type: number
+          format: double
+          maximum: 1000000
+          minimum: -1000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
         product:
           $ref: '#/components/schemas/Product'
         quantity:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -10974,20 +11863,20 @@ components:
           type: string
           format: uuid
           readOnly: true
-        sort_order:
+        sortOrder:
           type: integer
           readOnly: true
           nullable: true
-        get_total_price:
+        getTotalPrice:
           type: number
           format: double
           readOnly: true
       required:
-      - get_total_price
+      - getTotalPrice
       - price
       - product
-      - sort_order
-      - updated_at
+      - sortOrder
+      - updatedAt
       - uuid
     Vat:
       type: object
@@ -10996,13 +11885,16 @@ components:
           type: integer
           readOnly: true
         value:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,10}(?:\.\d{0,1})?$
-        created_at:
+          type: number
+          format: double
+          maximum: 10000000000
+          minimum: -10000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
           readOnly: true
@@ -11012,7 +11904,7 @@ components:
           readOnly: true
       required:
       - id
-      - updated_at
+      - updatedAt
       - uuid
       - value
   securitySchemes:
@@ -11023,3 +11915,8 @@ components:
       type: apiKey
       in: cookie
       name: sessionid
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"

@@ -6,7 +6,6 @@ from backend.user.paginators.address import UserAddressPagination
 from backend.user.serializers.address import UserAddressSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
@@ -16,7 +15,6 @@ from rest_framework.viewsets import ModelViewSet
 
 
 class UserAddressViewSet(BaseExpandView, ModelViewSet):
-    authentication_classes = [SessionAuthentication]
     permission_classes = [IsAuthenticated]
     queryset = UserAddress.objects.all()
     serializer_class = UserAddressSerializer
