@@ -20,7 +20,7 @@
 		"format": "prettier --check --ignore-path .gitignore .",
 		"format:fix": "prettier --write --ignore-path .gitignore .",
 		"clean": "rm -rf .nuxt dist .output",
-		"generate:locales": "node tools/translator.js ./locales en.yml",
+		"generate:locales": "node tools/translator.js ./locales en-US.yml",
 		"dts": "vue-tsc --noEmit false --declaration --emitDeclarationOnly --declarationDir .output/types && tsc-alias -p tsconfig.json && npx prettier --write ./.output/"
 	},
 	"prettier": {

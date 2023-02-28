@@ -51,7 +51,6 @@ const localeSetting = useState<string>('locale.setting')
 						'text-sky-500 bg-gray-100 dark:bg-gray-600/30': localeSetting === lang.code,
 						'hover:bg-gray-50 dark:hover:bg-gray-700/30': localeSetting !== lang.code
 					}"
-					@change="$i18n.locale = lang.code"
 				>
 					<span class="text-sm mr-2">
 						{{ lang.flag }}
@@ -73,7 +72,6 @@ const localeSetting = useState<string>('locale.setting')
 				:key="lang.code"
 				:value="lang.code"
 				class="flex items-center space-x-2"
-				@change="$i18n.locale = lang.code"
 			>
 				{{ lang.flag }} {{ lang.name }} ({{ lang.code }})
 			</option>

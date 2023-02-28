@@ -185,7 +185,7 @@ export default defineNuxtConfig({
 
 	// localization - i18n config
 	i18n: {
-		strategy: 'prefix_and_default',
+		strategy: 'prefix_except_default',
 		defaultLocale: 'en',
 		debug: process.env.NODE_ENV !== 'production',
 		langDir: 'locales/',
@@ -324,7 +324,7 @@ export default defineNuxtConfig({
 		},
 		workbox: {
 			navigateFallback: '/',
-			globPatterns: ['**/*.{js,ts,css,html,png,svg,ico}']
+			globPatterns: ['**/*.{js,css,html,png,svg,ico}']
 		},
 		devOptions: {
 			enabled: true,
