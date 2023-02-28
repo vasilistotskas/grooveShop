@@ -51,7 +51,8 @@ export default defineNuxtConfig({
 		'@pinia/nuxt',
 		'@vueuse/nuxt',
 		'@nuxt/devtools',
-		'@nuxt/image-edge'
+		'@nuxt/image-edge',
+		'@vite-pwa/nuxt'
 	],
 
 	pinia: {
@@ -100,7 +101,9 @@ export default defineNuxtConfig({
 	nitro: {
 		compressPublicAssets: true,
 		prerender: {
-			crawlLinks: true
+			crawlLinks: true,
+			ignore: [],
+			routes: []
 		}
 	},
 
@@ -142,6 +145,10 @@ export default defineNuxtConfig({
 				}
 			],
 			link: [
+				{
+					rel: 'manifest',
+					href: '/manifest.webmanifest'
+				},
 				{
 					rel: 'shortcut icon',
 					type: 'image/x-icon',
@@ -247,6 +254,72 @@ export default defineNuxtConfig({
 		plugins: {
 			tailwindcss: {},
 			autoprefixer: {}
+		}
+	},
+
+	pwa: {
+		registerType: 'autoUpdate',
+		minify: true,
+		disable: false,
+		injectRegister: 'auto',
+		includeAssets: [],
+		includeManifestIcons: true,
+		manifest: {
+			name: process.env.NUXT_APP_TITLE,
+			short_name: process.env.NUXT_APP_TITLE,
+			description: process.env.NUXT_APP_DESCRIPTION,
+			theme_color: '#ffffff',
+			background_color: '#ffffff',
+			display: 'standalone',
+			orientation: 'portrait',
+			start_url: '/',
+			scope: '/',
+			icons: [
+				{
+					src: '/assets/favicon/android-icon-144x144.png',
+					sizes: '144x144',
+					type: 'image/png',
+					purpose: 'maskable'
+				},
+				{
+					src: '/assets/favicon/android-icon-192x192.png',
+					sizes: '192x192',
+					type: 'image/png',
+					purpose: 'maskable'
+				},
+				{
+					src: '/assets/favicon/android-icon-512x512.png',
+					sizes: '512x512',
+					type: 'image/png',
+					purpose: 'maskable'
+				},
+				{
+					src: '/assets/favicon/android-icon-144x144.png',
+					sizes: '144x144',
+					type: 'image/png',
+					purpose: 'any'
+				},
+				{
+					src: '/assets/favicon/android-icon-192x192.png',
+					sizes: '192x192',
+					type: 'image/png',
+					purpose: 'any'
+				},
+				{
+					src: '/assets/favicon/android-icon-512x512.png',
+					sizes: '512x512',
+					type: 'image/png',
+					purpose: 'any'
+				}
+			]
+		},
+		workbox: {
+			navigateFallback: '/',
+			globPatterns: ['**/*.{js,ts,css,html,png,svg,ico}']
+		},
+		devOptions: {
+			enabled: true,
+			type: 'module'
 		}
 	}
 })

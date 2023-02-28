@@ -2,6 +2,8 @@ import { VueUseNuxtOptions } from '@vueuse/nuxt'
 import { NuxtI18nOptions } from '@nuxtjs/i18n'
 import { ModuleOptions as DevToolsModuleOptions } from '@nuxt/devtools'
 import { ModuleOptions as PiniaModuleOptions } from '@pinia/nuxt'
+import { VitePWAOptions } from "vite-plugin-pwa";
+import { NitroOptions } from "nitropack";
 
 declare module '@nuxt/schema' {
 	interface AppConfigInput {
@@ -26,12 +28,8 @@ declare module 'nuxt/config' {
 		i18n?: NuxtI18nOptions
 		devtools?: DevToolsModuleOptions
 		pinia?: PiniaModuleOptions,
-    nitro?: {
-      compressPublicAssets: boolean
-      prerender: {
-        crawlLinks: boolean
-      }
-    }
+    nitro?: Partial<NitroOptions>,
+    pwa?: Partial<VitePWAOptions>
 	}
 }
 

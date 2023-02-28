@@ -41,6 +41,11 @@ html.dark {
 		background-color: theme('colors.slate.400');
 	}
 }
-
+#__nuxt {
+  @apply bg-gray-50 dark:bg-gray-900;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 // animations
 @import 'animations/transitions';
