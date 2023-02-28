@@ -2,6 +2,19 @@
 
 <!--next-version-placeholder-->
 
+## v0.26.0 (2023-02-28)
+### Feature
+* **Nuxt:** More SEO optimization and app/router.options.ts file for scrollbehavior ([`7bdaffe`](https://github.com/vasilistotskas/grooveShop/commit/7bdaffe6aa8fd40a5b673281e5bb31b54b1d63ea))
+* **Nuxt:** Lang strategy set to prefix_and_default ([`d4bcde9`](https://github.com/vasilistotskas/grooveShop/commit/d4bcde90b4097a83cd35fe55a457da953b897f93))
+* **Nuxt:** PWA ready (offline also) ([`3fae593`](https://github.com/vasilistotskas/grooveShop/commit/3fae5936c998605ea222ce37e2cb85329fb5ea1e))
+* **Nuxt:** Loading skeleton prototype and versions bump ([`cee3d78`](https://github.com/vasilistotskas/grooveShop/commit/cee3d78c1d65c45fc94795f53d66123a781e01f7))
+* **Nuxt:** Vue toastification client plugin implemented ([`1ea33d5`](https://github.com/vasilistotskas/grooveShop/commit/1ea33d5869463a733f71bf0a47cd05bee515accb))
+
+### Fix
+* **Django:** Remove black and null from order model paid_amount ([`0f17260`](https://github.com/vasilistotskas/grooveShop/commit/0f172604e4fd02db073eb40dc468f0754e1676e6))
+* **Nuxt:** I18n strategy change ([`a4a4a1b`](https://github.com/vasilistotskas/grooveShop/commit/a4a4a1b155888f60556368dcc36fab0e0669854d))
+* **Django:** Auth and permission Api fixes ([`4397d3e`](https://github.com/vasilistotskas/grooveShop/commit/4397d3ee461f557e45c95d40768563f709f9605f))
+
 ## v0.25.0 (2023-02-23)
 ### Feature
 * **Nuxt:** Vue toastification lib added as plugin, some minor fixes ([`96748d8`](https://github.com/vasilistotskas/grooveShop/commit/96748d8d2f1a10ad6ff1b472e6612abc4b330806))
