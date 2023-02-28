@@ -59,6 +59,8 @@ pages:
     index:
       nav: home
       title: home
+layouts:
+  title: DeepWeb %{title}
 banners:
   welcome: Welcome to %{app_name}!
 others:

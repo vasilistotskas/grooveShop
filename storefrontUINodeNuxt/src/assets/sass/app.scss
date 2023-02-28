@@ -41,6 +41,9 @@ html.dark {
 		background-color: theme('colors.slate.400');
 	}
 }
+p, a, li, span, h1, h2, h3, h4, h5, h6, label {
+  @apply text-gray-700 dark:text-gray-200
+}
 #__nuxt {
 	@apply bg-gray-50 dark:bg-gray-900;
 	display: flex;

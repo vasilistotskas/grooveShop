@@ -44,7 +44,7 @@ pages:
         description: 这是您的机器人 id。
         footer: 与机器人交互时使用。
       protection_spam:
-        title: 垃圾邮件防护
+        title: 垃圾邮件保护
         description: 切换启用以删除红色边框
         footer: 如果启用，我们将保护您的评论免受垃圾邮件
       advanced_enable_advanced:
@@ -59,6 +59,8 @@ pages:
     index:
       nav: 家
       title: 家
+layouts:
+  title: 深网 %{title}
 banners:
   welcome: 欢迎使用 %{app_name}！
 others:

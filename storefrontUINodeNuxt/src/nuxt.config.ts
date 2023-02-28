@@ -12,6 +12,8 @@ export default defineNuxtConfig({
 
 		// Keys within public are also exposed client-side
 		public: {
+			appTitle: process.env.NUXT_APP_TITLE,
+			appDescription: process.env.NUXT_APP_DESCRIPTION,
 			domainName: process.env.NUXT_APP_PUBLIC_DOMAIN_NAME,
 			canonicalUrl: process.env.NUXT_APP_PUBLIC_CANONICAL_URL,
 			baseUrl: process.env.NUXT_APP_PUBLIC_BASE_URL,
@@ -189,6 +191,7 @@ export default defineNuxtConfig({
 		defaultLocale: 'en',
 		debug: process.env.NODE_ENV !== 'production',
 		langDir: 'locales/',
+		baseUrl: process.env.NUXT_APP_PUBLIC_BASE_URL || 'http://localhost:3000',
 		detectBrowserLanguage: {
 			useCookie: true,
 			redirectOn: 'root',

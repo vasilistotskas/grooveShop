@@ -67,6 +67,8 @@ pages:
     index:
       nav: heim
       title: heim
+layouts:
+  title: deepweb %{title}
 banners:
   welcome: willkommen bei %{app_name}!
 others:

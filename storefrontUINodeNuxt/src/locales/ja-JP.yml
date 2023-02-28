@@ -35,7 +35,7 @@ pages:
     sections:
       validate_username:
         title: github プロファイルを検証する
-        description: github のユーザー名を入力し、ボタンをクリックして検証します。
+        description: github ユーザー名を入力し、ボタンをクリックして検証します。
         footer: 詳しくはこちら
         footer_button: 検証
         footer_link: github ユーザー api
@@ -59,6 +59,8 @@ pages:
     index:
       nav: 家
       title: 家
+layouts:
+  title: ディープウェブ %{title}
 banners:
   welcome: '%{app_name} へようこそ!'
 others:

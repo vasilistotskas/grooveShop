@@ -61,6 +61,8 @@ pages:
     index:
       nav: rumah
       title: rumah
+layouts:
+  title: deepweb %{judul}
 banners:
   welcome: selamat datang di %{app_name}!
 others:

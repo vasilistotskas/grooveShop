@@ -87,7 +87,7 @@ useHead(() => ({
 				<div>Error</div>
 			</template>
 			<template v-else>
-				<div>{{ product }}</div>
+				<p>{{ product }}</p>
 			</template>
 		</PageBody>
 	</PageWrapper>
