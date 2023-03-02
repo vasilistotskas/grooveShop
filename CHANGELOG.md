@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.26.1 (2023-03-02)
+### Fix
+* **Nuxt:** General fixes ([`e3cecf7`](https://github.com/vasilistotskas/grooveShop/commit/e3cecf7c139f7a79f4dc9dc48bab4cf0a22d664c))
+
 ## v0.26.0 (2023-02-28)
 ### Feature
 * **Nuxt:** More SEO optimization and app/router.options.ts file for scrollbehavior ([`7bdaffe`](https://github.com/vasilistotskas/grooveShop/commit/7bdaffe6aa8fd40a5b673281e5bb31b54b1d63ea))
