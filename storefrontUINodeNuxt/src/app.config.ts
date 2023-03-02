@@ -1,6 +1,7 @@
 export default defineAppConfig({
-	name: 'DeepWeb',
+	name: 'DeepWeb - defineAppConfig',
 	description: 'DeepWeb Description',
+	buildDate: new Date().toISOString(),
 	author: {
 		name: 'vasilistotskas',
 		github_url: 'https://github.com/vasilistotskas'

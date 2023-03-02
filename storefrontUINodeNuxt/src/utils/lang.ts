@@ -6,49 +6,49 @@ export interface ILocales {
 }
 
 export const availableLocales: ILocales = {
-	'en-US': {
+	en: {
 		code: 'en',
 		name: 'English',
 		file: 'en-US.yml',
 		iso: 'en-US',
 		flag: '🇺🇸'
 	},
-	'el-GR': {
+	el: {
 		code: 'el',
 		name: 'Ελληνικά',
 		file: 'el-GR.yml',
 		iso: 'el-GR',
 		flag: '🇬🇷'
 	},
-	'de-DE': {
+	de: {
 		code: 'de',
 		name: 'Deutsch',
 		file: 'de-DE.yml',
 		iso: 'de-DE',
 		flag: '🇩🇪'
 	},
-	'id-ID': {
+	id: {
 		code: 'id',
 		name: 'Bahasa',
 		file: 'id.yml',
 		iso: 'id-ID',
 		flag: '🇮🇩'
 	},
-	'ja-JP': {
+	ja: {
 		code: 'ja',
 		name: '日本語',
 		file: 'ja.yml',
 		iso: 'ja-JP',
 		flag: '🇯🇵'
 	},
-	'ko-KR': {
+	ko: {
 		code: 'ko',
 		name: '한국어',
 		file: 'ko.yml',
 		iso: 'ko-KR',
 		flag: '🇰🇷'
 	},
-	'zh-CN': {
+	zh: {
 		code: 'zh',
 		name: '简体中文',
 		file: 'zh.yml',
@@ -72,10 +72,23 @@ export function LanguageManager() {
 			return 'en'
 		}
 	}
-	const getUserLocale = (): string => localeUserSetting.value || getSystemLocale()
+	const getLocaleFromPath = (): string => {
+		try {
+			const pathnameSegments = window.location.pathname.split('/')
+			const languageInUrl = pathnameSegments[1]
+			return availableLocales[languageInUrl] ? languageInUrl : 'en'
+		} catch (error) {
+			return 'en'
+		}
+	}
+	console.log('getSystemLocale', getSystemLocale())
+	const getUserLocale = (): string =>
+		getLocaleFromPath() || localeUserSetting.value || getSystemLocale()
+	console.log('getUserLocale', getUserLocale())
 
 	// state
 	const localeSetting = useState<string>('locale.setting', () => getUserLocale())
+	console.log('localeSetting', localeSetting)
 
 	// watchers
 	watch(localeSetting, (localeSetting) => {

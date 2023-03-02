@@ -18,7 +18,7 @@ const app = useAppConfig() as AppConfigInput
 						<span class="text-center md:text-right">
 							design by <a href="https://github.com/vasilistotskas">vasilistotskas</a>
 						</span>
-						<span class="block bg-blue-500 rounded px-1 py-0.5 text-white text-xs">
+						<span class="block bg-blue-700 rounded px-1 py-0.5 text-white text-xs">
 							{{ p.devDependencies.nuxt }}
 						</span>
 					</div>

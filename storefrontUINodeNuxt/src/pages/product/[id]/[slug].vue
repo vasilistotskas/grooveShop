@@ -15,6 +15,7 @@ const { pending, error } = useLazyAsyncData('product', () =>
 )
 
 definePageMeta({
+	middleware: ['product'],
 	layout: 'page'
 })
 useHead(() => ({

@@ -29,17 +29,15 @@ export const useProductStore = defineStore({
 			}
 		},
 		async fetchProduct(productId: string | string[]): Promise<void> {
-			const config = useRuntimeConfig()
 			this.product = null
 			try {
-				this.product = await fetch(
-					`${config.public.apiBaseUrl}/product/${productId}`
-				).then((response) => response.json())
+				const request = await $fetch(`/api/product/${productId}`)
+				this.product = request.product
 			} catch (error) {
 				console.log('error', error)
 			}
 		},
-		updateProductHits: async function (productId: string | string[]): Promise<void> {
+		async updateProductHits(productId: string | string[]): Promise<void> {
 			const config = useRuntimeConfig()
 			try {
 				await fetch(

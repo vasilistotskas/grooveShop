@@ -60,7 +60,7 @@ pages:
       nav: home
       title: home
 layouts:
-  title: DeepWeb %{title}
+  title: DeepWeb-Title %{title}
 banners:
   welcome: Welcome to %{app_name}!
 others:
