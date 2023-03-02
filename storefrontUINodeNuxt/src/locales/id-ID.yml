@@ -62,7 +62,7 @@ pages:
       nav: rumah
       title: rumah
 layouts:
-  title: deepweb %{judul}
+  title: deepweb-title %{title}
 banners:
   welcome: selamat datang di %{app_name}!
 others:

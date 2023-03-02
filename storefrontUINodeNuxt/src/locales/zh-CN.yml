@@ -60,7 +60,7 @@ pages:
       nav: 家
       title: 家
 layouts:
-  title: 深网 %{title}
+  title: deepweb-标题 %{title}
 banners:
   welcome: 欢迎使用 %{app_name}！
 others:

@@ -60,7 +60,7 @@ pages:
       nav: 家
       title: 家
 layouts:
-  title: ディープウェブ %{title}
+  title: deepweb-タイトル %{title}
 banners:
   welcome: '%{app_name} へようこそ!'
 others:

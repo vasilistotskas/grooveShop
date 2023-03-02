@@ -52,7 +52,7 @@ pages:
           εάν ενεργοποιηθεί, θα προστατεύσουμε τα σχόλιά σας από ανεπιθύμητα
           μηνύματα
       advanced_enable_advanced:
-        title: ενεργοποιήστε τις σύνθετες ρυθμίσεις
+        title: ενεργοποίηση σύνθετων ρυθμίσεων
         description: >-
           μπορείτε να ενεργοποιήσετε τις σύνθετες ρυθμίσεις για να αλλάξετε τις
           ρυθμίσεις
@@ -68,7 +68,7 @@ pages:
       nav: σπίτι
       title: σπίτι
 layouts:
-  title: deepweb %{title}
+  title: deepweb-title %{title}
 banners:
   welcome: καλώς ορίσατε στο %{app_name}!
 others:

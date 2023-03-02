@@ -60,7 +60,7 @@ pages:
       nav: 집
       title: 집
 layouts:
-  title: 딥웹 %{title}
+  title: deepweb-제목 %{title}
 banners:
   welcome: '%{app_name}에 오신 것을 환영합니다!'
 others:

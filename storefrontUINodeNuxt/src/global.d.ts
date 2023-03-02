@@ -3,7 +3,7 @@ import { NuxtI18nOptions } from '@nuxtjs/i18n'
 import { ModuleOptions as DevToolsModuleOptions } from '@nuxt/devtools'
 import { ModuleOptions as PiniaModuleOptions } from '@pinia/nuxt'
 import { NitroOptions } from 'nitropack'
-import { ModuleOptions as PWAModuleOptions } from "@vite-pwa/nuxt";
+import { ModuleOptions as PWAModuleOptions } from '@vite-pwa/nuxt'
 
 declare module '@nuxt/schema' {
 	interface AppConfigInput {
