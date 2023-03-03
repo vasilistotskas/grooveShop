@@ -9,6 +9,7 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		// The private keys which are only available server-side
 		apiSecret: process.env.NUXT_APP_PRIVATE_API_SECRET,
+		nuxtEnvironment: process.env.NUXT_ENVIRONMENT,
 
 		// Keys within public are also exposed client-side
 		public: {
@@ -17,7 +18,8 @@ export default defineNuxtConfig({
 			domainName: process.env.NUXT_APP_PUBLIC_DOMAIN_NAME,
 			canonicalUrl: process.env.NUXT_APP_PUBLIC_CANONICAL_URL,
 			baseUrl: process.env.NUXT_APP_PUBLIC_BASE_URL,
-			apiBaseUrl: process.env.NUXT_APP_PUBLIC_API_BASE_URL
+			apiBaseUrl: process.env.NUXT_APP_PUBLIC_API_BASE_URL,
+			defaultLocale: process.env.NUXT_APP_DEFAULT_LOCALE
 		}
 	},
 
@@ -69,7 +71,8 @@ export default defineNuxtConfig({
 	// experimental features
 	experimental: {
 		reactivityTransform: false,
-		componentIslands: true
+		componentIslands: true,
+		payloadExtraction: false
 	},
 
 	// auto import components
@@ -101,11 +104,15 @@ export default defineNuxtConfig({
 
 	// nitro
 	nitro: {
+		esbuild: {
+			options: {
+				target: 'esnext'
+			}
+		},
 		compressPublicAssets: true,
+		// @ts-ignore
 		prerender: {
-			crawlLinks: true,
-			ignore: [],
-			routes: []
+			routes: ['/']
 		}
 	},
 
@@ -188,6 +195,7 @@ export default defineNuxtConfig({
 	// localization - i18n config
 	i18n: {
 		strategy: 'prefix_except_default',
+		lazy: true,
 		defaultLocale: 'en',
 		debug: process.env.NODE_ENV !== 'production',
 		langDir: 'locales/',
@@ -204,7 +212,8 @@ export default defineNuxtConfig({
 				name: 'English',
 				file: 'en-US.yml',
 				iso: 'en-US',
-				flag: '🇺🇸'
+				flag: '🇺🇸',
+				isCatchallLocale: true
 			},
 			{
 				code: 'de',
@@ -269,13 +278,12 @@ export default defineNuxtConfig({
 		}
 	},
 
+	appConfig: {
+		// you don't need to include this: only for testing purposes
+		buildDate: new Date().toISOString()
+	},
 	pwa: {
 		registerType: 'autoUpdate',
-		minify: true,
-		disable: false,
-		injectRegister: 'auto',
-		includeAssets: [],
-		includeManifestIcons: true,
 		manifest: {
 			name: process.env.NUXT_APP_TITLE,
 			short_name: process.env.NUXT_APP_TITLE,
@@ -284,8 +292,6 @@ export default defineNuxtConfig({
 			background_color: '#ffffff',
 			display: 'standalone',
 			orientation: 'portrait',
-			start_url: '/',
-			scope: '/',
 			icons: [
 				{
 					src: '/assets/favicon/android-icon-144x144.png',
@@ -327,7 +333,14 @@ export default defineNuxtConfig({
 		},
 		workbox: {
 			navigateFallback: '/',
-			globPatterns: ['**/*.{js,css,html,png,svg,ico}']
+			globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
+			sourcemap: true
+		},
+		client: {
+			installPrompt: true
+			// you don't need to include this: only for testing purposes
+			// if enabling periodic sync for update use 1 hour or so (periodicSyncForUpdates: 3600)
+			// periodicSyncForUpdates: 20
 		},
 		devOptions: {
 			enabled: true,

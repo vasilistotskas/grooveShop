@@ -31,8 +31,7 @@ export const useProductStore = defineStore({
 		async fetchProduct(productId: string | string[]): Promise<void> {
 			this.product = null
 			try {
-				const request = await $fetch(`/api/product/${productId}`)
-				this.product = request.product
+				this.product = await $fetch(`/api/product/${productId}`)
 			} catch (error) {
 				console.log('error', error)
 			}

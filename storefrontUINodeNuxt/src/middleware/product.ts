@@ -1,8 +1,7 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
 	const nuxtApp = useNuxtApp()
 
-	const request = await $fetch(`/api/product/${to.params.id}`)
-	const product = request.product
+	const product = await $fetch(`/api/product/${to.params.id}`)
 	const productSlug = product.slug
 	const productId = product.id
 	const currentLocale = nuxtApp.$i18n.locale.value

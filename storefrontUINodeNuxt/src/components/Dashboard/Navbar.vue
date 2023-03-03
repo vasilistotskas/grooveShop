@@ -9,18 +9,13 @@ const consoleLogImageLoaded = () => {
 		<template #menu>
 			<div class="relative hidden lg:flex items-center ml-auto">
 				<div class="flex items-center justify-center">
-					<img
-						class="rounded-full"
-						src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-						alt="Avatar of Jonathan Reinink"
-					/>
 					<nuxt-img
 						preload
 						loading="lazy"
 						class="rounded-full"
 						src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
 						alt="Avatar of Jonathan Reinink"
-						sizes="sm:100vw md:50vw lg:400px"
+						sizes="sm:100vw md:50vw lg:1.5vw"
 						format="webp"
 						@load="consoleLogImageLoaded"
 					/>

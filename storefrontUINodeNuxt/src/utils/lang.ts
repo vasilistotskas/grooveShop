@@ -81,14 +81,11 @@ export function LanguageManager() {
 			return 'en'
 		}
 	}
-	console.log('getSystemLocale', getSystemLocale())
 	const getUserLocale = (): string =>
 		getLocaleFromPath() || localeUserSetting.value || getSystemLocale()
-	console.log('getUserLocale', getUserLocale())
 
 	// state
 	const localeSetting = useState<string>('locale.setting', () => getUserLocale())
-	console.log('localeSetting', localeSetting)
 
 	// watchers
 	watch(localeSetting, (localeSetting) => {

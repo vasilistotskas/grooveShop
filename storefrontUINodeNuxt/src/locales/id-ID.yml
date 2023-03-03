@@ -7,54 +7,56 @@ components:
 pages:
   '404':
     title: halaman tidak ditemukan
+  development:
+    nav: perkembangan
+    index:
+      title: deepweb[]mengagumkan[]pemula
+    blank:
+      nav: kosong
+      title: halaman kosong
+      description: ini adalah halaman kosong
+      just_blank_page_with_title: hanya halaman kosong dengan judul
+    test:
+      nav: tes
+      title: pengujian
+      description: ini adalah halaman percobaan
+      counter: menangkal
+      increment: kenaikan
+      decrement: pengurangan
+      reset: mengatur ulang
+      identity: identitas
+      full_name: nama lengkap
+    setting:
+      nav: pengaturan
+      title: pengaturan
+      description: ini adalah halaman pengaturan
+      sections:
+        validate_username:
+          title: memvalidasi profil github
+          description: ketik nama pengguna github anda dan klik tombol untuk memvalidasi.
+          footer: belajar lebih tentang
+          footer_button: mengesahkan
+          footer_link: pengguna github api
+        bot_id:
+          title: id bot
+          description: ini adalah id bot anda.
+          footer: digunakan saat berinteraksi dengan bot.
+        protection_spam:
+          title: proteksi spam
+          description: beralih aktifkan untuk menghapus batas merah
+          footer: jika memungkinkan kami akan mengamankan komentar anda dari spam
+        advanced_enable_advanced:
+          title: mengaktifkan pengaturan lanjutan
+          description: >-
+            anda dapat mengaktifkan pengaturan lanjutan untuk mengubah
+            pengaturan
+        advanced_dir_listing:
+          title: daftar direktori
+          description: >-
+            jika tidak ada file indeks di dalam direktori, isi direktori akan
+            ditampilkan.
   index:
     title: deepweb[]mengagumkan[]pemula
-  blank:
-    nav: kosong
-    title: halaman kosong
-    description: ini adalah halaman kosong
-    just_blank_page_with_title: hanya halaman kosong dengan judul
-  post:
-    nav: pos
-    title: pos
-    description: ini adalah halaman postingan
-  test:
-    nav: tes
-    title: pengujian
-    description: ini adalah halaman percobaan
-    counter: menangkal
-    increment: kenaikan
-    decrement: pengurangan
-    reset: mengatur ulang
-    identity: identitas
-    full_name: nama lengkap
-  setting:
-    nav: pengaturan
-    title: pengaturan
-    description: ini adalah halaman pengaturan
-    sections:
-      validate_username:
-        title: memvalidasi profil github
-        description: ketik nama pengguna github anda dan klik tombol untuk memvalidasi.
-        footer: belajar lebih tentang
-        footer_button: mengesahkan
-        footer_link: pengguna github api
-      bot_id:
-        title: id bot
-        description: ini adalah id bot anda.
-        footer: digunakan saat berinteraksi dengan bot.
-      protection_spam:
-        title: proteksi spam
-        description: beralih aktifkan untuk menghapus batas merah
-        footer: jika memungkinkan kami akan mengamankan komentar anda dari spam
-      advanced_enable_advanced:
-        title: mengaktifkan pengaturan lanjutan
-        description: anda dapat mengaktifkan pengaturan lanjutan untuk mengubah pengaturan
-      advanced_dir_listing:
-        title: daftar direktori
-        description: >-
-          jika tidak ada file indeks di dalam direktori, isi direktori akan
-          ditampilkan.
   dashboard:
     nav: dasbor
     title: dasbor
