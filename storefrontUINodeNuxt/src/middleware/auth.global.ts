@@ -3,14 +3,20 @@ import { useAccountStore } from '~/stores/user/account'
 
 export default defineNuxtRouteMiddleware((to, from) => {
 	const config = useRuntimeConfig()
-	const auth = useAuthStore()
-	const userAccount = useAccountStore()
-
-	if (!userAccount.account?.isSuperuser && to.path === '/admin') {
-		if (process.client) return (window.location.href = config.public.baseUrl)
-	}
-
-	if (!auth.isAuthenticated && to.meta.layout === 'dashboard') {
-		if (process.client) return (window.location.href = config.public.baseUrl)
-	}
+	console.log('to', to)
+	console.log('from', from)
+	// const auth = useAuthStore()
+	// const userAccount = useAccountStore()
+	//
+	// if (!userAccount.account?.isSuperuser && to.path === '/admin') {
+	// 	return navigateTo('/')
+	// }
+	//
+	// if (!auth.isAuthenticated && to.meta.layout === 'dashboard') {
+	// 	return navigateTo('/')
+	// }
+	//
+	// if (config.nuxtEnvironment !== 'development' && to.meta.layout === 'development') {
+	// 	return navigateTo('/')
+	// }
 })

@@ -3,9 +3,9 @@ import { useAuthStore } from '~/stores/auth'
 export default defineNuxtPlugin(() => {
 	addRouteMiddleware(
 		'auth',
-		() => {
+		async () => {
 			const auth = useAuthStore()
-			auth.initAuth()
+			await auth.initAuth()
 		},
 		{ global: true }
 	)

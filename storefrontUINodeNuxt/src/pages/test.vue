@@ -33,7 +33,9 @@ const identity = useIdentity()
 			<PageSection>
 				<PageSectionTitle :text="$t('pages.test.counter')" class="capitalize" />
 				<div class="">
-					<div class="mb-2">Counter : {{ counter.count }}</div>
+					<div class="mb-2">
+						<p>Counter : {{ counter.count }}</p>
+					</div>
 					<div
 						class="flex flex-col items-center justify-items-center space-y-2 md:space-y-0 md:flex-row md:space-x-2"
 					>

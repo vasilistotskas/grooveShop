@@ -92,7 +92,6 @@ export function ThemeManager() {
 	return {
 		themeSetting,
 		themeCurrent,
-
 		getUserSetting,
 		getSystemTheme,
 		getRealtimeTheme

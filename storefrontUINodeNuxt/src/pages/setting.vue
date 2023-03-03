@@ -169,7 +169,7 @@ const validate = async () => {
 											<template #suffix>
 												<Button type="opposite" class="flex space-x-1 border-none">
 													<icon-ic:baseline-content-copy />
-													<span>{{ $t('others.copy') }}</span>
+													{{ $t('others.copy') }}
 												</Button>
 											</template>
 										</FormTextInput>

@@ -212,8 +212,7 @@ export default defineNuxtConfig({
 				name: 'English',
 				file: 'en-US.yml',
 				iso: 'en-US',
-				flag: '🇺🇸',
-				isCatchallLocale: true
+				flag: '🇺🇸'
 			},
 			{
 				code: 'de',
@@ -343,7 +342,7 @@ export default defineNuxtConfig({
 			// periodicSyncForUpdates: 20
 		},
 		devOptions: {
-			enabled: true,
+			enabled: process.env.NODE_ENV !== 'production',
 			type: 'module'
 		}
 	}
