@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.27.1 (2023-03-03)
+### Fix
+* **Nuxt:** General improvements ([`5e3dbc9`](https://github.com/vasilistotskas/grooveShop/commit/5e3dbc966ca2c1ea7f3ffde9c692d6657d0d0fd0))
+
 ## v0.27.0 (2023-03-02)
 ### Feature
 * **Nuxt:** ClientOnly pwa messages + lint fixes ([`de0b7f6`](https://github.com/vasilistotskas/grooveShop/commit/de0b7f65aa1ea463345bdfa55e8836e28f6ede39))
