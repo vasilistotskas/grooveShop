@@ -61,7 +61,7 @@ const copyBash = () => {
 			></div>
 			<div class="absolute bottom-0 right-0 triangle-shape"></div>
 		</div>
-		<PageBody class="flex-1 flex">
+		<PageBody>
 			<PageSection class="flex-1 flex items-center">
 				<div class="flex-1 md:w-5/8 flex flex-col z-10">
 					<h1 class="text-center md:text-left mt-4">

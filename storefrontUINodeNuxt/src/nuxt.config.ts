@@ -3,52 +3,46 @@ import IconsResolver from 'unplugin-icons/resolver'
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
-	// server side rendering mode
 	ssr: true,
-
 	runtimeConfig: {
 		// The private keys which are only available server-side
 		apiSecret: process.env.NUXT_APP_PRIVATE_API_SECRET,
 		nuxtEnvironment: process.env.NUXT_ENVIRONMENT,
+		buildDate: new Date().toISOString(),
 
 		// Keys within public are also exposed client-side
 		public: {
 			appTitle: process.env.NUXT_APP_TITLE,
 			appDescription: process.env.NUXT_APP_DESCRIPTION,
+			appImage: process.env.NUXT_APP_IMAGE,
 			domainName: process.env.NUXT_APP_PUBLIC_DOMAIN_NAME,
 			canonicalUrl: process.env.NUXT_APP_PUBLIC_CANONICAL_URL,
 			baseUrl: process.env.NUXT_APP_PUBLIC_BASE_URL,
 			apiBaseUrl: process.env.NUXT_APP_PUBLIC_API_BASE_URL,
-			defaultLocale: process.env.NUXT_APP_DEFAULT_LOCALE
+			defaultLocale: process.env.NUXT_APP_DEFAULT_LOCALE,
+			facebookAppId: process.env.NUXT_APP_PUBLIC_FACEBOOK_APP_ID,
+			author: {
+				name: process.env.NUXT_APP_PUBLIC_AUTHOR_NAME,
+				github_url: process.env.NUXT_APP_PUBLIC_AUTHOR_GITHUB_URL
+			}
 		}
 	},
-
-	// typescripts
 	typescript: {
 		strict: true,
 		typeCheck: true
 	},
-
 	devtools: {
 		enabled: true
 	},
-
-	// css
 	css: [
 		'~/assets/sass/vendor.scss',
 		'~/assets/sass/app.scss',
 		'vue-toastification/dist/index.css'
 	],
-
-	// plugins
 	plugins: ['~/plugins/navbar.ts', '~/plugins/auth.ts'],
-
-	// build
 	build: {
 		transpile: ['@headlessui/vue', 'vue-toastification']
 	},
-
-	// modules
 	modules: [
 		'unplugin-icons/nuxt',
 		'@nuxtjs/i18n',
@@ -56,9 +50,9 @@ export default defineNuxtConfig({
 		'@vueuse/nuxt',
 		'@nuxt/devtools',
 		'@nuxt/image-edge',
-		'@vite-pwa/nuxt'
+		'@vite-pwa/nuxt',
+		'@nuxtjs/html-validator'
 	],
-
 	pinia: {
 		autoImports: [
 			// automatically imports `defineStore`
@@ -67,18 +61,10 @@ export default defineNuxtConfig({
 			'storeToRefs' // import { storeToRefs } from 'pinia'
 		]
 	},
-
-	// experimental features
 	experimental: {
-		reactivityTransform: false,
-		componentIslands: true,
-		payloadExtraction: false
+		componentIslands: true
 	},
-
-	// auto import components
 	components: true,
-
-	// vite plugins
 	vite: {
 		plugins: [
 			UnpluginComponentsVite({
@@ -101,56 +87,21 @@ export default defineNuxtConfig({
 			}
 		}
 	},
-
-	// nitro
 	nitro: {
-		esbuild: {
-			options: {
-				target: 'esnext'
-			}
-		},
-		compressPublicAssets: true,
-		// @ts-ignore
-		prerender: {
-			routes: ['/']
-		}
+		compressPublicAssets: true
 	},
-
-	// app config
 	app: {
 		head: {
 			charset: 'utf-8',
 			viewport: 'width=device-width, initial-scale=1',
-			title: process.env.NUXT_APP_TITLE,
 			meta: [
 				{ name: 'robots', content: 'index, follow' },
-				{ name: 'description', content: process.env.NUXT_APP_DESCRIPTION },
 				{ name: 'theme-color', content: '#ffffff' },
 				{ name: 'msapplication-TileColor', content: '#ffffff' },
 				{ name: 'msapplication-config', content: '/assets/favicon/browserconfig.xml' },
 				{
 					name: 'google-site-verification',
 					content: process.env.NUXT_APP_GOOGLE_SITE_VERIFICATION
-				},
-
-				{ property: 'og:title', content: process.env.NUXT_APP_TITLE },
-				{ property: 'og:description', content: process.env.NUXT_APP_DESCRIPTION },
-				{ property: 'og:type', content: 'website' },
-				{ property: 'og:url', content: process.env.NUXT_APP_PUBLIC_CANONICAL_URL },
-				{
-					property: 'og:image',
-					content: `${process.env.NUXT_APP_PUBLIC_CANONICAL_URL}/images/websiteLogo_circle.png`
-				},
-				{ property: 'og:site_name', content: process.env.NUXT_APP_TITLE },
-
-				{ name: 'twitter:card', content: 'summary_large_image' },
-				{ name: 'twitter:site', content: '@' + process.env.NUXT_APP_TWITTER_USERNAME },
-				{ name: 'twitter:creator', content: '@' + process.env.NUXT_APP_TWITTER_USERNAME },
-				{ name: 'twitter:title', content: process.env.NUXT_APP_TITLE },
-				{ name: 'twitter:description', content: process.env.NUXT_APP_DESCRIPTION },
-				{
-					name: 'twitter:image',
-					content: `${process.env.NUXT_APP_PUBLIC_CANONICAL_URL}/images/websiteLogo_circle.png`
 				}
 			],
 			link: [
@@ -187,17 +138,14 @@ export default defineNuxtConfig({
 				}
 			]
 		},
-		// global transition
 		pageTransition: { name: 'page', mode: 'out-in' },
 		layoutTransition: { name: 'layout', mode: 'out-in' }
 	},
-
-	// localization - i18n config
 	i18n: {
 		strategy: 'prefix_except_default',
 		lazy: true,
 		defaultLocale: 'en',
-		debug: process.env.NODE_ENV !== 'production',
+		debug: false, // process.env.NODE_ENV !== 'production',
 		langDir: 'locales/',
 		baseUrl: process.env.NUXT_APP_PUBLIC_BASE_URL || 'http://localhost:3000',
 		detectBrowserLanguage: {
@@ -264,19 +212,15 @@ export default defineNuxtConfig({
 			fallbackLocale: 'en'
 		}
 	},
-
-	// vueuse
 	vueuse: {
 		ssrHandlers: true
 	},
-
 	postcss: {
 		plugins: {
 			tailwindcss: {},
 			autoprefixer: {}
 		}
 	},
-
 	appConfig: {
 		// you don't need to include this: only for testing purposes
 		buildDate: new Date().toISOString()
@@ -342,8 +286,11 @@ export default defineNuxtConfig({
 			// periodicSyncForUpdates: 20
 		},
 		devOptions: {
-			enabled: process.env.NODE_ENV !== 'production',
+			enabled: false, // process.env.NODE_ENV !== 'production',
 			type: 'module'
 		}
+	},
+	htmlValidator: {
+		usePrettier: false
 	}
 })

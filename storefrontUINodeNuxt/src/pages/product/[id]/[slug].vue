@@ -1,24 +1,22 @@
 <script lang="ts" setup>
+import { useServerHead } from '@unhead/vue'
 import { useProductStore } from '~/stores/product/product'
 import { capitalize } from '~/utils/str'
 
 const route = useRoute()
 const config = useRuntimeConfig()
 const store = useProductStore()
-const { product } = storeToRefs(store)
 
-const productId = route.params.id
 const fullPath = config.public.baseUrl + route.fullPath
-
-const { pending, error } = useLazyAsyncData('product', () =>
-	store.fetchProduct(productId)
-)
+const productId = route.params.id
+await store.fetchProduct(productId)
+const { product, loading, error } = storeToRefs(store)
 
 definePageMeta({
 	middleware: ['product'],
 	layout: 'page'
 })
-useHead(() => ({
+useServerHead({
 	title: capitalize(product.value?.seoTitle || ''),
 	meta: [
 		{
@@ -74,7 +72,7 @@ useHead(() => ({
 			content: fullPath
 		}
 	]
-}))
+})
 </script>
 
 <template>
@@ -83,7 +81,7 @@ useHead(() => ({
 			<PageTitle :text="product?.name" class="capitalize" />
 		</PageHeader>
 		<PageBody>
-			<LoadingSkeleton v-if="pending"></LoadingSkeleton>
+			<LoadingSkeleton v-if="loading"></LoadingSkeleton>
 			<template v-else-if="error">
 				<div>Error</div>
 			</template>

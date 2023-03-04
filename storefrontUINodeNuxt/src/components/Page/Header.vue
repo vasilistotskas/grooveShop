@@ -6,6 +6,6 @@ export default defineComponent({
 
 <template>
 	<div class="lg:px-8 px-4 mb-6">
-		<p><slot /></p>
+		<slot />
 	</div>
 </template>

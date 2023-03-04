@@ -57,7 +57,7 @@ const validate = async () => {
 			name: string
 			id: string
 		}
-		alert(`Found Accout Name ${data.name} with id : ${data.id}`)
+		alert(`Found Account Name ${data.name} with id : ${data.id}`)
 	} catch (err) {
 		alert(err)
 	}

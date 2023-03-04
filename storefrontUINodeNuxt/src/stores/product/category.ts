@@ -55,6 +55,8 @@ export const useCategoryStore = defineStore({
 				if (error instanceof Error) {
 					this.error = error.message
 				}
+			} finally {
+				this.loading = false
 			}
 		}
 	}
