@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.28.0 (2023-03-04)
+### Feature
+* **Nuxt:** Seo optimized and code cleanup , warnings solved and more ([`cc0617c`](https://github.com/vasilistotskas/grooveShop/commit/cc0617c9ab7635bbb274cd5098c24f93804dff13))
+
 ## v0.27.1 (2023-03-03)
 ### Fix
 * **Nuxt:** General improvements ([`5e3dbc9`](https://github.com/vasilistotskas/grooveShop/commit/5e3dbc966ca2c1ea7f3ffde9c692d6657d0d0fd0))
