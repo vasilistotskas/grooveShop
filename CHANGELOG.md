@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.29.0 (2023-03-05)
+### Feature
+* **Nuxt:** Sitemap dynamic generation on build (must implement command also) , ui improvements ([`2d16b6a`](https://github.com/vasilistotskas/grooveShop/commit/2d16b6a6b68771d1510c94920ffd461b541688c9))
+
 ## v0.28.0 (2023-03-04)
 ### Feature
 * **Nuxt:** Seo optimized and code cleanup , warnings solved and more ([`cc0617c`](https://github.com/vasilistotskas/grooveShop/commit/cc0617c9ab7635bbb274cd5098c24f93804dff13))
