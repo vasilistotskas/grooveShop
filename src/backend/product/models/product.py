@@ -175,7 +175,7 @@ class Product(TimeStampMixinModel, SeoModel, UUIDModel):
 
     @property
     def absolute_url(self) -> str:
-        return f"/{self.category.slug}/{self.slug}"
+        return f"/{self.id}/{self.slug}"
 
 
 class ProductTranslation(TimeStampMixinModel, UUIDModel, SeoModelTranslation):

@@ -87,7 +87,7 @@ onMounted(() => {
 					}"
 					@click="activeTab = item.name"
 				>
-					<a href="#" @click.prevent="$emit('click')">
+					<a :aria-label="item.title" href="#" @click.prevent="$emit('click')">
 						{{ item.title }}
 					</a>
 				</div>

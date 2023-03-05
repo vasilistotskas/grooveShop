@@ -74,6 +74,7 @@ const onClick = (event: MouseEvent) => {
 	<NuxtLink
 		v-if="to"
 		tag="a"
+		:aria-label="text"
 		:to="localePath(to)"
 		:class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"
 	>
@@ -83,6 +84,7 @@ const onClick = (event: MouseEvent) => {
 		v-else
 		:class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"
 		:href="href"
+		:aria-label="text"
 		@click="onClick"
 	>
 		<slot>{{ text }}</slot>

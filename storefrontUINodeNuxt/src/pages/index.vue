@@ -48,7 +48,7 @@ const copyBash = () => {
 </script>
 
 <template>
-	<PageWrapper class="flex-1 flex">
+	<PageWrapper class="flex">
 		<div class="background-overlay">
 			<div
 				class="absolute top-0 left-0 transform translate-x-64 translate-y-4 h-14 w-14 rounded-full bg-gray-900 dark:bg-white"
@@ -62,7 +62,7 @@ const copyBash = () => {
 			<div class="absolute bottom-0 right-0 triangle-shape"></div>
 		</div>
 		<PageBody>
-			<PageSection class="flex-1 flex items-center">
+			<PageSection class="flex items-center">
 				<div class="flex-1 md:w-5/8 flex flex-col z-10">
 					<h1 class="text-center md:text-left mt-4">
 						<span

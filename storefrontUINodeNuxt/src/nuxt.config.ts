@@ -19,12 +19,15 @@ export default defineNuxtConfig({
 			canonicalUrl: process.env.NUXT_APP_PUBLIC_CANONICAL_URL,
 			baseUrl: process.env.NUXT_APP_PUBLIC_BASE_URL,
 			apiBaseUrl: process.env.NUXT_APP_PUBLIC_API_BASE_URL,
-			defaultLocale: process.env.NUXT_APP_DEFAULT_LOCALE,
 			facebookAppId: process.env.NUXT_APP_PUBLIC_FACEBOOK_APP_ID,
 			author: {
 				name: process.env.NUXT_APP_PUBLIC_AUTHOR_NAME,
 				github_url: process.env.NUXT_APP_PUBLIC_AUTHOR_GITHUB_URL
 			}
+		},
+		i18n: {
+			locales: process.env.NUXT_APP_LOCALES,
+			defaultLocale: process.env.NUXT_APP_DEFAULT_LOCALE
 		}
 	},
 	typescript: {
@@ -44,14 +47,17 @@ export default defineNuxtConfig({
 		transpile: ['@headlessui/vue', 'vue-toastification']
 	},
 	modules: [
-		'unplugin-icons/nuxt',
+		'@nuxt/devtools',
+		'@nuxt/image-edge',
+		'@nuxt/content',
+		'@nuxtjs/html-validator',
+		'@nuxtjs/robots',
 		'@nuxtjs/i18n',
 		'@pinia/nuxt',
 		'@vueuse/nuxt',
-		'@nuxt/devtools',
-		'@nuxt/image-edge',
 		'@vite-pwa/nuxt',
-		'@nuxtjs/html-validator'
+		'unplugin-icons/nuxt',
+		'./modules/sitemap-dynamic'
 	],
 	pinia: {
 		autoImports: [
@@ -88,7 +94,12 @@ export default defineNuxtConfig({
 		}
 	},
 	nitro: {
-		compressPublicAssets: true
+		compressPublicAssets: true,
+		prerender: {
+			crawlLinks: true,
+			ignore: [],
+			routes: ['/sitemap.xml']
+		}
 	},
 	app: {
 		head: {
@@ -141,10 +152,13 @@ export default defineNuxtConfig({
 		pageTransition: { name: 'page', mode: 'out-in' },
 		layoutTransition: { name: 'layout', mode: 'out-in' }
 	},
+	robots: {
+		configPath: '~/config/robots.config'
+	},
 	i18n: {
 		strategy: 'prefix_except_default',
 		lazy: true,
-		defaultLocale: 'en',
+		defaultLocale: process.env.NUXT_APP_DEFAULT_LOCALE,
 		debug: false, // process.env.NODE_ENV !== 'production',
 		langDir: 'locales/',
 		baseUrl: process.env.NUXT_APP_PUBLIC_BASE_URL || 'http://localhost:3000',
@@ -207,9 +221,9 @@ export default defineNuxtConfig({
 		],
 		vueI18n: {
 			legacy: false,
-			availableLocales: ['en', 'de', 'el', 'id', 'ja', 'ko', 'zh'],
-			locale: 'en',
-			fallbackLocale: 'en'
+			availableLocales: process.env.NUXT_APP_AVAILABLE_LOCALES?.split(','),
+			locale: process.env.NUXT_APP_DEFAULT_LOCALE,
+			fallbackLocale: process.env.NUXT_APP_DEFAULT_LOCALE
 		}
 	},
 	vueuse: {

@@ -1,16 +1,3 @@
-<script lang="ts" setup>
-import { ITheme } from '~/utils/theme'
-
-const theme = useState<ITheme>('theme.current')
-const themeClass = computed(() => (theme.value === 'dark' ? 'dark' : 'light'))
-
-useHead({
-	htmlAttrs: {
-		class: themeClass
-	}
-})
-</script>
-
 <template>
 	<div class="relative bg-gray-50 dark:bg-gray-900">
 		<slot name="app-before" />

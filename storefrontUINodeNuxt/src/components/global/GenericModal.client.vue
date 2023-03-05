@@ -165,6 +165,7 @@ onMounted(() => {
 				aria-label="Close"
 				@click="closeModal"
 			>
+				<span class="hidden">Close</span>
 				<IconEntypo:circle-with-cross></IconEntypo:circle-with-cross>
 			</button>
 			<div

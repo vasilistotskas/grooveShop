@@ -38,6 +38,7 @@ const availableLocales = computed(() => {
 				title="Change Language"
 				class="transition-colors duration-300"
 			>
+				<span class="hidden">Change Language</span>
 				<span class="justify-center items-center flex">
 					<IconLa:language />
 				</span>

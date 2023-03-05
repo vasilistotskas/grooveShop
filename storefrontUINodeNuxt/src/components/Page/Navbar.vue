@@ -70,7 +70,7 @@ bus.on((event: string) => {
 	</GenericModal>
 
 	<!-- button that opens the modal  -->
-	<button class="text-white" @click="openModal">Open Modal</button>
+	<button type="button" class="text-white" @click="openModal">Open Modal</button>
 
 	<BuilderNavbar>
 		<template #banner>
@@ -82,10 +82,7 @@ bus.on((event: string) => {
 		</template>
 		<template #menu>
 			<div class="relative hidden lg:flex items-center ml-auto">
-				<nav
-					class="text-sm leading-6 font-semibold text-gray-600 dark:text-gray-300"
-					role="navigation"
-				>
+				<nav class="text-sm leading-6 font-semibold text-gray-600 dark:text-gray-300">
 					<ul class="flex items-center space-x-8">
 						<li></li>
 						<li v-for="(item, i) in menus" :key="i">
@@ -93,6 +90,7 @@ bus.on((event: string) => {
 								v-if="item.type === 'link'"
 								:to="item.route ? item.route : undefined"
 								:href="item.href ? item.href : undefined"
+								:text="item.text"
 								class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
 								>{{ item.text }}</Anchor
 							>
@@ -116,6 +114,7 @@ bus.on((event: string) => {
 						class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
 						href="https://github.com/vasilistotskas/grooveShop/storefrontUINodeNuxt"
 						title="Github"
+						:text="'Github'"
 					>
 						<IconMdi:github-face />
 					</Anchor>
@@ -141,6 +140,7 @@ bus.on((event: string) => {
 									v-if="item.type === 'link'"
 									:to="item.route ? item.route : undefined"
 									:href="item.href ? item.href : undefined"
+									:text="item.text"
 									class="flex-1 hover:no-underline capitalize"
 									>{{ item.text }}</Anchor
 								>

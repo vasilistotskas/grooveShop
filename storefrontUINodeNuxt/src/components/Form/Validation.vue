@@ -43,7 +43,7 @@ const onSubmit = handleSubmit((e) => {
 			<span>{{ errors.email }}</span>
 		</div>
 		<div>
-			<label for="email">Password</label>
+			<label for="password">Password</label>
 			<div>
 				<input
 					id="password"

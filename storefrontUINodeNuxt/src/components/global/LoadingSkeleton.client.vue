@@ -33,7 +33,7 @@ defineProps({
 
 <template>
 	<div class="container">
-		<a id="card-link" class="card" target="_blank">
+		<a id="card-link" aria-label="skeleton" class="card" target="_blank">
 			<div class="card__header">
 				<div v-if="showImage">
 					<img

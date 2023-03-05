@@ -28,6 +28,7 @@ const consoleLogImageLoaded = () => {
 					<LanguageSwitcher />
 					<ThemeSwitcher />
 					<Anchor
+						:text="'Github'"
 						class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
 						href="https://github.com/vasilistotskas/grooveShop/storefrontUINodeNuxt"
 						title="Github"

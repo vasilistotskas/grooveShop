@@ -81,12 +81,16 @@ const identity = useIdentity()
 						class="flex flex-col items-center space-y-2 md:space-y-0 md:flex-row md:space-x-2"
 					>
 						<FormTextInput
+							:id="'firstName'"
 							v-model="identity.firstName"
+							:name="'firstName'"
 							size="md"
 							class="w-full md:w-1/3"
 						/>
 						<FormTextInput
+							:id="'lastName'"
 							v-model="identity.lastName"
+							:name="'lastName'"
 							size="md"
 							class="w-full md:w-1/3"
 						/>

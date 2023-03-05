@@ -66,6 +66,7 @@ module.exports = {
 		'./pages/**/*.vue',
 		'./plugins/**/*.{js,ts}',
 		'./utils/**/*.{js,ts}',
+		'./config/**/*.{js,ts}',
 		'./app.vue'
 	],
 	future: {

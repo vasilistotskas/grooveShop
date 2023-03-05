@@ -43,7 +43,7 @@ pages:
         footer_link: api χρηστών github
       bot_id:
         title: αναγνωριστικό ρομπότ
-        description: αυτό είναι το αναγνωριστικό του bot σας.
+        description: αυτό είναι το αναγνωριστικό ρομπότ σας.
         footer: χρησιμοποιείται κατά την αλληλεπίδραση με το bot.
       protection_spam:
         title: προστασία ανεπιθύμητων

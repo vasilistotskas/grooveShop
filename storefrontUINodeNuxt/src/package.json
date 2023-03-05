@@ -9,10 +9,10 @@
 	"author": "vasilistotskas",
 	"license": "MIT",
 	"scripts": {
-		"build": "nuxt build",
-		"dev": "nuxt dev",
-		"generate": "nuxt generate",
-		"preview": "nuxt preview",
+		"build": "nuxi build",
+		"dev": "nuxi dev",
+		"generate": "nuxi generate",
+		"preview": "nuxi preview",
 		"start": "node .output/server/index.mjs",
 		"serve": "serve dist/",
 		"lint": "eslint --ext \".ts,.js,.vue\" --ignore-path .eslintignore .",
@@ -35,15 +35,17 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.21.0",
-		"@headlessui/vue": "^1.7.11",
+		"@headlessui/vue": "^1.7.12",
 		"@iconify/json": "^2.2.30",
+		"@nuxt/content": "^2.4.3",
 		"@nuxt/devtools": "^0.2.5",
 		"@nuxt/image-edge": "^1.0.0-27954023.4cee565",
-		"@nuxt/test-utils-edge": "3.3.0-27964013.e11d55a49",
+		"@nuxt/test-utils-edge": "3.3.0-27965718.b73ca9143",
 		"@nuxtjs/eslint-config": "^12.0.0",
 		"@nuxtjs/eslint-config-typescript": "^12.0.0",
 		"@nuxtjs/html-validator": "^1.2.3",
 		"@nuxtjs/i18n": "^8.0.0-beta.10",
+		"@nuxtjs/robots": "^3.0.0",
 		"@pinia/nuxt": "^0.4.7",
 		"@tailwindcss/typography": "0.5.9",
 		"@vee-validate/zod": "^4.7.4",
@@ -65,6 +67,7 @@
 		"sass": "1.58.3",
 		"sass-loader": "^13.2.0",
 		"serve": "^14.2.0",
+		"sitemap": "^7.1.1",
 		"tailwindcss": "^3.2.7",
 		"translate": "^1.4.1",
 		"tsc-alias": "^1.8.2",
@@ -78,7 +81,7 @@
 		"vue-toastification": "^2.0.0-rc.5",
 		"vue-tsc": "^1.2.0",
 		"webpack": "^5.75.0",
-		"zod": "^3.20.6"
+		"zod": "^3.21.0"
 	},
 	"lint-staged": {
 		"**/*.{js,ts,vue,html}": [

@@ -26,6 +26,7 @@ onMounted(() => {
 				<li v-for="i in 29" :key="i">
 					<Anchor
 						:to="localePath('dashboard')"
+						:text="$t('pages.dashboard.index.nav')"
 						class="group flex items-center mb-4 hover:no-underline"
 					>
 						<div

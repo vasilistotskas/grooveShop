@@ -68,10 +68,12 @@ const toggleOptions = (show?: boolean) => {
 						class="lg:hidden flex items-center self-center justify-center mr-2"
 					>
 						<button
+							type="button"
 							class="flex items-center focus:outline-none"
 							aria-label="Toggle Drawer Menu"
 							@click="toggleDrawer()"
 						>
+							<span class="hidden">Toggle Drawer Menu</span>
 							<span
 								class="flex items-center text-gray-600 dark:text-gray-300 text-lg"
 								aria-hidden="true"
@@ -85,6 +87,7 @@ const toggleOptions = (show?: boolean) => {
 					<slot name="title">
 						<NuxtLink
 							tag="a"
+							aria-label="index"
 							class="mr-3 flex-none overflow-hidden md:w-auto text-md font-bold text-gray-900 dark:text-gray-200"
 							:to="localePath('index')"
 						>
@@ -102,10 +105,12 @@ const toggleOptions = (show?: boolean) => {
 					<!-- options:toggle -->
 					<div v-if="$slots['options']" class="flex-1 flex justify-end lg:hidden">
 						<button
+							type="button"
 							class="flex items-center focus:outline-none"
 							aria-label="Toggle Options Menu"
 							@click="toggleOptions()"
 						>
+							<span class="hidden">Toggle Options Menu</span>
 							<span
 								class="flex items-center text-gray-600 dark:text-gray-300 text-sm"
 								aria-hidden="true"

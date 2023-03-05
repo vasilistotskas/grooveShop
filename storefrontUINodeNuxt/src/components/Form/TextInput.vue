@@ -15,7 +15,15 @@ const props = defineProps({
 	},
 	type: {
 		type: String,
-		default: 'default'
+		default: 'text'
+	},
+	id: {
+		type: String,
+		default: ''
+	},
+	name: {
+		type: String,
+		default: ''
 	}
 })
 const emit = defineEmits(['update:modelValue'])
@@ -68,15 +76,18 @@ const selectedFontSizeStyle = computed(
 			<slot name="prefix" />
 		</div>
 		<div class="text-input-wrapper relative flex flex-1">
+			<label :for="id" class="hidden"> {{ name }}</label>
 			<input
+				:id="id"
 				v-model="modelValue"
+				:name="name"
 				:class="`text-input w-full flex-1 bg-transparent outline-none border ${
 					havePreEl ? '' : 'rounded-l'
 				} ${
 					haveSuEl ? '' : 'rounded-r'
 				} ${selectedBorderStyle} ${selectedOnHoverBorderStyle} ${selectedPaddingStyle} ${selectedFontSizeStyle}`"
 				:type="type"
-				:placeholder="placeholder"
+				:placeholder="type === 'text' ? placeholder : ''"
 			/>
 		</div>
 		<div v-if="slots.suffix" :class="`flex rounded-r border ${selectedBorderStyle}`">

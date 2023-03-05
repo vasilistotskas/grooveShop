@@ -87,6 +87,7 @@ const validate = async () => {
 					<TabList class="w-full md:w-1/6 flex md:flex-col rounded-lg mb-2">
 						<HeadlessUiTab v-slot="{ selected }" as="template">
 							<button
+								type="button"
 								:class="[
 									'md:w-full text-left px-3 py-1.5 rounded py-2.5 text-sm leading-5 transition-all hover:bg-gray-200 hover:text-slate-900 dark:hover:bg-white/[0.12] dark:hover:text-white',
 									selected ? 'font-extrabold' : 'text-slate-800 dark:text-gray-400'
@@ -97,6 +98,7 @@ const validate = async () => {
 						</HeadlessUiTab>
 						<HeadlessUiTab v-slot="{ selected }" as="template">
 							<button
+								type="button"
 								:class="[
 									'md:w-full text-left px-3 py-1.5 rounded py-2.5 text-sm leading-5 transition-all hover:bg-gray-200 hover:text-slate-900 dark:hover:bg-white/[0.12] dark:hover:text-white',
 									selected ? 'font-extrabold' : 'text-slate-800 dark:text-gray-400'
@@ -107,6 +109,7 @@ const validate = async () => {
 						</HeadlessUiTab>
 						<HeadlessUiTab v-slot="{ selected }" as="template">
 							<button
+								type="button"
 								:class="[
 									'md:w-full text-left px-3 py-1.5 rounded py-2.5 text-sm leading-5 transition-all hover:bg-gray-200 hover:text-slate-900 dark:hover:bg-white/[0.12] dark:hover:text-white',
 									selected ? 'font-extrabold' : 'text-slate-800 dark:text-gray-400'
@@ -128,7 +131,12 @@ const validate = async () => {
 										{{ $t('pages.setting.sections.validate_username.description') }}
 									</p>
 									<div class="flex">
-										<FormTextInput v-model="username" class="w-full md:w-1/3">
+										<FormTextInput
+											:id="'username'"
+											v-model="username"
+											:name="'username'"
+											class="w-full md:w-1/3"
+										>
 											<template #prefix-disabled>
 												<span class="flex-1 px-4 py-2">github.com/</span>
 											</template>
@@ -165,7 +173,12 @@ const validate = async () => {
 										{{ $t('pages.setting.sections.bot_id.description') }}
 									</p>
 									<div class="flex">
-										<FormTextInput v-model="id" class="w-full md:w-1/3">
+										<FormTextInput
+											:id="'id'"
+											v-model="id"
+											:name="'id'"
+											class="w-full md:w-1/3"
+										>
 											<template #suffix>
 												<Button type="opposite" class="flex space-x-1 border-none">
 													<icon-ic:baseline-content-copy />

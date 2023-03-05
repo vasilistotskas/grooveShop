@@ -37,6 +37,7 @@ const currentStyle = toRef(props, 'type')
 				:title="$t('components.theme_switcher.change_theme')"
 				class="transition-colors duration-300"
 			>
+				<span class="hidden">{{ $t('components.theme_switcher.change_theme') }}</span>
 				<span class="flex justify-center items-center dark:hidden">
 					<IconUil:sun />
 				</span>
