@@ -1,41 +1,59 @@
-import { Product } from '~/zod/product/product'
+import { CreateRequest, Product } from '~/zod/product/product'
+import Paginated, { PaginationQuery } from '~/zod/pagination/paginated'
 
 export interface ProductState {
-	products: Product[]
+	products: Paginated<Product>
 	product: Product | null
 	loading: boolean
 	error: string | null
 }
 
+const resolveError = (error: any): string | null => {
+	if (error instanceof TypeError) {
+		return error.message
+	}
+	if (error instanceof Error) {
+		return error.message
+	}
+	return null
+}
+
 export const useProductStore = defineStore({
 	id: 'product',
 	state: (): ProductState => ({
-		products: [] as Product[],
+		products: {
+			links: {
+				next: null,
+				prev: null
+			},
+			count: 0,
+			totalPages: 0,
+			pageSize: 0,
+			page: 0,
+			results: []
+		},
 		product: null as Product | null,
 		loading: false,
 		error: null as string | null
 	}),
 	getters: {
 		getProductById: (state) => (id: number) => {
-			return state.products.find((product) => product.id === id)
+			return state.products.results.find((product) => product.id === id)
 		}
 	},
 	actions: {
-		async fetchProducts(): Promise<void> {
-			const config = useRuntimeConfig()
-			this.products = []
+		async fetchProducts({ offset, limit }: PaginationQuery): Promise<void> {
 			this.loading = true
 			try {
-				this.products = await fetch(`${config.public.apiBaseUrl}/product`).then(
-					(response) => response.json()
-				)
+				this.products = await $fetch(`/api/product/list/list`, {
+					method: 'GET',
+					params: {
+						offset,
+						limit
+					}
+				})
 			} catch (error) {
-				if (error instanceof TypeError) {
-					this.error = error.message
-				}
-				if (error instanceof Error) {
-					this.error = error.message
-				}
+				this.error = resolveError(error)
 			} finally {
 				this.loading = false
 			}
@@ -46,33 +64,33 @@ export const useProductStore = defineStore({
 			try {
 				this.product = await $fetch(`/api/product/${productId}`)
 			} catch (error) {
-				if (error instanceof TypeError) {
-					this.error = error.message
-				}
-				if (error instanceof Error) {
-					this.error = error.message
-				}
+				this.error = resolveError(error)
+			} finally {
+				this.loading = false
+			}
+		},
+		async createProduct(product: CreateRequest): Promise<void> {
+			this.loading = true
+			try {
+				const newProduct = await $fetch(`/api/product/list/list`, {
+					method: 'POST',
+					body: product
+				})
+				this.products.results.push(newProduct)
+			} catch (error) {
+				this.error = resolveError(error)
 			} finally {
 				this.loading = false
 			}
 		},
 		async updateProductHits(productId: string | string[]): Promise<void> {
-			const config = useRuntimeConfig()
 			this.loading = true
 			try {
-				await fetch(
-					`${config.public.apiBaseUrl}/product/${productId}/update_product_hits`,
-					{
-						method: 'POST'
-					}
-				)
+				await $fetch(`/api/product/${productId}/update_product_hits`, {
+					body: JSON.stringify({})
+				})
 			} catch (error) {
-				if (error instanceof TypeError) {
-					this.error = error.message
-				}
-				if (error instanceof Error) {
-					this.error = error.message
-				}
+				this.error = resolveError(error)
 			} finally {
 				this.loading = false
 			}

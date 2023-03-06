@@ -27,53 +27,70 @@ defineProps({
 	showFooter: {
 		type: Boolean,
 		default: true
+	},
+	replicas: {
+		type: Number,
+		default: 1
+	},
+	cardWidth: {
+		type: [Number, String],
+		default: '100%'
+	},
+	cardHeight: {
+		type: [Number, String],
+		default: 'auto'
 	}
 })
 </script>
 
 <template>
-	<div class="container">
-		<a id="card-link" aria-label="skeleton" class="card" target="_blank">
-			<div class="card__header">
-				<div v-if="showImage">
-					<img
-						id="logo-img"
-						class="header__img skeleton"
-						alt="Loading image"
-						src=""
-						:style="{ borderRadius: isCircle ? '50%' : 'none' }"
-						:width="imageWidth"
-						:height="imageHeight"
-					/>
+	<div
+		:class="{
+			wrapper: true,
+			'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4': replicas > 1
+		}"
+	>
+		<div v-for="i in replicas" :key="i" class="container">
+			<a
+				id="card-link"
+				aria-label="skeleton"
+				class="card"
+				target="_blank"
+				:style="`width:${cardWidth}; height:${cardHeight};`"
+			>
+				<div class="card__header">
+					<div v-if="showImage">
+						<div
+							id="logo-img"
+							class="header__img skeleton"
+							:style="{ borderRadius: isCircle ? '50%' : 'none' }"
+						/>
+					</div>
+					<h3 v-if="showHeading" id="card-title" class="card__header header__title">
+						<span class="skeleton skeleton-text"></span>
+						<span class="skeleton skeleton-text"></span>
+					</h3>
 				</div>
-				<h3 v-if="showHeading" id="card-title" class="card__header header__title">
-					<span class="skeleton skeleton-text"></span>
-					<span class="skeleton skeleton-text"></span>
-				</h3>
-			</div>
 
-			<div class="card__body">
-				<div v-if="showParagraph" id="card-details" class="card__body body__text">
-					<div class="skeleton skeleton-text skeleton-text__body"></div>
+				<div class="card__body">
+					<div v-if="showParagraph" id="card-details" class="card__body body__text">
+						<div class="skeleton skeleton-text skeleton-text__body"></div>
+					</div>
+
+					<div v-if="showImage" class="card__body body__img">
+						<div
+							id="cover-img"
+							class="skeleton"
+							:style="{ borderRadius: isCircle ? '50%' : 'none' }"
+						/>
+					</div>
 				</div>
 
-				<div v-if="showImage" class="card__body body__img">
-					<img
-						id="cover-img"
-						class="skeleton"
-						alt="Loading image"
-						src=""
-						:style="{ borderRadius: isCircle ? '50%' : 'none' }"
-						:width="imageWidth"
-						:height="imageHeight"
-					/>
+				<div v-if="showFooter" id="card-footer" class="card__footer">
+					<div class="skeleton skeleton-text skeleton-footer"></div>
 				</div>
-			</div>
-
-			<div v-if="showFooter" id="card-footer" class="card__footer">
-				<div class="skeleton skeleton-text skeleton-footer"></div>
-			</div>
-		</a>
+			</a>
+		</div>
 	</div>
 </template>
 
@@ -88,7 +105,6 @@ img[alt] {
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
-	margin: 5rem;
 
 	@media screen and (max-width: 600px) {
 		margin: -0.5rem;
@@ -105,10 +121,7 @@ img[alt] {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-	width: 330px;
-	height: auto;
 	transition: all 0.2s ease;
-	margin: 2rem;
 
 	&__header {
 		display: flex;

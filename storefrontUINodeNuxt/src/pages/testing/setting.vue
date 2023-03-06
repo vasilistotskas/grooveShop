@@ -15,14 +15,14 @@ const screen = useScreen()
 
 // compiler macro
 definePageMeta({
-	layout: 'page'
+	layout: 'testing'
 })
 useHead(() => ({
-	title: capitalize(t('pages.setting.title')),
+	title: capitalize(t('pages.testing.setting.title')),
 	meta: [
 		{
 			name: 'description',
-			content: t('pages.setting.description')
+			content: t('pages.testing.setting.description')
 		}
 	]
 }))
@@ -75,7 +75,7 @@ const validate = async () => {
 			/>
 		</PageSection>
 		<PageHeader>
-			<PageTitle :text="$t('pages.setting.title')" class="capitalize" />
+			<PageTitle :text="$t('pages.testing.setting.title')" class="capitalize" />
 		</PageHeader>
 		<PageBody>
 			<PageSection>
@@ -125,10 +125,12 @@ const validate = async () => {
 								<CardContent>
 									<CardTitle
 										class="capitalize"
-										:text="$t('pages.setting.sections.validate_username.title')"
+										:text="$t('pages.testing.setting.sections.validate_username.title')"
 									/>
-									<p class="mb-2">
-										{{ $t('pages.setting.sections.validate_username.description') }}
+									<p class="text-gray-700 dark:text-gray-200 mb-2">
+										{{
+											$t('pages.testing.setting.sections.validate_username.description')
+										}}
 									</p>
 									<div class="flex">
 										<FormTextInput
@@ -146,11 +148,13 @@ const validate = async () => {
 								<CardFooter
 									class="flex flex-col space-y-2 md:space-y md:flex-row items-center md:justify-between"
 								>
-									<p>
-										{{ $t('pages.setting.sections.validate_username.footer') }}
+									<p class="text-gray-700 dark:text-gray-200">
+										{{ $t('pages.testing.setting.sections.validate_username.footer') }}
 										<Anchor
 											class="underline font-bold capitalize"
-											:text="$t('pages.setting.sections.validate_username.footer_link')"
+											:text="
+												$t('pages.testing.setting.sections.validate_username.footer_link')
+											"
 											href="https://docs.github.com/en/rest/users/users#get-a-user"
 										/>
 									</p>
@@ -158,7 +162,9 @@ const validate = async () => {
 										class="capitalize"
 										size="sm"
 										type="opposite"
-										:text="$t('pages.setting.sections.validate_username.footer_button')"
+										:text="
+											$t('pages.testing.setting.sections.validate_username.footer_button')
+										"
 										@click="validate"
 									/>
 								</CardFooter>
@@ -167,10 +173,10 @@ const validate = async () => {
 								<CardContent>
 									<CardTitle
 										class="capitalize"
-										:text="$t('pages.setting.sections.bot_id.title')"
+										:text="$t('pages.testing.setting.sections.bot_id.title')"
 									/>
-									<p class="mb-2">
-										{{ $t('pages.setting.sections.bot_id.description') }}
+									<p class="text-gray-700 dark:text-gray-200 mb-2">
+										{{ $t('pages.testing.setting.sections.bot_id.description') }}
 									</p>
 									<div class="flex">
 										<FormTextInput
@@ -180,7 +186,7 @@ const validate = async () => {
 											class="w-full md:w-1/3"
 										>
 											<template #suffix>
-												<Button type="opposite" class="flex space-x-1 border-none">
+												<Button type="opposite" class="space-x-1 border-none">
 													<icon-ic:baseline-content-copy />
 													{{ $t('others.copy') }}
 												</Button>
@@ -189,8 +195,8 @@ const validate = async () => {
 									</div>
 								</CardContent>
 								<CardFooter class="justify-between">
-									<p>
-										{{ $t('pages.setting.sections.bot_id.footer') }}
+									<p class="text-gray-700 dark:text-gray-200">
+										{{ $t('pages.testing.setting.sections.bot_id.footer') }}
 									</p>
 								</CardFooter>
 							</Card>
@@ -205,10 +211,10 @@ const validate = async () => {
 								<CardContent>
 									<CardTitle
 										class="capitalize"
-										:text="$t('pages.setting.sections.protection_spam.title')"
+										:text="$t('pages.testing.setting.sections.protection_spam.title')"
 									/>
-									<p class="mb-2">
-										{{ $t('pages.setting.sections.protection_spam.description') }}
+									<p class="text-gray-700 dark:text-gray-200 mb-2">
+										{{ $t('pages.testing.setting.sections.protection_spam.description') }}
 									</p>
 									<div class="flex">
 										<FormSwitch v-model="enableSpamProtection">
@@ -221,8 +227,8 @@ const validate = async () => {
 									</div>
 								</CardContent>
 								<CardFooter class="justify-between">
-									<p>
-										{{ $t('pages.setting.sections.protection_spam.footer') }}
+									<p class="text-gray-700 dark:text-gray-200">
+										{{ $t('pages.testing.setting.sections.protection_spam.footer') }}
 									</p>
 								</CardFooter>
 							</Card>
@@ -232,11 +238,15 @@ const validate = async () => {
 								<CardContent>
 									<CardTitle
 										class="capitalize"
-										:text="$t('pages.setting.sections.advanced_enable_advanced.title')"
+										:text="
+											$t('pages.testing.setting.sections.advanced_enable_advanced.title')
+										"
 									/>
-									<p class="mb-2">
+									<p class="text-gray-700 dark:text-gray-200 mb-2">
 										{{
-											$t('pages.setting.sections.advanced_enable_advanced.description')
+											$t(
+												'pages.testing.setting.sections.advanced_enable_advanced.description'
+											)
 										}}
 									</p>
 									<div class="flex">
@@ -254,10 +264,16 @@ const validate = async () => {
 								<CardContent>
 									<CardTitle
 										class="capitalize"
-										:text="$t('pages.setting.sections.advanced_dir_listing.title')"
+										:text="
+											$t('pages.testing.setting.sections.advanced_dir_listing.title')
+										"
 									/>
-									<p class="mb-2">
-										{{ $t('pages.setting.sections.advanced_dir_listing.description') }}
+									<p class="text-gray-700 dark:text-gray-200 mb-2">
+										{{
+											$t(
+												'pages.testing.setting.sections.advanced_dir_listing.description'
+											)
+										}}
 									</p>
 									<div class="flex">
 										<FormSwitch v-model="enableDirList" on>

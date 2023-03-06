@@ -25,8 +25,8 @@ onMounted(() => {
 			<ul>
 				<li v-for="i in 29" :key="i">
 					<Anchor
-						:to="localePath('dashboard')"
-						:text="$t('pages.dashboard.index.nav')"
+						:to="'testing'"
+						:text="$t('pages.testing.index.nav')"
 						class="group flex items-center mb-4 hover:no-underline"
 					>
 						<div
@@ -45,7 +45,7 @@ onMounted(() => {
 								'font-extrabold text-sky-500 dark:text-sky-400': i === 1
 							}"
 						>
-							{{ $t('pages.dashboard.index.nav') }}
+							{{ $t('pages.testing.index.nav') }}
 						</span>
 					</Anchor>
 				</li>

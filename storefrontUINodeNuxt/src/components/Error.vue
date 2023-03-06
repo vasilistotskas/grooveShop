@@ -37,7 +37,7 @@ const error = computed(() => {
 		:is="props.wrap ? PageWrapper : 'div'"
 		:class="props.wrap ? 'flex flex-col items-center justify-center' : ''"
 	>
-		<h1 class="text-center mb-6 leading-3">
+		<h1 class="text-center mb-6 leading-3 text-gray-700 dark:text-gray-200">
 			<span class="font-bold text-8xl block">{{ error.code }}</span>
 			<span class="block italic">{{ error.message }}</span>
 		</h1>

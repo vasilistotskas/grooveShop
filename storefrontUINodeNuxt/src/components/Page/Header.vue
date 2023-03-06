@@ -1,11 +1,11 @@
 <script lang="ts">
 export default defineComponent({
-	layout: 'dashboard'
+	layout: 'testing'
 })
 </script>
 
 <template>
-	<div class="lg:px-8 px-4 mb-6">
+	<div>
 		<slot />
 	</div>
 </template>

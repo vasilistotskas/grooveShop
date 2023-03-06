@@ -160,7 +160,8 @@ module.exports = {
 				'2fr-1fr': '2fr 1fr',
 				'1fr-auto': '1fr auto',
 				'auto-auto': 'auto auto',
-				'repeat-auto-fill-mimax-80-auto': 'repeat(auto-fill, minmax(87px, auto));'
+				'repeat-auto-fill-mimax-80-auto': 'repeat(auto-fill, minmax(87px, auto));',
+				'repeat-auto-fill-mimax-350-auto': 'repeat(auto-fill, minmax(350px, auto));'
 			},
 			gridRow: {
 				'second-row': '2'

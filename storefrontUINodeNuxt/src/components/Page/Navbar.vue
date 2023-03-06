@@ -2,26 +2,9 @@
 import { AppConfigInput } from '@nuxt/schema'
 import { GlobalEvents } from '~/events/global'
 
-export interface IMenuItem {
-	type: 'link' | 'button'
-	text: string
-	href?: any
-	route?: any
-}
-
 const { t } = useLang()
 const toast = useToast()
 const app = useAppConfig() as AppConfigInput
-const menus = computed((): IMenuItem[] => [
-	{ type: 'link', text: t('pages.blank.nav'), route: { name: 'blank' } },
-	{ type: 'link', text: t('pages.test.nav'), route: { name: 'test' } },
-	{ type: 'link', text: t('pages.setting.nav'), route: { name: 'setting' } },
-	{
-		type: 'button',
-		text: t('pages.dashboard.nav'),
-		route: { name: 'dashboard' }
-	}
-])
 const navbarModal = ref(null)
 const bus = useEventBus<string>(GlobalEvents.GENERIC_MODAL)
 
@@ -54,17 +37,17 @@ bus.on((event: string) => {
 	>
 		<template #header>
 			<div>
-				<h2 class="text-2xl font-bold">Header</h2>
+				<h2 class="text-gray-700 dark:text-gray-200 text-2xl font-bold">Header</h2>
 			</div>
 		</template>
 		<template #body>
 			<div>
-				<p>Body</p>
+				<p class="text-gray-700 dark:text-gray-200">Body</p>
 			</div>
 		</template>
 		<template #footer>
 			<div>
-				<p>Footer</p>
+				<p class="text-gray-700 dark:text-gray-200">Footer</p>
 			</div>
 		</template>
 	</GenericModal>
@@ -84,24 +67,21 @@ bus.on((event: string) => {
 			<div class="relative hidden lg:flex items-center ml-auto">
 				<nav class="text-sm leading-6 font-semibold text-gray-600 dark:text-gray-300">
 					<ul class="flex items-center space-x-8">
-						<li></li>
-						<li v-for="(item, i) in menus" :key="i">
+						<li class="flex w-full gap-4">
 							<Anchor
-								v-if="item.type === 'link'"
-								:to="item.route ? item.route : undefined"
-								:href="item.href ? item.href : undefined"
-								:text="item.text"
+								:to="'products'"
+								:href="'products'"
+								:text="'products'"
 								class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
-								>{{ item.text }}</Anchor
+								>{{ $t('pages.products.title') }}</Anchor
 							>
-							<Button
-								v-else-if="item.type === 'button'"
-								:text="item.text"
-								size="xs"
-								class="font-extrabold capitalize"
-								:to="item.route ? item.route : undefined"
-								:href="item.href ? item.href : undefined"
-							/>
+							<Anchor
+								:to="'testing'"
+								:href="'testing'"
+								:text="'testing'"
+								class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
+								>{{ $t('pages.testing.title') }}</Anchor
+							>
 						</li>
 					</ul>
 				</nav>
@@ -128,30 +108,22 @@ bus.on((event: string) => {
 					<nav class="leading-6 font-semibold text-gray-600 dark:text-gray-300">
 						<ul class="flex flex-col">
 							<li
-								v-for="(item, i) in menus"
-								:key="i"
-								class="flex w-full"
-								:class="{
-									'pb-2 mb-2 border-b border-gray-900/10 dark:border-gray-50/[0.2]':
-										item.type === 'link'
-								}"
+								class="flex w-full pb-2 mb-2 border-b border-gray-900/10 dark:border-gray-50/[0.2] link"
 							>
 								<Anchor
-									v-if="item.type === 'link'"
-									:to="item.route ? item.route : undefined"
-									:href="item.href ? item.href : undefined"
-									:text="item.text"
+									:to="'products'"
+									:href="'products'"
+									:text="'products'"
 									class="flex-1 hover:no-underline capitalize"
-									>{{ item.text }}</Anchor
+									>{{ $t('pages.products.title') }}</Anchor
 								>
-								<Button
-									v-else-if="item.type === 'button'"
-									:text="item.text"
-									size="xs"
-									class="flex-1 font-extrabold capitalize"
-									:to="item.route ? item.route : undefined"
-									:href="item.href ? item.href : undefined"
-								/>
+								<Anchor
+									:to="'testing'"
+									:href="'testing'"
+									:text="'testing'"
+									class="flex-1 hover:no-underline capitalize"
+									>{{ $t('pages.testing.title') }}</Anchor
+								>
 							</li>
 						</ul>
 					</nav>

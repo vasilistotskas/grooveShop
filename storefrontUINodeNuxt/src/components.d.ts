@@ -13,6 +13,8 @@ declare module '@vue/runtime-core' {
 		'IconClarity:timesCircleSolid': typeof import('~icons/clarity/times-circle-solid')['default']
 		'IconClarity:timesLine': typeof import('~icons/clarity/times-line')['default']
 		'IconEntypo:circleWithCross': typeof import('~icons/entypo/circle-with-cross')['default']
+		'IconFaSolid:angleLeft': typeof import('~icons/fa-solid/angle-left')['default']
+		'IconFaSolid:angleRight': typeof import('~icons/fa-solid/angle-right')['default']
 		'IconFaSolid:ellipsisV': typeof import('~icons/fa-solid/ellipsis-v')['default']
 		'IconIc:baselineContentCopy': typeof import('~icons/ic/baseline-content-copy')['default']
 		'IconLa:language': typeof import('~icons/la/language')['default']

@@ -28,16 +28,26 @@ const to = toRef(props, 'to')
 		tag="a"
 		:to="localePath(to)"
 		:aria-label="text"
-		:class="`transition-colors duration-300 dark:hover:text-white hover:text-gray-900 hover:underline`"
+		:class="`transition-colors duration-300 dark:hover:text-white hover:text-gray-900`"
 	>
 		<slot>{{ text }}</slot>
 	</NuxtLink>
 	<a
 		v-else
 		:aria-label="text"
-		:class="`transition-colors duration-300 dark:hover:text-white hover:text-gray-900 hover:underline`"
+		:class="`transition-colors duration-300 dark:hover:text-white hover:text-gray-900`"
 		:href="href"
 	>
 		<slot>{{ text }}</slot>
 	</a>
 </template>
+
+<style lang="scss" scoped>
+a {
+	&.disabled {
+		pointer-events: none;
+		cursor: default;
+		color: #ccc;
+	}
+}
+</style>

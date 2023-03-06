@@ -17,7 +17,7 @@ definePageMeta({
 	layout: 'page'
 })
 useServerHead({
-	title: capitalize(product.value?.seoTitle || ''),
+	title: capitalize(product.value?.seoTitle || product.value?.name || ''),
 	meta: [
 		{
 			name: 'description',
@@ -86,7 +86,7 @@ useServerHead({
 				<div>Error</div>
 			</template>
 			<template v-else>
-				<p>{{ product }}</p>
+				<p class="text-gray-700 dark:text-gray-200">{{ product }}</p>
 			</template>
 		</PageBody>
 	</PageWrapper>

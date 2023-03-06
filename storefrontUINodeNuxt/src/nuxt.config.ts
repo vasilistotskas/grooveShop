@@ -98,7 +98,7 @@ export default defineNuxtConfig({
 		prerender: {
 			crawlLinks: true,
 			ignore: [],
-			routes: ['/sitemap.xml']
+			routes: ['/', '/sitemap.xml']
 		}
 	},
 	app: {
@@ -154,6 +154,29 @@ export default defineNuxtConfig({
 	},
 	robots: {
 		configPath: '~/config/robots.config'
+	},
+	image: {
+		screens: {
+			xs: 320,
+			sm: 640,
+			md: 768,
+			lg: 1024,
+			xl: 1280,
+			xxl: 1536,
+			'2xl': 1536
+		},
+		presets: {
+			productCard: {
+				modifiers: {
+					format: 'webp',
+					width: 250,
+					height: 230,
+					fit: 'cover',
+					loading: 'lazy',
+					background: 'transparent'
+				}
+			}
+		}
 	},
 	i18n: {
 		strategy: 'prefix_except_default',

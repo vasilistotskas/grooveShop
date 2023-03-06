@@ -7,6 +7,7 @@ import { ModuleOptions as PWAModuleOptions } from '@vite-pwa/nuxt'
 import { ModuleOptions as HtmlValidatorModuleOptions } from '@nuxtjs/html-validator'
 import { ModuleOptions as RobotsModuleOptions } from '@nuxtjs/robots'
 import { ModuleOptions as ContentModuleOptions } from '@nuxt/content'
+import { ModuleOptions as ImageOptions } from '@nuxt/image-edge'
 
 declare module '@nuxt/schema' {
 	interface AppConfigInput {
@@ -38,6 +39,7 @@ declare module 'nuxt/config' {
 		htmlValidator?: HtmlValidatorModuleOptions
 		robots?: Partial<RobotsModuleOptions>
 		content?: ContentModuleOptions
+		image?: Partial<ImageOptions>
 	}
 }
 

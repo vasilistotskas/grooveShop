@@ -43,7 +43,7 @@
 		"@nuxt/test-utils-edge": "3.3.0-27965718.b73ca9143",
 		"@nuxtjs/eslint-config": "^12.0.0",
 		"@nuxtjs/eslint-config-typescript": "^12.0.0",
-		"@nuxtjs/html-validator": "^1.2.3",
+		"@nuxtjs/html-validator": "^1.2.4",
 		"@nuxtjs/i18n": "^8.0.0-beta.10",
 		"@nuxtjs/robots": "^3.0.0",
 		"@pinia/nuxt": "^0.4.7",

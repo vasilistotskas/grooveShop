@@ -33,3 +33,21 @@ export const ZodProduct = z.object({
 })
 
 export type Product = Readonly<z.infer<typeof ZodProduct>>
+
+export const ZodCreateRequest = z.object({
+	name: z.string(),
+	slug: z.string(),
+	category: z.number().int().nonnegative(),
+	description: z.string().nullable(),
+	price: z.number(),
+	vat: z.number(),
+	stock: z.number().int().nonnegative(),
+	active: z.boolean(),
+	weight: z.number().nonnegative(),
+	seoTitle: z.string().nullable(),
+	seoDescription: z.string().nullable(),
+	seoKeywords: z.string().nullable(),
+	discountPercent: z.number().nonnegative()
+})
+
+export type CreateRequest = Readonly<z.infer<typeof ZodCreateRequest>>

@@ -8,8 +8,6 @@ export default defineEventHandler(
 		const responseJson = await response.json()
 
 		const session = responseJson as Session
-
-		console.log('session', session)
 		return {
 			isAuthenticated: session?.isAuthenticated
 		}
