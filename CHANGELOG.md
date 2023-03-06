@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.30.1 (2023-03-06)
+### Fix
+* **Django:** Remove  "-" prefix from Api views ordering fields ([`a3fb8e3`](https://github.com/vasilistotskas/grooveShop/commit/a3fb8e328674d071423a222582bb289ad6338141))
+
 ## v0.30.0 (2023-03-06)
 ### Feature
 * **Nuxt:** Pagination implemented and ui improvements ([`100b55b`](https://github.com/vasilistotskas/grooveShop/commit/100b55b6e07c71045523caef4d8748939e5a662a))
