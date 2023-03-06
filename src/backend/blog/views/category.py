@@ -18,7 +18,7 @@ class BlogCategoryViewSet(ModelViewSet):
     pagination_class = BlogCategoryPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["id", "name"]
-    ordering_fields = ["id", "name", "-created_at"]
+    ordering_fields = ["id", "name", "created_at"]
     ordering = ["id"]
     search_fields = ["id", "name"]
 

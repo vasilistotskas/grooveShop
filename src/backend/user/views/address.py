@@ -41,7 +41,7 @@ class UserAddressViewSet(BaseExpandView, ModelViewSet):
         "floor",
         "location_type",
         "is_main",
-        "-created_at",
+        "created_at",
     ]
     ordering = ["id"]
     search_fields = ["id", "user", "country", "city", "street", "zipcode"]

@@ -18,7 +18,7 @@ class PayWayViewSet(ModelViewSet):
     pagination_class = PayWayPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["name", "active", "cost", "free_for_order_amount"]
-    ordering_fields = ["name", "cost", "free_for_order_amount", "-created_at"]
+    ordering_fields = ["name", "cost", "free_for_order_amount", "created_at"]
     ordering = ["-created_at"]
     search_fields = ["name"]
 

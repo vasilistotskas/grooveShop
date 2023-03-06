@@ -25,9 +25,9 @@ class BlogPostViewSet(BaseExpandView, ModelViewSet):
         "id",
         "title",
         "slug",
-        "-created_at",
-        "-updated_at",
-        "-published_at",
+        "created_at",
+        "updated_at",
+        "published_at",
     ]
     ordering = ["-created_at"]
     search_fields = ["id", "title", "subtitle", "body"]

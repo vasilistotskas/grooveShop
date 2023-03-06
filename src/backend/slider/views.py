@@ -22,7 +22,7 @@ class SliderViewSet(ModelViewSet):
     pagination_class = SliderPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["id", "name"]
-    ordering_fields = ["id", "name", "-created_at"]
+    ordering_fields = ["id", "name", "created_at"]
     ordering = ["id"]
     search_fields = ["id", "name"]
 
@@ -75,7 +75,7 @@ class SlideViewSet(BaseExpandView, ModelViewSet):
     pagination_class = SlidePagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["id", "slider", "title"]
-    ordering_fields = ["id", "slider", "order_position", "-created_at"]
+    ordering_fields = ["id", "slider", "order_position", "created_at"]
     ordering = ["id"]
     search_fields = ["id", "title"]
 

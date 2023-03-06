@@ -19,7 +19,7 @@ class BlogAuthorViewSet(BaseExpandView, ModelViewSet):
     pagination_class = BlogAuthorPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["id", "user"]
-    ordering_fields = ["id", "user", "-created_at"]
+    ordering_fields = ["id", "user", "created_at"]
     ordering = ["id"]
     search_fields = ["id", "user"]
 

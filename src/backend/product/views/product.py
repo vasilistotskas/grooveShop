@@ -23,7 +23,7 @@ class ProductViewSet(BaseExpandView, ModelViewSet):
     pagination_class = ProductPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["id", "name", "slug", "price", "category"]
-    ordering_fields = ["name", "price", "-created_at"]
+    ordering_fields = ["name", "price", "created_at"]
     ordering = ["-created_at"]
     search_fields = ["id", "name", "category"]
 
@@ -86,7 +86,7 @@ class ProductImagesViewSet(BaseExpandView, ModelViewSet):
     pagination_class = ProductImagesPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["id", "product", "is_main"]
-    ordering_fields = ["-created_at", "is_main"]
+    ordering_fields = ["created_at", "is_main"]
     ordering = ["-created_at", "is_main"]
 
     def list(self, request, *args, **kwargs) -> Response:

@@ -18,7 +18,7 @@ class TipViewSet(ModelViewSet):
     pagination_class = TipPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["id", "title", "kind", "active"]
-    ordering_fields = ["id", "title", "kind", "active", "-created_at"]
+    ordering_fields = ["id", "title", "kind", "active", "created_at"]
     ordering = ["id"]
     search_fields = ["id", "title"]
 

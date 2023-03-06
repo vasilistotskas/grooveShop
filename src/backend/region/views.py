@@ -20,7 +20,7 @@ class RegionViewSet(BaseExpandView, ModelViewSet):
     pagination_class = RegionPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["name", "alpha", "alpha_2"]
-    ordering_fields = ["name", "-created_at"]
+    ordering_fields = ["name", "created_at"]
     ordering = ["-created_at"]
     search_fields = ["name", "alpha", "alpha_2"]
 

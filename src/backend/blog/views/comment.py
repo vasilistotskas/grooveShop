@@ -19,7 +19,7 @@ class BlogCommentViewSet(BaseExpandView, ModelViewSet):
     pagination_class = BlogCommentPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["id", "user", "post"]
-    ordering_fields = ["id", "user", "post", "-created_at"]
+    ordering_fields = ["id", "user", "post", "created_at"]
     ordering = ["id"]
     search_fields = ["id", "user", "post"]
 

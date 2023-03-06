@@ -24,7 +24,7 @@ class ProductReviewViewSet(BaseExpandView, ModelViewSet):
         "id",
         "user_id",
         "product_id",
-        "-created_at",
+        "created_at",
     ]
     ordering = ["id"]
     search_fields = [

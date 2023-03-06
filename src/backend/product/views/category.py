@@ -21,7 +21,7 @@ class ProductCategoryViewSet(ModelViewSet):
     ordering_fields = [
         "id",
         "name",
-        "-created_at",
+        "created_at",
     ]
     ordering = ["id"]
     search_fields = ["id", "name"]

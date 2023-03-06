@@ -18,7 +18,7 @@ class VatViewSet(ModelViewSet):
     pagination_class = VatPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["id", "value"]
-    ordering_fields = ["id", "value", "-created_at"]
+    ordering_fields = ["id", "value", "created_at"]
     ordering = ["id"]
     search_fields = ["id", "value"]
 

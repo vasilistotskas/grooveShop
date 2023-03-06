@@ -18,7 +18,7 @@ class BlogTagViewSet(ModelViewSet):
     pagination_class = BlogTagPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["id", "name", "active"]
-    ordering_fields = ["id", "name", "active", "-created_at"]
+    ordering_fields = ["id", "name", "active", "created_at"]
     ordering = ["id"]
     search_fields = ["id", "name"]
 
