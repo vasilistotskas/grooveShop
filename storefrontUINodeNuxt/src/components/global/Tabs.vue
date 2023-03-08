@@ -93,7 +93,7 @@ onMounted(() => {
 				</div>
 				<span
 					ref="tabHeaderIndicator"
-					class="absolute flex h-full top-0 left-0 p-1 py-1.5 overflow-hidden transition-all duration-300"
+					class="absolute flex h-full top-0 left-0 p-1 py-1.5 overflow-hidden transition-all duration-300 text-gray-700 dark:text-gray-200"
 					:style="{ zIndex: 1 }"
 				>
 					<span class="flex-1 bg-slate-500/40 rounded-lg" />

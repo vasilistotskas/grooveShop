@@ -9,7 +9,7 @@ const props = defineProps({
 </script>
 
 <template>
-	<li class="product_card">
+	<li v-if="product" class="product_card">
 		<Anchor
 			:to="`/product${product?.absoluteUrl}`"
 			:href="product?.absoluteUrl"
@@ -23,18 +23,19 @@ const props = defineProps({
 						<div class="card-thumb">
 							<div class="card-thumb-container">
 								<div class="card-thumb-image">
-									<nuxt-picture
+									<nuxt-img
 										preload
+										placeholder
 										preset="productCard"
-										placeholder="blur"
 										class="product_img"
 										format="webp"
-										fit="cover"
+										fit="contain"
 										loading="lazy"
 										background="#fff"
-										:src="product?.mainImageAbsoluteUrl"
+										sizes="sm:100vw md:50vw lg:250px"
+										quality="80"
+										:src="product?.mainImageAbsoluteUrl || '/images/placeholder.png'"
 										:alt="product?.name"
-										:img-attrs="{ id: product?.id }"
 										:width="250"
 										:height="230"
 									/>
@@ -52,12 +53,14 @@ const props = defineProps({
 						<div class="card-prices">
 							<div class="card-price d-flex justify-content-between">
 								<p class="text-gray-700 dark:text-gray-200">
-									<span>price</span><span>{{ product?.price }}</span>
+									<span class="text-gray-700 dark:text-gray-200">price</span
+									><span>{{ product?.price }}</span>
 								</p>
 							</div>
 							<div class="card-vat-percent d-flex justify-content-between">
 								<p class="text-gray-700 dark:text-gray-200">
-									<span>vatPercent</span><span>{{ product?.vatPercent }}</span>
+									<span class="text-gray-700 dark:text-gray-200">vatPercent</span
+									><span>{{ product?.vatPercent }}</span>
 								</p>
 							</div>
 						</div>
@@ -65,7 +68,8 @@ const props = defineProps({
 							class="card-final-price d-flex justify-content-between total font-weight-bold mt-4"
 						>
 							<p class="text-gray-700 dark:text-gray-200">
-								<span>Total</span><span>{{ product?.finalPrice }}</span>
+								<span class="text-gray-700 dark:text-gray-200">Total</span
+								><span>{{ product?.finalPrice }}</span>
 							</p>
 						</div>
 					</div>
@@ -114,20 +118,18 @@ const props = defineProps({
 		width: 100%;
 		height: 100%;
 		background: #fff;
-		.product_img {
-			::v-deep(img) {
-				transition: all 300ms ease-in-out;
-				font-size: 9px;
-				line-height: 1.2;
-				position: absolute;
-				top: 0;
-				bottom: 0;
-				left: 0;
-				right: 0;
-				margin: auto;
-				max-height: 100%;
-				max-width: 100%;
-			}
+		::v-deep(.product_img) {
+			transition: all 300ms ease-in-out;
+			font-size: 9px;
+			line-height: 1.2;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			margin: auto;
+			max-height: 100%;
+			max-width: 100%;
 		}
 	}
 }

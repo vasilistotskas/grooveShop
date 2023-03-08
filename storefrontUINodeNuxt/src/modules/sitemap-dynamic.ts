@@ -11,7 +11,8 @@ export default defineNuxtModule({
 	defaults: {
 		hostname: 'http://localhost:3000'
 	},
-	setup(options, nuxt) {
+	// eslint-disable-next-line require-await
+	async setup(options, nuxt) {
 		const resolver = createResolver(import.meta.url)
 		const generatedFilePaths = resolver.resolve(
 			nuxt.options.srcDir,

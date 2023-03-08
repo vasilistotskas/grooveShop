@@ -89,8 +89,10 @@ const close = () => {
 					<div :class="`font-bold text-lg mb-0.5 ${selectedTextStyle}`">
 						<slot name="title">{{ props.title }}</slot>
 					</div>
-					<div class="text-gray-700 dark:text-gray-100">
-						<slot name="title">{{ props.text }}</slot>
+					<div>
+						<p class="text-gray-700 dark:text-gray-100">
+							<slot name="title">{{ props.text }}</slot>
+						</p>
 					</div>
 				</div>
 				<div>

@@ -38,10 +38,14 @@ const currentStyle = toRef(props, 'type')
 				class="transition-colors duration-300"
 			>
 				<span class="hidden">{{ $t('components.theme_switcher.change_theme') }}</span>
-				<span class="flex justify-center items-center dark:hidden">
+				<span
+					class="flex justify-center items-center dark:hidden text-gray-700 dark:text-gray-200"
+				>
 					<IconUil:sun />
 				</span>
-				<span class="justify-center items-center hidden dark:flex">
+				<span
+					class="justify-center items-center hidden dark:flex text-gray-700 dark:text-gray-200"
+				>
 					<IconUil:moon />
 				</span>
 			</ListboxButton>
@@ -58,7 +62,7 @@ const currentStyle = toRef(props, 'type')
 						'hover:bg-gray-50 dark:hover:bg-gray-700/30': themeSetting !== theme.key
 					}"
 				>
-					<span class="text-sm mr-2 flex items-center">
+					<span class="text-sm mr-2 flex items-center text-gray-700 dark:text-gray-200">
 						<IconUil:sun v-if="theme.key === 'light'" />
 						<IconUil:moon v-else-if="theme.key === 'dark'" />
 						<IconUil:laptop v-else-if="theme.key === 'system'" />

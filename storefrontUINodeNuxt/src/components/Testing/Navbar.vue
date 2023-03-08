@@ -11,12 +11,12 @@ const consoleLogImageLoaded = () => {
 	console.log('Image loaded')
 }
 const menus = computed((): IMenuItem[] => [
-	{ type: 'link', text: t('pages.testing.blank.nav'), route: { name: 'testing/blank' } },
-	{ type: 'link', text: t('pages.testing.test.nav'), route: { name: 'testing/test' } },
+	{ type: 'link', text: t('pages.testing.blank.nav'), route: { name: 'testing-blank' } },
+	{ type: 'link', text: t('pages.testing.test.nav'), route: { name: 'testing-test' } },
 	{
 		type: 'link',
 		text: t('pages.testing.setting.nav'),
-		route: { name: 'testing/setting' }
+		route: { name: 'testing-setting' }
 	},
 	{
 		type: 'button',
@@ -29,7 +29,7 @@ const menus = computed((): IMenuItem[] => [
 <template>
 	<BuilderNavbar>
 		<template #menu>
-			<nav class="text-sm leading-6 font-semibold text-gray-600 dark:text-gray-300">
+			<nav class="text-sm leading-6 font-semibold text-gray-700 dark:text-gray-200">
 				<ul class="flex items-center space-x-8">
 					<li></li>
 					<li v-for="(item, i) in menus" :key="i">
@@ -64,7 +64,9 @@ const menus = computed((): IMenuItem[] => [
 						format="webp"
 						@load="consoleLogImageLoaded"
 					/>
-					<span class="ml-2 text-sm font-semibold">Alfian</span>
+					<span class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-200"
+						>Alfian</span
+					>
 					<IconUil:angle-down />
 				</div>
 				<div
@@ -74,7 +76,7 @@ const menus = computed((): IMenuItem[] => [
 					<ThemeSwitcher />
 					<Anchor
 						:text="'Github'"
-						class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
+						class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center text-gray-700 dark:text-gray-200"
 						href="https://github.com/vasilistotskas/grooveShop/storefrontUINodeNuxt"
 						title="Github"
 					>
@@ -87,7 +89,7 @@ const menus = computed((): IMenuItem[] => [
 			<ActionSheet @on-close="toggleOptions(false)">
 				<ActionSheetBody>
 					<ActionSheetHeader text="Menu" />
-					<nav class="leading-6 font-semibold text-gray-600 dark:text-gray-300">
+					<nav class="leading-6 font-semibold text-gray-700 dark:text-gray-200">
 						<ul class="flex flex-col">
 							<li
 								v-for="(item, i) in menus"
@@ -136,7 +138,7 @@ const menus = computed((): IMenuItem[] => [
 					href="https://github.com/vasilistotskas/grooveShop/storefrontUINodeNuxt"
 				>
 					<IconMdi:github-face />
-					<span class="ml-1">Github</span>
+					<span class="ml-1 text-gray-700 dark:text-gray-200">Github</span>
 				</Button>
 				<Button text="Close" type="secondary" @click.prevent="toggleOptions(false)" />
 			</ActionSheet>

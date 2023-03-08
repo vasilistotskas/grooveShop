@@ -39,7 +39,7 @@ const availableLocales = computed(() => {
 				class="transition-colors duration-300"
 			>
 				<span class="hidden">Change Language</span>
-				<span class="justify-center items-center flex">
+				<span class="text-gray-700 dark:text-gray-200 justify-center items-center flex">
 					<IconLa:language />
 				</span>
 			</ListboxButton>
@@ -57,12 +57,14 @@ const availableLocales = computed(() => {
 					}"
 					@click.prevent.stop="setLocale(lang.code)"
 				>
-					<span class="text-sm mr-2">
+					<span class="text-gray-700 dark:text-gray-200 text-sm mr-2">
 						{{ lang.flag }}
 					</span>
-					<span class="flex-1 truncate">
+					<span class="text-gray-700 dark:text-gray-200 flex-1 truncate">
 						{{ lang.name }}
-						<span class="text-xs">({{ lang.code }})</span>
+						<span class="text-gray-700 dark:text-gray-200 text-xs"
+							>({{ lang.code }})</span
+						>
 					</span>
 				</ListboxOption>
 			</ListboxOptions>

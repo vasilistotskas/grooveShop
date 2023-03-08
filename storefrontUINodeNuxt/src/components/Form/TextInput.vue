@@ -81,7 +81,7 @@ const selectedFontSizeStyle = computed(
 				:id="id"
 				v-model="modelValue"
 				:name="name"
-				:class="`text-input w-full flex-1 bg-transparent outline-none border ${
+				:class="`text-input w-full flex-1 bg-transparent outline-none border text-gray-700 dark:text-gray-200 ${
 					havePreEl ? '' : 'rounded-l'
 				} ${
 					haveSuEl ? '' : 'rounded-r'

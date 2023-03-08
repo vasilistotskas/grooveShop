@@ -52,20 +52,17 @@ bus.on((event: string) => {
 		</template>
 	</GenericModal>
 
-	<!-- button that opens the modal  -->
-	<button type="button" class="text-white" @click="openModal">Open Modal</button>
-
 	<BuilderNavbar>
 		<template #banner>
 			<div class="text-white text-xs text-center py-1 px-4 lg:px-8 capitalize">
-				<span class="mr-1">
+				<span class="mr-1 text-gray-700 dark:text-gray-200">
 					{{ $t('banners.welcome', { app_name: app.name }) }}
 				</span>
 			</div>
 		</template>
 		<template #menu>
 			<div class="relative hidden lg:flex items-center ml-auto">
-				<nav class="text-sm leading-6 font-semibold text-gray-600 dark:text-gray-300">
+				<nav class="text-sm leading-6 font-semibold text-gray-700 dark:text-gray-200">
 					<ul class="flex items-center space-x-8">
 						<li class="flex w-full gap-4">
 							<Anchor
@@ -75,6 +72,14 @@ bus.on((event: string) => {
 								class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
 								>{{ $t('pages.products.title') }}</Anchor
 							>
+							<!-- button that opens the modal  -->
+							<button
+								type="button"
+								class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
+								@click="openModal"
+							>
+								Open Modal
+							</button>
 							<Anchor
 								:to="'testing'"
 								:href="'testing'"
@@ -86,7 +91,7 @@ bus.on((event: string) => {
 					</ul>
 				</nav>
 				<div
-					class="flex space-x-4 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2] text-gray-600 dark:text-gray-300"
+					class="flex space-x-4 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2] text-gray-700 dark:text-gray-200"
 				>
 					<LanguageSwitcher />
 					<ThemeSwitcher />
@@ -105,7 +110,7 @@ bus.on((event: string) => {
 			<ActionSheet @on-close="toggleOptions(false)">
 				<ActionSheetBody>
 					<ActionSheetHeader text="Menu" />
-					<nav class="leading-6 font-semibold text-gray-600 dark:text-gray-300">
+					<nav class="leading-6 font-semibold text-gray-700 dark:text-gray-200">
 						<ul class="flex flex-col">
 							<li
 								class="flex w-full pb-2 mb-2 border-b border-gray-900/10 dark:border-gray-50/[0.2] link"
@@ -146,7 +151,7 @@ bus.on((event: string) => {
 					href="https://github.com/vasilistotskas/grooveShop/storefrontUINodeNuxt"
 				>
 					<IconMdi:github-face />
-					<span class="ml-1">Github</span>
+					<span class="ml-1 text-gray-700 dark:text-gray-200">Github</span>
 				</Button>
 				<Button text="Close" type="secondary" @click.prevent="toggleOptions(false)" />
 			</ActionSheet>

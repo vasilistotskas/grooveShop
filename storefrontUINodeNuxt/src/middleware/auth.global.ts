@@ -12,7 +12,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
 	) {
 		return navigateTo('/')
 	}
-	if (config.nuxtEnvironment !== 'development' && to.meta.layout === 'testing') {
+	if (process.env.NODE_ENV !== 'development' && to.meta.layout === 'testing') {
 		return navigateTo('/')
 	}
 })

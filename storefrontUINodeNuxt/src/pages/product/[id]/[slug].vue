@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useServerHead } from '@unhead/vue'
 import { useProductStore } from '~/stores/product/product'
 import { capitalize } from '~/utils/str'
 
@@ -9,14 +8,15 @@ const store = useProductStore()
 
 const fullPath = config.public.baseUrl + route.fullPath
 const productId = route.params.id
-await store.fetchProduct(productId)
+
+const { pending, refresh } = useAsyncData('product', () => store.fetchProduct(productId))
 const { product, loading, error } = storeToRefs(store)
 
 definePageMeta({
 	middleware: ['product'],
 	layout: 'page'
 })
-useServerHead({
+useHead(() => ({
 	title: capitalize(product.value?.seoTitle || product.value?.name || ''),
 	meta: [
 		{
@@ -72,7 +72,7 @@ useServerHead({
 			content: fullPath
 		}
 	]
-})
+}))
 </script>
 
 <template>
@@ -81,8 +81,12 @@ useServerHead({
 			<PageTitle :text="product?.name" class="capitalize" />
 		</PageHeader>
 		<PageBody>
-			<LoadingSkeleton v-if="loading"></LoadingSkeleton>
-			<template v-else-if="error">
+			<ClientOnly>
+				<div v-if="loading || pending" class="grid">
+					<LoadingSkeleton v-if="loading"></LoadingSkeleton>
+				</div>
+			</ClientOnly>
+			<template v-if="error">
 				<div>Error</div>
 			</template>
 			<template v-else>

@@ -1,5 +1,5 @@
-import { CreateRequest, Product } from '~/zod/product/product'
-import Paginated, { PaginationQuery } from '~/zod/pagination/paginated'
+import { CreateRequest, Product, ProductQuery } from '~/zod/product/product'
+import Paginated from '~/zod/pagination/paginated'
 
 export interface ProductState {
 	products: Paginated<Product>
@@ -42,16 +42,20 @@ export const useProductStore = defineStore({
 		}
 	},
 	actions: {
-		async fetchProducts({ offset, limit }: PaginationQuery): Promise<void> {
+		async fetchProducts({ offset, limit, ordering }: ProductQuery): Promise<void> {
 			this.loading = true
 			try {
-				this.products = await $fetch(`/api/product/list/list`, {
-					method: 'GET',
+				const { data: products } = await useFetch(`/api/products`, {
+					method: 'get',
 					params: {
 						offset,
-						limit
+						limit,
+						ordering
 					}
 				})
+				if (products.value) {
+					this.products = products.value
+				}
 			} catch (error) {
 				this.error = resolveError(error)
 			} finally {
@@ -62,7 +66,12 @@ export const useProductStore = defineStore({
 			this.product = null
 			this.loading = true
 			try {
-				this.product = await $fetch(`/api/product/${productId}`)
+				const { data: product } = await useFetch(`/api/product/${productId}`, {
+					method: 'get'
+				})
+				if (product.value) {
+					this.product = product.value
+				}
 			} catch (error) {
 				this.error = resolveError(error)
 			} finally {
@@ -72,11 +81,13 @@ export const useProductStore = defineStore({
 		async createProduct(product: CreateRequest): Promise<void> {
 			this.loading = true
 			try {
-				const newProduct = await $fetch(`/api/product/list/list`, {
-					method: 'POST',
-					body: product
+				const { data: newProduct } = await useFetch(`/api/products`, {
+					method: 'post',
+					body: JSON.stringify(product)
 				})
-				this.products.results.push(newProduct)
+				if (newProduct.value) {
+					this.products.results.push(newProduct.value)
+				}
 			} catch (error) {
 				this.error = resolveError(error)
 			} finally {
@@ -86,8 +97,8 @@ export const useProductStore = defineStore({
 		async updateProductHits(productId: string | string[]): Promise<void> {
 			this.loading = true
 			try {
-				await $fetch(`/api/product/${productId}/update_product_hits`, {
-					body: JSON.stringify({})
+				await useFetch(`/api/product/${productId}/update_product_hits`, {
+					method: 'post'
 				})
 			} catch (error) {
 				this.error = resolveError(error)

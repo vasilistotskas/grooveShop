@@ -4,6 +4,10 @@ defineProps({
 		type: Boolean,
 		default: true
 	},
+	showBodyImage: {
+		type: Boolean,
+		default: false
+	},
 	imageWidth: {
 		type: [Number, String],
 		default: '100%'
@@ -58,7 +62,7 @@ defineProps({
 				target="_blank"
 				:style="`width:${cardWidth}; height:${cardHeight};`"
 			>
-				<div class="card__header">
+				<div class="card__header gap-2">
 					<div v-if="showImage">
 						<div
 							id="logo-img"
@@ -74,10 +78,14 @@ defineProps({
 
 				<div class="card__body">
 					<div v-if="showParagraph" id="card-details" class="card__body body__text">
-						<div class="skeleton skeleton-text skeleton-text__body"></div>
+						<div
+							v-for="i in 10"
+							:key="i"
+							class="skeleton skeleton-text skeleton-text__body"
+						></div>
 					</div>
 
-					<div v-if="showImage" class="card__body body__img">
+					<div v-if="showBodyImage" class="card__body body__img">
 						<div
 							id="cover-img"
 							class="skeleton"

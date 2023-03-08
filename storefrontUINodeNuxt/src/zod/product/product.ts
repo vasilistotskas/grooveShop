@@ -1,4 +1,6 @@
 import { z } from 'zod'
+import { PaginationQuery } from '~/zod/pagination/paginated'
+import { OrderingQuery } from '~/zod/ordering/ordering'
 
 export const ZodProduct = z.object({
 	id: z.number().int().nonnegative(),
@@ -49,5 +51,13 @@ export const ZodCreateRequest = z.object({
 	seoKeywords: z.string().nullable(),
 	discountPercent: z.number().nonnegative()
 })
+
+export type ProductQuery = PaginationQuery & OrderingQuery
+export type ProductOrderingField = 'name' | 'price' | 'created_at'
+export type ProductOrdering = [
+	{ value: 'name'; label: 'Name'; options: ['ascending', 'descending'] },
+	{ value: 'price'; label: 'Price'; options: ['ascending', 'descending'] },
+	{ value: 'created_at'; label: 'Created At'; options: ['ascending', 'descending'] }
+]
 
 export type CreateRequest = Readonly<z.infer<typeof ZodCreateRequest>>

@@ -71,9 +71,11 @@ const copyBash = () => {
 							:style="`--content: '${item.text}'; --start-color: ${
 								item.startColor
 							}; --end-color: ${item.endColor}; --animation-name: anim-fg-${i + 1}`"
-							class="animated-text-bg drop-shadow-xl text-5xl xl:text-8xl 2xl:text-9xl block font-black uppercase"
+							class="animated-text-bg drop-shadow-xl text-5xl xl:text-8xl 2xl:text-9xl block font-black uppercase text-gray-700 dark:text-gray-200"
 						>
-							<span class="animated-text-fg">{{ item.text }}</span>
+							<span class="animated-text-fg text-gray-700 dark:text-gray-200">{{
+								item.text
+							}}</span>
 						</span>
 					</h1>
 					<div class="flex space-x-4 ml-4 mt-10 justify-center md:justify-start">

@@ -1,21 +1,25 @@
 <script lang="ts" setup>
 import { useServerHead } from '@unhead/vue'
 import { useProductStore } from '~/stores/product/product'
-import { PaginationQuery } from '~/zod/pagination/paginated'
+import {
+	ProductOrdering,
+	ProductOrderingField,
+	ProductQuery
+} from '~/zod/product/product'
+import { OrderingOption } from '~/zod/ordering/ordering'
 
 const route = useRoute()
 const { t } = useI18n()
 const config = useRuntimeConfig()
 const store = useProductStore()
 
-const routePaginationParams = computed(() => {
-	return {
-		limit: Number(route.query.limit) || 20,
-		offset: Number(route.query.offset) || 0
-	}
+const routePaginationParams = ref<ProductQuery>({
+	limit: Number(route.query.limit),
+	offset: Number(route.query.offset),
+	ordering: String(route.query.ordering)
 })
 
-const { pending } = useAsyncData('products', () =>
+const { pending, refresh } = useAsyncData('products', () =>
 	store.fetchProducts(routePaginationParams.value)
 )
 
@@ -33,11 +37,47 @@ const limit = computed(() => {
 	return pageSize.value
 })
 
-const bus = useEventBus<string>('products')
-bus.on((event, payload: PaginationQuery) => {
-	if (event === 'products-pagination') {
-		store.fetchProducts(payload)
+const ordering = ref<ProductOrdering>([
+	{ value: 'name', label: 'Name', options: ['ascending', 'descending'] },
+	{ value: 'price', label: 'Price', options: ['ascending', 'descending'] },
+	{ value: 'created_at', label: 'Created At', options: ['ascending', 'descending'] }
+])
+
+const orderingOptions = computed(() => {
+	const options: Record<ProductOrderingField, OrderingOption[]> = {
+		name: [],
+		price: [],
+		created_at: []
 	}
+	ordering.value.forEach((items) => {
+		options[items.value] = items.options.map((option) => {
+			const value = option === 'ascending' ? items.value : `-${items.value}`
+			return {
+				value,
+				label: `${items.label} ${option}`
+			}
+		})
+	})
+	return options
+})
+
+const orderingOptionsArray = computed(() => {
+	const options: OrderingOption[] = []
+	Object.entries(orderingOptions.value).forEach(([key, value]) => {
+		value.forEach((option) => {
+			options.push({
+				value: String(option.value),
+				label: option.label
+			})
+		})
+	})
+	return options
+})
+
+const bus = useEventBus<string>('products')
+bus.on((event, payload: ProductQuery) => {
+	routePaginationParams.value = payload
+	refresh()
 })
 
 definePageMeta({
@@ -61,17 +101,28 @@ useServerHead({
 <template>
 	<PageWrapper>
 		<PageHeader>
-			<PageTitle :text="$t('pages.products.title')" class="capitalize" />
+			<PageTitle
+				:text="`${$t('pages.products.title')} - ${resultsCount}`"
+				class="capitalize"
+			/>
 		</PageHeader>
 		<PageBody>
 			<ClientOnly>
-				<LoadingSkeleton v-if="loading && pending" :replicas="30"></LoadingSkeleton>
+				<div v-if="loading || pending" class="grid gap-2">
+					<LoadingSkeletonBar
+						:replicas="1"
+						:card-width="'320px'"
+						:card-height="'32px'"
+						:border-radius="'0.5rem'"
+					></LoadingSkeletonBar>
+					<LoadingSkeleton :replicas="30" :card-height="'528px'"></LoadingSkeleton>
+				</div>
 			</ClientOnly>
 			<template v-if="error">
 				<div>Error</div>
 			</template>
 			<template v-if="products.results.length">
-				<div class="flex">
+				<div class="flex items-center">
 					<Pagination
 						:total-pages="totalPages"
 						:current-page="currentPage"
@@ -81,6 +132,12 @@ useServerHead({
 						:event-bus-id="'products'"
 						:event-name="'products-pagination'"
 					/>
+					<Ordering
+						:event-bus-id="'products'"
+						:event-name="'products-ordering'"
+						:ordering="String(routePaginationParams.ordering)"
+						:ordering-options="orderingOptionsArray"
+					></Ordering>
 				</div>
 			</template>
 			<template v-if="products.results.length">

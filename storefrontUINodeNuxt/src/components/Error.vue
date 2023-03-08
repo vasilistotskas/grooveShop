@@ -38,8 +38,12 @@ const error = computed(() => {
 		:class="props.wrap ? 'flex flex-col items-center justify-center' : ''"
 	>
 		<h1 class="text-center mb-6 leading-3 text-gray-700 dark:text-gray-200">
-			<span class="font-bold text-8xl block">{{ error.code }}</span>
-			<span class="block italic">{{ error.message }}</span>
+			<span class="text-gray-700 dark:text-gray-200 font-bold text-8xl block">{{
+				error.code
+			}}</span>
+			<span class="text-gray-700 dark:text-gray-200 block italic">{{
+				error.message
+			}}</span>
 		</h1>
 		<Button text="Home" to="/" size="sm" />
 	</component>

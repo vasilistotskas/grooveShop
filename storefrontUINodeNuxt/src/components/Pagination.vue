@@ -109,9 +109,9 @@ const bus = useEventBus<string>(eventBusId.value)
 </script>
 
 <template>
-	<div class="pagination relative mb-3 mt-3">
+	<div class="pagination relative">
 		<ol
-			v-if="totalPages > 1"
+			v-if="totalPages > 1 && totalPages > maxVisibleButtons"
 			class="pagination-ordered-list w-full grid items-center gap-4"
 		>
 			<li>
@@ -132,7 +132,9 @@ const bus = useEventBus<string>(eventBusId.value)
 							bus.emit(eventName, { limit: limit, offset: offset - limit })
 					"
 				>
-					<span><icon-fa-solid:angle-left /></span>
+					<span class="text-gray-700 dark:text-gray-200"
+						><icon-fa-solid:angle-left
+					/></span>
 				</Anchor>
 			</li>
 
@@ -153,39 +155,37 @@ const bus = useEventBus<string>(eventBusId.value)
 				>
 					<span
 						:class="{
-							'grid items-center justify-center w-full rounded bg-gray-800 dark:bg-gray-800 py-1 px-2': true,
+							'grid items-center justify-center w-full rounded bg-gray-800 dark:bg-gray-800 py-1 px-2 text-gray-700 dark:text-gray-200': true,
 							'bg-primary-400 dark:bg-primary-400': isInFirstPage
 						}"
 						>{{ firstPageNumber }}</span
 					>
 					<span
 						v-if="shouldDisplayPreviousTripleDots"
-						class="grid self-end justify-self-start text-sm"
+						class="grid self-end justify-self-start text-sm text-gray-700 dark:text-gray-200"
 						>...</span
 					>
 				</Anchor>
 			</li>
 
-			<div v-if="totalPages > maxVisibleButtons" class="pagination-pages">
-				<li v-for="(page, index) in pages" :key="page">
-					<Anchor
-						:to="{ path: link, query: { limit, offset: (page - 1) * limit } }"
-						:class="{
-							'grid items-center justify-center w-full rounded bg-gray-800 dark:bg-gray-800 py-1 px-2': true,
-							'bg-primary-400 dark:bg-primary-400': page === currentPage
-						}"
-						:href="`${link}?limit=${limit}&offset=${(page - 1) * limit}`"
-						:text="String(index)"
-						:title="`Go to page ${page}`"
-						@click="
-							applyPaginationQuery &&
-								bus.emit(eventName, { limit: limit, offset: (page - 1) * limit })
-						"
-					>
-						<span>{{ page }}</span>
-					</Anchor>
-				</li>
-			</div>
+			<li v-for="(page, index) in pages" :key="page">
+				<Anchor
+					:to="{ path: link, query: { limit, offset: (page - 1) * limit } }"
+					:class="{
+						'grid items-center justify-center w-full rounded bg-gray-800 dark:bg-gray-800 py-1 px-2': true,
+						'bg-primary-400 dark:bg-primary-400': page === currentPage
+					}"
+					:href="`${link}?limit=${limit}&offset=${(page - 1) * limit}`"
+					:text="String(index)"
+					:title="`Go to page ${page}`"
+					@click="
+						applyPaginationQuery &&
+							bus.emit(eventName, { limit: limit, offset: (page - 1) * limit })
+					"
+				>
+					<span class="text-gray-700 dark:text-gray-200">{{ page }}</span>
+				</Anchor>
+			</li>
 
 			<li v-if="shouldDisplayLastPage">
 				<Anchor
@@ -204,12 +204,12 @@ const bus = useEventBus<string>(eventBusId.value)
 				>
 					<span
 						v-if="shouldDisplayNextTripleDots"
-						class="grid self-end justify-self-end text-sm"
+						class="grid self-end justify-self-end text-sm text-gray-700 dark:text-gray-200"
 						>...</span
 					>
 					<span
 						:class="{
-							'grid items-center justify-center w-full rounded bg-gray-800 dark:bg-gray-800 py-1 px-2': true,
+							'grid items-center justify-center w-full rounded bg-gray-800 dark:bg-gray-800 py-1 px-2 text-gray-700 dark:text-gray-200': true,
 							'bg-primary-400 dark:bg-primary-400': isInLastPage
 						}"
 						>{{ lastPageNumber }}</span
@@ -231,7 +231,9 @@ const bus = useEventBus<string>(eventBusId.value)
 							bus.emit(eventName, { limit: limit, offset: offset + limit })
 					"
 				>
-					<span><icon-fa-solid:angle-right /></span>
+					<span class="text-gray-700 dark:text-gray-200"
+						><icon-fa-solid:angle-right
+					/></span>
 				</Anchor>
 			</li>
 		</ol>
@@ -240,15 +242,8 @@ const bus = useEventBus<string>(eventBusId.value)
 
 <style lang="scss" scoped>
 .pagination {
-	.pagination-pages {
-		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		justify-items: center;
-		align-items: center;
-		gap: 1rem;
-	}
 	.pagination-ordered-list {
-		grid-template-columns: auto auto 1fr auto auto;
+		grid-template-columns: auto auto 1fr auto auto auto auto;
 	}
 }
 </style>

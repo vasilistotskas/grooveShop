@@ -5,8 +5,12 @@ const { $pwa } = useNuxtApp()
 	<div id="pwa">
 		<div v-if="$pwa?.offlineReady || $pwa?.needRefresh" class="pwa-toast" role="alert">
 			<div class="message">
-				<span v-if="$pwa.offlineReady"> App ready to work offline </span>
-				<span v-else> New content available, click on reload button to update. </span>
+				<span v-if="$pwa.offlineReady" class="text-gray-700 dark:text-gray-200">
+					App ready to work offline
+				</span>
+				<span v-else class="text-gray-700 dark:text-gray-200">
+					New content available, click on reload button to update.
+				</span>
 			</div>
 			<button v-if="$pwa.needRefresh" type="button" @click="$pwa.updateServiceWorker()">
 				Reload
@@ -19,7 +23,7 @@ const { $pwa } = useNuxtApp()
 			role="alert"
 		>
 			<div class="message">
-				<span> Install PWA </span>
+				<span class="text-gray-700 dark:text-gray-200"> Install PWA </span>
 			</div>
 			<button type="button" @click="$pwa.install()">Install</button>
 			<button type="button" @click="$pwa.cancelInstall()">Cancel</button>

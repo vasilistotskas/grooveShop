@@ -73,8 +73,10 @@ const identity = useIdentity()
 			<PageSection>
 				<PageSectionTitle :text="$t('pages.testing.test.identity')" class="capitalize" />
 				<div class="mb-2">
-					<span class="capitalize">{{ $t('pages.testing.test.full_name') }} : </span>
-					<span>{{ identity.fullName }}</span>
+					<span class="capitalize text-gray-700 dark:text-gray-200"
+						>{{ $t('pages.testing.test.full_name') }} :
+					</span>
+					<span class="text-gray-700 dark:text-gray-200">{{ identity.fullName }}</span>
 				</div>
 				<div class="mb-2">
 					<div

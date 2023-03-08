@@ -7,7 +7,6 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		// The private keys which are only available server-side
 		apiSecret: process.env.NUXT_APP_PRIVATE_API_SECRET,
-		nuxtEnvironment: process.env.NUXT_ENVIRONMENT,
 		buildDate: new Date().toISOString(),
 
 		// Keys within public are also exposed client-side
@@ -149,8 +148,14 @@ export default defineNuxtConfig({
 				}
 			]
 		},
-		pageTransition: { name: 'page', mode: 'out-in' },
-		layoutTransition: { name: 'layout', mode: 'out-in' }
+		pageTransition: {
+			name: 'page',
+			mode: 'out-in' // default
+		},
+		layoutTransition: {
+			name: 'layout',
+			mode: 'out-in' // default
+		}
 	},
 	robots: {
 		configPath: '~/config/robots.config'
@@ -182,7 +187,7 @@ export default defineNuxtConfig({
 		strategy: 'prefix_except_default',
 		lazy: true,
 		defaultLocale: process.env.NUXT_APP_DEFAULT_LOCALE,
-		debug: false, // process.env.NODE_ENV !== 'production',
+		debug: process.env.NODE_ENV !== 'production',
 		langDir: 'locales/',
 		baseUrl: process.env.NUXT_APP_PUBLIC_BASE_URL || 'http://localhost:3000',
 		detectBrowserLanguage: {
@@ -317,10 +322,10 @@ export default defineNuxtConfig({
 			sourcemap: true
 		},
 		client: {
-			installPrompt: true
+			installPrompt: true,
 			// you don't need to include this: only for testing purposes
 			// if enabling periodic sync for update use 1 hour or so (periodicSyncForUpdates: 3600)
-			// periodicSyncForUpdates: 20
+			periodicSyncForUpdates: 3600
 		},
 		devOptions: {
 			enabled: false, // process.env.NODE_ENV !== 'production',
@@ -328,6 +333,6 @@ export default defineNuxtConfig({
 		}
 	},
 	htmlValidator: {
-		usePrettier: false
+		usePrettier: true
 	}
 })

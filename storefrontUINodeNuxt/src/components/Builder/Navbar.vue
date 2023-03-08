@@ -75,7 +75,7 @@ const toggleOptions = (show?: boolean) => {
 						>
 							<span class="hidden">Toggle Drawer Menu</span>
 							<span
-								class="flex items-center text-gray-600 dark:text-gray-300 text-lg"
+								class="flex items-center text-gray-700 dark:text-gray-200 text-lg"
 								aria-hidden="true"
 							>
 								<IconUil:bars v-if="!showDrawer" />
@@ -91,10 +91,10 @@ const toggleOptions = (show?: boolean) => {
 							class="mr-3 flex-none overflow-hidden md:w-auto text-md font-bold text-gray-900 dark:text-gray-200"
 							:to="localePath('index')"
 						>
-							<span class="sr-only">home</span>
-							<span class="flex items-center">
+							<span class="text-gray-700 dark:text-gray-200 sr-only">home</span>
+							<span class="text-gray-700 dark:text-gray-200 flex items-center">
 								<IconSimpleIcons:nuxtdotjs
-									class="inline-block mr-2 text-lg text-primary-500"
+									class="inline-block mr-2 text-lg text-primary-400"
 								/>
 								{{ app.name }}
 							</span>
@@ -112,7 +112,7 @@ const toggleOptions = (show?: boolean) => {
 						>
 							<span class="hidden">Toggle Options Menu</span>
 							<span
-								class="flex items-center text-gray-600 dark:text-gray-300 text-sm"
+								class="flex items-center text-gray-700 dark:text-gray-200 text-sm"
 								aria-hidden="true"
 							>
 								<icon-fa-solid:ellipsis-v />

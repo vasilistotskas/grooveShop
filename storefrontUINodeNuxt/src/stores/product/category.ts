@@ -1,7 +1,9 @@
 import { Category } from '~/zod/product/category'
+import { ProductQuery } from '~/zod/product/product'
+import Paginated from '~/zod/pagination/paginated'
 
 export interface CategoryState {
-	categories: Category[]
+	categories: Paginated<Category>
 	category: Category | null
 	loading: boolean
 	error: string | null
@@ -10,25 +12,41 @@ export interface CategoryState {
 export const useCategoryStore = defineStore({
 	id: 'productCategory',
 	state: (): CategoryState => ({
-		categories: [] as Category[],
+		categories: {
+			links: {
+				next: null,
+				prev: null
+			},
+			count: 0,
+			totalPages: 0,
+			pageSize: 0,
+			page: 0,
+			results: []
+		},
 		category: null as Category | null,
 		loading: false,
 		error: null as string | null
 	}),
 	getters: {
 		getCategoryById: (state) => (id: number) => {
-			return state.categories.find((category) => category.id === id)
+			return state.categories.results.find((category) => category.id === id)
 		}
 	},
 	actions: {
-		async fetchCategories() {
-			const config = useRuntimeConfig()
-			this.categories = []
+		async fetchCategories({ offset, limit, ordering }: ProductQuery): Promise<void> {
 			this.loading = true
 			try {
-				this.categories = await fetch(
-					`${config.public.apiBaseUrl}/product/category`
-				).then((response) => response.json())
+				const { data: categories } = await useFetch(`/api/product_categories`, {
+					method: 'get',
+					params: {
+						offset,
+						limit,
+						ordering
+					}
+				})
+				if (categories.value) {
+					this.categories = categories.value
+				}
 			} catch (error) {
 				if (error instanceof TypeError) {
 					this.error = error.message
@@ -40,13 +58,13 @@ export const useCategoryStore = defineStore({
 				this.loading = false
 			}
 		},
-		async fetchCategory(categoryId: string | string[]) {
+		async fetchCategory(categoryId: string | string[]): Promise<void> {
 			const config = useRuntimeConfig()
 			this.category = null
 			this.loading = true
 			try {
 				this.category = await fetch(
-					`${config.public.apiBaseUrl}/product/category/${categoryId}`
+					`${config.public.apiBaseUrl}/product_category/${categoryId}`
 				).then((response) => response.json())
 			} catch (error) {
 				if (error instanceof TypeError) {

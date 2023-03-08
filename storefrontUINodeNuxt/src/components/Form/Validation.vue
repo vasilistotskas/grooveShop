@@ -28,37 +28,39 @@ const onSubmit = handleSubmit((e) => {
 
 <template>
 	<form id="logInForm" class="_form" name="logInForm" @submit="onSubmit">
-		<div>
-			<label for="email">Email</label>
+		<div class="grid">
+			<label class="text-gray-700 dark:text-gray-200 mb-2" for="email">Email</label>
 			<div>
-				<input
+				<FormTextInput
 					id="email"
 					v-model="email"
+					class="text-gray-700 dark:text-gray-200 mb-2"
 					name="email"
 					type="email"
 					placeholder="Email"
 					autocomplete="email"
 				/>
 			</div>
-			<span>{{ errors.email }}</span>
+			<span class="text-gray-700 dark:text-gray-200">{{ errors.email }}</span>
 		</div>
 		<div>
-			<label for="password">Password</label>
+			<label class="text-gray-700 dark:text-gray-200 mb-2" for="password">Password</label>
 			<div>
-				<input
+				<FormTextInput
 					id="password"
 					v-model="password"
+					class="text-gray-700 dark:text-gray-200 mb-2"
 					name="password"
 					type="password"
 					placeholder="Password"
 					autocomplete="current-password"
 				/>
 			</div>
-			<span>{{ errors.password }}</span>
+			<span class="text-gray-700 dark:text-gray-200">{{ errors.password }}</span>
 		</div>
-		<button v-if="!tooManyAttempts" type="submit">Submit</button>
-		<button v-else type="button" disabled>
+		<Button v-if="!tooManyAttempts" type="submit"> Submit </Button>
+		<Button v-else type="button" disabled>
 			Too many attempts, please try again later.
-		</button>
+		</Button>
 	</form>
 </template>

@@ -17,7 +17,7 @@ onMounted(() => {
 	<div
 		ref="sidebar"
 		:class="{
-			'fixed top-0 hidden pt-12 lg:flex lg:w-60 xl:w-80 h-screen': mode === 'normal',
+			'fixed top-0 hidden pt-14 lg:flex lg:w-30 xl:w-40 h-screen': mode === 'normal',
 			'relative flex-1 flex flex-col w-full': mode === 'mobile'
 		}"
 	>
@@ -40,7 +40,7 @@ onMounted(() => {
 							<IconUil:apps class="text-xs" />
 						</div>
 						<span
-							class="text-sm font-semibold capitalize"
+							class="text-sm font-semibold capitalize text-gray-700 dark:text-gray-200"
 							:class="{
 								'font-extrabold text-sky-500 dark:text-sky-400': i === 1
 							}"

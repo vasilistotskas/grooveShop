@@ -90,7 +90,9 @@ const validate = async () => {
 								type="button"
 								:class="[
 									'md:w-full text-left px-3 py-1.5 rounded py-2.5 text-sm leading-5 transition-all hover:bg-gray-200 hover:text-slate-900 dark:hover:bg-white/[0.12] dark:hover:text-white',
-									selected ? 'font-extrabold' : 'text-slate-800 dark:text-gray-400'
+									selected
+										? 'font-extrabold text-primary-400'
+										: 'text-gray-700 dark:text-gray-200'
 								]"
 							>
 								General
@@ -101,7 +103,9 @@ const validate = async () => {
 								type="button"
 								:class="[
 									'md:w-full text-left px-3 py-1.5 rounded py-2.5 text-sm leading-5 transition-all hover:bg-gray-200 hover:text-slate-900 dark:hover:bg-white/[0.12] dark:hover:text-white',
-									selected ? 'font-extrabold' : 'text-slate-800 dark:text-gray-400'
+									selected
+										? 'font-extrabold text-primary-400'
+										: 'text-gray-700 dark:text-gray-200'
 								]"
 							>
 								Protection
@@ -112,7 +116,9 @@ const validate = async () => {
 								type="button"
 								:class="[
 									'md:w-full text-left px-3 py-1.5 rounded py-2.5 text-sm leading-5 transition-all hover:bg-gray-200 hover:text-slate-900 dark:hover:bg-white/[0.12] dark:hover:text-white',
-									selected ? 'font-extrabold' : 'text-slate-800 dark:text-gray-400'
+									selected
+										? 'font-extrabold text-primary-400'
+										: 'text-gray-700 dark:text-gray-200'
 								]"
 							>
 								Advanced
@@ -140,7 +146,9 @@ const validate = async () => {
 											class="w-full md:w-1/3"
 										>
 											<template #prefix-disabled>
-												<span class="flex-1 px-4 py-2">github.com/</span>
+												<span class="flex-1 px-4 py-2 text-gray-700 dark:text-gray-200"
+													>github.com/</span
+												>
 											</template>
 										</FormTextInput>
 									</div>
@@ -218,7 +226,7 @@ const validate = async () => {
 									</p>
 									<div class="flex">
 										<FormSwitch v-model="enableSpamProtection">
-											<span class="capitalize">{{
+											<span class="capitalize text-gray-700 dark:text-gray-200">{{
 												enableSpamProtection
 													? $t('others.enabled')
 													: $t('others.disabled')
@@ -251,7 +259,7 @@ const validate = async () => {
 									</p>
 									<div class="flex">
 										<FormSwitch v-model="enableAdvancedSetting">
-											<span class="capitalize">{{
+											<span class="capitalize text-gray-700 dark:text-gray-200">{{
 												enableAdvancedSetting
 													? $t('others.enabled')
 													: $t('others.disabled')
@@ -277,7 +285,7 @@ const validate = async () => {
 									</p>
 									<div class="flex">
 										<FormSwitch v-model="enableDirList" on>
-											<span class="capitalize">{{
+											<span class="capitalize text-gray-700 dark:text-gray-200">{{
 												enableDirList ? $t('others.enabled') : $t('others.disabled')
 											}}</span>
 										</FormSwitch>

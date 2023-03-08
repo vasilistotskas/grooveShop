@@ -80,6 +80,15 @@ const onClick = (event: MouseEvent) => {
 	>
 		<slot>{{ text }}</slot>
 	</NuxtLink>
+	<button
+		v-else-if="type === 'button' || type === 'submit' || type === 'reset'"
+		:type="type"
+		:class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"
+		:aria-label="text"
+		@click="onClick"
+	>
+		<slot>{{ text }}</slot>
+	</button>
 	<a
 		v-else
 		:class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"
