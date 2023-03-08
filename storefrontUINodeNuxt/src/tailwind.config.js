@@ -163,6 +163,9 @@ module.exports = {
 				'repeat-auto-fill-mimax-80-auto': 'repeat(auto-fill, minmax(87px, auto));',
 				'repeat-auto-fill-mimax-350-auto': 'repeat(auto-fill, minmax(350px, auto));'
 			},
+			gridTemplateRows: {
+				'auto-1fr': 'auto 1fr'
+			},
 			gridRow: {
 				'second-row': '2'
 			},

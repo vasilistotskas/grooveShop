@@ -67,7 +67,7 @@ const menus = computed((): IMenuItem[] => [
 					<span class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-200"
 						>Alfian</span
 					>
-					<IconUil:angle-down />
+					<span class="text-gray-700 dark:text-gray-200"><IconUil:angle-down /></span>
 				</div>
 				<div
 					class="flex space-x-4 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2]"

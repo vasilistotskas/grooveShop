@@ -22,7 +22,6 @@ defineProps({
 <template>
 	<div
 		:class="{
-			wrapper: true,
 			'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4': replicas > 1
 		}"
 	>
@@ -62,7 +61,7 @@ img[alt] {
 }
 
 .card {
-	background-color: #f5f8fc;
+  @apply bg-gray-50 dark:bg-gray-900;
 	box-shadow: 0 0 transparent, 0 0 transparent,
 		0 0.375rem 0.375rem -0.125rem rgba(168, 179, 207, 0.4);
 	padding: 0.5rem;

@@ -15,4 +15,4 @@ dist
 # IDE
 .idea
 .vercel
-sitemap/*.xml
+sitemap/*

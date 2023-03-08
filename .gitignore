@@ -61,6 +61,7 @@ coverage.xml
 
 # Django stuff:
 *.log
+src/logs/*
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
@@ -210,3 +211,6 @@ npm-debug.log
 
 # Celery
 /src/celerybeat-schedule
+
+# Store Front
+/storefrontUINodeNuxt/src/sitemap/*

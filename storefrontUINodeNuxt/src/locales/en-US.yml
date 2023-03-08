@@ -9,8 +9,9 @@ pages:
     nav: testing
     title: testing
     index:
-      nav: home
-      title: home
+      nav: testing
+      title: testing
+      description: this is a testing page
     blank:
       nav: blank
       title: blank page
@@ -52,9 +53,12 @@ pages:
           title: directory listing
           description: if no index file is present within a directory, the directory contents will be displayed.
   index:
+    nav: home
     title: DeepWeb[]awesome[]starter
+    description: DeepWeb[]awesome[]starter
   404:
     title: page not found
+    description: page not found
   products:
     title: products
     nav: products

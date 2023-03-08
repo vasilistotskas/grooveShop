@@ -155,7 +155,7 @@ const bus = useEventBus<string>(eventBusId.value)
 				>
 					<span
 						:class="{
-							'grid items-center justify-center w-full rounded bg-gray-800 dark:bg-gray-800 py-1 px-2 text-gray-700 dark:text-gray-200': true,
+							'grid items-center justify-center w-full rounded bg-gray-200 dark:bg-gray-800 py-1 px-2 text-gray-700 dark:text-gray-200': true,
 							'bg-primary-400 dark:bg-primary-400': isInFirstPage
 						}"
 						>{{ firstPageNumber }}</span
@@ -172,7 +172,7 @@ const bus = useEventBus<string>(eventBusId.value)
 				<Anchor
 					:to="{ path: link, query: { limit, offset: (page - 1) * limit } }"
 					:class="{
-						'grid items-center justify-center w-full rounded bg-gray-800 dark:bg-gray-800 py-1 px-2': true,
+						'grid items-center justify-center w-full rounded bg-gray-200 dark:bg-gray-800 py-1 px-2': true,
 						'bg-primary-400 dark:bg-primary-400': page === currentPage
 					}"
 					:href="`${link}?limit=${limit}&offset=${(page - 1) * limit}`"
@@ -209,7 +209,7 @@ const bus = useEventBus<string>(eventBusId.value)
 					>
 					<span
 						:class="{
-							'grid items-center justify-center w-full rounded bg-gray-800 dark:bg-gray-800 py-1 px-2 text-gray-700 dark:text-gray-200': true,
+							'grid items-center justify-center w-full rounded bg-gray-200 dark:bg-gray-800 py-1 px-2 text-gray-700 dark:text-gray-200': true,
 							'bg-primary-400 dark:bg-primary-400': isInLastPage
 						}"
 						>{{ lastPageNumber }}</span

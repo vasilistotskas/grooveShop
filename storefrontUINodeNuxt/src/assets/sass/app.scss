@@ -47,5 +47,8 @@ html.dark {
 	flex-direction: column;
 	min-height: 100vh;
 }
+.wrapper {
+  min-height: 83vh;
+}
 // animations
 @import 'animations/transitions';

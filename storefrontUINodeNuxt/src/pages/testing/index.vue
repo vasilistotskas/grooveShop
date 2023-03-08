@@ -1,6 +1,19 @@
 <script lang="ts" setup>
+import { useServerHead } from '@unhead/vue'
+
+const { t } = useI18n()
+
 definePageMeta({
 	layout: 'testing'
+})
+useServerHead({
+	title: t('pages.testing.index.title'),
+	meta: [
+		{
+			name: 'description',
+			content: t('pages.testing.index.description')
+		}
+	]
 })
 </script>
 

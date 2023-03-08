@@ -88,7 +88,7 @@ export default defineNuxtConfig({
 				path: 'hmr/'
 			},
 			watch: {
-				usePolling: process.env.NODE_ENV !== 'production'
+				usePolling: false // process.env.NODE_ENV !== 'production'
 			}
 		}
 	},
