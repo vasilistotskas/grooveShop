@@ -67,6 +67,15 @@ class Product(TimeStampMixinModel, SeoModel, UUIDModel):
     weight = models.DecimalField(
         max_digits=11, decimal_places=2, default=0.0, verbose_name="Weight (kg)"
     )
+    final_price = models.DecimalField(
+        max_digits=11, decimal_places=2, default=0.0, editable=False
+    )
+    discount_value = models.DecimalField(
+        max_digits=11, decimal_places=2, default=0.0, editable=False
+    )
+    price_save_percent = models.DecimalField(
+        max_digits=11, decimal_places=2, default=0.0, editable=False
+    )
 
     translated = TranslationProxy()
 
@@ -76,6 +85,19 @@ class Product(TimeStampMixinModel, SeoModel, UUIDModel):
 
     def __str__(self) -> str:
         return self.name
+
+    def save(self, *args, **kwargs):
+        vat_value = 0.0
+        if self.vat:
+            vat_value = (self.price * self.vat.value) / 100
+
+        self.discount_value = (self.price * self.discount_percent) / 100
+        self.final_price = float(self.price + vat_value) - float(self.discount_value)
+        self.price_save_percent = (
+            (self.price - self.discount_value)
+            * (self.price - self.price - self.discount_value)
+        ) / self.price
+        super().save(*args, **kwargs)
 
     @property
     def likes_counter(self) -> int:
@@ -118,21 +140,6 @@ class Product(TimeStampMixinModel, SeoModel, UUIDModel):
         if self.vat:
             return (self.price * self.vat.value) / 100
         return 0
-
-    @property
-    def discount_value(self) -> Decimal:
-        return (self.price * self.discount_percent) / 100
-
-    @property
-    def price_save_percent(self) -> Decimal:
-        final_price: Decimal = self.price - self.discount_value
-        product_save_value: Decimal = self.price - final_price
-        product_save_percent: Decimal = (final_price * product_save_value) / self.price
-        return product_save_percent
-
-    @property
-    def final_price(self) -> Decimal:
-        return self.price + self.vat_value - self.discount_value
 
     @property
     def main_image_absolute_url(self) -> str:

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from backend.core.api.views import BaseExpandView
+from backend.product.filters.product import ProductFilter
 from backend.product.models.product import Product
 from backend.product.models.product import ProductImages
 from backend.product.paginators.product import ProductImagesPagination
@@ -22,10 +23,19 @@ class ProductViewSet(BaseExpandView, ModelViewSet):
     serializer_class = ProductSerializer
     pagination_class = ProductPagination
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
-    filterset_fields = ["id", "name", "slug", "price", "category"]
-    ordering_fields = ["name", "price", "created_at"]
+    filterset_class = ProductFilter
+    ordering_fields = [
+        "name",
+        "price",
+        "created_at",
+        "discount_value",
+        "final_price",
+        "price_save_percent",
+        "review_average",
+        "likes_counter",
+    ]
     ordering = ["-created_at"]
-    search_fields = ["id", "name", "category"]
+    search_fields = ["id", "name"]
 
     def list(self, request, *args, **kwargs) -> Response:
         queryset = self.filter_queryset(self.get_queryset())
