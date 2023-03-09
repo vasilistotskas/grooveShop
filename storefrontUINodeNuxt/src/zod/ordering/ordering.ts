@@ -1,3 +1,5 @@
+import { LocationQueryValue } from 'vue-router'
+
 export interface OrderingOption {
 	value?: string
 	label?: string
@@ -8,5 +10,5 @@ export type OrderingOptions = {
 }
 
 export type OrderingQuery = {
-	[key: string]: string | number
+	ordering: string | LocationQueryValue[] | undefined
 }

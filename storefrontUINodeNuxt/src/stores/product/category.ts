@@ -59,13 +59,15 @@ export const useCategoryStore = defineStore({
 			}
 		},
 		async fetchCategory(categoryId: string | string[]): Promise<void> {
-			const config = useRuntimeConfig()
 			this.category = null
 			this.loading = true
 			try {
-				this.category = await fetch(
-					`${config.public.apiBaseUrl}/product_category/${categoryId}`
-				).then((response) => response.json())
+				const { data: category } = await useFetch(`/api/product_category/${categoryId}`, {
+					method: 'get'
+				})
+				if (category.value) {
+					this.category = category.value
+				}
 			} catch (error) {
 				if (error instanceof TypeError) {
 					this.error = error.message

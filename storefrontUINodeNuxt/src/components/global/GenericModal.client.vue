@@ -165,7 +165,7 @@ onMounted(() => {
 				aria-label="Close"
 				@click="closeModal"
 			>
-				<span class="hidden">Close</span>
+				<span class="hidden">{{ $t('components.global.generic_modal.close') }}</span>
 				<IconEntypo:circle-with-cross></IconEntypo:circle-with-cross>
 			</button>
 			<div

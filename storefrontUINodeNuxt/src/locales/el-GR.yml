@@ -1,18 +1,55 @@
 components:
+  global:
+    generic_modal:
+      close: κλείσε
+  page:
+    footer:
+      copyright: πνευματικά δικαιώματα © 2022
+      rights: ολα τα δικαιώματα διατηρούνται . φτιαγμένο με
+      design_by: σχεδιασμένο από
   language_switcher:
     change_language: άλλαξε γλώσσα
   theme_switcher:
     theme: θέμα
     change_theme: άλλαξε θέμα
+  ordering:
+    title: παραγγελία
+  pagination:
+    title: σελιδοποίηση
+    prev: προηγούμενος
+    next: επόμενο
+    previous_page: προηγούμενη σελίδα
+    next_page: επόμενη σελίδα
+    first_page: πρώτη σελίδα
+    last_page: τελευταία σελίδα
+    go_to_page: μετάβαση στη σελίδα %{page}
+    you_are_on_last_page: είστε στην τελευταία σελίδα
+  builder:
+    navbar:
+      toggle_drawer_menu: εναλλαγή μενού συρταριού
+      toggle_options_menu: εναλλαγή μενού επιλογών
+  form:
+    validation:
+      email: ηλεκτρονικη διευθυνση
+      password: κωδικός πρόσβασης
+      submit: υποβάλλουν
+      too_many_attempts: πάρα πολλές προσπάθειες, δοκιμάστε ξανά αργότερα.
+  product:
+    card:
+      price: τιμή
+      vat_percent: ποσοστό φπα
+      total_price: συνολικό ποσό
 pages:
   '404':
     title: η σελίδα δεν βρέθηκε
+    description: η σελίδα δεν βρέθηκε
   testing:
-    nav: δοκιμές
-    title: δοκιμές
+    nav: δοκιμή
+    title: δοκιμή
     index:
-      nav: σπίτι
-      title: σπίτι
+      nav: δοκιμή
+      title: δοκιμή
+      description: αυτή είναι μια δοκιμαστική σελίδα
     blank:
       nav: κενό
       title: κενή σελίδα
@@ -20,7 +57,7 @@ pages:
       just_blank_page_with_title: απλά κενή σελίδα με τίτλο
     test:
       nav: δοκιμή
-      title: δοκιμές
+      title: δοκιμή
       description: αυτή είναι μια δοκιμαστική σελίδα
       counter: μετρητής
       increment: αύξηση
@@ -62,7 +99,14 @@ pages:
             εάν δεν υπάρχει αρχείο ευρετηρίου σε έναν κατάλογο, θα εμφανιστούν
             τα περιεχόμενα του καταλόγου.
   index:
+    nav: σπίτι
     title: deepweb[]καταπληκτική[]μίζα
+    description: deepweb[]καταπληκτική[]μίζα
+  product:
+    ordering:
+      name: ονομα
+      price: τιμή
+      created_at: δημιουργήθηκε στο
   products:
     title: προϊόντα
     nav: προϊόντα
@@ -73,6 +117,7 @@ layouts:
 banners:
   welcome: καλώς ορίσατε στο %{app_name}!
 others:
+  home: σπίτι
   learn_more: μάθε περισσότερα
   copy: αντίγραφο
   enabled: ενεργοποιημένη

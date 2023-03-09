@@ -29,7 +29,9 @@ const onSubmit = handleSubmit((e) => {
 <template>
 	<form id="logInForm" class="_form" name="logInForm" @submit="onSubmit">
 		<div class="grid">
-			<label class="text-gray-700 dark:text-gray-200 mb-2" for="email">Email</label>
+			<label class="text-gray-700 dark:text-gray-200 mb-2" for="email">{{
+				$t('components.form.validation.email')
+			}}</label>
 			<div>
 				<FormTextInput
 					id="email"
@@ -37,14 +39,16 @@ const onSubmit = handleSubmit((e) => {
 					class="text-gray-700 dark:text-gray-200 mb-2"
 					name="email"
 					type="email"
-					placeholder="Email"
+					:placeholder="$t('components.form.validation.email')"
 					autocomplete="email"
 				/>
 			</div>
 			<span class="text-gray-700 dark:text-gray-200">{{ errors.email }}</span>
 		</div>
 		<div>
-			<label class="text-gray-700 dark:text-gray-200 mb-2" for="password">Password</label>
+			<label class="text-gray-700 dark:text-gray-200 mb-2" for="password">{{
+				$t('components.form.validation.password')
+			}}</label>
 			<div>
 				<FormTextInput
 					id="password"
@@ -52,15 +56,17 @@ const onSubmit = handleSubmit((e) => {
 					class="text-gray-700 dark:text-gray-200 mb-2"
 					name="password"
 					type="password"
-					placeholder="Password"
+					:placeholder="$t('components.form.validation.password')"
 					autocomplete="current-password"
 				/>
 			</div>
 			<span class="text-gray-700 dark:text-gray-200">{{ errors.password }}</span>
 		</div>
-		<Button v-if="!tooManyAttempts" type="submit"> Submit </Button>
+		<Button v-if="!tooManyAttempts" type="submit">
+			{{ $t('components.form.validation.submit') }}
+		</Button>
 		<Button v-else type="button" disabled>
-			Too many attempts, please try again later.
+			{{ $t('components.form.validation.too_many_attempts') }}
 		</Button>
 	</form>
 </template>

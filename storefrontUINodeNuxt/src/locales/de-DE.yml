@@ -1,18 +1,55 @@
 components:
+  global:
+    generic_modal:
+      close: schließen
+  page:
+    footer:
+      copyright: copyright © 2022
+      rights: alle rechte vorbehalten . gemacht mit
+      design_by: design von
   language_switcher:
     change_language: sprache ändern
   theme_switcher:
     theme: thema
     change_theme: thema wechseln
+  ordering:
+    title: bestellung
+  pagination:
+    title: seitennummerierung
+    prev: vorherige
+    next: nächste
+    previous_page: vorherige seite
+    next_page: nächste seite
+    first_page: erste seite
+    last_page: letzte seite
+    go_to_page: gehe zu seite %{page}
+    you_are_on_last_page: sie befinden sich auf der letzten seite
+  builder:
+    navbar:
+      toggle_drawer_menu: schubladenmenü umschalten
+      toggle_options_menu: optionsmenü umschalten
+  form:
+    validation:
+      email: email
+      password: passwort
+      submit: einreichen
+      too_many_attempts: zu viele versuche. bitte später erneut versuchen.
+  product:
+    card:
+      price: preis
+      vat_percent: mehrwertsteuer prozent
+      total_price: gesamtpreis
 pages:
   '404':
     title: seite nicht gefunden
+    description: seite nicht gefunden
   testing:
     nav: testen
     title: testen
     index:
-      nav: heim
-      title: heim
+      nav: testen
+      title: testen
+      description: dies ist eine testseite
     blank:
       nav: leer
       title: leere seite
@@ -62,7 +99,14 @@ pages:
             wenn in einem verzeichnis keine indexdatei vorhanden ist, wird der
             inhalt des verzeichnisses angezeigt.
   index:
+    nav: heim
     title: deepweb[]fantastischer[]starter
+    description: deepweb[]fantastischer[]starter
+  product:
+    ordering:
+      name: name
+      price: preis
+      created_at: hergestellt in
   products:
     title: produkte
     nav: produkte
@@ -73,6 +117,7 @@ layouts:
 banners:
   welcome: willkommen bei %{app_name}!
 others:
+  home: heim
   learn_more: lern mehr
   copy: kopieren
   enabled: ermöglicht

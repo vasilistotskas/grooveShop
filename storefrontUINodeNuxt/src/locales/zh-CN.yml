@@ -1,18 +1,55 @@
 components:
+  global:
+    generic_modal:
+      close: 关闭
+  page:
+    footer:
+      copyright: 版权所有 © 2022
+      rights: 版权所有 。用
+      design_by: 由...设计
   language_switcher:
     change_language: 改变语言
   theme_switcher:
     theme: 主题
     change_theme: 改变主题
+  ordering:
+    title: 订购
+  pagination:
+    title: 分页
+    prev: 以前的
+    next: 下一个
+    previous_page: 上一页
+    next_page: 下一页
+    first_page: 第一页
+    last_page: 最后一页
+    go_to_page: 转到第 %{page} 页
+    you_are_on_last_page: 你在最后一页
+  builder:
+    navbar:
+      toggle_drawer_menu: 切换抽屉菜单
+      toggle_options_menu: 切换选项菜单
+  form:
+    validation:
+      email: 电子邮件
+      password: 密码
+      submit: 提交
+      too_many_attempts: 尝试次数过多，请稍后再试。
+  product:
+    card:
+      price: 价格
+      vat_percent: 增值税百分比
+      total_price: 总价
 pages:
   '404':
     title: 找不到网页
+    description: 找不到网页
   testing:
     nav: 测试
     title: 测试
     index:
-      nav: 家
-      title: 家
+      nav: 测试
+      title: 测试
+      description: 这是一个测试页面
     blank:
       nav: 空白的
       title: 空白页
@@ -44,7 +81,7 @@ pages:
           description: 这是您的机器人 id。
           footer: 与机器人交互时使用。
         protection_spam:
-          title: 垃圾邮件防护
+          title: 垃圾邮件保护
           description: 切换启用以删除红色边框
           footer: 如果启用，我们将保护您的评论免受垃圾邮件
         advanced_enable_advanced:
@@ -54,7 +91,14 @@ pages:
           title: 目录列表
           description: 如果目录中没有索引文件，则显示目录内容。
   index:
+    nav: 家
     title: deepweb[]awesome[]starter
+    description: deepweb[]awesome[]starter
+  product:
+    ordering:
+      name: 姓名
+      price: 价格
+      created_at: 创建于
   products:
     title: 产品
     nav: 产品
@@ -65,6 +109,7 @@ layouts:
 banners:
   welcome: 欢迎使用 %{app_name}！
 others:
+  home: 家
   learn_more: 了解更多
   copy: 复制
   enabled: 启用

@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { LocationQueryValue } from 'vue-router'
 
 export const ZodPaginated = z.object({
 	links: z.object({
@@ -25,6 +26,6 @@ export default interface Paginated<T> {
 }
 
 export type PaginationQuery = {
-	offset: number
-	limit: number
+	offset: string | LocationQueryValue[] | undefined
+	limit: string | LocationQueryValue[] | undefined
 }

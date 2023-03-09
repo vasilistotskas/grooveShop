@@ -73,7 +73,9 @@ const toggleOptions = (show?: boolean) => {
 							aria-label="Toggle Drawer Menu"
 							@click="toggleDrawer()"
 						>
-							<span class="hidden">Toggle Drawer Menu</span>
+							<span class="hidden">{{
+								$t('components.builder.navbar.toggle_drawer_menu')
+							}}</span>
 							<span
 								class="flex items-center text-gray-700 dark:text-gray-200 text-lg"
 								aria-hidden="true"
@@ -91,7 +93,9 @@ const toggleOptions = (show?: boolean) => {
 							class="mr-3 flex-none overflow-hidden md:w-auto text-md font-bold text-gray-900 dark:text-gray-200"
 							:to="localePath('index')"
 						>
-							<span class="text-gray-700 dark:text-gray-200 sr-only">home</span>
+							<span class="text-gray-700 dark:text-gray-200 sr-only">{{
+								$t('others.home')
+							}}</span>
 							<span class="text-gray-700 dark:text-gray-200 flex items-center">
 								<IconSimpleIcons:nuxtdotjs
 									class="inline-block mr-2 text-lg text-primary-400"
@@ -110,7 +114,9 @@ const toggleOptions = (show?: boolean) => {
 							aria-label="Toggle Options Menu"
 							@click="toggleOptions()"
 						>
-							<span class="hidden">Toggle Options Menu</span>
+							<span class="hidden">{{
+								$t('components.builder.navbar.toggle_options_menu')
+							}}</span>
 							<span
 								class="flex items-center text-gray-700 dark:text-gray-200 text-sm"
 								aria-hidden="true"

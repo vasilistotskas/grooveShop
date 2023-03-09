@@ -12,7 +12,9 @@ const app = useAppConfig() as AppConfigInput
 					<span class="text-gray-700 dark:text-gray-200">{{ app.name }}</span>
 				</div>
 				<div>
-					<span class="text-gray-700 dark:text-gray-200">Copyright © 2022</span>
+					<span class="text-gray-700 dark:text-gray-200">{{
+						$t('components.page.footer.copyright')
+					}}</span>
 					<a
 						class="text-gray-700 dark:text-gray-200"
 						:aria-label="app.author.name"
@@ -20,16 +22,17 @@ const app = useAppConfig() as AppConfigInput
 						>{{ app.author.name }}</a
 					>.
 					<span class="text-gray-700 dark:text-gray-200"
-						>All rights reserved. Made with <span class="text-red-500">❤</span></span
+						>{{ $t('components.page.footer.rights') }}
+						<span class="text-red-500">❤</span></span
 					>
 					<div class="flex flex-col md:flex-row space-x-2 items-center md:float-right">
 						<span class="text-gray-700 dark:text-gray-200 text-center md:text-right">
-							design by
+							{{ $t('components.page.footer.design_by') }}
 							<a
 								class="text-gray-700 dark:text-gray-200"
-								aria-label="vasilistotskas"
+								:aria-label="app.author.name"
 								href="https://github.com/vasilistotskas"
-								>vasilistotskas</a
+								>{{ app.author.name }}</a
 							>
 						</span>
 						<span

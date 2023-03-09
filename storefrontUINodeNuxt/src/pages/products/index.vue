@@ -14,9 +14,9 @@ const config = useRuntimeConfig()
 const store = useProductStore()
 
 const routePaginationParams = ref<ProductQuery>({
-	limit: Number(route.query.limit),
-	offset: Number(route.query.offset),
-	ordering: String(route.query.ordering)
+	limit: route.query.limit || undefined,
+	offset: route.query.offset || undefined,
+	ordering: route.query.ordering || undefined
 })
 
 const { pending, refresh } = useAsyncData('products', () =>
@@ -38,9 +38,21 @@ const limit = computed(() => {
 })
 
 const ordering = ref<ProductOrdering>([
-	{ value: 'name', label: 'Name', options: ['ascending', 'descending'] },
-	{ value: 'price', label: 'Price', options: ['ascending', 'descending'] },
-	{ value: 'created_at', label: 'Created At', options: ['ascending', 'descending'] }
+	{
+		value: 'name',
+		label: t('pages.product.ordering.name'),
+		options: ['ascending', 'descending']
+	},
+	{
+		value: 'price',
+		label: t('pages.product.ordering.price'),
+		options: ['ascending', 'descending']
+	},
+	{
+		value: 'created_at',
+		label: t('pages.product.ordering.created_at'),
+		options: ['ascending', 'descending']
+	}
 ])
 
 const orderingOptions = computed(() => {
@@ -79,6 +91,17 @@ bus.on((event, payload: ProductQuery) => {
 	routePaginationParams.value = payload
 	refresh()
 })
+
+watch(
+	() => route.query,
+	() => {
+		bus.emit('products', {
+			limit: route.query.limit || undefined,
+			offset: route.query.offset || undefined,
+			ordering: route.query.ordering || undefined
+		})
+	}
+)
 
 definePageMeta({
 	layout: 'page'
@@ -122,6 +145,11 @@ useServerHead({
 				<div>Error</div>
 			</template>
 			<template v-if="products.results.length">
+				<!--        <Filters-->
+				<!--          :event-bus-id="'products'"-->
+				<!--          :event-name="'products-filters'"-->
+				<!--          :filters="filters"-->
+				<!--        ></Filters>-->
 				<div class="flex items-center">
 					<Pagination
 						:total-pages="totalPages"
@@ -129,12 +157,8 @@ useServerHead({
 						:offset="offset"
 						:limit="limit"
 						:pagination-urls="paginationUrls"
-						:event-bus-id="'products'"
-						:event-name="'products-pagination'"
 					/>
 					<Ordering
-						:event-bus-id="'products'"
-						:event-name="'products-ordering'"
 						:ordering="String(routePaginationParams.ordering)"
 						:ordering-options="orderingOptionsArray"
 					></Ordering>

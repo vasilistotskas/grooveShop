@@ -10,9 +10,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 	if (productSlug !== to.params.slug && process.client) {
 		if (currentLocale === defaultLocale) {
 			const path = `/product/${productId}/${product.slug}`
-			return navigateTo(path, {
-				replace: true
-			})
+			return navigateTo(path)
 		} else {
 			const path = `/${currentLocale}/product/${productId}/${product.slug}`
 			return navigateTo(path)

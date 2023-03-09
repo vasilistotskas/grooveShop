@@ -55,9 +55,9 @@ export const ZodCreateRequest = z.object({
 export type ProductQuery = PaginationQuery & OrderingQuery
 export type ProductOrderingField = 'name' | 'price' | 'created_at'
 export type ProductOrdering = [
-	{ value: 'name'; label: 'Name'; options: ['ascending', 'descending'] },
-	{ value: 'price'; label: 'Price'; options: ['ascending', 'descending'] },
-	{ value: 'created_at'; label: 'Created At'; options: ['ascending', 'descending'] }
+	{ value: 'name'; label: string; options: ['ascending', 'descending'] },
+	{ value: 'price'; label: string; options: ['ascending', 'descending'] },
+	{ value: 'created_at'; label: string; options: ['ascending', 'descending'] }
 ]
 
 export type CreateRequest = Readonly<z.infer<typeof ZodCreateRequest>>

@@ -53,13 +53,17 @@ const props = defineProps({
 						<div class="card-prices">
 							<div class="card-price d-flex justify-content-between">
 								<p class="text-gray-700 dark:text-gray-200">
-									<span class="text-gray-700 dark:text-gray-200">price</span
+									<span class="text-gray-700 dark:text-gray-200">{{
+										$t('components.product.card.price')
+									}}</span
 									><span>{{ product?.price }}</span>
 								</p>
 							</div>
 							<div class="card-vat-percent d-flex justify-content-between">
 								<p class="text-gray-700 dark:text-gray-200">
-									<span class="text-gray-700 dark:text-gray-200">vatPercent</span
+									<span class="text-gray-700 dark:text-gray-200">{{
+										$t('components.product.card.vat_percent')
+									}}</span
 									><span>{{ product?.vatPercent }}</span>
 								</p>
 							</div>
@@ -68,7 +72,9 @@ const props = defineProps({
 							class="card-final-price d-flex justify-content-between total font-weight-bold mt-4"
 						>
 							<p class="text-gray-700 dark:text-gray-200">
-								<span class="text-gray-700 dark:text-gray-200">Total</span
+								<span class="text-gray-700 dark:text-gray-200">{{
+									$t('components.product.card.total_price')
+								}}</span
 								><span>{{ product?.finalPrice }}</span>
 							</p>
 						</div>

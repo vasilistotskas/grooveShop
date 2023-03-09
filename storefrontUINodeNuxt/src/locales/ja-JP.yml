@@ -1,18 +1,55 @@
 components:
+  global:
+    generic_modal:
+      close: 近い
+  page:
+    footer:
+      copyright: 著作権 © 2022
+      rights: 全著作権所有 。で作った
+      design_by: のデザインです
   language_switcher:
     change_language: 言語を変えてください
   theme_switcher:
     theme: テーマ
     change_theme: テーマを変更
+  ordering:
+    title: 注文
+  pagination:
+    title: ページネーション
+    prev: 前
+    next: 次
+    previous_page: 前のページ
+    next_page: 次のページ
+    first_page: 一ページ目
+    last_page: 最後のページ
+    go_to_page: ページ %{page} に移動
+    you_are_on_last_page: あなたは最後のページにいます
+  builder:
+    navbar:
+      toggle_drawer_menu: 引き出しメニューの切り替え
+      toggle_options_menu: オプションメニューの切り替え
+  form:
+    validation:
+      email: eメール
+      password: パスワード
+      submit: 送信
+      too_many_attempts: 試行回数が多すぎます。しばらくしてからもう一度お試しください。
+  product:
+    card:
+      price: 価格
+      vat_percent: 付加価値税率
+      total_price: 合計金額
 pages:
   '404':
     title: ページが見つかりません
+    description: ページが見つかりません
   testing:
     nav: テスト
     title: テスト
     index:
-      nav: 家
-      title: 家
+      nav: テスト
+      title: テスト
+      description: これはテストページです
     blank:
       nav: 空欄
       title: 空白ページ
@@ -54,7 +91,14 @@ pages:
           title: ディレクトリ一覧
           description: ディレクトリ内にインデックス ファイルが存在しない場合は、ディレクトリの内容が表示されます。
   index:
+    nav: 家
     title: ディープウェブ[]素晴らしい[]スターター
+    description: ディープウェブ[]素晴らしい[]スターター
+  product:
+    ordering:
+      name: 名前
+      price: 価格
+      created_at: 作成日
   products:
     title: 製品
     nav: 製品
@@ -65,6 +109,7 @@ layouts:
 banners:
   welcome: '%{app_name} へようこそ!'
 others:
+  home: 家
   learn_more: もっと詳しく知る
   copy: コピー
   enabled: 有効

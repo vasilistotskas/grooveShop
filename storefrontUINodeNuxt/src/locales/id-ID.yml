@@ -1,18 +1,55 @@
 components:
+  global:
+    generic_modal:
+      close: menutup
+  page:
+    footer:
+      copyright: hak cipta © 2022
+      rights: seluruh hak cipta . dibuat dengan
+      design_by: desain oleh
   language_switcher:
     change_language: ganti bahasa
   theme_switcher:
     theme: tema
     change_theme: ganti tema
+  ordering:
+    title: memerintah
+  pagination:
+    title: paginasi
+    prev: sebelumnya
+    next: berikutnya
+    previous_page: halaman sebelumnya
+    next_page: halaman selanjutnya
+    first_page: halaman pertama
+    last_page: halaman terakhir
+    go_to_page: buka halaman %{halaman}
+    you_are_on_last_page: anda berada di halaman terakhir
+  builder:
+    navbar:
+      toggle_drawer_menu: alihkan menu laci
+      toggle_options_menu: alihkan menu opsi
+  form:
+    validation:
+      email: surel
+      password: kata sandi
+      submit: kirim
+      too_many_attempts: terlalu banyak percobaan, coba lagi nanti.
+  product:
+    card:
+      price: harga
+      vat_percent: persen ppn
+      total_price: total harga
 pages:
   '404':
     title: halaman tidak ditemukan
+    description: halaman tidak ditemukan
   testing:
     nav: pengujian
     title: pengujian
     index:
-      nav: rumah
-      title: rumah
+      nav: pengujian
+      title: pengujian
+      description: ini adalah halaman pengujian
     blank:
       nav: kosong
       title: halaman kosong
@@ -58,7 +95,14 @@ pages:
             jika tidak ada file indeks di dalam direktori, isi direktori akan
             ditampilkan.
   index:
+    nav: rumah
     title: deepweb[]mengagumkan[]pemula
+    description: deepweb[]mengagumkan[]pemula
+  product:
+    ordering:
+      name: nama
+      price: harga
+      created_at: dibuat di
   products:
     title: produk
     nav: produk
@@ -69,6 +113,7 @@ layouts:
 banners:
   welcome: selamat datang di %{app_name}!
 others:
+  home: rumah
   learn_more: belajarlah lagi
   copy: menyalin
   enabled: diaktifkan

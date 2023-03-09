@@ -12,6 +12,7 @@ import { Size } from '~/composables/useScreen'
 // composable
 const { t } = useLang()
 const screen = useScreen()
+const config = useRuntimeConfig()
 
 // compiler macro
 definePageMeta({
@@ -38,7 +39,7 @@ const randomToken = () => {
 }
 
 // state
-const username = ref('vasilistotskas')
+const username = ref(config.public.author.name)
 const id = ref(randomToken())
 const enableSpamProtection = ref(false)
 const enableDirList = ref(false)
