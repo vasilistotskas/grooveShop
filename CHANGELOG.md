@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.31.0 (2023-03-09)
+### Feature
+* **Nuxt:** Ui improvements , implement product categories page index and more ([`a3f26c4`](https://github.com/vasilistotskas/grooveShop/commit/a3f26c40434714c952944ba1a125ac0c552261e8))
+* **Django:** New product filters prototype + new product db columns (final_price, discount_value, price_save_percent) ([`315737d`](https://github.com/vasilistotskas/grooveShop/commit/315737db0f509c503d28748cdd72e87c5b2237a1))
+
 ## v0.30.2 (2023-03-08)
 ### Fix
 * **Nuxt:** Ui fixes and improvments ([`ee87893`](https://github.com/vasilistotskas/grooveShop/commit/ee87893f29dd5b7ab7ac97f14bc105bd1b7d4a7c))
