@@ -20,6 +20,8 @@ const props = defineProps({
 	}
 })
 const { ordering, orderingOptions } = toRefs(props)
+const listBox = ref(null)
+const { listBoxOpen, listBoxToggle } = useListBox(listBox)
 
 const link = computed(() => {
 	return route.path
@@ -27,13 +29,14 @@ const link = computed(() => {
 </script>
 
 <template>
-	<div class="flex flex-col items-center z-10">
+	<div ref="listBox" class="flex flex-col items-center z-10">
 		<div class="flex flex-row">
 			<div class="flex flex-col">
-				<Listbox v-slot="{ open }" v-model="ordering" name="Ordering">
+				<Listbox v-model="ordering" name="Ordering">
 					<div class="relative w-52">
 						<ListboxButton
 							class="cursor-pointer relative w-full cursor-default rounded-lg bg-gray-200 dark:bg-gray-800 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
+							@click="listBoxToggle"
 						>
 							<span class="block truncate text-gray-700 dark:text-gray-200">{{
 								$t('components.ordering.title')
@@ -47,7 +50,7 @@ const link = computed(() => {
 							</span>
 						</ListboxButton>
 
-						<div v-show="open">
+						<div v-show="listBoxOpen">
 							<transition
 								leave-active-class="transition duration-100 ease-in"
 								leave-from-class="opacity-100"
@@ -82,10 +85,10 @@ const link = computed(() => {
 													'text-primary-400 dark:text-primary-400':
 														ordering === option.value
 												}"
-												:href="`${link}?ordering=${option.value}`"
 												:text="option.label"
 												:title="option.label"
 												:disabled="ordering === option.value"
+												@click="listBoxToggle"
 											>
 												<span
 													:class="[

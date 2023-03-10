@@ -18,39 +18,14 @@ const props = defineProps({
 		type: Number,
 		required: true
 	},
-	paginationUrls: {
-		type: Object,
-		required: true
-	},
 	maxVisibleButtons: {
 		type: Number,
 		required: false,
 		default: 3
-	},
-	eventBusId: {
-		type: String,
-		required: true
-	},
-	eventName: {
-		type: String,
-		required: true
-	},
-	applyPaginationQuery: {
-		type: Boolean,
-		required: false,
-		default: true
 	}
 })
 
-const {
-	totalPages,
-	currentPage,
-	offset,
-	limit,
-	paginationUrls,
-	eventBusId,
-	maxVisibleButtons
-} = toRefs(props)
+const { totalPages, currentPage, offset, limit, maxVisibleButtons } = toRefs(props)
 
 const firstPageNumber = computed(() => 1)
 const lastPageNumber = computed(() => totalPages.value)
@@ -104,8 +79,6 @@ const pages = computed(() => {
 const link = computed(() => {
 	return route.path
 })
-
-const bus = useEventBus<string>(eventBusId.value)
 </script>
 
 <template>
@@ -118,19 +91,18 @@ const bus = useEventBus<string>(eventBusId.value)
 				<Anchor
 					:to="{
 						path: link,
-						query: { limit, offset: isInFirstPage ? offset : offset - limit }
+						query: {
+							limit,
+							offset: isInFirstPage ? offset : offset - limit,
+							ordering: route.query?.ordering
+						}
 					}"
 					:class="{
 						disabled: isInFirstPage
 					}"
-					:href="`${link}?limit=${limit}&offset=${offset - limit}`"
 					:text="'Previous Page'"
 					:title="'Previous Page'"
 					:disabled="isInFirstPage"
-					@click="
-						applyPaginationQuery &&
-							bus.emit(eventName, { limit: limit, offset: offset - limit })
-					"
 				>
 					<span class="text-gray-700 dark:text-gray-200"
 						><icon-fa-solid:angle-left
@@ -140,18 +112,17 @@ const bus = useEventBus<string>(eventBusId.value)
 
 			<li v-if="shouldDisplayFirstPage">
 				<Anchor
-					:to="{ path: link, query: { limit, offset: 0 } }"
+					:to="{
+						path: link,
+						query: { limit, offset: 0, ordering: route.query?.ordering }
+					}"
 					:class="{
 						'grid grid-cols-2 gap-1': shouldDisplayPreviousTripleDots,
 						disabled: isInFirstPage
 					}"
-					:href="`${link}?limit=${limit}&offset=0`"
 					:text="'First Page'"
 					:title="'First Page'"
 					:disabled="isInFirstPage"
-					@click="
-						applyPaginationQuery && bus.emit(eventName, { limit: limit, offset: 0 })
-					"
 				>
 					<span
 						:class="{
@@ -170,18 +141,16 @@ const bus = useEventBus<string>(eventBusId.value)
 
 			<li v-for="(page, index) in pages" :key="page">
 				<Anchor
-					:to="{ path: link, query: { limit, offset: (page - 1) * limit } }"
+					:to="{
+						path: link,
+						query: { limit, offset: (page - 1) * limit, ordering: route.query?.ordering }
+					}"
 					:class="{
 						'grid items-center justify-center w-full rounded bg-gray-200 dark:bg-gray-800 py-1 px-2': true,
 						'bg-primary-400 dark:bg-primary-400': page === currentPage
 					}"
-					:href="`${link}?limit=${limit}&offset=${(page - 1) * limit}`"
 					:text="String(index)"
 					:title="`Go to page ${page}`"
-					@click="
-						applyPaginationQuery &&
-							bus.emit(eventName, { limit: limit, offset: (page - 1) * limit })
-					"
 				>
 					<span class="text-gray-700 dark:text-gray-200">{{ page }}</span>
 				</Anchor>
@@ -189,18 +158,20 @@ const bus = useEventBus<string>(eventBusId.value)
 
 			<li v-if="shouldDisplayLastPage">
 				<Anchor
-					:to="{ path: link, query: { limit, offset: (totalPages - 1) * limit } }"
+					:to="{
+						path: link,
+						query: {
+							limit,
+							offset: (totalPages - 1) * limit,
+							ordering: route.query?.ordering
+						}
+					}"
 					:class="{
 						'grid grid-cols-2 gap-1': shouldDisplayNextTripleDots,
 						disabled: isInLastPage
 					}"
-					:href="`${link}?limit=${limit}&offset=${(totalPages - 1) * limit}`"
 					:text="'Last Page'"
 					:title="`Go to last page (${lastPageNumber})`"
-					@click="
-						applyPaginationQuery &&
-							bus.emit(eventName, { limit: limit, offset: (totalPages - 1) * limit })
-					"
 				>
 					<span
 						v-if="shouldDisplayNextTripleDots"
@@ -219,17 +190,15 @@ const bus = useEventBus<string>(eventBusId.value)
 
 			<li>
 				<Anchor
-					:to="{ path: link, query: { limit, offset: offset + limit } }"
+					:to="{
+						path: link,
+						query: { limit, offset: offset + limit, ordering: route.query?.ordering }
+					}"
 					:class="{
 						disabled: isInLastPage
 					}"
-					:href="`${link}?limit=${limit}&offset=${offset + limit}`"
 					:text="'Next Page'"
 					:title="isInLastPage ? 'You are on the last page' : 'Next Page'"
-					@click="
-						applyPaginationQuery &&
-							bus.emit(eventName, { limit: limit, offset: offset + limit })
-					"
 				>
 					<span class="text-gray-700 dark:text-gray-200"
 						><icon-fa-solid:angle-right

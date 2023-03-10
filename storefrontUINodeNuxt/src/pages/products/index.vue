@@ -24,7 +24,6 @@ const { pending, refresh } = useAsyncData('products', () =>
 )
 
 const { products, loading, error } = storeToRefs(store)
-const paginationUrls = computed(() => products.value.links)
 const resultsCount = computed(() => products.value.count)
 const totalPages = computed(() => products.value.totalPages)
 const pageSize = computed(() => products.value.pageSize)
@@ -156,7 +155,6 @@ useServerHead({
 						:current-page="currentPage"
 						:offset="offset"
 						:limit="limit"
-						:pagination-urls="paginationUrls"
 					/>
 					<Ordering
 						:ordering="String(routePaginationParams.ordering)"
