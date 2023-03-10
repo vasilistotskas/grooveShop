@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.31.1 (2023-03-10)
+### Fix
+* **Nuxt:** UseListBox composable and minor fixes ([`cbdfddc`](https://github.com/vasilistotskas/grooveShop/commit/cbdfddcb1f766a65c1923265b17e4d2ac5d5ca52))
+
 ## v0.31.0 (2023-03-09)
 ### Feature
 * **Nuxt:** Ui improvements , implement product categories page index and more ([`a3f26c4`](https://github.com/vasilistotskas/grooveShop/commit/a3f26c40434714c952944ba1a125ac0c552261e8))
