@@ -1,6 +1,6 @@
 import { Category } from '~/zod/product/category'
 import { ProductQuery } from '~/zod/product/product'
-import Paginated from '~/zod/pagination/paginated'
+import { Paginated } from '~/zod/pagination/paginated'
 
 export interface CategoryState {
 	categories: Paginated<Category>
@@ -29,7 +29,7 @@ export const useCategoryStore = defineStore({
 	}),
 	getters: {
 		getCategoryById: (state) => (id: number) => {
-			return state.categories.results.find((category) => category.id === id)
+			return state.categories.results?.find((category) => category.id === id)
 		}
 	},
 	actions: {

@@ -1,5 +1,5 @@
 import { CreateRequest, Product, ProductQuery } from '~/zod/product/product'
-import Paginated from '~/zod/pagination/paginated'
+import { Paginated } from '~/zod/pagination/paginated'
 
 export interface ProductState {
 	products: Paginated<Product>
@@ -38,7 +38,7 @@ export const useProductStore = defineStore({
 	}),
 	getters: {
 		getProductById: (state) => (id: number) => {
-			return state.products.results.find((product) => product.id === id)
+			return state.products.results?.find((product) => product.id === id)
 		}
 	},
 	actions: {

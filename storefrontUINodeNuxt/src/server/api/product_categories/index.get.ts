@@ -1,6 +1,6 @@
 import { H3Event } from 'h3'
 import { Category } from '~/zod/product/category'
-import Paginated from '~/zod/pagination/paginated'
+import { Paginated } from '~/zod/pagination/paginated'
 import { buildFullUrl } from '~/helpers/api'
 
 export default defineEventHandler(

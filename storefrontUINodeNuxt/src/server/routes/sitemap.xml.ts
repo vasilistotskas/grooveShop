@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url'
 import { SitemapAndIndexStream, SitemapStream, streamToPromise } from 'sitemap'
 import { Product } from '~/zod/product/product'
 import { serverQueryContent } from '#content/server'
-import Paginated from '~/zod/pagination/paginated'
+import { Paginated } from '~/zod/pagination/paginated'
 
 export default defineEventHandler(async (event) => {
 	const config = useRuntimeConfig()
