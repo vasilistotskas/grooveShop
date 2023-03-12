@@ -14,6 +14,8 @@ components:
     change_theme: thema wechseln
   ordering:
     title: bestellung
+  breadcrumbs:
+    title: brotkrümel
   pagination:
     title: seitennummerierung
     prev: vorherige
@@ -113,7 +115,8 @@ pages:
     description: produktliste
     keywords: produkte
 layouts:
-  title: deepweb-titel %{title}
+  title: deepweb %{title}
+  description: deepweb-beschreibung %{description}
 banners:
   welcome: willkommen bei %{app_name}!
 others:
@@ -122,3 +125,14 @@ others:
   copy: kopieren
   enabled: ermöglicht
   disabled: behinderte
+routes:
+  el: griechisch
+  en: englisch
+  de: deutsch
+  id: indonesisch
+  ja: japanisch
+  ko: koreanisch
+  zh: chinesisch
+  products: produkte
+  product: produkt
+  home: heim

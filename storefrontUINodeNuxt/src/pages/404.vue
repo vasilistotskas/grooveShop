@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useServerHead } from '@unhead/vue'
 import { capitalize } from '~/utils/str'
 import { ITheme } from '~/utils/theme'
 
@@ -14,7 +13,7 @@ const themeColor = computed(() => (theme.value === 'dark' ? '#1a202c' : '#ffffff
 definePageMeta({
 	layout: 'page'
 })
-useServerHead({
+useHead(() => ({
 	title: capitalize(t('pages.404.title')),
 	meta: [
 		{
@@ -26,7 +25,7 @@ useServerHead({
 			content: t('pages.products.keywords')
 		}
 	]
-})
+}))
 
 useServerSeoMeta({
 	colorScheme: computed(() => (theme.value === 'dark' ? 'dark' : 'light')),

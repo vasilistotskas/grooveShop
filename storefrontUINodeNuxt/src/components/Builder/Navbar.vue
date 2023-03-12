@@ -87,22 +87,18 @@ const toggleOptions = (show?: boolean) => {
 					</div>
 					<!-- title -->
 					<slot name="title">
-						<NuxtLink
-							tag="a"
-							aria-label="index"
-							class="mr-3 flex-none overflow-hidden md:w-auto text-md font-bold text-gray-900 dark:text-gray-200"
-							:to="localePath('index')"
-						>
-							<span class="text-gray-700 dark:text-gray-200 sr-only">{{
-								$t('others.home')
-							}}</span>
-							<span class="text-gray-700 dark:text-gray-200 flex items-center">
-								<IconSimpleIcons:nuxtdotjs
-									class="inline-block mr-2 text-lg text-primary-400"
-								/>
-								{{ app.name }}
-							</span>
-						</NuxtLink>
+						<h1>
+							<strong>
+								<NuxtLink
+									tag="a"
+									aria-label="index"
+									class="mr-3 flex-none overflow-hidden md:w-auto text-md font-bold text-gray-700 dark:text-gray-200 flex items-center"
+									:to="localePath('index')"
+								>
+									{{ app.name }}
+								</NuxtLink>
+							</strong>
+						</h1>
 					</slot>
 					<!-- menu -->
 					<slot name="menu" />

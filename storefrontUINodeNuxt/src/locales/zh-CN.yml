@@ -14,6 +14,8 @@ components:
     change_theme: 改变主题
   ordering:
     title: 订购
+  breadcrumbs:
+    title: 面包屑
   pagination:
     title: 分页
     prev: 以前的
@@ -105,7 +107,8 @@ pages:
     description: 产品清单
     keywords: 产品
 layouts:
-  title: deepweb-标题 %{title}
+  title: 深网 %{title}
+  description: deepweb-描述 %{description}
 banners:
   welcome: 欢迎使用 %{app_name}！
 others:
@@ -114,3 +117,14 @@ others:
   copy: 复制
   enabled: 启用
   disabled: 禁用
+routes:
+  el: 希腊语
+  en: 英语
+  de: 德语
+  id: 印度尼西亚
+  ja: 日本人
+  ko: 韩国人
+  zh: 中国人
+  products: 产品
+  product: 产品
+  home: 家

@@ -17,6 +17,7 @@
 							<TestingSidebar />
 						</div>
 						<div class="flex flex-col lg:ml-30 xl:ml-40">
+							<Breadcrumbs />
 							<slot />
 							<slot name="footer">
 								<PageFooter />

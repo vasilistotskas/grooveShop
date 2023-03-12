@@ -43,12 +43,17 @@ defineProps({
 	cardHeight: {
 		type: [Number, String],
 		default: 'auto'
+	},
+	loading: {
+		type: Boolean,
+		default: false
 	}
 })
 </script>
 
 <template>
 	<div
+		v-if="loading"
 		:class="{
 			wrapper: true,
 			'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4': replicas > 1
@@ -79,8 +84,8 @@ defineProps({
 				<div class="card__body">
 					<div v-if="showParagraph" id="card-details" class="card__body body__text">
 						<div
-							v-for="i in 10"
-							:key="i"
+							v-for="n in 10"
+							:key="n"
 							class="skeleton skeleton-text skeleton-text__body"
 						></div>
 					</div>
@@ -100,6 +105,7 @@ defineProps({
 			</a>
 		</div>
 	</div>
+	<div v-else class="hidden"></div>
 </template>
 
 <style lang="scss" scoped>
@@ -124,7 +130,7 @@ img[alt] {
 	box-shadow: 0 0 transparent, 0 0 transparent,
 		0 0.375rem 0.375rem -0.125rem rgba(168, 179, 207, 0.4);
 	padding: 0.5rem;
-	border-radius: 1rem;
+	border-radius: 0.5rem;
 	border: 1px solid rgba(82, 88, 102, 0.2);
 	display: flex;
 	flex-direction: column;

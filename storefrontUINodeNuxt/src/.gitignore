@@ -16,3 +16,4 @@ dist
 .idea
 .vercel
 sitemap/*
+/sitemap/

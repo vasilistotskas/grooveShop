@@ -1,11 +1,5 @@
-<script lang="ts">
-export default defineComponent({
-	layout: 'testing'
-})
-</script>
-
 <template>
-	<div>
+	<header class="relative z-20">
 		<slot />
-	</div>
+	</header>
 </template>

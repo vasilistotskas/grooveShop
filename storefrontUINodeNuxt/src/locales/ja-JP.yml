@@ -14,6 +14,8 @@ components:
     change_theme: テーマを変更
   ordering:
     title: 注文
+  breadcrumbs:
+    title: ブレッドクラム
   pagination:
     title: ページネーション
     prev: 前
@@ -105,7 +107,8 @@ pages:
     description: 製品一覧
     keywords: 製品
 layouts:
-  title: deepweb-タイトル %{title}
+  title: ディープウェブ %{title}
+  description: deepweb 説明 %{description}
 banners:
   welcome: '%{app_name} へようこそ!'
 others:
@@ -114,3 +117,14 @@ others:
   copy: コピー
   enabled: 有効
   disabled: 無効
+routes:
+  el: ギリシャ語
+  en: 英語
+  de: ドイツ人
+  id: インドネシア語
+  ja: 日本
+  ko: 韓国語
+  zh: 中国語
+  products: 製品
+  product: 製品
+  home: 家

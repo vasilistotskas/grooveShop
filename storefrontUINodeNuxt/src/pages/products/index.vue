@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useServerHead } from '@unhead/vue'
 import { useProductStore } from '~/stores/product/product'
 import {
 	ProductOrdering,
@@ -23,7 +22,7 @@ const { pending, refresh } = useAsyncData('products', () =>
 	store.fetchProducts(routePaginationParams.value)
 )
 
-const { products, loading, error } = storeToRefs(store)
+const { products, error } = storeToRefs(store)
 const resultsCount = computed(() => products.value.count)
 const totalPages = computed(() => products.value.totalPages)
 const pageSize = computed(() => products.value.pageSize)
@@ -103,9 +102,10 @@ watch(
 )
 
 definePageMeta({
-	layout: 'page'
+	layout: 'page',
+	middleware: ['breadcrumbs']
 })
-useServerHead({
+useHead(() => ({
 	title: t('pages.products.title'),
 	meta: [
 		{
@@ -117,32 +117,28 @@ useServerHead({
 			content: t('pages.products.keywords')
 		}
 	]
+}))
+useServerSeoMeta({
+	title: t('pages.products.title'),
+	description: t('pages.products.description'),
+	ogTitle: t('pages.products.title'),
+	ogDescription: t('pages.products.description'),
+	ogImage: '',
+	ogUrl: config.public.baseUrl + route.path,
+	twitterTitle: t('pages.products.title'),
+	twitterDescription: t('pages.products.description'),
+	twitterImage: ''
 })
 </script>
 
 <template>
 	<PageWrapper>
-		<PageHeader>
-			<PageTitle
-				:text="`${$t('pages.products.title')} - ${resultsCount}`"
-				class="capitalize"
-			/>
-		</PageHeader>
+		<PageTitle
+			:text="`${$t('pages.products.title')} - ${resultsCount}`"
+			class="capitalize"
+		/>
 		<PageBody>
-			<ClientOnly>
-				<div v-if="loading || pending" class="grid gap-2">
-					<LoadingSkeletonBar
-						:replicas="1"
-						:card-width="'320px'"
-						:card-height="'32px'"
-						:border-radius="'0.5rem'"
-					></LoadingSkeletonBar>
-					<LoadingSkeleton :replicas="30" :card-height="'528px'"></LoadingSkeleton>
-				</div>
-			</ClientOnly>
-			<template v-if="error">
-				<div>Error</div>
-			</template>
+			<PageError v-if="error" :error="error"></PageError>
 			<template v-if="products.results.length">
 				<!--        <Filters-->
 				<!--          :event-bus-id="'products'"-->
@@ -162,6 +158,12 @@ useServerHead({
 					></Ordering>
 				</div>
 			</template>
+			<LoadingSkeleton
+				:class="pending ? 'block' : 'hidden'"
+				:loading="pending"
+				:replicas="30"
+				:card-height="'528px'"
+			></LoadingSkeleton>
 			<template v-if="products.results.length">
 				<ol
 					class="grid items-center justify-center grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"

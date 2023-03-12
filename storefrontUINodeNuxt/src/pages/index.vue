@@ -64,7 +64,7 @@ const copyBash = () => {
 		<PageBody>
 			<PageSection class="flex items-center">
 				<div class="flex-1 md:w-5/8 flex flex-col z-10">
-					<h1 class="text-gray-700 dark:text-gray-200 text-center md:text-left mt-4">
+					<p class="text-gray-700 dark:text-gray-200 text-center md:text-left mt-4">
 						<span
 							v-for="(item, i) in leadingsText"
 							:key="i"
@@ -77,7 +77,7 @@ const copyBash = () => {
 								item.text
 							}}</span>
 						</span>
-					</h1>
+					</p>
 					<div class="flex space-x-4 ml-4 mt-10 justify-center md:justify-start">
 						<Button
 							size="lg"

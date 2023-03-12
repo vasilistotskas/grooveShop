@@ -3,12 +3,12 @@ import { useCounter } from '~/stores/testing/counter'
 import { useIdentity } from '~/stores/testing/identity'
 import { capitalize } from '~/utils/str'
 
-// composable
+const config = useRuntimeConfig()
 const { t } = useLang()
 
-// compiler macro
 definePageMeta({
-	layout: 'testing'
+	layout: 'testing',
+	middleware: ['breadcrumbs']
 })
 useHead(() => ({
 	title: capitalize(t('pages.testing.test.title')),

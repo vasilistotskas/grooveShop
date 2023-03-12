@@ -14,6 +14,8 @@ components:
     change_theme: ganti tema
   ordering:
     title: memerintah
+  breadcrumbs:
+    title: remah roti
   pagination:
     title: paginasi
     prev: sebelumnya
@@ -109,7 +111,8 @@ pages:
     description: daftar produk
     keywords: produk
 layouts:
-  title: deepweb-title %{title}
+  title: deepweb %{judul}
+  description: deepweb-deskripsi %{description}
 banners:
   welcome: selamat datang di %{app_name}!
 others:
@@ -118,3 +121,14 @@ others:
   copy: menyalin
   enabled: diaktifkan
   disabled: dengan disabilitas
+routes:
+  el: orang yunani
+  en: bahasa inggris
+  de: jerman
+  id: bahasa indonesia
+  ja: jepang
+  ko: korea
+  zh: cina
+  products: produk
+  product: produk
+  home: rumah

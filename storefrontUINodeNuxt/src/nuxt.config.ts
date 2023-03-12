@@ -19,14 +19,14 @@ export default defineNuxtConfig({
 			baseUrl: process.env.NUXT_APP_PUBLIC_BASE_URL,
 			apiBaseUrl: process.env.NUXT_APP_PUBLIC_API_BASE_URL,
 			facebookAppId: process.env.NUXT_APP_PUBLIC_FACEBOOK_APP_ID,
+			i18n: {
+				locales: process.env.NUXT_APP_LOCALES,
+				defaultLocale: process.env.NUXT_APP_DEFAULT_LOCALE
+			},
 			author: {
 				name: process.env.NUXT_APP_PUBLIC_AUTHOR_NAME,
 				github_url: process.env.NUXT_APP_PUBLIC_AUTHOR_GITHUB_URL
 			}
-		},
-		i18n: {
-			locales: process.env.NUXT_APP_LOCALES,
-			defaultLocale: process.env.NUXT_APP_DEFAULT_LOCALE
 		}
 	},
 	typescript: {
@@ -52,6 +52,7 @@ export default defineNuxtConfig({
 		'@nuxtjs/html-validator',
 		'@nuxtjs/robots',
 		'@nuxtjs/i18n',
+		'@nuxtjs/eslint-module',
 		'@pinia/nuxt',
 		'@vueuse/nuxt',
 		'@vite-pwa/nuxt',
@@ -100,6 +101,9 @@ export default defineNuxtConfig({
 			routes: ['/', '/sitemap.xml']
 		}
 	},
+	eslint: {
+		/* module options */
+	},
 	app: {
 		head: {
 			charset: 'utf-8',
@@ -147,15 +151,15 @@ export default defineNuxtConfig({
 					color: '#5bbad5'
 				}
 			]
-		},
-		pageTransition: {
-			name: 'page',
-			mode: 'out-in' // default
-		},
-		layoutTransition: {
-			name: 'layout',
-			mode: 'out-in' // default
 		}
+		// pageTransition: {
+		// 	name: 'page',
+		// 	mode: 'out-in' // default
+		// },
+		// layoutTransition: {
+		// 	name: 'layout',
+		// 	mode: 'out-in' // default
+		// }
 	},
 	robots: {
 		configPath: '~/config/robots.config'

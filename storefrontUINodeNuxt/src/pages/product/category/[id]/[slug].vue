@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useCategoryStore } from '~/stores/product/category'
 
+const config = useRuntimeConfig()
 const route = useRoute()
 const categoryId = route.params.id
 const { category, loading, error } = storeToRefs(useCategoryStore())

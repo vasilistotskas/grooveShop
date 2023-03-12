@@ -16,7 +16,8 @@ const config = useRuntimeConfig()
 
 // compiler macro
 definePageMeta({
-	layout: 'testing'
+	layout: 'testing',
+	middleware: ['breadcrumbs']
 })
 useHead(() => ({
 	title: capitalize(t('pages.testing.setting.title')),

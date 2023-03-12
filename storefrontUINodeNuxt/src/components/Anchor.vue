@@ -14,12 +14,17 @@ const props = defineProps({
 	href: {
 		type: String,
 		default: ''
+	},
+	cssClass: {
+		type: String,
+		default: ''
 	}
 })
 
 // state
 const href = toRef(props, 'href')
 const to = toRef(props, 'to')
+const cssClass = toRef(props, 'cssClass')
 </script>
 
 <template>
@@ -28,7 +33,10 @@ const to = toRef(props, 'to')
 		tag="a"
 		:to="localePath(to)"
 		:aria-label="text"
-		:class="`transition-colors duration-300 dark:hover:text-white hover:text-gray-900`"
+		:class="[
+			cssClass,
+			`transition-colors duration-300 dark:hover:text-white hover:text-gray-900`
+		]"
 	>
 		<slot>{{ text }}</slot>
 	</NuxtLink>

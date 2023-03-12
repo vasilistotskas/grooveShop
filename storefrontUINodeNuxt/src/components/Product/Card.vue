@@ -4,7 +4,7 @@ import { Product } from '~/zod/product/product'
 const { contentShorten } = useText()
 
 const props = defineProps({
-	product: Object as PropType<Product>
+	product: { type: Object as PropType<Product>, required: true, default: null }
 })
 </script>
 

@@ -11,8 +11,8 @@ export default defineEventHandler(async (event) => {
 	const config = useRuntimeConfig()
 	const baseUrl = config.public.baseUrl
 
-	const availableLocales = config.i18n.locales.split(',')
-	const defaultLocale = config.i18n.defaultLocale
+	const availableLocales = config.public.i18n.locales.split(',')
+	const defaultLocale = config.public.i18n.defaultLocale
 
 	const productResponse = await fetch(`${config.public.apiBaseUrl}/product`)
 	const products = (await productResponse.json()) as Paginated<Product>

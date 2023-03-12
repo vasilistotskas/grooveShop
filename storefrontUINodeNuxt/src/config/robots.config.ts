@@ -1,6 +1,6 @@
 export default [
 	{ UserAgent: '*' },
-	{ Disallow: '/' },
+	// { Disallow: '/' },
 	{ BlankLine: true },
 	{ Comment: 'Comment here' },
 	// @ts-ignore
