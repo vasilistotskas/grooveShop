@@ -24,7 +24,7 @@ components:
     next_page: 다음 페이지
     first_page: 첫 페이지
     last_page: 마지막 페이지
-    go_to_page: '%{page} 페이지로 이동'
+    go_to_page: 페이지 %{page}로 이동
     you_are_on_last_page: 당신은 마지막 페이지에 있습니다
   builder:
     navbar:
@@ -126,3 +126,5 @@ routes:
   ko: 한국인
   zh: 중국인
   products: 제품
+  product: 제품
+  home: 집

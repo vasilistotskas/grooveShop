@@ -126,3 +126,5 @@ routes:
   ko: Korean
   zh: Chinese
   products: Products
+  product: Product
+  home: Home

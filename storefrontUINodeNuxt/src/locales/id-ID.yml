@@ -130,3 +130,5 @@ routes:
   ko: korea
   zh: cina
   products: produk
+  product: produk
+  home: rumah
