@@ -6,23 +6,21 @@ export default defineNuxtRouteMiddleware((to, from) => {
 	const config = useRuntimeConfig()
 	const defaultLocale = config.public.i18n.defaultLocale
 	const breadcrumbStore = useBreadcrumbsStore()
-	const fullPath = to.fullPath
-	const paths = fullPath.split('/').filter((path) => path !== '')
-	const breadCrumbs: BreadCrumbsObject = new BreadCrumbsObject()
-	let path = ''
-	paths.forEach((pathItem, idx) => {
-		path += `/${pathItem}`
-		if (idx === 0) {
-			breadCrumbs.parent = {
-				text: $i18n.t(`routes.${pathItem}`),
-				link: path
+	const breadCrumbs: BreadCrumbsObject = new BreadCrumbsObject({
+		parent: {
+			text: $i18n.t(`routes.home`),
+			link: '/'
+		},
+		children: [
+			{
+				text: $i18n.t(`routes.products`),
+				link: '/products'
+			},
+			{
+				text: $i18n.t(`routes.product`),
+				link: `/product/${to.params.id}/${to.params.slug}`
 			}
-		} else {
-			breadCrumbs.children.push({
-				text: $i18n.t(`routes.${pathItem}`),
-				link: path
-			})
-		}
+		]
 	})
 	breadcrumbStore.setBreadcrumbs(breadCrumbs)
 	return breadcrumbStore.setStructuredData($i18n.locale.value, defaultLocale)
