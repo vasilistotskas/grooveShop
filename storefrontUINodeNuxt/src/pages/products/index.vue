@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useServerHead } from '@unhead/vue'
 import { useProductStore } from '~/stores/product/product'
 import {
 	ProductOrdering,
@@ -105,7 +104,7 @@ watch(
 definePageMeta({
 	layout: 'page'
 })
-useServerHead({
+useHead(() => ({
 	title: t('pages.products.title'),
 	meta: [
 		{
@@ -117,6 +116,17 @@ useServerHead({
 			content: t('pages.products.keywords')
 		}
 	]
+}))
+useServerSeoMeta({
+	title: t('pages.products.title'),
+	description: t('pages.products.description'),
+	ogTitle: t('pages.products.title'),
+	ogDescription: t('pages.products.description'),
+	ogImage: '',
+	ogUrl: config.public.baseUrl + route.path,
+	twitterTitle: t('pages.products.title'),
+	twitterDescription: t('pages.products.description'),
+	twitterImage: ''
 })
 </script>
 

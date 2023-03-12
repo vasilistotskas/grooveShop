@@ -9,15 +9,26 @@ const store = useProductStore()
 const fullPath = config.public.baseUrl + route.fullPath
 const productId = route.params.id
 
-const { pending, refresh } = useAsyncData('product', () => store.fetchProduct(productId))
+const { pending, refresh } = await useAsyncData(
+	'product',
+	async () => await store.fetchProduct(productId)
+)
 const { product, loading, error } = storeToRefs(store)
 
 definePageMeta({
 	middleware: ['product'],
 	layout: 'page'
 })
+const i18nHead = useLocaleHead({
+	addDirAttribute: true,
+	addSeoAttributes: true,
+	identifierAttribute: 'id'
+})
 useHead(() => ({
 	title: capitalize(product.value?.seoTitle || product.value?.name || ''),
+	htmlAttrs: {
+		lang: i18nHead.value.htmlAttrs!.lang
+	},
 	meta: [
 		{
 			name: 'description',
@@ -77,9 +88,6 @@ useHead(() => ({
 
 <template>
 	<PageWrapper class="flex flex-col">
-		<PageHeader>
-			<PageTitle :text="product?.name" class="capitalize" />
-		</PageHeader>
 		<PageBody>
 			<ClientOnly>
 				<div v-if="loading || pending" class="grid">

@@ -7,7 +7,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 	const currentLocale = nuxtApp.$i18n.locale.value
 	const defaultLocale = nuxtApp.$i18n.fallbackLocale.value
 
-	if (productSlug !== to.params.slug && process.client) {
+	if (productSlug !== to.params.slug) {
 		if (currentLocale === defaultLocale) {
 			const path = `/product/${productId}/${product.slug}`
 			return navigateTo(path)

@@ -14,6 +14,8 @@ components:
     change_theme: άλλαξε θέμα
   ordering:
     title: παραγγελία
+  breadcrumbs:
+    title: φρυγανιά
   pagination:
     title: σελιδοποίηση
     prev: προηγούμενος
@@ -80,7 +82,7 @@ pages:
           footer_link: api χρηστών github
         bot_id:
           title: αναγνωριστικό ρομπότ
-          description: αυτό είναι το αναγνωριστικό του bot σας.
+          description: αυτό είναι το αναγνωριστικό ρομπότ σας.
           footer: χρησιμοποιείται κατά την αλληλεπίδραση με το bot.
         protection_spam:
           title: προστασία ανεπιθύμητων
@@ -113,7 +115,8 @@ pages:
     description: λίστα προϊόντων
     keywords: προϊόντα
 layouts:
-  title: deepweb-title %{title}
+  title: deepweb %{title}
+  description: deepweb-description %{description}
 banners:
   welcome: καλώς ορίσατε στο %{app_name}!
 others:
@@ -122,3 +125,12 @@ others:
   copy: αντίγραφο
   enabled: ενεργοποιημένη
   disabled: άτομα με ειδικές ανάγκες
+routes:
+  el: ελληνικά
+  en: αγγλικά
+  de: γερμανός
+  id: ινδονησιακά
+  ja: ιαπωνικά
+  ko: κορεάτης
+  zh: κινέζικα
+  products: προϊόντα

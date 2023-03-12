@@ -214,3 +214,6 @@ npm-debug.log
 
 # Store Front
 /storefrontUINodeNuxt/src/sitemap/*
+/storefrontUINodeNuxt/src/sitemap/
+sitemap/*
+/sitemap/

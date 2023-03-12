@@ -1,7 +1,4 @@
-import {
-	BreadCrumbsItemObject,
-	BreadCrumbsObject,
-} from '~/zod/global/breadcrumbs'
+import { BreadCrumbsItemObject, BreadCrumbsObject } from '~/zod/global/breadcrumbs'
 import { BreadcrumbList } from '~/zod/global/org.schema/BreadcrumbList'
 import ListItem from '~/zod/global/org.schema/ListItem'
 
@@ -21,10 +18,10 @@ export const useBreadcrumbsStore = defineStore({
 		}
 	},
 	actions: {
-		setStructuredData(locale: string) {
+		setStructuredData(locale: string, defaultLocale: string) {
 			const config = useRuntimeConfig()
 			const baseUrl = config.public.baseUrl
-			const instanceRoot = `${baseUrl}/${locale}`
+			const instanceRoot = `${baseUrl}${locale === defaultLocale ? '' : `/${locale}`}`
 			const parentItem: ListItem = new ListItem({
 				'@type': 'ListItem',
 				name: this.breadcrumbs.parent?.text,

@@ -8,7 +8,7 @@ interface IMenuItem {
 
 const { t } = useLang()
 const consoleLogImageLoaded = () => {
-	console.log('Image loaded')
+	// Image loaded
 }
 const menus = computed((): IMenuItem[] => [
 	{ type: 'link', text: t('pages.testing.blank.nav'), route: { name: 'testing-blank' } },

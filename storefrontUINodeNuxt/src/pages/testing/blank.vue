@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { capitalize } from '~/utils/str'
 
-// composable
+const config = useRuntimeConfig()
 const { t } = useLang()
 
-// compiler macro
 definePageMeta({
 	layout: 'testing'
 })

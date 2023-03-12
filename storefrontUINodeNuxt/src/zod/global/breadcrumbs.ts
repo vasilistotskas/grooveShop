@@ -11,6 +11,10 @@ export class BreadCrumbsObject {
 	children: BreadCrumbsItemObject[] = []
 	delimiter = '>'
 
+	constructor(data?: Partial<BreadCrumbsObject>) {
+		Object.assign(this, data)
+	}
+
 	toJSON(): string {
 		return JSON.stringify({
 			parent: this.parent,

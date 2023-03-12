@@ -22,7 +22,6 @@ const tooManyAttempts = computed(() => {
 
 const onSubmit = handleSubmit((e) => {
 	e.preventDefault()
-	console.log('event', e)
 })
 </script>
 
