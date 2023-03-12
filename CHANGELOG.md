@@ -2,6 +2,15 @@
 
 <!--next-version-placeholder-->
 
+## v0.32.0 (2023-03-12)
+### Feature
+* **Nuxt:** Breadcrumbs and product-breadcrumbs middlwares implemented and usage ([`11db992`](https://github.com/vasilistotskas/grooveShop/commit/11db99293a8da1dda35affa39ae7dcc714601140))
+* **Nuxt:** Breadcrumbs prototype init ([`709849e`](https://github.com/vasilistotskas/grooveShop/commit/709849efa9abd0e299cabaae7d1337e583f45bfe))
+
+### Fix
+* **Nuxt:** Ui fixes and Html Skeleton cleanup ([`4bda8dc`](https://github.com/vasilistotskas/grooveShop/commit/4bda8dcc76bfdd822798c951e76c211e60dd5813))
+* **Nuxt:** Breadcrumb fixes and seo improvements ([`b209f1b`](https://github.com/vasilistotskas/grooveShop/commit/b209f1b577989b9c2fdc1291baa74dc0525555fe))
+
 ## v0.31.1 (2023-03-10)
 ### Fix
 * **Nuxt:** UseListBox composable and minor fixes ([`cbdfddc`](https://github.com/vasilistotskas/grooveShop/commit/cbdfddcb1f766a65c1923265b17e4d2ac5d5ca52))
