@@ -4,19 +4,16 @@ import { useBreadcrumbsStore } from '~/stores/global/breadcrumbs'
 const store = useBreadcrumbsStore()
 const { breadcrumbs } = storeToRefs(store)
 
-const isLast = computed(
-	(position: number) => breadcrumbs.value.children.length === position + 1
-)
 const hasChildren = computed(() => breadcrumbs.value.children.length > 0)
 const resolveHeadingElement = (idx: number) => {
 	const totalBreadcrumbs = breadcrumbs.value.children.length
 	if (totalBreadcrumbs === 1) {
-		return 'h4'
+		return 'h2'
 	} else if (totalBreadcrumbs === 2) {
 		if (idx === 0) {
-			return 'h4'
-		} else {
 			return 'h3'
+		} else {
+			return 'h2'
 		}
 	} else if (totalBreadcrumbs === 3) {
 		if (idx === 0) {
@@ -26,17 +23,35 @@ const resolveHeadingElement = (idx: number) => {
 		} else {
 			return 'h2'
 		}
-	} else {
+	} else if (idx === 0) {
 		return 'h5'
+	} else if (idx === 1) {
+		return 'h4'
+	} else if (idx === 2) {
+		return 'h3'
+	} else {
+		return 'h2'
 	}
 }
+const resolveParentHeadingElement = computed(() => {
+	const totalBreadcrumbs = breadcrumbs.value.children.length
+	if (totalBreadcrumbs === 1) {
+		return 'h3'
+	} else if (totalBreadcrumbs === 2) {
+		return 'h4'
+	} else if (totalBreadcrumbs === 3) {
+		return 'h5'
+	} else {
+		return 'h6'
+	}
+})
 </script>
 
 <template>
-	<section class="cp-breadcrumbs-breadcrumbs">
+	<section v-if="hasChildren" class="cp-breadcrumbs-breadcrumbs">
 		<nav class="cp-breadcrumbs-breadcrumbs-itm_li">
 			<component
-				:is="'h5'"
+				:is="resolveParentHeadingElement"
 				v-if="breadcrumbs.parent"
 				class="cp-breadcrumbs-breadcrumbs-itm"
 			>
@@ -70,10 +85,12 @@ const resolveHeadingElement = (idx: number) => {
 			</template>
 		</nav>
 	</section>
+	<div v-else class="cp-breadcrumbs-breadcrumbs-empty"></div>
 </template>
 
 <style lang="scss" scoped>
 .cp-breadcrumbs-breadcrumbs {
+	padding: 0.5rem;
 	&-itm_li {
 		margin: 0;
 		padding: 0;
@@ -91,15 +108,17 @@ const resolveHeadingElement = (idx: number) => {
 		padding-left: 3px;
 		flex-shrink: 0;
 		display: flex;
-
 		&-lnk {
 			font-size: 12px;
 			text-decoration: none;
 			color: gray;
 			&:hover {
-				color: black;
+				color: white;
 			}
 		}
+	}
+	&-empty {
+		height: 34px;
 	}
 }
 </style>

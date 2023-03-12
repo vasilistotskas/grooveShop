@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 definePageMeta({
-	layout: 'testing'
+	layout: 'testing',
+	middleware: ['breadcrumbs']
 })
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<header class="relative z-20">
 		<slot />
-	</div>
+	</header>
 </template>

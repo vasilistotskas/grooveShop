@@ -52,6 +52,9 @@ export const useBreadcrumbsStore = defineStore({
 		},
 		setChildren(breadcrumbs: BreadCrumbsItemObject[]) {
 			this.breadcrumbs.children = breadcrumbs
+		},
+		cleanBreadcrumbs() {
+			this.breadcrumbs = new BreadCrumbsObject()
 		}
 	}
 })

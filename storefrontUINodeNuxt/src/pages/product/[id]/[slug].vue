@@ -13,10 +13,14 @@ const { pending, refresh } = await useAsyncData(
 	'product',
 	async () => await store.fetchProduct(productId)
 )
-const { product, loading, error } = storeToRefs(store)
+const { product, error } = storeToRefs(store)
+
+const productTitle = computed(() => {
+	return capitalize(product.value?.seoTitle || product.value?.name || '')
+})
 
 definePageMeta({
-	middleware: ['product'],
+	middleware: ['product', 'product-breadcrumbs'],
 	layout: 'page'
 })
 const i18nHead = useLocaleHead({
@@ -25,7 +29,7 @@ const i18nHead = useLocaleHead({
 	identifierAttribute: 'id'
 })
 useHead(() => ({
-	title: capitalize(product.value?.seoTitle || product.value?.name || ''),
+	title: productTitle.value,
 	htmlAttrs: {
 		lang: i18nHead.value.htmlAttrs!.lang
 	},
@@ -89,17 +93,14 @@ useHead(() => ({
 <template>
 	<PageWrapper class="flex flex-col">
 		<PageBody>
-			<ClientOnly>
-				<div v-if="loading || pending" class="grid">
-					<LoadingSkeleton v-if="loading"></LoadingSkeleton>
-				</div>
-			</ClientOnly>
-			<template v-if="error">
-				<div>Error</div>
-			</template>
-			<template v-else>
+			<PageError v-if="error" :error="error"></PageError>
+			<LoadingSkeleton
+				:loading="pending"
+				:class="pending ? 'block' : 'hidden'"
+			></LoadingSkeleton>
+			<div class="product">
 				<p class="text-gray-700 dark:text-gray-200">{{ product }}</p>
-			</template>
+			</div>
 		</PageBody>
 	</PageWrapper>
 </template>

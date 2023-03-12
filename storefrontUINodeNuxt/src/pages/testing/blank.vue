@@ -5,7 +5,8 @@ const config = useRuntimeConfig()
 const { t } = useLang()
 
 definePageMeta({
-	layout: 'testing'
+	layout: 'testing',
+	middleware: ['breadcrumbs']
 })
 useHead(() => ({
 	title: capitalize(t('pages.testing.blank.title')),
