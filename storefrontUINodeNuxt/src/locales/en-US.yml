@@ -30,6 +30,25 @@ components:
     navbar:
       toggle_drawer_menu: Toggle Drawer Menu
       toggle_options_menu: Toggle Options Menu
+  cookie:
+    accept: Accept
+    accept_all: Accept All
+    banner:
+      description: We use our own cookies and third-party cookies so that we can display this website correctly and better understand how this website is used, with a view to improving the services we offer. A decision on cookie usage permissions can be changed anytime using the cookie button that will appear after a selection has been made on this banner.
+      title: Cookies
+    close: Close
+    cookies:
+      functional: Functional cookies
+      necessary: Necessary cookies
+      optional: Optional cookies
+    decline: Decline
+    decline_all: Decline All
+    here: here
+    iframe_blocked: To see this, please enable functional cookies.
+    manage_cookies: Manage Cookies
+    save: Save
+    settings:
+      unsaved: You have unsaved changes.
   form:
     validation:
       email: Email

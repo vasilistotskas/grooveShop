@@ -57,7 +57,8 @@ export default defineNuxtConfig({
 		'@vueuse/nuxt',
 		'@vite-pwa/nuxt',
 		'unplugin-icons/nuxt',
-		'./modules/sitemap-dynamic'
+		'./modules/sitemap-dynamic',
+		'./modules/cookies'
 	],
 	pinia: {
 		autoImports: [

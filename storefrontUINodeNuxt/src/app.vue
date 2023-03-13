@@ -57,5 +57,6 @@ useServerSeoMeta({
 		<NuxtLayout>
 			<NuxtPage />
 		</NuxtLayout>
+		<CookieControl />
 	</Body>
 </template>

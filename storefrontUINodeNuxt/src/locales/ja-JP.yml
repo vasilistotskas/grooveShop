@@ -30,6 +30,28 @@ components:
     navbar:
       toggle_drawer_menu: 引き出しメニューの切り替え
       toggle_options_menu: オプションメニューの切り替え
+  cookie:
+    accept: 受け入れる
+    accept_all: すべて受け入れる
+    banner:
+      description: >-
+        当社は、提供するサービスを改善する目的で、この web サイトを正しく表示し、この web
+        サイトがどのように使用されているかをよりよく理解できるように、独自の cookie とサードパーティの cookie を使用しています。
+        cookie の使用許可に関する決定は、このバナーで選択した後に表示される cookie ボタンを使用していつでも変更できます。
+      title: クッキー
+    close: 近い
+    cookies:
+      functional: 機能性クッキー
+      necessary: 必要なクッキー
+      optional: オプションのクッキー
+    decline: 却下
+    decline_all: すべて辞退
+    here: ここ
+    iframe_blocked: これを表示するには、機能性 cookie を有効にしてください。
+    manage_cookies: cookie の管理
+    save: 保存
+    settings:
+      unsaved: 保存されていない変更があります。
   form:
     validation:
       email: eメール
