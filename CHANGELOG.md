@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.33.0 (2023-03-15)
+### Feature
+* **Nuxt:** Cookies prototype init ([`f2f31ba`](https://github.com/vasilistotskas/grooveShop/commit/f2f31ba6b261b62fa03c2ffa8f21c9ef89f76e79))
+
 ## v0.32.0 (2023-03-12)
 ### Feature
 * **Nuxt:** Breadcrumbs and product-breadcrumbs middlwares implemented and usage ([`11db992`](https://github.com/vasilistotskas/grooveShop/commit/11db99293a8da1dda35affa39ae7dcc714601140))
