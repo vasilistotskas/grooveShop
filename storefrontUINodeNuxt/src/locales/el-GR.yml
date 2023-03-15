@@ -2,6 +2,16 @@ components:
   global:
     generic_modal:
       close: κλείσε
+    pwa:
+      ready_to_work_offline: εφαρμογή έτοιμη για εργασία εκτός σύνδεσης
+      new_content_available: >-
+        νέο διαθέσιμο περιεχόμενο, κάντε κλικ στο κουμπί επαναφόρτωσης για
+        ενημέρωση.
+      reload: γεμίζω πάλι
+      close: κλείσε
+      install_pwa: εγκαταστήστε το pwa
+      install: εγκαθιστώ
+      cancel: ματαίωση
   page:
     footer:
       copyright: πνευματικά δικαιώματα © 2022
@@ -30,6 +40,41 @@ components:
     navbar:
       toggle_drawer_menu: εναλλαγή μενού συρταριού
       toggle_options_menu: εναλλαγή μενού επιλογών
+  cookie:
+    accept: αποδέχομαι
+    accept_all: αποδοχή όλων
+    banner:
+      description: >-
+        χρησιμοποιούμε τα δικά μας cookies και cookies τρίτων, ώστε να μπορούμε
+        να εμφανίζουμε σωστά αυτόν τον ιστότοπο και να κατανοούμε καλύτερα τον
+        τρόπο χρήσης αυτού του ιστότοπου, με σκοπό τη βελτίωση των υπηρεσιών που
+        προσφέρουμε. μια απόφαση σχετικά με τα δικαιώματα χρήσης cookie μπορεί
+        να αλλάξει ανά πάσα στιγμή χρησιμοποιώντας το κουμπί cookie που θα
+        εμφανιστεί αφού γίνει μια επιλογή σε αυτό το banner.
+      title: μπισκότα
+    close: κλείσε
+    cookies:
+      functional: λειτουργικά cookies
+      necessary: απαραίτητα μπισκότα
+      necessary_description: >-
+        τα απαραίτητα cookies βοηθούν να γίνει ένας ιστότοπος εύχρηστος,
+        ενεργοποιώντας βασικές λειτουργίες όπως η πλοήγηση στη σελίδα και η
+        πρόσβαση σε ασφαλείς περιοχές του ιστότοπου. ο ιστότοπος δεν μπορεί να
+        λειτουργήσει σωστά χωρίς αυτά τα cookies.
+      optional: προαιρετικά cookies
+      optional_links:
+        privacy_policy: πολιτική απορρήτου
+      google:
+        analytics: google analytics
+        analytics_description: χρησιμοποιείται για έλεγχο cookie.
+    decline: πτώση
+    decline_all: απόρριψη όλων
+    here: εδώ
+    iframe_blocked: για να το δείτε αυτό, ενεργοποιήστε τα λειτουργικά cookies.
+    manage_cookies: διαχείριση cookies
+    save: αποθηκεύσετε
+    settings:
+      unsaved: έχετε μη αποθηκευμένες αλλαγές.
   form:
     validation:
       email: ηλεκτρονικη διευθυνση
@@ -82,7 +127,7 @@ pages:
           footer_link: api χρηστών github
         bot_id:
           title: αναγνωριστικό ρομπότ
-          description: αυτό είναι το αναγνωριστικό ρομπότ σας.
+          description: αυτό είναι το αναγνωριστικό του bot σας.
           footer: χρησιμοποιείται κατά την αλληλεπίδραση με το bot.
         protection_spam:
           title: προστασία ανεπιθύμητων

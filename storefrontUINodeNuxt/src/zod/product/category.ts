@@ -29,17 +29,12 @@ export type Category = z.infer<typeof ZodCategory>
 export const ZodCreateRequest = z.object({
 	name: z.string(),
 	slug: z.string(),
-	category: z.number().int().nonnegative(),
-	description: z.string().nullable(),
-	price: z.number(),
-	vat: z.number(),
-	stock: z.number().int().nonnegative(),
-	active: z.boolean(),
-	weight: z.number().nonnegative(),
-	seoTitle: z.string().nullable(),
-	seoDescription: z.string().nullable(),
-	seoKeywords: z.string().nullable(),
-	discountPercent: z.number().nonnegative()
+	description: z.string().optional(),
+	parent: z.number().optional(),
+	seoTitle: z.string().optional(),
+	seoDescription: z.string().optional(),
+	seoKeywords: z.string().optional(),
+	createdAt: z.string().optional()
 })
 
 export type CreateRequest = Readonly<z.infer<typeof ZodCreateRequest>>

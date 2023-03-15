@@ -2,6 +2,14 @@ components:
   global:
     generic_modal:
       close: 近い
+    pwa:
+      ready_to_work_offline: オフラインで作業できるアプリ
+      new_content_available: 新しいコンテンツが利用可能です。更新するにはリロード ボタンをクリックしてください。
+      reload: リロード
+      close: 近い
+      install_pwa: pwa をインストールする
+      install: インストール
+      cancel: キャンセル
   page:
     footer:
       copyright: 著作権 © 2022
@@ -30,6 +38,36 @@ components:
     navbar:
       toggle_drawer_menu: 引き出しメニューの切り替え
       toggle_options_menu: オプションメニューの切り替え
+  cookie:
+    accept: 受け入れる
+    accept_all: すべて受け入れる
+    banner:
+      description: >-
+        当社は、提供するサービスを改善する目的で、この web サイトを正しく表示し、この web
+        サイトがどのように使用されているかをよりよく理解できるように、独自の cookie とサードパーティの cookie を使用しています。
+        cookie の使用許可に関する決定は、このバナーで選択した後に表示される cookie ボタンを使用していつでも変更できます。
+      title: クッキー
+    close: 近い
+    cookies:
+      functional: 機能性クッキー
+      necessary: 必要なクッキー
+      necessary_description: >-
+        必要な cookie は、ページ ナビゲーションや web サイトの安全な領域へのアクセスなどの基本的な機能を有効にすることで、web
+        サイトを使いやすくします。これらの cookie がないと、web サイトは正しく機能しません。
+      optional: オプションのクッキー
+      optional_links:
+        privacy_policy: プライバシーポリシー
+      google:
+        analytics: グーグルアナリティクス
+        analytics_description: cookie 制御に使用されます。
+    decline: 却下
+    decline_all: すべて辞退
+    here: ここ
+    iframe_blocked: これを表示するには、機能性 cookie を有効にしてください。
+    manage_cookies: cookie の管理
+    save: 保存
+    settings:
+      unsaved: 保存されていない変更があります。
   form:
     validation:
       email: eメール

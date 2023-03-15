@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { AppConfigInput } from '@nuxt/schema'
-
 // state
-const app = useAppConfig() as AppConfigInput
 const navbar = ref(null)
 const showDrawer = useState<boolean>('navbar.showDrawer', () => false)
 const showOptions = useState<boolean>('navbar.showOptions', () => false)
+
+// config
+const config = useRuntimeConfig()
 
 // locale
 const localePath = useLocalePath()
@@ -95,7 +95,7 @@ const toggleOptions = (show?: boolean) => {
 									class="mr-3 flex-none overflow-hidden md:w-auto text-md font-bold text-gray-700 dark:text-gray-200 flex items-center"
 									:to="localePath('index')"
 								>
-									{{ app.name }}
+									{{ config.public.appTitle }}
 								</NuxtLink>
 							</strong>
 						</h1>

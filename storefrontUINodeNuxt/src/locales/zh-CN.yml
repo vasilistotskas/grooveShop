@@ -2,6 +2,14 @@ components:
   global:
     generic_modal:
       close: 关闭
+    pwa:
+      ready_to_work_offline: 应用程序准备离线工作
+      new_content_available: 有新内容可用，单击重新加载按钮进行更新。
+      reload: 重新加载
+      close: 关闭
+      install_pwa: 安装 pwa
+      install: 安装
+      cancel: 取消
   page:
     footer:
       copyright: 版权所有 © 2022
@@ -30,6 +38,34 @@ components:
     navbar:
       toggle_drawer_menu: 切换抽屉菜单
       toggle_options_menu: 切换选项菜单
+  cookie:
+    accept: 接受
+    accept_all: 全都接受
+    banner:
+      description: >-
+        我们使用我们自己的 cookie 和第三方 cookie
+        以便我们能够正确显示本网站并更好地了解本网站的使用情况，以改善我们提供的服务。使用在此横幅上做出选择后出现的 cookie
+        按钮，可以随时更改有关 cookie 使用权限的决定。
+      title: 饼干
+    close: 关闭
+    cookies:
+      functional: 功能性 cookie
+      necessary: 必要的饼干
+      necessary_description: 必要的 cookie 通过启用页面导航和访问网站安全区域等基本功能来帮助使网站可用。没有这些 cookie，网站将无法正常运行。
+      optional: 可选的 cookie
+      optional_links:
+        privacy_policy: 隐私政策
+      google:
+        analytics: 谷歌分析
+        analytics_description: 用于 cookie 控制。
+    decline: 衰退
+    decline_all: 全部拒绝
+    here: 这里
+    iframe_blocked: 要查看此内容，请启用功能性 cookie。
+    manage_cookies: 管理 cookie
+    save: 节省
+    settings:
+      unsaved: 您有未保存的更改。
   form:
     validation:
       email: 电子邮件

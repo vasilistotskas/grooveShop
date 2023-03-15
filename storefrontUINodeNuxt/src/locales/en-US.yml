@@ -2,6 +2,14 @@ components:
   global:
     generic_modal:
       close: Close
+    pwa:
+      ready_to_work_offline: App ready to work offline
+      new_content_available: New content available, click on reload button to update.
+      reload: Reload
+      close: Close
+      install_pwa: Install PWA
+      install: Install
+      cancel: Cancel
   page:
     footer:
       copyright: Copyright © 2022
@@ -30,6 +38,31 @@ components:
     navbar:
       toggle_drawer_menu: Toggle Drawer Menu
       toggle_options_menu: Toggle Options Menu
+  cookie:
+    accept: Accept
+    accept_all: Accept All
+    banner:
+      description: We use our own cookies and third-party cookies so that we can display this website correctly and better understand how this website is used, with a view to improving the services we offer. A decision on cookie usage permissions can be changed anytime using the cookie button that will appear after a selection has been made on this banner.
+      title: Cookies
+    close: Close
+    cookies:
+      functional: Functional cookies
+      necessary: Necessary cookies
+      necessary_description: Necessary cookies help make a website usable by enabling basic functions like page navigation and access to secure areas of the website. The website cannot function properly without these cookies.
+      optional: Optional cookies
+      optional_links:
+        privacy_policy: Privacy Policy
+      google:
+        analytics: Google Analytics
+        analytics_description: Used for cookie control.
+    decline: Decline
+    decline_all: Decline All
+    here: here
+    iframe_blocked: To see this, please enable functional cookies.
+    manage_cookies: Manage Cookies
+    save: Save
+    settings:
+      unsaved: You have unsaved changes.
   form:
     validation:
       email: Email

@@ -52,7 +52,7 @@ class Product(TimeStampMixinModel, SeoModel, UUIDModel):
     name = models.CharField(unique=True, max_length=255)
     slug = models.SlugField(unique=True)
     description = HTMLField(null=True, blank=True)
-    price = models.DecimalField(max_digits=11, decimal_places=2, default=0.0)
+    price = models.DecimalField(max_digits=11, decimal_places=2)
     active = models.BooleanField(default=True)
     stock = models.PositiveIntegerField(default=1)
     discount_percent = models.DecimalField(max_digits=11, decimal_places=2, default=0.0)

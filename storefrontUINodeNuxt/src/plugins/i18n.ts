@@ -1,6 +1,7 @@
 import { GlobalEvents } from '~/events/global'
 
 export default defineNuxtPlugin((nuxtApp) => {
+	// @ts-ignore
 	nuxtApp.$i18n.onBeforeLanguageSwitch = (
 		oldLocale: string,
 		newLocale: string,
@@ -13,6 +14,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 			isInitialSetup
 		})
 	}
+	// @ts-ignore
 	nuxtApp.$i18n.onLanguageSwitched = (oldLocale: string, newLocale: string) => {
 		const bus = useEventBus<string>(GlobalEvents.ON_LANGUAGE_SWITCHED)
 		bus.emit(GlobalEvents.ON_LANGUAGE_SWITCHED, {

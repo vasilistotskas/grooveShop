@@ -1,10 +1,9 @@
 <script lang="ts" setup>
-import { AppConfigInput } from '@nuxt/schema'
 import { GlobalEvents } from '~/events/global'
 
+const config = useRuntimeConfig()
 const { t } = useLang()
 const toast = useToast()
-const app = useAppConfig() as AppConfigInput
 const navbarModal = ref(null)
 const bus = useEventBus<string>(GlobalEvents.GENERIC_MODAL)
 
@@ -56,7 +55,7 @@ bus.on((event: string) => {
 		<template #banner>
 			<div class="text-white text-xs text-center py-1 px-4 lg:px-8 capitalize">
 				<span class="mr-1 text-gray-700 dark:text-gray-200">
-					{{ $t('banners.welcome', { app_name: app.name }) }}
+					{{ $t('banners.welcome', { app_name: config.public.appTitle }) }}
 				</span>
 			</div>
 		</template>

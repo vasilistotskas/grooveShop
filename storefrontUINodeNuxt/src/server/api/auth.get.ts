@@ -1,15 +1,14 @@
 import { H3Event } from 'h3'
-import { Session } from '~/zod/auth/session'
-export default defineEventHandler(
-	async (event: H3Event): Promise<Session | undefined> => {
-		const config = useRuntimeConfig()
+import { ZodSession } from '~/zod/auth/session'
+import { parseDataAs } from '~/zod/parser'
 
-		const response = await fetch(`${config.public.apiBaseUrl}/session`)
-		const responseJson = await response.json()
-
-		const session = responseJson as Session
-		return {
-			isAuthenticated: session?.isAuthenticated
+export default defineEventHandler(async (event: H3Event) => {
+	const config = useRuntimeConfig()
+	const cookie = event.node.req.headers.cookie
+	const response = await fetch(`${config.public.apiBaseUrl}/session`, {
+		headers: {
+			Cookie: cookie || ''
 		}
-	}
-)
+	})
+	return await parseDataAs(response.json(), ZodSession)
+})

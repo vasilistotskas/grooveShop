@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { useProductStore } from '~/stores/product/product'
 import {
-	ProductOrdering,
-	ProductOrderingField,
-	ProductQuery
-} from '~/zod/product/product'
+	ProductsOrdering,
+	ProductsOrderingField,
+	ProductsQuery
+} from '~/zod/products/products'
 import { OrderingOption } from '~/zod/ordering/ordering'
 
 const route = useRoute()
@@ -12,7 +12,7 @@ const { t } = useI18n()
 const config = useRuntimeConfig()
 const store = useProductStore()
 
-const routePaginationParams = ref<ProductQuery>({
+const routePaginationParams = ref<ProductsQuery>({
 	limit: route.query.limit || undefined,
 	offset: route.query.offset || undefined,
 	ordering: route.query.ordering || undefined
@@ -35,7 +35,7 @@ const limit = computed(() => {
 	return pageSize.value
 })
 
-const ordering = ref<ProductOrdering>([
+const ordering = ref<ProductsOrdering>([
 	{
 		value: 'name',
 		label: t('pages.product.ordering.name'),
@@ -54,7 +54,7 @@ const ordering = ref<ProductOrdering>([
 ])
 
 const orderingOptions = computed(() => {
-	const options: Record<ProductOrderingField, OrderingOption[]> = {
+	const options: Record<ProductsOrderingField, OrderingOption[]> = {
 		name: [],
 		price: [],
 		created_at: []
@@ -85,7 +85,7 @@ const orderingOptionsArray = computed(() => {
 })
 
 const bus = useEventBus<string>('products')
-bus.on((event, payload: ProductQuery) => {
+bus.on((event, payload: ProductsQuery) => {
 	routePaginationParams.value = payload
 	refresh()
 })

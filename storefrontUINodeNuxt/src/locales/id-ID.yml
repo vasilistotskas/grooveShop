@@ -2,6 +2,14 @@ components:
   global:
     generic_modal:
       close: menutup
+    pwa:
+      ready_to_work_offline: aplikasi siap bekerja offline
+      new_content_available: konten baru tersedia, klik tombol muat ulang untuk memperbarui.
+      reload: muat ulang
+      close: menutup
+      install_pwa: instal pwa
+      install: install
+      cancel: membatalkan
   page:
     footer:
       copyright: hak cipta © 2022
@@ -30,6 +38,41 @@ components:
     navbar:
       toggle_drawer_menu: alihkan menu laci
       toggle_options_menu: alihkan menu opsi
+  cookie:
+    accept: menerima
+    accept_all: terima semua
+    banner:
+      description: >-
+        kami menggunakan cookie kami sendiri dan cookie pihak ketiga sehingga
+        kami dapat menampilkan situs web ini dengan benar dan lebih memahami
+        bagaimana situs web ini digunakan, dengan maksud untuk meningkatkan
+        layanan yang kami tawarkan. keputusan tentang izin penggunaan cookie
+        dapat diubah kapan saja menggunakan tombol cookie yang akan muncul
+        setelah pemilihan dilakukan pada spanduk ini.
+      title: kue
+    close: menutup
+    cookies:
+      functional: cookie fungsional
+      necessary: cookie yang diperlukan
+      necessary_description: >-
+        cookie yang diperlukan membantu membuat situs web dapat digunakan dengan
+        mengaktifkan fungsi dasar seperti navigasi halaman dan akses ke area
+        situs web yang aman. situs web tidak dapat berfungsi dengan baik tanpa
+        cookie ini.
+      optional: cookie opsional
+      optional_links:
+        privacy_policy: kebijakan pribadi
+      google:
+        analytics: google analytics
+        analytics_description: digunakan untuk kontrol cookie.
+    decline: menolak
+    decline_all: tolak semua
+    here: di sini
+    iframe_blocked: untuk melihatnya, harap aktifkan cookie fungsional.
+    manage_cookies: kelola cookie
+    save: menyimpan
+    settings:
+      unsaved: anda memiliki perubahan yang belum disimpan.
   form:
     validation:
       email: surel

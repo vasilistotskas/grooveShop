@@ -2,6 +2,16 @@ components:
   global:
     generic_modal:
       close: schließen
+    pwa:
+      ready_to_work_offline: app bereit, offline zu arbeiten
+      new_content_available: >-
+        neue inhalte verfügbar, klicken sie zum aktualisieren auf die
+        schaltfläche „neu laden“.
+      reload: neu laden
+      close: schließen
+      install_pwa: pwa installieren
+      install: installieren
+      cancel: stornieren
   page:
     footer:
       copyright: copyright © 2022
@@ -30,6 +40,41 @@ components:
     navbar:
       toggle_drawer_menu: schubladenmenü umschalten
       toggle_options_menu: optionsmenü umschalten
+  cookie:
+    accept: akzeptieren
+    accept_all: akzeptiere alle
+    banner:
+      description: >-
+        wir verwenden unsere eigenen cookies und cookies von drittanbietern,
+        damit wir diese website korrekt anzeigen und besser verstehen können,
+        wie diese website verwendet wird, um die von uns angebotenen dienste zu
+        verbessern. eine entscheidung über die erlaubnis zur verwendung von
+        cookies kann jederzeit über die cookie-schaltfläche geändert werden, die
+        erscheint, nachdem eine auswahl auf diesem banner getroffen wurde.
+      title: kekse
+    close: schließen
+    cookies:
+      functional: funktionale cookies
+      necessary: notwendige kekse
+      necessary_description: >-
+        notwendige cookies helfen dabei, eine website nutzbar zu machen, indem
+        sie grundfunktionen wie seitennavigation und zugriff auf sichere
+        bereiche der website ermöglichen. ohne diese cookies kann die website
+        nicht richtig funktionieren.
+      optional: optionale cookies
+      optional_links:
+        privacy_policy: datenschutz-bestimmungen
+      google:
+        analytics: google analytics
+        analytics_description: wird für die cookie-steuerung verwendet.
+    decline: abfall
+    decline_all: alle ablehnen
+    here: hier
+    iframe_blocked: um dies zu sehen, aktivieren sie bitte funktionale cookies.
+    manage_cookies: cookies verwalten
+    save: speichern
+    settings:
+      unsaved: du hast nicht gespeicherte änderungen.
   form:
     validation:
       email: email
@@ -86,7 +131,7 @@ pages:
           footer: wird bei der interaktion mit dem bot verwendet.
         protection_spam:
           title: spamschutz
-          description: toggle enable, um den roten rand zu entfernen
+          description: toggle enable, um den roten rahmen zu entfernen
           footer: >-
             wenn sie diese option aktivieren, schützen wir ihre kommentare vor
             spam

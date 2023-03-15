@@ -46,6 +46,7 @@ services:
       - USE_L10N=${USE_L10N}
       - USE_TZ=${USE_TZ}
       - SYSTEM_ENV=${SYSTEM_ENV}
+      - CORS_ORIGIN_ALLOW_ALL=${CORS_ORIGIN_ALLOW_ALL}
     depends_on:
       - db
       - redis
@@ -96,6 +97,7 @@ services:
       - USE_L10N=${USE_L10N}
       - USE_TZ=${USE_TZ}
       - SYSTEM_ENV=${SYSTEM_ENV}
+      - CORS_ORIGIN_ALLOW_ALL=${CORS_ORIGIN_ALLOW_ALL}
     depends_on:
       - backend
       - redis
@@ -144,6 +146,7 @@ services:
       - USE_L10N=${USE_L10N}
       - USE_TZ=${USE_TZ}
       - SYSTEM_ENV=${SYSTEM_ENV}
+      - CORS_ORIGIN_ALLOW_ALL=${CORS_ORIGIN_ALLOW_ALL}
     depends_on:
       - celery_worker
       - redis
@@ -196,6 +199,7 @@ services:
       - USE_L10N=${USE_L10N}
       - USE_TZ=${USE_TZ}
       - SYSTEM_ENV=${SYSTEM_ENV}
+      - CORS_ORIGIN_ALLOW_ALL=${CORS_ORIGIN_ALLOW_ALL}
     depends_on:
       - celery_worker
     networks:
