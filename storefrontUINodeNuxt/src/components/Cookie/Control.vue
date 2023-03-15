@@ -57,11 +57,11 @@
 								@click="isModalActive = false"
 								v-text="$t('components.cookie.close')"
 							/>
-							<template v-for="cookieType in CookieType" :key="cookieType">
+							<template v-for="cookieType in CookieTypeEnum.enum" :key="cookieType">
 								<template v-if="moduleOptions.cookies[cookieType].length">
 									<h3
 										v-text="
-											cookieType === CookieType.NECESSARY
+											cookieType === CookieTypeEnum.enum.necessary
 												? $t('components.cookie.cookies.necessary')
 												: $t('components.cookie.cookies.optional')
 										"
@@ -74,7 +74,7 @@
 											<div class="cookieControl__ModalInputWrapper">
 												<input
 													v-if="
-														cookieType === CookieType.NECESSARY &&
+														cookieType === CookieTypeEnum.enum.necessary &&
 														cookie.name !== 'functional'
 													"
 													:id="cookie.name"
@@ -184,7 +184,7 @@ import {
 	removeCookie,
 	setCookie
 } from '#cookie-control/methods'
-import { Cookie, CookieType } from '#cookie-control/types'
+import { Cookie, CookieTypeEnum } from '#cookie-control/types'
 import setCssVariables from '#cookie-control/set-vars'
 
 const { t } = useLang()

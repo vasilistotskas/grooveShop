@@ -1,6 +1,4 @@
 import { z } from 'zod'
-import { PaginationQuery } from '~/zod/pagination/pagination'
-import { OrderingQuery } from '~/zod/ordering/ordering'
 
 export const ZodProduct = z.object({
 	id: z.number().int().nonnegative(),
@@ -54,3 +52,7 @@ export const ZodCreateRequest = z.object({
 })
 
 export type CreateRequest = z.infer<typeof ZodCreateRequest>
+
+export const ZodParams = z.object({
+	id: z.string()
+})

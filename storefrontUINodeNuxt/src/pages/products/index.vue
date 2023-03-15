@@ -13,8 +13,8 @@ const config = useRuntimeConfig()
 const store = useProductStore()
 
 const routePaginationParams = ref<ProductsQuery>({
-	limit: route.query.limit || undefined,
-	offset: route.query.offset || undefined,
+	limit: Number(route.query.limit) || undefined,
+	offset: Number(route.query.offset) || undefined,
 	ordering: route.query.ordering || undefined
 })
 
@@ -94,9 +94,9 @@ watch(
 	() => route.query,
 	() => {
 		bus.emit('products', {
-			limit: route.query.limit || undefined,
-			offset: route.query.offset || undefined,
-			ordering: route.query.ordering || undefined
+			limit: Number(route.query.limit) || undefined,
+			offset: Number(route.query.offset) || undefined,
+			ordering: Number(route.query.ordering) || undefined
 		})
 	}
 )
@@ -147,10 +147,10 @@ useServerSeoMeta({
 				<!--        ></Filters>-->
 				<div class="flex items-center">
 					<Pagination
-						:total-pages="totalPages"
 						:current-page="currentPage"
-						:offset="offset"
 						:limit="limit"
+						:offset="offset"
+						:total-pages="totalPages"
 					/>
 					<Ordering
 						:ordering="String(routePaginationParams.ordering)"
@@ -159,10 +159,10 @@ useServerSeoMeta({
 				</div>
 			</template>
 			<LoadingSkeleton
+				:card-height="'528px'"
 				:class="pending ? 'block' : 'hidden'"
 				:loading="pending"
 				:replicas="30"
-				:card-height="'528px'"
 			></LoadingSkeleton>
 			<template v-if="products.results.length">
 				<ol

@@ -1,11 +1,9 @@
 import { Ref } from 'vue'
+import { z } from 'zod'
 
 export type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>
 
-export enum CookieType {
-	NECESSARY = 'necessary',
-	OPTIONAL = 'optional'
-}
+export const CookieTypeEnum = z.enum(['necessary', 'optional'])
 
 export interface Cookie {
 	description?: string

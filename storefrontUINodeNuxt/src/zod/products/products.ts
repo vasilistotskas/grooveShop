@@ -3,8 +3,8 @@ import { PaginationQuery } from '~/zod/pagination/pagination'
 import { OrderingQuery } from '~/zod/ordering/ordering'
 
 export const ZodProductsQuery = z.object({
-	offset: z.number().int().nonnegative().optional(),
-	limit: z.number().int().nonnegative().optional(),
+	offset: z.string().optional(),
+	limit: z.string().optional(),
 	ordering: z.string().optional()
 })
 
