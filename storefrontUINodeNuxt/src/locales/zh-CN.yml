@@ -2,6 +2,14 @@ components:
   global:
     generic_modal:
       close: 关闭
+    pwa:
+      ready_to_work_offline: 应用程序准备离线工作
+      new_content_available: 有新内容可用，单击重新加载按钮进行更新。
+      reload: 重新加载
+      close: 关闭
+      install_pwa: 安装 pwa
+      install: 安装
+      cancel: 取消
   page:
     footer:
       copyright: 版权所有 © 2022
@@ -43,7 +51,13 @@ components:
     cookies:
       functional: 功能性 cookie
       necessary: 必要的饼干
+      necessary_description: 必要的 cookie 通过启用页面导航和访问网站安全区域等基本功能来帮助使网站可用。没有这些 cookie，网站将无法正常运行。
       optional: 可选的 cookie
+      optional_links:
+        privacy_policy: 隐私政策
+      google:
+        analytics: 谷歌分析
+        analytics_description: 用于 cookie 控制。
     decline: 衰退
     decline_all: 全部拒绝
     here: 这里

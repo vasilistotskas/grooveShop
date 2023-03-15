@@ -1,8 +1,9 @@
-import { CreateRequest, Product, ProductQuery } from '~/zod/product/product'
-import { Paginated } from '~/zod/pagination/paginated'
+import { CreateRequest, Product } from '~/zod/product/product'
+import { Pagination } from '~/zod/pagination/pagination'
+import { ProductsQuery } from '~/zod/products/products'
 
 export interface ProductState {
-	products: Paginated<Product>
+	products: Pagination<Product>
 	product: Product | null
 	loading: boolean
 	error: string | null
@@ -42,7 +43,7 @@ export const useProductStore = defineStore({
 		}
 	},
 	actions: {
-		async fetchProducts({ offset, limit, ordering }: ProductQuery): Promise<void> {
+		async fetchProducts({ offset, limit, ordering }: ProductsQuery): Promise<void> {
 			this.loading = true
 			try {
 				const { data: products } = await useFetch(`/api/products`, {
@@ -97,7 +98,7 @@ export const useProductStore = defineStore({
 		async updateProductHits(productId: string | string[]): Promise<void> {
 			this.loading = true
 			try {
-				await useFetch(`/api/product/${productId}/update_product_hits`, {
+				await useFetch(`/api/product/${productId}/update-product-hits`, {
 					method: 'post'
 				})
 			} catch (error) {

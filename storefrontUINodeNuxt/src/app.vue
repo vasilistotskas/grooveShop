@@ -1,12 +1,10 @@
 <script lang="ts" setup>
-import { AppConfigInput } from '@nuxt/schema'
 import { AppSetup } from '~/utils/app'
 import { ITheme } from '~/utils/theme'
 import { GlobalEvents } from '~/events/global'
 
 AppSetup()
 const theme = useState<ITheme>('theme.current')
-const app = useAppConfig() as AppConfigInput
 const config = useRuntimeConfig()
 const route = useRoute()
 const { t } = useI18n()

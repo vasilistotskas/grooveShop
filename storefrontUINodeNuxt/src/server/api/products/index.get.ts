@@ -1,15 +1,14 @@
 import { H3Event } from 'h3'
-import { Product, ProductQuery } from '~/zod/product/product'
-import { Paginated } from '~/zod/pagination/paginated'
+import { ZodProduct } from '~/zod/product/product'
+import { ZodPagination } from '~/zod/pagination/pagination'
 import { buildFullUrl } from '~/helpers/api'
+import { parseDataAs, parseQueryAs } from '~/zod/parser'
+import { ZodProductsQuery } from '~/zod/products/products'
 
-export default defineEventHandler(async (event: H3Event): Promise<Paginated<Product>> => {
+export default defineEventHandler(async (event: H3Event) => {
 	const config = useRuntimeConfig()
-	const query = <ProductQuery>getQuery(event)
-
+	const query = parseQueryAs(event, ZodProductsQuery)
 	const url = buildFullUrl(`${config.public.apiBaseUrl}/product/`, query)
 	const response = await fetch(url)
-	const products = (await response.json()) as Paginated<Product>
-
-	return products
+	return await parseDataAs(response.json(), ZodPagination(ZodProduct))
 })

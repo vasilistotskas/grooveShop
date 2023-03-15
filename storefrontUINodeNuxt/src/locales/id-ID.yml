@@ -2,6 +2,14 @@ components:
   global:
     generic_modal:
       close: menutup
+    pwa:
+      ready_to_work_offline: aplikasi siap bekerja offline
+      new_content_available: konten baru tersedia, klik tombol muat ulang untuk memperbarui.
+      reload: muat ulang
+      close: menutup
+      install_pwa: instal pwa
+      install: install
+      cancel: membatalkan
   page:
     footer:
       copyright: hak cipta © 2022
@@ -46,7 +54,17 @@ components:
     cookies:
       functional: cookie fungsional
       necessary: cookie yang diperlukan
+      necessary_description: >-
+        cookie yang diperlukan membantu membuat situs web dapat digunakan dengan
+        mengaktifkan fungsi dasar seperti navigasi halaman dan akses ke area
+        situs web yang aman. situs web tidak dapat berfungsi dengan baik tanpa
+        cookie ini.
       optional: cookie opsional
+      optional_links:
+        privacy_policy: kebijakan pribadi
+      google:
+        analytics: google analytics
+        analytics_description: digunakan untuk kontrol cookie.
     decline: menolak
     decline_all: tolak semua
     here: di sini

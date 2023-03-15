@@ -2,6 +2,16 @@ components:
   global:
     generic_modal:
       close: κλείσε
+    pwa:
+      ready_to_work_offline: εφαρμογή έτοιμη για εργασία εκτός σύνδεσης
+      new_content_available: >-
+        νέο διαθέσιμο περιεχόμενο, κάντε κλικ στο κουμπί επαναφόρτωσης για
+        ενημέρωση.
+      reload: γεμίζω πάλι
+      close: κλείσε
+      install_pwa: εγκαταστήστε το pwa
+      install: εγκαθιστώ
+      cancel: ματαίωση
   page:
     footer:
       copyright: πνευματικά δικαιώματα © 2022
@@ -46,7 +56,17 @@ components:
     cookies:
       functional: λειτουργικά cookies
       necessary: απαραίτητα μπισκότα
+      necessary_description: >-
+        τα απαραίτητα cookies βοηθούν να γίνει ένας ιστότοπος εύχρηστος,
+        ενεργοποιώντας βασικές λειτουργίες όπως η πλοήγηση στη σελίδα και η
+        πρόσβαση σε ασφαλείς περιοχές του ιστότοπου. ο ιστότοπος δεν μπορεί να
+        λειτουργήσει σωστά χωρίς αυτά τα cookies.
       optional: προαιρετικά cookies
+      optional_links:
+        privacy_policy: πολιτική απορρήτου
+      google:
+        analytics: google analytics
+        analytics_description: χρησιμοποιείται για έλεγχο cookie.
     decline: πτώση
     decline_all: απόρριψη όλων
     here: εδώ
@@ -107,7 +127,7 @@ pages:
           footer_link: api χρηστών github
         bot_id:
           title: αναγνωριστικό ρομπότ
-          description: αυτό είναι το αναγνωριστικό ρομπότ σας.
+          description: αυτό είναι το αναγνωριστικό του bot σας.
           footer: χρησιμοποιείται κατά την αλληλεπίδραση με το bot.
         protection_spam:
           title: προστασία ανεπιθύμητων
@@ -116,7 +136,7 @@ pages:
             εάν ενεργοποιηθεί, θα προστατεύσουμε τα σχόλιά σας από ανεπιθύμητα
             μηνύματα
         advanced_enable_advanced:
-          title: ενεργοποιήστε τις σύνθετες ρυθμίσεις
+          title: ενεργοποίηση σύνθετων ρυθμίσεων
           description: >-
             μπορείτε να ενεργοποιήσετε τις σύνθετες ρυθμίσεις για να αλλάξετε
             τις ρυθμίσεις

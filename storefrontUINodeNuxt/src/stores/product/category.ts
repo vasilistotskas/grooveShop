@@ -1,9 +1,9 @@
 import { Category } from '~/zod/product/category'
-import { ProductQuery } from '~/zod/product/product'
-import { Paginated } from '~/zod/pagination/paginated'
+import { ProductsQuery } from '~/zod/products/products'
+import { Pagination } from '~/zod/pagination/pagination'
 
 export interface CategoryState {
-	categories: Paginated<Category>
+	categories: Pagination<Category>
 	category: Category | null
 	loading: boolean
 	error: string | null
@@ -33,10 +33,10 @@ export const useCategoryStore = defineStore({
 		}
 	},
 	actions: {
-		async fetchCategories({ offset, limit, ordering }: ProductQuery): Promise<void> {
+		async fetchCategories({ offset, limit, ordering }: ProductsQuery): Promise<void> {
 			this.loading = true
 			try {
-				const { data: categories } = await useFetch(`/api/product_categories`, {
+				const { data: categories } = await useFetch(`/api/product-categories`, {
 					method: 'get',
 					params: {
 						offset,
@@ -62,7 +62,7 @@ export const useCategoryStore = defineStore({
 			this.category = null
 			this.loading = true
 			try {
-				const { data: category } = await useFetch(`/api/product_category/${categoryId}`, {
+				const { data: category } = await useFetch(`/api/product-category/${categoryId}`, {
 					method: 'get'
 				})
 				if (category.value) {

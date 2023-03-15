@@ -1,4 +1,4 @@
-import ListItem from '~/zod/global/org.schema/ListItem'
+import ListItem from '~/zod/global/org.schema/list-item'
 
 export class BreadcrumbList {
 	'@context': 'https://schema.org'

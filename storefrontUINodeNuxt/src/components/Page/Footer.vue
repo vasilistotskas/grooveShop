@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { AppConfigInput } from '@nuxt/schema'
 import p from './../../package.json'
-const app = useAppConfig() as AppConfigInput
+const config = useRuntimeConfig()
 </script>
 
 <template>
@@ -9,7 +8,9 @@ const app = useAppConfig() as AppConfigInput
 		<section class="max-w-8xl mx-auto px-4 lg:px-8 flex-1 flex w-full space-x-20">
 			<div class="w-full py-4 text-center md:text-left">
 				<div class="mb-1">
-					<span class="text-gray-700 dark:text-gray-200">{{ app.name }}</span>
+					<span class="text-gray-700 dark:text-gray-200">{{
+						config.public.appTitle
+					}}</span>
 				</div>
 				<div>
 					<span class="text-gray-700 dark:text-gray-200">{{
@@ -17,9 +18,9 @@ const app = useAppConfig() as AppConfigInput
 					}}</span>
 					<a
 						class="text-gray-700 dark:text-gray-200"
-						:aria-label="app.author.name"
-						:href="app.author.github_url"
-						>{{ app.author.name }}</a
+						:aria-label="config.public.author.name"
+						:href="config.public.author.github_url"
+						>{{ config.public.author.name }}</a
 					>.
 					<span class="text-gray-700 dark:text-gray-200"
 						>{{ $t('components.page.footer.rights') }}
@@ -30,9 +31,9 @@ const app = useAppConfig() as AppConfigInput
 							{{ $t('components.page.footer.design_by') }}
 							<a
 								class="text-gray-700 dark:text-gray-200"
-								:aria-label="app.author.name"
+								:aria-label="config.public.author.name"
 								href="https://github.com/vasilistotskas"
-								>{{ app.author.name }}</a
+								>{{ config.public.author.name }}</a
 							>
 						</span>
 						<span

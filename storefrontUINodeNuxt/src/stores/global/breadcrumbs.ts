@@ -1,6 +1,6 @@
 import { BreadCrumbsItemObject, BreadCrumbsObject } from '~/zod/global/breadcrumbs'
-import { BreadcrumbList } from '~/zod/global/org.schema/BreadcrumbList'
-import ListItem from '~/zod/global/org.schema/ListItem'
+import { BreadcrumbList } from '~/zod/global/org.schema/breadcrumb-list'
+import ListItem from '~/zod/global/org.schema/list-item'
 
 export interface BreadcrumbsState {
 	breadcrumbs: BreadCrumbsObject

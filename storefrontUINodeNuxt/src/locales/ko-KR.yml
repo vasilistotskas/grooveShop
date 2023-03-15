@@ -2,6 +2,14 @@ components:
   global:
     generic_modal:
       close: 닫다
+    pwa:
+      ready_to_work_offline: 오프라인에서 작업할 준비가 된 앱
+      new_content_available: 새로운 콘텐츠를 사용할 수 있습니다. 새로고침 버튼을 클릭하여 업데이트하세요.
+      reload: 새로고침
+      close: 닫다
+      install_pwa: pwa 설치
+      install: 설치하다
+      cancel: 취소
   page:
     footer:
       copyright: 저작권 © 2022
@@ -43,7 +51,15 @@ components:
     cookies:
       functional: 기능 쿠키
       necessary: 필요한 쿠키
+      necessary_description: >-
+        필수 쿠키는 페이지 탐색 및 웹사이트의 보안 영역에 대한 액세스와 같은 기본 기능을 활성화하여 웹사이트를 사용할 수 있도록
+        도와줍니다. 웹사이트는 이러한 쿠키가 없으면 제대로 작동할 수 없습니다.
       optional: 선택적 쿠키
+      optional_links:
+        privacy_policy: 개인 정보 정책
+      google:
+        analytics: 구글 애널리틱스
+        analytics_description: 쿠키 제어에 사용됩니다.
     decline: 감소
     decline_all: 모두 거절
     here: 여기

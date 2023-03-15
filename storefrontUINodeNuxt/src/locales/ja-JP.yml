@@ -2,6 +2,14 @@ components:
   global:
     generic_modal:
       close: 近い
+    pwa:
+      ready_to_work_offline: オフラインで作業できるアプリ
+      new_content_available: 新しいコンテンツが利用可能です。更新するにはリロード ボタンをクリックしてください。
+      reload: リロード
+      close: 近い
+      install_pwa: pwa をインストールする
+      install: インストール
+      cancel: キャンセル
   page:
     footer:
       copyright: 著作権 © 2022
@@ -43,7 +51,15 @@ components:
     cookies:
       functional: 機能性クッキー
       necessary: 必要なクッキー
+      necessary_description: >-
+        必要な cookie は、ページ ナビゲーションや web サイトの安全な領域へのアクセスなどの基本的な機能を有効にすることで、web
+        サイトを使いやすくします。これらの cookie がないと、web サイトは正しく機能しません。
       optional: オプションのクッキー
+      optional_links:
+        privacy_policy: プライバシーポリシー
+      google:
+        analytics: グーグルアナリティクス
+        analytics_description: cookie 制御に使用されます。
     decline: 却下
     decline_all: すべて辞退
     here: ここ

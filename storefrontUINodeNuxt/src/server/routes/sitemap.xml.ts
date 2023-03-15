@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url'
 import { SitemapAndIndexStream, SitemapStream, streamToPromise } from 'sitemap'
 import { Product } from '~/zod/product/product'
 import { serverQueryContent } from '#content/server'
-import { Paginated } from '~/zod/pagination/paginated'
+import { Pagination } from '~/zod/pagination/pagination'
 
 export default defineEventHandler(async (event) => {
 	const config = useRuntimeConfig()
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
 	const defaultLocale = config.public.i18n.defaultLocale
 
 	const productResponse = await fetch(`${config.public.apiBaseUrl}/product`)
-	const products = (await productResponse.json()) as Paginated<Product>
+	const products = (await productResponse.json()) as Pagination<Product>
 
 	const docs = await serverQueryContent(event).find()
 

@@ -2,6 +2,14 @@ components:
   global:
     generic_modal:
       close: Close
+    pwa:
+      ready_to_work_offline: App ready to work offline
+      new_content_available: New content available, click on reload button to update.
+      reload: Reload
+      close: Close
+      install_pwa: Install PWA
+      install: Install
+      cancel: Cancel
   page:
     footer:
       copyright: Copyright © 2022
@@ -40,7 +48,13 @@ components:
     cookies:
       functional: Functional cookies
       necessary: Necessary cookies
+      necessary_description: Necessary cookies help make a website usable by enabling basic functions like page navigation and access to secure areas of the website. The website cannot function properly without these cookies.
       optional: Optional cookies
+      optional_links:
+        privacy_policy: Privacy Policy
+      google:
+        analytics: Google Analytics
+        analytics_description: Used for cookie control.
     decline: Decline
     decline_all: Decline All
     here: here

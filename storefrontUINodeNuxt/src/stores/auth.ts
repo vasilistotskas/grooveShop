@@ -16,8 +16,12 @@ export const useAuthStore = defineStore({
 	actions: {
 		async initAuth() {
 			try {
-				const auth = await $fetch('/api/auth')
-				this.isAuthenticated = auth.isAuthenticated || false
+				const { data: auth } = await useFetch(`/api/auth`, {
+					method: 'get'
+				})
+				if (auth.value) {
+					this.isAuthenticated = auth.value.isAuthenticated
+				}
 			} catch (error) {
 				if (error instanceof TypeError) {
 					this.error = error.message

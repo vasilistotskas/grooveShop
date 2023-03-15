@@ -1,16 +1,18 @@
 <template>
 	<ClientOnly>
-		<iframe v-if="isCookieFunctionalEnabled" />
-		<div v-else class="cookieControl__BlockedIframe">
-			<p>
-				{{ $t('components.cookie.iframe_blocked') }}
-				<a
-					href="#"
-					@click.prevent="isModalActive = true"
-					v-text="$t('components.cookie.here')"
-				/>
-			</p>
-		</div>
+		<Teleport to="body">
+			<iframe v-if="isCookieFunctionalEnabled" />
+			<div v-else class="cookieControl__BlockedIframe">
+				<p>
+					{{ $t('components.cookie.iframe_blocked') }}
+					<a
+						href="#"
+						@click.prevent="isModalActive = true"
+						v-text="$t('components.cookie.here')"
+					/>
+				</p>
+			</div>
+		</Teleport>
 	</ClientOnly>
 </template>
 

@@ -95,7 +95,7 @@
 															typeof moduleOptions.isIframeBlocked === 'object' &&
 															moduleOptions.isIframeBlocked.initialState)
 													"
-													@change="toogleCookie(cookie)"
+													@change="toggleCookie(cookie)"
 												/>
 												<button @click="toggleButton($event)">
 													{{ getName(cookie.name) }}
@@ -129,7 +129,7 @@
 															:key="entry[0]"
 														>
 															<br />
-															<a :href="entry[0]">{{ entry[1] || entry[0] }}</a>
+															<a :href="entry[0]">{{ resolveLinkEntryText(entry) }}</a>
 														</span>
 													</template>
 												</label>
@@ -236,7 +236,7 @@ const declineAll = () => {
 		cookiesOptionalEnabled: []
 	})
 }
-const toogleCookie = (cookie: Cookie) => {
+const toggleCookie = (cookie: Cookie) => {
 	const cookieIndex = getCookieIds(localCookiesEnabled.value).indexOf(getCookieId(cookie))
 	if (cookieIndex < 0) {
 		localCookiesEnabled.value.push(cookie)
@@ -245,9 +245,15 @@ const toogleCookie = (cookie: Cookie) => {
 	}
 }
 const getDescription = (description: string) =>
-	`${moduleOptions.isDashInDescriptionEnabled === false ? '' : '-'} ${description}`
+	`${moduleOptions.isDashInDescriptionEnabled === false ? '' : '-'} ${t(description)}`
 const getName = (name: string) => {
-	return name === 'functional' ? t('components.cookie.cookies.functional') : name
+	return name === 'functional' ? t('components.cookie.cookies.functional') : t(name)
+}
+const resolveLinkEntryText = (entry: [string, unknown]) => {
+	if (typeof entry[1] === 'string') {
+		return t(entry[1])
+	}
+	return entry[0]
 }
 const init = () => {
 	expires.setTime(expires.getTime() + moduleOptions.cookieExpiryOffsetMs)
