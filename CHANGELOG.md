@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.33.1 (2023-03-15)
+### Fix
+* **Nuxt:** Minor fixes ([`eeda703`](https://github.com/vasilistotskas/grooveShop/commit/eeda703d79492c814572a9bc5877e09d091e5bf1))
+
 ## v0.33.0 (2023-03-15)
 ### Feature
 * **Nuxt:** Cookies prototype init ([`f2f31ba`](https://github.com/vasilistotskas/grooveShop/commit/f2f31ba6b261b62fa03c2ffa8f21c9ef89f76e79))
