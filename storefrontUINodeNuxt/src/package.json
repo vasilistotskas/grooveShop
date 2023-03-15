@@ -1,7 +1,7 @@
 {
 	"name": "nuxt3",
 	"version": "0.2.0",
-	"description": "a DeepWeb starter template or boilerplate with a lot of useful features. Nuxt3 + Tailwindcss 3",
+	"description": "Deep Web Description",
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/vasilistotskas/grooveShop/storefrontUINodeNuxt"

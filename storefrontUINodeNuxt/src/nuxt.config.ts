@@ -1,40 +1,27 @@
-import UnpluginComponentsVite from 'unplugin-vue-components/vite'
-import IconsResolver from 'unplugin-icons/resolver'
+import { i18n } from './config/i18n'
+import { pwa } from './config/pwa'
+import { runtimeConfig } from './config/runtime'
+import { devtools } from './config/devtools'
+import { cookieControl } from './config/cookie'
+import { pinia } from './config/pinia'
+import { vite } from './config/vite'
+import { nitro } from './config/nitro'
+import { app } from './config/app'
+import { image } from './config/image'
+import { eslint } from './config/eslint'
+import { postcss } from './config/postcss'
+import { htmlValidator } from './config/html-validator'
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
 	ssr: true,
-	runtimeConfig: {
-		// The private keys which are only available server-side
-		apiSecret: process.env.NUXT_APP_PRIVATE_API_SECRET,
-		buildDate: new Date().toISOString(),
-
-		// Keys within public are also exposed client-side
-		public: {
-			appTitle: process.env.NUXT_APP_TITLE,
-			appDescription: process.env.NUXT_APP_DESCRIPTION,
-			appImage: process.env.NUXT_APP_IMAGE,
-			domainName: process.env.NUXT_APP_PUBLIC_DOMAIN_NAME,
-			canonicalUrl: process.env.NUXT_APP_PUBLIC_CANONICAL_URL,
-			baseUrl: process.env.NUXT_APP_PUBLIC_BASE_URL,
-			apiBaseUrl: process.env.NUXT_APP_PUBLIC_API_BASE_URL,
-			facebookAppId: process.env.NUXT_APP_PUBLIC_FACEBOOK_APP_ID,
-			i18n: {
-				locales: process.env.NUXT_APP_LOCALES,
-				defaultLocale: process.env.NUXT_APP_DEFAULT_LOCALE
-			},
-			author: {
-				name: process.env.NUXT_APP_PUBLIC_AUTHOR_NAME,
-				github_url: process.env.NUXT_APP_PUBLIC_AUTHOR_GITHUB_URL
-			}
-		}
+	components: true,
+	experimental: {
+		componentIslands: true
 	},
 	typescript: {
 		strict: true,
 		typeCheck: true
-	},
-	devtools: {
-		enabled: true
 	},
 	css: [
 		'~/assets/sass/vendor.scss',
@@ -58,318 +45,20 @@ export default defineNuxtConfig({
 		'@vite-pwa/nuxt',
 		'unplugin-icons/nuxt'
 	],
-	cookieControl: {
-		cookies: {
-			necessary: [
-				{
-					id: 'NEC',
-					description: 'components.cookie.cookies.necessary_description',
-					name: 'components.cookie.cookies.necessary',
-					targetCookieIds: ['NEC']
-				}
-			],
-			optional: [
-				{
-					id: 'op',
-					name: 'components.cookie.cookies.optional',
-					links: {
-						'https://example.com':
-							'components.cookie.cookies.optional_links.privacy_policy',
-						'https://example.cop': null
-					},
-					targetCookieIds: ['_o', '_p', '_t']
-				},
-				{
-					id: 'functional',
-					name: 'functional',
-					description: 'functional',
-					targetCookieIds: ['functional']
-				},
-				{
-					id: 'ga',
-					name: 'components.cookie.cookies.google.analytics',
-					description: 'components.cookie.cookies.google.analytics_description',
-					src: `https://www.googletagmanager.com/gtag/js?id=${process.env.NUXT_APP_PUBLIC_GOOGLE_TAG_ID}`,
-					targetCookieIds: ['_ga', '_gat', '_gid']
-				}
-			]
-		}
-	},
-	pinia: {
-		autoImports: [
-			// automatically imports `defineStore`
-			'defineStore', // import { defineStore } from 'pinia'
-			['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia',
-			'storeToRefs' // import { storeToRefs } from 'pinia'
-		]
-	},
-	experimental: {
-		componentIslands: true
-	},
-	components: true,
-	vite: {
-		plugins: [
-			UnpluginComponentsVite({
-				dts: true,
-				resolvers: [
-					IconsResolver({
-						prefix: 'Icon'
-					})
-				]
-			})
-		],
-		server: {
-			hmr: {
-				protocol: process.env.NODE_ENV === 'production' ? 'wss' : 'ws',
-				clientPort: 24678,
-				path: 'hmr/'
-			},
-			watch: {
-				usePolling: false // process.env.NODE_ENV !== 'production'
-			}
-		}
-	},
-	nitro: {
-		compressPublicAssets: true,
-		prerender: {
-			crawlLinks: true,
-			ignore: [],
-			routes: ['/', '/sitemap.xml']
-		}
-	},
-	eslint: {
-		/* module options */
-	},
-	app: {
-		head: {
-			charset: 'utf-8',
-			viewport: 'width=device-width, initial-scale=1',
-			meta: [
-				{ name: 'robots', content: 'index, follow' },
-				{ name: 'theme-color', content: '#ffffff' },
-				{ name: 'msapplication-TileColor', content: '#ffffff' },
-				{ name: 'msapplication-config', content: '/assets/favicon/browserconfig.xml' },
-				{
-					name: 'google-site-verification',
-					content: process.env.NUXT_APP_GOOGLE_SITE_VERIFICATION
-				}
-			],
-			link: [
-				{
-					rel: 'manifest',
-					href: '/manifest.webmanifest'
-				},
-				{
-					rel: 'shortcut icon',
-					type: 'image/x-icon',
-					href: '/assets/favicon/favicon.ico'
-				},
-				{
-					rel: 'apple-touch-icon',
-					sizes: '180x180',
-					href: '/assets/favicon/apple-touch-icon.png'
-				},
-				{
-					rel: 'icon',
-					type: 'image/png',
-					sizes: '32x32',
-					href: '/assets/favicon/favicon-32x32.png'
-				},
-				{
-					rel: 'icon',
-					type: 'image/png',
-					sizes: '16x16',
-					href: '/assets/favicon/favicon-16x16.png'
-				},
-				{
-					rel: 'mask-icon',
-					href: '/assets/favicon/safari-pinned-tab.svg',
-					color: '#5bbad5'
-				}
-			]
-		}
-		// pageTransition: {
-		// 	name: 'page',
-		// 	mode: 'out-in' // default
-		// },
-		// layoutTransition: {
-		// 	name: 'layout',
-		// 	mode: 'out-in' // default
-		// }
-	},
 	robots: {
 		configPath: '~/config/robots.config'
 	},
-	image: {
-		screens: {
-			xs: 320,
-			sm: 640,
-			md: 768,
-			lg: 1024,
-			xl: 1280,
-			xxl: 1536,
-			'2xl': 1536
-		},
-		presets: {
-			productCard: {
-				modifiers: {
-					format: 'webp',
-					width: 250,
-					height: 230,
-					fit: 'cover',
-					loading: 'lazy',
-					background: 'transparent'
-				}
-			}
-		}
-	},
-	i18n: {
-		strategy: 'prefix_except_default',
-		lazy: true,
-		defaultLocale: process.env.NUXT_APP_DEFAULT_LOCALE,
-		debug: process.env.NODE_ENV !== 'production',
-		langDir: 'locales/',
-		baseUrl: process.env.NUXT_APP_PUBLIC_BASE_URL || 'http://localhost:3000',
-		detectBrowserLanguage: {
-			useCookie: true,
-			redirectOn: 'root',
-			cookieKey: 'i18n_redirected',
-			alwaysRedirect: true
-		},
-		locales: [
-			{
-				code: 'en',
-				name: 'English',
-				file: 'en-US.yml',
-				iso: 'en-US',
-				flag: '🇺🇸'
-			},
-			{
-				code: 'de',
-				name: 'Deutsch',
-				file: 'de-DE.yml',
-				iso: 'de-DE',
-				flag: '🇩🇪'
-			},
-			{
-				code: 'el',
-				name: 'Ελληνικά',
-				file: 'el-GR.yml',
-				iso: 'el-GR',
-				flag: '🇬🇷'
-			},
-			{
-				code: 'id',
-				name: 'Bahasa',
-				file: 'id-ID.yml',
-				iso: 'id-ID',
-				flag: '🇮🇩'
-			},
-			{
-				code: 'ja',
-				name: '日本語',
-				file: 'ja-JP.yml',
-				iso: 'ja-JP',
-				flag: '🇯🇵'
-			},
-			{
-				code: 'ko',
-				name: '한국어',
-				file: 'ko-KR.yml',
-				iso: 'ko-KR',
-				flag: '🇰🇷'
-			},
-			{
-				code: 'zh',
-				name: '简体中文',
-				file: 'zh-CN.yml',
-				iso: 'zh-CN',
-				flag: '🇨🇳'
-			}
-		],
-		vueI18n: {
-			legacy: false,
-			availableLocales: process.env.NUXT_APP_AVAILABLE_LOCALES?.split(','),
-			locale: process.env.NUXT_APP_DEFAULT_LOCALE,
-			fallbackLocale: process.env.NUXT_APP_DEFAULT_LOCALE
-		}
-	},
-	postcss: {
-		plugins: {
-			tailwindcss: {},
-			autoprefixer: {}
-		}
-	},
-	appConfig: {
-		// you don't need to include this: only for testing purposes
-		buildDate: new Date().toISOString()
-	},
-	pwa: {
-		registerType: 'autoUpdate',
-		manifest: {
-			name: process.env.NUXT_APP_TITLE,
-			short_name: process.env.NUXT_APP_TITLE,
-			description: process.env.NUXT_APP_DESCRIPTION,
-			theme_color: '#ffffff',
-			background_color: '#ffffff',
-			display: 'standalone',
-			orientation: 'portrait',
-			icons: [
-				{
-					src: '/assets/favicon/android-icon-144x144.png',
-					sizes: '144x144',
-					type: 'image/png',
-					purpose: 'maskable'
-				},
-				{
-					src: '/assets/favicon/android-icon-192x192.png',
-					sizes: '192x192',
-					type: 'image/png',
-					purpose: 'maskable'
-				},
-				{
-					src: '/assets/favicon/android-icon-512x512.png',
-					sizes: '512x512',
-					type: 'image/png',
-					purpose: 'maskable'
-				},
-				{
-					src: '/assets/favicon/android-icon-144x144.png',
-					sizes: '144x144',
-					type: 'image/png',
-					purpose: 'any'
-				},
-				{
-					src: '/assets/favicon/android-icon-192x192.png',
-					sizes: '192x192',
-					type: 'image/png',
-					purpose: 'any'
-				},
-				{
-					src: '/assets/favicon/android-icon-512x512.png',
-					sizes: '512x512',
-					type: 'image/png',
-					purpose: 'any'
-				}
-			]
-		},
-		workbox: {
-			navigateFallback: '/',
-			globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
-			sourcemap: true
-		},
-		client: {
-			installPrompt: true,
-			// you don't need to include this: only for testing purposes
-			// if enabling periodic sync for update use 1 hour or so (periodicSyncForUpdates: 3600)
-			periodicSyncForUpdates: 3600
-		},
-		devOptions: {
-			enabled: false, // process.env.NODE_ENV !== 'production',
-			type: 'module'
-		}
-	},
-	htmlValidator: {
-		usePrettier: true
-	}
+	eslint,
+	runtimeConfig,
+	devtools,
+	cookieControl,
+	pinia,
+	vite,
+	nitro,
+	app,
+	image,
+	i18n,
+	postcss,
+	pwa,
+	htmlValidator
 })
