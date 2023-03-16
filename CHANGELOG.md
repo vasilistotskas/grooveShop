@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.34.0 (2023-03-16)
+### Feature
+* **Nuxt:** Implemented media stream provider ([`3220fc0`](https://github.com/vasilistotskas/grooveShop/commit/3220fc0a94265104afbe69de0a8ef3dcaab922ea))
+* **MediaStream:** Support background color ([`92f8c53`](https://github.com/vasilistotskas/grooveShop/commit/92f8c53bc168d241062170652ffd6f7d122b8532))
+
 ## v0.33.1 (2023-03-15)
 ### Fix
 * **Nuxt:** Minor fixes ([`eeda703`](https://github.com/vasilistotskas/grooveShop/commit/eeda703d79492c814572a9bc5877e09d091e5bf1))
