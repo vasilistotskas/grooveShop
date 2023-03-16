@@ -5,7 +5,12 @@ import { Controller, Get, Param, Res, Scope } from '@nestjs/common'
 import ResourceMetaData from '../../DTO/ResourceMetaData'
 import { IMAGE, VERSION } from '../Constant/RoutePrefixes'
 import CacheImageResourceOperation from '../../Operation/CacheImageResourceOperation'
-import CacheImageRequest, { FitOptions, ResizeOptions, PositionOptions } from '../../API/DTO/CacheImageRequest'
+import CacheImageRequest, {
+	FitOptions,
+	ResizeOptions,
+	PositionOptions,
+	BackgroundOptions
+} from "../../API/DTO/CacheImageRequest";
 import GenerateResourceIdentityFromRequestJob from '../../Job/GenerateResourceIdentityFromRequestJob'
 
 @Controller({
@@ -31,7 +36,7 @@ export default class MediaStreamImageRESTController {
 	}
 
 	// px http://localhost:3003/media_stream-image/media/uploads/products/charger2/500/500
-	@Get('media/uploads/:imageType/:imageName/:width?/:height?/:fit?/:position?/:trimThreshold?/:format?')
+	@Get('media/uploads/:imageType/:imageName/:width?/:height?/:fit?/:position?/:background?/:trimThreshold?/:format?')
 	public async uploadedImage(
 		@Param('imageType') imageType: string,
 		@Param('imageName') imageName: any,
@@ -39,24 +44,28 @@ export default class MediaStreamImageRESTController {
 		@Param('height') height: number = null,
 		@Param('fit') fit: FitOptions = FitOptions.contain,
 		@Param('position') position = PositionOptions.entropy,
+		@Param('background') background = BackgroundOptions.transparent,
 		@Param('trimThreshold') trimThreshold = 5,
 		@Param('format') format: 'jpg'|'jpeg'|'png'|'webp' = 'jpg',
 		@Res() res: Response
 	): Promise<void> {
-		const request = new CacheImageRequest({
-			resourceTarget: `http://backend:8001/backend/media/uploads/${imageType}/${imageName}.${format}`,
-			resizeOptions: new ResizeOptions({
+		const resizeOptions = new ResizeOptions({
 				width,
 				height,
 				position,
+				background,
 				fit,
 				trimThreshold
 			})
+
+		const request = new CacheImageRequest({
+			resourceTarget: MediaStreamImageRESTController.resourceTargetPrepare(`http://backend:8001/backend/media/uploads/${imageType}/${imageName}.${format}`),
+			resizeOptions: resizeOptions
 		})
 		await this.streamRequestedResource(request, res)
 	}
 
-	@Get('static/images/:imageName/:width?/:height?/:fit?/:position?/:trimThreshold?/:format?')
+	@Get('static/images/:imageName/:width?/:height?/:fit?/:position?/:background?/:trimThreshold?/:format?')
 	public async staticImage(
 		@Param('imageType') imageType: string,
 		@Param('imageName') imageName: string,
@@ -64,6 +73,7 @@ export default class MediaStreamImageRESTController {
 		@Param('height') height: number = null,
 		@Param('fit') fit: FitOptions = FitOptions.contain,
 		@Param('position') position = PositionOptions.entropy,
+		@Param('background') background = BackgroundOptions.transparent,
 		@Param('trimThreshold') trimThreshold = 5,
 		@Param('format') format: 'jpg'|'jpeg'|'png'|'webp' = 'jpg',
 		@Res() res: Response
@@ -74,6 +84,7 @@ export default class MediaStreamImageRESTController {
 				width,
 				height,
 				position,
+				background,
 				fit,
 				trimThreshold
 			})
@@ -98,10 +109,15 @@ export default class MediaStreamImageRESTController {
 				await this.cacheImageResourceOperation.execute()
 			}
 		} else {
-			await this.cacheImageResourceOperation.execute()
-			const headers = await this.cacheImageResourceOperation.getHeaders
-			res = MediaStreamImageRESTController.addHeadersToRequest(res, headers)
-			createReadStream(this.cacheImageResourceOperation.getResourcePath).pipe(res)
+
+			try {
+				await this.cacheImageResourceOperation.execute()
+				const headers = await this.cacheImageResourceOperation.getHeaders
+				res = MediaStreamImageRESTController.addHeadersToRequest(res, headers)
+				createReadStream(this.cacheImageResourceOperation.getResourcePath).pipe(res)
+			} catch (e) {
+				res.status(404).send()
+			}
 		}
 	}
 
