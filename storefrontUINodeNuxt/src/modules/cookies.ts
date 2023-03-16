@@ -22,7 +22,7 @@ export default defineNuxtModule<ModuleOptions>({
 		compatibility: { nuxt: '^3.0.0' }
 	},
 	defaults: DEFAULTS,
-  // eslint-disable-next-line require-await
+	// eslint-disable-next-line require-await
 	async setup(moduleOptions, nuxt) {
 		nuxt.options.alias['#cookie-control/set-vars'] = moduleOptions.isCssPonyfillEnabled
 			? resolve(runtimeDir, 'set-vars/ponyfill')

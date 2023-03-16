@@ -6,6 +6,15 @@ const { contentShorten } = useText()
 const props = defineProps({
 	product: { type: Object as PropType<Product>, required: true, default: null }
 })
+
+const imageFilename = computed(() => {
+	if (!props.product?.mainImageFilename) return undefined
+	return props.product.mainImageFilename.split('.').slice(0, -1).join('.')
+})
+const resolveImageFileExtension = computed(() => {
+	if (!props.product?.mainImageFilename) return undefined
+	return props.product.mainImageFilename.split('.').pop()
+})
 </script>
 
 <template>
@@ -26,18 +35,22 @@ const props = defineProps({
 									<nuxt-img
 										preload
 										placeholder
-										preset="productCard"
-										class="product_img"
-										format="webp"
-										fit="contain"
 										loading="lazy"
-										background="#fff"
-										sizes="sm:100vw md:50vw lg:250px"
-										quality="80"
-										:src="product?.mainImageAbsoluteUrl || '/images/placeholder.png'"
-										:alt="product?.name"
+										provider="mediaStream"
+										class="product_img"
 										:width="250"
 										:height="230"
+										:fit="'contain'"
+										:position="'entropy'"
+										:background="'transparent'"
+										:trim-threshold="5"
+										:format="resolveImageFileExtension"
+										sizes="sm:100vw md:50vw lg:250px"
+										:src="
+											`media/uploads/products/${imageFilename}` ||
+											'/images/placeholder.png'
+										"
+										:alt="product?.name"
 									/>
 								</div>
 							</div>

@@ -1,5 +1,14 @@
 import { ModuleOptions as ImageModuleOptions } from '@nuxt/image-edge'
 export const image: Partial<ImageModuleOptions> = {
+	providers: {
+		mediaStream: {
+			name: 'mediaStream', // optional value to overrider provider name
+			provider: '~/providers/media-stream', // Path to custom provider
+			options: {
+				background: 'transparent'
+			}
+		}
+	},
 	screens: {
 		xs: 320,
 		sm: 640,
@@ -8,17 +17,5 @@ export const image: Partial<ImageModuleOptions> = {
 		xl: 1280,
 		xxl: 1536,
 		'2xl': 1536
-	},
-	presets: {
-		productCard: {
-			modifiers: {
-				format: 'webp',
-				width: 250,
-				height: 230,
-				fit: 'cover',
-				loading: 'lazy',
-				background: 'transparent'
-			}
-		}
 	}
 }

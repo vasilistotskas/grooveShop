@@ -95,7 +95,16 @@ const toggleOptions = (show?: boolean) => {
 									class="mr-3 flex-none overflow-hidden md:w-auto text-md font-bold text-gray-700 dark:text-gray-200 flex items-center"
 									:to="localePath('index')"
 								>
-									{{ config.public.appTitle }}
+									<nuxt-img
+										preload
+										loading="lazy"
+										class="rounded-full"
+										:src="`${config.public.mediaStreamUrl}/static/images/websiteLogo/275/100`"
+										alt="Avatar of Jonathan Reinink"
+										sizes="sm:75vw md:125vw lg:275px"
+										format="webp"
+									/>
+									<span class="hidden">{{ config.public.appTitle }}</span>
 								</NuxtLink>
 							</strong>
 						</h1>

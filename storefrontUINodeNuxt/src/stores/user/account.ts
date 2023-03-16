@@ -20,13 +20,15 @@ export const useAccountStore = defineStore({
 	},
 	actions: {
 		async fetchAccount() {
-			const config = useRuntimeConfig()
 			this.account = null
 			this.loading = true
 			try {
-				this.account = await fetch(
-					`${config.public.apiBaseUrl}/user/account/session`
-				).then((response) => response.json())
+				const { data: account } = await useFetch(`/api/user_account_session`, {
+					method: 'get'
+				})
+				if (account.value) {
+					this.account = account.value
+				}
 			} catch (error) {
 				if (error instanceof TypeError) {
 					this.error = error.message

@@ -13,6 +13,7 @@ export const runtimeConfig = {
 		baseUrl: process.env.NUXT_APP_PUBLIC_BASE_URL,
 		apiBaseUrl: process.env.NUXT_APP_PUBLIC_API_BASE_URL,
 		facebookAppId: process.env.NUXT_APP_PUBLIC_FACEBOOK_APP_ID,
+		mediaStreamUrl: process.env.NUXT_APP_PUBLIC_MEDIA_STREAM_URL,
 		i18n: {
 			locales: process.env.NUXT_APP_LOCALES,
 			defaultLocale: process.env.NUXT_APP_DEFAULT_LOCALE

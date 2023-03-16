@@ -38,3 +38,7 @@ export const ZodCreateRequest = z.object({
 })
 
 export type CreateRequest = Readonly<z.infer<typeof ZodCreateRequest>>
+
+export const ZodParams = z.object({
+	id: z.string()
+})
