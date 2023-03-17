@@ -3,7 +3,7 @@ import { ProductsQuery } from '~/zod/products/products'
 import { Pagination } from '~/zod/pagination/pagination'
 
 export interface CategoryState {
-	categories: Pagination<Category>
+	categories: Pagination<Category> | null
 	category: Category | null
 	loading: boolean
 	error: string | null
@@ -29,7 +29,7 @@ export const useCategoryStore = defineStore({
 	}),
 	getters: {
 		getCategoryById: (state) => (id: number) => {
-			return state.categories.results?.find((category) => category.id === id)
+			return state.categories?.results?.find((category) => category.id === id)
 		}
 	},
 	actions: {
@@ -59,7 +59,6 @@ export const useCategoryStore = defineStore({
 			}
 		},
 		async fetchCategory(categoryId: string | string[]): Promise<void> {
-			this.category = null
 			this.loading = true
 			try {
 				const { data: category } = await useFetch(`/api/product-category/${categoryId}`, {

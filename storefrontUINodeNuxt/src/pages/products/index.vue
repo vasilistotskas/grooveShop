@@ -29,6 +29,8 @@ const pageSize = computed(() => products.value.pageSize)
 const currentPage = computed(() => products.value.page)
 
 const offset = computed(() => {
+	if (!currentPage.value) return 0
+	if (!pageSize.value) return 0
 	return (currentPage.value - 1) * pageSize.value
 })
 const limit = computed(() => {

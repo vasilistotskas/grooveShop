@@ -3,7 +3,7 @@ import { ZodCartItem } from '~/zod/cart/cart-item'
 
 export const ZodCart = z.object({
 	id: z.number(),
-	user: z.number(),
+	user: z.number().nullable(),
 	totalPrice: z.number(),
 	totalDiscountValue: z.number(),
 	totalVatValue: z.number(),

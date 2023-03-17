@@ -1,7 +1,26 @@
 <script lang="ts" setup>
+const { t } = useLang()
+
 definePageMeta({
 	layout: 'testing',
 	middleware: ['breadcrumbs']
+})
+useHead(() => ({
+	title: t('pages.testing.index.title'),
+	meta: [
+		{
+			name: 'description',
+			content: t('pages.testing.index.description')
+		},
+		{
+			name: 'keywords',
+			content: t('pages.testing.index.keywords')
+		}
+	]
+}))
+useServerSeoMeta({
+	title: t('pages.testing.index.title'),
+	description: t('pages.testing.index.description')
 })
 </script>
 

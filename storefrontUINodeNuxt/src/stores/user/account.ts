@@ -20,7 +20,6 @@ export const useAccountStore = defineStore({
 	},
 	actions: {
 		async fetchAccount() {
-			this.account = null
 			this.loading = true
 			try {
 				const { data: account } = await useFetch(`/api/user_account_session`, {

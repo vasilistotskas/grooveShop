@@ -1,10 +1,11 @@
 import { dirname } from 'path'
 import { defineNuxtModule, createResolver } from '@nuxt/kit'
+import { version } from '../package.json'
 
 export default defineNuxtModule({
 	meta: {
 		name: '@groove/nuxt-sitemap',
-		version: '0.0.1',
+		version,
 		configKey: 'sitemap',
 		compatibility: { nuxt: '^3.2.3' }
 	},

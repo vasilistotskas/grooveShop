@@ -1,15 +1,14 @@
 import { H3Event } from 'h3'
-import { ZodCategory } from '~/zod/product/category'
-import { ZodPagination } from '~/zod/pagination/pagination'
 import { parseDataAs } from '~/zod/parser'
+import { ZodCart } from '~/zod/cart/cart'
 
 export default defineEventHandler(async (event: H3Event) => {
 	const config = useRuntimeConfig()
 	const cookie = event.node.req.headers.cookie
-	const response = await fetch(`${config.public.apiBaseUrl}/category/`, {
+	const response = await fetch(`${config.public.apiBaseUrl}/cart`, {
 		headers: {
 			Cookie: cookie || ''
 		}
 	})
-	return await parseDataAs(response.json(), ZodPagination(ZodCategory))
+	return await parseDataAs(response.json(), ZodCart)
 })

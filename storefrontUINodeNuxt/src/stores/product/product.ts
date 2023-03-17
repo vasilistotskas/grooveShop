@@ -64,7 +64,6 @@ export const useProductStore = defineStore({
 			}
 		},
 		async fetchProduct(productId: string | string[]): Promise<void> {
-			this.product = null
 			this.loading = true
 			try {
 				const { data: product } = await useFetch(`/api/product/${productId}`, {
@@ -79,12 +78,12 @@ export const useProductStore = defineStore({
 				this.loading = false
 			}
 		},
-		async createProduct(product: CreateRequest): Promise<void> {
+		async createProduct(body: CreateRequest): Promise<void> {
 			this.loading = true
 			try {
 				const { data: newProduct } = await useFetch(`/api/products`, {
 					method: 'post',
-					body: JSON.stringify(product)
+					body: JSON.stringify(body)
 				})
 				if (newProduct.value) {
 					this.products.results.push(newProduct.value)

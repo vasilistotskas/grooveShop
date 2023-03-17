@@ -22,14 +22,16 @@ class CartService(object):
         except KeyError:
             pre_log_in_cart_id = None
 
+        print(
+            "===== request.user.is_authenticated =====", request.user.is_authenticated
+        )
         if request.user.is_authenticated and pre_log_in_cart_id:
             print("user is authenticated and cart_id is in session")
             try:
-                self.cart = Cart.objects.get(id=request.session["pre_log_in_cart_id"])
+                self.cart = Cart.objects.get(id=int(pre_log_in_cart_id))
                 request.session["pre_log_in_cart_id"] = self.cart.id
             except Cart.DoesNotExist:
-                self.cart = Cart.objects.get(id=request.session["pre_log_in_cart_id"])
-                self.cart.user = request.user
+                self.cart = Cart(user=request.user)
                 self.cart.save()
                 request.session["pre_log_in_cart_id"] = self.cart.id
         elif request.user.is_authenticated:
@@ -44,7 +46,7 @@ class CartService(object):
         elif pre_log_in_cart_id:
             print("cart_id is in session")
             try:
-                self.cart = Cart.objects.get(id=request.session["pre_log_in_cart_id"])
+                self.cart = Cart.objects.get(id=int(pre_log_in_cart_id))
                 request.session["pre_log_in_cart_id"] = self.cart.id
             except Cart.DoesNotExist:
                 self.cart = Cart()

@@ -8,7 +8,12 @@ import { ZodProductsQuery } from '~/zod/products/products'
 export default defineEventHandler(async (event: H3Event) => {
 	const config = useRuntimeConfig()
 	const query = parseQueryAs(event, ZodProductsQuery)
+	const cookie = event.node.req.headers.cookie
 	const url = buildFullUrl(`${config.public.apiBaseUrl}/product/`, query)
-	const response = await fetch(url)
+	const response = await fetch(url, {
+		headers: {
+			Cookie: cookie || ''
+		}
+	})
 	return await parseDataAs(response.json(), ZodPagination(ZodProduct))
 })

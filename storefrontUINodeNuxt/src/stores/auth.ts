@@ -1,11 +1,13 @@
 export interface AuthState {
 	isAuthenticated: boolean
+	loading: boolean
 	error: string | null
 }
 export const useAuthStore = defineStore({
 	id: 'auth',
 	state: (): AuthState => ({
 		isAuthenticated: false,
+		loading: false,
 		error: null as string | null
 	}),
 	getters: {
@@ -15,6 +17,7 @@ export const useAuthStore = defineStore({
 	},
 	actions: {
 		async initAuth() {
+			this.loading = true
 			try {
 				const { data: auth } = await useFetch(`/api/auth`, {
 					method: 'get'
@@ -29,6 +32,8 @@ export const useAuthStore = defineStore({
 				if (error instanceof Error) {
 					this.error = error.message
 				}
+			} finally {
+				this.loading = false
 			}
 		}
 	}

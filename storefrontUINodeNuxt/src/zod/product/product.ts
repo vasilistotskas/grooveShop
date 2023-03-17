@@ -56,3 +56,5 @@ export type CreateRequest = z.infer<typeof ZodCreateRequest>
 export const ZodParams = z.object({
 	id: z.string()
 })
+
+export type Params = z.infer<typeof ZodParams>
