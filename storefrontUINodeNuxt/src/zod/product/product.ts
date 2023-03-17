@@ -1,35 +1,35 @@
 import { z } from 'zod'
 
 export const ZodProduct = z.object({
-	id: z.number().int().nonnegative(),
+	id: z.number().int(),
 	name: z.string().max(255),
 	slug: z.string().max(50),
-	category: z.number().int().nonnegative(),
+	category: z.number().int(),
 	absoluteUrl: z.string(),
 	description: z.string().nullable(),
 	price: z.number(),
-	vat: z.number().nonnegative(),
-	vatPercent: z.number().nonnegative(),
-	vatValue: z.number().nonnegative(),
-	finalPrice: z.number().nonnegative(),
-	hits: z.number().int().nonnegative(),
-	likesCounter: z.number().int().nonnegative(),
-	stock: z.number().int().nonnegative(),
+	vat: z.number(),
+	vatPercent: z.number(),
+	vatValue: z.number(),
+	finalPrice: z.number(),
+	hits: z.number().int(),
+	likesCounter: z.number().int(),
+	stock: z.number().int(),
 	active: z.boolean(),
-	weight: z.number().nonnegative(),
+	weight: z.number(),
 	seoTitle: z.string().max(70).nullable(),
 	seoDescription: z.string().max(300).nullable(),
 	seoKeywords: z.string().max(255).nullable(),
 	uuid: z.string().uuid(),
-	discountPercent: z.number().nonnegative(),
-	discountValue: z.number().nonnegative(),
-	priceSavePercent: z.number().nonnegative(),
+	discountPercent: z.number(),
+	discountValue: z.number(),
+	priceSavePercent: z.number(),
 	createdAt: z.string().datetime({ offset: true }),
 	updatedAt: z.string().datetime({ offset: true }),
 	mainImageAbsoluteUrl: z.string(),
 	mainImageFilename: z.string(),
-	reviewAverage: z.number().nonnegative(),
-	reviewCounter: z.number().int().nonnegative()
+	reviewAverage: z.number(),
+	reviewCounter: z.number().int()
 })
 
 export type Product = Readonly<z.infer<typeof ZodProduct>>
@@ -37,18 +37,18 @@ export type Product = Readonly<z.infer<typeof ZodProduct>>
 export const ZodCreateRequest = z.object({
 	name: z.string(),
 	slug: z.string(),
-	category: z.number().int().nonnegative(),
+	category: z.number().int(),
 	description: z.string().optional(),
 	price: z.number(),
 	vat: z.number(),
-	hits: z.number().int().nonnegative().optional(),
-	stock: z.number().int().nonnegative().optional(),
+	hits: z.number().int().optional(),
+	stock: z.number().int().optional(),
 	active: z.boolean().optional(),
-	weight: z.number().nonnegative().optional(),
+	weight: z.number().optional(),
 	seoTitle: z.string().optional(),
 	seoDescription: z.string().optional(),
 	seoKeywords: z.string().optional(),
-	discountPercent: z.number().nonnegative().optional()
+	discountPercent: z.number().optional()
 })
 
 export type CreateRequest = z.infer<typeof ZodCreateRequest>
