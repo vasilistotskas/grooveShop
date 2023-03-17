@@ -8,7 +8,7 @@ class CartItemSerializer(serializers.ModelSerializer):
     cart = serializers.SerializerMethodField("get_cart_id")
 
     @extend_schema_field(serializers.IntegerField)
-    def get_cart_id(self) -> int:
+    def get_cart_id(self, cart_item) -> int:
         cart = self.context.get("cart")
         return cart.id
 

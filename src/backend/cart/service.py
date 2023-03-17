@@ -17,33 +17,44 @@ class CartService(object):
     total_cost_with_tax: float
 
     def __init__(self, request: HttpRequest):
-        if request.user.is_authenticated and "cart_id" in request.session:
+        try:
+            pre_log_in_cart_id = request.session["pre_log_in_cart_id"]
+        except KeyError:
+            pre_log_in_cart_id = None
+
+        if request.user.is_authenticated and pre_log_in_cart_id:
+            print("user is authenticated and cart_id is in session")
             try:
-                self.cart = Cart.objects.get(id=request.session["cart_id"])
-                request.session.pop("cart_id")
+                self.cart = Cart.objects.get(id=request.session["pre_log_in_cart_id"])
+                request.session["pre_log_in_cart_id"] = self.cart.id
             except Cart.DoesNotExist:
-                self.cart = Cart.objects.get(id=request.session["cart_id"])
+                self.cart = Cart.objects.get(id=request.session["pre_log_in_cart_id"])
                 self.cart.user = request.user
                 self.cart.save()
-                request.session.pop("cart_id")
+                request.session["pre_log_in_cart_id"] = self.cart.id
         elif request.user.is_authenticated:
+            print("user is authenticated")
             try:
                 self.cart = Cart.objects.get(user=request.user)
+                request.session["pre_log_in_cart_id"] = self.cart.id
             except Cart.DoesNotExist:
                 self.cart = Cart(user=request.user)
                 self.cart.save()
-        elif "cart_id" in request.session:
+                request.session["pre_log_in_cart_id"] = self.cart.id
+        elif pre_log_in_cart_id:
+            print("cart_id is in session")
             try:
-                self.cart = Cart.objects.get(id=request.session["cart_id"])
+                self.cart = Cart.objects.get(id=request.session["pre_log_in_cart_id"])
+                request.session["pre_log_in_cart_id"] = self.cart.id
             except Cart.DoesNotExist:
-                request.session.pop("cart_id")
                 self.cart = Cart()
                 self.cart.save()
-                request.session["cart_id"] = self.cart.id
+                request.session["pre_log_in_cart_id"] = self.cart.id
         else:
+            print("no cart_id in session")
             self.cart = Cart()
             self.cart.save()
-            request.session["cart_id"] = self.cart.id
+            request.session["pre_log_in_cart_id"] = self.cart.id
 
         self.load_items()
 

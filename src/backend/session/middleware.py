@@ -34,9 +34,12 @@ class SessionTraceMiddleware:
         else:
             request.session["user"] = None
 
-        if hasattr(request, "session") and not hasattr(
-            request.session, "pre_log_in_cart_id"
-        ):
+        try:
+            pre_log_in_cart_id = request.session["pre_log_in_cart_id"]
+        except KeyError:
+            pre_log_in_cart_id = None
+
+        if not pre_log_in_cart_id:
             cart_service = CartService(request)
             pre_log_in_cart_id = cart_service.cart.id
             request.session["pre_log_in_cart_id"] = pre_log_in_cart_id
