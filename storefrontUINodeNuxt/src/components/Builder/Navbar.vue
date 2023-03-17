@@ -97,12 +97,20 @@ const toggleOptions = (show?: boolean) => {
 								>
 									<nuxt-img
 										preload
+										placeholder
 										loading="lazy"
+										provider="mediaStream"
 										class="rounded-full"
-										:src="`${config.public.mediaStreamUrl}/static/images/websiteLogo/275/100`"
-										alt="Avatar of Jonathan Reinink"
+										:src="`static/images/websiteLogo`"
+										:width="150"
+										:height="42"
+										:fit="'contain'"
+										:position="'entropy'"
+										:background="'transparent'"
+										:trim-threshold="5"
+										:format="'png'"
 										sizes="sm:75vw md:125vw lg:275px"
-										format="webp"
+										alt="Avatar of Jonathan Reinink"
 									/>
 									<span class="hidden">{{ config.public.appTitle }}</span>
 								</NuxtLink>

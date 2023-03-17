@@ -56,12 +56,20 @@ const menus = computed((): IMenuItem[] => [
 				<div class="flex items-center justify-center">
 					<nuxt-img
 						preload
+						placeholder
 						loading="lazy"
+						provider="mediaStream"
 						class="rounded-full"
-						src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+						:src="`static/images/websiteLogo`"
+						:width="150"
+						:height="42"
+						:fit="'contain'"
+						:position="'entropy'"
+						:background="'transparent'"
+						:trim-threshold="5"
+						:format="'png'"
+						sizes="sm:75vw md:125vw lg:275px"
 						alt="Avatar of Jonathan Reinink"
-						sizes="sm:100vw md:50vw lg:32px"
-						format="webp"
 						@load="consoleLogImageLoaded"
 					/>
 					<span class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-200"
