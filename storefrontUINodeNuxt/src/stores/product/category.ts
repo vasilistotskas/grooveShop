@@ -5,8 +5,8 @@ import { Pagination } from '~/zod/pagination/pagination'
 export interface CategoryState {
 	categories: Pagination<Category> | null
 	category: Category | null
-	loading: boolean
-	error: string | null
+	pending: boolean
+	error: string | undefined
 }
 
 export const useCategoryStore = defineStore({
@@ -24,8 +24,8 @@ export const useCategoryStore = defineStore({
 			results: []
 		},
 		category: null as Category | null,
-		loading: false,
-		error: null as string | null
+		pending: false,
+		error: undefined as string | undefined
 	}),
 	getters: {
 		getCategoryById: (state) => (id: number) => {
@@ -34,48 +34,44 @@ export const useCategoryStore = defineStore({
 	},
 	actions: {
 		async fetchCategories({ offset, limit, ordering }: ProductsQuery): Promise<void> {
-			this.loading = true
-			try {
-				const { data: categories } = await useFetch(`/api/product-categories`, {
-					method: 'get',
-					params: {
-						offset,
-						limit,
-						ordering
-					}
-				})
-				if (categories.value) {
-					this.categories = categories.value
+			const {
+				data: categories,
+				error,
+				pending
+			} = await useFetch(`/api/product-categories`, {
+				method: 'get',
+				params: {
+					offset,
+					limit,
+					ordering
 				}
-			} catch (error) {
-				if (error instanceof TypeError) {
-					this.error = error.message
-				}
-				if (error instanceof Error) {
-					this.error = error.message
-				}
-			} finally {
-				this.loading = false
+			})
+			if (pending) {
+				this.pending = true
+			}
+			if (error) {
+				this.error = error.value?.statusMessage || error.value?.message
+			}
+			if (categories.value) {
+				this.categories = categories.value
 			}
 		},
 		async fetchCategory(categoryId: string | string[]): Promise<void> {
-			this.loading = true
-			try {
-				const { data: category } = await useFetch(`/api/product-category/${categoryId}`, {
-					method: 'get'
-				})
-				if (category.value) {
-					this.category = category.value
-				}
-			} catch (error) {
-				if (error instanceof TypeError) {
-					this.error = error.message
-				}
-				if (error instanceof Error) {
-					this.error = error.message
-				}
-			} finally {
-				this.loading = false
+			const {
+				data: category,
+				error,
+				pending
+			} = await useFetch(`/api/product-category/${categoryId}`, {
+				method: 'get'
+			})
+			if (pending) {
+				this.pending = true
+			}
+			if (error) {
+				this.error = error.value?.statusMessage || error.value?.message
+			}
+			if (category.value) {
+				this.category = category.value
 			}
 		}
 	}

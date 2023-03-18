@@ -143,6 +143,7 @@ pages:
     nav: rumah
     title: deepweb[]mengagumkan[]pemula
     description: deepweb[]mengagumkan[]pemula
+    keywords: deepweb[]mengagumkan[]pemula
   product:
     ordering:
       name: nama
@@ -153,6 +154,12 @@ pages:
     nav: produk
     description: daftar produk
     keywords: produk
+  cart:
+    title: keranjang
+    nav: keranjang
+    description: keranjang
+    keywords: keranjang
+    empty: keranjang anda kosong
 layouts:
   title: deepweb %{judul}
   description: deepweb-deskripsi %{description}
@@ -175,3 +182,4 @@ routes:
   products: produk
   product: produk
   home: rumah
+  cart: keranjang

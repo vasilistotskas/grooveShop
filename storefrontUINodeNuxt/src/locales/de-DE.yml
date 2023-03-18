@@ -149,6 +149,7 @@ pages:
     nav: heim
     title: deepweb[]fantastischer[]starter
     description: deepweb[]fantastischer[]starter
+    keywords: deepweb[]fantastischer[]starter
   product:
     ordering:
       name: name
@@ -159,6 +160,12 @@ pages:
     nav: produkte
     description: produktliste
     keywords: produkte
+  cart:
+    title: wagen
+    nav: wagen
+    description: wagen
+    keywords: wagen
+    empty: ihr warenkorb ist leer
 layouts:
   title: deepweb %{title}
   description: deepweb-beschreibung %{description}
@@ -181,3 +188,4 @@ routes:
   products: produkte
   product: produkt
   home: heim
+  cart: wagen

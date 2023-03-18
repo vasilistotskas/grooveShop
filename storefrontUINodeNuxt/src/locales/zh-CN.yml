@@ -132,6 +132,7 @@ pages:
     nav: 家
     title: deepweb[]awesome[]starter
     description: deepweb[]awesome[]starter
+    keywords: deepweb[]awesome[]starter
   product:
     ordering:
       name: 姓名
@@ -142,6 +143,12 @@ pages:
     nav: 产品
     description: 产品清单
     keywords: 产品
+  cart:
+    title: 大车
+    nav: 大车
+    description: 大车
+    keywords: 大车
+    empty: 您的购物车是空的
 layouts:
   title: 深网 %{title}
   description: deepweb-描述 %{description}
@@ -164,3 +171,4 @@ routes:
   products: 产品
   product: 产品
   home: 家
+  cart: 大车

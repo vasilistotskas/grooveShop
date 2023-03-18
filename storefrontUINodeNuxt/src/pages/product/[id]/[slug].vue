@@ -9,9 +9,8 @@ const store = useProductStore()
 const fullPath = config.public.baseUrl + route.fullPath
 const productId = route.params.id
 
-const { pending, refresh } = await useAsyncData(
-	'product',
-	async () => await store.fetchProduct(productId)
+const { pending, refresh } = await useAsyncData('product', () =>
+	store.fetchProduct(productId)
 )
 const { product, error } = storeToRefs(store)
 

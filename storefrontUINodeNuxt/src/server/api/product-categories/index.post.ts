@@ -12,5 +12,14 @@ export default defineEventHandler(async (event: H3Event) => {
 			Cookie: cookie || ''
 		}
 	})
-	return await parseDataAs(response.json(), ZodCategory)
+	const data = await response.json()
+	const status = response.status
+	if (status !== 200) {
+		throw createError({
+			statusCode: status,
+			statusMessage: data.detail,
+			message: JSON.stringify(data)
+		})
+	}
+	return await parseDataAs(data, ZodCategory)
 })

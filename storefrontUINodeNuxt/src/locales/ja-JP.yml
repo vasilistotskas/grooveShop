@@ -134,6 +134,7 @@ pages:
     nav: 家
     title: ディープウェブ[]素晴らしい[]スターター
     description: ディープウェブ[]素晴らしい[]スターター
+    keywords: ディープウェブ[]素晴らしい[]スターター
   product:
     ordering:
       name: 名前
@@ -144,6 +145,12 @@ pages:
     nav: 製品
     description: 製品一覧
     keywords: 製品
+  cart:
+    title: カート
+    nav: カート
+    description: カート
+    keywords: カート
+    empty: あなたのカートは空です
 layouts:
   title: ディープウェブ %{title}
   description: deepweb 説明 %{description}
@@ -166,3 +173,4 @@ routes:
   products: 製品
   product: 製品
   home: 家
+  cart: カート

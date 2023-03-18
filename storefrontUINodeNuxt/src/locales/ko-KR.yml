@@ -134,6 +134,7 @@ pages:
     nav: 집
     title: deepweb[]awesome[]스타터
     description: deepweb[]awesome[]스타터
+    keywords: deepweb[]awesome[]스타터
   product:
     ordering:
       name: 이름
@@ -144,6 +145,12 @@ pages:
     nav: 제품
     description: 제품 목록
     keywords: 제품
+  cart:
+    title: 카트
+    nav: 카트
+    description: 카트
+    keywords: 카트
+    empty: 장바구니가 비어 있습니다.
 layouts:
   title: 딥웹 %{title}
   description: deepweb 설명 %{description}
@@ -166,3 +173,4 @@ routes:
   products: 제품
   product: 제품
   home: 집
+  cart: 카트

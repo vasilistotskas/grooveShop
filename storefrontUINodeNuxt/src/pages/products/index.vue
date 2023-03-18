@@ -18,7 +18,7 @@ const routePaginationParams = ref<ProductsQuery>({
 	ordering: route.query.ordering || undefined
 })
 
-const { pending, refresh } = useAsyncData('products', () =>
+const { pending, refresh } = await useAsyncData('products', () =>
 	store.fetchProducts(routePaginationParams.value)
 )
 
@@ -88,6 +88,7 @@ const orderingOptionsArray = computed(() => {
 
 const bus = useEventBus<string>('products')
 bus.on((event, payload: ProductsQuery) => {
+	console.log('========= event =========', event, payload)
 	routePaginationParams.value = payload
 	refresh()
 })
@@ -98,7 +99,7 @@ watch(
 		bus.emit('products', {
 			limit: Number(route.query.limit) || undefined,
 			offset: Number(route.query.offset) || undefined,
-			ordering: Number(route.query.ordering) || undefined
+			ordering: route.query.ordering || undefined
 		})
 	}
 )
