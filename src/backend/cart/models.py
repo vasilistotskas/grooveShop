@@ -62,7 +62,7 @@ class CartItem(TimeStampMixinModel, UUIDModel):
 
     class Meta:
         verbose_name_plural = "Cart Items"
-        ordering = ["-created_at"]
+        ordering = ["id"]
         unique_together = (("cart", "product"),)
 
     def __str__(self):

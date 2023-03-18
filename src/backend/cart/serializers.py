@@ -1,11 +1,17 @@
 from backend.cart.models import Cart
 from backend.cart.models import CartItem
+from backend.product.serializers.product import ProductSerializer
 from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 
 class CartItemSerializer(serializers.ModelSerializer):
     cart = serializers.SerializerMethodField("get_cart_id")
+    product = serializers.SerializerMethodField("get_product")
+
+    @extend_schema_field(ProductSerializer)
+    def get_product(self, cart_item) -> ProductSerializer:
+        return ProductSerializer(cart_item.product).data
 
     @extend_schema_field(serializers.IntegerField)
     def get_cart_id(self, cart_item) -> int:
