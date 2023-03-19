@@ -6,7 +6,23 @@ const { t } = useLang()
 definePageMeta({
 	layout: 'page'
 })
-
+useHead(() => ({
+	title: t('pages.index.title'),
+	meta: [
+		{
+			name: 'description',
+			content: t('pages.index.description')
+		},
+		{
+			name: 'keywords',
+			content: t('pages.index.keywords')
+		}
+	]
+}))
+useServerSeoMeta({
+	title: t('pages.index.title'),
+	description: t('pages.index.description')
+})
 // vars
 const titlesText = computed<string[]>(() => t('pages.index.title').split('[]'))
 const leadingsText = computed(() => [

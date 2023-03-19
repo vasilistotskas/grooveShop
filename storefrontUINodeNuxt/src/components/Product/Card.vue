@@ -28,7 +28,7 @@ const resolveImageFileExtension = computed(() => {
 				class="container p-5 bg-white text-white dark:bg-slate-800 dark:text-black rounded-lg"
 			>
 				<div class="card grid gap-2">
-					<div class="card-image">
+					<div class="card-head">
 						<div class="card-thumb">
 							<div class="card-thumb-container">
 								<div class="card-thumb-image">
@@ -92,6 +92,13 @@ const resolveImageFileExtension = computed(() => {
 							</p>
 						</div>
 					</div>
+					<div class="card-footer">
+						<AddToCartButton
+							:product="product"
+							:quantity="1"
+							:text="$t('components.product.card.add_to_cart')"
+						/>
+					</div>
 				</div>
 			</div>
 		</Anchor>
@@ -113,9 +120,13 @@ const resolveImageFileExtension = computed(() => {
 		align-items: flex-start;
 		justify-content: flex-end;
 	}
-	.card-image {
+	.card-head {
 		flex: 0 0 100%;
 		max-width: 100%;
+	}
+	.card-footer {
+		display: grid;
+		align-items: center;
 	}
 	.card-description {
 		font-size: 0.875rem;

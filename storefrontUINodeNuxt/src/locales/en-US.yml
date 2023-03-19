@@ -74,6 +74,10 @@ components:
       price: Price
       vat_percent: VAT Percent
       total_price: Total Price
+      add_to_cart: Add to cart
+  add_to_cart_button:
+    text: Add to cart
+    added_to_cart: Added to cart
 pages:
   testing:
     nav: testing
@@ -126,6 +130,8 @@ pages:
     nav: home
     title: DeepWeb[]awesome[]starter
     description: DeepWeb[]awesome[]starter
+    keywords: DeepWeb[]awesome[]starter
+    add_to_cart: Add to cart
   404:
     title: page not found
     description: page not found
@@ -139,6 +145,16 @@ pages:
     nav: products
     description: products list
     keywords: products
+  cart:
+    title: Cart
+    nav: cart
+    description: cart
+    keywords: cart
+    empty: Your cart is empty
+    updated: Cart updated
+    update_error: Cart update error
+    deleted: Cart Item deleted
+    delete_error: Cart Item delete error
 layouts:
   title: DeepWeb %{title}
   description: DeepWeb-Description %{description}
@@ -161,3 +177,4 @@ routes:
   products: Products
   product: Product
   home: Home
+  cart: Cart

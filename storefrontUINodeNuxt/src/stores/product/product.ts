@@ -5,18 +5,8 @@ import { ProductsQuery } from '~/zod/products/products'
 export interface ProductState {
 	products: Pagination<Product>
 	product: Product | null
-	loading: boolean
-	error: string | null
-}
-
-const resolveError = (error: any): string | null => {
-	if (error instanceof TypeError) {
-		return error.message
-	}
-	if (error instanceof Error) {
-		return error.message
-	}
-	return null
+	pending: boolean
+	error: string | undefined
 }
 
 export const useProductStore = defineStore({
@@ -34,8 +24,8 @@ export const useProductStore = defineStore({
 			results: []
 		},
 		product: null as Product | null,
-		loading: false,
-		error: null as string | null
+		pending: false,
+		error: undefined as string | undefined
 	}),
 	getters: {
 		getProductById: (state) => (id: number) => {
@@ -44,67 +34,77 @@ export const useProductStore = defineStore({
 	},
 	actions: {
 		async fetchProducts({ offset, limit, ordering }: ProductsQuery): Promise<void> {
-			this.loading = true
-			try {
-				const { data: products } = await useFetch(`/api/products`, {
-					method: 'get',
-					params: {
-						offset,
-						limit,
-						ordering
-					}
-				})
-				if (products.value) {
-					this.products = products.value
+			const {
+				data: products,
+				error,
+				pending
+			} = await useFetch(`/api/products`, {
+				method: 'get',
+				params: {
+					offset,
+					limit,
+					ordering
 				}
-			} catch (error) {
-				this.error = resolveError(error)
-			} finally {
-				this.loading = false
+			})
+			if (pending) {
+				this.pending = true
+			}
+			if (error) {
+				this.error = error.value?.statusMessage || error.value?.message
+			}
+			if (products.value) {
+				this.products = products.value
 			}
 		},
-		async fetchProduct(productId: string | string[]): Promise<void> {
-			this.product = null
-			this.loading = true
-			try {
-				const { data: product } = await useFetch(`/api/product/${productId}`, {
-					method: 'get'
-				})
-				if (product.value) {
-					this.product = product.value
-				}
-			} catch (error) {
-				this.error = resolveError(error)
-			} finally {
-				this.loading = false
+		async fetchProduct(productId: string | string[] | number): Promise<void> {
+			const {
+				data: product,
+				error,
+				pending
+			} = await useFetch(`/api/product/${productId}`, {
+				method: 'get'
+			})
+			if (pending) {
+				this.pending = true
+			}
+			if (error) {
+				this.error = error.value?.statusMessage || error.value?.message
+			}
+			if (product.value) {
+				this.product = product.value
 			}
 		},
-		async createProduct(product: CreateRequest): Promise<void> {
-			this.loading = true
-			try {
-				const { data: newProduct } = await useFetch(`/api/products`, {
-					method: 'post',
-					body: JSON.stringify(product)
-				})
-				if (newProduct.value) {
-					this.products.results.push(newProduct.value)
-				}
-			} catch (error) {
-				this.error = resolveError(error)
-			} finally {
-				this.loading = false
+		async createProduct(body: CreateRequest): Promise<void> {
+			const {
+				data: newProduct,
+				error,
+				pending
+			} = await useFetch(`/api/products`, {
+				method: 'post',
+				body: JSON.stringify(body)
+			})
+			if (pending) {
+				this.pending = true
+			}
+			if (error) {
+				this.error = error.value?.statusMessage || error.value?.message
+			}
+			if (newProduct.value) {
+				this.products.results.push(newProduct.value)
 			}
 		},
 		async updateProductHits(productId: string | string[]): Promise<void> {
-			this.loading = true
-			try {
-				await useFetch(`/api/product/${productId}/update-product-hits`, {
+			const { error, pending } = await useFetch(
+				`/api/product/${productId}/update-product-hits`,
+				{
 					method: 'post'
-				})
-			} catch (error) {
-				this.error = resolveError(error)
-			} finally {
-				this.loading = false
+				}
+			)
+			if (pending) {
+				this.pending = true
+			}
+			if (error) {
+				this.error = error.value?.statusMessage || error.value?.message
 			}
 		}
 	}

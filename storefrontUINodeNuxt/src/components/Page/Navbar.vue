@@ -96,11 +96,11 @@ bus.on((event: string) => {
 					<ThemeSwitcher />
 					<Anchor
 						class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
-						href="https://github.com/vasilistotskas/grooveShop/storefrontUINodeNuxt"
-						title="Github"
-						:text="'Github'"
+						:to="'cart'"
+						title="Cart"
+						:text="'Cart'"
 					>
-						<IconMdi:github-face />
+						<icon-fa6-solid:cart-shopping />
 					</Anchor>
 				</div>
 			</div>
@@ -144,14 +144,15 @@ bus.on((event: string) => {
 						<LanguageSwitcher type="select-box" />
 					</div>
 				</ActionSheetBody>
-				<Button
-					type="secondary"
-					title="Github"
-					href="https://github.com/vasilistotskas/grooveShop/storefrontUINodeNuxt"
+				<Anchor
+					class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
+					:to="'cart'"
+					title="Cart"
+					:text="'Cart'"
 				>
-					<IconMdi:github-face />
-					<span class="ml-1 text-gray-700 dark:text-gray-200">Github</span>
-				</Button>
+					<icon-fa6-solid:cart-shopping />
+					<span class="ml-1 text-gray-700 dark:text-gray-200">Cart</span>
+				</Anchor>
 				<Button text="Close" type="secondary" @click.prevent="toggleOptions(false)" />
 			</ActionSheet>
 		</template>

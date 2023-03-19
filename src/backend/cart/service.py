@@ -17,30 +17,43 @@ class CartService(object):
     total_cost_with_tax: float
 
     def __init__(self, request: HttpRequest):
-        if request.user.is_authenticated and "cart_id" in request.session:
-            try:
-                self.cart = Cart.objects.get(id=request.session["cart_id"])
-                request.session.pop("cart_id")
-            except Cart.DoesNotExist:
-                self.cart = Cart.objects.get(id=request.session["cart_id"])
-                self.cart.user = request.user
-                self.cart.save()
-                request.session.pop("cart_id")
-        elif request.user.is_authenticated:
+        try:
+            cart_id = request.session["cart_id"]
+        except KeyError:
+            cart_id = None
+
+        print(
+            "===== request.user.is_authenticated =====", request.user.is_authenticated
+        )
+        if request.user.is_authenticated and cart_id:
+            print("user is authenticated and cart_id is in session")
             try:
                 self.cart = Cart.objects.get(user=request.user)
+                request.session["cart_id"] = self.cart.id
             except Cart.DoesNotExist:
                 self.cart = Cart(user=request.user)
                 self.cart.save()
-        elif "cart_id" in request.session:
+                request.session["cart_id"] = self.cart.id
+        elif request.user.is_authenticated:
+            print("user is authenticated")
             try:
-                self.cart = Cart.objects.get(id=request.session["cart_id"])
+                self.cart = Cart.objects.get(user=request.user)
+                request.session["cart_id"] = self.cart.id
             except Cart.DoesNotExist:
-                request.session.pop("cart_id")
+                self.cart = Cart(user=request.user)
+                self.cart.save()
+                request.session["cart_id"] = self.cart.id
+        elif cart_id:
+            print("cart_id is in session")
+            try:
+                self.cart = Cart.objects.get(id=int(cart_id))
+                request.session["cart_id"] = self.cart.id
+            except Cart.DoesNotExist:
                 self.cart = Cart()
                 self.cart.save()
                 request.session["cart_id"] = self.cart.id
         else:
+            print("no cart_id in session")
             self.cart = Cart()
             self.cart.save()
             request.session["cart_id"] = self.cart.id
@@ -66,9 +79,9 @@ class CartService(object):
             user_cart = Cart(user=request.user)
             user_cart.save()
 
-        pre_log_in_cart_id = caches.get(str(request.user.id))
+        pre_log_in_cart = caches.get(str(request.user.id))
         try:
-            pre_log_in_cart = Cart.objects.get(id=pre_log_in_cart_id)
+            pre_log_in_cart = Cart.objects.get(id=pre_log_in_cart)
         except Cart.DoesNotExist:
             pre_log_in_cart = None
 

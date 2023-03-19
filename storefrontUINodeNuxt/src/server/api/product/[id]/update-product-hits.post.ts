@@ -1,11 +1,27 @@
 import { H3Event } from 'h3'
-import { ZodProduct } from '~/zod/product/product'
-import { parseDataAs } from '~/zod/parser'
+import { ZodParams, ZodProduct } from '~/zod/product/product'
+import { parseDataAs, parseParamsAs } from '~/zod/parser'
 
 export default defineEventHandler(async (event: H3Event) => {
 	const config = useRuntimeConfig()
+	const params = parseParamsAs(event, ZodParams)
+	const cookie = event.node.req.headers.cookie
 	const response = await fetch(
-		`${config.public.apiBaseUrl}/product/${event.context.params?.id}/update_product_hits`
+		`${config.public.apiBaseUrl}/product/${params.id}/update_product_hits`,
+		{
+			headers: {
+				Cookie: cookie || ''
+			}
+		}
 	)
-	return await parseDataAs(response.json(), ZodProduct)
+	const data = await response.json()
+	const status = response.status
+	if (status !== 200) {
+		throw createError({
+			statusCode: status,
+			statusMessage: data.detail,
+			message: JSON.stringify(data)
+		})
+	}
+	return await parseDataAs(data, ZodProduct)
 })

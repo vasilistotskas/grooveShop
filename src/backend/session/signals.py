@@ -11,11 +11,10 @@ def update_session_user_log_in(sender, request, user, **kwargs):
     try:
         request.session["user"] = user
 
-        pre_log_in_cart_id = None
-        if hasattr(request, "session") and hasattr(
-            request.session, "pre_log_in_cart_id"
-        ):
+        try:
             pre_log_in_cart_id = request.session["pre_log_in_cart_id"]
+        except KeyError:
+            pre_log_in_cart_id = None
 
         caches.set(
             str(user.id),

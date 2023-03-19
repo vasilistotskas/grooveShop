@@ -4,11 +4,13 @@ const route = useRoute()
 const props = defineProps({
 	totalPages: {
 		type: Number,
-		required: true
+		required: true,
+		default: 1
 	},
 	currentPage: {
-		type: Number,
-		required: true
+		type: [Number],
+		required: true,
+		default: 1
 	},
 	offset: {
 		type: Number,
@@ -16,7 +18,8 @@ const props = defineProps({
 	},
 	limit: {
 		type: Number,
-		required: true
+		required: true,
+		default: 10
 	},
 	maxVisibleButtons: {
 		type: Number,

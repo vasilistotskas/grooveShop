@@ -1,9 +1,24 @@
+import { H3Event } from 'h3'
 import { ZodCategory } from '~/zod/product/category'
 import { ZodPagination } from '~/zod/pagination/pagination'
 import { parseDataAs } from '~/zod/parser'
 
-export default defineEventHandler(async () => {
+export default defineEventHandler(async (event: H3Event) => {
 	const config = useRuntimeConfig()
-	const response = await fetch(`${config.public.apiBaseUrl}/category/`)
-	return await parseDataAs(response.json(), ZodPagination(ZodCategory))
+	const cookie = event.node.req.headers.cookie
+	const response = await fetch(`${config.public.apiBaseUrl}/category/`, {
+		headers: {
+			Cookie: cookie || ''
+		}
+	})
+	const data = await response.json()
+	const status = response.status
+	if (status !== 200) {
+		throw createError({
+			statusCode: status,
+			statusMessage: data.detail,
+			message: JSON.stringify(data)
+		})
+	}
+	return await parseDataAs(data, ZodPagination(ZodCategory))
 })

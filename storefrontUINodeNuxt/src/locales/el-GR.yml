@@ -127,7 +127,7 @@ pages:
           footer_link: api χρηστών github
         bot_id:
           title: αναγνωριστικό ρομπότ
-          description: αυτό είναι το αναγνωριστικό του bot σας.
+          description: αυτό είναι το αναγνωριστικό ρομπότ σας.
           footer: χρησιμοποιείται κατά την αλληλεπίδραση με το bot.
         protection_spam:
           title: προστασία ανεπιθύμητων
@@ -149,6 +149,7 @@ pages:
     nav: σπίτι
     title: deepweb[]καταπληκτική[]μίζα
     description: deepweb[]καταπληκτική[]μίζα
+    keywords: deepweb[]καταπληκτική[]μίζα
   product:
     ordering:
       name: ονομα
@@ -159,6 +160,12 @@ pages:
     nav: προϊόντα
     description: λίστα προϊόντων
     keywords: προϊόντα
+  cart:
+    title: καροτσάκι
+    nav: καροτσάκι
+    description: καροτσάκι
+    keywords: καροτσάκι
+    empty: το καλάθι σας είναι άδειο
 layouts:
   title: deepweb %{title}
   description: deepweb-description %{description}
@@ -181,3 +188,4 @@ routes:
   products: προϊόντα
   product: προϊόν
   home: σπίτι
+  cart: καροτσάκι

@@ -18,7 +18,7 @@ const routePaginationParams = ref<ProductsQuery>({
 	ordering: route.query.ordering || undefined
 })
 
-const { pending, refresh } = useAsyncData('products', () =>
+const { pending, refresh } = await useAsyncData('products', () =>
 	store.fetchProducts(routePaginationParams.value)
 )
 
@@ -29,6 +29,8 @@ const pageSize = computed(() => products.value.pageSize)
 const currentPage = computed(() => products.value.page)
 
 const offset = computed(() => {
+	if (!currentPage.value) return 0
+	if (!pageSize.value) return 0
 	return (currentPage.value - 1) * pageSize.value
 })
 const limit = computed(() => {
@@ -96,7 +98,7 @@ watch(
 		bus.emit('products', {
 			limit: Number(route.query.limit) || undefined,
 			offset: Number(route.query.offset) || undefined,
-			ordering: Number(route.query.ordering) || undefined
+			ordering: route.query.ordering || undefined
 		})
 	}
 )
@@ -162,7 +164,7 @@ useServerSeoMeta({
 				:card-height="'528px'"
 				:class="pending ? 'block' : 'hidden'"
 				:loading="pending"
-				:replicas="30"
+				:replicas="products.results.length || 4"
 			></LoadingSkeleton>
 			<template v-if="products.results.length">
 				<ol

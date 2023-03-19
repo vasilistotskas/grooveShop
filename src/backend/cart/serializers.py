@@ -1,14 +1,20 @@
 from backend.cart.models import Cart
 from backend.cart.models import CartItem
+from backend.product.serializers.product import ProductSerializer
 from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 
 class CartItemSerializer(serializers.ModelSerializer):
     cart = serializers.SerializerMethodField("get_cart_id")
+    product = serializers.SerializerMethodField("get_product")
+
+    @extend_schema_field(ProductSerializer)
+    def get_product(self, cart_item) -> ProductSerializer:
+        return ProductSerializer(cart_item.product).data
 
     @extend_schema_field(serializers.IntegerField)
-    def get_cart_id(self) -> int:
+    def get_cart_id(self, cart_item) -> int:
         cart = self.context.get("cart")
         return cart.id
 
@@ -24,12 +30,30 @@ class CartItemSerializer(serializers.ModelSerializer):
             "product_discount_percent",
         )
 
+
+class CartItemCreateSerializer(serializers.ModelSerializer):
+    cart = serializers.SerializerMethodField("get_cart_id")
+
+    @extend_schema_field(serializers.IntegerField)
+    def get_cart_id(self, cart_item) -> int:
+        cart = self.context.get("cart")
+        return cart.id
+
+    class Meta:
+        model = CartItem
+        fields = ("id", "cart", "product", "quantity")
+
     def create(self, validated_data):
         cart = self.context.get("cart")
         if CartItem.objects.filter(
             cart=cart, product=validated_data["product"]
         ).exists():
-            raise serializers.ValidationError("Product already in cart")
+            cart_item = CartItem.objects.get(
+                cart=cart, product=validated_data["product"]
+            )
+            cart_item.quantity += validated_data["quantity"]
+            cart_item.save()
+            return cart_item
         cart_item = CartItem.objects.create(cart=cart, **validated_data)
         return cart_item
 

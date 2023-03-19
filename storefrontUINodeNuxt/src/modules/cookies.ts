@@ -8,7 +8,7 @@ import {
 } from '@nuxt/kit'
 import { Nuxt } from '@nuxt/schema'
 
-import { name, version } from '../package.json'
+import { version } from '../package.json'
 import { DEFAULTS, ModuleOptions } from '../runtime/cookies/types'
 
 const resolver = createResolver(import.meta.url)
@@ -16,7 +16,7 @@ const runtimeDir = resolver.resolve('../runtime/cookies')
 
 export default defineNuxtModule<ModuleOptions>({
 	meta: {
-		name,
+		name: '@groove/nuxt-cookies',
 		version,
 		configKey: 'cookieControl',
 		compatibility: { nuxt: '^3.0.0' }

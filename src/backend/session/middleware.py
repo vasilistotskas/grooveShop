@@ -34,12 +34,17 @@ class SessionTraceMiddleware:
         else:
             request.session["user"] = None
 
-        if hasattr(request, "session") and not hasattr(
-            request.session, "pre_log_in_cart_id"
-        ):
+        try:
+            cart_id = request.session["cart_id"]
+        except KeyError:
+            cart_id = None
+
+        if not cart_id:
             cart_service = CartService(request)
             pre_log_in_cart_id = cart_service.cart.id
+            cart_id = cart_service.cart.id
             request.session["pre_log_in_cart_id"] = pre_log_in_cart_id
+            request.session["cart_id"] = cart_id
 
         request.session["last_activity"] = now()
         request.session["referer"] = request.META.get("HTTP_REFERER", None)
@@ -53,6 +58,7 @@ class SessionTraceMiddleware:
                     "user": json_user,
                     "referer": request.META.get("HTTP_REFERER", None),
                     "session_key": request.session.session_key,
+                    "cart_id": cart_id,
                 },
                 caches.ONE_HOUR,
             )
@@ -64,6 +70,7 @@ class SessionTraceMiddleware:
                     "user": user,
                     "referer": request.META.get("HTTP_REFERER", None),
                     "session_key": request.session.session_key,
+                    "cart_id": cart_id,
                 },
                 caches.ONE_HOUR,
             )

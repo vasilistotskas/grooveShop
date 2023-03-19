@@ -164,7 +164,8 @@ module.exports = {
 				'repeat-auto-fill-mimax-350-auto': 'repeat(auto-fill, minmax(350px, auto));'
 			},
 			gridTemplateRows: {
-				'auto-1fr': 'auto 1fr'
+				'auto-1fr': 'auto 1fr',
+				'repeat-auto-fill-mimax-100-130': 'repeat(auto-fill, minmax(100px, 130px))'
 			},
 			gridRow: {
 				'second-row': '2'

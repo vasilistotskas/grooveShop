@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from backend.cart.models import CartItem
+from backend.cart.serializers import CartItemCreateSerializer
 from backend.cart.serializers import CartItemSerializer
 from backend.cart.serializers import CartSerializer
 from backend.cart.service import CartService
@@ -74,7 +75,8 @@ class CartItemViewSet(ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+        serializer = CartItemCreateSerializer(data=request.data)
+        serializer.context["cart"] = self.get_cart()
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

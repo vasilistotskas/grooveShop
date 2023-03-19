@@ -2,8 +2,8 @@ from backend.helpers.paginator import LimitOffsetPaginator
 
 
 class ProductPagination(LimitOffsetPaginator):
-    page_size = 16
+    default_limit = 54
 
 
 class ProductImagesPagination(LimitOffsetPaginator):
-    page_size = 4
+    default_limit = 20
