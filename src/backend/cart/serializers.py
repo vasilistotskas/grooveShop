@@ -30,12 +30,30 @@ class CartItemSerializer(serializers.ModelSerializer):
             "product_discount_percent",
         )
 
+
+class CartItemCreateSerializer(serializers.ModelSerializer):
+    cart = serializers.SerializerMethodField("get_cart_id")
+
+    @extend_schema_field(serializers.IntegerField)
+    def get_cart_id(self, cart_item) -> int:
+        cart = self.context.get("cart")
+        return cart.id
+
+    class Meta:
+        model = CartItem
+        fields = ("id", "cart", "product", "quantity")
+
     def create(self, validated_data):
         cart = self.context.get("cart")
         if CartItem.objects.filter(
             cart=cart, product=validated_data["product"]
         ).exists():
-            raise serializers.ValidationError("Product already in cart")
+            cart_item = CartItem.objects.get(
+                cart=cart, product=validated_data["product"]
+            )
+            cart_item.quantity += validated_data["quantity"]
+            cart_item.save()
+            return cart_item
         cart_item = CartItem.objects.create(cart=cart, **validated_data)
         return cart_item
 
