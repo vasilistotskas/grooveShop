@@ -2,6 +2,18 @@
 
 <!--next-version-placeholder-->
 
+## v0.35.0 (2023-03-19)
+### Feature
+* **Nuxt:** Add to cart button component implemented plus loading skeleton and quantity selector improvements ([`4a6215a`](https://github.com/vasilistotskas/grooveShop/commit/4a6215aa0ae4e95bad8461c7c91d75a3c1854ec5))
+* **Nuxt:** Cart page and components unstyled , api errors and code optimize ([`fe3f310`](https://github.com/vasilistotskas/grooveShop/commit/fe3f310d879bbf98b3ee19ff87aeb65e50193e37))
+* **Nuxt:** Cart prototype ([`b4c674e`](https://github.com/vasilistotskas/grooveShop/commit/b4c674ee0ec447cc77e3527ab4aea5d87ac5fb2f))
+* **Nuxt:** Zod cart schema ([`15fbca9`](https://github.com/vasilistotskas/grooveShop/commit/15fbca9787e7c7616ddfcd5a2b40e80de9f900cc))
+
+### Fix
+* **Django:** Cart api create serializer for post request ([`a55c0b1`](https://github.com/vasilistotskas/grooveShop/commit/a55c0b12e79618ee03145d978309829ab4368303))
+* **Django:** Cart and session fixes and more minor ([`1e9fa0f`](https://github.com/vasilistotskas/grooveShop/commit/1e9fa0fcb0eb99c5e2210a48ce702e96c0fc5b1b))
+* **Django:** Fix cart and session issues ([`4807846`](https://github.com/vasilistotskas/grooveShop/commit/4807846c9267792953b8e779b5b73ab39a167828))
+
 ## v0.34.0 (2023-03-16)
 ### Feature
 * **Nuxt:** Implemented media stream provider ([`3220fc0`](https://github.com/vasilistotskas/grooveShop/commit/3220fc0a94265104afbe69de0a8ef3dcaab922ea))
