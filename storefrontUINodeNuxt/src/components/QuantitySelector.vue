@@ -2,24 +2,26 @@
 import { GlobalEvents } from '~/events/global'
 
 const props = defineProps({
-	quantity: { type: Number, required: true, default: 1 },
 	max: { type: Number, required: true, default: 1 },
 	cartItemId: { type: Number, required: true }
 })
 const bus = useEventBus<string>(GlobalEvents.QUANTITY_SELECTOR)
-const { quantity, max, cartItemId } = toRefs(props)
+const { max, cartItemId } = toRefs(props)
+const cartItemQuantity = useState<number>(`${cartItemId.value}-quantity`)
 
 const decreaseQuantityEvent = () => {
-	if (quantity.value <= 1) return
+	if (cartItemQuantity.value <= 1) return
+	cartItemQuantity.value -= 1
 	bus.emit('update', {
-		quantity: quantity.value - 1,
+		quantity: cartItemQuantity.value,
 		cartItemId: cartItemId.value
 	})
 }
 const increaseQuantityEvent = () => {
-	if (quantity.value >= max.value) return
+	if (cartItemQuantity.value >= max.value) return
+	cartItemQuantity.value += 1
 	bus.emit('update', {
-		quantity: quantity.value + 1,
+		quantity: cartItemQuantity.value,
 		cartItemId: cartItemId.value
 	})
 }
@@ -34,23 +36,32 @@ const changeQuantityEvent = (event: Event) => {
 </script>
 
 <template>
-	<div class="quantity-selector">
+	<div
+		class="quantity-selector grid grid-cols-3 items-center justify-center justify-items-center"
+	>
 		<button
-			:disabled="quantity <= 1"
+			class="text-gray-700 dark:text-gray-200"
+			:disabled="cartItemQuantity <= 1"
 			:aria-label="'decrease'"
 			type="button"
 			@click="decreaseQuantityEvent"
 		>
 			<icon-fa-solid:minus />
 		</button>
-		<select :value="quantity" :aria-label="'quantity'" @change="changeQuantityEvent">
-			<option v-for="i in max" :key="i" :value="i" :selected="i === quantity">
+		<select
+			class="w-full text-gray-700 dark:text-gray-200"
+			:value="cartItemQuantity"
+			:aria-label="'quantity'"
+			@change="changeQuantityEvent"
+		>
+			<option v-for="i in max" :key="i" :value="i" :selected="i === cartItemQuantity">
 				{{ i }}
 			</option>
 		</select>
 
 		<button
-			:disabled="quantity >= max"
+			class="text-gray-700 dark:text-gray-200"
+			:disabled="cartItemQuantity >= max"
 			:aria-label="'increase'"
 			type="button"
 			@click="increaseQuantityEvent"

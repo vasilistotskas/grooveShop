@@ -88,7 +88,6 @@ const orderingOptionsArray = computed(() => {
 
 const bus = useEventBus<string>('products')
 bus.on((event, payload: ProductsQuery) => {
-	console.log('========= event =========', event, payload)
 	routePaginationParams.value = payload
 	refresh()
 })
@@ -165,7 +164,7 @@ useServerSeoMeta({
 				:card-height="'528px'"
 				:class="pending ? 'block' : 'hidden'"
 				:loading="pending"
-				:replicas="30"
+				:replicas="products.results.length || 4"
 			></LoadingSkeleton>
 			<template v-if="products.results.length">
 				<ol

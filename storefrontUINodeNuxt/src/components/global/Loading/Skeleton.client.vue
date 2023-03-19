@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-defineProps({
+export type Direction = 'column' | 'row' | 'column-reverse' | 'row-reverse'
+
+const props = defineProps({
 	showImage: {
 		type: Boolean,
 		default: true
@@ -47,27 +49,45 @@ defineProps({
 	loading: {
 		type: Boolean,
 		default: false
+	},
+	direction: {
+		type: String as PropType<Direction>,
+		default: () => 'column'
+	},
+	columns: {
+		type: Number,
+		default: 1
+	},
+	columnsMd: {
+		type: Number,
+		default: 2
+	},
+	columnsLg: {
+		type: Number,
+		default: 4
+	},
+	cartBodyParagraphs: {
+		type: Number,
+		default: 10
 	}
 })
+const { direction } = toRefs(props)
 </script>
 
 <template>
 	<div
 		v-if="loading"
-		:class="{
-			wrapper: true,
-			'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4': replicas > 1
-		}"
+		:class="`wrapper grid grid-cols-${columns} md:grid-cols-${columnsMd} lg:grid-cols-${columnsLg} gap-4`"
 	>
 		<div v-for="i in replicas" :key="i" class="container">
 			<a
 				id="card-link"
 				aria-label="skeleton"
-				class="card"
+				:class="`card card__${direction}`"
 				target="_blank"
 				:style="`width:${cardWidth}; height:${cardHeight};`"
 			>
-				<div class="card__header gap-2">
+				<div class="card__header gap-2 w-full">
 					<div v-if="showImage">
 						<div
 							id="logo-img"
@@ -75,16 +95,24 @@ defineProps({
 							:style="{ borderRadius: isCircle ? '50%' : 'none' }"
 						/>
 					</div>
-					<h3 v-if="showHeading" id="card-title" class="card__header header__title">
+					<h3
+						v-if="showHeading"
+						id="card-title"
+						class="card__header header__title grid gap-3"
+					>
 						<span class="skeleton skeleton-text"></span>
 						<span class="skeleton skeleton-text"></span>
 					</h3>
 				</div>
 
-				<div class="card__body">
-					<div v-if="showParagraph" id="card-details" class="card__body body__text">
+				<div class="card__body w-full grid">
+					<div
+						v-if="showParagraph"
+						id="card-details"
+						class="card__body body__text grid gap-3"
+					>
 						<div
-							v-for="n in 10"
+							v-for="n in cartBodyParagraphs"
 							:key="n"
 							class="skeleton skeleton-text skeleton-text__body"
 						></div>
@@ -99,7 +127,7 @@ defineProps({
 					</div>
 				</div>
 
-				<div v-if="showFooter" id="card-footer" class="card__footer">
+				<div v-if="showFooter" id="card-footer" class="card__footer w-full">
 					<div class="skeleton skeleton-text skeleton-footer"></div>
 				</div>
 			</a>
@@ -190,6 +218,12 @@ img[alt] {
 	&:hover {
 		border-color: rgba(82, 88, 102, 0.4);
 	}
+	&.card__row {
+		flex-direction: row;
+	}
+	&.card__column {
+		flex-direction: column;
+	}
 }
 
 .skeleton {
@@ -208,7 +242,6 @@ img[alt] {
 .skeleton-text {
 	width: 100%;
 	height: 0.7rem;
-	margin-bottom: 0.5rem;
 	border-radius: 0.25rem;
 }
 

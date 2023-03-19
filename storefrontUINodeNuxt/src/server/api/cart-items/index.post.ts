@@ -9,7 +9,7 @@ export default defineEventHandler(async (event: H3Event) => {
 	const regex = /csrftoken=([^;]+)/
 	const match = cookie?.match(regex)
 	const csrftoken = match ? match[1] : ''
-	const response = await fetch(`${config.public.apiBaseUrl}/cart/item`, {
+	const response = await fetch(`${config.public.apiBaseUrl}/cart/item/`, {
 		headers: {
 			Cookie: cookie || '',
 			'X-CSRFToken': csrftoken,
