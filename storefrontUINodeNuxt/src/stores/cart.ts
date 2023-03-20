@@ -23,6 +23,10 @@ export const useCartStore = defineStore({
 		},
 		getCartItemById: (state) => (id: number) => {
 			return state.cart?.cartItems.find((item) => item.id === id)
+		},
+		getCartItemByProductId: (state) => (productId: number) => {
+			const cartProducts = state.cart?.cartItems.map((item) => item.product)
+			return cartProducts?.find((product) => product.id === productId)
 		}
 	},
 	actions: {
