@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.35.1 (2023-03-20)
+### Fix
+* **Nuxt:** Start building product page ([`e2d67c5`](https://github.com/vasilistotskas/grooveShop/commit/e2d67c5d2d7c9e2f472b14126a60ef397bc9e357))
+
 ## v0.35.0 (2023-03-19)
 ### Feature
 * **Nuxt:** Add to cart button component implemented plus loading skeleton and quantity selector improvements ([`4a6215a`](https://github.com/vasilistotskas/grooveShop/commit/4a6215aa0ae4e95bad8461c7c91d75a3c1854ec5))
