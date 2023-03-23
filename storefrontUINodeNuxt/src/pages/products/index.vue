@@ -8,7 +8,7 @@ import {
 import { OrderingOption } from '~/zod/ordering/ordering'
 
 const route = useRoute()
-const { t } = useI18n()
+const { t } = useLang()
 const config = useRuntimeConfig()
 const store = useProductStore()
 

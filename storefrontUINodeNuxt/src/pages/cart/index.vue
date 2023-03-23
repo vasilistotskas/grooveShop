@@ -2,13 +2,13 @@
 import { useCartStore } from '~/stores/cart'
 import { GlobalEvents } from '~/events/global'
 
-const { t } = useI18n()
+const { t } = useLang()
 const config = useRuntimeConfig()
 const store = useCartStore()
 const toast = useToast()
+const cartBus = useEventBus<string>(GlobalEvents.ON_CART_UPDATED)
 
-const { pending, refresh } = await useAsyncData('cart', () => store.initCart())
-const { cart, error } = storeToRefs(store)
+const { cart, error, pending } = storeToRefs(store)
 
 definePageMeta({
 	layout: 'page',
@@ -32,28 +32,27 @@ useServerSeoMeta({
 	description: t('pages.cart.description')
 })
 
-const bus = useEventBus<string>(GlobalEvents.QUANTITY_SELECTOR)
+const querySelectorBus = useEventBus<string>(GlobalEvents.CART_QUANTITY_SELECTOR)
 
-bus.on((event, payload: { cartItemId: number; quantity: number }) => {
+querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) => {
 	switch (event) {
 		case 'update':
 			store
 				.updateCartItem(payload.cartItemId, { quantity: String(payload.quantity) })
 				.then(() => {
 					toast.success(t('pages.cart.updated'))
-					refresh()
+					cartBus.emit(GlobalEvents.ON_CART_UPDATED)
 				})
 				.catch(() => {
 					toast.error(t('pages.cart.update_error'))
 				})
-			refresh()
 			break
 		case 'delete':
 			store
 				.deleteCartItem(payload.cartItemId)
 				.then(() => {
 					toast.success(t('pages.cart.deleted'))
-					refresh()
+					cartBus.emit(GlobalEvents.ON_CART_UPDATED)
 				})
 				.catch(() => {
 					toast.error(t('pages.cart.delete_error'))
@@ -68,9 +67,19 @@ bus.on((event, payload: { cartItemId: number; quantity: number }) => {
 		<PageTitle :text="$t('pages.cart.title')" class="capitalize" />
 		<PageBody>
 			<PageError v-if="error" :error="error"></PageError>
+			<h2>
+				<Anchor
+					:to="'checkout'"
+					:text="'checkout'"
+					class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
+					>{{ $t('pages.cart.checkout') }}</Anchor
+				>
+			</h2>
 			<LoadingSkeleton
 				:card-height="'130px'"
-				:class="pending ? 'block' : 'hidden'"
+				:class="
+					pending ? 'block grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4' : 'hidden'
+				"
 				:loading="pending"
 				:direction="'row'"
 				:columns-md="1"

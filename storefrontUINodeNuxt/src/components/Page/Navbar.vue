@@ -1,11 +1,15 @@
 <script lang="ts" setup>
 import { GlobalEvents } from '~/events/global'
+import { useCartStore } from '~/stores/cart'
 
 const config = useRuntimeConfig()
 const { t } = useLang()
 const toast = useToast()
 const navbarModal = ref(null)
 const bus = useEventBus<string>(GlobalEvents.GENERIC_MODAL)
+const store = useCartStore()
+
+const { cart } = storeToRefs(store)
 
 const openModal = () => {
 	bus.emit('modal-open-navbarModal')
@@ -66,7 +70,6 @@ bus.on((event: string) => {
 						<li class="flex w-full gap-4">
 							<Anchor
 								:to="'products'"
-								:href="'products'"
 								:text="'products'"
 								class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
 								>{{ $t('pages.products.title') }}</Anchor
@@ -81,7 +84,6 @@ bus.on((event: string) => {
 							</button>
 							<Anchor
 								:to="'testing'"
-								:href="'testing'"
 								:text="'testing'"
 								class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
 								>{{ $t('pages.testing.title') }}</Anchor
@@ -89,20 +91,27 @@ bus.on((event: string) => {
 						</li>
 					</ul>
 				</nav>
-				<div
+				<ul
 					class="flex space-x-4 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2] text-gray-700 dark:text-gray-200"
 				>
-					<LanguageSwitcher />
-					<ThemeSwitcher />
-					<Anchor
-						class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
-						:to="'cart'"
-						title="Cart"
-						:text="'Cart'"
-					>
-						<icon-fa6-solid:cart-shopping />
-					</Anchor>
-				</div>
+					<li class="relative">
+						<LanguageSwitcher />
+					</li>
+					<li class="relative">
+						<ThemeSwitcher />
+					</li>
+					<li class="relative">
+						<span class="cart-items-count" :data-count="cart?.totalItems"></span>
+						<Anchor
+							class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
+							:to="'cart'"
+							title="Cart"
+							:text="'Cart'"
+						>
+							<icon-fa6-solid:cart-shopping />
+						</Anchor>
+					</li>
+				</ul>
 			</div>
 		</template>
 		<template #options="{ toggleOptions }">
@@ -116,14 +125,12 @@ bus.on((event: string) => {
 							>
 								<Anchor
 									:to="'products'"
-									:href="'products'"
 									:text="'products'"
 									class="flex-1 hover:no-underline capitalize"
 									>{{ $t('pages.products.title') }}</Anchor
 								>
 								<Anchor
 									:to="'testing'"
-									:href="'testing'"
 									:text="'testing'"
 									class="flex-1 hover:no-underline capitalize"
 									>{{ $t('pages.testing.title') }}</Anchor
@@ -158,3 +165,26 @@ bus.on((event: string) => {
 		</template>
 	</BuilderNavbar>
 </template>
+
+<style lang="scss" scoped>
+.cart-items-count {
+	&::before {
+		content: attr(data-count);
+		display: grid;
+		position: absolute;
+		top: -5px;
+		align-items: center;
+		justify-content: center;
+		width: 70%;
+		height: 70%;
+		border-radius: 50%;
+		background: #eb2e2b;
+		cursor: pointer;
+		color: #fff;
+		font-size: 10px;
+		pointer-events: none;
+		right: -5px;
+		z-index: 10;
+	}
+}
+</style>

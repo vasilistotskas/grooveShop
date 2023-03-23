@@ -86,6 +86,7 @@ pages:
       nav: testing
       title: testing
       description: this is a testing page
+      keywords: testing
     blank:
       nav: blank
       title: blank page
@@ -136,6 +137,11 @@ pages:
     title: page not found
     description: page not found
   product:
+    add_to_cart: Add to cart
+    product_id: Product ID
+    save: Save
+    inclusive_of_taxes: Inclusive of all Taxes.
+    qty: Qty
     ordering:
       name: Name
       price: Price
@@ -155,6 +161,7 @@ pages:
     update_error: Cart update error
     deleted: Cart Item deleted
     delete_error: Cart Item delete error
+    checkout: Checkout
   checkout:
     title: Checkout
     nav: checkout
@@ -189,6 +196,8 @@ others:
   copy: copy
   enabled: enabled
   disabled: disabled
+  readLess: read less
+  readMore: read more
 routes:
   el: Greek
   en: English
@@ -197,6 +206,10 @@ routes:
   ja: Japanese
   ko: Korean
   zh: Chinese
+  setting: Setting
+  test: Test
+  blank: Blank
+  testing: Testing
   products: Products
   product: Product
   home: Home

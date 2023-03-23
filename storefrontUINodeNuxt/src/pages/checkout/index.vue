@@ -6,23 +6,21 @@ import { useCartStore } from '~/stores/cart'
 import { useCountryStore } from '~/stores/country'
 import { useRegionStore } from '~/stores/region'
 
-const { t } = useI18n()
+const { t } = useLang()
 
 const cartStore = useCartStore()
 const countryStore = useCountryStore()
 const regionStore = useRegionStore()
 
-const { cart, error } = storeToRefs(cartStore)
+const { cart } = storeToRefs(cartStore)
 const { countries } = storeToRefs(countryStore)
 const { regions } = storeToRefs(regionStore)
 
-const { pending: cartPending, refresh: cartRefresh } = await useAsyncData('cart', () =>
-	cartStore.initCart()
-)
-const { pending: countryPending, refresh: countryRefresh } = await useAsyncData(
-	'country',
-	() => countryStore.initCountries()
-)
+const {
+	pending: countryPending,
+	refresh: countryRefresh,
+	error: countriesError
+} = await useAsyncData('country', () => countryStore.initCountries())
 
 const onCountryChange = (event: Event) => {
 	if (!(event.target instanceof HTMLSelectElement)) return

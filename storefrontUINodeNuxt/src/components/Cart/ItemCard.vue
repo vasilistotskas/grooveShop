@@ -21,7 +21,7 @@ const resolveImageFileExtension = computed(() => {
 	if (!cartItem.value?.product.mainImageFilename) return undefined
 	return product.value.mainImageFilename.split('.').pop()
 })
-const bus = useEventBus<string>(GlobalEvents.QUANTITY_SELECTOR)
+const bus = useEventBus<string>(GlobalEvents.CART_QUANTITY_SELECTOR)
 const cartItemQuantity = useState<number>(
 	`${cartItem.value.id}-quantity`,
 	() => cartItem.value.quantity
@@ -30,7 +30,7 @@ const cartItemQuantity = useState<number>(
 
 <template>
 	<div
-		class="grid grid-cols-5 items-center gap-4 py-4 bg-white dark:bg-slate-800 border rounded-md border-gray-900/10 dark:border-gray-50/[0.2]"
+		class="grid grid-cols-6 items-center gap-4 py-4 bg-white dark:bg-slate-800 border rounded-md border-gray-900/10 dark:border-gray-50/[0.2]"
 	>
 		<div class="image">
 			<Anchor :to="`/product${product?.absoluteUrl}`" :title="product.name">
@@ -69,6 +69,9 @@ const cartItemQuantity = useState<number>(
 		</div>
 		<div class="price">
 			<span class="text-gray-700 dark:text-gray-200">{{ product.finalPrice }}</span>
+		</div>
+		<div class="total-price">
+			<span class="text-gray-700 dark:text-gray-200">{{ cartItem.totalPrice }}</span>
 		</div>
 		<div class="remove-from-cart">
 			<button

@@ -9,7 +9,6 @@ export default defineEventHandler(async (event: H3Event) => {
 	const query = parseQueryAs(event, ZodRegionsQuery)
 	const cookie = event.node.req.headers.cookie
 	const url = buildFullUrl(`${config.public.apiBaseUrl}/region/`, query)
-	console.log('===== url =====', url)
 	const response = await fetch(url, {
 		headers: {
 			Cookie: cookie || ''

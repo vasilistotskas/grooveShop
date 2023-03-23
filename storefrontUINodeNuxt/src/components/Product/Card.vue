@@ -27,11 +27,7 @@ const resolveImageFileExtension = computed(() => {
 					<div class="card-thumb">
 						<div class="card-thumb-container">
 							<div class="card-thumb-image">
-								<Anchor
-									:to="`/product${product?.absoluteUrl}`"
-									:href="product?.absoluteUrl"
-									:text="product?.name"
-								>
+								<Anchor :to="`/product${product?.absoluteUrl}`" :text="product?.name">
 									<nuxt-img
 										preload
 										placeholder
@@ -59,11 +55,7 @@ const resolveImageFileExtension = computed(() => {
 				</div>
 				<div class="card-body">
 					<h2 class="card-title text-gray-700 dark:text-gray-200">
-						<Anchor
-							:to="`/product${product?.absoluteUrl}`"
-							:href="product?.absoluteUrl"
-							:text="product?.name"
-						>
+						<Anchor :to="`/product${product?.absoluteUrl}`" :text="product?.name">
 							{{ product?.name }}
 						</Anchor>
 					</h2>

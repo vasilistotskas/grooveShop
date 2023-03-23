@@ -36,7 +36,6 @@ const menus = computed((): IMenuItem[] => [
 						<Anchor
 							v-if="item.type === 'link'"
 							:to="item.route ? item.route : undefined"
-							:href="item.href ? item.href : undefined"
 							:text="item.text"
 							class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
 							>{{ item.text }}</Anchor
@@ -111,7 +110,6 @@ const menus = computed((): IMenuItem[] => [
 								<Anchor
 									v-if="item.type === 'link'"
 									:to="item.route ? item.route : undefined"
-									:href="item.href ? item.href : undefined"
 									:text="item.text"
 									class="flex-1 hover:no-underline capitalize"
 									>{{ item.text }}</Anchor

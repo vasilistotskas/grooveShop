@@ -5,6 +5,7 @@ import { capitalize } from '~/utils/str'
 const route = useRoute()
 const config = useRuntimeConfig()
 const store = useProductStore()
+const { t } = useLang()
 
 const fullPath = config.public.baseUrl + route.fullPath
 const productId = route.params.id
@@ -109,156 +110,154 @@ useHead(() => ({
 				:loading="pending"
 				:class="pending ? 'block' : 'hidden'"
 			></LoadingSkeleton>
-			<div class="product">
-				<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-					<div class="grid grid-cols-2 gap-2">
-						<div class="md:flex-1 px-4">
-							<div class="grid">
-								<div class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4">
-									<nuxt-img
-										v-show="image === 1"
-										preload
-										placeholder
-										loading="lazy"
-										provider="mediaStream"
-										class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
-										:width="592"
-										:height="320"
-										:fit="'contain'"
-										:position="'entropy'"
-										:background="'transparent'"
-										:trim-threshold="5"
-										:format="resolveImageFileExtension"
-										sizes="sm:100vw md:50vw lg:592px"
-										:src="
-											`media/uploads/products/${imageFilename}` ||
-											'/images/placeholder.png'
-										"
-										:alt="product?.name"
-									/>
-
-									<div
-										v-show="image === 2"
-										class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
-									>
-										<span class="text-5xl">2</span>
-									</div>
-
-									<div
-										v-show="image === 3"
-										class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
-									>
-										<span class="text-5xl">3</span>
-									</div>
-
-									<div
-										v-show="image === 4"
-										class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
-									>
-										<span class="text-5xl">4</span>
-									</div>
-								</div>
-
-								<div class="flex -mx-2 mb-4">
-									<template v-for="i in 4" :key="i">
-										<div class="flex-1 px-2">
-											<button
-												:class="{ 'ring-2 ring-indigo-300 ring-inset': image === i }"
-												type="button"
-												class="focus:outline-none w-full rounded-lg h-24 md:h-32 bg-gray-100 flex items-center justify-center"
-												@click="image = i"
-											>
-												<span class="text-2xl" v-text="i"></span>
-											</button>
-										</div>
-									</template>
-								</div>
-							</div>
-						</div>
-						<div class="md:flex-1 px-4">
-							<h2
-								class="mb-2 leading-tight tracking-tight font-bold text-gray-700 dark:text-gray-200 text-2xl md:text-3xl"
-							>
-								{{ product?.name }}
-							</h2>
-							<h3 class="text-gray-700 dark:text-gray-200 text-sm">
-								By <a href="#" class="text-indigo-600 hover:underline">ABC Company</a>
-							</h3>
-
-							<div class="flex items-center space-x-4 my-4">
-								<div>
-									<div class="rounded-lg bg-gray-100 flex py-2 px-3">
-										<span class="text-indigo-400 mr-1 mt-1">$</span>
-										<span class="font-bold text-indigo-600 text-3xl">{{
-											product?.finalPrice
-										}}</span>
-									</div>
-								</div>
-								<div class="flex-1">
-									<p class="text-green-500 text-xl font-semibold">
-										Save {{ product?.priceSavePercent }}%
-									</p>
-									<p class="text-gray-700 dark:text-gray-200 text-sm">
-										Inclusive of all Taxes.
-									</p>
-								</div>
-							</div>
-
-							<p
-								class="text-gray-700 dark:text-gray-200"
-								v-text="product?.description"
-							></p>
-
-							<div class="flex py-4 space-x-4">
-								<div class="relative">
-									<div
-										class="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-700 dark:text-gray-200 tracking-wide font-semibold"
-									>
-										<label for="quantity">Qty</label>
-									</div>
-									<select
-										id="quantity"
-										v-model="selectorQuantity"
-										class="text-gray-700 dark:text-gray-200 cursor-pointer appearance-none rounded-xl border border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1"
-									>
-										<option
-											v-for="i in product?.stock"
-											:key="i"
-											class="text-gray-700 dark:text-gray-200"
-											:value="i"
-											:selected="i === selectorQuantity"
-										>
-											{{ i }}
-										</option>
-									</select>
-
-									<svg
-										class="w-5 h-5 text-gray-700 dark:text-gray-200 absolute right-0 bottom-0 mb-2 mr-2"
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke="currentColor"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M8 9l4-4 4 4m0 6l-4 4-4-4"
+			<template v-if="product">
+				<div class="product">
+					<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+						<div class="grid grid-cols-2 gap-2">
+							<div class="md:flex-1 px-4">
+								<div class="grid">
+									<div class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4">
+										<nuxt-img
+											v-show="image === 1"
+											preload
+											placeholder
+											loading="lazy"
+											provider="mediaStream"
+											class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
+											:width="592"
+											:height="320"
+											:fit="'contain'"
+											:position="'entropy'"
+											:background="'transparent'"
+											:trim-threshold="5"
+											:format="resolveImageFileExtension"
+											sizes="sm:100vw md:50vw lg:592px"
+											:src="
+												`media/uploads/products/${imageFilename}` ||
+												'/images/placeholder.png'
+											"
+											:alt="product.name"
 										/>
-									</svg>
-								</div>
 
-								<AddToCartButton
-									v-if="product"
-									:product="product"
-									:quantity="selectorQuantity"
-									:text="$t('components.product.card.add_to_cart')"
-								/>
+										<div
+											v-show="image === 2"
+											class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
+										>
+											<span class="text-5xl">2</span>
+										</div>
+
+										<div
+											v-show="image === 3"
+											class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
+										>
+											<span class="text-5xl">3</span>
+										</div>
+
+										<div
+											v-show="image === 4"
+											class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
+										>
+											<span class="text-5xl">4</span>
+										</div>
+									</div>
+
+									<div class="flex -mx-2 mb-4">
+										<template v-for="i in 4" :key="i">
+											<div class="flex-1 px-2">
+												<button
+													:class="{ 'ring-2 ring-indigo-300 ring-inset': image === i }"
+													type="button"
+													class="focus:outline-none w-full rounded-lg h-24 md:h-32 bg-gray-100 flex items-center justify-center"
+													@click="image = i"
+												>
+													<span class="text-2xl" v-text="i"></span>
+												</button>
+											</div>
+										</template>
+									</div>
+								</div>
+							</div>
+							<div class="grid gap-6 px-4 items-center content-center">
+								<h2
+									class="leading-tight tracking-tight font-bold text-gray-700 dark:text-gray-200 text-2xl md:text-3xl"
+								>
+									{{ product.name }}
+								</h2>
+								<h3 class="text-gray-700 dark:text-gray-200 text-sm">
+									<span>{{ t('pages.product.product_id') }}: </span>
+									<span class="text-indigo-600 hover:underline">{{ product.id }}</span>
+								</h3>
+
+								<div class="flex items-center gap-4">
+									<div>
+										<div class="rounded-lg bg-gray-100 flex py-2 px-3">
+											<span class="text-indigo-400 mr-1 mt-1">$</span>
+											<span class="font-bold text-indigo-600 text-3xl">{{
+												product.finalPrice
+											}}</span>
+										</div>
+									</div>
+									<div class="flex-1">
+										<p class="text-green-500 text-xl font-semibold">
+											{{ t('pages.product.save') }} {{ product.priceSavePercent }}%
+										</p>
+										<p class="text-gray-700 dark:text-gray-200 text-sm">
+											{{ t('pages.product.inclusive_of_taxes') }}
+										</p>
+									</div>
+								</div>
+								<ReadMore :text="product.description" :max-chars="100"></ReadMore>
+								<div class="flex space-x-4">
+									<div class="relative">
+										<div
+											class="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-700 dark:text-gray-200 tracking-wide font-semibold"
+										>
+											<label for="quantity">{{ t('pages.product.qty') }}</label>
+										</div>
+										<select
+											id="quantity"
+											v-model="selectorQuantity"
+											class="bg-gray-100/[0.8] dark:bg-slate-800/[0.8] text-gray-700 dark:text-gray-200 cursor-pointer appearance-none rounded-xl border border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1"
+										>
+											<option
+												v-for="i in product.stock"
+												:key="i"
+												class="text-gray-700 dark:text-gray-200"
+												:value="i"
+												:selected="i === selectorQuantity"
+											>
+												{{ i }}
+											</option>
+										</select>
+
+										<svg
+											class="w-5 h-5 text-gray-700 dark:text-gray-200 absolute right-0 bottom-0 mb-2 mr-2"
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+										>
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M8 9l4-4 4 4m0 6l-4 4-4-4"
+											/>
+										</svg>
+									</div>
+
+									<AddToCartButton
+										v-if="product"
+										:product="product"
+										:quantity="selectorQuantity"
+										:text="$t('pages.product.add_to_cart')"
+									/>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</template>
 		</PageBody>
 	</PageWrapper>
 </template>
