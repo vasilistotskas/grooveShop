@@ -44,8 +44,8 @@ components:
     banner:
       description: >-
         我们使用我们自己的 cookie 和第三方 cookie
-        以便我们能够正确显示本网站并更好地了解本网站的使用情况，以改善我们提供的服务。使用在此横幅上做出选择后出现的 cookie
-        按钮，可以随时更改有关 cookie 使用权限的决定。
+        以便我们能够正确显示本网站并更好地了解本网站的使用情况，以改善我们提供的服务。可以随时使用在此横幅上做出选择后出现的 cookie 按钮更改有关
+        cookie 使用权限的决定。
       title: 饼干
     close: 关闭
     cookies:
@@ -77,6 +77,10 @@ components:
       price: 价格
       vat_percent: 增值税百分比
       total_price: 总价
+      add_to_cart: 添加到购物车
+  add_to_cart_button:
+    text: 添加到购物车
+    added_to_cart: 加入购物车
 pages:
   '404':
     title: 找不到网页
@@ -133,6 +137,7 @@ pages:
     title: deepweb[]awesome[]starter
     description: deepweb[]awesome[]starter
     keywords: deepweb[]awesome[]starter
+    add_to_cart: 添加到购物车
   product:
     ordering:
       name: 姓名
@@ -149,6 +154,33 @@ pages:
     description: 大车
     keywords: 大车
     empty: 您的购物车是空的
+    updated: 购物车已更新
+    update_error: 购物车更新错误
+    deleted: 购物车项目已删除
+    delete_error: 购物车项目删除错误
+  checkout:
+    title: 查看
+    nav: 查看
+    description: 查看
+    keywords: 查看
+    empty: 您的购物车是空的
+    form:
+      first_name: 名
+      last_name: 姓
+      address: 地址
+      city: 城市
+      email: 电子邮件
+      phone: 电话
+      place: 地方
+      zipcode: 邮政编码
+      country: 国家
+      region: 地区
+      customer_notes: 客户须知
+      submit: 提交
+      too_many_attempts: 尝试次数过多，请稍后再试。
+      choose:
+        country: 选择国家
+        region: 选择地区
 layouts:
   title: 深网 %{title}
   description: deepweb-描述 %{description}
@@ -172,3 +204,4 @@ routes:
   product: 产品
   home: 家
   cart: 大车
+  checkout: 查看

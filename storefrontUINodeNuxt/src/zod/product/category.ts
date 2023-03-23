@@ -19,8 +19,8 @@ export const ZodCategory = z.object({
 	seoTitle: z.string().nullable(),
 	seoDescription: z.string().nullable(),
 	seoKeywords: z.string().nullable(),
-	createdAt: z.string(),
-	updatedAt: z.string(),
+	createdAt: z.string().datetime({ offset: true }),
+	updatedAt: z.string().datetime({ offset: true }),
 	uuid: z.string()
 })
 

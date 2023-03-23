@@ -19,19 +19,19 @@ const resolveImageFileExtension = computed(() => {
 
 <template>
 	<li v-if="product" class="product_card">
-		<Anchor
-			:to="`/product${product?.absoluteUrl}`"
-			:href="product?.absoluteUrl"
-			:text="product?.name"
+		<div
+			class="container p-5 bg-white text-white dark:bg-slate-800 dark:text-black rounded-lg"
 		>
-			<div
-				class="container p-5 bg-white text-white dark:bg-slate-800 dark:text-black rounded-lg"
-			>
-				<div class="card grid gap-2">
-					<div class="card-head">
-						<div class="card-thumb">
-							<div class="card-thumb-container">
-								<div class="card-thumb-image">
+			<div class="card grid gap-2">
+				<div class="card-head">
+					<div class="card-thumb">
+						<div class="card-thumb-container">
+							<div class="card-thumb-image">
+								<Anchor
+									:to="`/product${product?.absoluteUrl}`"
+									:href="product?.absoluteUrl"
+									:text="product?.name"
+								>
 									<nuxt-img
 										preload
 										placeholder
@@ -52,56 +52,62 @@ const resolveImageFileExtension = computed(() => {
 										"
 										:alt="product?.name"
 									/>
-								</div>
+								</Anchor>
 							</div>
 						</div>
 					</div>
-					<div class="card-body">
-						<h2 class="card-title text-gray-700 dark:text-gray-200">
-							{{ product?.name }}
-						</h2>
-						<p class="card-description text-gray-700 dark:text-gray-200 text-muted">
-							{{ contentShorten(product?.description, 0, 100) }}
-						</p>
-						<div class="card-prices">
-							<div class="card-price d-flex justify-content-between">
-								<p class="text-gray-700 dark:text-gray-200">
-									<span class="text-gray-700 dark:text-gray-200">{{
-										$t('components.product.card.price')
-									}}</span
-									><span>{{ product?.price }}</span>
-								</p>
-							</div>
-							<div class="card-vat-percent d-flex justify-content-between">
-								<p class="text-gray-700 dark:text-gray-200">
-									<span class="text-gray-700 dark:text-gray-200">{{
-										$t('components.product.card.vat_percent')
-									}}</span
-									><span>{{ product?.vatPercent }}</span>
-								</p>
-							</div>
-						</div>
-						<div
-							class="card-final-price d-flex justify-content-between total font-weight-bold mt-4"
+				</div>
+				<div class="card-body">
+					<h2 class="card-title text-gray-700 dark:text-gray-200">
+						<Anchor
+							:to="`/product${product?.absoluteUrl}`"
+							:href="product?.absoluteUrl"
+							:text="product?.name"
 						>
+							{{ product?.name }}
+						</Anchor>
+					</h2>
+					<p class="card-description text-gray-700 dark:text-gray-200 text-muted">
+						{{ contentShorten(product?.description, 0, 100) }}
+					</p>
+					<div class="card-prices">
+						<div class="card-price d-flex justify-content-between">
 							<p class="text-gray-700 dark:text-gray-200">
 								<span class="text-gray-700 dark:text-gray-200">{{
-									$t('components.product.card.total_price')
+									$t('components.product.card.price')
 								}}</span
-								><span>{{ product?.finalPrice }}</span>
+								><span>{{ product?.price }}</span>
+							</p>
+						</div>
+						<div class="card-vat-percent d-flex justify-content-between">
+							<p class="text-gray-700 dark:text-gray-200">
+								<span class="text-gray-700 dark:text-gray-200">{{
+									$t('components.product.card.vat_percent')
+								}}</span
+								><span>{{ product?.vatPercent }}</span>
 							</p>
 						</div>
 					</div>
-					<div class="card-footer">
-						<AddToCartButton
-							:product="product"
-							:quantity="1"
-							:text="$t('components.product.card.add_to_cart')"
-						/>
+					<div
+						class="card-final-price d-flex justify-content-between total font-weight-bold mt-4"
+					>
+						<p class="text-gray-700 dark:text-gray-200">
+							<span class="text-gray-700 dark:text-gray-200">{{
+								$t('components.product.card.total_price')
+							}}</span
+							><span>{{ product?.finalPrice }}</span>
+						</p>
 					</div>
 				</div>
+				<div class="card-footer">
+					<AddToCartButton
+						:product="product"
+						:quantity="1"
+						:text="$t('components.product.card.add_to_cart')"
+					/>
+				</div>
 			</div>
-		</Anchor>
+		</div>
 	</li>
 </template>
 

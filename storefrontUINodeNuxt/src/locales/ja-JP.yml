@@ -79,6 +79,10 @@ components:
       price: 価格
       vat_percent: 付加価値税率
       total_price: 合計金額
+      add_to_cart: カートに追加
+  add_to_cart_button:
+    text: カートに追加
+    added_to_cart: カートに追加
 pages:
   '404':
     title: ページが見つかりません
@@ -112,7 +116,7 @@ pages:
       sections:
         validate_username:
           title: github プロファイルを検証する
-          description: github ユーザー名を入力し、ボタンをクリックして検証します。
+          description: github のユーザー名を入力し、ボタンをクリックして検証します。
           footer: 詳しくはこちら
           footer_button: 検証
           footer_link: github ユーザー api
@@ -135,6 +139,7 @@ pages:
     title: ディープウェブ[]素晴らしい[]スターター
     description: ディープウェブ[]素晴らしい[]スターター
     keywords: ディープウェブ[]素晴らしい[]スターター
+    add_to_cart: カートに追加
   product:
     ordering:
       name: 名前
@@ -151,6 +156,33 @@ pages:
     description: カート
     keywords: カート
     empty: あなたのカートは空です
+    updated: カートを更新しました
+    update_error: カート更新エラー
+    deleted: カートの商品を削除しました
+    delete_error: カート項目削除エラー
+  checkout:
+    title: チェックアウト
+    nav: チェックアウト
+    description: チェックアウト
+    keywords: チェックアウト
+    empty: あなたのカートは空です
+    form:
+      first_name: ファーストネーム
+      last_name: 苗字
+      address: 住所
+      city: 街
+      email: eメール
+      phone: 電話
+      place: 場所
+      zipcode: 郵便番号
+      country: 国
+      region: 領域
+      customer_notes: 顧客メモ
+      submit: 送信
+      too_many_attempts: 試行回数が多すぎます。しばらくしてからもう一度お試しください。
+      choose:
+        country: 国を選択します
+        region: リージョンを選択
 layouts:
   title: ディープウェブ %{title}
   description: deepweb 説明 %{description}
@@ -174,3 +206,4 @@ routes:
   product: 製品
   home: 家
   cart: カート
+  checkout: チェックアウト

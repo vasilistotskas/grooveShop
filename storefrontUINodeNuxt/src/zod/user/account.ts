@@ -18,8 +18,8 @@ export const ZodAccount = z.object({
 	mainImageFilename: z.string(),
 	isSuperuser: z.boolean(),
 	lastLogin: z.string().nullable(),
-	createdAt: z.string(),
-	updatedAt: z.string(),
+	createdAt: z.string().datetime({ offset: true }),
+	updatedAt: z.string().datetime({ offset: true }),
 	uuid: z.string()
 })
 

@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 	const userStore = useAccountStore()
 
 	await authStore.initAuth().then(() => {
-		console.log('========== authStore initialized ==========')
+		// console.log('========== authStore initialized ==========')
 	})
 
 	if (

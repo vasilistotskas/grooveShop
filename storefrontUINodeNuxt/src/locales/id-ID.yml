@@ -84,6 +84,10 @@ components:
       price: harga
       vat_percent: persen ppn
       total_price: total harga
+      add_to_cart: masukkan ke keranjang
+  add_to_cart_button:
+    text: masukkan ke keranjang
+    added_to_cart: ditambahkan ke troli
 pages:
   '404':
     title: halaman tidak ditemukan
@@ -144,6 +148,7 @@ pages:
     title: deepweb[]mengagumkan[]pemula
     description: deepweb[]mengagumkan[]pemula
     keywords: deepweb[]mengagumkan[]pemula
+    add_to_cart: masukkan ke keranjang
   product:
     ordering:
       name: nama
@@ -160,6 +165,33 @@ pages:
     description: keranjang
     keywords: keranjang
     empty: keranjang anda kosong
+    updated: keranjang diperbarui
+    update_error: kesalahan pembaruan keranjang
+    deleted: item keranjang dihapus
+    delete_error: kesalahan penghapusan item keranjang
+  checkout:
+    title: periksa
+    nav: periksa
+    description: periksa
+    keywords: periksa
+    empty: keranjang anda kosong
+    form:
+      first_name: nama depan
+      last_name: nama keluarga
+      address: alamat
+      city: kota
+      email: surel
+      phone: telepon
+      place: tempat
+      zipcode: kode pos
+      country: negara
+      region: wilayah
+      customer_notes: catatan pelanggan
+      submit: kirim
+      too_many_attempts: terlalu banyak percobaan, coba lagi nanti.
+      choose:
+        country: pilih negara
+        region: pilih wilayah
 layouts:
   title: deepweb %{judul}
   description: deepweb-deskripsi %{description}
@@ -183,3 +215,4 @@ routes:
   product: produk
   home: rumah
   cart: keranjang
+  checkout: periksa

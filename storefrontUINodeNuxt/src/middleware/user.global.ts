@@ -9,7 +9,7 @@ export default defineNuxtRouteMiddleware(() => {
 
 	if (isAuthenticated && !account) {
 		userAccount.fetchAccount().then(() => {
-			console.log('========== account fetched ==========')
+			// console.log('========== account fetched ==========')
 		})
 	}
 })

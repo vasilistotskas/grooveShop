@@ -164,6 +164,7 @@ useHead(() => ({
 										<div class="flex-1 px-2">
 											<button
 												:class="{ 'ring-2 ring-indigo-300 ring-inset': image === i }"
+												type="button"
 												class="focus:outline-none w-full rounded-lg h-24 md:h-32 bg-gray-100 flex items-center justify-center"
 												@click="image = i"
 											>
@@ -178,24 +179,24 @@ useHead(() => ({
 							<h2
 								class="mb-2 leading-tight tracking-tight font-bold text-gray-700 dark:text-gray-200 text-2xl md:text-3xl"
 							>
-								{{ product.name }}
+								{{ product?.name }}
 							</h2>
-							<p class="text-gray-700 dark:text-gray-200 text-sm">
+							<h3 class="text-gray-700 dark:text-gray-200 text-sm">
 								By <a href="#" class="text-indigo-600 hover:underline">ABC Company</a>
-							</p>
+							</h3>
 
 							<div class="flex items-center space-x-4 my-4">
 								<div>
 									<div class="rounded-lg bg-gray-100 flex py-2 px-3">
 										<span class="text-indigo-400 mr-1 mt-1">$</span>
 										<span class="font-bold text-indigo-600 text-3xl">{{
-											product.finalPrice
+											product?.finalPrice
 										}}</span>
 									</div>
 								</div>
 								<div class="flex-1">
 									<p class="text-green-500 text-xl font-semibold">
-										Save {{ product.priceSavePercent }}%
+										Save {{ product?.priceSavePercent }}%
 									</p>
 									<p class="text-gray-700 dark:text-gray-200 text-sm">
 										Inclusive of all Taxes.
@@ -205,7 +206,7 @@ useHead(() => ({
 
 							<p
 								class="text-gray-700 dark:text-gray-200"
-								v-text="product.description"
+								v-text="product?.description"
 							></p>
 
 							<div class="flex py-4 space-x-4">
@@ -213,14 +214,15 @@ useHead(() => ({
 									<div
 										class="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-700 dark:text-gray-200 tracking-wide font-semibold"
 									>
-										Qty
+										<label for="quantity">Qty</label>
 									</div>
 									<select
+										id="quantity"
 										v-model="selectorQuantity"
 										class="text-gray-700 dark:text-gray-200 cursor-pointer appearance-none rounded-xl border border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1"
 									>
 										<option
-											v-for="i in product.stock"
+											v-for="i in product?.stock"
 											:key="i"
 											class="text-gray-700 dark:text-gray-200"
 											:value="i"
@@ -247,6 +249,7 @@ useHead(() => ({
 								</div>
 
 								<AddToCartButton
+									v-if="product"
 									:product="product"
 									:quantity="selectorQuantity"
 									:text="$t('components.product.card.add_to_cart')"

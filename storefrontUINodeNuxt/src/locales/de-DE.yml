@@ -86,6 +86,10 @@ components:
       price: preis
       vat_percent: mehrwertsteuer prozent
       total_price: gesamtpreis
+      add_to_cart: in den warenkorb legen
+  add_to_cart_button:
+    text: in den warenkorb legen
+    added_to_cart: zum warenkorb hinzugefügt
 pages:
   '404':
     title: seite nicht gefunden
@@ -150,6 +154,7 @@ pages:
     title: deepweb[]fantastischer[]starter
     description: deepweb[]fantastischer[]starter
     keywords: deepweb[]fantastischer[]starter
+    add_to_cart: in den warenkorb legen
   product:
     ordering:
       name: name
@@ -166,6 +171,33 @@ pages:
     description: wagen
     keywords: wagen
     empty: ihr warenkorb ist leer
+    updated: warenkorb aktualisiert
+    update_error: fehler bei der warenkorbaktualisierung
+    deleted: warenkorb artikel gelöscht
+    delete_error: fehler beim löschen des warenkorbartikels
+  checkout:
+    title: kasse
+    nav: kasse
+    description: kasse
+    keywords: kasse
+    empty: ihr warenkorb ist leer
+    form:
+      first_name: vorname
+      last_name: familienname, nachname
+      address: adresse
+      city: stadt
+      email: email
+      phone: telefon
+      place: ort
+      zipcode: plz
+      country: land
+      region: region
+      customer_notes: kundenhinweise
+      submit: einreichen
+      too_many_attempts: zu viele versuche. bitte später erneut versuchen.
+      choose:
+        country: land auswählen
+        region: wählen sie region
 layouts:
   title: deepweb %{title}
   description: deepweb-beschreibung %{description}
@@ -189,3 +221,4 @@ routes:
   product: produkt
   home: heim
   cart: wagen
+  checkout: kasse

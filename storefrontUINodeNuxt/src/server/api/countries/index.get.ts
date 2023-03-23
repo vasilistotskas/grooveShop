@@ -1,15 +1,14 @@
 import { H3Event } from 'h3'
-import { ZodProduct } from '~/zod/product/product'
 import { ZodPagination } from '~/zod/pagination/pagination'
 import { buildFullUrl } from '~/helpers/api'
 import { parseDataAs, parseQueryAs } from '~/zod/parser'
-import { ZodProductsQuery } from '~/zod/products/products'
+import { ZodCountry, ZodCountriesQuery } from '~/zod/country/country'
 
 export default defineEventHandler(async (event: H3Event) => {
 	const config = useRuntimeConfig()
-	const query = parseQueryAs(event, ZodProductsQuery)
+	const query = parseQueryAs(event, ZodCountriesQuery)
 	const cookie = event.node.req.headers.cookie
-	const url = buildFullUrl(`${config.public.apiBaseUrl}/product/`, query)
+	const url = buildFullUrl(`${config.public.apiBaseUrl}/country/`, query)
 	const response = await fetch(url, {
 		headers: {
 			Cookie: cookie || ''
@@ -24,5 +23,5 @@ export default defineEventHandler(async (event: H3Event) => {
 			message: JSON.stringify(data)
 		})
 	}
-	return await parseDataAs(data, ZodPagination(ZodProduct))
+	return await parseDataAs(data, ZodPagination(ZodCountry))
 })

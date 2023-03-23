@@ -79,6 +79,10 @@ components:
       price: 가격
       vat_percent: 부가가치세 비율
       total_price: 총 가격
+      add_to_cart: 장바구니에 담기
+  add_to_cart_button:
+    text: 장바구니에 담기
+    added_to_cart: 장바구니에 추가됨
 pages:
   '404':
     title: 페이지를 찾을 수 없음
@@ -135,6 +139,7 @@ pages:
     title: deepweb[]awesome[]스타터
     description: deepweb[]awesome[]스타터
     keywords: deepweb[]awesome[]스타터
+    add_to_cart: 장바구니에 담기
   product:
     ordering:
       name: 이름
@@ -151,6 +156,33 @@ pages:
     description: 카트
     keywords: 카트
     empty: 장바구니가 비어 있습니다.
+    updated: 장바구니 업데이트됨
+    update_error: 장바구니 업데이트 오류
+    deleted: 장바구니 항목이 삭제되었습니다.
+    delete_error: 장바구니 상품 삭제 오류
+  checkout:
+    title: 점검
+    nav: 점검
+    description: 점검
+    keywords: 점검
+    empty: 장바구니가 비어 있습니다.
+    form:
+      first_name: 이름
+      last_name: 성
+      address: 주소
+      city: 도시
+      email: 이메일
+      phone: 핸드폰
+      place: 장소
+      zipcode: 우편 번호
+      country: 국가
+      region: 지역
+      customer_notes: 고객 메모
+      submit: 제출하다
+      too_many_attempts: 시도 횟수가 너무 많습니다. 나중에 다시 시도해 주세요.
+      choose:
+        country: 국가 선택
+        region: 지역 선택
 layouts:
   title: 딥웹 %{title}
   description: deepweb 설명 %{description}
@@ -174,3 +206,4 @@ routes:
   product: 제품
   home: 집
   cart: 카트
+  checkout: 점검

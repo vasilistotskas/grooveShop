@@ -86,6 +86,10 @@ components:
       price: τιμή
       vat_percent: ποσοστό φπα
       total_price: συνολικό ποσό
+      add_to_cart: προσθήκη στο καλάθι
+  add_to_cart_button:
+    text: προσθήκη στο καλάθι
+    added_to_cart: προστέθηκε στο καλάθι
 pages:
   '404':
     title: η σελίδα δεν βρέθηκε
@@ -150,6 +154,7 @@ pages:
     title: deepweb[]καταπληκτική[]μίζα
     description: deepweb[]καταπληκτική[]μίζα
     keywords: deepweb[]καταπληκτική[]μίζα
+    add_to_cart: προσθήκη στο καλάθι
   product:
     ordering:
       name: ονομα
@@ -166,6 +171,33 @@ pages:
     description: καροτσάκι
     keywords: καροτσάκι
     empty: το καλάθι σας είναι άδειο
+    updated: το καλάθι ενημερώθηκε
+    update_error: σφάλμα ενημέρωσης καλαθιού
+    deleted: το προϊόν καλαθιού διαγράφηκε
+    delete_error: σφάλμα διαγραφής προϊόντος καλαθιού
+  checkout:
+    title: ολοκλήρωση αγοράς
+    nav: ολοκλήρωση αγοράς
+    description: ολοκλήρωση αγοράς
+    keywords: ολοκλήρωση αγοράς
+    empty: το καλάθι σας είναι άδειο
+    form:
+      first_name: ονομα
+      last_name: επίθετο
+      address: διεύθυνση
+      city: πόλη
+      email: ηλεκτρονικη διευθυνση
+      phone: τηλέφωνο
+      place: θέση
+      zipcode: ταχυδρομικός κώδικας
+      country: χώρα
+      region: περιοχή
+      customer_notes: σημειώσεις πελατών
+      submit: υποβάλλουν
+      too_many_attempts: πάρα πολλές προσπάθειες, δοκιμάστε ξανά αργότερα.
+      choose:
+        country: διάλεξε χώρα
+        region: επιλέξτε περιοχή
 layouts:
   title: deepweb %{title}
   description: deepweb-description %{description}
@@ -189,3 +221,4 @@ routes:
   product: προϊόν
   home: σπίτι
   cart: καροτσάκι
+  checkout: ολοκλήρωση αγοράς
