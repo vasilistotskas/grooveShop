@@ -16,7 +16,6 @@ const cartStore = useCartStore()
 const { refresh: refreshCart, pending: cartPending } = await useAsyncData('cart', () =>
 	cartStore.initCart()
 )
-console.log('===== cartPending: =====', cartPending)
 
 const title = computed(() => (route.meta.title as string) || config.public.appTitle)
 const description = computed(
@@ -35,7 +34,6 @@ langBus.on((event: string, payload) => {
 const cartBus = useEventBus<string>(GlobalEvents.ON_CART_UPDATED)
 cartBus.on((event: string, payload) => {
 	// ON_CART_UPDATED event
-	console.log('======event=======: ', event)
 	refreshCart()
 })
 

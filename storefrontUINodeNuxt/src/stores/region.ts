@@ -1,3 +1,4 @@
+import { FetchError } from 'ofetch/dist/node'
 import { Region, RegionsQuery } from '~/zod/region/region'
 import { Pagination } from '~/zod/pagination/pagination'
 
@@ -5,7 +6,7 @@ export interface RegionState {
 	regions: Pagination<Region>
 	region: Region | null
 	pending: boolean
-	error: string | undefined
+	error: FetchError<any> | null
 }
 
 export const useRegionStore = defineStore({
@@ -24,7 +25,7 @@ export const useRegionStore = defineStore({
 		},
 		region: null as Region | null,
 		pending: false,
-		error: undefined as string | undefined
+		error: null as FetchError<any> | null
 	}),
 	getters: {
 		getRegions: (state) => {
@@ -36,7 +37,6 @@ export const useRegionStore = defineStore({
 	},
 	actions: {
 		async initRegions({ alpha2 }: RegionsQuery) {
-			// console.log('===== initRegions =====', alpha2)
 			const {
 				data: regions,
 				error,
@@ -47,12 +47,8 @@ export const useRegionStore = defineStore({
 					alpha_2: alpha2
 				}
 			})
-			if (pending) {
-				this.pending = true
-			}
-			if (error) {
-				this.error = error.value?.statusMessage || error.value?.message
-			}
+			this.pending = pending.value
+			this.error = error.value
 			if (regions.value) {
 				this.regions = regions.value
 			}

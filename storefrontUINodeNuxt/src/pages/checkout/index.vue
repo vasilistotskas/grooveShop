@@ -24,7 +24,6 @@ const {
 
 const onCountryChange = (event: Event) => {
 	if (!(event.target instanceof HTMLSelectElement)) return
-	// console.log('===== onCountryChange =====', event.target.value)
 	regionStore.initRegions({
 		alpha2: event.target.value
 	})
@@ -84,7 +83,7 @@ useServerSeoMeta({
 	<PageWrapper>
 		<PageTitle :text="$t('pages.checkout.title')" class="capitalize" />
 		<PageBody>
-			<PageError v-if="error" :error="error"></PageError>
+			<PageError v-if="countriesError" :error="countriesError"></PageError>
 			<template v-if="cartItems.length">
 				<form
 					id="checkoutForm"

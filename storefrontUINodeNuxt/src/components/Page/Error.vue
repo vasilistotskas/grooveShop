@@ -1,7 +1,10 @@
 <script lang="ts" setup>
+import { FetchError } from 'ofetch'
+
 defineProps({
 	error: {
-		type: String,
+		type: Object as PropType<FetchError>,
+		required: true,
 		default: null
 	}
 })

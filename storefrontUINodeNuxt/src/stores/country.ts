@@ -1,3 +1,4 @@
+import { FetchError } from 'ofetch/dist/node'
 import { CountriesQuery, Country } from '~/zod/country/country'
 import { Pagination } from '~/zod/pagination/pagination'
 
@@ -5,7 +6,7 @@ export interface CountryState {
 	countries: Pagination<Country>
 	country: Country | null
 	pending: boolean
-	error: string | undefined
+	error: FetchError<any> | null
 }
 
 export const useCountryStore = defineStore({
@@ -24,7 +25,7 @@ export const useCountryStore = defineStore({
 		},
 		country: null as Country | null,
 		pending: false,
-		error: undefined as string | undefined
+		error: null as FetchError<any> | null
 	}),
 	getters: {
 		getCountries: (state) => {
@@ -44,12 +45,8 @@ export const useCountryStore = defineStore({
 				method: 'get',
 				params
 			})
-			if (pending) {
-				this.pending = true
-			}
-			if (error) {
-				this.error = error.value?.statusMessage || error.value?.message
-			}
+			this.pending = pending.value
+			this.error = error.value
 			if (countries.value) {
 				this.countries = countries.value
 			}

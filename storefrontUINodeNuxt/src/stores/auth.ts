@@ -1,14 +1,16 @@
+import { FetchError } from 'ofetch/dist/node'
+
 export interface AuthState {
 	isAuthenticated: boolean
 	pending: boolean
-	error: string | undefined
+	error: FetchError<any> | null
 }
 export const useAuthStore = defineStore({
 	id: 'auth',
 	state: (): AuthState => ({
 		isAuthenticated: false,
 		pending: false,
-		error: undefined as string | undefined
+		error: null as FetchError<any> | null
 	}),
 	getters: {
 		getIsAuthenticated: (state) => {
@@ -25,12 +27,8 @@ export const useAuthStore = defineStore({
 			} = await useFetch(`/api/auth`, {
 				method: 'get'
 			})
-			if (pending) {
-				this.pending = true
-			}
-			if (error) {
-				this.error = error.value?.statusMessage || error.value?.message
-			}
+			this.pending = pending.value
+			this.error = error.value
 			if (auth.value) {
 				this.isAuthenticated = auth.value.isAuthenticated
 			}

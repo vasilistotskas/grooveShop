@@ -41,10 +41,11 @@ export const useCartStore = defineStore({
 			})
 			this.pending = pending.value
 			this.error = error.value
-			this.cart = cart.value
+			if (cart.value) {
+				this.cart = cart.value
+			}
 		},
 		async addCartItem(body: CreateRequest) {
-			this.pending = true
 			const { error, pending } = await useFetch(`/api/cart-items`, {
 				method: 'post',
 				body: JSON.stringify(body)
@@ -53,7 +54,6 @@ export const useCartStore = defineStore({
 			this.error = error.value
 		},
 		async updateCartItem(cartItemId: number, body: PutRequest) {
-			this.pending = true
 			const { error, pending } = await useFetch(`/api/cart-items/${cartItemId}`, {
 				method: 'put',
 				body: JSON.stringify(body)
@@ -62,7 +62,6 @@ export const useCartStore = defineStore({
 			this.error = error.value
 		},
 		async deleteCartItem(cartItemId: number) {
-			this.pending = true
 			const { error, pending } = await useFetch(`/api/cart-items/${cartItemId}`, {
 				method: 'delete'
 			})

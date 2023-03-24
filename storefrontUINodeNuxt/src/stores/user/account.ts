@@ -1,9 +1,10 @@
+import { FetchError } from 'ofetch/dist/node'
 import { Account } from '~/zod/user/account'
 
 export interface AccountState {
 	account: Account | null
 	pending: boolean
-	error: string | undefined
+	error: FetchError<any> | null
 }
 
 export const useAccountStore = defineStore({
@@ -11,7 +12,7 @@ export const useAccountStore = defineStore({
 	state: (): AccountState => ({
 		account: null as Account | null,
 		pending: false,
-		error: undefined as string | undefined
+		error: null as FetchError<any> | null
 	}),
 	getters: {
 		getAccount: (state) => {
@@ -27,12 +28,8 @@ export const useAccountStore = defineStore({
 			} = await useFetch(`/api/user_account_session`, {
 				method: 'get'
 			})
-			if (pending) {
-				this.pending = true
-			}
-			if (error) {
-				this.error = error.value?.statusMessage || error.value?.message
-			}
+			this.pending = pending.value
+			this.error = error.value
 			if (account.value) {
 				this.account = account.value
 			}

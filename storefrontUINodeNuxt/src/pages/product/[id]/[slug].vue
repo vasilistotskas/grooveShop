@@ -206,7 +206,11 @@ useHead(() => ({
 										</p>
 									</div>
 								</div>
-								<ReadMore :text="product.description" :max-chars="100"></ReadMore>
+								<ReadMore
+									v-if="product.description"
+									:text="product.description"
+									:max-chars="100"
+								></ReadMore>
 								<div class="flex space-x-4">
 									<div class="relative">
 										<div
