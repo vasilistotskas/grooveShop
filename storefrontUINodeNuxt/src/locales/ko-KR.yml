@@ -94,6 +94,7 @@ pages:
       nav: 테스트
       title: 테스트
       description: 이것은 테스트 페이지입니다
+      keywords: 테스트
     blank:
       nav: 공백
       title: 빈 페이지
@@ -141,6 +142,11 @@ pages:
     keywords: deepweb[]awesome[]스타터
     add_to_cart: 장바구니에 담기
   product:
+    add_to_cart: 장바구니에 담기
+    product_id: 제품 id
+    save: 구하다
+    inclusive_of_taxes: 모든 세금 포함.
+    qty: 수량
     ordering:
       name: 이름
       price: 가격
@@ -160,6 +166,7 @@ pages:
     update_error: 장바구니 업데이트 오류
     deleted: 장바구니 항목이 삭제되었습니다.
     delete_error: 장바구니 상품 삭제 오류
+    checkout: 점검
   checkout:
     title: 점검
     nav: 점검
@@ -194,6 +201,8 @@ others:
   copy: 복사
   enabled: 가능
   disabled: 장애가 있는
+  readLess: 적게 읽기
+  readMore: 더 읽어보기
 routes:
   el: 그리스 어
   en: 영어
@@ -202,6 +211,10 @@ routes:
   ja: 일본어
   ko: 한국인
   zh: 중국인
+  setting: 환경
+  test: 시험
+  blank: 공백
+  testing: 테스트
   products: 제품
   product: 제품
   home: 집

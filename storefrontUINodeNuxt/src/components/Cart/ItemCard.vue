@@ -3,6 +3,7 @@ import { CartItem } from '~/zod/cart/cart-item'
 import { GlobalEvents } from '~/events/global'
 
 const { contentShorten } = useText()
+const { resolveImageFilenameNoExt, resolveImageFileExtension } = useImage()
 
 const props = defineProps({
 	cartItem: { type: Object as PropType<CartItem>, required: true, default: null }
@@ -10,15 +11,6 @@ const props = defineProps({
 const { cartItem } = toRefs(props)
 
 const product = computed(() => cartItem.value.product)
-
-const imageFilenameNoExt = computed(() => {
-	if (!cartItem.value?.product.mainImageFilename) return undefined
-	return product.value.mainImageFilename.split('.').slice(0, -1).join('.')
-})
-const resolveImageFileExtension = (fileName: string) => {
-	if (!fileName) return undefined
-	return fileName.split('.').pop()
-}
 const bus = useEventBus<string>(GlobalEvents.CART_QUANTITY_SELECTOR)
 const cartItemQuantity = useState<number>(
 	`${cartItem.value.id}-quantity`,
@@ -48,7 +40,9 @@ const cartItemQuantity = useState<number>(
 					:format="resolveImageFileExtension(product.mainImageFilename)"
 					sizes="sm:100vw md:50vw lg:262px"
 					:src="
-						`media/uploads/products/${imageFilenameNoExt}` || '/images/placeholder.png'
+						`media/uploads/products/${resolveImageFilenameNoExt(
+							product.mainImageFilename
+						)}` || '/images/placeholder.png'
 					"
 					:alt="product.name"
 				/>

@@ -101,6 +101,7 @@ pages:
       nav: testen
       title: testen
       description: dies ist eine testseite
+      keywords: testen
     blank:
       nav: leer
       title: leere seite
@@ -156,6 +157,11 @@ pages:
     keywords: deepweb[]fantastischer[]starter
     add_to_cart: in den warenkorb legen
   product:
+    add_to_cart: in den warenkorb legen
+    product_id: produkt id
+    save: speichern
+    inclusive_of_taxes: inklusive aller steuern.
+    qty: menge
     ordering:
       name: name
       price: preis
@@ -175,6 +181,7 @@ pages:
     update_error: fehler bei der warenkorbaktualisierung
     deleted: warenkorb artikel gelöscht
     delete_error: fehler beim löschen des warenkorbartikels
+    checkout: kasse
   checkout:
     title: kasse
     nav: kasse
@@ -209,6 +216,8 @@ others:
   copy: kopieren
   enabled: ermöglicht
   disabled: behinderte
+  readLess: lese weniger
+  readMore: weiterlesen
 routes:
   el: griechisch
   en: englisch
@@ -217,6 +226,10 @@ routes:
   ja: japanisch
   ko: koreanisch
   zh: chinesisch
+  setting: einstellung
+  test: prüfen
+  blank: leer
+  testing: testen
   products: produkte
   product: produkt
   home: heim

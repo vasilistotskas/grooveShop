@@ -2,19 +2,11 @@
 import { Product } from '~/zod/product/product'
 
 const { contentShorten } = useText()
+const { resolveImageFilenameNoExt, resolveImageFileExtension } = useImage()
 
 const props = defineProps({
 	product: { type: Object as PropType<Product>, required: true, default: null }
 })
-
-const imageFilenameNoExt = computed(() => {
-	if (!props.product?.mainImageFilename) return undefined
-	return props.product.mainImageFilename.split('.').slice(0, -1).join('.')
-})
-const resolveImageFileExtension = (fileName: string) => {
-	if (!fileName) return undefined
-	return fileName.split('.').pop()
-}
 </script>
 
 <template>
@@ -44,8 +36,9 @@ const resolveImageFileExtension = (fileName: string) => {
 										:format="resolveImageFileExtension(product?.mainImageFilename)"
 										sizes="sm:100vw md:50vw lg:250px"
 										:src="
-											`media/uploads/products/${imageFilenameNoExt}` ||
-											'/images/placeholder.png'
+											`media/uploads/products/${resolveImageFilenameNoExt(
+												product?.mainImageFilename
+											)}` || '/images/placeholder.png'
 										"
 										:alt="product?.name"
 									/>

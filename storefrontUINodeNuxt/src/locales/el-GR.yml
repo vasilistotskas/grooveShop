@@ -101,6 +101,7 @@ pages:
       nav: δοκιμή
       title: δοκιμή
       description: αυτή είναι μια δοκιμαστική σελίδα
+      keywords: δοκιμή
     blank:
       nav: κενό
       title: κενή σελίδα
@@ -156,6 +157,11 @@ pages:
     keywords: deepweb[]καταπληκτική[]μίζα
     add_to_cart: προσθήκη στο καλάθι
   product:
+    add_to_cart: προσθήκη στο καλάθι
+    product_id: αναγνωριστικό προϊόντος
+    save: αποθηκεύσετε
+    inclusive_of_taxes: συμπεριλαμβάνονται όλοι οι φόροι.
+    qty: ποσ
     ordering:
       name: ονομα
       price: τιμή
@@ -175,6 +181,7 @@ pages:
     update_error: σφάλμα ενημέρωσης καλαθιού
     deleted: το προϊόν καλαθιού διαγράφηκε
     delete_error: σφάλμα διαγραφής προϊόντος καλαθιού
+    checkout: ολοκλήρωση αγοράς
   checkout:
     title: ολοκλήρωση αγοράς
     nav: ολοκλήρωση αγοράς
@@ -209,6 +216,8 @@ others:
   copy: αντίγραφο
   enabled: ενεργοποιημένη
   disabled: άτομα με ειδικές ανάγκες
+  readLess: διάβασε λιγότερο
+  readMore: διαβάστε περισσότερα
 routes:
   el: ελληνικά
   en: αγγλικά
@@ -217,6 +226,10 @@ routes:
   ja: ιαπωνικά
   ko: κορεάτης
   zh: κινέζικα
+  setting: σύνθεση
+  test: δοκιμή
+  blank: κενό
+  testing: δοκιμές
   products: προϊόντα
   product: προϊόν
   home: σπίτι

@@ -94,6 +94,7 @@ pages:
       nav: テスト
       title: テスト
       description: これはテストページです
+      keywords: テスト
     blank:
       nav: 空欄
       title: 空白ページ
@@ -116,7 +117,7 @@ pages:
       sections:
         validate_username:
           title: github プロファイルを検証する
-          description: github のユーザー名を入力し、ボタンをクリックして検証します。
+          description: github ユーザー名を入力し、ボタンをクリックして検証します。
           footer: 詳しくはこちら
           footer_button: 検証
           footer_link: github ユーザー api
@@ -141,6 +142,11 @@ pages:
     keywords: ディープウェブ[]素晴らしい[]スターター
     add_to_cart: カートに追加
   product:
+    add_to_cart: カートに追加
+    product_id: 製品番号
+    save: 保存
+    inclusive_of_taxes: すべての税金を含みます。
+    qty: 数量
     ordering:
       name: 名前
       price: 価格
@@ -160,6 +166,7 @@ pages:
     update_error: カート更新エラー
     deleted: カートの商品を削除しました
     delete_error: カート項目削除エラー
+    checkout: チェックアウト
   checkout:
     title: チェックアウト
     nav: チェックアウト
@@ -194,6 +201,8 @@ others:
   copy: コピー
   enabled: 有効
   disabled: 無効
+  readLess: もっと読む
+  readMore: 続きを読む
 routes:
   el: ギリシャ語
   en: 英語
@@ -202,6 +211,10 @@ routes:
   ja: 日本
   ko: 韓国語
   zh: 中国語
+  setting: 設定
+  test: テスト
+  blank: 空欄
+  testing: テスト
   products: 製品
   product: 製品
   home: 家

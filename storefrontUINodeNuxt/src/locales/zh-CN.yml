@@ -44,8 +44,8 @@ components:
     banner:
       description: >-
         我们使用我们自己的 cookie 和第三方 cookie
-        以便我们能够正确显示本网站并更好地了解本网站的使用情况，以改善我们提供的服务。可以随时使用在此横幅上做出选择后出现的 cookie 按钮更改有关
-        cookie 使用权限的决定。
+        以便我们能够正确显示本网站并更好地了解本网站的使用情况，以改善我们提供的服务。使用在此横幅上做出选择后出现的 cookie
+        按钮，可以随时更改有关 cookie 使用权限的决定。
       title: 饼干
     close: 关闭
     cookies:
@@ -92,6 +92,7 @@ pages:
       nav: 测试
       title: 测试
       description: 这是一个测试页面
+      keywords: 测试
     blank:
       nav: 空白的
       title: 空白页
@@ -123,7 +124,7 @@ pages:
           description: 这是您的机器人 id。
           footer: 与机器人交互时使用。
         protection_spam:
-          title: 垃圾邮件保护
+          title: 垃圾邮件防护
           description: 切换启用以删除红色边框
           footer: 如果启用，我们将保护您的评论免受垃圾邮件
         advanced_enable_advanced:
@@ -139,6 +140,11 @@ pages:
     keywords: deepweb[]awesome[]starter
     add_to_cart: 添加到购物车
   product:
+    add_to_cart: 添加到购物车
+    product_id: 产品编号
+    save: 节省
+    inclusive_of_taxes: 包括所有税费。
+    qty: 数量
     ordering:
       name: 姓名
       price: 价格
@@ -158,6 +164,7 @@ pages:
     update_error: 购物车更新错误
     deleted: 购物车项目已删除
     delete_error: 购物车项目删除错误
+    checkout: 查看
   checkout:
     title: 查看
     nav: 查看
@@ -192,6 +199,8 @@ others:
   copy: 复制
   enabled: 启用
   disabled: 禁用
+  readLess: 少读书
+  readMore: 阅读更多
 routes:
   el: 希腊语
   en: 英语
@@ -200,6 +209,10 @@ routes:
   ja: 日本人
   ko: 韩国人
   zh: 中国人
+  setting: 环境
+  test: 测试
+  blank: 空白的
+  testing: 测试
   products: 产品
   product: 产品
   home: 家

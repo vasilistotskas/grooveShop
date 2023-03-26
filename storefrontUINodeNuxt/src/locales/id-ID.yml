@@ -99,6 +99,7 @@ pages:
       nav: pengujian
       title: pengujian
       description: ini adalah halaman pengujian
+      keywords: pengujian
     blank:
       nav: kosong
       title: halaman kosong
@@ -150,6 +151,11 @@ pages:
     keywords: deepweb[]mengagumkan[]pemula
     add_to_cart: masukkan ke keranjang
   product:
+    add_to_cart: masukkan ke keranjang
+    product_id: id produk
+    save: menyimpan
+    inclusive_of_taxes: termasuk semua pajak.
+    qty: jumlah
     ordering:
       name: nama
       price: harga
@@ -169,6 +175,7 @@ pages:
     update_error: kesalahan pembaruan keranjang
     deleted: item keranjang dihapus
     delete_error: kesalahan penghapusan item keranjang
+    checkout: periksa
   checkout:
     title: periksa
     nav: periksa
@@ -203,6 +210,8 @@ others:
   copy: menyalin
   enabled: diaktifkan
   disabled: dengan disabilitas
+  readLess: baca lebih sedikit
+  readMore: baca selengkapnya
 routes:
   el: orang yunani
   en: bahasa inggris
@@ -211,6 +220,10 @@ routes:
   ja: jepang
   ko: korea
   zh: cina
+  setting: pengaturan
+  test: tes
+  blank: kosong
+  testing: pengujian
   products: produk
   product: produk
   home: rumah
