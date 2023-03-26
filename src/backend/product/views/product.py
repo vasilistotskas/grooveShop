@@ -97,7 +97,7 @@ class ProductImagesViewSet(BaseExpandView, ModelViewSet):
     filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
     filterset_fields = ["id", "product", "is_main"]
     ordering_fields = ["created_at", "is_main"]
-    ordering = ["-created_at", "is_main"]
+    ordering = ["-is_main", "-created_at"]
 
     def list(self, request, *args, **kwargs) -> Response:
         queryset = self.filter_queryset(self.get_queryset())

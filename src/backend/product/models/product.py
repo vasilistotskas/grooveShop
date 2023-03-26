@@ -223,15 +223,15 @@ class ProductTranslation(TimeStampMixinModel, UUIDModel, SeoModelTranslation):
 
 class ProductImages(TimeStampMixinModel, SortableModel, UUIDModel):
     id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=50, blank=True)
+    title = models.CharField(max_length=50)
     product = models.ForeignKey(
         "product.Product", related_name="product_images", on_delete=models.CASCADE
     )
-    image = models.ImageField(upload_to="uploads/products/", blank=True, null=True)
+    image = models.ImageField(upload_to="uploads/products/")
     thumbnail = models.ImageField(
         upload_to="uploads/products/thumbnails/", blank=True, null=True
     )
-    is_main = models.BooleanField(blank=False, null=False, default=False)
+    is_main = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = "Product Images"
