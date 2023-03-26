@@ -1,4 +1,4 @@
-import { FetchError } from 'ofetch/dist/node'
+import { FetchError } from 'ofetch'
 import { CreateRequest, Product } from '~/zod/product/product'
 import { Pagination } from '~/zod/pagination/pagination'
 import { ProductsQuery } from '~/zod/products/products'

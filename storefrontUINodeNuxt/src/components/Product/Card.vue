@@ -7,14 +7,14 @@ const props = defineProps({
 	product: { type: Object as PropType<Product>, required: true, default: null }
 })
 
-const imageFilename = computed(() => {
+const imageFilenameNoExt = computed(() => {
 	if (!props.product?.mainImageFilename) return undefined
 	return props.product.mainImageFilename.split('.').slice(0, -1).join('.')
 })
-const resolveImageFileExtension = computed(() => {
-	if (!props.product?.mainImageFilename) return undefined
-	return props.product.mainImageFilename.split('.').pop()
-})
+const resolveImageFileExtension = (fileName: string) => {
+	if (!fileName) return undefined
+	return fileName.split('.').pop()
+}
 </script>
 
 <template>
@@ -34,16 +34,17 @@ const resolveImageFileExtension = computed(() => {
 										loading="lazy"
 										provider="mediaStream"
 										class="product_img"
+										:style="{ objectFit: 'contain' }"
 										:width="250"
 										:height="230"
 										:fit="'contain'"
 										:position="'entropy'"
 										:background="'transparent'"
 										:trim-threshold="5"
-										:format="resolveImageFileExtension"
+										:format="resolveImageFileExtension(product?.mainImageFilename)"
 										sizes="sm:100vw md:50vw lg:250px"
 										:src="
-											`media/uploads/products/${imageFilename}` ||
+											`media/uploads/products/${imageFilenameNoExt}` ||
 											'/images/placeholder.png'
 										"
 										:alt="product?.name"

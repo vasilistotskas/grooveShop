@@ -64,17 +64,19 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 
 <template>
 	<PageWrapper>
-		<PageTitle :text="$t('pages.cart.title')" class="capitalize" />
+		<div class="grid grid-cols-2 items-center">
+			<PageTitle :text="$t('pages.cart.title')" class="capitalize" />
+			<h2 class="grid justify-items-center justify-self-end">
+				<Button
+					:text="$t('pages.cart.checkout')"
+					class="font-extrabold capitalize"
+					:to="'checkout'"
+					:href="'checkout'"
+				/>
+			</h2>
+		</div>
 		<PageBody>
 			<PageError v-if="error" :error="error"></PageError>
-			<h2>
-				<Anchor
-					:to="'checkout'"
-					:text="'checkout'"
-					class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
-					>{{ $t('pages.cart.checkout') }}</Anchor
-				>
-			</h2>
 			<LoadingSkeleton
 				:card-height="'130px'"
 				:class="

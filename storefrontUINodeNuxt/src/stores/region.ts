@@ -1,4 +1,4 @@
-import { FetchError } from 'ofetch/dist/node'
+import { FetchError } from 'ofetch'
 import { Region, RegionsQuery } from '~/zod/region/region'
 import { Pagination } from '~/zod/pagination/pagination'
 

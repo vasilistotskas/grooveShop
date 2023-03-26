@@ -59,6 +59,7 @@ const menus = computed((): IMenuItem[] => [
 						loading="lazy"
 						provider="mediaStream"
 						class="rounded-full"
+						:style="{ objectFit: 'contain' }"
 						:src="`static/images/websiteLogo`"
 						:width="150"
 						:height="42"

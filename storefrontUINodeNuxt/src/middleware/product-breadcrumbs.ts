@@ -17,7 +17,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
 				link: '/products'
 			},
 			{
-				text: $i18n.t(`routes.product`),
+				text: String(to.params.slug),
 				link: `/product/${to.params.id}/${to.params.slug}`
 			}
 		]

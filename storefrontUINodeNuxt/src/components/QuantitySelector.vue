@@ -49,7 +49,7 @@ const changeQuantityEvent = (event: Event) => {
 			<icon-fa-solid:minus />
 		</button>
 		<select
-			class="w-full text-gray-700 dark:text-gray-200"
+			class="w-full text-gray-700 dark:text-gray-200 bg-gray-100/[0.8] dark:bg-slate-800/[0.8] border border-gray-200"
 			:value="cartItemQuantity"
 			:aria-label="'quantity'"
 			@change="changeQuantityEvent"

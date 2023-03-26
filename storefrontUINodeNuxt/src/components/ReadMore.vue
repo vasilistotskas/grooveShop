@@ -41,10 +41,11 @@ const toggleFullText = () => {
 		></div>
 		<div class="absolute bottom-0 right-0">
 			<button
+				type="button"
 				class="text-sm font-semibold text-gray-700 dark:text-gray-200 hover:text-gray-800 dark:hover:text-gray-100"
 				@click="toggleFullText"
 			>
-				{{ showFullText ? t('readLess') : t('readMore') }}
+				{{ showFullText ? t('others.readLess') : t('others.readMore') }}
 			</button>
 		</div>
 	</div>

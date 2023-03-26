@@ -1,4 +1,4 @@
-import { FetchError } from 'ofetch/dist/node'
+import { FetchError } from 'ofetch'
 import { Account } from '~/zod/user/account'
 
 export interface AccountState {

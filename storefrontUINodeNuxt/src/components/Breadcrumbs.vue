@@ -93,7 +93,8 @@ const resolveParentHeadingElement = computed(() => {
 	padding: 0.5rem;
 	&-itm_li {
 		margin: 0;
-		padding: 0;
+		padding-left: 2rem;
+		padding-right: 2rem;
 		display: flex;
 		overflow-x: auto;
 		flex-wrap: nowrap;
@@ -109,6 +110,10 @@ const resolveParentHeadingElement = computed(() => {
 		flex-shrink: 0;
 		display: flex;
 		&-lnk {
+			display: grid;
+			grid-template-columns: auto 1fr;
+			align-items: center;
+			gap: 3px;
 			font-size: 12px;
 			text-decoration: none;
 			color: gray;

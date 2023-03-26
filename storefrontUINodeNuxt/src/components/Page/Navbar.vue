@@ -56,7 +56,7 @@ bus.on((event: string) => {
 	</GenericModal>
 
 	<BuilderNavbar>
-		<template #banner>
+		<template v-if="false" #banner>
 			<div class="text-white text-xs text-center py-1 px-4 lg:px-8 capitalize">
 				<span class="mr-1 text-gray-700 dark:text-gray-200">
 					{{ $t('banners.welcome', { app_name: config.public.appTitle }) }}

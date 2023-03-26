@@ -1,34 +1,32 @@
 <script lang="ts" setup>
 import { useProductStore } from '~/stores/product/product'
 import { capitalize } from '~/utils/str'
+import { useImagesStore } from '~/stores/product/images'
 
 const route = useRoute()
 const config = useRuntimeConfig()
-const store = useProductStore()
+const productStore = useProductStore()
+const productImagesStore = useImagesStore()
 const { t } = useLang()
 
 const fullPath = config.public.baseUrl + route.fullPath
 const productId = route.params.id
 
-const { pending, refresh } = await useAsyncData('product', () =>
-	store.fetchProduct(productId)
+const { pending: productPending } = await useAsyncData('product', () =>
+	productStore.fetchProduct(productId)
 )
-const { product, error } = storeToRefs(store)
+const { product, error: productError } = storeToRefs(productStore)
+
+const { pending: productImagesPending } = await useAsyncData('productImages', () =>
+	productImagesStore.fetchImages({ product: String(productId) })
+)
+
+const { images: productImages, error: productImagesError } =
+	storeToRefs(productImagesStore)
 
 const productTitle = computed(() => {
 	return capitalize(product.value?.seoTitle || product.value?.name || '')
 })
-
-const imageFilename = computed(() => {
-	if (!product.value?.mainImageFilename) return undefined
-	return product.value.mainImageFilename.split('.').slice(0, -1).join('.')
-})
-const resolveImageFileExtension = computed(() => {
-	if (!product.value?.mainImageFilename) return undefined
-	return product.value.mainImageFilename.split('.').pop()
-})
-
-const image = ref(1)
 const selectorQuantity = ref(1)
 
 definePageMeta({
@@ -105,77 +103,22 @@ useHead(() => ({
 <template>
 	<PageWrapper class="flex flex-col">
 		<PageBody>
-			<PageError v-if="error" :error="error"></PageError>
+			<PageError v-if="productError" :error="productError"></PageError>
 			<LoadingSkeleton
-				:loading="pending"
-				:class="pending ? 'block' : 'hidden'"
+				:loading="productPending"
+				:class="productPending ? 'block' : 'hidden'"
 			></LoadingSkeleton>
 			<template v-if="product">
 				<div class="product">
 					<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
 						<div class="grid grid-cols-2 gap-2">
 							<div class="md:flex-1 px-4">
-								<div class="grid">
-									<div class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4">
-										<nuxt-img
-											v-show="image === 1"
-											preload
-											placeholder
-											loading="lazy"
-											provider="mediaStream"
-											class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
-											:width="592"
-											:height="320"
-											:fit="'contain'"
-											:position="'entropy'"
-											:background="'transparent'"
-											:trim-threshold="5"
-											:format="resolveImageFileExtension"
-											sizes="sm:100vw md:50vw lg:592px"
-											:src="
-												`media/uploads/products/${imageFilename}` ||
-												'/images/placeholder.png'
-											"
-											:alt="product.name"
-										/>
-
-										<div
-											v-show="image === 2"
-											class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
-										>
-											<span class="text-5xl">2</span>
-										</div>
-
-										<div
-											v-show="image === 3"
-											class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
-										>
-											<span class="text-5xl">3</span>
-										</div>
-
-										<div
-											v-show="image === 4"
-											class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
-										>
-											<span class="text-5xl">4</span>
-										</div>
-									</div>
-
-									<div class="flex -mx-2 mb-4">
-										<template v-for="i in 4" :key="i">
-											<div class="flex-1 px-2">
-												<button
-													:class="{ 'ring-2 ring-indigo-300 ring-inset': image === i }"
-													type="button"
-													class="focus:outline-none w-full rounded-lg h-24 md:h-32 bg-gray-100 flex items-center justify-center"
-													@click="image = i"
-												>
-													<span class="text-2xl" v-text="i"></span>
-												</button>
-											</div>
-										</template>
-									</div>
-								</div>
+								<ProductImages
+									:product="product"
+									:product-images="productImages"
+									:pending="productImagesPending"
+									:error="productImagesError"
+								></ProductImages>
 							</div>
 							<div class="grid gap-6 px-4 items-center content-center">
 								<h2
@@ -206,11 +149,7 @@ useHead(() => ({
 										</p>
 									</div>
 								</div>
-								<ReadMore
-									v-if="product.description"
-									:text="product.description"
-									:max-chars="100"
-								></ReadMore>
+								<ReadMore :text="product.description || ''" :max-chars="100"></ReadMore>
 								<div class="flex space-x-4">
 									<div class="relative">
 										<div

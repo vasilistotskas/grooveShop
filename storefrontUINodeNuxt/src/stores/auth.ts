@@ -1,4 +1,4 @@
-import { FetchError } from 'ofetch/dist/node'
+import { FetchError } from 'ofetch'
 
 export interface AuthState {
 	isAuthenticated: boolean

@@ -95,7 +95,7 @@ useServerSeoMeta({
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="firstName">{{
 							$t('pages.checkout.form.first_name')
 						}}</label>
-						<div>
+						<div class="grid">
 							<FormTextInput
 								id="firstName"
 								v-model="firstName"
@@ -113,7 +113,7 @@ useServerSeoMeta({
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="lastName">{{
 							$t('pages.checkout.form.last_name')
 						}}</label>
-						<div>
+						<div class="grid">
 							<FormTextInput
 								id="lastName"
 								v-model="lastName"
@@ -131,7 +131,7 @@ useServerSeoMeta({
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="address">{{
 							$t('pages.checkout.form.address')
 						}}</label>
-						<div>
+						<div class="grid">
 							<FormTextInput
 								id="address"
 								v-model="address"
@@ -149,7 +149,7 @@ useServerSeoMeta({
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="city">{{
 							$t('pages.checkout.form.city')
 						}}</label>
-						<div>
+						<div class="grid">
 							<FormTextInput
 								id="city"
 								v-model="city"
@@ -167,7 +167,7 @@ useServerSeoMeta({
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="email">{{
 							$t('pages.checkout.form.email')
 						}}</label>
-						<div>
+						<div class="grid">
 							<FormTextInput
 								id="email"
 								v-model="email"
@@ -185,7 +185,7 @@ useServerSeoMeta({
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="phone">{{
 							$t('pages.checkout.form.phone')
 						}}</label>
-						<div>
+						<div class="grid">
 							<FormTextInput
 								id="phone"
 								v-model="phone"
@@ -203,7 +203,7 @@ useServerSeoMeta({
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="place">{{
 							$t('pages.checkout.form.place')
 						}}</label>
-						<div>
+						<div class="grid">
 							<FormTextInput
 								id="place"
 								v-model="place"
@@ -221,7 +221,7 @@ useServerSeoMeta({
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="zipcode">{{
 							$t('pages.checkout.form.zipcode')
 						}}</label>
-						<div>
+						<div class="grid">
 							<FormTextInput
 								id="zipcode"
 								v-model="zipcode"
@@ -239,11 +239,11 @@ useServerSeoMeta({
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="country">{{
 							$t('pages.checkout.form.country')
 						}}</label>
-						<div>
+						<div class="grid">
 							<select
 								id="country"
 								v-model="country"
-								class="form-select text-gray-700 dark:text-gray-300 border-gray-900/10 dark:border-gray-50/[0.2]"
+								class="form-select text-gray-700 dark:text-gray-300 bg-gray-100/[0.8] dark:bg-slate-800/[0.8] border border-gray-200"
 								name="country"
 								@change="onCountryChange"
 							>
@@ -267,12 +267,12 @@ useServerSeoMeta({
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="region">{{
 							$t('pages.checkout.form.region')
 						}}</label>
-						<div>
+						<div class="grid">
 							<select
 								id="region"
 								ref="regionSelectElement"
 								v-model="region"
-								class="form-select text-gray-700 dark:text-gray-300 border-gray-900/10 dark:border-gray-50/[0.2]"
+								class="form-select text-gray-700 dark:text-gray-300 bg-gray-100/[0.8] dark:bg-slate-800/[0.8] border border-gray-200"
 								name="region"
 							>
 								<option disabled value="choose">
@@ -295,25 +295,27 @@ useServerSeoMeta({
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="customerNotes">{{
 							$t('pages.checkout.form.customer_notes')
 						}}</label>
-						<div>
+						<div class="grid">
 							<textarea
 								id="customerNotes"
 								v-model="customerNotes"
-								class="text-gray-700 dark:text-gray-200 mb-2"
+								class="w-full text-gray-700 dark:text-gray-200 bg-gray-100/[0.8] dark:bg-slate-800/[0.8] border border-gray-200"
 								name="customerNotes"
 								type="text"
+								rows="4"
 								:placeholder="$t('pages.checkout.form.customer_notes')"
-								autocomplete="customerNotes"
 							/>
 						</div>
 					</div>
 
-					<Button v-if="!tooManyAttempts" type="submit">
-						{{ $t('pages.checkout.form.submit') }}
-					</Button>
-					<Button v-else type="button" disabled>
-						{{ $t('pages.checkout.form.too_many_attempts') }}
-					</Button>
+					<div class="grid items-end">
+						<Button v-if="!tooManyAttempts" type="submit">
+							{{ $t('pages.checkout.form.submit') }}
+						</Button>
+						<Button v-else type="button" disabled>
+							{{ $t('pages.checkout.form.too_many_attempts') }}
+						</Button>
+					</div>
 				</form>
 			</template>
 			<template v-else>

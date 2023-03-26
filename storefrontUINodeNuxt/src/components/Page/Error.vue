@@ -3,8 +3,8 @@ import { FetchError } from 'ofetch'
 
 defineProps({
 	error: {
-		type: Object as PropType<FetchError>,
-		required: true,
+		type: Object as PropType<FetchError | null>,
+		required: false,
 		default: null
 	}
 })
