@@ -95,25 +95,7 @@ const toggleOptions = (show?: boolean) => {
 									class="mr-3 flex-none overflow-hidden md:w-auto text-md font-bold text-gray-700 dark:text-gray-200 flex items-center"
 									:to="localePath('index')"
 								>
-									<nuxt-img
-										preload
-										placeholder
-										loading="lazy"
-										provider="mediaStream"
-										class="rounded-full"
-										:style="{ objectFit: 'contain' }"
-										:src="`static/images/websiteLogo`"
-										:width="150"
-										:height="42"
-										:fit="'contain'"
-										:position="'entropy'"
-										:background="'transparent'"
-										:trim-threshold="5"
-										:format="'png'"
-										sizes="sm:75vw md:125vw lg:275px"
-										alt="Avatar of Jonathan Reinink"
-									/>
-									<span class="hidden">{{ config.public.appTitle }}</span>
+									<span>{{ config.public.appTitle }}</span>
 								</NuxtLink>
 							</strong>
 						</h1>

@@ -1,4 +1,4 @@
-export const useImage = () => {
+export const useImageResolver = () => {
 	const resolveImageFilenameNoExt = (fileName: string) => {
 		if (!fileName) return undefined
 		return fileName.split('.').slice(0, -1).join('.')

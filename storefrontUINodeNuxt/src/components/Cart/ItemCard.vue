@@ -3,7 +3,7 @@ import { CartItem } from '~/zod/cart/cart-item'
 import { GlobalEvents } from '~/events/global'
 
 const { contentShorten } = useText()
-const { resolveImageFilenameNoExt, resolveImageFileExtension } = useImage()
+const { resolveImageFilenameNoExt, resolveImageFileExtension } = useImageResolver()
 
 const props = defineProps({
 	cartItem: { type: Object as PropType<CartItem>, required: true, default: null }

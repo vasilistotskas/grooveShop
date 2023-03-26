@@ -1,12 +1,29 @@
 <script lang="ts" setup>
+import { isClient } from '@vueuse/shared'
+import { useShare } from '@vueuse/core'
 import { Product } from '~/zod/product/product'
 
 const { contentShorten } = useText()
-const { resolveImageFilenameNoExt, resolveImageFileExtension } = useImage()
+const { resolveImageFilenameNoExt, resolveImageFileExtension } = useImageResolver()
 
 const props = defineProps({
 	product: { type: Object as PropType<Product>, required: true, default: null }
 })
+
+const { product } = toRefs(props)
+
+const productUrl = computed(() => {
+	if (!product.value) return ''
+	return `/product/${product.value.id}/${product.value.slug}`
+})
+
+const shareOptions = ref({
+	title: product?.value.name,
+	text: product?.value.description || '',
+	url: isClient ? productUrl : ''
+})
+const { share, isSupported } = useShare(shareOptions)
+const startShare = () => share().catch((err) => err)
 </script>
 
 <template>
@@ -48,6 +65,19 @@ const props = defineProps({
 					</div>
 				</div>
 				<div class="card-body">
+					<div class="card-actions h-6">
+						<ClientOnly>
+							<Button
+								:disabled="!isSupported"
+								:text="
+									isSupported ? 'Share' : 'Web share is not supported in your browser'
+								"
+								size="xs"
+								class="font-extrabold capitalize"
+								@click="startShare"
+							/>
+						</ClientOnly>
+					</div>
 					<h2 class="card-title text-gray-700 dark:text-gray-200">
 						<Anchor :to="`/product${product?.absoluteUrl}`" :text="product?.name">
 							{{ product?.name }}
