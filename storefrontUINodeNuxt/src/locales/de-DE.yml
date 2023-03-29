@@ -87,9 +87,17 @@ components:
       vat_percent: mehrwertsteuer prozent
       total_price: gesamtpreis
       add_to_cart: in den warenkorb legen
+      share: aktie
+      share_not_supported: die webfreigabe wird von ihrem browser nicht unterstützt
   add_to_cart_button:
     text: in den warenkorb legen
     added_to_cart: zum warenkorb hinzugefügt
+  add_to_favourite_button:
+    not_authenticated: sie müssen angemeldet sein, um favoriten hinzufügen zu können
+    added: zu favoriten hinzugefügt
+    removed: aus favoriten entfernt
+    add: zu favoriten hinzufügen
+    remove: von den favoriten entfernen
 pages:
   '404':
     title: seite nicht gefunden
@@ -136,7 +144,7 @@ pages:
           footer: wird bei der interaktion mit dem bot verwendet.
         protection_spam:
           title: spamschutz
-          description: toggle enable, um den roten rahmen zu entfernen
+          description: toggle enable, um den roten rand zu entfernen
           footer: >-
             wenn sie diese option aktivieren, schützen wir ihre kommentare vor
             spam
@@ -166,6 +174,8 @@ pages:
       name: name
       price: preis
       created_at: hergestellt in
+    share: aktie
+    share_not_supported: die webfreigabe wird von ihrem browser nicht unterstützt
   products:
     title: produkte
     nav: produkte

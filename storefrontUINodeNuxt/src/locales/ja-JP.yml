@@ -53,7 +53,7 @@ components:
       necessary: 必要なクッキー
       necessary_description: >-
         必要な cookie は、ページ ナビゲーションや web サイトの安全な領域へのアクセスなどの基本的な機能を有効にすることで、web
-        サイトを使いやすくします。これらの cookie がないと、web サイトは正しく機能しません。
+        サイトを使いやすくするのに役立ちます。これらの cookie がないと、web サイトは正しく機能しません。
       optional: オプションのクッキー
       optional_links:
         privacy_policy: プライバシーポリシー
@@ -80,9 +80,17 @@ components:
       vat_percent: 付加価値税率
       total_price: 合計金額
       add_to_cart: カートに追加
+      share: 共有
+      share_not_supported: お使いのブラウザーでは web 共有がサポートされていません
   add_to_cart_button:
     text: カートに追加
     added_to_cart: カートに追加
+  add_to_favourite_button:
+    not_authenticated: お気に入りに追加するにはログインする必要があります
+    added: お気に入りに追加
+    removed: お気に入りから削除しました
+    add: お気に入りに追加
+    remove: お気に入りから削除
 pages:
   '404':
     title: ページが見つかりません
@@ -151,6 +159,8 @@ pages:
       name: 名前
       price: 価格
       created_at: 作成日
+    share: 共有
+    share_not_supported: お使いのブラウザーでは web 共有がサポートされていません
   products:
     title: 製品
     nav: 製品

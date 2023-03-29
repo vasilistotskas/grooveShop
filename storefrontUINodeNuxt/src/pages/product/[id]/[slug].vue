@@ -1,16 +1,25 @@
 <script lang="ts" setup>
+import { isClient } from '@vueuse/shared'
+import { useShare } from '@vueuse/core'
 import { useProductStore } from '~/stores/product/product'
 import { capitalize } from '~/utils/str'
 import { useImagesStore } from '~/stores/product/images'
+import { useAuthStore } from '~/stores/auth'
+import { useUserStore } from '~/stores/user/user'
 
 const route = useRoute()
 const config = useRuntimeConfig()
 const productStore = useProductStore()
 const productImagesStore = useImagesStore()
+const authStore = useAuthStore()
+const userStore = useUserStore()
 const { t } = useLang()
 
 const fullPath = config.public.baseUrl + route.fullPath
 const productId = route.params.id
+const isAuthenticated = authStore.isAuthenticated
+
+const { account, favourites } = storeToRefs(userStore)
 
 const { pending: productPending } = await useAsyncData('product', () =>
 	productStore.fetchProduct(productId)
@@ -28,6 +37,27 @@ const productTitle = computed(() => {
 	return capitalize(product.value?.seoTitle || product.value?.name || '')
 })
 const selectorQuantity = ref(1)
+const productUrl = computed(() => {
+	if (!product.value) return ''
+	return `/product/${product.value.id}/${product.value.slug}`
+})
+
+const shareOptions = ref({
+	title: product.value?.name,
+	text: product.value?.description || '',
+	url: isClient ? productUrl : ''
+})
+const { share, isSupported } = useShare(shareOptions)
+const startShare = () => share().catch((err) => err)
+const productInUserFavourites = computed(() => {
+	if (!product.value) return false
+	return userStore.getIsProductInFavourites(product.value.id)
+})
+
+const userToProductFavourite = computed(() => {
+	if (!product.value) return null
+	return userStore.getUserToProductFavourite(product.value.id)
+})
 
 definePageMeta({
 	middleware: ['product', 'product-breadcrumbs'],
@@ -126,6 +156,28 @@ useHead(() => ({
 								>
 									{{ product.name }}
 								</h2>
+								<div class="actions h-6 flex gap-4">
+									<ClientOnly>
+										<Button
+											:disabled="!isSupported"
+											:text="
+												isSupported
+													? $t('pages.product.share')
+													: $t('pages.product.share_not_supported')
+											"
+											size="xs"
+											class="font-extrabold capitalize"
+											@click="startShare"
+										/>
+									</ClientOnly>
+									<AddToFavouriteButton
+										:product-id="product.id"
+										:user-id="account?.id"
+										:is-favourite="productInUserFavourites"
+										:favourite="userToProductFavourite"
+										:is-authenticated="isAuthenticated"
+									/>
+								</div>
 								<h3 class="text-gray-700 dark:text-gray-200 text-sm">
 									<span>{{ t('pages.product.product_id') }}: </span>
 									<span class="text-indigo-600 hover:underline">{{ product.id }}</span>

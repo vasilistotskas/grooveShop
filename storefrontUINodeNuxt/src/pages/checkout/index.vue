@@ -20,11 +20,11 @@ const {
 	pending: countryPending,
 	refresh: countryRefresh,
 	error: countriesError
-} = await useAsyncData('country', () => countryStore.initCountries())
+} = await useAsyncData('country', () => countryStore.fetchCountries())
 
 const onCountryChange = (event: Event) => {
 	if (!(event.target instanceof HTMLSelectElement)) return
-	regionStore.initRegions({
+	regionStore.fetchRegions({
 		alpha2: event.target.value
 	})
 }

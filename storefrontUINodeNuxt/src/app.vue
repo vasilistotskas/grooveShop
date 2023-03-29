@@ -14,7 +14,7 @@ const cartStore = useCartStore()
 
 // cart
 const { refresh: refreshCart, pending: cartPending } = await useAsyncData('cart', () =>
-	cartStore.initCart()
+	cartStore.fetchCart()
 )
 
 const title = computed(() => (route.meta.title as string) || config.public.appTitle)

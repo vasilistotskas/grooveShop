@@ -75,9 +75,17 @@ components:
       vat_percent: VAT Percent
       total_price: Total Price
       add_to_cart: Add to cart
+      share: Share
+      share_not_supported: Web share is not supported in your browser
   add_to_cart_button:
     text: Add to cart
     added_to_cart: Added to cart
+  add_to_favourite_button:
+    not_authenticated: You must be logged in to add to favourites
+    added: Added to favourites
+    removed: Removed from favourites
+    add: Add to favourites
+    remove: Remove from favourites
 pages:
   testing:
     nav: testing
@@ -146,6 +154,8 @@ pages:
       name: Name
       price: Price
       created_at: Created At
+    share: Share
+    share_not_supported: Web share is not supported in your browser
   products:
     title: Products
     nav: products

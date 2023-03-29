@@ -18,7 +18,7 @@ export const useAuthStore = defineStore({
 		}
 	},
 	actions: {
-		async initAuth() {
+		async fetchAuth() {
 			this.pending = true
 			const {
 				data: auth,

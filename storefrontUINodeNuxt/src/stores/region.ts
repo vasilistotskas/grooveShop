@@ -36,7 +36,7 @@ export const useRegionStore = defineStore({
 		}
 	},
 	actions: {
-		async initRegions({ alpha2 }: RegionsQuery) {
+		async fetchRegions({ alpha2 }: RegionsQuery) {
 			const {
 				data: regions,
 				error,

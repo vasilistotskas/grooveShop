@@ -126,13 +126,13 @@ const menus = computed((): IMenuItem[] => [
 							</li>
 						</ul>
 					</nav>
-					<div class="mt-6 text-sm font-bold capitalize">
+					<div class="text-gray-700 dark:text-gray-200 mt-6 text-sm font-bold capitalize">
 						{{ $t('components.theme_switcher.change_theme') }}
 					</div>
 					<div class="mt-2">
 						<ThemeSwitcher type="select-box" />
 					</div>
-					<div class="mt-6 text-sm font-bold capitalize">
+					<div class="text-gray-700 dark:text-gray-200 mt-6 text-sm font-bold capitalize">
 						{{ $t('components.language_switcher.change_language') }}
 					</div>
 					<div class="mt-2">

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { PropType } from 'vue'
 import { Product } from '~/zod/product/product'
 import { useCartStore } from '~/stores/cart'
 import { GlobalEvents } from '~/events/global'

@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { PropType } from 'vue'
+
 export type Direction = 'column' | 'row' | 'column-reverse' | 'row-reverse'
 
 const props = defineProps({

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { FetchError } from 'ofetch'
+import { PropType } from 'vue'
 
 defineProps({
 	error: {

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { FetchError } from 'ofetch/dist/node'
+import { PropType } from 'vue'
 import { Product } from '~/zod/product/product'
 import { Image } from '~/zod/product/image'
 import { Pagination } from '~/zod/pagination/pagination'

@@ -1,14 +1,14 @@
 import { useAuthStore } from '~/stores/auth'
-import { useAccountStore } from '~/stores/user/account'
+import { useUserStore } from '~/stores/user/user'
 
 export default defineNuxtRouteMiddleware(() => {
-	const auth = useAuthStore()
-	const userAccount = useAccountStore()
-	const account = userAccount.account
-	const isAuthenticated = auth.isAuthenticated
+	const authStore = useAuthStore()
+	const userStore = useUserStore()
+	const account = userStore.account
+	const isAuthenticated = authStore.isAuthenticated
 
 	if (isAuthenticated && !account) {
-		userAccount.fetchAccount().then(() => {
+		userStore.fetchAccount().then(() => {
 			// console.log('========== account fetched ==========')
 		})
 	}

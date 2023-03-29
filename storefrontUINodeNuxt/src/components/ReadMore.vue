@@ -29,16 +29,12 @@ const toggleFullText = () => {
 
 <template>
 	<div class="relative">
-		<div
-			v-if="!showFullText"
-			class="overflow-hidden text-gray-700 dark:text-gray-200"
-			v-html="trimmedText"
-		></div>
-		<div
-			v-else
-			class="overflow-hidden text-gray-700 dark:text-gray-200"
-			v-html="text"
-		></div>
+		<div v-if="!showFullText" class="overflow-hidden text-gray-700 dark:text-gray-200">
+			{{ trimmedText }}
+		</div>
+		<div v-else class="overflow-hidden text-gray-700 dark:text-gray-200">
+			{{ text }}
+		</div>
 		<div class="absolute bottom-0 right-0">
 			<button
 				type="button"

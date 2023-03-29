@@ -85,9 +85,17 @@ components:
       vat_percent: persen ppn
       total_price: total harga
       add_to_cart: masukkan ke keranjang
+      share: membagikan
+      share_not_supported: berbagi web tidak didukung di browser anda
   add_to_cart_button:
     text: masukkan ke keranjang
     added_to_cart: ditambahkan ke troli
+  add_to_favourite_button:
+    not_authenticated: anda harus masuk untuk menambahkan ke favorit
+    added: ditambahkan ke favorit
+    removed: dihapus dari favorit
+    add: tambahkan ke favorit
+    remove: hapus dari favorit
 pages:
   '404':
     title: halaman tidak ditemukan
@@ -160,6 +168,8 @@ pages:
       name: nama
       price: harga
       created_at: dibuat di
+    share: membagikan
+    share_not_supported: berbagi web tidak didukung di browser anda
   products:
     title: produk
     nav: produk

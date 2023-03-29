@@ -80,9 +80,17 @@ components:
       vat_percent: 부가가치세 비율
       total_price: 총 가격
       add_to_cart: 장바구니에 담기
+      share: 공유하다
+      share_not_supported: 브라우저에서 웹 공유가 지원되지 않습니다.
   add_to_cart_button:
     text: 장바구니에 담기
     added_to_cart: 장바구니에 추가됨
+  add_to_favourite_button:
+    not_authenticated: 즐겨찾기에 추가하려면 로그인해야 합니다.
+    added: 즐겨찾기에 추가됨
+    removed: 즐겨찾기에서 삭제됨
+    add: 즐겨 찾기에 추가
+    remove: 즐겨찾기에서 제거
 pages:
   '404':
     title: 페이지를 찾을 수 없음
@@ -151,6 +159,8 @@ pages:
       name: 이름
       price: 가격
       created_at: 만든 시간
+    share: 공유하다
+    share_not_supported: 브라우저에서 웹 공유가 지원되지 않습니다.
   products:
     title: 제품
     nav: 제품

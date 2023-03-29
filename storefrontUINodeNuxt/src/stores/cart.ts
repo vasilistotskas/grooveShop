@@ -31,7 +31,7 @@ export const useCartStore = defineStore({
 		}
 	},
 	actions: {
-		async initCart() {
+		async fetchCart() {
 			const {
 				data: cart,
 				error,

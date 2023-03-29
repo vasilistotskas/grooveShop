@@ -36,7 +36,7 @@ export const useCountryStore = defineStore({
 		}
 	},
 	actions: {
-		async initCountries(params?: CountriesQuery) {
+		async fetchCountries(params?: CountriesQuery) {
 			const {
 				data: countries,
 				error,

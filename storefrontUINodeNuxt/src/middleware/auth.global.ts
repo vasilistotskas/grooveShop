@@ -1,11 +1,11 @@
 import { useAuthStore } from '~/stores/auth'
-import { useAccountStore } from '~/stores/user/account'
+import { useUserStore } from '~/stores/user/user'
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
 	const authStore = useAuthStore()
-	const userStore = useAccountStore()
+	const userStore = useUserStore()
 
-	await authStore.initAuth().then(() => {
+	await authStore.fetchAuth().then(() => {
 		// console.log('========== authStore initialized ==========')
 	})
 

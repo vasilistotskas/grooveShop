@@ -78,9 +78,17 @@ components:
       vat_percent: 增值税百分比
       total_price: 总价
       add_to_cart: 添加到购物车
+      share: 分享
+      share_not_supported: 您的浏览器不支持 web 共享
   add_to_cart_button:
     text: 添加到购物车
     added_to_cart: 加入购物车
+  add_to_favourite_button:
+    not_authenticated: 您必须登录才能添加到收藏夹
+    added: 已添加到收藏夹
+    removed: 已从收藏夹中删除
+    add: 加入“最喜欢的
+    remove: 从收藏夹中删除
 pages:
   '404':
     title: 找不到网页
@@ -124,7 +132,7 @@ pages:
           description: 这是您的机器人 id。
           footer: 与机器人交互时使用。
         protection_spam:
-          title: 垃圾邮件防护
+          title: 垃圾邮件保护
           description: 切换启用以删除红色边框
           footer: 如果启用，我们将保护您的评论免受垃圾邮件
         advanced_enable_advanced:
@@ -149,6 +157,8 @@ pages:
       name: 姓名
       price: 价格
       created_at: 创建于
+    share: 分享
+    share_not_supported: 您的浏览器不支持 web 共享
   products:
     title: 产品
     nav: 产品

@@ -1,11 +1,19 @@
 <script lang="ts" setup>
 import { isClient } from '@vueuse/shared'
 import { useShare } from '@vueuse/core'
+import { PropType } from 'vue'
 import { Product } from '~/zod/product/product'
+import { useAuthStore } from '~/stores/auth'
+import { useUserStore } from '~/stores/user/user'
 
 const { contentShorten } = useText()
 const { resolveImageFilenameNoExt, resolveImageFileExtension } = useImageResolver()
+const authStore = useAuthStore()
+const userStore = useUserStore()
 
+const { account, favourites } = storeToRefs(userStore)
+
+const isAuthenticated = authStore.isAuthenticated
 const props = defineProps({
 	product: { type: Object as PropType<Product>, required: true, default: null }
 })
@@ -18,12 +26,19 @@ const productUrl = computed(() => {
 })
 
 const shareOptions = ref({
-	title: product?.value.name,
-	text: product?.value.description || '',
+	title: product.value.name,
+	text: product.value.description || '',
 	url: isClient ? productUrl : ''
 })
 const { share, isSupported } = useShare(shareOptions)
 const startShare = () => share().catch((err) => err)
+const productInUserFavourites = computed(() => {
+	return userStore.getIsProductInFavourites(product.value.id)
+})
+
+const userToProductFavourite = computed(() => {
+	return userStore.getUserToProductFavourite(product.value.id)
+})
 </script>
 
 <template>
@@ -36,7 +51,7 @@ const startShare = () => share().catch((err) => err)
 					<div class="card-thumb">
 						<div class="card-thumb-container">
 							<div class="card-thumb-image">
-								<Anchor :to="`/product${product?.absoluteUrl}`" :text="product?.name">
+								<Anchor :to="`/product${product.absoluteUrl}`" :text="product.name">
 									<nuxt-img
 										preload
 										placeholder
@@ -50,14 +65,16 @@ const startShare = () => share().catch((err) => err)
 										:position="'entropy'"
 										:background="'transparent'"
 										:trim-threshold="5"
-										:format="resolveImageFileExtension(product?.mainImageFilename)"
+										:format="
+											resolveImageFileExtension(product.mainImageFilename) || 'png'
+										"
 										sizes="sm:100vw md:50vw lg:250px"
 										:src="
 											`media/uploads/products/${resolveImageFilenameNoExt(
-												product?.mainImageFilename
+												product.mainImageFilename
 											)}` || '/images/placeholder.png'
 										"
-										:alt="product?.name"
+										:alt="product.name"
 									/>
 								</Anchor>
 							</div>
@@ -65,26 +82,35 @@ const startShare = () => share().catch((err) => err)
 					</div>
 				</div>
 				<div class="card-body">
-					<div class="card-actions h-6">
+					<div class="card-actions h-6 flex gap-4">
 						<ClientOnly>
 							<Button
 								:disabled="!isSupported"
 								:text="
-									isSupported ? 'Share' : 'Web share is not supported in your browser'
+									isSupported
+										? $t('components.product.card.share')
+										: $t('components.product.card.share_not_supported')
 								"
 								size="xs"
 								class="font-extrabold capitalize"
 								@click="startShare"
 							/>
 						</ClientOnly>
+						<AddToFavouriteButton
+							:product-id="product.id"
+							:user-id="account?.id"
+							:is-favourite="productInUserFavourites"
+							:favourite="userToProductFavourite"
+							:is-authenticated="isAuthenticated"
+						/>
 					</div>
 					<h2 class="card-title text-gray-700 dark:text-gray-200">
-						<Anchor :to="`/product${product?.absoluteUrl}`" :text="product?.name">
-							{{ product?.name }}
+						<Anchor :to="`/product${product.absoluteUrl}`" :text="product.name">
+							{{ product.name }}
 						</Anchor>
 					</h2>
 					<p class="card-description text-gray-700 dark:text-gray-200 text-muted">
-						{{ contentShorten(product?.description, 0, 100) }}
+						{{ contentShorten(product.description, 0, 100) }}
 					</p>
 					<div class="card-prices">
 						<div class="card-price d-flex justify-content-between">
@@ -92,7 +118,7 @@ const startShare = () => share().catch((err) => err)
 								<span class="text-gray-700 dark:text-gray-200">{{
 									$t('components.product.card.price')
 								}}</span
-								><span>{{ product?.price }}</span>
+								><span>{{ product.price }}</span>
 							</p>
 						</div>
 						<div class="card-vat-percent d-flex justify-content-between">
@@ -100,7 +126,7 @@ const startShare = () => share().catch((err) => err)
 								<span class="text-gray-700 dark:text-gray-200">{{
 									$t('components.product.card.vat_percent')
 								}}</span
-								><span>{{ product?.vatPercent }}</span>
+								><span>{{ product.vatPercent }}</span>
 							</p>
 						</div>
 					</div>
@@ -111,7 +137,7 @@ const startShare = () => share().catch((err) => err)
 							<span class="text-gray-700 dark:text-gray-200">{{
 								$t('components.product.card.total_price')
 							}}</span
-							><span>{{ product?.finalPrice }}</span>
+							><span>{{ product.finalPrice }}</span>
 						</p>
 					</div>
 				</div>
