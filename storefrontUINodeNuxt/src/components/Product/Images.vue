@@ -49,14 +49,14 @@ const imageId = useState<number>(`${product.value.uuid}-imageID`, () => {
 				v-for="(productImage, index) in productImages.results"
 				v-show="imageId === productImage.id"
 				:key="index"
-				class="product-images-main h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
+				class="product-images-main grid h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
 			>
 				<nuxt-img
 					preload
 					placeholder
 					loading="lazy"
 					provider="mediaStream"
-					class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
+					class="h-64 md:h-80 rounded-lg bg-gray-100 flex items-center justify-center"
 					:style="{ objectFit: 'contain' }"
 					:width="592"
 					:height="320"

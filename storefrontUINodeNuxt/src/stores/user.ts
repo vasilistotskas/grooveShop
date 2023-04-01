@@ -1,29 +1,26 @@
 import { FetchError } from 'ofetch'
 import { Account } from '~/zod/user/account'
-import { CreateRequest, Favourite } from '~/zod/product/favourite'
+import { FavouriteCreateRequest, Favourite } from '~/zod/product/favourite'
+import { Review, ReviewCreateRequest, ReviewUpdateRequest } from '~/zod/product/review'
 
 export interface UserState {
 	account: Account | null
 	favourites: Favourite[] | null
+	reviews: Review[] | null
 	pending: boolean
 	error: FetchError<any> | null
 }
 
 export const useUserStore = defineStore({
-	id: 'account',
+	id: 'user',
 	state: (): UserState => ({
 		account: null as Account | null,
 		favourites: null as Favourite[] | null,
+		reviews: null as Review[] | null,
 		pending: false,
 		error: null as FetchError<any> | null
 	}),
 	getters: {
-		getAccount: (state) => {
-			return state.account
-		},
-		getFavourites: (state) => {
-			return state.favourites
-		},
 		getIsProductInFavourites: (state) => (id: number) => {
 			return state.favourites?.some((favourite) => favourite.product === id) || false
 		},
@@ -47,7 +44,7 @@ export const useUserStore = defineStore({
 				this.favourites = account.value.favourites
 			}
 		},
-		async addFavourite(body: CreateRequest) {
+		async addFavourite(body: FavouriteCreateRequest) {
 			const {
 				data: favourite,
 				error,
@@ -71,6 +68,52 @@ export const useUserStore = defineStore({
 			if (!error.value) {
 				this.favourites =
 					this.favourites?.filter((favourite) => favourite.id !== id) || null
+			}
+		},
+		async addReview(body: ReviewCreateRequest) {
+			const {
+				data: review,
+				error,
+				pending
+			} = await useFetch(`/api/product-reviews`, {
+				method: 'post',
+				body
+			})
+			this.pending = pending.value
+			this.error = error.value
+			if (review.value) {
+				this.reviews?.push(review.value)
+			}
+		},
+		async updateReview(id: number, body: ReviewUpdateRequest) {
+			const {
+				data: review,
+				error,
+				pending
+			} = await useFetch(`/api/product-reviews/${id}`, {
+				method: 'put',
+				body
+			})
+			this.pending = pending.value
+			this.error = error.value
+			if (review.value) {
+				this.reviews =
+					this.reviews?.map((review) => {
+						if (review.id === id) {
+							return review
+						}
+						return review
+					}) || null
+			}
+		},
+		async removeReview(id: number) {
+			const { error, pending } = await useFetch(`/api/product-reviews/${id}`, {
+				method: 'delete'
+			})
+			this.pending = pending.value
+			this.error = error.value
+			if (!error.value) {
+				this.reviews = this.reviews?.filter((review) => review.id !== id) || null
 			}
 		}
 	}

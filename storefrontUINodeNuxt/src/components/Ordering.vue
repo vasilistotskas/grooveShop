@@ -30,7 +30,7 @@ const link = computed(() => {
 </script>
 
 <template>
-	<div ref="listBox" class="flex flex-col items-center z-10">
+	<div ref="listBox" class="grid md:flex md:flex-col md:items-center z-10">
 		<div class="flex flex-row">
 			<div class="flex flex-col">
 				<Listbox v-model="ordering" name="Ordering">

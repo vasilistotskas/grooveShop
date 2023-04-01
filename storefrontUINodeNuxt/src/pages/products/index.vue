@@ -147,8 +147,8 @@ useServerSeoMeta({
 				<!--          :event-name="'products-filters'"-->
 				<!--          :filters="filters"-->
 				<!--        ></Filters>-->
-				<div class="flex items-center">
-					<Pagination
+				<div class="grid gap-2 md:flex md:items-center">
+					<PaginationLimitOffset
 						:current-page="currentPage"
 						:limit="limit"
 						:offset="offset"

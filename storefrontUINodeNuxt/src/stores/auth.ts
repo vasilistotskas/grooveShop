@@ -12,11 +12,6 @@ export const useAuthStore = defineStore({
 		pending: false,
 		error: null as FetchError<any> | null
 	}),
-	getters: {
-		getIsAuthenticated: (state) => {
-			return state.isAuthenticated
-		}
-	},
 	actions: {
 		async fetchAuth() {
 			this.pending = true

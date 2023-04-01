@@ -1,15 +1,15 @@
 import { H3Event } from 'h3'
 import { parseBodyAs, parseDataAs } from '~/zod/parser'
-import { ZodCartItem, ZodCartItemCreateRequest } from '~/zod/cart/cart-item'
+import { ZodReviewCreateRequest, ZodReview } from '~/zod/product/review'
 
 export default defineEventHandler(async (event: H3Event) => {
 	const config = useRuntimeConfig()
-	const body = await parseBodyAs(event, ZodCartItemCreateRequest)
+	const body = await parseBodyAs(event, ZodReviewCreateRequest)
 	const cookie = event.node.req.headers.cookie
 	const regex = /csrftoken=([^;]+)/
 	const match = cookie?.match(regex)
 	const csrftoken = match ? match[1] : ''
-	const response = await fetch(`${config.public.apiBaseUrl}/cart/item/`, {
+	const response = await fetch(`${config.public.apiBaseUrl}/product/review/`, {
 		headers: {
 			Cookie: cookie || '',
 			'X-CSRFToken': csrftoken,
@@ -21,12 +21,12 @@ export default defineEventHandler(async (event: H3Event) => {
 	})
 	const data = await response.json()
 	const status = response.status
-	if (status !== 200) {
+	if (status !== 200 && status !== 201) {
 		throw createError({
 			statusCode: status,
 			statusMessage: data.detail,
 			message: JSON.stringify(data)
 		})
 	}
-	return await parseDataAs(data, ZodCartItem)
+	return await parseDataAs(data, ZodReview)
 })

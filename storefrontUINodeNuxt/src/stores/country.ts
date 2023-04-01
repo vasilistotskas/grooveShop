@@ -27,14 +27,6 @@ export const useCountryStore = defineStore({
 		pending: false,
 		error: null as FetchError<any> | null
 	}),
-	getters: {
-		getCountries: (state) => {
-			return state.countries
-		},
-		getCountry: (state) => {
-			return state.country
-		}
-	},
 	actions: {
 		async fetchCountries(params?: CountriesQuery) {
 			const {

@@ -3,19 +3,35 @@ import { PropType } from 'vue'
 import { CartItem } from '~/zod/cart/cart-item'
 import { GlobalEvents } from '~/events/global'
 
-const { contentShorten } = useText()
-const { resolveImageFilenameNoExt, resolveImageFileExtension } = useImageResolver()
-
 const props = defineProps({
 	cartItem: { type: Object as PropType<CartItem>, required: true, default: null }
 })
+
 const { cartItem } = toRefs(props)
 
 const product = computed(() => cartItem.value.product)
+
+const { contentShorten } = useText()
+const { resolveImageFilenameNoExt, resolveImageFileExtension, resolveImageSrc } =
+	useImageResolver()
+
+const imageExtension = computed(() => {
+	return resolveImageFileExtension(product.value?.mainImageFilename)
+})
+
+const imageSrc = computed(() => {
+	return resolveImageSrc(
+		product.value?.mainImageFilename,
+		`media/uploads/products/${resolveImageFilenameNoExt(
+			product.value?.mainImageFilename
+		)}`
+	)
+})
+
 const bus = useEventBus<string>(GlobalEvents.CART_QUANTITY_SELECTOR)
 const cartItemQuantity = useState<number>(
-	`${cartItem.value.id}-quantity`,
-	() => cartItem.value.quantity
+	`${props.cartItem?.id}-quantity`,
+	() => props.cartItem?.quantity || 0
 )
 </script>
 
@@ -38,13 +54,9 @@ const cartItemQuantity = useState<number>(
 					:position="'entropy'"
 					:background="'transparent'"
 					:trim-threshold="5"
-					:format="resolveImageFileExtension(product.mainImageFilename)"
+					:format="imageExtension"
 					sizes="sm:100vw md:50vw lg:262px"
-					:src="
-						`media/uploads/products/${resolveImageFilenameNoExt(
-							product.mainImageFilename
-						)}` || '/images/placeholder.png'
-					"
+					:src="imageSrc"
 					:alt="product.name"
 				/>
 			</Anchor>

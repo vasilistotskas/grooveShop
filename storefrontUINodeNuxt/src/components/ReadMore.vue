@@ -28,7 +28,7 @@ const toggleFullText = () => {
 </script>
 
 <template>
-	<div class="relative">
+	<div v-if="text.length > maxChars" class="relative">
 		<div v-if="!showFullText" class="overflow-hidden text-gray-700 dark:text-gray-200">
 			{{ trimmedText }}
 		</div>
@@ -44,5 +44,8 @@ const toggleFullText = () => {
 				{{ showFullText ? t('others.readLess') : t('others.readMore') }}
 			</button>
 		</div>
+	</div>
+	<div v-else class="text-gray-700 dark:text-gray-200">
+		{{ text }}
 	</div>
 </template>

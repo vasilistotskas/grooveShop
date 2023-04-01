@@ -1,10 +1,10 @@
 import { H3Event } from 'h3'
 import { parseBodyAs, parseDataAs } from '~/zod/parser'
-import { ZodCreateRequest, ZodFavourite } from '~/zod/product/favourite'
+import { ZodFavouriteCreateRequest, ZodFavourite } from '~/zod/product/favourite'
 
 export default defineEventHandler(async (event: H3Event) => {
 	const config = useRuntimeConfig()
-	const body = await parseBodyAs(event, ZodCreateRequest)
+	const body = await parseBodyAs(event, ZodFavouriteCreateRequest)
 	const cookie = event.node.req.headers.cookie
 	const regex = /csrftoken=([^;]+)/
 	const match = cookie?.match(regex)

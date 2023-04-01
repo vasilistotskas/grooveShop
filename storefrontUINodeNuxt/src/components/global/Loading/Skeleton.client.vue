@@ -73,7 +73,25 @@ const props = defineProps({
 		default: 10
 	}
 })
-const { direction } = toRefs(props)
+const {
+	showImage,
+	showBodyImage,
+	imageWidth,
+	imageHeight,
+	isCircle,
+	showHeading,
+	showParagraph,
+	showFooter,
+	replicas,
+	cardWidth,
+	cardHeight,
+	loading,
+	direction,
+	columns,
+	columnsMd,
+	columnsLg,
+	cartBodyParagraphs
+} = toRefs(props)
 </script>
 
 <template>

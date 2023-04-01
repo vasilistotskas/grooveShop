@@ -150,16 +150,16 @@ bus.on((event: string) => {
 					<div class="mt-2">
 						<LanguageSwitcher type="select-box" />
 					</div>
+					<Anchor
+						class="text-gray-700 dark:text-gray-200 hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center justify-center gap-2 mt-4"
+						:to="'cart'"
+						title="Cart"
+						:text="'Cart'"
+					>
+						<icon-fa6-solid:cart-shopping />
+						<span class="ml-1 text-gray-700 dark:text-gray-200">Cart</span>
+					</Anchor>
 				</ActionSheetBody>
-				<Anchor
-					class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
-					:to="'cart'"
-					title="Cart"
-					:text="'Cart'"
-				>
-					<icon-fa6-solid:cart-shopping />
-					<span class="ml-1 text-gray-700 dark:text-gray-200">Cart</span>
-				</Anchor>
 				<Button text="Close" type="secondary" @click.prevent="toggleOptions(false)" />
 			</ActionSheet>
 		</template>

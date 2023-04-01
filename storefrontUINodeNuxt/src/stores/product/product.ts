@@ -1,5 +1,5 @@
 import { FetchError } from 'ofetch'
-import { CreateRequest, Product } from '~/zod/product/product'
+import { ProductCreateRequest, Product } from '~/zod/product/product'
 import { Pagination } from '~/zod/pagination/pagination'
 import { ProductsQuery } from '~/zod/products/products'
 
@@ -65,7 +65,7 @@ export const useProductStore = defineStore({
 			this.error = error.value
 			this.product = product.value
 		},
-		async createProduct(body: CreateRequest): Promise<void> {
+		async createProduct(body: ProductCreateRequest): Promise<void> {
 			const {
 				data: newProduct,
 				error,

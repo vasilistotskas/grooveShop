@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 import { Favourite } from '~/zod/product/favourite'
-import { useUserStore } from '~/stores/user/user'
+import { useUserStore } from '~/stores/user'
+
 const props = defineProps({
 	productId: {
 		type: Number as PropType<number | undefined>,
@@ -9,7 +10,7 @@ const props = defineProps({
 	},
 	userId: {
 		type: Number as PropType<number | undefined>,
-		required: true,
+		required: false,
 		default: undefined
 	},
 	isFavourite: {

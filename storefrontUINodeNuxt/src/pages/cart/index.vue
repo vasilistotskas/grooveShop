@@ -80,7 +80,7 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 			<LoadingSkeleton
 				:card-height="'130px'"
 				:class="
-					pending ? 'block grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4' : 'hidden'
+					pending ? 'grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4' : 'hidden'
 				"
 				:loading="pending"
 				:direction="'row'"
@@ -98,13 +98,7 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 					/>
 				</div>
 			</template>
-			<template v-else>
-				<div class="flex flex-col items-center justify-center">
-					<p class="text-center text-gray-700 dark:text-gray-200">
-						{{ $t('pages.cart.empty') }}
-					</p>
-				</div>
-			</template>
+			<Empty v-else :text="$t('pages.cart.empty')" />
 		</PageBody>
 	</PageWrapper>
 </template>

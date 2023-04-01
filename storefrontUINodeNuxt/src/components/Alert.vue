@@ -2,7 +2,6 @@
 import { TransitionRoot, TransitionChild } from '@headlessui/vue'
 export type IStyles = 'primary' | 'success' | 'warning' | 'danger'
 
-// props
 const props = defineProps({
 	title: {
 		type: String,
@@ -18,7 +17,8 @@ const props = defineProps({
 	}
 })
 
-// styles
+const { title, text, type } = toRefs(props)
+
 const styles = reactive<{
 	[key: string]: string
 }>({
@@ -39,10 +39,9 @@ const textStyles = reactive<{
 	danger: 'text-red-500'
 })
 
-// selected
 const isDestroyed = ref<Boolean>(false)
 const selectedType = computed<IStyles>((): IStyles => {
-	if (['primary', 'success', 'warning', 'danger'].includes(props.type))
+	if (['primary', 'success', 'warning', 'danger'].includes(type.value))
 		return props.type as IStyles
 	return 'primary'
 })

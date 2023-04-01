@@ -4,12 +4,6 @@ import { Product } from '~/zod/product/product'
 import { useCartStore } from '~/stores/cart'
 import { GlobalEvents } from '~/events/global'
 
-const { t } = useLang()
-const store = useCartStore()
-const toast = useToast()
-
-const cartBus = useEventBus<string>(GlobalEvents.ON_CART_UPDATED)
-
 const props = defineProps({
 	product: { type: Object as PropType<Product>, required: true, default: null },
 	quantity: { type: Number, required: true, default: 1 },
@@ -18,6 +12,14 @@ const props = defineProps({
 		required: true
 	}
 })
+
+const { product, quantity, text } = toRefs(props)
+
+const { t } = useLang()
+const store = useCartStore()
+const toast = useToast()
+
+const cartBus = useEventBus<string>(GlobalEvents.ON_CART_UPDATED)
 </script>
 
 <template>

@@ -5,15 +5,20 @@ import { useProductStore } from '~/stores/product/product'
 import { capitalize } from '~/utils/str'
 import { useImagesStore } from '~/stores/product/images'
 import { useAuthStore } from '~/stores/auth'
-import { useUserStore } from '~/stores/user/user'
+import { useUserStore } from '~/stores/user'
+import { useReviewsStore } from '~/stores/product/reviews'
+import { ReviewQuery } from '~/zod/product/review'
+import { ProductsQuery } from '~/zod/products/products'
 
 const route = useRoute()
 const config = useRuntimeConfig()
+const { t } = useLang()
+
 const productStore = useProductStore()
 const productImagesStore = useImagesStore()
 const authStore = useAuthStore()
 const userStore = useUserStore()
-const { t } = useLang()
+const reviewsStore = useReviewsStore()
 
 const fullPath = config.public.baseUrl + route.fullPath
 const productId = route.params.id
@@ -29,6 +34,19 @@ const { product, error: productError } = storeToRefs(productStore)
 const { pending: productImagesPending } = await useAsyncData('productImages', () =>
 	productImagesStore.fetchImages({ product: String(productId) })
 )
+
+const reviewsQuery = ref<ReviewQuery>({
+	product_id: String(productId),
+	page: Number(route.query.page) || undefined,
+	ordering: route.query.ordering || undefined,
+	expand: 'true'
+})
+const { pending: reviewsPending, refresh: reviewsRefresh } = await useAsyncData(
+	'productReviews',
+	() => reviewsStore.fetchReviews(reviewsQuery.value)
+)
+
+const { reviews, error: reviewsError } = storeToRefs(reviewsStore)
 
 const { images: productImages, error: productImagesError } =
 	storeToRefs(productImagesStore)
@@ -58,6 +76,24 @@ const userToProductFavourite = computed(() => {
 	if (!product.value) return null
 	return userStore.getUserToProductFavourite(product.value.id)
 })
+
+const bus = useEventBus<string>('productReviews')
+bus.on((event, payload: ProductsQuery) => {
+	reviewsQuery.value = payload
+	reviewsRefresh()
+})
+
+watch(
+	() => route.query,
+	() => {
+		bus.emit('productReviews', {
+			product_id: String(productId),
+			page: Number(route.query.page) || undefined,
+			ordering: route.query.ordering || undefined,
+			expand: 'true'
+		})
+	}
+)
 
 definePageMeta({
 	middleware: ['product', 'product-breadcrumbs'],
@@ -131,7 +167,7 @@ useHead(() => ({
 </script>
 
 <template>
-	<PageWrapper class="flex flex-col">
+	<PageWrapper class="gap-16">
 		<PageBody>
 			<PageError v-if="productError" :error="productError"></PageError>
 			<LoadingSkeleton
@@ -141,7 +177,7 @@ useHead(() => ({
 			<template v-if="product">
 				<div class="product">
 					<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-						<div class="grid grid-cols-2 gap-2">
+						<div class="grid md:grid-cols-2 gap-2">
 							<div class="md:flex-1 px-4">
 								<ProductImages
 									:product="product"
@@ -253,6 +289,15 @@ useHead(() => ({
 					</div>
 				</div>
 			</template>
+			<ProductReviews
+				v-if="reviews.results.length > 0"
+				:reviews="reviews"
+				:pending="reviewsPending"
+				:error="reviewsError"
+				:reviews-average="product?.reviewAverage"
+				:reviews-count="product?.reviewCounter"
+			>
+			</ProductReviews>
 		</PageBody>
 	</PageWrapper>
 </template>

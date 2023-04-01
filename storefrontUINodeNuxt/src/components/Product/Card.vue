@@ -4,25 +4,40 @@ import { useShare } from '@vueuse/core'
 import { PropType } from 'vue'
 import { Product } from '~/zod/product/product'
 import { useAuthStore } from '~/stores/auth'
-import { useUserStore } from '~/stores/user/user'
+import { useUserStore } from '~/stores/user'
+
+const props = defineProps({
+	product: { type: Object as PropType<Product>, required: true, default: null }
+})
 
 const { contentShorten } = useText()
-const { resolveImageFilenameNoExt, resolveImageFileExtension } = useImageResolver()
+const { resolveImageFilenameNoExt, resolveImageFileExtension, resolveImageSrc } =
+	useImageResolver()
 const authStore = useAuthStore()
 const userStore = useUserStore()
 
 const { account, favourites } = storeToRefs(userStore)
 
 const isAuthenticated = authStore.isAuthenticated
-const props = defineProps({
-	product: { type: Object as PropType<Product>, required: true, default: null }
-})
 
 const { product } = toRefs(props)
 
 const productUrl = computed(() => {
 	if (!product.value) return ''
 	return `/product/${product.value.id}/${product.value.slug}`
+})
+
+const imageExtension = computed(() => {
+	return resolveImageFileExtension(product.value.mainImageFilename)
+})
+
+const imageSrc = computed(() => {
+	return resolveImageSrc(
+		product.value?.mainImageFilename,
+		`media/uploads/products/${resolveImageFilenameNoExt(
+			product.value?.mainImageFilename
+		)}`
+	)
 })
 
 const shareOptions = ref({
@@ -65,15 +80,9 @@ const userToProductFavourite = computed(() => {
 										:position="'entropy'"
 										:background="'transparent'"
 										:trim-threshold="5"
-										:format="
-											resolveImageFileExtension(product.mainImageFilename) || 'png'
-										"
+										:format="imageExtension"
 										sizes="sm:100vw md:50vw lg:250px"
-										:src="
-											`media/uploads/products/${resolveImageFilenameNoExt(
-												product.mainImageFilename
-											)}` || '/images/placeholder.png'
-										"
+										:src="imageSrc"
 										:alt="product.name"
 									/>
 								</Anchor>

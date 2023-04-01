@@ -27,14 +27,6 @@ export const useRegionStore = defineStore({
 		pending: false,
 		error: null as FetchError<any> | null
 	}),
-	getters: {
-		getRegions: (state) => {
-			return state.regions
-		},
-		getRegion: (state) => {
-			return state.region
-		}
-	},
 	actions: {
 		async fetchRegions({ alpha2 }: RegionsQuery) {
 			const {

@@ -13,20 +13,20 @@ export const ZodCartItem = z.object({
 
 export type CartItem = Readonly<z.infer<typeof ZodCartItem>>
 
-export const ZodCreateRequest = z.object({
+export const ZodCartItemCreateRequest = z.object({
 	product: z.string(),
 	quantity: z.string()
 })
 
-export const ZodPutRequest = z.object({
+export const ZodCartItemPutRequest = z.object({
 	quantity: z.string()
 })
 
-export type CreateRequest = z.infer<typeof ZodCreateRequest>
-export type PutRequest = z.infer<typeof ZodPutRequest>
+export type CartItemCreateRequest = z.infer<typeof ZodCartItemCreateRequest>
+export type CartItemPutRequest = z.infer<typeof ZodCartItemPutRequest>
 
-export const ZodParams = z.object({
+export const ZodCartItemParams = z.object({
 	id: z.string()
 })
 
-export type Params = z.infer<typeof ZodParams>
+export type CartItemParams = z.infer<typeof ZodCartItemParams>

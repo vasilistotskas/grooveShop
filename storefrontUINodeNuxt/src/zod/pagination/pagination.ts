@@ -27,6 +27,7 @@ export const ZodPagination = <T>(resultSchema: z.Schema<T>): z.Schema<Pagination
 	})
 
 export type PaginationQuery = {
+	page?: number | LocationQueryValue[] | undefined
 	offset?: number | LocationQueryValue[] | undefined
 	limit?: number | LocationQueryValue[] | undefined
 	pagination?: string | LocationQueryValue[] | undefined

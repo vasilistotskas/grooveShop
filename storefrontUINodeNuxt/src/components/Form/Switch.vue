@@ -15,6 +15,9 @@ const props = defineProps({
 		default: undefined
 	}
 })
+
+const { modelValue, on } = toRefs(props)
+
 const emit = defineEmits(['update:modelValue'])
 
 // random

@@ -318,13 +318,7 @@ useServerSeoMeta({
 					</div>
 				</form>
 			</template>
-			<template v-else>
-				<div class="flex flex-col items-center justify-center">
-					<p class="text-center text-gray-700 dark:text-gray-200">
-						{{ $t('pages.checkout.empty') }}
-					</p>
-				</div>
-			</template>
+			<Empty v-else :text="$t('pages.checkout.empty')" />
 		</PageBody>
 	</PageWrapper>
 </template>

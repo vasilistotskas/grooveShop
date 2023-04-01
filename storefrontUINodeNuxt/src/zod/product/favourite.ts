@@ -29,15 +29,15 @@ export const ZodFavouriteQuery = z.object({
 	product_id: z.string().optional()
 })
 
-export const ZodCreateRequest = z.object({
+export const ZodFavouriteCreateRequest = z.object({
 	user: z.string(),
 	product: z.string()
 })
 
-export type CreateRequest = z.infer<typeof ZodCreateRequest>
+export type FavouriteCreateRequest = z.infer<typeof ZodFavouriteCreateRequest>
 
-export const ZodParams = z.object({
+export const ZodFavouriteParams = z.object({
 	id: z.string()
 })
 
-export type Params = z.infer<typeof ZodParams>
+export type FavouriteParams = z.infer<typeof ZodFavouriteParams>

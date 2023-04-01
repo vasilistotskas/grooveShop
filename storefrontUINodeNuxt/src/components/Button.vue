@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-// locale
-const localePath = useLocalePath()
-
 const props = defineProps({
 	text: {
 		type: String,
@@ -24,6 +21,10 @@ const props = defineProps({
 		default: undefined
 	}
 })
+
+const { text, type, size, to, href } = toRefs(props)
+
+const localePath = useLocalePath()
 
 // state:styles
 const defaultStyle = `
