@@ -11,7 +11,7 @@ export default defineEventHandler(async (event: H3Event) => {
 	const match = cookie?.match(regex)
 	const csrftoken = match ? match[1] : ''
 	const response = await fetch(
-		`${config.public.apiBaseUrl}/product/review/${params.id}`,
+		`${config.public.apiBaseUrl}/product/review/${params.id}/`,
 		{
 			headers: {
 				Cookie: cookie || '',
@@ -24,13 +24,5 @@ export default defineEventHandler(async (event: H3Event) => {
 		}
 	)
 	const data = await response.json()
-	const status = response.status
-	if (status !== 200) {
-		throw createError({
-			statusCode: status,
-			statusMessage: data.detail,
-			message: JSON.stringify(data)
-		})
-	}
 	return await parseDataAs(data, ZodReview)
 })

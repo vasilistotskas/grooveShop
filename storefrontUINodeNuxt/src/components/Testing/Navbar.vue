@@ -140,14 +140,20 @@ const menus = computed((): IMenuItem[] => [
 					</div>
 				</ActionSheetBody>
 				<Button
-					type="secondary"
+					type="button"
+					:style="'secondary'"
 					title="Github"
 					href="https://github.com/vasilistotskas/grooveShop/storefrontUINodeNuxt"
 				>
 					<IconMdi:github-face />
 					<span class="ml-1 text-gray-700 dark:text-gray-200">Github</span>
 				</Button>
-				<Button text="Close" type="secondary" @click.prevent="toggleOptions(false)" />
+				<Button
+					text="Close"
+					:style="'secondary'"
+					type="button"
+					@click.prevent="toggleOptions(false)"
+				/>
 			</ActionSheet>
 		</template>
 		<template #drawer>

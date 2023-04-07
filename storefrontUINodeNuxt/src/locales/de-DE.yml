@@ -89,6 +89,37 @@ components:
       add_to_cart: in den warenkorb legen
       share: aktie
       share_not_supported: die webfreigabe wird von ihrem browser nicht unterstützt
+    reviews:
+      title: bewertungen
+      empty: noch keine bewertungen
+      ordering:
+        id: ausweis
+        user_id: benutzer-id
+        product_id: produkt id
+        created_at: hergestellt in
+      summary:
+        reviews: bewertungen
+    review:
+      write_review: eine rezension schreiben
+      edit_review: bewertung bearbeiten
+      update_review: bewertung aktualisieren
+      delete_review: bewertung löschen
+      must_be_logged_in: sie müssen angemeldet sein, um eine bewertung schreiben zu können
+      write_review_for_product: schreiben sie eine bewertung für produkt <strong>%{product}</strong>
+      confirm_delete: möchten sie diese bewertung wirklich löschen?
+      too_many_attempts: zu viele versuche. bitte später erneut versuchen.
+      rating:
+        title: bewertung
+        bad: schlecht
+        not_that_good: nicht so gut
+        meh: meh
+        its_ok: es ist in ordnung
+        good: gut
+        very_good: sehr gut
+        perfect: perfekt!
+      comment:
+        title: kommentar
+        placeholder: teile deine erfahrung...
   add_to_cart_button:
     text: in den warenkorb legen
     added_to_cart: zum warenkorb hinzugefügt
@@ -176,6 +207,16 @@ pages:
       created_at: hergestellt in
     share: aktie
     share_not_supported: die webfreigabe wird von ihrem browser nicht unterstützt
+    review:
+      created:
+        success: bewertung erfolgreich erstellt
+        error: fehler bei der überprüfungserstellung
+      updated:
+        success: bewertung erfolgreich aktualisiert
+        error: aktualisierungsfehler überprüfen
+      deleted:
+        success: bewertung erfolgreich gelöscht
+        error: überprüfen sie den löschfehler
   products:
     title: produkte
     nav: produkte
@@ -215,6 +256,10 @@ pages:
       choose:
         country: land auswählen
         region: wählen sie region
+  login:
+    title: anmeldung
+  account:
+    title: konto
 layouts:
   title: deepweb %{title}
   description: deepweb-beschreibung %{description}

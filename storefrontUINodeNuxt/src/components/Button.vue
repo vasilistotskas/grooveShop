@@ -1,16 +1,24 @@
 <script lang="ts" setup>
+import { PropType } from 'vue'
+import { ButtonSize, ButtonStyle, ButtonType } from '~/zod/global/button'
+
 const props = defineProps({
 	text: {
 		type: String,
 		default: ''
 	},
 	type: {
-		type: String,
+		type: String as PropType<ButtonType>,
+		default: 'button'
+	},
+	style: {
+		type: String as PropType<ButtonStyle>,
 		default: 'primary'
 	},
 	size: {
-		type: String,
-		default: 'md'
+		type: String as PropType<ButtonSize>,
+		default: 'md',
+		validator: (value: string) => ['lg', 'md', 'sm', 'xs'].includes(value)
 	},
 	to: {
 		type: [String, Object],
@@ -42,7 +50,11 @@ const styles = reactive<{
 	secondary:
 		'secondary-btn text-gray-700 dark:text-gray-200 bg-gray-200 border-gray-200 hover:bg-gray-300 dark:border-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700',
 	opposite:
-		'opposite-btn text-gray-700 dark:text-gray-700 bg-gray-800 hover:bg-white hover:text-gray-800 hover:border-gray-900  dark:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-100 dark:border-white'
+		'opposite-btn text-gray-700 dark:text-gray-700 bg-gray-800 hover:bg-white hover:text-gray-800 hover:border-gray-900  dark:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-100 dark:border-white',
+	success:
+		'success-btn text-white dark:text-white bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700',
+	danger:
+		'danger-btn text-white dark:text-white bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700'
 })
 const sizes = reactive<{
 	[key: string]: string
@@ -55,7 +67,7 @@ const sizes = reactive<{
 
 // state
 const selectedStyle = computed(() =>
-	props.type in styles ? styles[props.type] : styles.primary
+	styles[props.style] ? styles[props.style] : styles.primary
 )
 const selectedSize = computed(() => sizes[props.size] || sizes.lg)
 
@@ -73,7 +85,7 @@ const onClick = (event: MouseEvent) => {
 
 <template>
 	<NuxtLink
-		v-if="to"
+		v-if="to && type === 'link'"
 		tag="a"
 		:aria-label="text"
 		:to="localePath(to)"
@@ -90,6 +102,12 @@ const onClick = (event: MouseEvent) => {
 	>
 		<slot>{{ text }}</slot>
 	</button>
+	<input
+		v-else-if="type === 'input'"
+		type="submit"
+		:value="text"
+		:class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"
+	/>
 	<a
 		v-else
 		:class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"

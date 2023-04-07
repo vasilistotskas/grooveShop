@@ -1,7 +1,7 @@
 import { FetchError } from 'ofetch'
 import { Account } from '~/zod/user/account'
 import { FavouriteCreateRequest, Favourite } from '~/zod/product/favourite'
-import { Review, ReviewCreateRequest, ReviewUpdateRequest } from '~/zod/product/review'
+import { Review, ReviewCreateRequest, ReviewPutRequest } from '~/zod/product/review'
 
 export interface UserState {
 	account: Account | null
@@ -85,7 +85,7 @@ export const useUserStore = defineStore({
 				this.reviews?.push(review.value)
 			}
 		},
-		async updateReview(id: number, body: ReviewUpdateRequest) {
+		async updateReview(id: number, body: ReviewPutRequest) {
 			const {
 				data: review,
 				error,

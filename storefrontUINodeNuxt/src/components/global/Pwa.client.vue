@@ -46,10 +46,18 @@ const pwa = useNuxtApp().$pwa as {
 					{{ $t('components.global.pwa.install_pwa') }}
 				</span>
 			</div>
-			<button type="button" @click="pwa?.install()">
+			<button
+				class="text-gray-700 dark:text-gray-200"
+				type="button"
+				@click="pwa?.install()"
+			>
 				{{ $t('components.global.pwa.install') }}
 			</button>
-			<button type="button" @click="pwa?.cancelInstall()">
+			<button
+				class="text-gray-700 dark:text-gray-200"
+				type="button"
+				@click="pwa?.cancelInstall()"
+			>
 				{{ $t('components.global.pwa.cancel') }}
 			</button>
 		</div>

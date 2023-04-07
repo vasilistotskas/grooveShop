@@ -87,6 +87,37 @@ components:
       add_to_cart: masukkan ke keranjang
       share: membagikan
       share_not_supported: berbagi web tidak didukung di browser anda
+    reviews:
+      title: ulasan
+      empty: belum ada ulasan
+      ordering:
+        id: pengenal
+        user_id: identitas pengguna
+        product_id: id produk
+        created_at: dibuat di
+      summary:
+        reviews: ulasan
+    review:
+      write_review: menulis review
+      edit_review: sunting ulasan
+      update_review: perbarui ulasan
+      delete_review: hapus ulasan
+      must_be_logged_in: anda harus masuk untuk menulis ulasan
+      write_review_for_product: tulis ulasan untuk produk <strong>%{product}</strong>
+      confirm_delete: yakin ingin menghapus ulasan ini?
+      too_many_attempts: terlalu banyak percobaan, coba lagi nanti.
+      rating:
+        title: peringkat
+        bad: buruk
+        not_that_good: tidak begitu bagus
+        meh: meh
+        its_ok: tidak apa-apa
+        good: bagus
+        very_good: sangat bagus
+        perfect: sempurna!
+      comment:
+        title: komentar
+        placeholder: bagikan pengalaman anda...
   add_to_cart_button:
     text: masukkan ke keranjang
     added_to_cart: ditambahkan ke troli
@@ -170,6 +201,16 @@ pages:
       created_at: dibuat di
     share: membagikan
     share_not_supported: berbagi web tidak didukung di browser anda
+    review:
+      created:
+        success: ulasan berhasil dibuat
+        error: kesalahan pembuatan ulasan
+      updated:
+        success: tinjauan berhasil diperbarui
+        error: tinjau kesalahan pembaruan
+      deleted:
+        success: tinjauan berhasil dihapus
+        error: kesalahan penghapusan ulasan
   products:
     title: produk
     nav: produk
@@ -209,6 +250,10 @@ pages:
       choose:
         country: pilih negara
         region: pilih wilayah
+  login:
+    title: gabung
+  account:
+    title: akun
 layouts:
   title: deepweb %{judul}
   description: deepweb-deskripsi %{description}

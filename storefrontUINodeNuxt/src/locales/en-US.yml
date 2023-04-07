@@ -79,6 +79,7 @@ components:
       share_not_supported: Web share is not supported in your browser
     reviews:
       title: Reviews
+      empty: No reviews yet
       ordering:
         id: ID
         user_id: User ID
@@ -86,6 +87,27 @@ components:
         created_at: Created At
       summary:
         reviews: Reviews
+    review:
+      write_review: Write a review
+      edit_review: Edit review
+      update_review: Update review
+      delete_review: Delete review
+      must_be_logged_in: You must be logged in to write a review
+      write_review_for_product: Write a review for product <strong>%{product}</strong>
+      confirm_delete: Are you sure you want to delete this review?
+      too_many_attempts: Too many attempts, please try again later.
+      rating:
+        title: Rating
+        bad: Bad
+        not_that_good: Not that good
+        meh: Meh
+        its_ok: It's ok
+        good: Good
+        very_good: Very good
+        perfect: Perfect!
+      comment:
+        title: Comment
+        placeholder: Share your experience...
   add_to_cart_button:
     text: Add to cart
     added_to_cart: Added to cart
@@ -165,6 +187,16 @@ pages:
       created_at: Created At
     share: Share
     share_not_supported: Web share is not supported in your browser
+    review:
+      created:
+        success: Review created successfully
+        error: Review creation error
+      updated:
+        success: Review updated successfully
+        error: Review update error
+      deleted:
+        success: Review deleted successfully
+        error: Review delete error
   products:
     title: Products
     nav: products
@@ -204,6 +236,10 @@ pages:
       choose:
         country: Choose Country
         region: Choose Region
+  login:
+    title: Login
+  account:
+    title: Account
 layouts:
   title: DeepWeb %{title}
   description: DeepWeb-Description %{description}

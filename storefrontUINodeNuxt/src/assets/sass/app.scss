@@ -27,8 +27,10 @@
 html {
 	min-width: 360px;
 	scroll-behavior: smooth;
+	background-color: theme('colors.gray.50');
 }
 html.dark {
+	background-color: theme('colors.gray.900');
 	::-webkit-scrollbar-track {
 		background: theme('colors.slate.800');
 		border-left: 1px solid theme('colors.slate.700');

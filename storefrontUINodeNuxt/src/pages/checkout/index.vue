@@ -309,7 +309,7 @@ useServerSeoMeta({
 					</div>
 
 					<div class="grid items-end">
-						<Button v-if="!tooManyAttempts" type="submit">
+						<Button v-if="!tooManyAttempts" type="button">
 							{{ $t('pages.checkout.form.submit') }}
 						</Button>
 						<Button v-else type="button" disabled>

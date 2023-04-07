@@ -19,7 +19,7 @@ class ProductReview(TimeStampMixinModel, PublishableModel, UUIDModel):
     comment = models.CharField(max_length=250, blank=True)
     rate = models.PositiveSmallIntegerField(choices=RateChoicesEnum.choices())
     status = models.CharField(
-        max_length=10, choices=StatusEnum.choices(), default=StatusEnum.NEW
+        max_length=250, choices=StatusEnum.choices(), default="New"
     )
 
     class Meta:

@@ -111,10 +111,12 @@ const orderingOptionsArray = computed(() => {
 </script>
 
 <template>
-	<div class="reviews_list text-gray-700 dark:text-gray-200 p-4">
+	<div
+		class="reviews_list text-gray-700 dark:text-gray-200 p-4 border-t border-gray-900/10 dark:border-gray-50/[0.2]"
+	>
 		<div class="reviews_list__header">
 			<h2 class="reviews_list__title">{{ t('components.product.reviews.title') }}</h2>
-			<div class="reviews_list__actions">
+			<div v-if="reviews?.results.length > 0" class="reviews_list__actions">
 				<div class="reviews_list__pagination">
 					<PaginationPageNumber
 						:results-count="resultsCount"
@@ -134,7 +136,7 @@ const orderingOptionsArray = computed(() => {
 		</div>
 		<div class="reviews_list__body">
 			<div class="reviews_list__items">
-				<div class="reviews_list__item">
+				<div v-show="pending" class="reviews_list__item">
 					<div class="reviews_list__item__loading">
 						<LoadingSkeleton
 							:card-height="'130px'"
@@ -146,7 +148,7 @@ const orderingOptionsArray = computed(() => {
 							:columns-md="1"
 							:columns-lg="1"
 							:cart-body-paragraphs="5"
-							:replicas="reviews?.results.length || 1"
+							:replicas="reviews?.results.length || 4"
 						></LoadingSkeleton>
 					</div>
 				</div>

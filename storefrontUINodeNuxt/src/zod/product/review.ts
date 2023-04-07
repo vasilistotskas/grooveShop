@@ -52,20 +52,31 @@ export const ZodReviewCreateRequest = z.object({
 	product: z.string(),
 	user: z.string(),
 	comment: z.string(),
-	rate: RateEnum
+	rate: z.string(),
+	status: z.string()
 })
 
 export type ReviewCreateRequest = z.infer<typeof ZodReviewCreateRequest>
 
 export const ZodReviewPutRequest = z.object({
+	product: z.string(),
+	user: z.string(),
 	comment: z.string(),
-	rate: RateEnum
+	rate: z.string()
 })
 
-export type ReviewUpdateRequest = z.infer<typeof ZodReviewPutRequest>
+export type ReviewPutRequest = z.infer<typeof ZodReviewPutRequest>
 
 export const ZodReviewParams = z.object({
 	id: z.string()
 })
 
 export type ReviewParams = z.infer<typeof ZodReviewParams>
+
+export type ReviewActionPayload = {
+	id: number
+	comment: string
+	productId: number
+	rate: number
+	userId: number
+}

@@ -161,7 +161,7 @@ useServerSeoMeta({
 				</div>
 			</template>
 			<LoadingSkeleton
-				:card-height="'528px'"
+				:card-height="'606px'"
 				:class="pending ? 'block' : 'hidden'"
 				:loading="pending"
 				:replicas="products.results.length || 4"

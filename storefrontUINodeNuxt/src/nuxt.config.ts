@@ -43,7 +43,8 @@ export default defineNuxtConfig({
 		'@pinia/nuxt',
 		'@vueuse/nuxt',
 		'@vite-pwa/nuxt',
-		'unplugin-icons/nuxt'
+		'unplugin-icons/nuxt',
+		'nuxt-lodash'
 	],
 	robots: {
 		configPath: '~/config/robots.config'

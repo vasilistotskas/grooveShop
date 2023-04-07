@@ -1,65 +1,23 @@
 <script lang="ts" setup>
-import { GlobalEvents } from '~/events/global'
 import { useCartStore } from '~/stores/cart'
+import { useAuthStore } from '~/stores/auth'
 
 const config = useRuntimeConfig()
 const { t } = useLang()
-const toast = useToast()
-const navbarModal = ref(null)
-const bus = useEventBus<string>(GlobalEvents.GENERIC_MODAL)
-const store = useCartStore()
 
-const { cart } = storeToRefs(store)
+const authStore = useAuthStore()
+const cartStore = useCartStore()
 
-const openModal = () => {
-	bus.emit('modal-open-navbarModal')
-}
-bus.on((event: string) => {
-	if (event === 'modal-opened-navbarModal') {
-		toast.success('Modal opened')
-	}
-	if (event === 'modal-closed-navbarModal') {
-		toast.error('Modal closed')
-	}
-})
+const { isAuthenticated } = storeToRefs(authStore)
+const { cart } = storeToRefs(cartStore)
 </script>
 
 <template>
-	<GenericModal
-		ref="navbarModal"
-		unique-id="navbarModal"
-		exit-modal-icon-class="fa fa-times"
-		modal-open-trigger-handler-id="modal-open-navbarModal"
-		modal-close-trigger-handler-id="modal-close-navbarModal"
-		modal-opened-trigger-handler-id="modal-opened-navbarModal"
-		modal-closed-trigger-handler-id="modal-closed-navbarModal"
-		max-width="700px"
-		max-height="100%"
-		width="auto"
-		height="auto"
-	>
-		<template #header>
-			<div>
-				<h2 class="text-gray-700 dark:text-gray-200 text-2xl font-bold">Header</h2>
-			</div>
-		</template>
-		<template #body>
-			<div>
-				<p class="text-gray-700 dark:text-gray-200">Body</p>
-			</div>
-		</template>
-		<template #footer>
-			<div>
-				<p class="text-gray-700 dark:text-gray-200">Footer</p>
-			</div>
-		</template>
-	</GenericModal>
-
 	<BuilderNavbar>
 		<template v-if="false" #banner>
 			<div class="text-white text-xs text-center py-1 px-4 lg:px-8 capitalize">
 				<span class="mr-1 text-gray-700 dark:text-gray-200">
-					{{ $t('banners.welcome', { app_name: config.public.appTitle }) }}
+					{{ t('banners.welcome', { app_name: config.public.appTitle }) }}
 				</span>
 			</div>
 		</template>
@@ -68,26 +26,24 @@ bus.on((event: string) => {
 				<nav class="text-sm leading-6 font-semibold text-gray-700 dark:text-gray-200">
 					<ul class="flex items-center space-x-8">
 						<li class="flex w-full gap-4">
-							<Anchor
-								:to="'products'"
-								:text="'products'"
-								class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
-								>{{ $t('pages.products.title') }}</Anchor
-							>
-							<!-- button that opens the modal  -->
-							<button
-								type="button"
-								class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
-								@click="openModal"
-							>
-								Open Modal
-							</button>
-							<Anchor
-								:to="'testing'"
-								:text="'testing'"
-								class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
-								>{{ $t('pages.testing.title') }}</Anchor
-							>
+							<h2>
+								<Anchor
+									:to="'products'"
+									:title="t('pages.products.title')"
+									:text="t('pages.products.title')"
+									class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
+									>{{ t('pages.products.title') }}</Anchor
+								>
+							</h2>
+							<h3>
+								<Anchor
+									:to="'testing'"
+									:title="t('pages.testing.title')"
+									:text="t('pages.testing.title')"
+									class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
+									>{{ t('pages.testing.title') }}</Anchor
+								>
+							</h3>
 						</li>
 					</ul>
 				</nav>
@@ -105,10 +61,30 @@ bus.on((event: string) => {
 						<Anchor
 							class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
 							:to="'cart'"
-							title="Cart"
-							:text="'Cart'"
+							:title="t('pages.cart.title')"
+							:text="t('pages.cart.title')"
 						>
 							<icon-fa6-solid:cart-shopping />
+						</Anchor>
+					</li>
+					<li class="relative">
+						<Anchor
+							v-if="isAuthenticated"
+							class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
+							:title="t('pages.account.title')"
+							:text="t('pages.account.title')"
+							:to="'account'"
+						>
+							<icon-fa6-solid:circle-user />
+						</Anchor>
+						<Anchor
+							v-else
+							class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
+							:title="t('pages.login.title')"
+							:text="t('pages.login.title')"
+							:href="`${config.public.baseUrl}/accounts/login`"
+						>
+							<icon-fa6-solid:circle-user />
 						</Anchor>
 					</li>
 				</ul>
@@ -125,27 +101,29 @@ bus.on((event: string) => {
 							>
 								<Anchor
 									:to="'products'"
-									:text="'products'"
+									:title="t('pages.products.title')"
+									:text="t('pages.products.title')"
 									class="flex-1 hover:no-underline capitalize"
-									>{{ $t('pages.products.title') }}</Anchor
+									>{{ t('pages.products.title') }}</Anchor
 								>
 								<Anchor
 									:to="'testing'"
-									:text="'testing'"
+									:title="t('pages.testing.title')"
+									:text="t('pages.testing.title')"
 									class="flex-1 hover:no-underline capitalize"
-									>{{ $t('pages.testing.title') }}</Anchor
+									>{{ t('pages.testing.title') }}</Anchor
 								>
 							</li>
 						</ul>
 					</nav>
 					<div class="text-gray-700 dark:text-gray-200 mt-6 text-sm font-bold capitalize">
-						{{ $t('components.theme_switcher.change_theme') }}
+						{{ t('components.theme_switcher.change_theme') }}
 					</div>
 					<div class="mt-2">
 						<ThemeSwitcher type="select-box" />
 					</div>
 					<div class="text-gray-700 dark:text-gray-200 mt-6 text-sm font-bold capitalize">
-						{{ $t('components.language_switcher.change_language') }}
+						{{ t('components.language_switcher.change_language') }}
 					</div>
 					<div class="mt-2">
 						<LanguageSwitcher type="select-box" />
@@ -153,14 +131,21 @@ bus.on((event: string) => {
 					<Anchor
 						class="text-gray-700 dark:text-gray-200 hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center justify-center gap-2 mt-4"
 						:to="'cart'"
-						title="Cart"
-						:text="'Cart'"
+						:title="t('pages.cart.title')"
+						:text="t('pages.cart.title')"
 					>
 						<icon-fa6-solid:cart-shopping />
-						<span class="ml-1 text-gray-700 dark:text-gray-200">Cart</span>
+						<span class="ml-1 text-gray-700 dark:text-gray-200">
+							{{ t('pages.cart.title') }}</span
+						>
 					</Anchor>
 				</ActionSheetBody>
-				<Button text="Close" type="secondary" @click.prevent="toggleOptions(false)" />
+				<Button
+					text="Close"
+					type="button"
+					:style="'secondary'"
+					@click.prevent="toggleOptions(false)"
+				/>
 			</ActionSheet>
 		</template>
 	</BuilderNavbar>

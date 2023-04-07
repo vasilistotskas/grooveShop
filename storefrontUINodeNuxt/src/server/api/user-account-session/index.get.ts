@@ -17,14 +17,6 @@ export default defineEventHandler(async (event: H3Event) => {
 		}
 	)
 	const accountData = await accountResponse.json()
-	const accountStatus = accountResponse.status
-	if (accountStatus !== 200) {
-		throw createError({
-			statusCode: accountStatus,
-			statusMessage: accountData.detail,
-			message: JSON.stringify(accountData)
-		})
-	}
 
 	const favouritesQuery: FavouriteQuery = {
 		user_id: accountData.id,
@@ -41,14 +33,6 @@ export default defineEventHandler(async (event: H3Event) => {
 		}
 	})
 	const favouritesData = await favouritesResponse.json()
-	const favouritesStatus = favouritesResponse.status
-	if (favouritesStatus !== 200) {
-		throw createError({
-			statusCode: favouritesStatus,
-			statusMessage: favouritesData.detail,
-			message: JSON.stringify(favouritesData)
-		})
-	}
 
 	const accountParsedData = await parseDataAs(accountData, ZodAccount)
 	const favouritesParsedData = await parseDataAs(favouritesData, z.array(ZodFavourite))

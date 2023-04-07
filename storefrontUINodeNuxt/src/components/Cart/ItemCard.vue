@@ -40,7 +40,7 @@ const cartItemQuantity = useState<number>(
 		class="grid grid-cols-6 items-center gap-4 py-4 bg-white dark:bg-slate-800 border rounded-md border-gray-900/10 dark:border-gray-50/[0.2]"
 	>
 		<div class="image">
-			<Anchor :to="`/product${product?.absoluteUrl}`" :title="product.name">
+			<Anchor :to="`/product${product.absoluteUrl}`" :title="product.name">
 				<nuxt-img
 					preload
 					placeholder
@@ -63,7 +63,7 @@ const cartItemQuantity = useState<number>(
 		</div>
 		<div class="title">
 			<h3 class="text-gray-700 dark:text-gray-200">
-				<Anchor :to="`/product${product?.absoluteUrl}`" :title="product.name">{{
+				<Anchor :to="`/product${product.absoluteUrl}`" :title="product.name">{{
 					contentShorten(product.name, 50)
 				}}</Anchor>
 			</h3>

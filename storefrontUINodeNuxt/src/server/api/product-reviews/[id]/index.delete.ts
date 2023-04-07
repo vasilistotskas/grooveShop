@@ -1,5 +1,6 @@
 import { H3Event } from 'h3'
-import { parseParamsAs } from '~/zod/parser'
+import { z } from 'zod'
+import { parseDataAs, parseParamsAs } from '~/zod/parser'
 import { ZodReviewParams } from '~/zod/product/review'
 
 export default defineEventHandler(async (event: H3Event) => {
@@ -23,12 +24,5 @@ export default defineEventHandler(async (event: H3Event) => {
 		}
 	)
 	const status = response.status
-	if (status !== 200) {
-		throw createError({
-			statusCode: status,
-			statusMessage: response.statusText,
-			message: JSON.stringify(response)
-		})
-	}
-	return setResponseStatus(status, response.statusText)
+	return parseDataAs(status, z.number())
 })

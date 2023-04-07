@@ -171,7 +171,8 @@ const validate = async () => {
 									<Button
 										class="capitalize"
 										size="sm"
-										type="opposite"
+										type="button"
+										:style="'opposite'"
 										:text="
 											$t('pages.testing.setting.sections.validate_username.footer_button')
 										"
@@ -196,7 +197,11 @@ const validate = async () => {
 											class="w-full md:w-1/3"
 										>
 											<template #suffix>
-												<Button type="opposite" class="space-x-1 border-none">
+												<Button
+													type="button"
+													:style="'opposite'"
+													class="space-x-1 border-none"
+												>
 													<icon-ic:baseline-content-copy />
 													{{ $t('others.copy') }}
 												</Button>

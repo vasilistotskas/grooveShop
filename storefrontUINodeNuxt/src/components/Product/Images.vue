@@ -59,7 +59,7 @@ const imageId = useState<number>(`${product.value.uuid}-imageID`, () => {
 					class="h-64 md:h-80 rounded-lg bg-gray-100 flex items-center justify-center"
 					:style="{ objectFit: 'contain' }"
 					:width="592"
-					:height="320"
+					:height="350"
 					:fit="'contain'"
 					:position="'entropy'"
 					:background="'transparent'"

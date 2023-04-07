@@ -2,10 +2,11 @@
 import { PropType } from 'vue'
 import { Favourite } from '~/zod/product/favourite'
 import { useUserStore } from '~/stores/user'
+import { ButtonSize } from '~/zod/global/button'
 
 const props = defineProps({
 	productId: {
-		type: Number as PropType<number | undefined>,
+		type: Number as PropType<number>,
 		required: true
 	},
 	userId: {
@@ -25,6 +26,11 @@ const props = defineProps({
 	isAuthenticated: {
 		type: Boolean,
 		required: true
+	},
+	size: {
+		type: String as PropType<ButtonSize>,
+		default: 'md',
+		validator: (value: string) => ['lg', 'md', 'sm', 'xs'].includes(value)
 	}
 })
 
@@ -65,9 +71,8 @@ const buttonColor = computed(() => {
 </script>
 
 <template>
-	<button class="btn btn--icon" type="button" @click="toggleFavourite">
+	<Button type="button" :text="buttonLabel" :size="size" @click="toggleFavourite">
 		<IconMdi:heart v-if="isFavourite" :style="{ color: buttonColor }" />
 		<IconMdi:heart-outline v-else :style="{ color: buttonColor }" />
-		<span class="ml-2 hidden">{{ buttonLabel }}</span>
-	</button>
+	</Button>
 </template>

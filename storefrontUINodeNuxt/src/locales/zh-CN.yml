@@ -44,8 +44,8 @@ components:
     banner:
       description: >-
         我们使用我们自己的 cookie 和第三方 cookie
-        以便我们能够正确显示本网站并更好地了解本网站的使用情况，以改善我们提供的服务。使用在此横幅上做出选择后出现的 cookie
-        按钮，可以随时更改有关 cookie 使用权限的决定。
+        以便我们能够正确显示本网站并更好地了解本网站的使用情况，以改善我们提供的服务。可以随时使用在此横幅上做出选择后出现的 cookie 按钮更改有关
+        cookie 使用权限的决定。
       title: 饼干
     close: 关闭
     cookies:
@@ -80,6 +80,37 @@ components:
       add_to_cart: 添加到购物车
       share: 分享
       share_not_supported: 您的浏览器不支持 web 共享
+    reviews:
+      title: 点评
+      empty: 暂无评论
+      ordering:
+        id: id
+        user_id: 用户身份
+        product_id: 产品编号
+        created_at: 创建于
+      summary:
+        reviews: 点评
+    review:
+      write_review: 写评论
+      edit_review: 编辑评论
+      update_review: 更新评论
+      delete_review: 删除评论
+      must_be_logged_in: 你必须先登录才能撰写评论
+      write_review_for_product: 为产品 <strong>%{product}</strong> 撰写评论
+      confirm_delete: 您确定要删除此评论吗？
+      too_many_attempts: 尝试次数过多，请稍后再试。
+      rating:
+        title: 评分
+        bad: 坏的
+        not_that_good: 没那么好
+        meh: 嗯
+        its_ok: 没关系
+        good: 好的
+        very_good: 非常好
+        perfect: 完美的！
+      comment:
+        title: 评论
+        placeholder: 分享你的经验...
   add_to_cart_button:
     text: 添加到购物车
     added_to_cart: 加入购物车
@@ -132,7 +163,7 @@ pages:
           description: 这是您的机器人 id。
           footer: 与机器人交互时使用。
         protection_spam:
-          title: 垃圾邮件保护
+          title: 垃圾邮件防护
           description: 切换启用以删除红色边框
           footer: 如果启用，我们将保护您的评论免受垃圾邮件
         advanced_enable_advanced:
@@ -159,6 +190,16 @@ pages:
       created_at: 创建于
     share: 分享
     share_not_supported: 您的浏览器不支持 web 共享
+    review:
+      created:
+        success: 评论创建成功
+        error: 查看创建错误
+      updated:
+        success: 评论更新成功
+        error: 查看更新错误
+      deleted:
+        success: 评价删除成功
+        error: 查看删除错误
   products:
     title: 产品
     nav: 产品
@@ -198,6 +239,10 @@ pages:
       choose:
         country: 选择国家
         region: 选择地区
+  login:
+    title: 登录
+  account:
+    title: 帐户
 layouts:
   title: 深网 %{title}
   description: deepweb-描述 %{description}

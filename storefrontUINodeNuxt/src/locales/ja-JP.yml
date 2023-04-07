@@ -53,7 +53,7 @@ components:
       necessary: 必要なクッキー
       necessary_description: >-
         必要な cookie は、ページ ナビゲーションや web サイトの安全な領域へのアクセスなどの基本的な機能を有効にすることで、web
-        サイトを使いやすくするのに役立ちます。これらの cookie がないと、web サイトは正しく機能しません。
+        サイトを使いやすくします。これらの cookie がないと、web サイトは正しく機能しません。
       optional: オプションのクッキー
       optional_links:
         privacy_policy: プライバシーポリシー
@@ -82,6 +82,37 @@ components:
       add_to_cart: カートに追加
       share: 共有
       share_not_supported: お使いのブラウザーでは web 共有がサポートされていません
+    reviews:
+      title: レビュー
+      empty: まだレビューはありません
+      ordering:
+        id: id
+        user_id: ユーザーid
+        product_id: 製品番号
+        created_at: 作成日
+      summary:
+        reviews: レビュー
+    review:
+      write_review: レビューを書く
+      edit_review: レビューを編集
+      update_review: レビューを更新
+      delete_review: レビューを削除
+      must_be_logged_in: レビューを書くにはログインする必要があります
+      write_review_for_product: 製品 <strong>%{product}</strong> のレビューを書く
+      confirm_delete: このレビューを削除してもよろしいですか?
+      too_many_attempts: 試行回数が多すぎます。しばらくしてからもう一度お試しください。
+      rating:
+        title: 評価
+        bad: 悪い
+        not_that_good: あまり良くない
+        meh: ええ
+        its_ok: 大丈夫です
+        good: 良い
+        very_good: とても良い
+        perfect: 完全！
+      comment:
+        title: コメント
+        placeholder: あなたの経験を共有してください...
   add_to_cart_button:
     text: カートに追加
     added_to_cart: カートに追加
@@ -161,6 +192,16 @@ pages:
       created_at: 作成日
     share: 共有
     share_not_supported: お使いのブラウザーでは web 共有がサポートされていません
+    review:
+      created:
+        success: レビューが正常に作成されました
+        error: レビュー作成エラー
+      updated:
+        success: レビューが正常に更新されました
+        error: レビュー更新エラー
+      deleted:
+        success: レビューは正常に削除されました
+        error: 削除エラーの確認
   products:
     title: 製品
     nav: 製品
@@ -200,6 +241,10 @@ pages:
       choose:
         country: 国を選択します
         region: リージョンを選択
+  login:
+    title: ログイン
+  account:
+    title: アカウント
 layouts:
   title: ディープウェブ %{title}
   description: deepweb 説明 %{description}

@@ -11,7 +11,13 @@ const props = defineProps({
 
 const userName = computed(() => {
 	if (typeof props.review?.user === 'number') return 'Anonymous'
+	if (!props.review?.user?.firstName && !props.review?.user?.lastName) return 'Anonymous'
 	return props.review?.user?.firstName + ' ' + props.review?.user?.lastName
+})
+
+const userAccount = computed(() => {
+	if (typeof props.review?.user === 'number') return undefined
+	return props.review?.user
 })
 </script>
 
@@ -20,7 +26,7 @@ const userName = computed(() => {
 		<div class="reviews_list__item__content__header">
 			<div class="reviews_list__item__content__header__user">
 				<div class="reviews_list__item__content__header__user__avatar">
-					<UserAvatar :user-account="review.user" />
+					<UserAvatar :user-account="userAccount" />
 				</div>
 				<div class="reviews_list__item__content__header__user__name">
 					<span>{{ userName }}</span>

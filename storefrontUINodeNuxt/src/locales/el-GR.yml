@@ -89,6 +89,37 @@ components:
       add_to_cart: προσθήκη στο καλάθι
       share: μερίδιο
       share_not_supported: η κοινή χρήση ιστού δεν υποστηρίζεται στο πρόγραμμα περιήγησής σας
+    reviews:
+      title: κριτικές
+      empty: δεν υπάρχουν ακόμη κριτικές
+      ordering:
+        id: ταυτότητα
+        user_id: ταυτότητα χρήστη
+        product_id: αναγνωριστικό προϊόντος
+        created_at: δημιουργήθηκε στο
+      summary:
+        reviews: κριτικές
+    review:
+      write_review: γράψτε μια κριτική
+      edit_review: επεξεργασία κριτικής
+      update_review: ενημέρωση κριτικής
+      delete_review: διαγραφή κριτικής
+      must_be_logged_in: πρέπει να συνδεθείτε για να γράψετε μία κριτική
+      write_review_for_product: γράψτε μια αξιολόγηση για το προϊόν <strong>%{product}</strong>
+      confirm_delete: είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν την κριτική;
+      too_many_attempts: πάρα πολλές προσπάθειες, δοκιμάστε ξανά αργότερα.
+      rating:
+        title: εκτίμηση
+        bad: κακό
+        not_that_good: όχι και τόσο καλό
+        meh: meh
+        its_ok: είναι εντάξει
+        good: καλός
+        very_good: πολύ καλά
+        perfect: τέλειος!
+      comment:
+        title: σχόλιο
+        placeholder: μοιραστείτε την εμπειρία σας...
   add_to_cart_button:
     text: προσθήκη στο καλάθι
     added_to_cart: προστέθηκε στο καλάθι
@@ -149,7 +180,7 @@ pages:
             εάν ενεργοποιηθεί, θα προστατεύσουμε τα σχόλιά σας από ανεπιθύμητα
             μηνύματα
         advanced_enable_advanced:
-          title: ενεργοποιήστε τις σύνθετες ρυθμίσεις
+          title: ενεργοποίηση σύνθετων ρυθμίσεων
           description: >-
             μπορείτε να ενεργοποιήσετε τις σύνθετες ρυθμίσεις για να αλλάξετε
             τις ρυθμίσεις
@@ -176,6 +207,16 @@ pages:
       created_at: δημιουργήθηκε στο
     share: μερίδιο
     share_not_supported: η κοινή χρήση ιστού δεν υποστηρίζεται στο πρόγραμμα περιήγησής σας
+    review:
+      created:
+        success: η κριτική δημιουργήθηκε με επιτυχία
+        error: ελέγξτε το σφάλμα δημιουργίας
+      updated:
+        success: η κριτική ενημερώθηκε με επιτυχία
+        error: ελέγξτε το σφάλμα ενημέρωσης
+      deleted:
+        success: η κριτική διαγράφηκε με επιτυχία
+        error: ελέγξτε το σφάλμα διαγραφής
   products:
     title: προϊόντα
     nav: προϊόντα
@@ -215,6 +256,10 @@ pages:
       choose:
         country: διάλεξε χώρα
         region: επιλέξτε περιοχή
+  login:
+    title: σύνδεση
+  account:
+    title: λογαριασμός
 layouts:
   title: deepweb %{title}
   description: deepweb-description %{description}

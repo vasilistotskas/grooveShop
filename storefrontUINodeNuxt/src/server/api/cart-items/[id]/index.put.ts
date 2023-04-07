@@ -25,13 +25,5 @@ export default defineEventHandler(async (event: H3Event) => {
 		method: 'put'
 	})
 	const data = await response.json()
-	const status = response.status
-	if (status !== 200) {
-		throw createError({
-			statusCode: status,
-			statusMessage: data.detail,
-			message: JSON.stringify(data)
-		})
-	}
 	return await parseDataAs(data, ZodCartItem)
 })

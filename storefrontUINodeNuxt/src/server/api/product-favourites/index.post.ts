@@ -20,13 +20,5 @@ export default defineEventHandler(async (event: H3Event) => {
 		method: 'post'
 	})
 	const data = await response.json()
-	const status = response.status
-	if (status !== 200 && status !== 201) {
-		throw createError({
-			statusCode: status,
-			statusMessage: data.detail,
-			message: JSON.stringify(data)
-		})
-	}
 	return await parseDataAs(data, ZodFavourite)
 })

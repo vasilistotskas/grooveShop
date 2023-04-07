@@ -32,7 +32,7 @@ components:
     next_page: 다음 페이지
     first_page: 첫 페이지
     last_page: 마지막 페이지
-    go_to_page: '%{page} 페이지로 이동'
+    go_to_page: 페이지 %{page}로 이동
     you_are_on_last_page: 당신은 마지막 페이지에 있습니다
   builder:
     navbar:
@@ -82,6 +82,37 @@ components:
       add_to_cart: 장바구니에 담기
       share: 공유하다
       share_not_supported: 브라우저에서 웹 공유가 지원되지 않습니다.
+    reviews:
+      title: 리뷰
+      empty: 아직 리뷰가 없습니다
+      ordering:
+        id: id
+        user_id: 사용자 아이디
+        product_id: 제품 id
+        created_at: 만든 시간
+      summary:
+        reviews: 리뷰
+    review:
+      write_review: 리뷰를 작성
+      edit_review: 리뷰 편집
+      update_review: 리뷰 업데이트
+      delete_review: 리뷰 삭제
+      must_be_logged_in: 리뷰를 작성하려면 로그인해야 합니다.
+      write_review_for_product: 제품 <strong>%{product}</strong>에 대한 리뷰 작성
+      confirm_delete: 이 리뷰를 삭제하시겠습니까?
+      too_many_attempts: 시도 횟수가 너무 많습니다. 나중에 다시 시도해 주세요.
+      rating:
+        title: 평가
+        bad: 나쁜
+        not_that_good: 좋지 않아
+        meh: 머
+        its_ok: 괜찮아요
+        good: 좋은
+        very_good: 매우 좋은
+        perfect: 완벽한!
+      comment:
+        title: 논평
+        placeholder: 경험을 공유하세요...
   add_to_cart_button:
     text: 장바구니에 담기
     added_to_cart: 장바구니에 추가됨
@@ -161,6 +192,16 @@ pages:
       created_at: 만든 시간
     share: 공유하다
     share_not_supported: 브라우저에서 웹 공유가 지원되지 않습니다.
+    review:
+      created:
+        success: 리뷰가 성공적으로 생성되었습니다.
+        error: 생성 오류 검토
+      updated:
+        success: 리뷰가 성공적으로 업데이트되었습니다.
+        error: 업데이트 오류 검토
+      deleted:
+        success: 리뷰가 삭제되었습니다.
+        error: 삭제 오류 검토
   products:
     title: 제품
     nav: 제품
@@ -200,6 +241,10 @@ pages:
       choose:
         country: 국가 선택
         region: 지역 선택
+  login:
+    title: 로그인
+  account:
+    title: 계정
 layouts:
   title: 딥웹 %{title}
   description: deepweb 설명 %{description}

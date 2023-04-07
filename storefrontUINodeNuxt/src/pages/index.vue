@@ -105,7 +105,8 @@ const copyBash = () => {
 						<Button
 							size="lg"
 							text="Github"
-							type="secondary"
+							type="button"
+							:style="'secondary'"
 							class="font-extrabold"
 							href="https://github.com/vasilistotskas/grooveShop/storefrontUINodeNuxt"
 						/>

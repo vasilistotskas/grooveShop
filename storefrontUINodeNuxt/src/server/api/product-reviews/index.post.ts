@@ -9,24 +9,19 @@ export default defineEventHandler(async (event: H3Event) => {
 	const regex = /csrftoken=([^;]+)/
 	const match = cookie?.match(regex)
 	const csrftoken = match ? match[1] : ''
-	const response = await fetch(`${config.public.apiBaseUrl}/product/review/`, {
-		headers: {
-			Cookie: cookie || '',
-			'X-CSRFToken': csrftoken,
-			'Content-Type': 'application/json',
+	const response = await fetch(
+		`${config.public.apiBaseUrl}/product/review/?expand=true`,
+		{
+			headers: {
+				Cookie: cookie || '',
+				'X-CSRFToken': csrftoken,
+				'Content-Type': 'application/json',
+				method: 'post'
+			},
+			body: JSON.stringify(body),
 			method: 'post'
-		},
-		body: JSON.stringify(body),
-		method: 'post'
-	})
+		}
+	)
 	const data = await response.json()
-	const status = response.status
-	if (status !== 200 && status !== 201) {
-		throw createError({
-			statusCode: status,
-			statusMessage: data.detail,
-			message: JSON.stringify(data)
-		})
-	}
 	return await parseDataAs(data, ZodReview)
 })

@@ -90,7 +90,7 @@ const userToProductFavourite = computed(() => {
 						</div>
 					</div>
 				</div>
-				<div class="card-body">
+				<div class="card-body gap-2">
 					<div class="card-actions h-6 flex gap-4">
 						<ClientOnly>
 							<Button
@@ -111,6 +111,7 @@ const userToProductFavourite = computed(() => {
 							:is-favourite="productInUserFavourites"
 							:favourite="userToProductFavourite"
 							:is-authenticated="isAuthenticated"
+							size="xs"
 						/>
 					</div>
 					<h2 class="card-title text-gray-700 dark:text-gray-200">

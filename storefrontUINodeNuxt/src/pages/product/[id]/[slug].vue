@@ -7,12 +7,14 @@ import { useImagesStore } from '~/stores/product/images'
 import { useAuthStore } from '~/stores/auth'
 import { useUserStore } from '~/stores/user'
 import { useReviewsStore } from '~/stores/product/reviews'
-import { ReviewQuery } from '~/zod/product/review'
+import { ReviewActionPayload, ReviewQuery } from '~/zod/product/review'
 import { ProductsQuery } from '~/zod/products/products'
+import { GlobalEvents } from '~/events/global'
 
 const route = useRoute()
 const config = useRuntimeConfig()
 const { t } = useLang()
+const toast = useToast()
 
 const productStore = useProductStore()
 const productImagesStore = useImagesStore()
@@ -22,12 +24,13 @@ const reviewsStore = useReviewsStore()
 
 const fullPath = config.public.baseUrl + route.fullPath
 const productId = route.params.id
-const isAuthenticated = authStore.isAuthenticated
 
 const { account, favourites } = storeToRefs(userStore)
+const { isAuthenticated } = storeToRefs(authStore)
 
-const { pending: productPending } = await useAsyncData('product', () =>
-	productStore.fetchProduct(productId)
+const { pending: productPending, refresh: productRefresh } = await useAsyncData(
+	'product',
+	() => productStore.fetchProduct(productId)
 )
 const { product, error: productError } = storeToRefs(productStore)
 
@@ -77,16 +80,92 @@ const userToProductFavourite = computed(() => {
 	return userStore.getUserToProductFavourite(product.value.id)
 })
 
-const bus = useEventBus<string>('productReviews')
-bus.on((event, payload: ProductsQuery) => {
+const {
+	data: review,
+	pending: reviewPending,
+	refresh: reviewRefresh
+} = await useAsyncData('productReview', () =>
+	reviewsStore.fetchUserToProductReview({
+		product_id: String(productId),
+		user_id: account.value?.id ? String(account.value.id) : undefined,
+		expand: 'true'
+	})
+)
+
+const reviewBus = useEventBus<string>('productReview')
+const reviewsBus = useEventBus<string>('productReviews')
+const modalBus = useEventBus<string>(GlobalEvents.GENERIC_MODAL)
+
+reviewsBus.on((event, payload: ProductsQuery) => {
 	reviewsQuery.value = payload
 	reviewsRefresh()
+})
+
+reviewBus.on((event, payload: ReviewActionPayload) => {
+	switch (event) {
+		case 'create':
+			reviewsStore
+				.addReview({
+					product: String(payload.productId),
+					user: String(payload.userId),
+					comment: payload.comment,
+					rate: String(payload.rate),
+					status: 'True'
+				})
+				.then(() => {
+					toast.success(t('pages.product.review.created.success'))
+				})
+				.catch((err) => {
+					toast.error(err.message)
+				})
+				.finally(() => {
+					modalBus.emit('modal-close-reviewModal')
+					productRefresh()
+					reviewRefresh()
+				})
+			break
+		case 'update':
+			reviewsStore
+				.updateReview(payload.id, {
+					product: String(payload.productId),
+					user: String(payload.userId),
+					comment: payload.comment,
+					rate: String(payload.rate)
+				})
+				.then(() => {
+					toast.success(t('pages.product.review.updated.success'))
+				})
+				.catch((err) => {
+					toast.error(err.message)
+				})
+				.finally(() => {
+					modalBus.emit('modal-close-reviewModal')
+					productRefresh()
+					reviewRefresh()
+				})
+			break
+		case 'delete':
+			reviewsStore
+				.deleteReview(payload.id)
+				.then(() => {
+					toast.success(t('pages.product.review.deleted.success'))
+				})
+				.catch((err) => {
+					toast.error(err.message)
+				})
+				.finally(() => {
+					modalBus.emit('modal-close-reviewModal')
+					productRefresh()
+					reviewRefresh()
+				})
+			break
+	}
 })
 
 watch(
 	() => route.query,
 	() => {
-		bus.emit('productReviews', {
+		reviewsBus.emit('productReviews', {
 			product_id: String(productId),
 			page: Number(route.query.page) || undefined,
 			ordering: route.query.ordering || undefined,
@@ -112,7 +191,7 @@ useHead(() => ({
 	meta: [
 		{
 			name: 'description',
-			content: product.value?.seoDescription || ''
+			content: product.value?.seoDescription || config.public.appDescription
 		},
 		{
 			name: 'keywords',
@@ -175,7 +254,7 @@ useHead(() => ({
 				:class="productPending ? 'block' : 'hidden'"
 			></LoadingSkeleton>
 			<template v-if="product">
-				<div class="product">
+				<div class="product mb-12 md:mb-24">
 					<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
 						<div class="grid md:grid-cols-2 gap-2">
 							<div class="md:flex-1 px-4">
@@ -192,20 +271,25 @@ useHead(() => ({
 								>
 									{{ product.name }}
 								</h2>
-								<div class="actions h-6 flex gap-4">
+								<div class="actions flex gap-4">
 									<ClientOnly>
 										<Button
 											:disabled="!isSupported"
+											type="button"
 											:text="
 												isSupported
 													? $t('pages.product.share')
 													: $t('pages.product.share_not_supported')
 											"
-											size="xs"
-											class="font-extrabold capitalize"
 											@click="startShare"
 										/>
 									</ClientOnly>
+									<ProductReview
+										:existing-review="review || undefined"
+										:product="product"
+										:user="account || undefined"
+										:is-authenticated="isAuthenticated"
+									></ProductReview>
 									<AddToFavouriteButton
 										:product-id="product.id"
 										:user-id="account?.id"
@@ -290,7 +374,6 @@ useHead(() => ({
 				</div>
 			</template>
 			<ProductReviews
-				v-if="reviews.results.length > 0"
 				:reviews="reviews"
 				:pending="reviewsPending"
 				:error="reviewsError"

@@ -1,26 +1,26 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
-import { ZodAccount } from '~/zod/user/account'
+import { Account } from '~/zod/user/account'
 
 const props = defineProps({
 	userAccount: {
-		type: Object as PropType<ZodAccount>,
+		type: Object as PropType<Account | undefined>,
 		required: true
 	}
 })
-
-const { userAccount } = toRefs(props)
 
 const { resolveImageFilenameNoExt, resolveImageFileExtension, resolveImageSrc } =
 	useImageResolver()
 
 const imageExtension = computed(() => {
-	return resolveImageFileExtension(userAccount.mainImageFilename)
+	return resolveImageFileExtension(props.userAccount?.mainImageFilename)
 })
 const imageSrc = computed(() => {
 	return resolveImageSrc(
-		userAccount.mainImageFilename,
-		`media/uploads/users/${resolveImageFilenameNoExt(userAccount.mainImageFilename)}`
+		props.userAccount?.mainImageFilename,
+		`media/uploads/users/${resolveImageFilenameNoExt(
+			props.userAccount?.mainImageFilename
+		)}`
 	)
 })
 </script>
@@ -44,11 +44,11 @@ const imageSrc = computed(() => {
 				:format="imageExtension"
 				sizes="sm:100vw md:50vw lg:100px"
 				:src="imageSrc"
-				:alt="userAccount.name"
+				:alt="userAccount.firstName + ' ' + userAccount.lastName"
 			/>
 		</div>
 		<div class="flex flex-col">
-			<span class="text-gray-700 dark:text-gray-200">{{ userAccount.name }}</span>
+			<span class="text-gray-700 dark:text-gray-200">{{ userAccount.firstName }}</span>
 		</div>
 	</div>
 </template>
