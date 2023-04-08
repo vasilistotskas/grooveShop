@@ -2,6 +2,23 @@
 
 <!--next-version-placeholder-->
 
+## v0.36.0 (2023-04-08)
+### Feature
+* **Nuxt:** User avatar update and more ([`2268e3d`](https://github.com/vasilistotskas/grooveShop/commit/2268e3d7f2398ce13511c6dd9f6af0738152f295))
+* **Nuxt:** User account page prototype init + more general improvements ([`1c39a58`](https://github.com/vasilistotskas/grooveShop/commit/1c39a580d47ce552309ef30b74af40d8e5dbb88b))
+* **Nuxt:** Produt reviews and user to product review update/create/delete UI/UX ready. ([`f340a85`](https://github.com/vasilistotskas/grooveShop/commit/f340a85c7b95d80d10b57ea1f4fe841e94be7943))
+* **Nuxt:** Product reviews ([`f7ab004`](https://github.com/vasilistotskas/grooveShop/commit/f7ab004dcb7f754326daa4dc026fb9856375ea1a))
+* **Nuxt:** Add to favourite button and more ([`29c3fce`](https://github.com/vasilistotskas/grooveShop/commit/29c3fcedd7915b2582eea2eae9baab3186a3b0a7))
+* **Django:** Implement a way to ask for non paginated results in API listing view (favourite) ([`064c68e`](https://github.com/vasilistotskas/grooveShop/commit/064c68ea5ce66aafc9d34bc1f9f3e333959a073d))
+* **Nuxt:** Vue use composables for nice thigs ([`ec7a594`](https://github.com/vasilistotskas/grooveShop/commit/ec7a59424fcfa559c075324d408062e336ad46b4))
+* **Nuxt:** Product Images ready ([`2b5e8de`](https://github.com/vasilistotskas/grooveShop/commit/2b5e8de42ce453dbf2c8aba24546b2fe1b14ccc8))
+* **Nuxt:** Cart fixes and more code improvements ([`908e9fc`](https://github.com/vasilistotskas/grooveShop/commit/908e9fcc6dedf12137220db86092acdbb5e8f0e1))
+* **Nuxt:** Country and region ([`8b2f796`](https://github.com/vasilistotskas/grooveShop/commit/8b2f7962290eb6a8ae8147f274ef05d026af14a9))
+
+### Fix
+* **Django:** Product Images model fix ([`aa9f6a7`](https://github.com/vasilistotskas/grooveShop/commit/aa9f6a72d546abdfb364ace6a1b2c90225595900))
+* **Nuxt:** Pinia store error improved and add lib uuid ([`8f1d4b6`](https://github.com/vasilistotskas/grooveShop/commit/8f1d4b6f37de52b5ec166aef619ff7fd008da976))
+
 ## v0.35.1 (2023-03-20)
 ### Fix
 * **Nuxt:** Start building product page ([`e2d67c5`](https://github.com/vasilistotskas/grooveShop/commit/e2d67c5d2d7c9e2f472b14126a60ef397bc9e357))
