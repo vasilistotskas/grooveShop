@@ -50,16 +50,16 @@ export const useCartStore = defineStore({
 			this.pending = pending.value
 			this.error = error.value
 		},
-		async updateCartItem(cartItemId: number, body: CartItemPutRequest) {
-			const { error, pending } = await useFetch(`/api/cart-items/${cartItemId}`, {
+		async updateCartItem(id: number, body: CartItemPutRequest) {
+			const { error, pending } = await useFetch(`/api/cart-items/${id}`, {
 				method: 'put',
 				body: JSON.stringify(body)
 			})
 			this.pending = pending.value
 			this.error = error.value
 		},
-		async deleteCartItem(cartItemId: number) {
-			const { error, pending } = await useFetch(`/api/cart-items/${cartItemId}`, {
+		async deleteCartItem(id: number) {
+			const { error, pending } = await useFetch(`/api/cart-items/${id}`, {
 				method: 'delete'
 			})
 			this.pending = pending.value

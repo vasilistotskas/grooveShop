@@ -7,9 +7,7 @@ export default defineEventHandler(async (event: H3Event) => {
 	const config = useRuntimeConfig()
 	const cookie = event.node.req.headers.cookie
 	const params = parseParamsAs(event, ZodCartItemParams)
-	const regex = /csrftoken=([^;]+)/
-	const match = cookie?.match(regex)
-	const csrftoken = match ? match[1] : ''
+	const csrftoken = getCookie(event, 'csrftoken') || ''
 
 	const response = await fetch(`${config.public.apiBaseUrl}/cart/item/${params.id}`, {
 		headers: {

@@ -59,6 +59,8 @@ onMounted(() => {
 				type="checkbox"
 				class="switch-checkbox absolute block w-6 h-6 rounded-full bg-white dark:bg-slate-900 border-2 border-slate-300 dark:border-slate-600 appearance-none cursor-pointer"
 				:checked="checked"
+				name="switch"
+				placeholder="Switch"
 				@change="onInputChange"
 			/>
 			<label

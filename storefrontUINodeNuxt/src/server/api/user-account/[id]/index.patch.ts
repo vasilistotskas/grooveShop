@@ -1,27 +1,24 @@
 import { H3Event } from 'h3'
 import { parseBodyAs, parseDataAs, parseParamsAs } from '~/zod/parser'
-import {
-	ZodCartItem,
-	ZodCartItemPutRequest,
-	ZodCartItemParams
-} from '~/zod/cart/cart-item'
+import { ZodAccount, ZodAccountParams, ZodAccountPatchRequest } from '~/zod/user/account'
 
 export default defineEventHandler(async (event: H3Event) => {
 	const config = useRuntimeConfig()
-	const body = await parseBodyAs(event, ZodCartItemPutRequest)
+	const body = await parseBodyAs(event, ZodAccountPatchRequest)
 	const cookie = event.node.req.headers.cookie
-	const params = parseParamsAs(event, ZodCartItemParams)
+	const params = parseParamsAs(event, ZodAccountParams)
 	const csrftoken = getCookie(event, 'csrftoken') || ''
-	const response = await fetch(`${config.public.apiBaseUrl}/cart/item/${params.id}`, {
+	// form data
+	const response = await fetch(`${config.public.apiBaseUrl}/user/account/${params.id}`, {
 		headers: {
 			Cookie: cookie || '',
 			'X-CSRFToken': csrftoken,
-			'Content-Type': 'application/json',
-			method: 'put'
+			'Content-Type': 'multipart/form-data',
+			method: 'patch'
 		},
 		body: JSON.stringify(body),
-		method: 'put'
+		method: 'patch'
 	})
 	const data = await response.json()
-	return await parseDataAs(data, ZodCartItem)
+	return await parseDataAs(data, ZodAccount)
 })

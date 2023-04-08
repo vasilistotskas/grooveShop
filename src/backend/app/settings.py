@@ -173,6 +173,15 @@ SESSION_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_HTTPONLY = False
 SESSION_COOKIE_HTTPONLY = True
 
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 22500  # higher than the count of fields
 
 TEMPLATES = [

@@ -172,8 +172,8 @@ const {
 
 				<div v-if="showFooter" id="card-footer" class="card__footer w-full">
 					<span
-						v-for="i in footerParagraphs"
-						:key="i"
+						v-for="n in footerParagraphs"
+						:key="n"
 						class="skeleton skeleton-text skeleton-footer"
 					></span>
 				</div>

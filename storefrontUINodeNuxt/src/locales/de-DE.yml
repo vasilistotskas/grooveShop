@@ -175,7 +175,7 @@ pages:
           footer: wird bei der interaktion mit dem bot verwendet.
         protection_spam:
           title: spamschutz
-          description: toggle enable, um den roten rand zu entfernen
+          description: toggle enable, um den roten rahmen zu entfernen
           footer: >-
             wenn sie diese option aktivieren, schützen wir ihre kommentare vor
             spam

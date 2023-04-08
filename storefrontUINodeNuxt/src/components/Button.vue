@@ -108,6 +108,8 @@ const onClick = (event: MouseEvent) => {
 		v-else-if="type === 'input'"
 		type="submit"
 		:value="text"
+		:name="text"
+		:placeholder="text"
 		:class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"
 	/>
 	<a

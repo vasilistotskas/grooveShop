@@ -280,7 +280,7 @@ pages:
       description: 리뷰
       keywords: 리뷰
       empty: 리뷰가 비어 있습니다.
-      updated: 업데이트된 리뷰
+      updated: 리뷰 업데이트됨
       update_error: 리뷰 업데이트 오류
       deleted: 리뷰 항목 삭제됨
       delete_error: 리뷰 항목 삭제 오류

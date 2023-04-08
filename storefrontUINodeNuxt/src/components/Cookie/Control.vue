@@ -78,6 +78,8 @@
 														cookie.name !== 'functional'
 													"
 													:id="cookie.name"
+													:name="cookie.name"
+													:placeholder="cookie.name"
 													type="checkbox"
 													disabled
 													checked

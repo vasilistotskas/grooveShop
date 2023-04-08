@@ -376,7 +376,7 @@ watch(
 					<span class="review_body__rating__error h-6">{{ errors.comment }}</span>
 				</div>
 
-				<input v-model="rate" type="hidden" name="rate" />
+				<input v-model="rate" type="hidden" name="rate" placeholder="rate" />
 			</div>
 		</template>
 		<template #footer>

@@ -17,7 +17,6 @@ User = get_user_model()
 
 
 class UserAccountViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserAccountSerializer
     pagination_class = UserAccountPagination

@@ -33,9 +33,11 @@ const props = defineProps({
 			<div class="user__info__avatar">
 				<UserAvatar
 					:user-account="account"
-					:img-width="120"
-					:img-height="120"
+					:img-width="135"
+					:img-height="135"
 					:show-name="false"
+					:background-border="true"
+					:change-avatar="true"
 				/>
 			</div>
 			<div class="user__info__name">

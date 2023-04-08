@@ -1,8 +1,9 @@
 import { FetchError } from 'ofetch'
-import { Account } from '~/zod/user/account'
-import { FavouriteCreateRequest, Favourite } from '~/zod/product/favourite'
+import { Account, AccountPutRequest, ZodAccount } from '~/zod/user/account'
+import { Favourite, FavouriteCreateRequest } from '~/zod/product/favourite'
 import { Review, ReviewCreateRequest, ReviewPutRequest } from '~/zod/product/review'
 import { Order } from '~/zod/order/order'
+import { parseDataAs } from '~/zod/parser'
 
 export interface UserState {
 	account: Account | null
@@ -47,6 +48,46 @@ export const useUserStore = defineStore({
 				this.favourites = account.value.favourites
 				this.reviews = account.value.reviews
 				this.orders = account.value.orders
+			}
+		},
+		async updateAccount(id: number, body: AccountPutRequest) {
+			const {
+				data: account,
+				error,
+				pending
+			} = await useFetch(`/api/user-account/${id}`, {
+				method: 'put',
+				body
+			})
+			this.pending = pending.value
+			this.error = error.value
+			if (account.value) {
+				this.account = account.value
+			}
+		},
+		async updateAccountImage(id: number, body: FormData) {
+			const config = useRuntimeConfig()
+			const csrfToken = useCookie('csrftoken')
+			const sessionID = useCookie('sessionid')
+			const { data, pending, error } = await useFetch(
+				`${config.public.apiBaseUrl}/user/account/${id}/`,
+				{
+					headers: {
+						Cookie: `csrftoken=${csrfToken.value}; sessionid=${sessionID.value}`,
+						'X-CSRFToken': csrfToken.value || ''
+					},
+					method: 'PATCH',
+					body
+				}
+			)
+			this.pending = pending.value
+			this.error = error.value
+			const account = await parseDataAs(data.value, ZodAccount).catch((error) => {
+				this.error = error?.data
+				return null
+			})
+			if (account) {
+				this.account = account
 			}
 		},
 		async addFavourite(body: FavouriteCreateRequest) {

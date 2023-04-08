@@ -8,6 +8,7 @@ class UserAccountSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "email",
+            "image",
             "first_name",
             "last_name",
             "phone",
