@@ -34,7 +34,7 @@ export const ZodProduct = z.object({
 
 export type Product = Readonly<z.infer<typeof ZodProduct>>
 
-export const ZodCreateRequest = z.object({
+export const ZodProductCreateRequest = z.object({
 	name: z.string(),
 	slug: z.string(),
 	category: z.number().int(),
@@ -51,10 +51,10 @@ export const ZodCreateRequest = z.object({
 	discountPercent: z.number().optional()
 })
 
-export type CreateRequest = z.infer<typeof ZodCreateRequest>
+export type ProductCreateRequest = z.infer<typeof ZodProductCreateRequest>
 
-export const ZodParams = z.object({
+export const ZodProductParams = z.object({
 	id: z.string()
 })
 
-export type Params = z.infer<typeof ZodParams>
+export type ProductParams = z.infer<typeof ZodProductParams>

@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-// locale
-const localePath = useLocalePath()
-// micro compiler
 const props = defineProps({
 	text: {
 		type: String,
@@ -21,10 +18,9 @@ const props = defineProps({
 	}
 })
 
-// state
-const href = toRef(props, 'href')
-const to = toRef(props, 'to')
-const cssClass = toRef(props, 'cssClass')
+const { text, to, href, cssClass } = toRefs(props)
+
+const localePath = useLocalePath()
 </script>
 
 <template>

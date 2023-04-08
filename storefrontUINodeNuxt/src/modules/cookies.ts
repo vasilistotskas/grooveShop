@@ -6,7 +6,6 @@ import {
 	addTemplate,
 	createResolver
 } from '@nuxt/kit'
-import { Nuxt } from '@nuxt/schema'
 
 import { version } from '../package.json'
 import { DEFAULTS, ModuleOptions } from '../runtime/cookies/types'
@@ -83,6 +82,7 @@ const blockIframes = (moduleOptions: ModuleOptions) => {
 	}
 }
 
-const pushCss = (moduleOptions: ModuleOptions, nuxt: Nuxt) => {
+// @ts-ignore
+const pushCss = (moduleOptions: ModuleOptions, nuxt) => {
 	if (moduleOptions.isCssEnabled) nuxt.options.css.push(resolve(runtimeDir, 'styles.css'))
 }

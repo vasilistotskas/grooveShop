@@ -61,7 +61,7 @@ const onSubmit = handleSubmit((e) => {
 			</div>
 			<span class="text-gray-700 dark:text-gray-200">{{ errors.password }}</span>
 		</div>
-		<Button v-if="!tooManyAttempts" type="submit">
+		<Button v-if="!tooManyAttempts" type="button">
 			{{ $t('components.form.validation.submit') }}
 		</Button>
 		<Button v-else type="button" disabled>

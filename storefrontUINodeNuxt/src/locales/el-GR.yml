@@ -86,6 +86,49 @@ components:
       price: τιμή
       vat_percent: ποσοστό φπα
       total_price: συνολικό ποσό
+      add_to_cart: προσθήκη στο καλάθι
+      share: μερίδιο
+      share_not_supported: η κοινή χρήση ιστού δεν υποστηρίζεται στο πρόγραμμα περιήγησής σας
+    reviews:
+      title: κριτικές
+      empty: δεν υπάρχουν ακόμη κριτικές
+      ordering:
+        id: ταυτότητα
+        user_id: ταυτότητα χρήστη
+        product_id: αναγνωριστικό προϊόντος
+        created_at: δημιουργήθηκε στο
+      summary:
+        reviews: κριτικές
+    review:
+      write_review: γράψτε μια κριτική
+      edit_review: επεξεργασία κριτικής
+      update_review: ενημέρωση κριτικής
+      delete_review: διαγραφή κριτικής
+      must_be_logged_in: πρέπει να συνδεθείτε για να γράψετε μία κριτική
+      write_review_for_product: γράψτε μια αξιολόγηση για το προϊόν <strong>%{product}</strong>
+      confirm_delete: είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν την κριτική;
+      too_many_attempts: πάρα πολλές προσπάθειες, δοκιμάστε ξανά αργότερα.
+      rating:
+        title: εκτίμηση
+        bad: κακό
+        not_that_good: όχι και τόσο καλό
+        meh: meh
+        its_ok: είναι εντάξει
+        good: καλός
+        very_good: πολύ καλά
+        perfect: τέλειος!
+      comment:
+        title: σχόλιο
+        placeholder: μοιραστείτε την εμπειρία σας...
+  add_to_cart_button:
+    text: προσθήκη στο καλάθι
+    added_to_cart: προστέθηκε στο καλάθι
+  add_to_favourite_button:
+    not_authenticated: πρέπει να είστε συνδεδεμένοι για να προσθέσετε στα αγαπημένα
+    added: προστέθηκε στα αγαπημένα
+    removed: καταργήθηκε από τα αγαπημένα
+    add: προσθήκη στα αγαπημένα
+    remove: αφαίρεση από τα αγαπημένα
 pages:
   '404':
     title: η σελίδα δεν βρέθηκε
@@ -97,6 +140,7 @@ pages:
       nav: δοκιμή
       title: δοκιμή
       description: αυτή είναι μια δοκιμαστική σελίδα
+      keywords: δοκιμή
     blank:
       nav: κενό
       title: κενή σελίδα
@@ -127,7 +171,7 @@ pages:
           footer_link: api χρηστών github
         bot_id:
           title: αναγνωριστικό ρομπότ
-          description: αυτό είναι το αναγνωριστικό ρομπότ σας.
+          description: αυτό είναι το αναγνωριστικό του bot σας.
           footer: χρησιμοποιείται κατά την αλληλεπίδραση με το bot.
         protection_spam:
           title: προστασία ανεπιθύμητων
@@ -136,7 +180,7 @@ pages:
             εάν ενεργοποιηθεί, θα προστατεύσουμε τα σχόλιά σας από ανεπιθύμητα
             μηνύματα
         advanced_enable_advanced:
-          title: ενεργοποίηση σύνθετων ρυθμίσεων
+          title: ενεργοποιήστε τις σύνθετες ρυθμίσεις
           description: >-
             μπορείτε να ενεργοποιήσετε τις σύνθετες ρυθμίσεις για να αλλάξετε
             τις ρυθμίσεις
@@ -150,11 +194,29 @@ pages:
     title: deepweb[]καταπληκτική[]μίζα
     description: deepweb[]καταπληκτική[]μίζα
     keywords: deepweb[]καταπληκτική[]μίζα
+    add_to_cart: προσθήκη στο καλάθι
   product:
+    add_to_cart: προσθήκη στο καλάθι
+    product_id: αναγνωριστικό προϊόντος
+    save: αποθηκεύσετε
+    inclusive_of_taxes: συμπεριλαμβάνονται όλοι οι φόροι.
+    qty: ποσ
     ordering:
       name: ονομα
       price: τιμή
       created_at: δημιουργήθηκε στο
+    share: μερίδιο
+    share_not_supported: η κοινή χρήση ιστού δεν υποστηρίζεται στο πρόγραμμα περιήγησής σας
+    review:
+      created:
+        success: η κριτική δημιουργήθηκε με επιτυχία
+        error: ελέγξτε το σφάλμα δημιουργίας
+      updated:
+        success: η κριτική ενημερώθηκε με επιτυχία
+        error: ελέγξτε το σφάλμα ενημέρωσης
+      deleted:
+        success: η κριτική διαγράφηκε με επιτυχία
+        error: ελέγξτε το σφάλμα διαγραφής
   products:
     title: προϊόντα
     nav: προϊόντα
@@ -166,6 +228,95 @@ pages:
     description: καροτσάκι
     keywords: καροτσάκι
     empty: το καλάθι σας είναι άδειο
+    updated: το καλάθι ενημερώθηκε
+    update_error: σφάλμα ενημέρωσης καλαθιού
+    deleted: το προϊόν καλαθιού διαγράφηκε
+    delete_error: σφάλμα διαγραφής προϊόντος καλαθιού
+    checkout: ολοκλήρωση αγοράς
+  checkout:
+    title: ολοκλήρωση αγοράς
+    nav: ολοκλήρωση αγοράς
+    description: ολοκλήρωση αγοράς
+    keywords: ολοκλήρωση αγοράς
+    empty: το καλάθι σας είναι άδειο
+    form:
+      first_name: ονομα
+      last_name: επίθετο
+      address: διεύθυνση
+      city: πόλη
+      email: ηλεκτρονικη διευθυνση
+      phone: τηλέφωνο
+      place: θέση
+      zipcode: ταχυδρομικός κώδικας
+      country: χώρα
+      region: περιοχή
+      customer_notes: σημειώσεις πελατών
+      submit: υποβάλλουν
+      too_many_attempts: πάρα πολλές προσπάθειες, δοκιμάστε ξανά αργότερα.
+      choose:
+        country: διάλεξε χώρα
+        region: επιλέξτε περιοχή
+  accounts:
+    login:
+      title: λογαριασμός
+    logout:
+      title: αποσύνδεση
+    security:
+      title: ασφάλεια
+  account:
+    index:
+      title: λογαριασμός
+      nav: λογαριασμός
+      description: λογαριασμός
+      keywords: λογαριασμός
+    orders:
+      title: παραγγελίες
+      nav: παραγγελίες
+      description: παραγγελίες
+      keywords: παραγγελίες
+      empty: οι παραγγελίες σας είναι κενές
+      updated: οι παραγγελίες ενημερώθηκαν
+      update_error: σφάλμα ενημέρωσης παραγγελιών
+      deleted: το στοιχείο παραγγελιών διαγράφηκε
+      delete_error: σφάλμα διαγραφής στοιχείων παραγγελιών
+    favourites:
+      title: αγαπημένα
+      nav: αγαπημένα
+      description: αγαπημένα
+      keywords: αγαπημένα
+      empty: τα αγαπημένα σας είναι άδεια
+      updated: τα αγαπημένα ενημερώθηκαν
+      update_error: σφάλμα ενημέρωσης αγαπημένων
+      deleted: αγαπημένα το αντικείμενο διαγράφηκε
+      delete_error: σφάλμα διαγραφής αγαπημένων στοιχείων
+    reviews:
+      title: κριτικές
+      nav: κριτικές
+      description: κριτικές
+      keywords: κριτικές
+      empty: οι κριτικές σας είναι κενές
+      updated: οι κριτικές ενημερώθηκαν
+      update_error: σφάλμα ενημέρωσης αξιολογήσεων
+      deleted: κριτικές το στοιχείο διαγράφηκε
+      delete_error: κριτικές σφάλμα διαγραφής στοιχείου
+    settings:
+      title: ρυθμίσεις
+      nav: ρυθμίσεις
+      description: ρυθμίσεις
+      keywords: ρυθμίσεις
+      updated: οι ρυθμίσεις ενημερώθηκαν
+      update_error: σφάλμα ενημέρωσης ρυθμίσεων
+      deleted: ρυθμίσεις το στοιχείο διαγράφηκε
+      delete_error: σφάλμα διαγραφής στοιχείου ρυθμίσεων
+    help:
+      title: βοήθεια
+      nav: βοήθεια
+      description: βοήθεια
+      keywords: βοήθεια
+      updated: η βοήθεια ενημερώθηκε
+      update_error: σφάλμα ενημέρωσης βοήθειας
+      deleted: το στοιχείο βοήθειας διαγράφηκε
+      delete_error: σφάλμα διαγραφής στοιχείου βοήθειας
 layouts:
   title: deepweb %{title}
   description: deepweb-description %{description}
@@ -177,6 +328,8 @@ others:
   copy: αντίγραφο
   enabled: ενεργοποιημένη
   disabled: άτομα με ειδικές ανάγκες
+  readLess: διάβασε λιγότερο
+  readMore: διαβάστε περισσότερα
 routes:
   el: ελληνικά
   en: αγγλικά
@@ -185,7 +338,18 @@ routes:
   ja: ιαπωνικά
   ko: κορεάτης
   zh: κινέζικα
+  setting: σύνθεση
+  test: δοκιμή
+  blank: κενό
+  testing: δοκιμές
   products: προϊόντα
   product: προϊόν
   home: σπίτι
   cart: καροτσάκι
+  checkout: ολοκλήρωση αγοράς
+  account: λογαριασμός
+  orders: παραγγελίες
+  favourites: αγαπημένα
+  reviews: κριτικές
+  settings: ρυθμίσεις
+  help: βοήθεια

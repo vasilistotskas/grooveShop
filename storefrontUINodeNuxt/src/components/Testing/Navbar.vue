@@ -36,7 +36,6 @@ const menus = computed((): IMenuItem[] => [
 						<Anchor
 							v-if="item.type === 'link'"
 							:to="item.route ? item.route : undefined"
-							:href="item.href ? item.href : undefined"
 							:text="item.text"
 							class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
 							>{{ item.text }}</Anchor
@@ -54,24 +53,6 @@ const menus = computed((): IMenuItem[] => [
 			</nav>
 			<div class="relative hidden lg:flex items-center ml-auto">
 				<div class="flex items-center justify-center">
-					<nuxt-img
-						preload
-						placeholder
-						loading="lazy"
-						provider="mediaStream"
-						class="rounded-full"
-						:src="`static/images/websiteLogo`"
-						:width="150"
-						:height="42"
-						:fit="'contain'"
-						:position="'entropy'"
-						:background="'transparent'"
-						:trim-threshold="5"
-						:format="'png'"
-						sizes="sm:75vw md:125vw lg:275px"
-						alt="Avatar of Jonathan Reinink"
-						@load="consoleLogImageLoaded"
-					/>
 					<span class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-200"
 						>Alfian</span
 					>
@@ -111,7 +92,6 @@ const menus = computed((): IMenuItem[] => [
 								<Anchor
 									v-if="item.type === 'link'"
 									:to="item.route ? item.route : undefined"
-									:href="item.href ? item.href : undefined"
 									:text="item.text"
 									class="flex-1 hover:no-underline capitalize"
 									>{{ item.text }}</Anchor
@@ -127,13 +107,13 @@ const menus = computed((): IMenuItem[] => [
 							</li>
 						</ul>
 					</nav>
-					<div class="mt-6 text-sm font-bold capitalize">
+					<div class="text-gray-700 dark:text-gray-200 mt-6 text-sm font-bold capitalize">
 						{{ $t('components.theme_switcher.change_theme') }}
 					</div>
 					<div class="mt-2">
 						<ThemeSwitcher type="select-box" />
 					</div>
-					<div class="mt-6 text-sm font-bold capitalize">
+					<div class="text-gray-700 dark:text-gray-200 mt-6 text-sm font-bold capitalize">
 						{{ $t('components.language_switcher.change_language') }}
 					</div>
 					<div class="mt-2">
@@ -141,14 +121,20 @@ const menus = computed((): IMenuItem[] => [
 					</div>
 				</ActionSheetBody>
 				<Button
-					type="secondary"
+					type="button"
+					:style="'secondary'"
 					title="Github"
 					href="https://github.com/vasilistotskas/grooveShop/storefrontUINodeNuxt"
 				>
 					<IconMdi:github-face />
 					<span class="ml-1 text-gray-700 dark:text-gray-200">Github</span>
 				</Button>
-				<Button text="Close" type="secondary" @click.prevent="toggleOptions(false)" />
+				<Button
+					text="Close"
+					:style="'secondary'"
+					type="button"
+					@click.prevent="toggleOptions(false)"
+				/>
 			</ActionSheet>
 		</template>
 		<template #drawer>

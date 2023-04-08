@@ -43,8 +43,8 @@ class Order(TimeStampMixinModel, UUIDModel):
         return self.first_name
 
     @property
-    def get_total_price(self) -> Decimal:
-        return sum(item.get_total_price for item in self.order_item_order.all())
+    def total_price(self) -> Decimal:
+        return sum(item.total_price for item in self.order_item_order.all())
 
 
 class OrderItem(TimeStampMixinModel, SortableModel, UUIDModel):
@@ -62,7 +62,7 @@ class OrderItem(TimeStampMixinModel, SortableModel, UUIDModel):
         return "%s" % self.id
 
     @property
-    def get_total_price(self) -> Decimal:
+    def total_price(self) -> Decimal:
         return self.price * self.quantity
 
     def get_ordering_queryset(self) -> QuerySet:

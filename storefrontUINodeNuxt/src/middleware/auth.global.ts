@@ -1,12 +1,12 @@
 import { useAuthStore } from '~/stores/auth'
-import { useAccountStore } from '~/stores/user/account'
+import { useUserStore } from '~/stores/user'
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
 	const authStore = useAuthStore()
-	const userStore = useAccountStore()
+	const userStore = useUserStore()
 
-	await authStore.initAuth().then(() => {
-		console.log('========== authStore initialized ==========')
+	await authStore.fetchAuth().then(() => {
+		// console.log('========== authStore initialized ==========')
 	})
 
 	if (
@@ -15,6 +15,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 	) {
 		return navigateTo('/')
 	}
+
+	if (!authStore.isAuthenticated && to.meta.layout === 'user') {
+		return navigateTo('/')
+	}
+
 	if (process.env.NODE_ENV !== 'development' && to.meta.layout === 'testing') {
 		return navigateTo('/')
 	}

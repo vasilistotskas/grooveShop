@@ -41,28 +41,32 @@ const identity = useIdentity()
 					>
 						<Button
 							class="w-full md:w-auto capitalize"
-							type="secondary"
+							type="button"
+							:style="'secondary'"
 							size="sm"
 							:text="$t('pages.testing.test.increment')"
 							@click.prevent="counter.increment"
 						/>
 						<Button
 							class="w-full md:w-auto"
-							type="secondary"
+							type="button"
+							:style="'secondary'"
 							size="sm"
 							:text="`${$t('pages.testing.test.increment')} 2x`"
 							@click.prevent="counter.increment2x"
 						/>
 						<Button
 							class="w-full md:w-auto capitalize"
-							type="secondary"
+							type="button"
+							:style="'secondary'"
 							size="sm"
 							:text="$t('pages.testing.test.decrement')"
 							@click.prevent="counter.decrement"
 						/>
 						<Button
 							class="w-full md:w-auto capitalize"
-							type="secondary"
+							type="button"
+							:style="'secondary'"
 							size="sm"
 							:text="$t('pages.testing.test.reset')"
 							@click.prevent="counter.reset"
@@ -99,7 +103,8 @@ const identity = useIdentity()
 						<Button
 							class="capitalize w-full md:w-auto"
 							:text="$t('pages.testing.test.reset')"
-							type="secondary"
+							type="button"
+							:style="'secondary'"
 							size="md"
 							@click.prevent="identity.reset"
 						/>

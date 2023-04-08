@@ -80,6 +80,7 @@ const copyBash = () => {
 		<PageBody>
 			<PageSection class="flex items-center">
 				<div class="flex-1 md:w-5/8 flex flex-col z-10">
+					<Cube></Cube>
 					<p class="text-gray-700 dark:text-gray-200 text-center md:text-left mt-4">
 						<span
 							v-for="(item, i) in leadingsText"
@@ -104,7 +105,8 @@ const copyBash = () => {
 						<Button
 							size="lg"
 							text="Github"
-							type="secondary"
+							type="button"
+							:style="'secondary'"
 							class="font-extrabold"
 							href="https://github.com/vasilistotskas/grooveShop/storefrontUINodeNuxt"
 						/>

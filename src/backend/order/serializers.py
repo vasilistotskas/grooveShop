@@ -10,6 +10,7 @@ class UserOrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = (
+            "id",
             "price",
             "product",
             "quantity",
@@ -17,17 +18,18 @@ class UserOrderItemSerializer(serializers.ModelSerializer):
             "updated_at",
             "uuid",
             "sort_order",
-            "get_total_price",
+            "total_price",
         )
 
 
 class UserOrderSerializer(serializers.ModelSerializer):
-    items = UserOrderItemSerializer(many=True)
+    order_item_order = UserOrderItemSerializer(many=True)
 
     class Meta:
         model = Order
         fields = (
             "id",
+            "user",
             "first_name",
             "last_name",
             "email",
@@ -38,12 +40,12 @@ class UserOrderSerializer(serializers.ModelSerializer):
             "phone",
             "stripe_token",
             "customer_notes",
-            "items",
+            "order_item_order",
             "paid_amount",
             "created_at",
             "updated_at",
             "uuid",
-            "get_total_price",
+            "total_price",
         )
 
 
@@ -51,6 +53,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = (
+            "id",
             "price",
             "product",
             "quantity",
@@ -58,7 +61,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
             "updated_at",
             "uuid",
             "sort_order",
-            "get_total_price",
+            "total_price",
         )
 
 
@@ -85,7 +88,7 @@ class OrderSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "uuid",
-            "get_total_price",
+            "total_price",
         )
 
     def create(self, validated_data):

@@ -14,6 +14,8 @@ const props = defineProps({
 	}
 })
 
+const { code, wrap } = toRefs(props)
+
 // computed
 const errorsMap: {
 	[key: string]: string
@@ -34,8 +36,8 @@ const error = computed(() => {
 
 <template>
 	<component
-		:is="props.wrap ? PageWrapper : 'div'"
-		:class="props.wrap ? 'flex flex-col items-center justify-center' : ''"
+		:is="wrap ? PageWrapper : 'div'"
+		:class="wrap ? 'flex flex-col items-center justify-center' : ''"
 	>
 		<h1 class="text-center mb-6 leading-3 text-gray-700 dark:text-gray-200">
 			<span class="text-gray-700 dark:text-gray-200 font-bold text-8xl block">{{

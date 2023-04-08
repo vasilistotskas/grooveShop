@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { PropType } from 'vue'
+
 export type Direction = 'column' | 'row' | 'column-reverse' | 'row-reverse'
 
 const props = defineProps({
@@ -12,11 +14,11 @@ const props = defineProps({
 	},
 	imageWidth: {
 		type: [Number, String],
-		default: '100%'
+		default: '2rem'
 	},
 	imageHeight: {
 		type: [Number, String],
-		default: '100%'
+		default: '2rem'
 	},
 	isCircle: {
 		type: Boolean,
@@ -69,9 +71,35 @@ const props = defineProps({
 	cartBodyParagraphs: {
 		type: Number,
 		default: 10
+	},
+	headerDirection: {
+		type: String as PropType<Direction>,
+		default: () => 'column'
+	},
+	footerParagraphs: {
+		type: Number,
+		default: 1
 	}
 })
-const { direction } = toRefs(props)
+const {
+	showImage,
+	showBodyImage,
+	imageWidth,
+	imageHeight,
+	isCircle,
+	showHeading,
+	showParagraph,
+	showFooter,
+	replicas,
+	cardWidth,
+	cardHeight,
+	loading,
+	direction,
+	columns,
+	columnsMd,
+	columnsLg,
+	cartBodyParagraphs
+} = toRefs(props)
 </script>
 
 <template>
@@ -87,18 +115,33 @@ const { direction } = toRefs(props)
 				target="_blank"
 				:style="`width:${cardWidth}; height:${cardHeight};`"
 			>
-				<div class="card__header gap-2 w-full">
+				<div
+					:class="[
+						'card__header gap-2 w-full items-center',
+						{ 'flex-row': headerDirection === 'row' },
+						{ 'flex-col': headerDirection === 'column' }
+					]"
+				>
 					<div v-if="showImage">
 						<div
 							id="logo-img"
 							class="header__img skeleton"
-							:style="{ borderRadius: isCircle ? '50%' : 'none' }"
+							:style="{
+								borderRadius: isCircle ? '50%' : 'none',
+								width: imageWidth,
+								height: imageHeight
+							}"
 						/>
 					</div>
 					<h3
 						v-if="showHeading"
 						id="card-title"
 						class="card__header header__title grid gap-3"
+						:class="
+							headerDirection === 'row'
+								? 'w-full flex-col items-center'
+								: 'flex-row w-3/5'
+						"
 					>
 						<span class="skeleton skeleton-text"></span>
 						<span class="skeleton skeleton-text"></span>
@@ -128,7 +171,11 @@ const { direction } = toRefs(props)
 				</div>
 
 				<div v-if="showFooter" id="card-footer" class="card__footer w-full">
-					<div class="skeleton skeleton-text skeleton-footer"></div>
+					<span
+						v-for="i in footerParagraphs"
+						:key="i"
+						class="skeleton skeleton-text skeleton-footer"
+					></span>
 				</div>
 			</a>
 		</div>
@@ -148,7 +195,7 @@ img[alt] {
 	justify-content: center;
 	align-items: center;
 
-	@media screen and (max-width: 600px) {
+	@media screen and (max-width: 768px) {
 		margin: -0.5rem;
 	}
 }
@@ -167,7 +214,6 @@ img[alt] {
 
 	&__header {
 		display: flex;
-		flex-direction: column;
 		margin: 0.5rem 0 0.5rem 0.5rem;
 
 		.header__img {

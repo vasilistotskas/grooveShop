@@ -2,13 +2,13 @@
 import { useCartStore } from '~/stores/cart'
 import { GlobalEvents } from '~/events/global'
 
-const { t } = useI18n()
+const { t } = useLang()
 const config = useRuntimeConfig()
 const store = useCartStore()
 const toast = useToast()
+const cartBus = useEventBus<string>(GlobalEvents.ON_CART_UPDATED)
 
-const { pending, refresh } = await useAsyncData('cart', () => store.initCart())
-const { cart, error } = storeToRefs(store)
+const { cart, error, pending } = storeToRefs(store)
 
 definePageMeta({
 	layout: 'page',
@@ -32,28 +32,27 @@ useServerSeoMeta({
 	description: t('pages.cart.description')
 })
 
-const bus = useEventBus<string>(GlobalEvents.QUANTITY_SELECTOR)
+const querySelectorBus = useEventBus<string>(GlobalEvents.CART_QUANTITY_SELECTOR)
 
-bus.on((event, payload: { cartItemId: number; quantity: number }) => {
+querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) => {
 	switch (event) {
 		case 'update':
 			store
 				.updateCartItem(payload.cartItemId, { quantity: String(payload.quantity) })
 				.then(() => {
 					toast.success(t('pages.cart.updated'))
-					refresh()
+					cartBus.emit(GlobalEvents.ON_CART_UPDATED)
 				})
 				.catch(() => {
 					toast.error(t('pages.cart.update_error'))
 				})
-			refresh()
 			break
 		case 'delete':
 			store
 				.deleteCartItem(payload.cartItemId)
 				.then(() => {
 					toast.success(t('pages.cart.deleted'))
-					refresh()
+					cartBus.emit(GlobalEvents.ON_CART_UPDATED)
 				})
 				.catch(() => {
 					toast.error(t('pages.cart.delete_error'))
@@ -65,12 +64,24 @@ bus.on((event, payload: { cartItemId: number; quantity: number }) => {
 
 <template>
 	<PageWrapper>
-		<PageTitle :text="$t('pages.cart.title')" class="capitalize" />
+		<div class="grid grid-cols-2 items-center">
+			<PageTitle :text="$t('pages.cart.title')" class="capitalize" />
+			<h2 class="grid justify-items-center justify-self-end">
+				<Button
+					:text="$t('pages.cart.checkout')"
+					class="font-extrabold capitalize"
+					:to="'checkout'"
+					:href="'checkout'"
+				/>
+			</h2>
+		</div>
 		<PageBody>
 			<PageError v-if="error" :error="error"></PageError>
 			<LoadingSkeleton
 				:card-height="'130px'"
-				:class="pending ? 'block' : 'hidden'"
+				:class="
+					pending ? 'grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4' : 'hidden'
+				"
 				:loading="pending"
 				:direction="'row'"
 				:columns-md="1"
@@ -87,13 +98,7 @@ bus.on((event, payload: { cartItemId: number; quantity: number }) => {
 					/>
 				</div>
 			</template>
-			<template v-else>
-				<div class="flex flex-col items-center justify-center">
-					<p class="text-center text-gray-700 dark:text-gray-200">
-						{{ $t('pages.cart.empty') }}
-					</p>
-				</div>
-			</template>
+			<Empty v-else :text="$t('pages.cart.empty')" />
 		</PageBody>
 	</PageWrapper>
 </template>

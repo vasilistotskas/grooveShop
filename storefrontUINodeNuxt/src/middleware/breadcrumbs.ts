@@ -23,5 +23,5 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 		})
 	})
 	await breadcrumbStore.setBreadcrumbs(breadCrumbs)
-	return breadcrumbStore.setStructuredData($i18n.locale.value, defaultLocale)
+	await breadcrumbStore.setStructuredData($i18n.locale.value, defaultLocale)
 })

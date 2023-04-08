@@ -8,7 +8,7 @@ import {
 import { OrderingOption } from '~/zod/ordering/ordering'
 
 const route = useRoute()
-const { t } = useI18n()
+const { t } = useLang()
 const config = useRuntimeConfig()
 const store = useProductStore()
 
@@ -147,8 +147,8 @@ useServerSeoMeta({
 				<!--          :event-name="'products-filters'"-->
 				<!--          :filters="filters"-->
 				<!--        ></Filters>-->
-				<div class="flex items-center">
-					<Pagination
+				<div class="grid gap-2 md:flex md:items-center">
+					<PaginationLimitOffset
 						:current-page="currentPage"
 						:limit="limit"
 						:offset="offset"
@@ -161,7 +161,7 @@ useServerSeoMeta({
 				</div>
 			</template>
 			<LoadingSkeleton
-				:card-height="'528px'"
+				:card-height="'606px'"
 				:class="pending ? 'block' : 'hidden'"
 				:loading="pending"
 				:replicas="products.results.length || 4"

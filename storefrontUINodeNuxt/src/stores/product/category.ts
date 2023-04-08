@@ -1,3 +1,4 @@
+import { FetchError } from 'ofetch'
 import { Category } from '~/zod/product/category'
 import { ProductsQuery } from '~/zod/products/products'
 import { Pagination } from '~/zod/pagination/pagination'
@@ -6,7 +7,7 @@ export interface CategoryState {
 	categories: Pagination<Category> | null
 	category: Category | null
 	pending: boolean
-	error: string | undefined
+	error: FetchError<any> | null
 }
 
 export const useCategoryStore = defineStore({
@@ -24,8 +25,8 @@ export const useCategoryStore = defineStore({
 			results: []
 		},
 		category: null as Category | null,
-		pending: false,
-		error: undefined as string | undefined
+		pending: true,
+		error: null as FetchError<any> | null
 	}),
 	getters: {
 		getCategoryById: (state) => (id: number) => {
@@ -46,12 +47,8 @@ export const useCategoryStore = defineStore({
 					ordering
 				}
 			})
-			if (pending) {
-				this.pending = true
-			}
-			if (error) {
-				this.error = error.value?.statusMessage || error.value?.message
-			}
+			this.pending = pending.value
+			this.error = error.value
 			if (categories.value) {
 				this.categories = categories.value
 			}
@@ -64,12 +61,8 @@ export const useCategoryStore = defineStore({
 			} = await useFetch(`/api/product-category/${categoryId}`, {
 				method: 'get'
 			})
-			if (pending) {
-				this.pending = true
-			}
-			if (error) {
-				this.error = error.value?.statusMessage || error.value?.message
-			}
+			this.pending = pending.value
+			this.error = error.value
 			if (category.value) {
 				this.category = category.value
 			}

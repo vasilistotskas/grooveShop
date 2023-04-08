@@ -2,13 +2,20 @@
 import { AppSetup } from '~/utils/app'
 import { ITheme } from '~/utils/theme'
 import { GlobalEvents } from '~/events/global'
+import { useCartStore } from '~/stores/cart'
 
 AppSetup()
 const theme = useState<ITheme>('theme.current')
 const config = useRuntimeConfig()
 const route = useRoute()
-const { t } = useI18n()
+const { t } = useLang()
 const { locale, locales } = useI18n()
+const cartStore = useCartStore()
+
+// cart
+const { refresh: refreshCart, pending: cartPending } = await useAsyncData('cart', () =>
+	cartStore.fetchCart()
+)
 
 const title = computed(() => (route.meta.title as string) || config.public.appTitle)
 const description = computed(
@@ -17,10 +24,19 @@ const description = computed(
 const themeClass = computed(() => (theme.value === 'dark' ? 'dark' : 'light'))
 const themeColor = computed(() => (theme.value === 'dark' ? '#1a202c' : '#ffffff'))
 
-const bus = useEventBus<string>(GlobalEvents.ON_LANGUAGE_SWITCHED)
-bus.on((event: string, payload) => {
+// lang events
+const langBus = useEventBus<string>(GlobalEvents.ON_LANGUAGE_SWITCHED)
+langBus.on((event: string, payload) => {
 	// ON_LANGUAGE_SWITCHED event
 })
+
+// cart events
+const cartBus = useEventBus<string>(GlobalEvents.ON_CART_UPDATED)
+cartBus.on((event: string, payload) => {
+	// ON_CART_UPDATED event
+	refreshCart()
+})
+
 const i18nHead = useLocaleHead({
 	addDirAttribute: true,
 	addSeoAttributes: true,

@@ -19,14 +19,14 @@ export const ZodCategory = z.object({
 	seoTitle: z.string().nullable(),
 	seoDescription: z.string().nullable(),
 	seoKeywords: z.string().nullable(),
-	createdAt: z.string(),
-	updatedAt: z.string(),
+	createdAt: z.string().datetime({ offset: true }),
+	updatedAt: z.string().datetime({ offset: true }),
 	uuid: z.string()
 })
 
 export type Category = z.infer<typeof ZodCategory>
 
-export const ZodCreateRequest = z.object({
+export const ZodCategoryCreateRequest = z.object({
 	name: z.string(),
 	slug: z.string(),
 	description: z.string().optional(),
@@ -37,8 +37,10 @@ export const ZodCreateRequest = z.object({
 	createdAt: z.string().optional()
 })
 
-export type CreateRequest = Readonly<z.infer<typeof ZodCreateRequest>>
+export type CategoryCreateRequest = Readonly<z.infer<typeof ZodCategoryCreateRequest>>
 
-export const ZodParams = z.object({
+export const ZodCategoryParams = z.object({
 	id: z.string()
 })
+
+export type CategoryParams = Readonly<z.infer<typeof ZodCategoryParams>>

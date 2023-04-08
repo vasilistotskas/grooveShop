@@ -10,5 +10,5 @@ export type OrderingOptions = {
 }
 
 export type OrderingQuery = {
-	ordering: string | LocationQueryValue[] | undefined
+	ordering?: string | LocationQueryValue[] | undefined
 }

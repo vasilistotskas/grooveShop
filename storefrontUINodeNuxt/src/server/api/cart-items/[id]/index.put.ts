@@ -1,12 +1,16 @@
 import { H3Event } from 'h3'
 import { parseBodyAs, parseDataAs, parseParamsAs } from '~/zod/parser'
-import { ZodCartItem, ZodPutRequest, ZodParams } from '~/zod/cart/cart-item'
+import {
+	ZodCartItem,
+	ZodCartItemPutRequest,
+	ZodCartItemParams
+} from '~/zod/cart/cart-item'
 
 export default defineEventHandler(async (event: H3Event) => {
 	const config = useRuntimeConfig()
-	const body = await parseBodyAs(event, ZodPutRequest)
+	const body = await parseBodyAs(event, ZodCartItemPutRequest)
 	const cookie = event.node.req.headers.cookie
-	const params = parseParamsAs(event, ZodParams)
+	const params = parseParamsAs(event, ZodCartItemParams)
 	const regex = /csrftoken=([^;]+)/
 	const match = cookie?.match(regex)
 	const csrftoken = match ? match[1] : ''
@@ -21,13 +25,5 @@ export default defineEventHandler(async (event: H3Event) => {
 		method: 'put'
 	})
 	const data = await response.json()
-	const status = response.status
-	if (status !== 200) {
-		throw createError({
-			statusCode: status,
-			statusMessage: data.detail,
-			message: JSON.stringify(data)
-		})
-	}
 	return await parseDataAs(data, ZodCartItem)
 })

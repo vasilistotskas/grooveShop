@@ -1,11 +1,12 @@
 import { H3Event } from 'h3'
-import { parseParamsAs } from '~/zod/parser'
-import { ZodParams } from '~/zod/cart/cart-item'
+import { z } from 'zod'
+import { parseDataAs, parseParamsAs } from '~/zod/parser'
+import { ZodCartItemParams } from '~/zod/cart/cart-item'
 
 export default defineEventHandler(async (event: H3Event) => {
 	const config = useRuntimeConfig()
 	const cookie = event.node.req.headers.cookie
-	const params = parseParamsAs(event, ZodParams)
+	const params = parseParamsAs(event, ZodCartItemParams)
 	const regex = /csrftoken=([^;]+)/
 	const match = cookie?.match(regex)
 	const csrftoken = match ? match[1] : ''
@@ -20,12 +21,5 @@ export default defineEventHandler(async (event: H3Event) => {
 		method: 'delete'
 	})
 	const status = response.status
-	if (status !== 200) {
-		throw createError({
-			statusCode: status,
-			statusMessage: response.statusText,
-			message: JSON.stringify(response)
-		})
-	}
-	return setResponseStatus(status, response.statusText)
+	return parseDataAs(status, z.number())
 })

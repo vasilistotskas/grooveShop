@@ -66,6 +66,11 @@ const props = defineProps({
 		required: false,
 		default: 'unset'
 	},
+	padding: {
+		type: String,
+		required: false,
+		default: '1rem'
+	},
 	modalOpenTriggerHandlerId: {
 		type: String,
 		required: false,
@@ -99,8 +104,25 @@ const props = defineProps({
 		type: String,
 		required: false,
 		default: 'blur(1rem)'
+	},
+	isForm: {
+		type: Boolean,
+		required: false,
+		default: false
+	},
+	formId: {
+		type: String,
+		required: false,
+		default: ''
+	},
+	formName: {
+		type: String,
+		required: false,
+		default: ''
 	}
 })
+
+const emit = defineEmits(['submitForm'])
 
 const isModalCurrentlyOpen = ref(props.shouldModalStartInOpenState)
 const getMyId = computed(() => `modal-${props.uniqueId}`)
@@ -168,10 +190,14 @@ onMounted(() => {
 				<span class="hidden">{{ $t('components.global.generic_modal.close') }}</span>
 				<IconEntypo:circle-with-cross></IconEntypo:circle-with-cross>
 			</button>
-			<div
+			<component
+				:is="isForm ? 'form' : 'div'"
+				:id="formId"
 				class="cp-utilities-generic_modal"
 				:style="`position:${position}; width:${width}; height:${height}; max-height: ${maxHeight};
-          max-width: ${maxWidth}; overflow: ${overflow}; gap: ${gap};`"
+          max-width: ${maxWidth}; overflow: ${overflow}; gap: ${gap}; padding: ${padding};`"
+				:name="formName"
+				@submit="$emit('submitForm', $event)"
 			>
 				<div v-if="hasHeader" class="cp-utilities-generic_modal-header">
 					<slot name="header" />
@@ -182,7 +208,7 @@ onMounted(() => {
 				<div v-if="hasFooter" class="cp-utilities-generic_modal-footer">
 					<slot name="footer" />
 				</div>
-			</div>
+			</component>
 		</div>
 	</Teleport>
 </template>

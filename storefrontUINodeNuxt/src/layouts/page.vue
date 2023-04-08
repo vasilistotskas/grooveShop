@@ -8,8 +8,8 @@
 			</PageHeader>
 		</slot>
 		<div class="relative flex-1 flex flex-col mx-auto max-w-8xl w-full h-full">
-			<Breadcrumbs />
 			<PageMain>
+				<Breadcrumbs />
 				<section class="flex flex-col min-h-screen">
 					<div class="flex-1 w-full flex flex-col">
 						<slot />

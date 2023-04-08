@@ -108,25 +108,18 @@ class UserAccount(AbstractBaseUser, PermissionsMixin, UUIDModel, TimeStampMixinM
         return None
 
     @property
-    def get_user_account_image_url(self) -> str:
-        if self.image and hasattr(self.image, "url"):
-            return self.image.url
-        else:
-            return "/backend/static/images/default.png"
-
-    @property
     def main_image_absolute_url(self) -> str:
+        image: str = ""
         if self.image and hasattr(self.image, "url"):
             return settings.BACKEND_BASE_URL + self.image.url
-        else:
-            return "/backend/static/images/default.png"
+        return image
 
     @property
     def main_image_filename(self) -> str:
-        if self.image and hasattr(self.image, "url"):
+        if self.image and hasattr(self.image, "name"):
             return os.path.basename(self.image.name)
         else:
-            return os.path.basename("/backend/static/images/default.png")
+            return ""
 
     @property
     def image_tag(self):

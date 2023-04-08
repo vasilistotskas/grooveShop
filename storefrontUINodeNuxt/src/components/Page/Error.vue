@@ -1,7 +1,11 @@
 <script lang="ts" setup>
+import { FetchError } from 'ofetch'
+import { PropType } from 'vue'
+
 defineProps({
 	error: {
-		type: String,
+		type: Object as PropType<FetchError | null>,
+		required: false,
 		default: null
 	}
 })

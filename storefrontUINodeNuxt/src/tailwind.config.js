@@ -165,6 +165,7 @@ module.exports = {
 			},
 			gridTemplateRows: {
 				'auto-1fr': 'auto 1fr',
+				'auto-auto-1fr': 'auto auto 1fr',
 				'repeat-auto-fill-mimax-100-130': 'repeat(auto-fill, minmax(100px, 130px))'
 			},
 			gridRow: {

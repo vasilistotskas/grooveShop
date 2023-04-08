@@ -86,6 +86,49 @@ components:
       price: preis
       vat_percent: mehrwertsteuer prozent
       total_price: gesamtpreis
+      add_to_cart: in den warenkorb legen
+      share: aktie
+      share_not_supported: die webfreigabe wird von ihrem browser nicht unterstützt
+    reviews:
+      title: bewertungen
+      empty: noch keine bewertungen
+      ordering:
+        id: ausweis
+        user_id: benutzer-id
+        product_id: produkt id
+        created_at: hergestellt in
+      summary:
+        reviews: bewertungen
+    review:
+      write_review: eine rezension schreiben
+      edit_review: bewertung bearbeiten
+      update_review: bewertung aktualisieren
+      delete_review: bewertung löschen
+      must_be_logged_in: sie müssen angemeldet sein, um eine bewertung schreiben zu können
+      write_review_for_product: schreiben sie eine bewertung für produkt <strong>%{product}</strong>
+      confirm_delete: möchten sie diese bewertung wirklich löschen?
+      too_many_attempts: zu viele versuche. bitte später erneut versuchen.
+      rating:
+        title: bewertung
+        bad: schlecht
+        not_that_good: nicht so gut
+        meh: meh
+        its_ok: es ist in ordnung
+        good: gut
+        very_good: sehr gut
+        perfect: perfekt!
+      comment:
+        title: kommentar
+        placeholder: teile deine erfahrung...
+  add_to_cart_button:
+    text: in den warenkorb legen
+    added_to_cart: zum warenkorb hinzugefügt
+  add_to_favourite_button:
+    not_authenticated: sie müssen angemeldet sein, um favoriten hinzufügen zu können
+    added: zu favoriten hinzugefügt
+    removed: aus favoriten entfernt
+    add: zu favoriten hinzufügen
+    remove: von den favoriten entfernen
 pages:
   '404':
     title: seite nicht gefunden
@@ -97,6 +140,7 @@ pages:
       nav: testen
       title: testen
       description: dies ist eine testseite
+      keywords: testen
     blank:
       nav: leer
       title: leere seite
@@ -131,7 +175,7 @@ pages:
           footer: wird bei der interaktion mit dem bot verwendet.
         protection_spam:
           title: spamschutz
-          description: toggle enable, um den roten rahmen zu entfernen
+          description: toggle enable, um den roten rand zu entfernen
           footer: >-
             wenn sie diese option aktivieren, schützen wir ihre kommentare vor
             spam
@@ -150,11 +194,29 @@ pages:
     title: deepweb[]fantastischer[]starter
     description: deepweb[]fantastischer[]starter
     keywords: deepweb[]fantastischer[]starter
+    add_to_cart: in den warenkorb legen
   product:
+    add_to_cart: in den warenkorb legen
+    product_id: produkt id
+    save: speichern
+    inclusive_of_taxes: inklusive aller steuern.
+    qty: menge
     ordering:
       name: name
       price: preis
       created_at: hergestellt in
+    share: aktie
+    share_not_supported: die webfreigabe wird von ihrem browser nicht unterstützt
+    review:
+      created:
+        success: bewertung erfolgreich erstellt
+        error: fehler bei der überprüfungserstellung
+      updated:
+        success: bewertung erfolgreich aktualisiert
+        error: aktualisierungsfehler überprüfen
+      deleted:
+        success: bewertung erfolgreich gelöscht
+        error: überprüfen sie den löschfehler
   products:
     title: produkte
     nav: produkte
@@ -166,6 +228,95 @@ pages:
     description: wagen
     keywords: wagen
     empty: ihr warenkorb ist leer
+    updated: warenkorb aktualisiert
+    update_error: fehler bei der warenkorbaktualisierung
+    deleted: warenkorb artikel gelöscht
+    delete_error: fehler beim löschen des warenkorbartikels
+    checkout: kasse
+  checkout:
+    title: kasse
+    nav: kasse
+    description: kasse
+    keywords: kasse
+    empty: ihr warenkorb ist leer
+    form:
+      first_name: vorname
+      last_name: familienname, nachname
+      address: adresse
+      city: stadt
+      email: email
+      phone: telefon
+      place: ort
+      zipcode: plz
+      country: land
+      region: region
+      customer_notes: kundenhinweise
+      submit: einreichen
+      too_many_attempts: zu viele versuche. bitte später erneut versuchen.
+      choose:
+        country: land auswählen
+        region: wählen sie region
+  accounts:
+    login:
+      title: konto
+    logout:
+      title: ausloggen
+    security:
+      title: sicherheit
+  account:
+    index:
+      title: konto
+      nav: konto
+      description: konto
+      keywords: konto
+    orders:
+      title: aufträge
+      nav: aufträge
+      description: aufträge
+      keywords: aufträge
+      empty: ihre bestellungen sind leer
+      updated: bestellungen aktualisiert
+      update_error: fehler bei der auftragsaktualisierung
+      deleted: bestellungen artikel gelöscht
+      delete_error: fehler beim löschen des auftragsartikels
+    favourites:
+      title: favoriten
+      nav: favoriten
+      description: favoriten
+      keywords: favoriten
+      empty: ihre favoriten sind leer
+      updated: favoriten aktualisiert
+      update_error: fehler bei der aktualisierung der favoriten
+      deleted: favoriten artikel gelöscht
+      delete_error: fehler beim löschen des favoriten-elements
+    reviews:
+      title: bewertungen
+      nav: bewertungen
+      description: bewertungen
+      keywords: bewertungen
+      empty: ihre bewertungen sind leer
+      updated: bewertungen aktualisiert
+      update_error: fehler bei der aktualisierung der bewertungen
+      deleted: bewertungen artikel gelöscht
+      delete_error: fehler beim löschen des rezensionsartikels
+    settings:
+      title: einstellungen
+      nav: einstellungen
+      description: einstellungen
+      keywords: einstellungen
+      updated: einstellungen aktualisiert
+      update_error: fehler bei der aktualisierung der einstellungen
+      deleted: einstellungselement gelöscht
+      delete_error: fehler beim löschen des einstellungselements
+    help:
+      title: hilfe
+      nav: hilfe
+      description: hilfe
+      keywords: hilfe
+      updated: hilfe aktualisiert
+      update_error: fehler beim aktualisieren der hilfe
+      deleted: hilfeartikel gelöscht
+      delete_error: fehler beim löschen des hilfeelements
 layouts:
   title: deepweb %{title}
   description: deepweb-beschreibung %{description}
@@ -177,6 +328,8 @@ others:
   copy: kopieren
   enabled: ermöglicht
   disabled: behinderte
+  readLess: lese weniger
+  readMore: weiterlesen
 routes:
   el: griechisch
   en: englisch
@@ -185,7 +338,18 @@ routes:
   ja: japanisch
   ko: koreanisch
   zh: chinesisch
+  setting: einstellung
+  test: prüfen
+  blank: leer
+  testing: testen
   products: produkte
   product: produkt
   home: heim
   cart: wagen
+  checkout: kasse
+  account: konto
+  orders: aufträge
+  favourites: favoriten
+  reviews: bewertungen
+  settings: einstellungen
+  help: hilfe

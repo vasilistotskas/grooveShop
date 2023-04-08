@@ -79,6 +79,49 @@ components:
       price: 価格
       vat_percent: 付加価値税率
       total_price: 合計金額
+      add_to_cart: カートに追加
+      share: 共有
+      share_not_supported: お使いのブラウザーでは web 共有がサポートされていません
+    reviews:
+      title: レビュー
+      empty: まだレビューはありません
+      ordering:
+        id: id
+        user_id: ユーザーid
+        product_id: 製品番号
+        created_at: 作成日
+      summary:
+        reviews: レビュー
+    review:
+      write_review: レビューを書く
+      edit_review: レビューを編集
+      update_review: レビューを更新
+      delete_review: レビューを削除
+      must_be_logged_in: レビューを書くにはログインする必要があります
+      write_review_for_product: 製品 <strong>%{product}</strong> のレビューを書く
+      confirm_delete: このレビューを削除してもよろしいですか?
+      too_many_attempts: 試行回数が多すぎます。しばらくしてからもう一度お試しください。
+      rating:
+        title: 評価
+        bad: 悪い
+        not_that_good: あまり良くない
+        meh: ええ
+        its_ok: 大丈夫です
+        good: 良い
+        very_good: とても良い
+        perfect: 完全！
+      comment:
+        title: コメント
+        placeholder: あなたの経験を共有してください...
+  add_to_cart_button:
+    text: カートに追加
+    added_to_cart: カートに追加
+  add_to_favourite_button:
+    not_authenticated: お気に入りに追加するにはログインする必要があります
+    added: お気に入りに追加
+    removed: お気に入りから削除しました
+    add: お気に入りに追加
+    remove: お気に入りから削除
 pages:
   '404':
     title: ページが見つかりません
@@ -90,6 +133,7 @@ pages:
       nav: テスト
       title: テスト
       description: これはテストページです
+      keywords: テスト
     blank:
       nav: 空欄
       title: 空白ページ
@@ -112,7 +156,7 @@ pages:
       sections:
         validate_username:
           title: github プロファイルを検証する
-          description: github ユーザー名を入力し、ボタンをクリックして検証します。
+          description: github のユーザー名を入力し、ボタンをクリックして検証します。
           footer: 詳しくはこちら
           footer_button: 検証
           footer_link: github ユーザー api
@@ -135,11 +179,29 @@ pages:
     title: ディープウェブ[]素晴らしい[]スターター
     description: ディープウェブ[]素晴らしい[]スターター
     keywords: ディープウェブ[]素晴らしい[]スターター
+    add_to_cart: カートに追加
   product:
+    add_to_cart: カートに追加
+    product_id: 製品番号
+    save: 保存
+    inclusive_of_taxes: すべての税金を含みます。
+    qty: 数量
     ordering:
       name: 名前
       price: 価格
       created_at: 作成日
+    share: 共有
+    share_not_supported: お使いのブラウザーでは web 共有がサポートされていません
+    review:
+      created:
+        success: レビューが正常に作成されました
+        error: レビュー作成エラー
+      updated:
+        success: レビューが正常に更新されました
+        error: 更新エラーの確認
+      deleted:
+        success: レビューは正常に削除されました
+        error: 削除エラーの確認
   products:
     title: 製品
     nav: 製品
@@ -151,6 +213,95 @@ pages:
     description: カート
     keywords: カート
     empty: あなたのカートは空です
+    updated: カートを更新しました
+    update_error: カート更新エラー
+    deleted: カートの商品を削除しました
+    delete_error: カート項目削除エラー
+    checkout: チェックアウト
+  checkout:
+    title: チェックアウト
+    nav: チェックアウト
+    description: チェックアウト
+    keywords: チェックアウト
+    empty: あなたのカートは空です
+    form:
+      first_name: ファーストネーム
+      last_name: 苗字
+      address: 住所
+      city: 街
+      email: eメール
+      phone: 電話
+      place: 場所
+      zipcode: 郵便番号
+      country: 国
+      region: 領域
+      customer_notes: 顧客メモ
+      submit: 送信
+      too_many_attempts: 試行回数が多すぎます。しばらくしてからもう一度お試しください。
+      choose:
+        country: 国を選択します
+        region: リージョンを選択
+  accounts:
+    login:
+      title: アカウント
+    logout:
+      title: ログアウト
+    security:
+      title: 安全
+  account:
+    index:
+      title: アカウント
+      nav: アカウント
+      description: アカウント
+      keywords: アカウント
+    orders:
+      title: 注文
+      nav: 注文
+      description: 注文
+      keywords: 注文
+      empty: 注文は空です
+      updated: 注文が更新されました
+      update_error: 注文更新エラー
+      deleted: 注文アイテムが削除されました
+      delete_error: 注文アイテム削除エラー
+    favourites:
+      title: お気に入り
+      nav: お気に入り
+      description: お気に入り
+      keywords: お気に入り
+      empty: お気に入りは空です
+      updated: お気に入りを更新しました
+      update_error: お気に入り更新エラー
+      deleted: お気に入りアイテムが削除されました
+      delete_error: お気に入りアイテムの削除エラー
+    reviews:
+      title: レビュー
+      nav: レビュー
+      description: レビュー
+      keywords: レビュー
+      empty: あなたのレビューは空です
+      updated: レビューが更新されました
+      update_error: レビュー更新エラー
+      deleted: レビュー アイテムを削除しました
+      delete_error: レビュー アイテムの削除エラー
+    settings:
+      title: 設定
+      nav: 設定
+      description: 設定
+      keywords: 設定
+      updated: 設定が更新されました
+      update_error: 設定更新エラー
+      deleted: 設定項目を削除しました
+      delete_error: 設定項目削除エラー
+    help:
+      title: ヘルプ
+      nav: ヘルプ
+      description: ヘルプ
+      keywords: ヘルプ
+      updated: ヘルプが更新されました
+      update_error: ヘルプ更新エラー
+      deleted: ヘルプ項目が削除されました
+      delete_error: ヘルプ アイテムの削除エラー
 layouts:
   title: ディープウェブ %{title}
   description: deepweb 説明 %{description}
@@ -162,6 +313,8 @@ others:
   copy: コピー
   enabled: 有効
   disabled: 無効
+  readLess: もっと読む
+  readMore: 続きを読む
 routes:
   el: ギリシャ語
   en: 英語
@@ -170,7 +323,18 @@ routes:
   ja: 日本
   ko: 韓国語
   zh: 中国語
+  setting: 設定
+  test: テスト
+  blank: 空欄
+  testing: テスト
   products: 製品
   product: 製品
   home: 家
   cart: カート
+  checkout: チェックアウト
+  account: アカウント
+  orders: 注文
+  favourites: お気に入り
+  reviews: レビュー
+  settings: 設定
+  help: ヘルプ

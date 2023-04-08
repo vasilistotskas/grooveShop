@@ -1,4 +1,5 @@
-import { CreateRequest, Product } from '~/zod/product/product'
+import { FetchError } from 'ofetch'
+import { ProductCreateRequest, Product } from '~/zod/product/product'
 import { Pagination } from '~/zod/pagination/pagination'
 import { ProductsQuery } from '~/zod/products/products'
 
@@ -6,7 +7,7 @@ export interface ProductState {
 	products: Pagination<Product>
 	product: Product | null
 	pending: boolean
-	error: string | undefined
+	error: FetchError<any> | null
 }
 
 export const useProductStore = defineStore({
@@ -24,8 +25,8 @@ export const useProductStore = defineStore({
 			results: []
 		},
 		product: null as Product | null,
-		pending: false,
-		error: undefined as string | undefined
+		pending: true,
+		error: null as FetchError<any> | null
 	}),
 	getters: {
 		getProductById: (state) => (id: number) => {
@@ -46,12 +47,8 @@ export const useProductStore = defineStore({
 					ordering
 				}
 			})
-			if (pending) {
-				this.pending = true
-			}
-			if (error) {
-				this.error = error.value?.statusMessage || error.value?.message
-			}
+			this.pending = pending.value
+			this.error = error.value
 			if (products.value) {
 				this.products = products.value
 			}
@@ -64,17 +61,11 @@ export const useProductStore = defineStore({
 			} = await useFetch(`/api/product/${productId}`, {
 				method: 'get'
 			})
-			if (pending) {
-				this.pending = true
-			}
-			if (error) {
-				this.error = error.value?.statusMessage || error.value?.message
-			}
-			if (product.value) {
-				this.product = product.value
-			}
+			this.pending = pending.value
+			this.error = error.value
+			this.product = product.value
 		},
-		async createProduct(body: CreateRequest): Promise<void> {
+		async createProduct(body: ProductCreateRequest): Promise<void> {
 			const {
 				data: newProduct,
 				error,
@@ -83,12 +74,8 @@ export const useProductStore = defineStore({
 				method: 'post',
 				body: JSON.stringify(body)
 			})
-			if (pending) {
-				this.pending = true
-			}
-			if (error) {
-				this.error = error.value?.statusMessage || error.value?.message
-			}
+			this.pending = pending.value
+			this.error = error.value
 			if (newProduct.value) {
 				this.products.results.push(newProduct.value)
 			}
@@ -100,12 +87,8 @@ export const useProductStore = defineStore({
 					method: 'post'
 				}
 			)
-			if (pending) {
-				this.pending = true
-			}
-			if (error) {
-				this.error = error.value?.statusMessage || error.value?.message
-			}
+			this.pending = pending.value
+			this.error = error.value
 		}
 	}
 })

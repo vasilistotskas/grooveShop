@@ -58,7 +58,7 @@ const resolveParentHeadingElement = computed(() => {
 				<Anchor
 					:to="breadcrumbs.parent.link"
 					:title="breadcrumbs.parent.text"
-					css-class="cp-breadcrumbs-breadcrumbs-itm-lnk"
+					css-class="cp-breadcrumbs-breadcrumbs-itm-lnk text-gray-700 dark:text-gray-200"
 					><span class="cp-breadcrumbs-breadcrumbs-itm-lnk-text">{{
 						breadcrumbs.parent.text || $t('components.breadcrumbs.title')
 					}}</span></Anchor
@@ -72,7 +72,7 @@ const resolveParentHeadingElement = computed(() => {
 					<Anchor
 						:to="breadcrumb.link"
 						:title="breadcrumb.text"
-						css-class="cp-breadcrumbs-breadcrumbs-itm-lnk"
+						css-class="cp-breadcrumbs-breadcrumbs-itm-lnk text-gray-700 dark:text-gray-200"
 					>
 						<span class="cp-breadcrumbs-breadcrumbs-itm-lnk-delimiter">{{
 							breadcrumbs.delimiter.replaceAll('>', '&gt;')
@@ -93,7 +93,8 @@ const resolveParentHeadingElement = computed(() => {
 	padding: 0.5rem;
 	&-itm_li {
 		margin: 0;
-		padding: 0;
+		padding-left: 2rem;
+		padding-right: 2rem;
 		display: flex;
 		overflow-x: auto;
 		flex-wrap: nowrap;
@@ -109,9 +110,12 @@ const resolveParentHeadingElement = computed(() => {
 		flex-shrink: 0;
 		display: flex;
 		&-lnk {
+			display: grid;
+			grid-template-columns: auto 1fr;
+			align-items: center;
+			gap: 3px;
 			font-size: 12px;
 			text-decoration: none;
-			color: gray;
 			&:hover {
 				color: white;
 			}

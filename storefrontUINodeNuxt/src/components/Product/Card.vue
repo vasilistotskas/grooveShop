@@ -1,107 +1,165 @@
 <script lang="ts" setup>
+import { isClient } from '@vueuse/shared'
+import { useShare } from '@vueuse/core'
+import { PropType } from 'vue'
 import { Product } from '~/zod/product/product'
-
-const { contentShorten } = useText()
+import { useAuthStore } from '~/stores/auth'
+import { useUserStore } from '~/stores/user'
 
 const props = defineProps({
 	product: { type: Object as PropType<Product>, required: true, default: null }
 })
 
-const imageFilename = computed(() => {
-	if (!props.product?.mainImageFilename) return undefined
-	return props.product.mainImageFilename.split('.').slice(0, -1).join('.')
+const { contentShorten } = useText()
+const { resolveImageFilenameNoExt, resolveImageFileExtension, resolveImageSrc } =
+	useImageResolver()
+const authStore = useAuthStore()
+const userStore = useUserStore()
+
+const { account, favourites } = storeToRefs(userStore)
+
+const isAuthenticated = authStore.isAuthenticated
+
+const { product } = toRefs(props)
+
+const productUrl = computed(() => {
+	if (!product.value) return ''
+	return `/product/${product.value.id}/${product.value.slug}`
 })
-const resolveImageFileExtension = computed(() => {
-	if (!props.product?.mainImageFilename) return undefined
-	return props.product.mainImageFilename.split('.').pop()
+
+const imageExtension = computed(() => {
+	return resolveImageFileExtension(product.value.mainImageFilename)
+})
+
+const imageSrc = computed(() => {
+	return resolveImageSrc(
+		product.value?.mainImageFilename,
+		`media/uploads/products/${resolveImageFilenameNoExt(
+			product.value?.mainImageFilename
+		)}`
+	)
+})
+
+const shareOptions = ref({
+	title: product.value.name,
+	text: product.value.description || '',
+	url: isClient ? productUrl : ''
+})
+const { share, isSupported } = useShare(shareOptions)
+const startShare = () => share().catch((err) => err)
+const productInUserFavourites = computed(() => {
+	return userStore.getIsProductInFavourites(product.value.id)
+})
+
+const userToProductFavourite = computed(() => {
+	return userStore.getUserToProductFavourite(product.value.id)
 })
 </script>
 
 <template>
 	<li v-if="product" class="product_card">
-		<Anchor
-			:to="`/product${product?.absoluteUrl}`"
-			:href="product?.absoluteUrl"
-			:text="product?.name"
+		<div
+			class="container p-5 bg-white text-white dark:bg-slate-800 dark:text-black rounded-lg"
 		>
-			<div
-				class="container p-5 bg-white text-white dark:bg-slate-800 dark:text-black rounded-lg"
-			>
-				<div class="card grid gap-2">
-					<div class="card-head">
-						<div class="card-thumb">
-							<div class="card-thumb-container">
-								<div class="card-thumb-image">
+			<div class="card grid gap-2">
+				<div class="card-head">
+					<div class="card-thumb">
+						<div class="card-thumb-container">
+							<div class="card-thumb-image">
+								<Anchor :to="`/product${product.absoluteUrl}`" :text="product.name">
 									<nuxt-img
 										preload
 										placeholder
 										loading="lazy"
 										provider="mediaStream"
 										class="product_img"
+										:style="{ objectFit: 'contain' }"
 										:width="250"
 										:height="230"
 										:fit="'contain'"
 										:position="'entropy'"
 										:background="'transparent'"
 										:trim-threshold="5"
-										:format="resolveImageFileExtension"
+										:format="imageExtension"
 										sizes="sm:100vw md:50vw lg:250px"
-										:src="
-											`media/uploads/products/${imageFilename}` ||
-											'/images/placeholder.png'
-										"
-										:alt="product?.name"
+										:src="imageSrc"
+										:alt="product.name"
 									/>
-								</div>
+								</Anchor>
 							</div>
 						</div>
 					</div>
-					<div class="card-body">
-						<h2 class="card-title text-gray-700 dark:text-gray-200">
-							{{ product?.name }}
-						</h2>
-						<p class="card-description text-gray-700 dark:text-gray-200 text-muted">
-							{{ contentShorten(product?.description, 0, 100) }}
-						</p>
-						<div class="card-prices">
-							<div class="card-price d-flex justify-content-between">
-								<p class="text-gray-700 dark:text-gray-200">
-									<span class="text-gray-700 dark:text-gray-200">{{
-										$t('components.product.card.price')
-									}}</span
-									><span>{{ product?.price }}</span>
-								</p>
-							</div>
-							<div class="card-vat-percent d-flex justify-content-between">
-								<p class="text-gray-700 dark:text-gray-200">
-									<span class="text-gray-700 dark:text-gray-200">{{
-										$t('components.product.card.vat_percent')
-									}}</span
-									><span>{{ product?.vatPercent }}</span>
-								</p>
-							</div>
-						</div>
-						<div
-							class="card-final-price d-flex justify-content-between total font-weight-bold mt-4"
-						>
+				</div>
+				<div class="card-body gap-2">
+					<div class="card-actions h-6 flex gap-4">
+						<ClientOnly>
+							<Button
+								:disabled="!isSupported"
+								:text="
+									isSupported
+										? $t('components.product.card.share')
+										: $t('components.product.card.share_not_supported')
+								"
+								size="xs"
+								class="font-extrabold capitalize"
+								@click="startShare"
+							/>
+						</ClientOnly>
+						<AddToFavouriteButton
+							:product-id="product.id"
+							:user-id="account?.id"
+							:is-favourite="productInUserFavourites"
+							:favourite="userToProductFavourite"
+							:is-authenticated="isAuthenticated"
+							size="xs"
+						/>
+					</div>
+					<h2 class="card-title text-gray-700 dark:text-gray-200">
+						<Anchor :to="`/product${product.absoluteUrl}`" :text="product.name">
+							{{ product.name }}
+						</Anchor>
+					</h2>
+					<p class="card-description text-gray-700 dark:text-gray-200 text-muted">
+						{{ contentShorten(product.description, 0, 100) }}
+					</p>
+					<div class="card-prices">
+						<div class="card-price d-flex justify-content-between">
 							<p class="text-gray-700 dark:text-gray-200">
 								<span class="text-gray-700 dark:text-gray-200">{{
-									$t('components.product.card.total_price')
+									$t('components.product.card.price')
 								}}</span
-								><span>{{ product?.finalPrice }}</span>
+								><span>{{ product.price }}</span>
+							</p>
+						</div>
+						<div class="card-vat-percent d-flex justify-content-between">
+							<p class="text-gray-700 dark:text-gray-200">
+								<span class="text-gray-700 dark:text-gray-200">{{
+									$t('components.product.card.vat_percent')
+								}}</span
+								><span>{{ product.vatPercent }}</span>
 							</p>
 						</div>
 					</div>
-					<div class="card-footer">
-						<AddToCartButton
-							:product="product"
-							:quantity="1"
-							:text="$t('components.product.card.add_to_cart')"
-						/>
+					<div
+						class="card-final-price d-flex justify-content-between total font-weight-bold mt-4"
+					>
+						<p class="text-gray-700 dark:text-gray-200">
+							<span class="text-gray-700 dark:text-gray-200">{{
+								$t('components.product.card.total_price')
+							}}</span
+							><span>{{ product.finalPrice }}</span>
+						</p>
 					</div>
 				</div>
+				<div class="card-footer">
+					<AddToCartButton
+						:product="product"
+						:quantity="1"
+						:text="$t('components.product.card.add_to_cart')"
+					/>
+				</div>
 			</div>
-		</Anchor>
+		</div>
 	</li>
 </template>
 

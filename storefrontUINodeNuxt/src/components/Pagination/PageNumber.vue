@@ -1,25 +1,31 @@
 <script lang="ts" setup>
-const route = useRoute()
+import { PropType } from 'vue'
+import { Pagination } from '~/zod/pagination/pagination'
 
 const props = defineProps({
+	resultsCount: {
+		type: Number,
+		required: true,
+		default: 0
+	},
 	totalPages: {
 		type: Number,
 		required: true,
 		default: 1
 	},
-	currentPage: {
-		type: [Number],
-		required: true,
-		default: 1
-	},
-	offset: {
-		type: Number,
-		required: true
-	},
-	limit: {
+	pageSize: {
 		type: Number,
 		required: true,
 		default: 10
+	},
+	currentPage: {
+		type: Number,
+		required: true,
+		default: 1
+	},
+	links: {
+		type: Object as PropType<Pagination<any>['links']>,
+		required: true
 	},
 	maxVisibleButtons: {
 		type: Number,
@@ -28,7 +34,11 @@ const props = defineProps({
 	}
 })
 
-const { totalPages, currentPage, offset, limit, maxVisibleButtons } = toRefs(props)
+const route = useRoute()
+const { t } = useLang()
+
+const { resultsCount, totalPages, pageSize, currentPage, links, maxVisibleButtons } =
+	toRefs(props)
 
 const firstPageNumber = computed(() => 1)
 const lastPageNumber = computed(() => totalPages.value)
@@ -74,6 +84,7 @@ const pages = computed(() => {
 	}
 	const startPageNumber = isInLastPage.value ? startPage.value - 1 : startPage.value
 	for (let i = startPageNumber; i <= lastPageNumber; i += 1) {
+		if (i === 0) continue
 		range.push(i)
 	}
 	return range
@@ -87,24 +98,23 @@ const link = computed(() => {
 <template>
 	<div class="pagination relative">
 		<ol
-			v-if="totalPages > 1 && totalPages > maxVisibleButtons"
-			class="pagination-ordered-list w-full grid items-center gap-4"
+			v-if="totalPages > 1"
+			class="pagination-ordered-list w-full flex md:grid items-center gap-4"
 		>
 			<li>
 				<Anchor
 					:to="{
 						path: link,
 						query: {
-							limit,
-							offset: isInFirstPage ? offset : offset - limit,
+							page: currentPage - 1,
 							ordering: route.query?.ordering
 						}
 					}"
 					:class="{
 						disabled: isInFirstPage
 					}"
-					:text="'Previous Page'"
-					:title="'Previous Page'"
+					:text="t('components.pagination.previous_page')"
+					:title="t('components.pagination.previous_page')"
 					:disabled="isInFirstPage"
 				>
 					<span class="text-gray-700 dark:text-gray-200"
@@ -117,14 +127,17 @@ const link = computed(() => {
 				<Anchor
 					:to="{
 						path: link,
-						query: { limit, offset: 0, ordering: route.query?.ordering }
+						query: {
+							page: firstPageNumber,
+							ordering: route.query?.ordering
+						}
 					}"
 					:class="{
 						'grid grid-cols-2 gap-1': shouldDisplayPreviousTripleDots,
 						disabled: isInFirstPage
 					}"
-					:text="'First Page'"
-					:title="'First Page'"
+					:text="t('components.pagination.first_page')"
+					:title="t('components.pagination.first_page')"
 					:disabled="isInFirstPage"
 				>
 					<span
@@ -146,14 +159,17 @@ const link = computed(() => {
 				<Anchor
 					:to="{
 						path: link,
-						query: { limit, offset: (page - 1) * limit, ordering: route.query?.ordering }
+						query: {
+							page,
+							ordering: route.query?.ordering
+						}
 					}"
 					:class="{
 						'grid items-center justify-center w-full rounded bg-gray-200 dark:bg-gray-800 py-1 px-2': true,
 						'bg-primary-400 dark:bg-primary-400': page === currentPage
 					}"
 					:text="String(index)"
-					:title="`Go to page ${page}`"
+					:title="t('components.pagination.go_to_page', { page: page })"
 				>
 					<span class="text-gray-700 dark:text-gray-200">{{ page }}</span>
 				</Anchor>
@@ -164,8 +180,7 @@ const link = computed(() => {
 					:to="{
 						path: link,
 						query: {
-							limit,
-							offset: (totalPages - 1) * limit,
+							page: lastPageNumber,
 							ordering: route.query?.ordering
 						}
 					}"
@@ -173,8 +188,8 @@ const link = computed(() => {
 						'grid grid-cols-2 gap-1': shouldDisplayNextTripleDots,
 						disabled: isInLastPage
 					}"
-					:text="'Last Page'"
-					:title="`Go to last page (${lastPageNumber})`"
+					:text="t('components.pagination.last_page')"
+					:title="t('components.pagination.go_to_page', { page: lastPageNumber })"
 				>
 					<span
 						v-if="shouldDisplayNextTripleDots"
@@ -195,13 +210,20 @@ const link = computed(() => {
 				<Anchor
 					:to="{
 						path: link,
-						query: { limit, offset: offset + limit, ordering: route.query?.ordering }
+						query: {
+							page: currentPage + 1,
+							ordering: route.query?.ordering
+						}
 					}"
 					:class="{
 						disabled: isInLastPage
 					}"
-					:text="'Next Page'"
-					:title="isInLastPage ? 'You are on the last page' : 'Next Page'"
+					:text="t('components.pagination.next_page')"
+					:title="
+						isInLastPage
+							? t('components.pagination.you_are_on_last_page')
+							: t('components.pagination.next_page')
+					"
 				>
 					<span class="text-gray-700 dark:text-gray-200"
 						><icon-fa-solid:angle-right

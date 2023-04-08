@@ -1,7 +1,7 @@
 import { useBreadcrumbsStore } from '~/stores/global/breadcrumbs'
 import { BreadCrumbsObject } from '~/zod/global/breadcrumbs'
 
-export default defineNuxtRouteMiddleware((to, from) => {
+export default defineNuxtRouteMiddleware(async (to, from) => {
 	const { $i18n } = useNuxtApp()
 	const config = useRuntimeConfig()
 	const defaultLocale = config.public.i18n.defaultLocale
@@ -17,11 +17,11 @@ export default defineNuxtRouteMiddleware((to, from) => {
 				link: '/products'
 			},
 			{
-				text: $i18n.t(`routes.product`),
+				text: String(to.params.slug),
 				link: `/product/${to.params.id}/${to.params.slug}`
 			}
 		]
 	})
-	breadcrumbStore.setBreadcrumbs(breadCrumbs)
-	return breadcrumbStore.setStructuredData($i18n.locale.value, defaultLocale)
+	await breadcrumbStore.setBreadcrumbs(breadCrumbs)
+	await breadcrumbStore.setStructuredData($i18n.locale.value, defaultLocale)
 })

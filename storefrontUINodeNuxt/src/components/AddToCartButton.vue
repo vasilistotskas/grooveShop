@@ -1,10 +1,8 @@
 <script lang="ts" setup>
+import { PropType } from 'vue'
 import { Product } from '~/zod/product/product'
 import { useCartStore } from '~/stores/cart'
-
-const { t } = useI18n()
-const store = useCartStore()
-const toast = useToast()
+import { GlobalEvents } from '~/events/global'
 
 const props = defineProps({
 	product: { type: Object as PropType<Product>, required: true, default: null },
@@ -14,6 +12,14 @@ const props = defineProps({
 		required: true
 	}
 })
+
+const { product, quantity, text } = toRefs(props)
+
+const { t } = useLang()
+const store = useCartStore()
+const toast = useToast()
+
+const cartBus = useEventBus<string>(GlobalEvents.ON_CART_UPDATED)
 </script>
 
 <template>
@@ -30,6 +36,7 @@ const props = defineProps({
 				})
 				.then(() => {
 					toast.success(t('components.add_to_cart_button.added_to_cart'))
+					cartBus.emit(GlobalEvents.ON_CART_UPDATED)
 				})
 		"
 	/>

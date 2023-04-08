@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/vue'
+import { PropType } from 'vue'
 import { OrderingOption } from '~/zod/ordering/ordering'
 
 const route = useRoute()
@@ -29,7 +30,7 @@ const link = computed(() => {
 </script>
 
 <template>
-	<div ref="listBox" class="flex flex-col items-center z-10">
+	<div ref="listBox" class="grid md:flex md:flex-col md:items-center z-10">
 		<div class="flex flex-row">
 			<div class="flex flex-col">
 				<Listbox v-model="ordering" name="Ordering">
@@ -57,6 +58,7 @@ const link = computed(() => {
 								leave-to-class="opacity-0"
 							>
 								<ListboxOptions
+									role="none"
 									static
 									class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-200 dark:bg-gray-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
 								>
