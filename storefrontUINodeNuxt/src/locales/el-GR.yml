@@ -171,7 +171,7 @@ pages:
           footer_link: api χρηστών github
         bot_id:
           title: αναγνωριστικό ρομπότ
-          description: αυτό είναι το αναγνωριστικό ρομπότ σας.
+          description: αυτό είναι το αναγνωριστικό του bot σας.
           footer: χρησιμοποιείται κατά την αλληλεπίδραση με το bot.
         protection_spam:
           title: προστασία ανεπιθύμητων
@@ -180,7 +180,7 @@ pages:
             εάν ενεργοποιηθεί, θα προστατεύσουμε τα σχόλιά σας από ανεπιθύμητα
             μηνύματα
         advanced_enable_advanced:
-          title: ενεργοποίηση σύνθετων ρυθμίσεων
+          title: ενεργοποιήστε τις σύνθετες ρυθμίσεις
           description: >-
             μπορείτε να ενεργοποιήσετε τις σύνθετες ρυθμίσεις για να αλλάξετε
             τις ρυθμίσεις
@@ -256,10 +256,67 @@ pages:
       choose:
         country: διάλεξε χώρα
         region: επιλέξτε περιοχή
-  login:
-    title: σύνδεση
+  accounts:
+    login:
+      title: λογαριασμός
+    logout:
+      title: αποσύνδεση
+    security:
+      title: ασφάλεια
   account:
-    title: λογαριασμός
+    index:
+      title: λογαριασμός
+      nav: λογαριασμός
+      description: λογαριασμός
+      keywords: λογαριασμός
+    orders:
+      title: παραγγελίες
+      nav: παραγγελίες
+      description: παραγγελίες
+      keywords: παραγγελίες
+      empty: οι παραγγελίες σας είναι κενές
+      updated: οι παραγγελίες ενημερώθηκαν
+      update_error: σφάλμα ενημέρωσης παραγγελιών
+      deleted: το στοιχείο παραγγελιών διαγράφηκε
+      delete_error: σφάλμα διαγραφής στοιχείων παραγγελιών
+    favourites:
+      title: αγαπημένα
+      nav: αγαπημένα
+      description: αγαπημένα
+      keywords: αγαπημένα
+      empty: τα αγαπημένα σας είναι άδεια
+      updated: τα αγαπημένα ενημερώθηκαν
+      update_error: σφάλμα ενημέρωσης αγαπημένων
+      deleted: αγαπημένα το αντικείμενο διαγράφηκε
+      delete_error: σφάλμα διαγραφής αγαπημένων στοιχείων
+    reviews:
+      title: κριτικές
+      nav: κριτικές
+      description: κριτικές
+      keywords: κριτικές
+      empty: οι κριτικές σας είναι κενές
+      updated: οι κριτικές ενημερώθηκαν
+      update_error: σφάλμα ενημέρωσης αξιολογήσεων
+      deleted: κριτικές το στοιχείο διαγράφηκε
+      delete_error: κριτικές σφάλμα διαγραφής στοιχείου
+    settings:
+      title: ρυθμίσεις
+      nav: ρυθμίσεις
+      description: ρυθμίσεις
+      keywords: ρυθμίσεις
+      updated: οι ρυθμίσεις ενημερώθηκαν
+      update_error: σφάλμα ενημέρωσης ρυθμίσεων
+      deleted: ρυθμίσεις το στοιχείο διαγράφηκε
+      delete_error: σφάλμα διαγραφής στοιχείου ρυθμίσεων
+    help:
+      title: βοήθεια
+      nav: βοήθεια
+      description: βοήθεια
+      keywords: βοήθεια
+      updated: η βοήθεια ενημερώθηκε
+      update_error: σφάλμα ενημέρωσης βοήθειας
+      deleted: το στοιχείο βοήθειας διαγράφηκε
+      delete_error: σφάλμα διαγραφής στοιχείου βοήθειας
 layouts:
   title: deepweb %{title}
   description: deepweb-description %{description}
@@ -290,3 +347,9 @@ routes:
   home: σπίτι
   cart: καροτσάκι
   checkout: ολοκλήρωση αγοράς
+  account: λογαριασμός
+  orders: παραγγελίες
+  favourites: αγαπημένα
+  reviews: κριτικές
+  settings: ρυθμίσεις
+  help: βοήθεια

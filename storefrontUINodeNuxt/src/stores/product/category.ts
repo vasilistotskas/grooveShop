@@ -25,7 +25,7 @@ export const useCategoryStore = defineStore({
 			results: []
 		},
 		category: null as Category | null,
-		pending: false,
+		pending: true,
 		error: null as FetchError<any> | null
 	}),
 	getters: {

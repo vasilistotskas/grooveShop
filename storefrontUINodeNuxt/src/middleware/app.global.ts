@@ -1,6 +1,6 @@
 import { useBreadcrumbsStore } from '~/stores/global/breadcrumbs'
 
-export default defineNuxtRouteMiddleware(() => {
+export default defineNuxtRouteMiddleware(async () => {
 	const breadcrumbStore = useBreadcrumbsStore()
-	return breadcrumbStore.cleanBreadcrumbs()
+	await breadcrumbStore.cleanBreadcrumbs()
 })

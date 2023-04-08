@@ -300,7 +300,9 @@ useHead(() => ({
 								</div>
 								<h3 class="text-gray-700 dark:text-gray-200 text-sm">
 									<span>{{ t('pages.product.product_id') }}: </span>
-									<span class="text-indigo-600 hover:underline">{{ product.id }}</span>
+									<span class="text-indigo-700 dark:text-indigo-200 hover:underline">{{
+										product.id
+									}}</span>
 								</h3>
 
 								<div class="flex items-center gap-4">

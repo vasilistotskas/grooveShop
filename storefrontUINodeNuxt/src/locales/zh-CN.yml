@@ -44,8 +44,8 @@ components:
     banner:
       description: >-
         我们使用我们自己的 cookie 和第三方 cookie
-        以便我们能够正确显示本网站并更好地了解本网站的使用情况，以改善我们提供的服务。可以随时使用在此横幅上做出选择后出现的 cookie 按钮更改有关
-        cookie 使用权限的决定。
+        以便我们能够正确显示本网站并更好地了解本网站的使用情况，以改善我们提供的服务。使用在此横幅上做出选择后出现的 cookie
+        按钮，可以随时更改有关 cookie 使用权限的决定。
       title: 饼干
     close: 关闭
     cookies:
@@ -163,7 +163,7 @@ pages:
           description: 这是您的机器人 id。
           footer: 与机器人交互时使用。
         protection_spam:
-          title: 垃圾邮件防护
+          title: 垃圾邮件保护
           description: 切换启用以删除红色边框
           footer: 如果启用，我们将保护您的评论免受垃圾邮件
         advanced_enable_advanced:
@@ -239,10 +239,67 @@ pages:
       choose:
         country: 选择国家
         region: 选择地区
-  login:
-    title: 登录
+  accounts:
+    login:
+      title: 帐户
+    logout:
+      title: 登出
+    security:
+      title: 安全
   account:
-    title: 帐户
+    index:
+      title: 帐户
+      nav: 帐户
+      description: 帐户
+      keywords: 帐户
+    orders:
+      title: 命令
+      nav: 命令
+      description: 命令
+      keywords: 命令
+      empty: 您的订单为空
+      updated: 订单已更新
+      update_error: 订单更新错误
+      deleted: 订单项目已删除
+      delete_error: 订单项目删除错误
+    favourites:
+      title: 收藏夹
+      nav: 最爱
+      description: 最爱
+      keywords: 最爱
+      empty: 你的收藏夹是空的
+      updated: 收藏夹已更新
+      update_error: 收藏夹更新错误
+      deleted: 收藏夹项目已删除
+      delete_error: 收藏夹项目删除错误
+    reviews:
+      title: 点评
+      nav: 评论
+      description: 评论
+      keywords: 评论
+      empty: 你的评论是空的
+      updated: 评论已更新
+      update_error: 评论更新错误
+      deleted: 评论项目已删除
+      delete_error: 评论项目删除错误
+    settings:
+      title: 设置
+      nav: 设置
+      description: 设置
+      keywords: 设置
+      updated: 设置更新
+      update_error: 设置更新错误
+      deleted: 设置项已删除
+      delete_error: 设置项删除错误
+    help:
+      title: 帮助
+      nav: 帮助
+      description: 帮助
+      keywords: 帮助
+      updated: 帮助已更新
+      update_error: 帮助更新错误
+      deleted: 帮助项目已删除
+      delete_error: 帮助项目删除错误
 layouts:
   title: 深网 %{title}
   description: deepweb-描述 %{description}
@@ -273,3 +330,9 @@ routes:
   home: 家
   cart: 大车
   checkout: 查看
+  account: 帐户
+  orders: 命令
+  favourites: 收藏夹
+  reviews: 点评
+  settings: 设置
+  help: 帮助

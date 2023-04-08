@@ -53,25 +53,6 @@ const menus = computed((): IMenuItem[] => [
 			</nav>
 			<div class="relative hidden lg:flex items-center ml-auto">
 				<div class="flex items-center justify-center">
-					<nuxt-img
-						preload
-						placeholder
-						loading="lazy"
-						provider="mediaStream"
-						class="rounded-full"
-						:style="{ objectFit: 'contain' }"
-						:src="`static/images/websiteLogo`"
-						:width="150"
-						:height="42"
-						:fit="'contain'"
-						:position="'entropy'"
-						:background="'transparent'"
-						:trim-threshold="5"
-						:format="'png'"
-						sizes="sm:75vw md:125vw lg:275px"
-						alt="Avatar of Jonathan Reinink"
-						@load="consoleLogImageLoaded"
-					/>
 					<span class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-200"
 						>Alfian</span
 					>

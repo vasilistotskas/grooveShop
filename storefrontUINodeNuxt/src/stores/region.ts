@@ -24,7 +24,7 @@ export const useRegionStore = defineStore({
 			results: []
 		},
 		region: null as Region | null,
-		pending: false,
+		pending: true,
 		error: null as FetchError<any> | null
 	}),
 	actions: {

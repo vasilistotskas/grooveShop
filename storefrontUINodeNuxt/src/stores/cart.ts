@@ -12,7 +12,7 @@ export const useCartStore = defineStore({
 	id: 'cart',
 	state: (): CartState => ({
 		cart: null as Cart | null,
-		pending: false,
+		pending: true,
 		error: null as FetchError<any> | null
 	}),
 	getters: {

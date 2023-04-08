@@ -1,52 +1,102 @@
 <script lang="ts" setup>
-import { useCartStore } from '~/stores/cart'
 import { useAuthStore } from '~/stores/auth'
+import { useCartStore } from '~/stores/cart'
+import userShield from '~icons/fa6-solid/user-shield'
+import doorArrowRight from '~icons/fluent/door-arrow-right-28-regular'
 
-const config = useRuntimeConfig()
+interface IMenuItem {
+	type: 'link' | 'button' | 'external-link'
+	text: string
+	href?: any
+	route?: any
+	icon?: any
+	cssClass?: string
+}
+
 const { t } = useLang()
+const config = useRuntimeConfig()
 
 const authStore = useAuthStore()
 const cartStore = useCartStore()
 
 const { isAuthenticated } = storeToRefs(authStore)
 const { cart } = storeToRefs(cartStore)
+
+const consoleLogImageLoaded = () => {
+	// Image loaded
+}
+const menus = computed((): IMenuItem[] => [
+	{
+		type: 'external-link',
+		text: t('pages.accounts.security.title'),
+		href: `${config.public.baseUrl}/accounts/email`,
+		icon: userShield,
+		cssClass:
+			'text-gray-700 dark:text-gray-200 bg-gray-200 border-gray-200 hover:bg-gray-300 dark:border-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700'
+	},
+	{
+		type: 'external-link',
+		text: t('pages.accounts.logout.title'),
+		href: `${config.public.baseUrl}/accounts/logout`,
+		icon: doorArrowRight,
+		cssClass:
+			'text-gray-700 dark:text-gray-200 bg-gray-200 border-gray-200 hover:bg-gray-300 dark:border-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700'
+	}
+])
 </script>
 
 <template>
 	<BuilderNavbar>
-		<template v-if="false" #banner>
-			<div class="text-white text-xs text-center py-1 px-4 lg:px-8 capitalize">
-				<span class="mr-1 text-gray-700 dark:text-gray-200">
-					{{ t('banners.welcome', { app_name: config.public.appTitle }) }}
-				</span>
-			</div>
-		</template>
 		<template #menu>
+			<nav class="text-sm leading-6 font-semibold text-gray-700 dark:text-gray-200">
+				<ul class="flex items-center gap-4">
+					<li></li>
+					<li v-for="(item, i) in menus" :key="i">
+						<Anchor
+							v-if="item.type === 'link'"
+							:to="item.route ? item.route : undefined"
+							:text="item.text"
+							class="flex md:grid py-1 px-2 md:py-2 md:px-4 items-center border rounded transition-color duration-300 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:dark:ring-offset-gray-50 focus:dark:ring-gray-400 focus:ring-gray-600/[0.6] focus:ring-offset-gray-800/[0.6]"
+							:class="[
+								{
+									'grid-cols-auto-1fr gap-2': item.icon !== undefined
+								},
+								item.cssClass
+							]"
+						>
+							<span class="hidden md:grid">{{ item.text }}</span>
+							<component :is="item.icon" />
+						</Anchor>
+						<Anchor
+							v-if="item.type === 'external-link'"
+							:href="item.href"
+							:text="item.text"
+							class="flex md:grid py-1 px-2 md:py-2 md:px-4 items-center border rounded transition-color duration-300 focus:outline-none focus:ring-1 focus:ring-offset-1 focus:dark:ring-offset-gray-50 focus:dark:ring-gray-400 focus:ring-gray-600/[0.6] focus:ring-offset-gray-800/[0.6]"
+							:class="[
+								{
+									'grid-cols-auto-1fr gap-2': item.icon !== undefined
+								},
+								item.cssClass
+							]"
+						>
+							<span class="hidden md:grid">{{ item.text }}</span>
+							<component :is="item.icon" />
+						</Anchor>
+						<Button
+							v-else-if="item.type === 'button'"
+							:text="item.text"
+							size="xs"
+							class="font-extrabold capitalize"
+							:to="item.route ? item.route : undefined"
+							:href="item.href ? item.href : undefined"
+						/>
+					</li>
+				</ul>
+			</nav>
 			<div class="relative hidden lg:flex items-center ml-auto">
-				<nav class="text-sm leading-6 font-semibold text-gray-700 dark:text-gray-200">
-					<ul class="flex items-center space-x-8">
-						<li class="flex w-full gap-4">
-							<h2>
-								<Anchor
-									:to="'products'"
-									:title="t('pages.products.title')"
-									:text="t('pages.products.title')"
-									class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
-									>{{ t('pages.products.title') }}</Anchor
-								>
-							</h2>
-							<h3>
-								<Anchor
-									:to="'testing'"
-									:title="t('pages.testing.title')"
-									:text="t('pages.testing.title')"
-									class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
-									>{{ t('pages.testing.title') }}</Anchor
-								>
-							</h3>
-						</li>
-					</ul>
-				</nav>
+				<div class="flex items-center justify-center">
+					<slot name="image" />
+				</div>
 				<ul
 					class="flex space-x-4 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2] text-gray-700 dark:text-gray-200"
 				>
@@ -64,7 +114,7 @@ const { cart } = storeToRefs(cartStore)
 							:title="t('pages.cart.title')"
 							:text="t('pages.cart.title')"
 						>
-							<icon-fa6-solid:cart-shopping />
+							<IconFa6Solid:cartShopping />
 						</Anchor>
 					</li>
 					<li class="relative">
@@ -147,6 +197,9 @@ const { cart } = storeToRefs(cartStore)
 					@click.prevent="toggleOptions(false)"
 				/>
 			</ActionSheet>
+		</template>
+		<template #drawer>
+			<slot name="drawer" />
 		</template>
 	</BuilderNavbar>
 </template>

@@ -24,7 +24,7 @@ export const useCountryStore = defineStore({
 			results: []
 		},
 		country: null as Country | null,
-		pending: false,
+		pending: true,
 		error: null as FetchError<any> | null
 	}),
 	actions: {

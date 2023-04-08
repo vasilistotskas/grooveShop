@@ -54,7 +54,7 @@ class Command(BaseCommand):
                         category_id=category.id,
                         name=name,
                         slug=slugify(name),
-                        description=faker.text(10),
+                        description=faker.text(50),
                         price=product_price,
                         active="True",
                         stock=100,

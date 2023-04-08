@@ -21,7 +21,12 @@ export default defineNuxtConfig({
 	},
 	typescript: {
 		strict: true,
-		typeCheck: true
+		typeCheck: true,
+		tsConfig: {
+			compilerOptions: {
+				types: ['unplugin-icons/types/vue']
+			}
+		}
 	},
 	css: [
 		'~/assets/sass/vendor.scss',

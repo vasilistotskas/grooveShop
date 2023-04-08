@@ -92,6 +92,7 @@ const onClick = (event: MouseEvent) => {
 		:class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"
 	>
 		<slot>{{ text }}</slot>
+		<slot name="icon"></slot>
 	</NuxtLink>
 	<button
 		v-else-if="type === 'button' || type === 'submit' || type === 'reset'"
@@ -101,6 +102,7 @@ const onClick = (event: MouseEvent) => {
 		@click="onClick"
 	>
 		<slot>{{ text }}</slot>
+		<slot name="icon"></slot>
 	</button>
 	<input
 		v-else-if="type === 'input'"
@@ -116,5 +118,6 @@ const onClick = (event: MouseEvent) => {
 		@click="onClick"
 	>
 		<slot>{{ text }}</slot>
+		<slot name="icon"></slot>
 	</a>
 </template>

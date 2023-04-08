@@ -256,10 +256,67 @@ pages:
       choose:
         country: land auswählen
         region: wählen sie region
-  login:
-    title: anmeldung
+  accounts:
+    login:
+      title: konto
+    logout:
+      title: ausloggen
+    security:
+      title: sicherheit
   account:
-    title: konto
+    index:
+      title: konto
+      nav: konto
+      description: konto
+      keywords: konto
+    orders:
+      title: aufträge
+      nav: aufträge
+      description: aufträge
+      keywords: aufträge
+      empty: ihre bestellungen sind leer
+      updated: bestellungen aktualisiert
+      update_error: fehler bei der auftragsaktualisierung
+      deleted: bestellungen artikel gelöscht
+      delete_error: fehler beim löschen des auftragsartikels
+    favourites:
+      title: favoriten
+      nav: favoriten
+      description: favoriten
+      keywords: favoriten
+      empty: ihre favoriten sind leer
+      updated: favoriten aktualisiert
+      update_error: fehler bei der aktualisierung der favoriten
+      deleted: favoriten artikel gelöscht
+      delete_error: fehler beim löschen des favoriten-elements
+    reviews:
+      title: bewertungen
+      nav: bewertungen
+      description: bewertungen
+      keywords: bewertungen
+      empty: ihre bewertungen sind leer
+      updated: bewertungen aktualisiert
+      update_error: fehler bei der aktualisierung der bewertungen
+      deleted: bewertungen artikel gelöscht
+      delete_error: fehler beim löschen des rezensionsartikels
+    settings:
+      title: einstellungen
+      nav: einstellungen
+      description: einstellungen
+      keywords: einstellungen
+      updated: einstellungen aktualisiert
+      update_error: fehler bei der aktualisierung der einstellungen
+      deleted: einstellungselement gelöscht
+      delete_error: fehler beim löschen des einstellungselements
+    help:
+      title: hilfe
+      nav: hilfe
+      description: hilfe
+      keywords: hilfe
+      updated: hilfe aktualisiert
+      update_error: fehler beim aktualisieren der hilfe
+      deleted: hilfeartikel gelöscht
+      delete_error: fehler beim löschen des hilfeelements
 layouts:
   title: deepweb %{title}
   description: deepweb-beschreibung %{description}
@@ -290,3 +347,9 @@ routes:
   home: heim
   cart: wagen
   checkout: kasse
+  account: konto
+  orders: aufträge
+  favourites: favoriten
+  reviews: bewertungen
+  settings: einstellungen
+  help: hilfe

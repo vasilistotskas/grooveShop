@@ -112,7 +112,7 @@ const orderingOptionsArray = computed(() => {
 
 <template>
 	<div
-		class="reviews_list text-gray-700 dark:text-gray-200 p-4 border-t border-gray-900/10 dark:border-gray-50/[0.2]"
+		class="reviews_list text-gray-700 dark:text-gray-200 p-6 border-t border-gray-900/10 dark:border-gray-50/[0.2]"
 	>
 		<div class="reviews_list__header">
 			<h2 class="reviews_list__title">{{ t('components.product.reviews.title') }}</h2>

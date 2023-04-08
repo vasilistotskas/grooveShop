@@ -2,11 +2,13 @@ import { FetchError } from 'ofetch'
 import { Account } from '~/zod/user/account'
 import { FavouriteCreateRequest, Favourite } from '~/zod/product/favourite'
 import { Review, ReviewCreateRequest, ReviewPutRequest } from '~/zod/product/review'
+import { Order } from '~/zod/order/order'
 
 export interface UserState {
 	account: Account | null
 	favourites: Favourite[] | null
 	reviews: Review[] | null
+	orders: Order[] | null
 	pending: boolean
 	error: FetchError<any> | null
 }
@@ -17,7 +19,8 @@ export const useUserStore = defineStore({
 		account: null as Account | null,
 		favourites: null as Favourite[] | null,
 		reviews: null as Review[] | null,
-		pending: false,
+		orders: null as Order[] | null,
+		pending: true,
 		error: null as FetchError<any> | null
 	}),
 	getters: {
@@ -42,6 +45,8 @@ export const useUserStore = defineStore({
 			if (account.value) {
 				this.account = account.value.account
 				this.favourites = account.value.favourites
+				this.reviews = account.value.reviews
+				this.orders = account.value.orders
 			}
 		},
 		async addFavourite(body: FavouriteCreateRequest) {

@@ -63,7 +63,7 @@ img[alt] {
 	justify-content: flex-start;
 	align-items: flex-start;
 
-	@media screen and (max-width: 600px) {
+	@media screen and (max-width: 767px) {
 		margin: -0.5rem;
 	}
 }

@@ -395,13 +395,17 @@ watch(
 				</div>
 				<div v-if="existingReview" class="review_footer__content">
 					<Button
-						class="review_footer__button"
+						class="review_footer__button gap-2"
 						:text="t('components.product.review.delete_review')"
 						type="button"
 						:style="'danger'"
 						size="sm"
 						@click.prevent="deleteReviewHandle()"
-					/>
+					>
+						<template #icon>
+							<icon-fa-solid:trash />
+						</template>
+					</Button>
 				</div>
 			</div>
 		</template>

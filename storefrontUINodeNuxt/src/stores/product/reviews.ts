@@ -27,7 +27,7 @@ export const useReviewsStore = defineStore({
 			page: 0,
 			results: []
 		},
-		pending: false,
+		pending: true,
 		error: null as FetchError<any> | null
 	}),
 	getters: {

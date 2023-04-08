@@ -34,6 +34,7 @@ class ProductFavouriteViewSet(BaseExpandView, ModelViewSet):
 
     def list(self, request, *args, **kwargs) -> Response:
         queryset = self.filter_queryset(self.get_queryset())
+
         # Check for 'pagination' query parameter
         pagination_param = request.query_params.get("pagination", "true")
         if pagination_param.lower() == "false":

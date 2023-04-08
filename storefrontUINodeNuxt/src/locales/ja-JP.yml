@@ -156,7 +156,7 @@ pages:
       sections:
         validate_username:
           title: github プロファイルを検証する
-          description: github ユーザー名を入力し、ボタンをクリックして検証します。
+          description: github のユーザー名を入力し、ボタンをクリックして検証します。
           footer: 詳しくはこちら
           footer_button: 検証
           footer_link: github ユーザー api
@@ -198,7 +198,7 @@ pages:
         error: レビュー作成エラー
       updated:
         success: レビューが正常に更新されました
-        error: レビュー更新エラー
+        error: 更新エラーの確認
       deleted:
         success: レビューは正常に削除されました
         error: 削除エラーの確認
@@ -241,10 +241,67 @@ pages:
       choose:
         country: 国を選択します
         region: リージョンを選択
-  login:
-    title: ログイン
+  accounts:
+    login:
+      title: アカウント
+    logout:
+      title: ログアウト
+    security:
+      title: 安全
   account:
-    title: アカウント
+    index:
+      title: アカウント
+      nav: アカウント
+      description: アカウント
+      keywords: アカウント
+    orders:
+      title: 注文
+      nav: 注文
+      description: 注文
+      keywords: 注文
+      empty: 注文は空です
+      updated: 注文が更新されました
+      update_error: 注文更新エラー
+      deleted: 注文アイテムが削除されました
+      delete_error: 注文アイテム削除エラー
+    favourites:
+      title: お気に入り
+      nav: お気に入り
+      description: お気に入り
+      keywords: お気に入り
+      empty: お気に入りは空です
+      updated: お気に入りを更新しました
+      update_error: お気に入り更新エラー
+      deleted: お気に入りアイテムが削除されました
+      delete_error: お気に入りアイテムの削除エラー
+    reviews:
+      title: レビュー
+      nav: レビュー
+      description: レビュー
+      keywords: レビュー
+      empty: あなたのレビューは空です
+      updated: レビューが更新されました
+      update_error: レビュー更新エラー
+      deleted: レビュー アイテムを削除しました
+      delete_error: レビュー アイテムの削除エラー
+    settings:
+      title: 設定
+      nav: 設定
+      description: 設定
+      keywords: 設定
+      updated: 設定が更新されました
+      update_error: 設定更新エラー
+      deleted: 設定項目を削除しました
+      delete_error: 設定項目削除エラー
+    help:
+      title: ヘルプ
+      nav: ヘルプ
+      description: ヘルプ
+      keywords: ヘルプ
+      updated: ヘルプが更新されました
+      update_error: ヘルプ更新エラー
+      deleted: ヘルプ項目が削除されました
+      delete_error: ヘルプ アイテムの削除エラー
 layouts:
   title: ディープウェブ %{title}
   description: deepweb 説明 %{description}
@@ -275,3 +332,9 @@ routes:
   home: 家
   cart: カート
   checkout: チェックアウト
+  account: アカウント
+  orders: 注文
+  favourites: お気に入り
+  reviews: レビュー
+  settings: 設定
+  help: ヘルプ

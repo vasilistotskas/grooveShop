@@ -15,6 +15,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 	) {
 		return navigateTo('/')
 	}
+
+	if (!authStore.isAuthenticated && to.meta.layout === 'user') {
+		return navigateTo('/')
+	}
+
 	if (process.env.NODE_ENV !== 'development' && to.meta.layout === 'testing') {
 		return navigateTo('/')
 	}

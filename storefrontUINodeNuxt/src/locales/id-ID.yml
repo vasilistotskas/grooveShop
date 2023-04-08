@@ -109,7 +109,7 @@ components:
       rating:
         title: peringkat
         bad: buruk
-        not_that_good: tidak begitu bagus
+        not_that_good: tidak sebagus itu
         meh: meh
         its_ok: tidak apa-apa
         good: bagus
@@ -250,10 +250,67 @@ pages:
       choose:
         country: pilih negara
         region: pilih wilayah
-  login:
-    title: gabung
+  accounts:
+    login:
+      title: akun
+    logout:
+      title: keluar
+    security:
+      title: keamanan
   account:
-    title: akun
+    index:
+      title: akun
+      nav: akun
+      description: akun
+      keywords: akun
+    orders:
+      title: pesanan
+      nav: pesanan
+      description: pesanan
+      keywords: pesanan
+      empty: pesanan anda kosong
+      updated: pesanan diperbarui
+      update_error: kesalahan pembaruan pesanan
+      deleted: butir pesanan dihapus
+      delete_error: kesalahan penghapusan item pesanan
+    favourites:
+      title: favorit
+      nav: favorit
+      description: favorit
+      keywords: favorit
+      empty: favorit anda kosong
+      updated: favorit diperbarui
+      update_error: kesalahan pembaruan favorit
+      deleted: item favorit dihapus
+      delete_error: kesalahan penghapusan item favorit
+    reviews:
+      title: ulasan
+      nav: ulasan
+      description: ulasan
+      keywords: ulasan
+      empty: ulasan anda kosong
+      updated: ulasan diperbarui
+      update_error: kesalahan pembaruan ulasan
+      deleted: tinjauan item dihapus
+      delete_error: ulasan item menghapus kesalahan
+    settings:
+      title: pengaturan
+      nav: pengaturan
+      description: pengaturan
+      keywords: pengaturan
+      updated: setelan diperbarui
+      update_error: kesalahan pembaruan pengaturan
+      deleted: pengaturan item dihapus
+      delete_error: kesalahan penghapusan item setelan
+    help:
+      title: membantu
+      nav: membantu
+      description: membantu
+      keywords: membantu
+      updated: bantuan diperbarui
+      update_error: bantu perbarui kesalahan
+      deleted: butir bantuan dihapus
+      delete_error: item bantuan menghapus kesalahan
 layouts:
   title: deepweb %{judul}
   description: deepweb-deskripsi %{description}
@@ -284,3 +341,9 @@ routes:
   home: rumah
   cart: keranjang
   checkout: periksa
+  account: akun
+  orders: pesanan
+  favourites: favorit
+  reviews: ulasan
+  settings: pengaturan
+  help: membantu

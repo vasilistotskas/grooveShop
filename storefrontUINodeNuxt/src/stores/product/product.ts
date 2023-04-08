@@ -25,7 +25,7 @@ export const useProductStore = defineStore({
 			results: []
 		},
 		product: null as Product | null,
-		pending: false,
+		pending: true,
 		error: null as FetchError<any> | null
 	}),
 	getters: {

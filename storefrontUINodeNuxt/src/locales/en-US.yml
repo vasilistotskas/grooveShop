@@ -236,10 +236,67 @@ pages:
       choose:
         country: Choose Country
         region: Choose Region
-  login:
-    title: Login
+  accounts:
+    login:
+      title: Account
+    logout:
+      title: Logout
+    security:
+      title: Security
   account:
-    title: Account
+    index:
+      title: Account
+      nav: account
+      description: account
+      keywords: account
+    orders:
+      title: Orders
+      nav: orders
+      description: orders
+      keywords: orders
+      empty: Your orders is empty
+      updated: Orders updated
+      update_error: Orders update error
+      deleted: Orders Item deleted
+      delete_error: Orders Item delete error
+    favourites:
+      title: Favourites
+      nav: favourites
+      description: favourites
+      keywords: favourites
+      empty: Your favourites is empty
+      updated: Favourites updated
+      update_error: Favourites update error
+      deleted: Favourites Item deleted
+      delete_error: Favourites Item delete error
+    reviews:
+      title: Reviews
+      nav: reviews
+      description: reviews
+      keywords: reviews
+      empty: Your reviews is empty
+      updated: Reviews updated
+      update_error: Reviews update error
+      deleted: Reviews Item deleted
+      delete_error: Reviews Item delete error
+    settings:
+      title: Settings
+      nav: settings
+      description: settings
+      keywords: settings
+      updated: Settings updated
+      update_error: Settings update error
+      deleted: Settings Item deleted
+      delete_error: Settings Item delete error
+    help:
+      title: Help
+      nav: help
+      description: help
+      keywords: help
+      updated: Help updated
+      update_error: Help update error
+      deleted: Help Item deleted
+      delete_error: Help Item delete error
 layouts:
   title: DeepWeb %{title}
   description: DeepWeb-Description %{description}
@@ -270,3 +327,9 @@ routes:
   home: Home
   cart: Cart
   checkout: Checkout
+  account: Account
+  orders: Orders
+  favourites: Favourites
+  reviews: Reviews
+  settings: Settings
+  help: Help

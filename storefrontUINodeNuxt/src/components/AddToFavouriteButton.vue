@@ -73,6 +73,6 @@ const buttonColor = computed(() => {
 <template>
 	<Button type="button" :text="buttonLabel" :size="size" @click="toggleFavourite">
 		<IconMdi:heart v-if="isFavourite" :style="{ color: buttonColor }" />
-		<IconMdi:heart-outline v-else :style="{ color: buttonColor }" />
+		<IconMdi:heartOutline v-else :style="{ color: buttonColor }" />
 	</Button>
 </template>

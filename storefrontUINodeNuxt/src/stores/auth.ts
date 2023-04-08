@@ -9,7 +9,7 @@ export const useAuthStore = defineStore({
 	id: 'auth',
 	state: (): AuthState => ({
 		isAuthenticated: false,
-		pending: false,
+		pending: true,
 		error: null as FetchError<any> | null
 	}),
 	actions: {

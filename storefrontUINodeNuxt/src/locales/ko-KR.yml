@@ -32,7 +32,7 @@ components:
     next_page: 다음 페이지
     first_page: 첫 페이지
     last_page: 마지막 페이지
-    go_to_page: 페이지 %{page}로 이동
+    go_to_page: '%{page} 페이지로 이동'
     you_are_on_last_page: 당신은 마지막 페이지에 있습니다
   builder:
     navbar:
@@ -241,10 +241,67 @@ pages:
       choose:
         country: 국가 선택
         region: 지역 선택
-  login:
-    title: 로그인
+  accounts:
+    login:
+      title: 계정
+    logout:
+      title: 로그 아웃
+    security:
+      title: 보안
   account:
-    title: 계정
+    index:
+      title: 계정
+      nav: 계정
+      description: 계정
+      keywords: 계정
+    orders:
+      title: 명령
+      nav: 명령
+      description: 명령
+      keywords: 명령
+      empty: 주문이 비어 있습니다.
+      updated: 업데이트된 주문
+      update_error: 주문 업데이트 오류
+      deleted: 주문 항목 삭제됨
+      delete_error: 주문 항목 삭제 오류
+    favourites:
+      title: 즐겨찾기
+      nav: 즐겨찾기
+      description: 즐겨찾기
+      keywords: 즐겨찾기
+      empty: 즐겨찾기가 비어 있습니다.
+      updated: 즐겨찾기 업데이트됨
+      update_error: 즐겨찾기 업데이트 오류
+      deleted: 즐겨찾기 항목 삭제됨
+      delete_error: 즐겨찾기 항목 삭제 오류
+    reviews:
+      title: 리뷰
+      nav: 리뷰
+      description: 리뷰
+      keywords: 리뷰
+      empty: 리뷰가 비어 있습니다.
+      updated: 업데이트된 리뷰
+      update_error: 리뷰 업데이트 오류
+      deleted: 리뷰 항목 삭제됨
+      delete_error: 리뷰 항목 삭제 오류
+    settings:
+      title: 설정
+      nav: 설정
+      description: 설정
+      keywords: 설정
+      updated: 설정 업데이트됨
+      update_error: 설정 업데이트 오류
+      deleted: 설정 항목 삭제됨
+      delete_error: 설정 항목 삭제 오류
+    help:
+      title: 돕다
+      nav: 돕다
+      description: 돕다
+      keywords: 돕다
+      updated: 업데이트된 도움말
+      update_error: 도움말 업데이트 오류
+      deleted: 도움말 항목 삭제됨
+      delete_error: 도움말 항목 삭제 오류
 layouts:
   title: 딥웹 %{title}
   description: deepweb 설명 %{description}
@@ -275,3 +332,9 @@ routes:
   home: 집
   cart: 카트
   checkout: 점검
+  account: 계정
+  orders: 명령
+  favourites: 즐겨찾기
+  reviews: 리뷰
+  settings: 설정
+  help: 돕다

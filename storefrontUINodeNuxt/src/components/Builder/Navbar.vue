@@ -54,18 +54,18 @@ const toggleOptions = (show?: boolean) => {
 <template>
 	<div
 		ref="navbar"
-		class="backdrop-filter backdrop-blur-md top-0 z-40 w-full flex-none transition-colors duration-300 lg:z-50 border-b border-gray-900/10 dark:border-gray-50/[0.2] bg-white/[0.5] dark:bg-slate-900/[0.5]"
+		class="backdrop-filter backdrop-blur-md top-0 z-50 w-full flex-none transition-colors duration-300 lg:z-50 border-b border-gray-900/10 dark:border-gray-50/[0.2] bg-white/[0.5] dark:bg-slate-900/[0.5]"
 	>
 		<div id="navbar-banner" class="banner">
 			<slot name="banner" />
 		</div>
 		<div class="max-w-8xl w-full mx-auto">
-			<div class="py-3 lg:px-8 mx-4 lg:mx-0">
-				<div class="relative flex items-center">
+			<div class="py-3 md:py-6 lg:px-8 mx-4 lg:mx-0">
+				<div class="relative flex items-center gap-4">
 					<!-- drawer:toggle -->
 					<div
 						v-if="$slots['drawer']"
-						class="lg:hidden flex items-center self-center justify-center mr-2"
+						class="lg:hidden flex items-center self-center justify-center"
 					>
 						<button
 							type="button"
@@ -92,10 +92,28 @@ const toggleOptions = (show?: boolean) => {
 								<NuxtLink
 									tag="a"
 									aria-label="index"
-									class="mr-3 flex-none overflow-hidden md:w-auto text-md font-bold text-gray-700 dark:text-gray-200 flex items-center"
+									class="grid overflow-hidden md:w-auto text-md font-bold text-gray-700 dark:text-gray-200 items-center"
 									:to="localePath('index')"
 								>
-									<span>{{ config.public.appTitle }}</span>
+									<span class="hidden">{{ config.public.appTitle }}</span>
+									<nuxt-img
+										preload
+										placeholder
+										loading="lazy"
+										provider="mediaStream"
+										class="rounded-full"
+										:style="{ objectFit: 'contain' }"
+										:src="`static/images/websiteLogo`"
+										:width="300"
+										:height="62"
+										:fit="'contain'"
+										:position="'entropy'"
+										:background="'transparent'"
+										:trim-threshold="5"
+										:format="'png'"
+										sizes="sm:75vw md:125vw lg:300px"
+										:alt="config.public.appTitle"
+									/>
 								</NuxtLink>
 							</strong>
 						</h1>
