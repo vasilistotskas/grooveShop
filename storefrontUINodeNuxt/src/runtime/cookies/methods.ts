@@ -13,8 +13,10 @@ export const getCookie = (name: string) => Cookies.get(name)
 
 export const getCookieId = (cookie: Cookie) => cookie.id || slugify(cookie.name)
 
-export const getCookieIds = (cookies: Cookie[]) =>
-	cookies.map((cookie) => getCookieId(cookie))
+export const getCookieIds = (cookies: Cookie[] | undefined) => {
+	if (!cookies) return []
+	return cookies.map((cookie) => getCookieId(cookie))
+}
 
 export const removeCookie = (name: string) => Cookies.remove(name)
 

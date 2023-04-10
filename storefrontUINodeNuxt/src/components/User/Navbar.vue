@@ -125,7 +125,7 @@ const menus = computed((): IMenuItem[] => [
 							:text="t('pages.accounts.login.title')"
 							:to="'account'"
 						>
-							<icon-fa6-solid:circle-user />
+							<IconFa6Solid:circleUser />
 						</Anchor>
 						<Anchor
 							v-else
@@ -134,7 +134,7 @@ const menus = computed((): IMenuItem[] => [
 							:text="t('pages.accounts.login.title')"
 							:href="`${config.public.baseUrl}/accounts/login`"
 						>
-							<icon-fa6-solid:circle-user />
+							<IconFa6Solid:circleUser />
 						</Anchor>
 					</li>
 				</ul>
@@ -184,7 +184,7 @@ const menus = computed((): IMenuItem[] => [
 						:title="t('pages.cart.title')"
 						:text="t('pages.cart.title')"
 					>
-						<icon-fa6-solid:cart-shopping />
+						<IconFa6Solid:cartShopping />
 						<span class="ml-1 text-gray-700 dark:text-gray-200">
 							{{ t('pages.cart.title') }}</span
 						>

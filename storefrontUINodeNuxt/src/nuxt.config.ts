@@ -33,7 +33,7 @@ export default defineNuxtConfig({
 		'~/assets/sass/app.scss',
 		'vue-toastification/dist/index.css'
 	],
-	plugins: ['~/plugins/navbar.ts'],
+	plugins: ['~/plugins/navbar.ts', '~/plugins/i18n.ts'],
 	build: {
 		transpile: ['@headlessui/vue', 'vue-toastification']
 	},

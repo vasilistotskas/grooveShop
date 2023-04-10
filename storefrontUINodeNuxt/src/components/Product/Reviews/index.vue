@@ -2,13 +2,8 @@
 import { PropType } from 'vue'
 import { FetchError } from 'ofetch'
 import { Pagination as PaginationType } from '~/zod/pagination/pagination'
-import {
-	Review,
-	ReviewQuery,
-	ReviewsOrdering,
-	ReviewsOrderingField
-} from '~/zod/product/review'
-import { OrderingOption } from '~/zod/ordering/ordering'
+import { Review, ReviewQuery, ReviewsOrderingField } from '~/zod/product/review'
+import { EntityOrdering, OrderingOption } from '~/zod/ordering/ordering'
 
 const props = defineProps({
 	reviews: {
@@ -42,13 +37,13 @@ const { t } = useLang()
 const toast = useToast()
 const route = useRoute()
 
-const resultsCount = computed(() => reviews.value.count)
-const totalPages = computed(() => reviews.value.totalPages)
-const pageSize = computed(() => reviews.value.pageSize)
-const currentPage = computed(() => reviews.value.page)
-const links = computed(() => reviews.value.links)
+const routePaginationParams = ref<ReviewQuery>({
+	page: Number(route.query.page) || undefined,
+	ordering: route.query.ordering || undefined,
+	expand: 'true'
+})
 
-const ordering = ref<ReviewsOrdering>([
+const entityOrdering: EntityOrdering<ReviewsOrderingField> = [
 	{
 		value: 'id',
 		label: t('components.product.reviews.ordering.id'),
@@ -69,44 +64,21 @@ const ordering = ref<ReviewsOrdering>([
 		label: t('components.product.reviews.ordering.created_at'),
 		options: ['ascending', 'descending']
 	}
-])
+]
 
-const orderingOptions = computed(() => {
-	const options: Record<ReviewsOrderingField, OrderingOption[]> = {
-		id: [],
-		user_id: [],
-		product_id: [],
-		created_at: []
-	}
-	ordering.value.forEach((items) => {
-		options[items.value] = items.options.map((option) => {
-			const value = option === 'ascending' ? items.value : `-${items.value}`
-			return {
-				value,
-				label: `${items.label} ${option}`
-			}
-		})
-	})
-	return options
+const orderingFields: Record<ReviewsOrderingField, OrderingOption[]> = {
+	id: [],
+	user_id: [],
+	product_id: [],
+	created_at: []
+}
+
+const pagination = computed(() => {
+	return usePagination<Review>(reviews.value)
 })
 
-const routePaginationParams = ref<ReviewQuery>({
-	page: Number(route.query.page) || undefined,
-	ordering: route.query.ordering || undefined,
-	expand: 'true'
-})
-
-const orderingOptionsArray = computed(() => {
-	const options: OrderingOption[] = []
-	Object.entries(orderingOptions.value).forEach(([key, value]) => {
-		value.forEach((option) => {
-			options.push({
-				value: String(option.value),
-				label: option.label
-			})
-		})
-	})
-	return options
+const ordering = computed(() => {
+	return useOrdering<ReviewsOrderingField>(entityOrdering, orderingFields)
 })
 </script>
 
@@ -119,17 +91,17 @@ const orderingOptionsArray = computed(() => {
 			<div v-if="reviews?.results.length > 0" class="reviews_list__actions">
 				<div class="reviews_list__pagination">
 					<PaginationPageNumber
-						:results-count="resultsCount"
-						:total-pages="totalPages"
-						:page-size="pageSize"
-						:current-page="currentPage"
-						:links="links"
+						:results-count="pagination.resultsCount"
+						:total-pages="pagination.totalPages"
+						:page-size="pagination.pageSize"
+						:current-page="pagination.currentPage"
+						:links="pagination.links"
 					/>
 				</div>
 				<div class="reviews_list__ordering">
 					<Ordering
 						:ordering="String(routePaginationParams.ordering)"
-						:ordering-options="orderingOptionsArray"
+						:ordering-options="ordering.orderingOptionsArray.value"
 					></Ordering>
 				</div>
 			</div>

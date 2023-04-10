@@ -27,7 +27,7 @@ export type Image = z.infer<typeof ZodImage>
 
 export type ImageQuery = PaginationQuery &
 	OrderingQuery & {
-		id?: string
-		product?: string
-		is_main?: string
+		id?: string | undefined
+		product?: string | undefined
+		is_main?: string | undefined
 	}

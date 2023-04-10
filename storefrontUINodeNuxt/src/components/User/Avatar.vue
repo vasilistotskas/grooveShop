@@ -88,7 +88,7 @@ const uploadImage = async (event: any) => {
 				enctype="multipart/form-data"
 				class="user__avatar__change"
 				name="uploadImageForm"
-				:title="t('pages.account.settings.avatar.change')"
+				:title="t('components.user.avatar.change')"
 			>
 				<label for="image"
 					><svg

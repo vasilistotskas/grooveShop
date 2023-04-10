@@ -54,7 +54,7 @@ const { account, favourites, reviews, orders, pending, error } = storeToRefs(use
 						<Breadcrumbs />
 						<div
 							:class="[
-								'relative flex-1 flex flex-col md:flex-row mx-auto max-w-8xl w-full h-full',
+								'relative flex-1 flex flex-col lg:flex-row mx-auto lg:max-w-8xl w-full h-full',
 								{ 'flex-col': $route.path === '/account' }
 							]"
 						>

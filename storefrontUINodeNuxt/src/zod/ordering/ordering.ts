@@ -1,13 +1,15 @@
 import { LocationQueryValue } from 'vue-router'
 
 export interface OrderingOption {
-	value?: string
-	label?: string
+	value: string
+	label: string
 }
 
-export type OrderingOptions = {
-	[key: string]: OrderingOption[]
-}
+export type EntityOrdering<OrderingField extends string> = {
+	value: OrderingField
+	label: string
+	options: ('ascending' | 'descending')[]
+}[]
 
 export type OrderingQuery = {
 	ordering?: string | LocationQueryValue[] | undefined

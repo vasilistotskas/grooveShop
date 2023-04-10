@@ -4,7 +4,6 @@ import { OrderingQuery } from '~/zod/ordering/ordering'
 import { ZodProduct } from '~/zod/product/product'
 import { ZodAccount } from '~/zod/user/account'
 
-export const RateEnum = z.enum(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'])
 export const StatusEnum = z.enum(['New', 'True', 'False'])
 
 export const ZodReview = z.object({
@@ -41,12 +40,6 @@ export const ZodReviewQuery = z.object({
 })
 
 export type ReviewsOrderingField = 'id' | 'user_id' | 'product_id' | 'created_at'
-export type ReviewsOrdering = [
-	{ value: 'id'; label: string; options: ['ascending', 'descending'] },
-	{ value: 'user_id'; label: string; options: ['ascending', 'descending'] },
-	{ value: 'product_id'; label: string; options: ['ascending', 'descending'] },
-	{ value: 'created_at'; label: string; options: ['ascending', 'descending'] }
-]
 
 export const ZodReviewCreateRequest = z.object({
 	product: z.string(),

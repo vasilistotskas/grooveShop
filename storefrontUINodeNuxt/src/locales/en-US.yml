@@ -117,6 +117,22 @@ components:
     removed: Removed from favourites
     add: Add to favourites
     remove: Remove from favourites
+  user:
+    avatar:
+      change: Change
+  order:
+    list:
+      footer: Footer
+    card:
+      extra: + %{count} more products
+      extra_one: + 1 more product
+      id: ID
+      address: Address
+      pay_way: Pay Way
+      status: Status
+      total_price: Total Price
+      actions:
+        details: Details
 pages:
   testing:
     nav: testing
@@ -259,6 +275,8 @@ pages:
       update_error: Orders update error
       deleted: Orders Item deleted
       delete_error: Orders Item delete error
+      ordering:
+        created_at: Created At
     favourites:
       title: Favourites
       nav: favourites

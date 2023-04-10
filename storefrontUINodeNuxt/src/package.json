@@ -43,6 +43,7 @@
 		"@nuxt/devtools": "^0.3.2",
 		"@nuxt/image-edge": "^1.0.0-28008586.381b906",
 		"@nuxt/test-utils-edge": "3.4.0-28014732.9878c5b6",
+		"@nuxt/types": "^2.16.3",
 		"@nuxtjs/eslint-config": "^12.0.0",
 		"@nuxtjs/eslint-config-typescript": "^12.0.0",
 		"@nuxtjs/eslint-module": "^4.0.2",

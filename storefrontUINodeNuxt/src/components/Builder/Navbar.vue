@@ -1,16 +1,12 @@
 <script lang="ts" setup>
-// state
 const navbar = ref(null)
 const showDrawer = useState<boolean>('navbar.showDrawer', () => false)
 const showOptions = useState<boolean>('navbar.showOptions', () => false)
 
-// config
 const config = useRuntimeConfig()
-
-// locale
 const localePath = useLocalePath()
+const { t } = useLang()
 
-// lifecycle
 let timer: NodeJS.Timer
 onMounted(() => {
 	if (!navbar.value) return
@@ -32,7 +28,6 @@ onBeforeUnmount(() => {
 	if (timer) clearInterval(timer)
 })
 
-// methods
 const updateDrawerOptions = () => {
 	// drawer
 	if (showDrawer.value || showOptions.value) {
@@ -60,7 +55,7 @@ const toggleOptions = (show?: boolean) => {
 			<slot name="banner" />
 		</div>
 		<div class="max-w-8xl w-full mx-auto">
-			<div class="py-3 md:py-6 lg:px-8 mx-4 lg:mx-0">
+			<div class="py-3 md:py-4 lg:px-8 mx-4 lg:mx-0">
 				<div class="relative flex items-center gap-4">
 					<!-- drawer:toggle -->
 					<div
@@ -74,7 +69,7 @@ const toggleOptions = (show?: boolean) => {
 							@click="toggleDrawer()"
 						>
 							<span class="hidden">{{
-								$t('components.builder.navbar.toggle_drawer_menu')
+								t('components.builder.navbar.toggle_drawer_menu')
 							}}</span>
 							<span
 								class="flex items-center text-gray-700 dark:text-gray-200 text-lg"
@@ -129,7 +124,7 @@ const toggleOptions = (show?: boolean) => {
 							@click="toggleOptions()"
 						>
 							<span class="hidden">{{
-								$t('components.builder.navbar.toggle_options_menu')
+								t('components.builder.navbar.toggle_options_menu')
 							}}</span>
 							<span
 								class="flex items-center text-gray-700 dark:text-gray-200 text-sm"

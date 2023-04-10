@@ -25,8 +25,6 @@ const { t } = useLang()
 const route = useRoute()
 const config = useRuntimeConfig()
 
-const localePath = useLocalePath()
-
 const menus = computed((): IMenuItem[] => [
 	{
 		type: 'link',
@@ -100,7 +98,7 @@ onMounted(() => {
 						v-if="item.type === 'link'"
 						:to="item.route ? item.route : undefined"
 						:text="item.text"
-						class="group grid grid-cols-auto-1fr gap-4 items-center hover:no-underline"
+						class="group grid p-2 grid-cols-auto-1fr gap-4 items-center hover:no-underline"
 					>
 						<div
 							class="flex items-center px-2 py-2 rounded-md ring-1 ring-slate-900/5 shadow-sm group-hover:shadow group-hover:ring-slate-900/10 dark:ring-0 dark:shadow-none dark:group-hover:shadow-none dark:group-hover:highlight-white/10 group-hover:shadow-sky-200 dark:highlight-white/10"
@@ -127,7 +125,7 @@ onMounted(() => {
 						v-else-if="item.type === 'external-link'"
 						:href="item.href"
 						:text="item.text"
-						class="group grid grid-cols-auto-1fr gap-4 items-center hover:no-underline"
+						class="group grid p-2 grid-cols-auto-1fr gap-4 items-center hover:no-underline"
 					>
 						<div
 							class="flex items-center px-2 py-2 rounded-md ring-1 ring-slate-900/5 shadow-sm group-hover:shadow group-hover:ring-slate-900/10 dark:ring-0 dark:shadow-none dark:group-hover:shadow-none dark:group-hover:highlight-white/10 group-hover:shadow-sky-200 dark:highlight-white/10"

@@ -64,7 +64,7 @@ const { cart } = storeToRefs(cartStore)
 							:title="t('pages.cart.title')"
 							:text="t('pages.cart.title')"
 						>
-							<icon-fa6-solid:cart-shopping />
+							<IconFa6Solid:cartShopping />
 						</Anchor>
 					</li>
 					<li class="relative">
@@ -75,7 +75,7 @@ const { cart } = storeToRefs(cartStore)
 							:text="t('pages.accounts.login.title')"
 							:to="'account'"
 						>
-							<icon-fa6-solid:circle-user />
+							<IconFa6Solid:circleUser />
 						</Anchor>
 						<Anchor
 							v-else
@@ -84,7 +84,7 @@ const { cart } = storeToRefs(cartStore)
 							:text="t('pages.accounts.login.title')"
 							:href="`${config.public.baseUrl}/accounts/login`"
 						>
-							<icon-fa6-solid:circle-user />
+							<IconFa6Solid:circleUser />
 						</Anchor>
 					</li>
 				</ul>
@@ -134,7 +134,7 @@ const { cart } = storeToRefs(cartStore)
 						:title="t('pages.cart.title')"
 						:text="t('pages.cart.title')"
 					>
-						<icon-fa6-solid:cart-shopping />
+						<IconFa6Solid:cartShopping />
 						<span class="ml-1 text-gray-700 dark:text-gray-200">
 							{{ t('pages.cart.title') }}</span
 						>

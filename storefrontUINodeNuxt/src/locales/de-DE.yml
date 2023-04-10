@@ -129,6 +129,22 @@ components:
     removed: aus favoriten entfernt
     add: zu favoriten hinzufügen
     remove: von den favoriten entfernen
+  user:
+    avatar:
+      change: ändern
+  order:
+    list:
+      footer: fusszeile
+    card:
+      extra: '%{count} weitere produkte'
+      extra_one: 1 weiteres produkt
+      id: ausweis
+      address: adresse
+      pay_way: zahlungsweg
+      status: status
+      total_price: gesamtpreis
+      actions:
+        details: einzelheiten
 pages:
   '404':
     title: seite nicht gefunden
@@ -279,6 +295,8 @@ pages:
       update_error: fehler bei der auftragsaktualisierung
       deleted: bestellungen artikel gelöscht
       delete_error: fehler beim löschen des auftragsartikels
+      ordering:
+        created_at: hergestellt in
     favourites:
       title: favoriten
       nav: favoriten

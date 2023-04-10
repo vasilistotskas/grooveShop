@@ -65,10 +65,10 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 <template>
 	<PageWrapper>
 		<div class="grid grid-cols-2 items-center">
-			<PageTitle :text="$t('pages.cart.title')" class="capitalize" />
+			<PageTitle :text="t('pages.cart.title')" class="capitalize" />
 			<h2 class="grid justify-items-center justify-self-end">
 				<Button
-					:text="$t('pages.cart.checkout')"
+					:text="t('pages.cart.checkout')"
 					class="font-extrabold capitalize"
 					:to="'checkout'"
 					:href="'checkout'"
@@ -98,7 +98,7 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 					/>
 				</div>
 			</template>
-			<Empty v-else :text="$t('pages.cart.empty')" />
+			<Empty v-else :text="t('pages.cart.empty')" />
 		</PageBody>
 	</PageWrapper>
 </template>

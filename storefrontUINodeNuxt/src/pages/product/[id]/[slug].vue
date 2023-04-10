@@ -8,7 +8,7 @@ import { useAuthStore } from '~/stores/auth'
 import { useUserStore } from '~/stores/user'
 import { useReviewsStore } from '~/stores/product/reviews'
 import { ReviewActionPayload, ReviewQuery } from '~/zod/product/review'
-import { ProductsQuery } from '~/zod/products/products'
+import { ProductQuery } from '~/zod/product/product'
 import { GlobalEvents } from '~/events/global'
 
 const route = useRoute()
@@ -38,7 +38,7 @@ const { pending: productImagesPending } = await useAsyncData('productImages', ()
 	productImagesStore.fetchImages({ product: String(productId) })
 )
 
-const reviewsQuery = ref<ReviewQuery>({
+const routePaginationParams = ref<ReviewQuery>({
 	product_id: String(productId),
 	page: Number(route.query.page) || undefined,
 	ordering: route.query.ordering || undefined,
@@ -46,7 +46,7 @@ const reviewsQuery = ref<ReviewQuery>({
 })
 const { pending: reviewsPending, refresh: reviewsRefresh } = await useAsyncData(
 	'productReviews',
-	() => reviewsStore.fetchReviews(reviewsQuery.value)
+	() => reviewsStore.fetchReviews(routePaginationParams.value)
 )
 
 const { reviews, error: reviewsError } = storeToRefs(reviewsStore)
@@ -96,8 +96,8 @@ const reviewBus = useEventBus<string>('productReview')
 const reviewsBus = useEventBus<string>('productReviews')
 const modalBus = useEventBus<string>(GlobalEvents.GENERIC_MODAL)
 
-reviewsBus.on((event, payload: ProductsQuery) => {
-	reviewsQuery.value = payload
+reviewsBus.on((event, payload: ProductQuery) => {
+	routePaginationParams.value = payload
 	reviewsRefresh()
 })
 
@@ -278,8 +278,8 @@ useHead(() => ({
 											type="button"
 											:text="
 												isSupported
-													? $t('pages.product.share')
-													: $t('pages.product.share_not_supported')
+													? t('pages.product.share')
+													: t('pages.product.share_not_supported')
 											"
 											@click="startShare"
 										/>
@@ -366,8 +366,8 @@ useHead(() => ({
 									<AddToCartButton
 										v-if="product"
 										:product="product"
-										:quantity="selectorQuantity"
-										:text="$t('pages.product.add_to_cart')"
+										:quantity="selectorQuantity as number || 1"
+										:text="t('pages.product.add_to_cart')"
 									/>
 								</div>
 							</div>

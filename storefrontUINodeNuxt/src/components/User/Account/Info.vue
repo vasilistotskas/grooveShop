@@ -86,7 +86,7 @@ const props = defineProps({
 						:to="`/account/reviews`"
 						:title="t('pages.account.reviews.title')"
 					>
-						<IconMdi:star-outline
+						<IconMdi:starOutline
 							class="text-gray-500 dark:text-gray-400 text-xl md:text-2xl"
 						/>
 						<span class="text-gray-500 dark:text-gray-400">{{
@@ -116,8 +116,8 @@ const props = defineProps({
 		&__container {
 			display: flex;
 			align-items: center;
-			padding-top: 2rem;
-			padding-bottom: 2rem;
+			padding-top: 1.5rem;
+			padding-bottom: 1.5rem;
 			gap: 2rem;
 			@media screen and (max-width: 767px) {
 				display: grid;

@@ -56,9 +56,10 @@ export default defineEventHandler(async (event: H3Event) => {
 
 	// Orders
 	const ordersQuery: OrderQuery = {
+		user_id: accountData.id,
 		pagination: 'false'
 	}
-	const ordersUrl = buildFullUrl(`${config.public.apiBaseUrl}/orders/`, ordersQuery)
+	const ordersUrl = buildFullUrl(`${config.public.apiBaseUrl}/order/`, ordersQuery)
 	const ordersResponse = await fetch(ordersUrl, {
 		headers: {
 			Cookie: cookie || ''

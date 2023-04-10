@@ -1,4 +1,6 @@
 import { z } from 'zod'
+import { PaginationQuery } from '~/zod/pagination/pagination'
+import { OrderingQuery } from '~/zod/ordering/ordering'
 
 export const ZodProduct = z.object({
 	id: z.number().int(),
@@ -58,3 +60,12 @@ export const ZodProductParams = z.object({
 })
 
 export type ProductParams = z.infer<typeof ZodProductParams>
+
+export const ZodProductQuery = z.object({
+	offset: z.string().optional(),
+	limit: z.string().optional(),
+	ordering: z.string().optional()
+})
+
+export type ProductQuery = PaginationQuery & OrderingQuery
+export type ProductOrderingField = 'name' | 'price' | 'created_at'

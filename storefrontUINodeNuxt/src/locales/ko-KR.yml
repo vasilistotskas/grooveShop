@@ -122,6 +122,22 @@ components:
     removed: 즐겨찾기에서 삭제됨
     add: 즐겨 찾기에 추가
     remove: 즐겨찾기에서 제거
+  user:
+    avatar:
+      change: 변화
+  order:
+    list:
+      footer: 보행인
+    card:
+      extra: '%{count} 더 많은 제품'
+      extra_one: 1 더 많은 제품
+      id: id
+      address: 주소
+      pay_way: 지불 방법
+      status: 상태
+      total_price: 총 가격
+      actions:
+        details: 세부
 pages:
   '404':
     title: 페이지를 찾을 수 없음
@@ -264,6 +280,8 @@ pages:
       update_error: 주문 업데이트 오류
       deleted: 주문 항목 삭제됨
       delete_error: 주문 항목 삭제 오류
+      ordering:
+        created_at: 만든 시간
     favourites:
       title: 즐겨찾기
       nav: 즐겨찾기

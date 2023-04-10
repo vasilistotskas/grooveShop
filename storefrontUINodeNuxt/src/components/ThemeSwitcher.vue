@@ -16,6 +16,8 @@ const props = defineProps({
 	}
 })
 
+const { t } = useLang()
+
 // state
 const themeSetting = useState<IThemeSettingOptions>('theme.setting')
 const currentStyle = toRef(props, 'type')
@@ -30,14 +32,14 @@ const currentStyle = toRef(props, 'type')
 			class="relative flex items-center"
 		>
 			<ListboxLabel class="sr-only">
-				{{ $t('components.theme_switcher.theme') }}
+				{{ t('components.theme_switcher.theme') }}
 			</ListboxLabel>
 			<ListboxButton
 				type="button"
-				:title="$t('components.theme_switcher.change_theme')"
+				:title="t('components.theme_switcher.change_theme')"
 				class="transition-colors duration-300"
 			>
-				<span class="hidden">{{ $t('components.theme_switcher.change_theme') }}</span>
+				<span class="hidden">{{ t('components.theme_switcher.change_theme') }}</span>
 				<span
 					class="flex justify-center items-center dark:hidden text-gray-700 dark:text-gray-200"
 				>

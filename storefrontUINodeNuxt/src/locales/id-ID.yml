@@ -127,6 +127,22 @@ components:
     removed: dihapus dari favorit
     add: tambahkan ke favorit
     remove: hapus dari favorit
+  user:
+    avatar:
+      change: mengubah
+  order:
+    list:
+      footer: catatan kaki
+    card:
+      extra: '%{count} lebih banyak produk'
+      extra_one: 1 produk lagi
+      id: pengenal
+      address: alamat
+      pay_way: cara bayar
+      status: status
+      total_price: total harga
+      actions:
+        details: detail
 pages:
   '404':
     title: halaman tidak ditemukan
@@ -272,7 +288,9 @@ pages:
       updated: pesanan diperbarui
       update_error: kesalahan pembaruan pesanan
       deleted: butir pesanan dihapus
-      delete_error: kesalahan penghapusan item pesanan
+      delete_error: kesalahan penghapusan butir pesanan
+      ordering:
+        created_at: dibuat di
     favourites:
       title: favorit
       nav: favorit

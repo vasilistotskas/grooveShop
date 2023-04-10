@@ -3,6 +3,8 @@ import { useCategoryStore } from '~/stores/product/category'
 
 const config = useRuntimeConfig()
 const route = useRoute()
+const { t } = useLang()
+
 const categoryId = route.params.id
 const { category, pending, error } = storeToRefs(useCategoryStore())
 const { fetchCategory } = useCategoryStore()
@@ -29,7 +31,7 @@ useHead(() => ({
 <template>
 	<PageWrapper class="flex flex-col">
 		<PageHeader>
-			<PageTitle :text="$t('pages.category.title')" class="capitalize" />
+			<PageTitle :text="t('pages.category.title')" class="capitalize" />
 		</PageHeader>
 		<PageBody>
 			<div></div>

@@ -108,9 +108,7 @@ const link = computed(() => {
 					:title="t('components.pagination.previous_page')"
 					:disabled="isInFirstPage"
 				>
-					<span class="text-gray-700 dark:text-gray-200"
-						><icon-fa-solid:angle-left
-					/></span>
+					<span class="text-gray-700 dark:text-gray-200"><IconFaSolid:angleLeft /></span>
 				</Anchor>
 			</li>
 
@@ -208,9 +206,7 @@ const link = computed(() => {
 							: t('components.pagination.next_page')
 					"
 				>
-					<span class="text-gray-700 dark:text-gray-200"
-						><icon-fa-solid:angle-right
-					/></span>
+					<span class="text-gray-700 dark:text-gray-200"><IconFaSolid:angleRight /></span>
 				</Anchor>
 			</li>
 		</ol>

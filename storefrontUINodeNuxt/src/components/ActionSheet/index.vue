@@ -1,19 +1,15 @@
 <script lang="ts" setup>
 import { TransitionRoot, TransitionChild } from '@headlessui/vue'
 
-// micro compiler
 const emit = defineEmits(['onClose'])
 
-// state
 const show = ref(false)
 
-// methods
 const close = () => {
 	show.value = false
 	setTimeout(() => emit('onClose'), 100)
 }
 
-// lifecycle
 onMounted(() => {
 	setTimeout(() => (show.value = true), 100)
 })

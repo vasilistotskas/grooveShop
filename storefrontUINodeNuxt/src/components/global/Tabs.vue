@@ -40,7 +40,7 @@ const updateIndicator = () => {
 	dom.style.left = `${tabItem.offsetLeft - padding - diff / 2}px`
 }
 
-// watchs
+// watches
 watch(tabItems, () => updateIndicator())
 watch(activeTab, () => updateIndicator())
 

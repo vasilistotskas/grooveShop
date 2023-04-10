@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useBreadcrumbsStore } from '~/stores/global/breadcrumbs'
 
+const { t } = useLang()
 const store = useBreadcrumbsStore()
 const { breadcrumbs } = storeToRefs(store)
 
@@ -60,7 +61,7 @@ const resolveParentHeadingElement = computed(() => {
 					:title="breadcrumbs.parent.text"
 					css-class="cp-breadcrumbs-breadcrumbs-itm-lnk text-gray-700 dark:text-gray-200"
 					><span class="cp-breadcrumbs-breadcrumbs-itm-lnk-text">{{
-						breadcrumbs.parent.text || $t('components.breadcrumbs.title')
+						breadcrumbs.parent.text || t('components.breadcrumbs.title')
 					}}</span></Anchor
 				>
 			</component>

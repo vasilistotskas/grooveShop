@@ -4,11 +4,11 @@
 			<iframe v-if="isCookieFunctionalEnabled" />
 			<div v-else class="cookieControl__BlockedIframe">
 				<p>
-					{{ $t('components.cookie.iframe_blocked') }}
+					{{ t('components.cookie.iframe_blocked') }}
 					<a
 						href="#"
 						@click.prevent="isModalActive = true"
-						v-text="$t('components.cookie.here')"
+						v-text="t('components.cookie.here')"
 					/>
 				</p>
 			</div>

@@ -48,7 +48,7 @@ const changeQuantityEvent = (event: Event) => {
 			type="button"
 			@click="decreaseQuantityEvent"
 		>
-			<icon-fa-solid:minus />
+			<IconFaSolid:minus />
 		</button>
 		<select
 			class="w-full text-gray-700 dark:text-gray-200 bg-gray-100/[0.8] dark:bg-slate-800/[0.8] border border-gray-200"
@@ -68,7 +68,7 @@ const changeQuantityEvent = (event: Event) => {
 			type="button"
 			@click="increaseQuantityEvent"
 		>
-			<icon-fa-solid:plus />
+			<IconFaSolid:plus />
 		</button>
 	</div>
 </template>

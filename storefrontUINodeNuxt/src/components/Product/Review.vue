@@ -304,7 +304,7 @@ watch(
 						})
 					"
 				></h5>
-				<icon-fa-solid:pen />
+				<IconFaSolid:pen />
 			</div>
 		</template>
 
@@ -390,7 +390,7 @@ watch(
 						:style="'success'"
 					/>
 					<Button v-else type="button" disabled>
-						{{ $t('components.product.review.too_many_attempts') }}
+						{{ t('components.product.review.too_many_attempts') }}
 					</Button>
 				</div>
 				<div v-if="existingReview" class="review_footer__content">
@@ -403,7 +403,7 @@ watch(
 						@click.prevent="deleteReviewHandle()"
 					>
 						<template #icon>
-							<icon-fa-solid:trash />
+							<iIconFaSolid:trash />
 						</template>
 					</Button>
 				</div>

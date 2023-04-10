@@ -6,7 +6,6 @@ import {
 	ListboxOptions,
 	ListboxOption
 } from '@headlessui/vue'
-import { LocaleObject } from 'vue-i18n-routing'
 
 // micro compiler
 const props = defineProps({
@@ -22,7 +21,7 @@ const currentStyle = toRef(props, 'type')
 const { locale, locales, setLocale } = useI18n()
 const availableLocales = computed(() => {
 	return locales.value
-}) as unknown as LocaleObject[]
+})
 </script>
 
 <template>

@@ -3,6 +3,8 @@ import { FieldContext, useField, useForm } from 'vee-validate'
 import { toFormValidator } from '@vee-validate/zod'
 import { z } from 'zod'
 
+const { t } = useLang()
+
 const ZodLogin = z.object({
 	email: z.string().email(),
 	password: z.string().min(8)
@@ -29,7 +31,7 @@ const onSubmit = handleSubmit((e) => {
 	<form id="logInForm" class="_form" name="logInForm" @submit="onSubmit">
 		<div class="grid">
 			<label class="text-gray-700 dark:text-gray-200 mb-2" for="email">{{
-				$t('components.form.validation.email')
+				t('components.form.validation.email')
 			}}</label>
 			<div>
 				<FormTextInput
@@ -38,7 +40,7 @@ const onSubmit = handleSubmit((e) => {
 					class="text-gray-700 dark:text-gray-200 mb-2"
 					name="email"
 					type="email"
-					:placeholder="$t('components.form.validation.email')"
+					:placeholder="t('components.form.validation.email')"
 					autocomplete="email"
 				/>
 			</div>
@@ -46,7 +48,7 @@ const onSubmit = handleSubmit((e) => {
 		</div>
 		<div>
 			<label class="text-gray-700 dark:text-gray-200 mb-2" for="password">{{
-				$t('components.form.validation.password')
+				t('components.form.validation.password')
 			}}</label>
 			<div>
 				<FormTextInput
@@ -55,17 +57,17 @@ const onSubmit = handleSubmit((e) => {
 					class="text-gray-700 dark:text-gray-200 mb-2"
 					name="password"
 					type="password"
-					:placeholder="$t('components.form.validation.password')"
+					:placeholder="t('components.form.validation.password')"
 					autocomplete="current-password"
 				/>
 			</div>
 			<span class="text-gray-700 dark:text-gray-200">{{ errors.password }}</span>
 		</div>
 		<Button v-if="!tooManyAttempts" type="button">
-			{{ $t('components.form.validation.submit') }}
+			{{ t('components.form.validation.submit') }}
 		</Button>
 		<Button v-else type="button" disabled>
-			{{ $t('components.form.validation.too_many_attempts') }}
+			{{ t('components.form.validation.too_many_attempts') }}
 		</Button>
 	</form>
 </template>

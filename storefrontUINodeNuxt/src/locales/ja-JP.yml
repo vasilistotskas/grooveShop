@@ -53,7 +53,7 @@ components:
       necessary: 必要なクッキー
       necessary_description: >-
         必要な cookie は、ページ ナビゲーションや web サイトの安全な領域へのアクセスなどの基本的な機能を有効にすることで、web
-        サイトを使いやすくします。これらの cookie がないと、web サイトは正しく機能しません。
+        サイトを使いやすくするのに役立ちます。これらの cookie がないと、web サイトは正しく機能しません。
       optional: オプションのクッキー
       optional_links:
         privacy_policy: プライバシーポリシー
@@ -122,6 +122,22 @@ components:
     removed: お気に入りから削除しました
     add: お気に入りに追加
     remove: お気に入りから削除
+  user:
+    avatar:
+      change: 変化
+  order:
+    list:
+      footer: フッター
+    card:
+      extra: '%{count} 個の製品'
+      extra_one: もう 1 個の製品
+      id: id
+      address: 住所
+      pay_way: ペイウェイ
+      status: スターテス
+      total_price: 合計金額
+      actions:
+        details: 詳細
 pages:
   '404':
     title: ページが見つかりません
@@ -264,6 +280,8 @@ pages:
       update_error: 注文更新エラー
       deleted: 注文アイテムが削除されました
       delete_error: 注文アイテム削除エラー
+      ordering:
+        created_at: 作成日
     favourites:
       title: お気に入り
       nav: お気に入り

@@ -1,7 +1,6 @@
 import { FetchError } from 'ofetch'
-import { ProductCreateRequest, Product } from '~/zod/product/product'
+import { ProductCreateRequest, Product, ProductQuery } from '~/zod/product/product'
 import { Pagination } from '~/zod/pagination/pagination'
-import { ProductsQuery } from '~/zod/products/products'
 
 export interface ProductState {
 	products: Pagination<Product>
@@ -34,7 +33,7 @@ export const useProductStore = defineStore({
 		}
 	},
 	actions: {
-		async fetchProducts({ offset, limit, ordering }: ProductsQuery): Promise<void> {
+		async fetchProducts({ offset, limit, ordering }: ProductQuery): Promise<void> {
 			const {
 				data: products,
 				error,
@@ -53,12 +52,12 @@ export const useProductStore = defineStore({
 				this.products = products.value
 			}
 		},
-		async fetchProduct(productId: string | string[] | number): Promise<void> {
+		async fetchProduct(id: string | string[] | number): Promise<void> {
 			const {
 				data: product,
 				error,
 				pending
-			} = await useFetch(`/api/product/${productId}`, {
+			} = await useFetch(`/api/product/${id}`, {
 				method: 'get'
 			})
 			this.pending = pending.value
@@ -80,9 +79,9 @@ export const useProductStore = defineStore({
 				this.products.results.push(newProduct.value)
 			}
 		},
-		async updateProductHits(productId: string | string[]): Promise<void> {
+		async updateProductHits(id: string | string[]): Promise<void> {
 			const { error, pending } = await useFetch(
-				`/api/product/${productId}/update-product-hits`,
+				`/api/product/${id}/update-product-hits`,
 				{
 					method: 'post'
 				}

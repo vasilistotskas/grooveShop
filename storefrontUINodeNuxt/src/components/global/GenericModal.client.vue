@@ -122,6 +122,7 @@ const props = defineProps({
 	}
 })
 
+const { t } = useLang()
 const emit = defineEmits(['submitForm'])
 
 const isModalCurrentlyOpen = ref(props.shouldModalStartInOpenState)
@@ -187,8 +188,8 @@ onMounted(() => {
 				aria-label="Close"
 				@click="closeModal"
 			>
-				<span class="hidden">{{ $t('components.global.generic_modal.close') }}</span>
-				<IconEntypo:circle-with-cross></IconEntypo:circle-with-cross>
+				<span class="hidden">{{ t('components.global.generic_modal.close') }}</span>
+				<IconEntypo:circleWithCross></IconEntypo:circleWithCross>
 			</button>
 			<component
 				:is="isForm ? 'form' : 'div'"

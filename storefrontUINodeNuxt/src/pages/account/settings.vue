@@ -10,7 +10,7 @@ definePageMeta({
 <template>
 	<PageWrapper>
 		<PageHeader>
-			<PageTitle :text="$t('pages.account.settings.title')" />
+			<PageTitle :text="t('pages.account.settings.title')" />
 		</PageHeader>
 		<PageBody> </PageBody>
 	</PageWrapper>

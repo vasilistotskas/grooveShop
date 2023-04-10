@@ -74,11 +74,11 @@ const close = () => {
 							v-if="selectedType === 'success'"
 							:class="`text-2xl ${selectedTextStyle}`"
 						/>
-						<icon-clarity:times-circle-solid
+						<IconClarity:timesCircleSolid
 							v-if="selectedType === 'danger'"
 							:class="`text-2xl ${selectedTextStyle}`"
 						/>
-						<icon-bi:exclamation-circle-fill
+						<IconBi:exclamationCircleFill
 							v-if="selectedType === 'warning'"
 							:class="`text-2xl ${selectedTextStyle}`"
 						/>
@@ -101,7 +101,7 @@ const close = () => {
 						@click="close"
 					>
 						<span class="hidden">{{ props.title }}</span>
-						<icon-clarity:times-line />
+						<IconClarity:timesLine />
 					</button>
 				</div>
 			</div>

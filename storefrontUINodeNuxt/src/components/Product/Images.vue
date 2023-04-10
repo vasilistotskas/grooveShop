@@ -32,7 +32,7 @@ const mainImage = computed(() => {
 	return images.find((image) => image.isMain)
 })
 
-const resolveImageFileExtension = (fileName: string) => {
+const resolveImageFileExtension = (fileName: string | undefined) => {
 	if (!fileName) return undefined
 	return fileName.split('.').pop()
 }

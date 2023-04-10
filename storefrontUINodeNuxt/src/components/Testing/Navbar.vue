@@ -56,7 +56,7 @@ const menus = computed((): IMenuItem[] => [
 					<span class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-200"
 						>Alfian</span
 					>
-					<span class="text-gray-700 dark:text-gray-200"><IconUil:angle-down /></span>
+					<span class="text-gray-700 dark:text-gray-200"><IconUil:angleDown /></span>
 				</div>
 				<div
 					class="flex space-x-4 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2]"
@@ -69,7 +69,7 @@ const menus = computed((): IMenuItem[] => [
 						href="https://github.com/vasilistotskas/grooveShop/storefrontUINodeNuxt"
 						title="Github"
 					>
-						<IconMdi:github-face />
+						<IconMdi:githubFace />
 					</Anchor>
 				</div>
 			</div>
@@ -108,13 +108,13 @@ const menus = computed((): IMenuItem[] => [
 						</ul>
 					</nav>
 					<div class="text-gray-700 dark:text-gray-200 mt-6 text-sm font-bold capitalize">
-						{{ $t('components.theme_switcher.change_theme') }}
+						{{ t('components.theme_switcher.change_theme') }}
 					</div>
 					<div class="mt-2">
 						<ThemeSwitcher type="select-box" />
 					</div>
 					<div class="text-gray-700 dark:text-gray-200 mt-6 text-sm font-bold capitalize">
-						{{ $t('components.language_switcher.change_language') }}
+						{{ t('components.language_switcher.change_language') }}
 					</div>
 					<div class="mt-2">
 						<LanguageSwitcher type="select-box" />
@@ -126,7 +126,7 @@ const menus = computed((): IMenuItem[] => [
 					title="Github"
 					href="https://github.com/vasilistotskas/grooveShop/storefrontUINodeNuxt"
 				>
-					<IconMdi:github-face />
+					<IconMdi:githubFace />
 					<span class="ml-1 text-gray-700 dark:text-gray-200">Github</span>
 				</Button>
 				<Button
