@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.37.0 (2023-04-10)
+### Feature
+* **Django:** Remove Stripe lib and usage + order api view and status field add in order model ([`47ed55a`](https://github.com/vasilistotskas/grooveShop/commit/47ed55ad3b1d48fbdd38401caa8cccd826ad74f4))
+
 ## v0.36.0 (2023-04-08)
 ### Feature
 * **Nuxt:** User avatar update and more ([`2268e3d`](https://github.com/vasilistotskas/grooveShop/commit/2268e3d7f2398ce13511c6dd9f6af0738152f295))
