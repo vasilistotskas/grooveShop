@@ -1,17 +1,17 @@
-import stripe
 from backend.order.enum.pay_way_enum import PayWayEnum
 from backend.order.models import Order
-from backend.order.paginators import UserOrderListPagination
+from backend.order.paginators import OrderListPagination
 from backend.order.serializers import OrderSerializer
-from backend.order.serializers import UserOrderSerializer
 from backend.pay_way.models import PayWay
-from django.conf import settings
 from django.contrib.auth import get_user_model
-from rest_framework import generics
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.filters import OrderingFilter
+from rest_framework.filters import SearchFilter
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
 User = get_user_model()
 
@@ -42,13 +42,6 @@ class Checkout(APIView):
         return paid_amount
 
     def create_order(self, request, paid_amount, serializer, items, pay_way_name):
-        if pay_way_name == PayWayEnum.CREDIT_CARD:
-            stripe.Charge.create(
-                amount=int(paid_amount * 100),
-                currency="USD",
-                description="Charge from grooveShop",
-                source=serializer.validated_data["stripe_token"],
-            )
 
         self.decrease_product_stock(items)
 
@@ -62,7 +55,6 @@ class Checkout(APIView):
     def post(self, request, format=None):
         serializer = OrderSerializer(data=request.data, context={"request": request})
         if serializer.is_valid(raise_exception=True):
-            stripe.api_key = settings.STRIPE_SECRET_KEY
             items = serializer.validated_data["items"]
             paid_amount = self.calculate_order_total_amount(items=items)
             pay_way_name = serializer.validated_data["pay_way"]
@@ -79,18 +71,17 @@ class Checkout(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-class UserOrdersList(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
-    pagination_class = UserOrderListPagination
-    serializer_class = UserOrderSerializer
+class OrderViewSet(ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    pagination_class = OrderListPagination
+    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    ordering_fields = ["created_at", "status"]
+    filterset_fields = ["user_id", "status"]
+    ordering = ["-created_at"]
+    search_fields = ["email", "user_id"]
 
-    def get_queryset(self):
-        if getattr(self, "swagger_fake_view", False):
-            return Order.objects.none()
-        user = self.request.user
-        return Order.objects.filter(user=user)
-
-    def list(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs) -> Response:
         queryset = self.filter_queryset(self.get_queryset())
 
         # Check for 'pagination' query parameter
@@ -105,6 +96,38 @@ class UserOrdersList(generics.ListAPIView):
         if page is not None:
             serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
-
         serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def create(self, request, *args, **kwargs) -> Response:
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, pk=None, *args, **kwargs) -> Response:
+        product = get_object_or_404(Order, pk=pk)
+        serializer = self.get_serializer(product)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def update(self, request, pk=None, *args, **kwargs) -> Response:
+        product = get_object_or_404(Order, pk=pk)
+        serializer = self.get_serializer(product, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def partial_update(self, request, pk=None, *args, **kwargs) -> Response:
+        product = get_object_or_404(Order, pk=pk)
+        serializer = self.get_serializer(product, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, pk=None, *args, **kwargs) -> Response:
+        product = get_object_or_404(Order, pk=pk)
+        product.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

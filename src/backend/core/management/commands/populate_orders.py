@@ -24,7 +24,6 @@ class Command(BaseCommand):
                 phone=faker.phone_number(),
                 created_at=now(),
                 paid_amount=10.0,
-                stripe_token=faker.text(5),
             )
 
             product_id = randrange(1, 399)

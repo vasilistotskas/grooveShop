@@ -18,8 +18,6 @@ environ.Env.read_env(os.path.join(BASE_DIR.parent, ".env"))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-# STRIPE_SECRET_KEY = 'pk_test_sDva2BtVWsc3nQzcqU5MEWDP008QiK6ae3'
-STRIPE_SECRET_KEY = "sk_test_wKFGpTy9h1zpwqo0wNxRNlK400dNnJS7L5"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get("DEBUG", 0)))
 SYSTEM_ENV = os.environ.get("SYSTEM_ENV", None)

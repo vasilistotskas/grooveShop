@@ -3,7 +3,6 @@ psycopg2-binary==2.9.6
 djangorestframework==3.14.0
 django-cors-headers==3.14.0
 pillow==9.5.0
-stripe==3.5.0
 django-admin-thumbnails==0.2.6
 django-mptt==0.14.0
 django-js-asset==2.0.0

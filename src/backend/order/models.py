@@ -3,6 +3,7 @@ from decimal import Decimal
 from backend.core.models import SortableModel
 from backend.core.models import TimeStampMixinModel
 from backend.core.models import UUIDModel
+from backend.order.enum.status_enum import StatusEnum
 from django.db import models
 from django.db.models import QuerySet
 
@@ -18,9 +19,8 @@ class Order(TimeStampMixinModel, UUIDModel):
     pay_way = models.ForeignKey(
         "pay_way.PayWay",
         related_name="order_pay_way",
-        blank=True,
-        null=True,
         on_delete=models.SET_NULL,
+        null=True,
     )
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -32,7 +32,9 @@ class Order(TimeStampMixinModel, UUIDModel):
     phone = models.CharField(max_length=100)
     paid_amount = models.DecimalField(max_digits=8, decimal_places=2)
     customer_notes = models.TextField(blank=True, null=True)
-    stripe_token = models.CharField(max_length=100, blank=True, null=True)
+    status = models.CharField(
+        max_length=20, choices=StatusEnum.choices(), default=StatusEnum.PENDING.value
+    )
 
     class Meta:
         ordering = [

@@ -4,7 +4,7 @@ from backend.product.serializers.product import ProductSerializer
 from rest_framework import serializers
 
 
-class UserOrderItemSerializer(serializers.ModelSerializer):
+class OrderItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
 
     class Meta:
@@ -22,51 +22,8 @@ class UserOrderItemSerializer(serializers.ModelSerializer):
         )
 
 
-class UserOrderSerializer(serializers.ModelSerializer):
-    order_item_order = UserOrderItemSerializer(many=True)
-
-    class Meta:
-        model = Order
-        fields = (
-            "id",
-            "user",
-            "first_name",
-            "last_name",
-            "email",
-            "address",
-            "zipcode",
-            "place",
-            "city",
-            "phone",
-            "stripe_token",
-            "customer_notes",
-            "order_item_order",
-            "paid_amount",
-            "created_at",
-            "updated_at",
-            "uuid",
-            "total_price",
-        )
-
-
-class OrderItemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OrderItem
-        fields = (
-            "id",
-            "price",
-            "product",
-            "quantity",
-            "created_at",
-            "updated_at",
-            "uuid",
-            "sort_order",
-            "total_price",
-        )
-
-
 class OrderSerializer(serializers.ModelSerializer):
-    items = OrderItemSerializer(many=True)
+    order_item_order = OrderItemSerializer(many=True)
 
     class Meta:
         model = Order
@@ -74,6 +31,7 @@ class OrderSerializer(serializers.ModelSerializer):
             "id",
             "user",
             "pay_way",
+            "status",
             "first_name",
             "last_name",
             "email",
@@ -83,8 +41,7 @@ class OrderSerializer(serializers.ModelSerializer):
             "city",
             "phone",
             "customer_notes",
-            "stripe_token",
-            "items",
+            "order_item_order",
             "created_at",
             "updated_at",
             "uuid",
@@ -92,7 +49,7 @@ class OrderSerializer(serializers.ModelSerializer):
         )
 
     def create(self, validated_data):
-        items_data = validated_data.pop("items")
+        items_data = validated_data.pop("order_item_order")
         order = Order.objects.create(**validated_data)
 
         for item_data in items_data:
