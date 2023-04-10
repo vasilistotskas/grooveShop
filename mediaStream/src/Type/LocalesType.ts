@@ -1,5 +1,5 @@
-import Locale from './LocaleType'
+import Locale from "./LocaleType";
 
-type Locales = Locale[]
+type Locales = Locale[];
 
-export default Locales
+export default Locales;
