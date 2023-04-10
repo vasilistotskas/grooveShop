@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.38.0 (2023-04-10)
+### Feature
+* **Nuxt:** User Account order history , useOrdering / usePagination composables and more ([`3a1c328`](https://github.com/vasilistotskas/grooveShop/commit/3a1c3288042535a58fe0c720f9612e084a5cc75c))
+
 ## v0.37.0 (2023-04-10)
 ### Feature
 * **Django:** Remove Stripe lib and usage + order api view and status field add in order model ([`47ed55a`](https://github.com/vasilistotskas/grooveShop/commit/47ed55ad3b1d48fbdd38401caa8cccd826ad74f4))
