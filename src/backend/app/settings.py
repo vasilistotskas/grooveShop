@@ -4,7 +4,19 @@ from pathlib import Path
 
 import environ
 
-env = environ.Env()
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False),
+    SYSTEM_ENV=(str, None),
+    CORS_ORIGIN_ALLOW_ALL=(bool, False),
+    ALLOWED_HOSTS=(str, "[*]"),
+    DB_HOST_TEST=(str, "db_replica"),
+    DB_NAME_TEST=(str, "devdb_replica"),
+    DB_TEST_MIRROR=(str, "default"),
+    DJANG0_SPECTACULAR_SETTINGS_TITLE=(str, "Django Spectacular"),
+    DJANG0_SPECTACULAR_SETTINGS_DESCRIPTION=(str, "Django Spectacular Description"),
+    LANGUAGE_CODE=(str, "en-us"),
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -16,30 +28,31 @@ environ.Env.read_env(os.path.join(BASE_DIR.parent, ".env"))
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(int(os.environ.get("DEBUG", 0)))
-SYSTEM_ENV = os.environ.get("SYSTEM_ENV", None)
+DEBUG = bool(int(env("DEBUG")))
+SYSTEM_ENV = env("SYSTEM_ENV")
 
 if "celery" in sys.argv[0]:
     DEBUG = False
 
-BACKEND_BASE_URL = str(os.environ.get("BACKEND_BASE_URL"))
-APP_BASE_URL = str(os.environ.get("APP_BASE_URL"))
-NUXT_BASE_URL = str(os.environ.get("NUXT_BASE_URL"))
-APP_MAIN_HOST_NAME = str(os.environ.get("APP_MAIN_HOST_NAME"))
+BACKEND_BASE_URL = str(env("BACKEND_BASE_URL"))
+APP_BASE_URL = str(env("APP_BASE_URL"))
+NUXT_BASE_URL = str(env("NUXT_BASE_URL"))
+APP_MAIN_HOST_NAME = str(env("APP_MAIN_HOST_NAME"))
+MEDIA_STREAM_URL = str(env("MEDIA_STREAM_URL"))
 BASE_URL = BACKEND_BASE_URL
 
 ALLOWED_HOSTS = [APP_MAIN_HOST_NAME, "http://localhost:3003", "backend"]
 ALLOWED_HOSTS.extend(
     filter(
         None,
-        os.environ.get("ALLOWED_HOSTS", "127.0.0.1").split(","),
+        env("ALLOWED_HOSTS").split(","),
     )
 )
 
-CORS_ORIGIN_ALLOW_ALL = bool(os.environ.get("CORS_ORIGIN_ALLOW_ALL", False))
+CORS_ORIGIN_ALLOW_ALL = bool(env("CORS_ORIGIN_ALLOW_ALL"))
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_WHITELIST = [
     APP_BASE_URL,
@@ -155,11 +168,11 @@ ACCOUNT_ADAPTER = "allauth_2fa.adapter.OTPAdapter"
 ROOT_URLCONF = "backend.app.urls"
 
 # Site info
-SITE_NAME = os.environ.get("SITE_NAME", "Site Name")
+SITE_NAME = env("SITE_NAME")
 SITE_ID = 1
 
 # Slash append
-APPEND_SLASH = os.environ.get("APPEND_SLASH")
+APPEND_SLASH = env("APPEND_SLASH")
 
 # User model
 AUTH_USER_MODEL = "user.UserAccount"
@@ -193,6 +206,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "backend.core.context_processors.media_stream",
             ],
         },
     },
@@ -239,8 +253,8 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_SIGNUP_REDIRECT_URL = "/user-account"
-LOGIN_REDIRECT_URL = "/user-account"
+ACCOUNT_SIGNUP_REDIRECT_URL = NUXT_BASE_URL + "/account"
+LOGIN_REDIRECT_URL = NUXT_BASE_URL + "/account"
 
 WSGI_APPLICATION = "backend.app.wsgi.application"
 
@@ -250,17 +264,17 @@ WSGI_APPLICATION = "backend.app.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "HOST": os.environ.get("DB_HOST"),
-        "NAME": os.environ.get("DB_NAME"),
-        "USER": os.environ.get("DB_USER"),
-        "PASSWORD": os.environ.get("DB_PASS"),
+        "HOST": env("DB_HOST"),
+        "NAME": env("DB_NAME"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASS"),
     },
     "replica": {
         "ENGINE": "django.db.backends.postgresql",
-        "HOST": os.environ.get("DB_HOST_TEST"),
-        "NAME": os.environ.get("DB_NAME_TEST"),
+        "HOST": env("DB_HOST_TEST"),
+        "NAME": env("DB_NAME_TEST"),
         "TEST": {
-            "MIRROR": os.environ.get("DB_TEST_MIRROR"),
+            "MIRROR": env("DB_TEST_MIRROR"),
         },
     },
 }
@@ -270,8 +284,8 @@ if SYSTEM_ENV == "GITHUB_WORKFLOW":
         "default": {
             "ENGINE": "django.db.backends.postgresql",
             "NAME": "postgres",
-            "USER": os.environ.get("DB_USER"),
-            "PASSWORD": os.environ.get("DB_PASS"),
+            "USER": env("DB_USER"),
+            "PASSWORD": env("DB_PASS"),
             "HOST": "127.0.0.1",
             "PORT": "5432",
         }
@@ -291,7 +305,7 @@ CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = "django-db"
 CELERY_CACHE_BACKEND = "django-cache"
 CELERY_ENABLE_UTC = False
-CELERY_TIMEZONE = os.environ.get("TIME_ZONE")
+CELERY_TIMEZONE = env("TIME_ZONE")
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
@@ -321,20 +335,20 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = os.environ.get("LANGUAGE_CODE")
-TIME_ZONE = os.environ.get("TIME_ZONE")
-USE_I18N = os.environ.get("USE_I18N")
-USE_L10N = os.environ.get("USE_L10N")
-USE_TZ = os.environ.get("USE_TZ")
+LANGUAGE_CODE = env("LANGUAGE_CODE")
+TIME_ZONE = env("TIME_ZONE")
+USE_I18N = env("USE_I18N")
+USE_L10N = env("USE_L10N")
+USE_TZ = env("USE_TZ")
 
 # Email Settings
-EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND")
-EMAIL_HOST = os.environ.get("EMAIL_HOST")
-EMAIL_PORT = os.environ.get("EMAIL_PORT")
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
-EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS")
-DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
+EMAIL_BACKEND = env("EMAIL_BACKEND")
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_PORT = env("EMAIL_PORT")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = env("EMAIL_USE_TLS")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -399,8 +413,8 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": os.environ.get("DJANG0_SPECTACULAR_SETTINGS_TITLE"),
-    "DESCRIPTION": os.environ.get("DJANG0_SPECTACULAR_SETTINGS_DESCRIPTION"),
+    "TITLE": env("DJANG0_SPECTACULAR_SETTINGS_TITLE"),
+    "DESCRIPTION": env("DJANG0_SPECTACULAR_SETTINGS_DESCRIPTION"),
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAuthenticated"],
