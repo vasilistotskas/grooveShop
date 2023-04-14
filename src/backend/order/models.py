@@ -4,6 +4,8 @@ from backend.core.models import SortableModel
 from backend.core.models import TimeStampMixinModel
 from backend.core.models import UUIDModel
 from backend.order.enum.status_enum import StatusEnum
+from backend.user.enum.address import FloorChoicesEnum
+from backend.user.enum.address import LocationChoicesEnum
 from django.db import models
 from django.db.models import QuerySet
 
@@ -22,19 +24,46 @@ class Order(TimeStampMixinModel, UUIDModel):
         on_delete=models.SET_NULL,
         null=True,
     )
+    country = models.ForeignKey(
+        "country.Country",
+        related_name="order_country",
+        on_delete=models.CASCADE,
+    )
+    region = models.ForeignKey(
+        "region.Region",
+        related_name="order_region",
+        on_delete=models.CASCADE,
+    )
+    floor = models.CharField(
+        max_length=50,
+        choices=FloorChoicesEnum.choices(),
+        null=True,
+        blank=True,
+        default=None,
+    )
+    location_type = models.CharField(
+        max_length=100,
+        choices=LocationChoicesEnum.choices(),
+        null=True,
+        blank=True,
+        default=None,
+    )
+    email = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-    zipcode = models.CharField(max_length=100)
-    place = models.CharField(max_length=100)
+    street = models.CharField(max_length=100)
+    street_number = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
+    zipcode = models.CharField(max_length=100)
+    place = models.CharField(max_length=100, blank=True, null=True)
     phone = models.CharField(max_length=100)
+    mobile_phone = models.CharField(max_length=100, null=True, blank=True, default=None)
     paid_amount = models.DecimalField(max_digits=8, decimal_places=2)
     customer_notes = models.TextField(blank=True, null=True)
     status = models.CharField(
         max_length=20, choices=StatusEnum.choices(), default=StatusEnum.PENDING.value
     )
+    shipping_price = models.DecimalField(max_digits=8, decimal_places=2, default=0)
 
     class Meta:
         ordering = [
@@ -46,7 +75,14 @@ class Order(TimeStampMixinModel, UUIDModel):
 
     @property
     def total_price(self) -> Decimal:
-        return sum(item.total_price for item in self.order_item_order.all())
+        return (
+            sum(item.total_price for item in self.order_item_order.all())
+            + self.shipping_price
+        )
+
+    @property
+    def full_address(self) -> str:
+        return f"{self.street} {self.street_number}, {self.zipcode} {self.city}"
 
 
 class OrderItem(TimeStampMixinModel, SortableModel, UUIDModel):

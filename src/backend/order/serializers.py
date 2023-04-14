@@ -1,6 +1,10 @@
+from backend.country.serializers import CountrySerializer
 from backend.order.models import Order
 from backend.order.models import OrderItem
+from backend.pay_way.serializers import PayWaySerializer
 from backend.product.serializers.product import ProductSerializer
+from backend.region.serializers import RegionSerializer
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 
@@ -24,28 +28,51 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     order_item_order = OrderItemSerializer(many=True)
+    country = serializers.SerializerMethodField("get_country")
+    region = serializers.SerializerMethodField("get_region")
+    pay_way = serializers.SerializerMethodField("get_pay_way")
+
+    @extend_schema_field(CountrySerializer)
+    def get_country(self, order) -> CountrySerializer:
+        return CountrySerializer(order.country).data
+
+    @extend_schema_field(RegionSerializer)
+    def get_region(self, order) -> RegionSerializer:
+        return RegionSerializer(order.region).data
+
+    @extend_schema_field(PayWaySerializer)
+    def get_pay_way(self, order) -> PayWaySerializer:
+        return PayWaySerializer(order.pay_way).data
 
     class Meta:
         model = Order
         fields = (
             "id",
             "user",
+            "country",
+            "region",
+            "floor",
+            "location_type",
+            "street",
+            "street_number",
             "pay_way",
             "status",
             "first_name",
             "last_name",
             "email",
-            "address",
             "zipcode",
             "place",
             "city",
             "phone",
+            "mobile_phone",
             "customer_notes",
             "order_item_order",
+            "shipping_price",
             "created_at",
             "updated_at",
             "uuid",
             "total_price",
+            "full_address",
         )
 
     def create(self, validated_data):

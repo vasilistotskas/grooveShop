@@ -7,9 +7,8 @@ from django.db.models.query import QuerySet
 
 
 class PayWay(TimeStampMixinModel, SortableModel, UUIDModel):
-    name = models.CharField(
-        primary_key=True, max_length=50, choices=PayWayEnum.choices(), unique=True
-    )
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50, choices=PayWayEnum.choices(), unique=True)
     active = models.BooleanField(default=True)
     cost = models.DecimalField(max_digits=11, decimal_places=2, default=0.0)
     free_for_order_amount = models.DecimalField(

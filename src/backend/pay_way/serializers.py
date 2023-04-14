@@ -6,6 +6,7 @@ class PayWaySerializer(serializers.ModelSerializer):
     class Meta:
         model = PayWay
         fields = (
+            "id",
             "name",
             "active",
             "cost",
