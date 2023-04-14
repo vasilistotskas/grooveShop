@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { FunctionalComponent, SVGAttributes } from 'vue'
 import { useAuthStore } from '~/stores/auth'
 import { useCartStore } from '~/stores/cart'
 import userShield from '~icons/fa6-solid/user-shield'
@@ -7,9 +8,9 @@ import doorArrowRight from '~icons/fluent/door-arrow-right-28-regular'
 interface IMenuItem {
 	type: 'link' | 'button' | 'external-link'
 	text: string
-	href?: any
-	route?: any
-	icon?: any
+	href?: string
+	route?: string | { name: string; path: string }
+	icon?: FunctionalComponent<SVGAttributes>
 	cssClass?: string
 }
 

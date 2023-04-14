@@ -403,7 +403,7 @@ watch(
 						@click.prevent="deleteReviewHandle()"
 					>
 						<template #icon>
-							<iIconFaSolid:trash />
+							<IconFaSolid:trash />
 						</template>
 					</Button>
 				</div>

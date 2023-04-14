@@ -5,7 +5,7 @@ import { Image, ImageQuery } from '~/zod/product/image'
 export interface ImagesState {
 	images: Pagination<Image>
 	pending: boolean
-	error: FetchError<any> | null
+	error: FetchError<unknown> | null
 }
 
 export const useImagesStore = defineStore({
@@ -23,7 +23,7 @@ export const useImagesStore = defineStore({
 			results: []
 		},
 		pending: true,
-		error: null as FetchError<any> | null
+		error: null as FetchError<unknown> | null
 	}),
 	getters: {
 		getImageById: (state) => (id: number) => {

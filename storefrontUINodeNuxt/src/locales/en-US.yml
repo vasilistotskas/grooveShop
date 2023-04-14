@@ -93,7 +93,7 @@ components:
       update_review: Update review
       delete_review: Delete review
       must_be_logged_in: You must be logged in to write a review
-      write_review_for_product: Write a review for product <strong>%{product}</strong>
+      write_review_for_product: Write a review for product %{product}
       confirm_delete: Are you sure you want to delete this review?
       too_many_attempts: Too many attempts, please try again later.
       rating:
@@ -120,6 +120,8 @@ components:
   user:
     avatar:
       change: Change
+      no_file_selected: No file selected
+      file_extension_not_allowed: File extension not allowed
   order:
     list:
       footer: Footer
@@ -270,11 +272,14 @@ pages:
       nav: orders
       description: orders
       keywords: orders
-      empty: Your orders is empty
       updated: Orders updated
       update_error: Orders update error
       deleted: Orders Item deleted
       delete_error: Orders Item delete error
+      empty:
+        title: Your orders is empty
+        description: You have not placed any orders yet.
+        button: Go to shop
       ordering:
         created_at: Created At
     favourites:

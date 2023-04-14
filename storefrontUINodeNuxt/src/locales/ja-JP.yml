@@ -53,7 +53,7 @@ components:
       necessary: 必要なクッキー
       necessary_description: >-
         必要な cookie は、ページ ナビゲーションや web サイトの安全な領域へのアクセスなどの基本的な機能を有効にすることで、web
-        サイトを使いやすくするのに役立ちます。これらの cookie がないと、web サイトは正しく機能しません。
+        サイトを使いやすくします。これらの cookie がないと、web サイトは正しく機能しません。
       optional: オプションのクッキー
       optional_links:
         privacy_policy: プライバシーポリシー
@@ -98,7 +98,7 @@ components:
       update_review: レビューを更新
       delete_review: レビューを削除
       must_be_logged_in: レビューを書くにはログインする必要があります
-      write_review_for_product: 製品 <strong>%{product}</strong> のレビューを書く
+      write_review_for_product: 製品 %{product} のレビューを書く
       confirm_delete: このレビューを削除してもよろしいですか?
       too_many_attempts: 試行回数が多すぎます。しばらくしてからもう一度お試しください。
       rating:
@@ -125,6 +125,8 @@ components:
   user:
     avatar:
       change: 変化
+      no_file_selected: ファイルが選択されていません
+      file_extension_not_allowed: ファイル拡張子は許可されていません
   order:
     list:
       footer: フッター
@@ -275,11 +277,14 @@ pages:
       nav: 注文
       description: 注文
       keywords: 注文
-      empty: 注文は空です
       updated: 注文が更新されました
       update_error: 注文更新エラー
       deleted: 注文アイテムが削除されました
       delete_error: 注文アイテム削除エラー
+      empty:
+        title: 注文は空です
+        description: まだ注文していません。
+        button: 店へ出かける
       ordering:
         created_at: 作成日
     favourites:

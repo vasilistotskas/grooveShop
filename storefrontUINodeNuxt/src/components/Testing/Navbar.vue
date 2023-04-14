@@ -2,8 +2,8 @@
 interface IMenuItem {
 	type: 'link' | 'button'
 	text: string
-	href?: any
-	route?: any
+	href?: string
+	route?: { name: string; path?: string }
 }
 
 const { t } = useLang()
@@ -17,11 +17,6 @@ const menus = computed((): IMenuItem[] => [
 		type: 'link',
 		text: t('pages.testing.setting.nav'),
 		route: { name: 'testing-setting' }
-	},
-	{
-		type: 'button',
-		text: t('pages.testing.nav'),
-		route: { name: 'testing' }
 	}
 ])
 </script>

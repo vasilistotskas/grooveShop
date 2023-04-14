@@ -54,7 +54,7 @@ const { account, favourites, reviews, orders, pending, error } = storeToRefs(use
 						<Breadcrumbs />
 						<div
 							:class="[
-								'relative flex-1 flex flex-col lg:flex-row mx-auto lg:max-w-8xl w-full h-full',
+								'relative flex-1 flex flex-col lg:flex-row mx-auto w-full h-full',
 								{ 'flex-col': $route.path === '/account' }
 							]"
 						>
@@ -69,7 +69,7 @@ const { account, favourites, reviews, orders, pending, error } = storeToRefs(use
 							>
 								<UserSidebar />
 							</div>
-							<div class="flex flex-col">
+							<div class="flex flex-col w-full">
 								<slot />
 								<slot name="footer">
 									<PageFooter />

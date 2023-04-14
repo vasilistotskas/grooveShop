@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { FunctionalComponent, SVGAttributes } from 'vue'
 import ordersIcon from '~icons/mdi/package-variant-closed'
 import favouritesIcon from '~icons/mdi/heart-outline'
 import reviewsIcon from '~icons/mdi/star-outline'
@@ -8,9 +9,9 @@ import helpIcon from '~icons/mdi/help-circle-outline'
 interface IMenuItem {
 	type: 'link' | 'button' | 'external-link'
 	text: string
-	href?: any
-	route?: any
-	icon?: any
+	href?: string
+	route?: { name: string; path: string }
+	icon?: FunctionalComponent<SVGAttributes>
 	cssClass?: string
 }
 
@@ -104,9 +105,9 @@ onMounted(() => {
 							class="flex items-center px-2 py-2 rounded-md ring-1 ring-slate-900/5 shadow-sm group-hover:shadow group-hover:ring-slate-900/10 dark:ring-0 dark:shadow-none dark:group-hover:shadow-none dark:group-hover:highlight-white/10 group-hover:shadow-sky-200 dark:highlight-white/10"
 							:class="{
 								'text-white dark:text-white group-hover:bg-sky-500 bg-sky-500':
-									route.path === item.route.path,
+									route.path === item.route?.path,
 								'text-slate-500 dark:text-gray-100 group-hover:bg-gray-200 dark:group-hover:bg-slate-600 bg-gray-100 dark:bg-slate-700':
-									route.path !== item.route.path
+									route.path !== item.route?.path
 							}"
 						>
 							<component :is="item.icon" class="text-2xl md:text-xl" />
@@ -115,7 +116,7 @@ onMounted(() => {
 							class="text-2xl md:text-xl font-semibold capitalize text-gray-700 dark:text-gray-200"
 							:class="{
 								'font-extrabold text-sky-500 dark:text-sky-400':
-									route.path === item.route.path
+									route.path === item.route?.path
 							}"
 						>
 							{{ item.text }}
@@ -131,9 +132,9 @@ onMounted(() => {
 							class="flex items-center px-2 py-2 rounded-md ring-1 ring-slate-900/5 shadow-sm group-hover:shadow group-hover:ring-slate-900/10 dark:ring-0 dark:shadow-none dark:group-hover:shadow-none dark:group-hover:highlight-white/10 group-hover:shadow-sky-200 dark:highlight-white/10"
 							:class="{
 								'text-white dark:text-white group-hover:bg-sky-500 bg-sky-500':
-									item.route.path === route.path,
+									item.route?.path === route.path,
 								'text-slate-500 dark:text-gray-100 group-hover:bg-gray-200 dark:group-hover:bg-slate-600 bg-gray-100 dark:bg-slate-700':
-									item.route.path !== route.path
+									item.route?.path !== route.path
 							}"
 						>
 							<component :is="item.icon" class="text-2xl md:text-xl" />
@@ -142,7 +143,7 @@ onMounted(() => {
 							class="text-2xl md:text-xl font-semibold capitalize text-gray-700 dark:text-gray-200"
 							:class="{
 								'font-extrabold text-sky-500 dark:text-sky-400':
-									item.route.path === route.path
+									item.route?.path === route.path
 							}"
 						>
 							{{ item.text }}

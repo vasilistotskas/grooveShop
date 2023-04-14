@@ -7,7 +7,7 @@ export interface CategoryState {
 	categories: Pagination<Category> | null
 	category: Category | null
 	pending: boolean
-	error: FetchError<any> | null
+	error: FetchError<unknown> | null
 }
 
 export const useCategoryStore = defineStore({
@@ -26,7 +26,7 @@ export const useCategoryStore = defineStore({
 		},
 		category: null as Category | null,
 		pending: true,
-		error: null as FetchError<any> | null
+		error: null as FetchError<unknown> | null
 	}),
 	getters: {
 		getCategoryById: (state) => (id: number) => {

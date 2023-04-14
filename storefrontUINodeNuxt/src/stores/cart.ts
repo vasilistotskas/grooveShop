@@ -5,7 +5,7 @@ import { CartItemCreateRequest, CartItemPutRequest } from '~/zod/cart/cart-item'
 export interface CartState {
 	cart: Cart | null
 	pending: boolean
-	error: FetchError<any> | null
+	error: FetchError<unknown> | null
 }
 
 export const useCartStore = defineStore({
@@ -13,7 +13,7 @@ export const useCartStore = defineStore({
 	state: (): CartState => ({
 		cart: null as Cart | null,
 		pending: true,
-		error: null as FetchError<any> | null
+		error: null as FetchError<unknown> | null
 	}),
 	getters: {
 		getCartItems: (state) => {

@@ -3,14 +3,14 @@ import { FetchError } from 'ofetch'
 export interface AuthState {
 	isAuthenticated: boolean
 	pending: boolean
-	error: FetchError<any> | null
+	error: FetchError<unknown> | null
 }
 export const useAuthStore = defineStore({
 	id: 'auth',
 	state: (): AuthState => ({
 		isAuthenticated: false,
 		pending: true,
-		error: null as FetchError<any> | null
+		error: null as FetchError<unknown> | null
 	}),
 	actions: {
 		async fetchAuth() {

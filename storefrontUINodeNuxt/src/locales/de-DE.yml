@@ -105,7 +105,7 @@ components:
       update_review: bewertung aktualisieren
       delete_review: bewertung löschen
       must_be_logged_in: sie müssen angemeldet sein, um eine bewertung schreiben zu können
-      write_review_for_product: schreiben sie eine bewertung für produkt <strong>%{product}</strong>
+      write_review_for_product: schreiben sie eine bewertung für produkt %{product}
       confirm_delete: möchten sie diese bewertung wirklich löschen?
       too_many_attempts: zu viele versuche. bitte später erneut versuchen.
       rating:
@@ -132,6 +132,8 @@ components:
   user:
     avatar:
       change: ändern
+      no_file_selected: keine datei ausgewählt
+      file_extension_not_allowed: dateierweiterung nicht zulässig
   order:
     list:
       footer: fusszeile
@@ -290,11 +292,14 @@ pages:
       nav: aufträge
       description: aufträge
       keywords: aufträge
-      empty: ihre bestellungen sind leer
       updated: bestellungen aktualisiert
       update_error: fehler bei der auftragsaktualisierung
       deleted: bestellungen artikel gelöscht
       delete_error: fehler beim löschen des auftragsartikels
+      empty:
+        title: ihre bestellungen sind leer
+        description: sie haben noch keine bestellungen aufgegeben.
+        button: zum laden gehen
       ordering:
         created_at: hergestellt in
     favourites:

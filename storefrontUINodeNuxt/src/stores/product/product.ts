@@ -6,7 +6,7 @@ export interface ProductState {
 	products: Pagination<Product>
 	product: Product | null
 	pending: boolean
-	error: FetchError<any> | null
+	error: FetchError<unknown> | null
 }
 
 export const useProductStore = defineStore({
@@ -25,7 +25,7 @@ export const useProductStore = defineStore({
 		},
 		product: null as Product | null,
 		pending: true,
-		error: null as FetchError<any> | null
+		error: null as FetchError<unknown> | null
 	}),
 	getters: {
 		getProductById: (state) => (id: number) => {

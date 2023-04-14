@@ -6,7 +6,7 @@ export interface OrderState {
 	orders: Pagination<Order>
 	order: Order | null
 	pending: boolean
-	error: FetchError<any> | null
+	error: FetchError<unknown> | null
 }
 
 export const useOrderStore = defineStore({
@@ -25,7 +25,7 @@ export const useOrderStore = defineStore({
 		},
 		order: null as Order | null,
 		pending: true,
-		error: null as FetchError<any> | null
+		error: null as FetchError<unknown> | null
 	}),
 	getters: {
 		getOrderById: (state) => (id: number) => {
@@ -34,7 +34,6 @@ export const useOrderStore = defineStore({
 	},
 	actions: {
 		async fetchOrders({ page, ordering, user_id }: OrderQuery): Promise<void> {
-			console.log('==== page ====', page)
 			const {
 				data: orders,
 				error,
@@ -49,6 +48,15 @@ export const useOrderStore = defineStore({
 			})
 			this.pending = pending.value
 			this.error = error.value
+			// @TODO: Better error handling
+			console.log('===== error data=====', error.value?.data)
+			console.log('===== error response =====', error.value?.response)
+			console.log('===== error statusMessage =====', error.value?.statusMessage)
+			console.log('===== error message =====', error.value?.message)
+			console.log('===== error status =====', error.value?.status)
+			console.log('===== error cause =====', error.value?.cause)
+			console.log('===== error statusCode =====', error.value?.statusCode)
+			console.log('===== error statusText =====', error.value?.statusText)
 			if (orders.value) {
 				this.orders = orders.value
 			}

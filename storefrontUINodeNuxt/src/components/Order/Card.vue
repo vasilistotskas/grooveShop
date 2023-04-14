@@ -131,14 +131,14 @@ const statusClass = computed(() => {
 					t('components.order.card.address')
 				}}</span>
 				<span class="order__card__body__address__text">{{
-					contentShorten(order.address, 0, 45)
+					contentShorten(order.fullAddress, 0, 45)
 				}}</span>
 			</div>
 			<div class="order__card__body__pay_way">
 				<span class="order__card__body__pay_way__title">{{
 					t('components.order.card.pay_way')
 				}}</span>
-				<span class="order__card__body__pay_way__text">{{ order.payWay }}</span>
+				<span class="order__card__body__pay_way__text">{{ order.payWay.name }}</span>
 			</div>
 			<div class="order__card__body__total_price">
 				<span class="order__card__body__total_price__title">{{

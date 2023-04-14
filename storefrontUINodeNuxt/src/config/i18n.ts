@@ -1,6 +1,4 @@
-import { NuxtI18nOptions } from '@nuxtjs/i18n'
-
-export const i18n: NuxtI18nOptions = {
+export const i18n = {
 	strategy: 'prefix_except_default',
 	lazy: true,
 	defaultLocale: process.env.NUXT_APP_DEFAULT_LOCALE,
@@ -64,10 +62,5 @@ export const i18n: NuxtI18nOptions = {
 			flag: '🇨🇳'
 		}
 	],
-	vueI18n: {
-		legacy: false,
-		availableLocales: process.env.NUXT_APP_AVAILABLE_LOCALES?.split(','),
-		locale: process.env.NUXT_APP_DEFAULT_LOCALE,
-		fallbackLocale: process.env.NUXT_APP_DEFAULT_LOCALE
-	}
+	vueI18n: './config/vueI18n.config.ts'
 }

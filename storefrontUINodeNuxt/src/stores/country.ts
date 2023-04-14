@@ -6,7 +6,7 @@ export interface CountryState {
 	countries: Pagination<Country>
 	country: Country | null
 	pending: boolean
-	error: FetchError<any> | null
+	error: FetchError<unknown> | null
 }
 
 export const useCountryStore = defineStore({
@@ -25,7 +25,7 @@ export const useCountryStore = defineStore({
 		},
 		country: null as Country | null,
 		pending: true,
-		error: null as FetchError<any> | null
+		error: null as FetchError<unknown> | null
 	}),
 	actions: {
 		async fetchCountries(params?: CountriesQuery) {

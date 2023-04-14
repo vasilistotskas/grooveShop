@@ -47,6 +47,7 @@ const {
 	orderStore.fetchOrders(routePaginationParams.value)
 )
 
+// @TODO: Event bus like this should have an Enum for key and event name
 const bus = useEventBus<string>('orders')
 bus.on((event, payload: OrderQuery) => {
 	routePaginationParams.value = payload

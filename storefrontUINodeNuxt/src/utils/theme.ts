@@ -44,7 +44,7 @@ export function ThemeManager() {
 		process.client ? getSystemTheme() : 'light'
 	)
 
-	// wathcers
+	// watchers
 	const onThemeSettingChange = (themeSetting: IThemeSettingOptions) => {
 		themeUserSetting.value = themeSetting
 		if (themeSetting === 'realtime') {
@@ -55,7 +55,13 @@ export function ThemeManager() {
 			themeCurrent.value = themeSetting
 		}
 	}
-	watch(themeSetting, (val) => onThemeSettingChange(val))
+
+	const bus = useEventBus<string>('theme')
+	bus.on((event: string, payload: IThemeSettingOptions) => {
+		if (event === 'change') {
+			onThemeSettingChange(payload)
+		}
+	})
 	const onThemeSystemChange = () => {
 		if (themeSetting.value === 'system') {
 			themeCurrent.value = getSystemTheme()

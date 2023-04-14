@@ -10,7 +10,7 @@ import {
 export interface ReviewsState {
 	reviews: Pagination<Review>
 	pending: boolean
-	error: FetchError<any> | null
+	error: FetchError<unknown> | null
 }
 
 export const useReviewsStore = defineStore({
@@ -28,7 +28,7 @@ export const useReviewsStore = defineStore({
 			results: []
 		},
 		pending: true,
-		error: null as FetchError<any> | null
+		error: null as FetchError<unknown> | null
 	}),
 	getters: {
 		getReviewById: (state) => (id: number) => {

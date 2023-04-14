@@ -19,7 +19,7 @@ onMounted(() => {
 	<div
 		ref="sidebar"
 		:class="{
-			'fixed top-0 hidden pt-14 lg:flex lg:w-30 xl:w-40 h-screen': mode === 'normal',
+			'fixed top-0 hidden pt-20 lg:flex lg:w-30 xl:w-40 h-screen': mode === 'normal',
 			'relative flex-1 flex flex-col w-full': mode === 'mobile'
 		}"
 	>

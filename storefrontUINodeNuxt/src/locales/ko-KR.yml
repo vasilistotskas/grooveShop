@@ -98,7 +98,7 @@ components:
       update_review: 리뷰 업데이트
       delete_review: 리뷰 삭제
       must_be_logged_in: 리뷰를 작성하려면 로그인해야 합니다.
-      write_review_for_product: 제품 <strong>%{product}</strong>에 대한 리뷰 작성
+      write_review_for_product: 제품 %{product}에 대한 리뷰 작성
       confirm_delete: 이 리뷰를 삭제하시겠습니까?
       too_many_attempts: 시도 횟수가 너무 많습니다. 나중에 다시 시도해 주세요.
       rating:
@@ -125,6 +125,8 @@ components:
   user:
     avatar:
       change: 변화
+      no_file_selected: 파일이 선택되지 않았습니다
+      file_extension_not_allowed: 파일 확장자가 허용되지 않음
   order:
     list:
       footer: 보행인
@@ -133,7 +135,7 @@ components:
       extra_one: 1 더 많은 제품
       id: id
       address: 주소
-      pay_way: 지불 방법
+      pay_way: 페이웨이
       status: 상태
       total_price: 총 가격
       actions:
@@ -275,11 +277,14 @@ pages:
       nav: 명령
       description: 명령
       keywords: 명령
-      empty: 주문이 비어 있습니다.
       updated: 업데이트된 주문
       update_error: 주문 업데이트 오류
       deleted: 주문 항목 삭제됨
       delete_error: 주문 항목 삭제 오류
+      empty:
+        title: 주문이 비어 있습니다.
+        description: 아직 주문을 하지 않았습니다.
+        button: 가게에 가다
       ordering:
         created_at: 만든 시간
     favourites:

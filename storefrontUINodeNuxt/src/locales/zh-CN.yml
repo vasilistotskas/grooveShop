@@ -96,7 +96,7 @@ components:
       update_review: 更新评论
       delete_review: 删除评论
       must_be_logged_in: 你必须先登录才能撰写评论
-      write_review_for_product: 为产品 <strong>%{product}</strong> 撰写评论
+      write_review_for_product: 为产品 %{product} 写评论
       confirm_delete: 您确定要删除此评论吗？
       too_many_attempts: 尝试次数过多，请稍后再试。
       rating:
@@ -117,12 +117,14 @@ components:
   add_to_favourite_button:
     not_authenticated: 您必须登录才能添加到收藏夹
     added: 已添加到收藏夹
-    removed: 已从收藏夹中删除
+    removed: 已从收藏夹中移除
     add: 加入“最喜欢的
     remove: 从收藏夹中删除
   user:
     avatar:
       change: 改变
+      no_file_selected: 没有选择文件
+      file_extension_not_allowed: 不允许的文件扩展名
   order:
     list:
       footer: 页脚
@@ -179,7 +181,7 @@ pages:
           description: 这是您的机器人 id。
           footer: 与机器人交互时使用。
         protection_spam:
-          title: 垃圾邮件保护
+          title: 垃圾邮件防护
           description: 切换启用以删除红色边框
           footer: 如果启用，我们将保护您的评论免受垃圾邮件
         advanced_enable_advanced:
@@ -273,11 +275,14 @@ pages:
       nav: 命令
       description: 命令
       keywords: 命令
-      empty: 您的订单为空
       updated: 订单已更新
       update_error: 订单更新错误
       deleted: 订单项目已删除
       delete_error: 订单项目删除错误
+      empty:
+        title: 您的订单为空
+        description: 您还没有下任何订单。
+        button: 去商店
       ordering:
         created_at: 创建于
     favourites:

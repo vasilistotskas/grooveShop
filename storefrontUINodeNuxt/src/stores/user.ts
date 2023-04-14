@@ -11,7 +11,7 @@ export interface UserState {
 	reviews: Review[] | null
 	orders: Order[] | null
 	pending: boolean
-	error: FetchError<any> | null
+	error: FetchError<unknown> | null
 }
 
 export const useUserStore = defineStore({
@@ -22,7 +22,7 @@ export const useUserStore = defineStore({
 		reviews: null as Review[] | null,
 		orders: null as Order[] | null,
 		pending: true,
-		error: null as FetchError<any> | null
+		error: null as FetchError<unknown> | null
 	}),
 	getters: {
 		getIsProductInFavourites: (state) => (id: number) => {

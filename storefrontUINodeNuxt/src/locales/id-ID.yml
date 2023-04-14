@@ -103,7 +103,7 @@ components:
       update_review: perbarui ulasan
       delete_review: hapus ulasan
       must_be_logged_in: anda harus masuk untuk menulis ulasan
-      write_review_for_product: tulis ulasan untuk produk <strong>%{product}</strong>
+      write_review_for_product: tulis ulasan untuk produk %{product}
       confirm_delete: yakin ingin menghapus ulasan ini?
       too_many_attempts: terlalu banyak percobaan, coba lagi nanti.
       rating:
@@ -130,6 +130,8 @@ components:
   user:
     avatar:
       change: mengubah
+      no_file_selected: tidak ada file yang dipilih
+      file_extension_not_allowed: ekstensi file tidak diizinkan
   order:
     list:
       footer: catatan kaki
@@ -284,11 +286,14 @@ pages:
       nav: pesanan
       description: pesanan
       keywords: pesanan
-      empty: pesanan anda kosong
       updated: pesanan diperbarui
       update_error: kesalahan pembaruan pesanan
       deleted: butir pesanan dihapus
-      delete_error: kesalahan penghapusan butir pesanan
+      delete_error: kesalahan penghapusan item pesanan
+      empty:
+        title: pesanan anda kosong
+        description: anda belum melakukan pemesanan apa pun.
+        button: pergi ke toko
       ordering:
         created_at: dibuat di
     favourites:

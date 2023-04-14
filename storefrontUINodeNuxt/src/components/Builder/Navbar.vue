@@ -94,7 +94,7 @@ const toggleOptions = (show?: boolean) => {
 									<nuxt-img
 										preload
 										placeholder
-										loading="lazy"
+										loading="eager"
 										provider="mediaStream"
 										class="rounded-full"
 										:style="{ objectFit: 'contain' }"

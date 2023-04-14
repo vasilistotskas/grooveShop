@@ -22,6 +22,7 @@ const props = withDefaults(
 )
 
 const { t } = useLang()
+const toast = useToast()
 
 const userStore = useUserStore()
 
@@ -40,8 +41,16 @@ const imageSrc = computed(() => {
 	)
 })
 
-const uploadImage = async (event: any) => {
-	const file = event.target.files[0]
+const uploadImage = async (event: Event) => {
+	const allowedExtensions = ['jpg', 'jpeg', 'png']
+	const target = event.target as HTMLInputElement
+	const file = target.files?.[0]
+	const fileExtensionAllowed = allowedExtensions.includes(
+		file?.name.split('.').pop()?.toLowerCase() || ''
+	)
+	if (!file) return toast.error(t('components.user.avatar.no_file_selected'))
+	if (!fileExtensionAllowed)
+		return toast.error(t('components.user.avatar.file_extension_not_allowed'))
 	const formData = new FormData()
 	formData.append('image', file)
 	if (!props.userAccount) return

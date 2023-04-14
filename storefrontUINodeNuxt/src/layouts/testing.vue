@@ -12,11 +12,11 @@
 					</TestingNavbar>
 				</slot>
 				<div class="flex-1 w-full flex flex-col">
-					<div class="relative flex-1 flex flex-row mx-auto max-w-8xl w-full h-full">
+					<div class="relative flex-1 flex flex-row mx-auto w-full h-full">
 						<div class="lg:pl-8 py-4">
 							<TestingSidebar />
 						</div>
-						<div class="flex flex-col lg:ml-30 xl:ml-40">
+						<div class="flex flex-col w-full lg:ml-30 xl:ml-40">
 							<Breadcrumbs />
 							<slot />
 							<slot name="footer">

@@ -6,7 +6,7 @@ export interface RegionState {
 	regions: Pagination<Region>
 	region: Region | null
 	pending: boolean
-	error: FetchError<any> | null
+	error: FetchError<unknown> | null
 }
 
 export const useRegionStore = defineStore({
@@ -25,7 +25,7 @@ export const useRegionStore = defineStore({
 		},
 		region: null as Region | null,
 		pending: true,
-		error: null as FetchError<any> | null
+		error: null as FetchError<unknown> | null
 	}),
 	actions: {
 		async fetchRegions({ alpha2 }: RegionsQuery) {

@@ -21,6 +21,14 @@ const { t } = useLang()
 // state
 const themeSetting = useState<IThemeSettingOptions>('theme.setting')
 const currentStyle = toRef(props, 'type')
+
+const bus = useEventBus<string>('theme')
+watch(
+	() => themeSetting.value,
+	() => {
+		bus.emit('change', themeSetting.value)
+	}
+)
 </script>
 
 <template>

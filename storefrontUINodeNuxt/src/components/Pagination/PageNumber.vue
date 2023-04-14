@@ -24,7 +24,7 @@ const props = defineProps({
 		default: 1
 	},
 	links: {
-		type: Object as PropType<Pagination<any>['links']>,
+		type: Object as PropType<Pagination<unknown>['links']>,
 		required: true
 	},
 	maxVisibleButtons: {
