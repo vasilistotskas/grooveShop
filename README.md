@@ -28,7 +28,7 @@
 
    #### Seed database with fake data through docker-compose :
    -     docker-compose run backend sh -c "python manage.py populate_all"
-   -   #### Seperate seed commands :
+   -   #### Separate seed commands :
    -     docker-compose run backend sh -c "python manage.py populate_users"
          docker-compose run backend sh -c "python manage.py populate_products"
          docker-compose run backend sh -c "python manage.py populate_orders"

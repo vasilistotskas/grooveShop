@@ -92,7 +92,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -177,7 +177,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -511,7 +511,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -596,7 +596,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -922,7 +922,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -1011,7 +1011,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -1349,7 +1349,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -1446,7 +1446,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -1946,7 +1946,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -2035,7 +2035,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -2584,7 +2584,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CartItem'
-        required: true
       security:
       - basicAuth: []
       - cookieAuth: []
@@ -2651,7 +2650,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CartItem'
-        required: true
       security:
       - basicAuth: []
       - cookieAuth: []
@@ -2708,7 +2706,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CartItem'
-        required: true
       security:
       - basicAuth: []
       - cookieAuth: []
@@ -2830,7 +2827,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CartItem'
-        required: true
       security:
       - basicAuth: []
       - cookieAuth: []
@@ -2908,35 +2904,6 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/checkout/:
-    post:
-      operationId: api_v1_checkout_create
-      tags:
-      - api
-      requestBody:
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Order'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Order'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Order'
-        required: true
-      security:
-      - basicAuth: []
-      - cookieAuth: []
-      - tokenAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Order'
-          description: ''
   /api/v1/country/:
     get:
       operationId: api_v1_country_list
@@ -2963,7 +2930,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -3060,7 +3027,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -3384,11 +3351,17 @@ paths:
       responses:
         '204':
           description: No response body
-  /api/v1/orders/:
+  /api/v1/order/:
     get:
-      operationId: api_v1_orders_list
+      operationId: api_v1_order_list
       parameters:
-      - name: p
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -3400,19 +3373,186 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - Canceled
+          - Paid and sent
+          - Pending
+          - Sent
+        description: |-
+          * `Sent` - SENT
+          * `Paid and sent` - PAID_AND_SENT
+          * `Canceled` - CANCELED
+          * `Pending` - PENDING
+
+          * `Sent` - SENT
+          * `Paid and sent` - PAID_AND_SENT
+          * `Canceled` - CANCELED
+          * `Pending` - PENDING
+      - in: query
+        name: user_id
+        schema:
+          type: integer
+          nullable: true
       tags:
       - api
       security:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedUserOrderList'
+                $ref: '#/components/schemas/PaginatedOrderList'
           description: ''
+    post:
+      operationId: api_v1_order_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Order'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+  /api/v1/order/{id}/:
+    get:
+      operationId: api_v1_order_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+    put:
+      operationId: api_v1_order_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Order'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+    patch:
+      operationId: api_v1_order_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedOrder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOrder'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedOrder'
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: ''
+    delete:
+      operationId: api_v1_order_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
   /api/v1/pay_way/:
     get:
       operationId: api_v1_pay_way_list
@@ -3438,13 +3578,23 @@ paths:
           - Pay On Delivery
           - Pay On Store
           - PayPal
+        description: |-
+          * `Credit Card` - CREDIT_CARD
+          * `Pay On Delivery` - PAY_ON_DELIVERY
+          * `Pay On Store` - PAY_ON_STORE
+          * `PayPal` - PAY_PAL
+
+          * `Credit Card` - CREDIT_CARD
+          * `Pay On Delivery` - PAY_ON_DELIVERY
+          * `Pay On Store` - PAY_ON_STORE
+          * `PayPal` - PAY_PAL
       - name: ordering
         required: false
         in: query
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -3504,20 +3654,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/PayWay'
           description: ''
-  /api/v1/pay_way/{name}/:
+  /api/v1/pay_way/{id}/:
     get:
       operationId: api_v1_pay_way_retrieve
       parameters:
       - in: path
-        name: name
+        name: id
         schema:
-          enum:
-          - Credit Card
-          - Pay On Delivery
-          - Pay On Store
-          - PayPal
           type: string
-        description: A unique value identifying this pay way.
         required: true
       tags:
       - api
@@ -3537,15 +3681,9 @@ paths:
       operationId: api_v1_pay_way_update
       parameters:
       - in: path
-        name: name
+        name: id
         schema:
-          enum:
-          - Credit Card
-          - Pay On Delivery
-          - Pay On Store
-          - PayPal
           type: string
-        description: A unique value identifying this pay way.
         required: true
       tags:
       - api
@@ -3577,15 +3715,9 @@ paths:
       operationId: api_v1_pay_way_partial_update
       parameters:
       - in: path
-        name: name
+        name: id
         schema:
-          enum:
-          - Credit Card
-          - Pay On Delivery
-          - Pay On Store
-          - PayPal
           type: string
-        description: A unique value identifying this pay way.
         required: true
       tags:
       - api
@@ -3616,15 +3748,9 @@ paths:
       operationId: api_v1_pay_way_destroy
       parameters:
       - in: path
-        name: name
+        name: id
         schema:
-          enum:
-          - Credit Card
-          - Pay On Delivery
-          - Pay On Store
-          - PayPal
           type: string
-        description: A unique value identifying this pay way.
         required: true
       tags:
       - api
@@ -3643,11 +3769,7 @@ paths:
       - in: query
         name: category
         schema:
-          type: integer
-      - in: query
-        name: id
-        schema:
-          type: integer
+          type: string
       - name: limit
         required: false
         in: query
@@ -3655,9 +3777,13 @@ paths:
         schema:
           type: integer
       - in: query
-        name: name
+        name: max_final_price
         schema:
-          type: string
+          type: number
+      - in: query
+        name: min_final_price
+        schema:
+          type: number
       - name: offset
         required: false
         in: query
@@ -3670,18 +3796,10 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - in: query
-        name: price
-        schema:
-          type: number
       - name: search
         required: false
         in: query
         description: A search term.
-        schema:
-          type: string
-      - in: query
-        name: slug
         schema:
           type: string
       tags:
@@ -3733,7 +3851,7 @@ paths:
       - in: query
         name: category
         schema:
-          type: integer
+          type: string
       - in: path
         name: format
         schema:
@@ -3741,10 +3859,6 @@ paths:
           enum:
           - .json
         required: true
-      - in: query
-        name: id
-        schema:
-          type: integer
       - name: limit
         required: false
         in: query
@@ -3752,9 +3866,13 @@ paths:
         schema:
           type: integer
       - in: query
-        name: name
+        name: max_final_price
         schema:
-          type: string
+          type: number
+      - in: query
+        name: min_final_price
+        schema:
+          type: number
       - name: offset
         required: false
         in: query
@@ -3767,18 +3885,10 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - in: query
-        name: price
-        schema:
-          type: number
       - name: search
         required: false
         in: query
         description: A search term.
-        schema:
-          type: string
-      - in: query
-        name: slug
         schema:
           type: string
       tags:
@@ -4170,7 +4280,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -4255,7 +4365,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -4581,7 +4691,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -4613,6 +4723,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -4640,6 +4751,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '201':
           content:
@@ -4668,7 +4780,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -4700,6 +4812,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -4735,6 +4848,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '201':
           content:
@@ -4757,6 +4871,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -4790,6 +4905,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -4822,6 +4938,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -4843,6 +4960,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '204':
           description: No response body
@@ -4868,6 +4986,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -4908,6 +5027,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -4947,6 +5067,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -4975,6 +5096,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '204':
           description: No response body
@@ -5415,7 +5537,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -5503,7 +5625,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -5838,7 +5960,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -5927,7 +6049,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -6306,7 +6428,7 @@ paths:
     get:
       operationId: api_v1_search_product_list
       parameters:
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -6343,7 +6465,7 @@ paths:
           enum:
           - .json
         required: true
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -6447,7 +6569,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -6536,7 +6658,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -6874,7 +6996,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -6959,7 +7081,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -7292,13 +7414,23 @@ paths:
           - info
           - success
           - warning
+        description: |-
+          * `success` - SUCCESS
+          * `info` - INFO
+          * `error` - ERROR
+          * `warning` - WARNING
+
+          * `success` - SUCCESS
+          * `info` - INFO
+          * `error` - ERROR
+          * `warning` - WARNING
       - name: ordering
         required: false
         in: query
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -7390,13 +7522,23 @@ paths:
           - info
           - success
           - warning
+        description: |-
+          * `success` - SUCCESS
+          * `info` - INFO
+          * `error` - ERROR
+          * `warning` - WARNING
+
+          * `success` - SUCCESS
+          * `info` - INFO
+          * `error` - ERROR
+          * `warning` - WARNING
       - name: ordering
         required: false
         in: query
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -7730,7 +7872,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -7754,6 +7896,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -7781,6 +7924,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '201':
           content:
@@ -7813,7 +7957,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -7837,6 +7981,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -7872,6 +8017,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '201':
           content:
@@ -7894,6 +8040,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -7927,6 +8074,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -7959,6 +8107,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -7980,6 +8129,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '204':
           description: No response body
@@ -8005,6 +8155,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -8045,6 +8196,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -8084,6 +8236,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '200':
           content:
@@ -8112,6 +8265,7 @@ paths:
       - basicAuth: []
       - cookieAuth: []
       - tokenAuth: []
+      - {}
       responses:
         '204':
           description: No response body
@@ -8181,6 +8335,24 @@ paths:
           - 5
           - 6
           - 7
+        description: |-
+          * `0` - BASEMENT
+          * `1` - GROUND_FLOOR
+          * `2` - FIRST_FLOOR
+          * `3` - SECOND_FLOOR
+          * `4` - THIRD_FLOOR
+          * `5` - FOURTH_FLOOR
+          * `6` - FIFTH_FLOOR
+          * `7` - SIXTH_FLOOR_PLUS
+
+          * `0` - BASEMENT
+          * `1` - GROUND_FLOOR
+          * `2` - FIRST_FLOOR
+          * `3` - SECOND_FLOOR
+          * `4` - THIRD_FLOOR
+          * `5` - FOURTH_FLOOR
+          * `6` - FIFTH_FLOOR
+          * `7` - SIXTH_FLOOR_PLUS
       - in: query
         name: id
         schema:
@@ -8198,13 +8370,21 @@ paths:
           - 0
           - 1
           - 2
+        description: |-
+          * `0` - HOME
+          * `1` - OFFICE
+          * `2` - OTHER
+
+          * `0` - HOME
+          * `1` - OFFICE
+          * `2` - OTHER
       - name: ordering
         required: false
         in: query
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -8300,6 +8480,24 @@ paths:
           - 5
           - 6
           - 7
+        description: |-
+          * `0` - BASEMENT
+          * `1` - GROUND_FLOOR
+          * `2` - FIRST_FLOOR
+          * `3` - SECOND_FLOOR
+          * `4` - THIRD_FLOOR
+          * `5` - FOURTH_FLOOR
+          * `6` - FIFTH_FLOOR
+          * `7` - SIXTH_FLOOR_PLUS
+
+          * `0` - BASEMENT
+          * `1` - GROUND_FLOOR
+          * `2` - FIRST_FLOOR
+          * `3` - SECOND_FLOOR
+          * `4` - THIRD_FLOOR
+          * `5` - FOURTH_FLOOR
+          * `6` - FIFTH_FLOOR
+          * `7` - SIXTH_FLOOR_PLUS
       - in: path
         name: format
         schema:
@@ -8324,13 +8522,21 @@ paths:
           - 0
           - 1
           - 2
+        description: |-
+          * `0` - HOME
+          * `1` - OFFICE
+          * `2` - OTHER
+
+          * `0` - HOME
+          * `1` - OFFICE
+          * `2` - OTHER
       - name: ordering
         required: false
         in: query
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -8658,7 +8864,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -8743,7 +8949,7 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
-      - name: p
+      - name: page
         required: false
         in: query
         description: A page number within the paginated result set.
@@ -9294,6 +9500,10 @@ components:
       - published
       - archived
       type: string
+      description: |-
+        * `draft` - DRAFT
+        * `published` - PUBLISHED
+        * `archived` - ARCHIVED
     BlogTag:
       type: object
       properties:
@@ -9380,7 +9590,9 @@ components:
           type: integer
           readOnly: true
         product:
-          type: integer
+          allOf:
+          - $ref: '#/components/schemas/Product'
+          readOnly: true
         quantity:
           type: integer
           maximum: 2147483647
@@ -9459,6 +9671,15 @@ components:
       - 6
       - 7
       type: integer
+      description: |-
+        * `0` - BASEMENT
+        * `1` - GROUND_FLOOR
+        * `2` - FIRST_FLOOR
+        * `3` - SECOND_FLOOR
+        * `4` - THIRD_FLOOR
+        * `5` - FOURTH_FLOOR
+        * `6` - FIFTH_FLOOR
+        * `7` - SIXTH_FLOOR_PLUS
     KindEnum:
       enum:
       - success
@@ -9466,12 +9687,21 @@ components:
       - error
       - warning
       type: string
+      description: |-
+        * `success` - SUCCESS
+        * `info` - INFO
+        * `error` - ERROR
+        * `warning` - WARNING
     LocationTypeEnum:
       enum:
       - 0
       - 1
       - 2
       type: integer
+      description: |-
+        * `0` - HOME
+        * `1` - OFFICE
+        * `2` - OTHER
     NameEnum:
       enum:
       - Credit Card
@@ -9479,6 +9709,11 @@ components:
       - Pay On Store
       - PayPal
       type: string
+      description: |-
+        * `Credit Card` - CREDIT_CARD
+        * `Pay On Delivery` - PAY_ON_DELIVERY
+        * `Pay On Store` - PAY_ON_STORE
+        * `PayPal` - PAY_PAL
     NullEnum:
       enum:
       - null
@@ -9491,10 +9726,38 @@ components:
         user:
           type: integer
           nullable: true
+        country:
+          allOf:
+          - $ref: '#/components/schemas/Country'
+          readOnly: true
+        region:
+          allOf:
+          - $ref: '#/components/schemas/Region'
+          readOnly: true
+        floor:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/FloorEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        locationType:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/LocationTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        street:
+          type: string
+          maxLength: 100
+        streetNumber:
+          type: string
+          maxLength: 100
         payWay:
           allOf:
-          - $ref: '#/components/schemas/PayWayEnum'
-          nullable: true
+          - $ref: '#/components/schemas/PayWay'
+          readOnly: true
+        status:
+          $ref: '#/components/schemas/OrderStatusEnum'
         firstName:
           type: string
           maxLength: 100
@@ -9504,14 +9767,12 @@ components:
         email:
           type: string
           maxLength: 100
-        address:
-          type: string
-          maxLength: 100
         zipcode:
           type: string
           maxLength: 100
         place:
           type: string
+          nullable: true
           maxLength: 100
         city:
           type: string
@@ -9519,17 +9780,24 @@ components:
         phone:
           type: string
           maxLength: 100
-        customerNotes:
-          type: string
-          nullable: true
-        stripeToken:
+        mobilePhone:
           type: string
           nullable: true
           maxLength: 100
-        items:
+        customerNotes:
+          type: string
+          nullable: true
+        orderItemOrder:
           type: array
           items:
             $ref: '#/components/schemas/OrderItem'
+        shippingPrice:
+          type: number
+          format: double
+          maximum: 1000000
+          minimum: -1000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
         createdAt:
           type: string
           format: date-time
@@ -9541,27 +9809,37 @@ components:
           type: string
           format: uuid
           readOnly: true
-        getTotalPrice:
+        totalPrice:
           type: number
           format: double
           readOnly: true
+        fullAddress:
+          type: string
+          readOnly: true
       required:
-      - address
       - city
+      - country
       - email
       - firstName
-      - getTotalPrice
+      - fullAddress
       - id
-      - items
       - lastName
+      - orderItemOrder
+      - payWay
       - phone
-      - place
+      - region
+      - street
+      - streetNumber
+      - totalPrice
       - updatedAt
       - uuid
       - zipcode
     OrderItem:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         price:
           type: number
           format: double
@@ -9570,7 +9848,7 @@ components:
           exclusiveMaximum: true
           exclusiveMinimum: true
         product:
-          type: integer
+          $ref: '#/components/schemas/Product'
         quantity:
           type: integer
           maximum: 2147483647
@@ -9590,17 +9868,30 @@ components:
           type: integer
           readOnly: true
           nullable: true
-        getTotalPrice:
+        totalPrice:
           type: number
           format: double
           readOnly: true
       required:
-      - getTotalPrice
+      - id
       - price
       - product
       - sortOrder
+      - totalPrice
       - updatedAt
       - uuid
+    OrderStatusEnum:
+      enum:
+      - Sent
+      - Paid and sent
+      - Canceled
+      - Pending
+      type: string
+      description: |-
+        * `Sent` - SENT
+        * `Paid and sent` - PAID_AND_SENT
+        * `Canceled` - CANCELED
+        * `Pending` - PENDING
     PaginatedBlogAuthorList:
       type: object
       properties:
@@ -9611,12 +9902,12 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
@@ -9631,12 +9922,12 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
@@ -9651,12 +9942,12 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
@@ -9671,12 +9962,12 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
@@ -9691,12 +9982,12 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
@@ -9731,16 +10022,36 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
             $ref: '#/components/schemas/Country'
+    PaginatedOrderList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
     PaginatedPayWayList:
       type: object
       properties:
@@ -9751,12 +10062,12 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
@@ -9771,12 +10082,12 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
@@ -9791,12 +10102,12 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
@@ -9851,12 +10162,12 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
@@ -9871,12 +10182,12 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
@@ -9891,12 +10202,12 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
@@ -9911,12 +10222,12 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
@@ -9931,12 +10242,12 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
@@ -9951,12 +10262,12 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
@@ -9971,36 +10282,16 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
             $ref: '#/components/schemas/UserAddress'
-    PaginatedUserOrderList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?p=4
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?p=2
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserOrder'
     PaginatedVatList:
       type: object
       properties:
@@ -10011,12 +10302,12 @@ components:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=4
+          example: http://api.example.org/accounts/?page=4
         previous:
           type: string
           nullable: true
           format: uri
-          example: http://api.example.org/accounts/?p=2
+          example: http://api.example.org/accounts/?page=2
         results:
           type: array
           items:
@@ -10261,7 +10552,9 @@ components:
           type: integer
           readOnly: true
         product:
-          type: integer
+          allOf:
+          - $ref: '#/components/schemas/Product'
+          readOnly: true
         quantity:
           type: integer
           maximum: 2147483647
@@ -10315,9 +10608,111 @@ components:
           type: string
           format: uuid
           readOnly: true
+    PatchedOrder:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          type: integer
+          nullable: true
+        country:
+          allOf:
+          - $ref: '#/components/schemas/Country'
+          readOnly: true
+        region:
+          allOf:
+          - $ref: '#/components/schemas/Region'
+          readOnly: true
+        floor:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/FloorEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        locationType:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/LocationTypeEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        street:
+          type: string
+          maxLength: 100
+        streetNumber:
+          type: string
+          maxLength: 100
+        payWay:
+          allOf:
+          - $ref: '#/components/schemas/PayWay'
+          readOnly: true
+        status:
+          $ref: '#/components/schemas/OrderStatusEnum'
+        firstName:
+          type: string
+          maxLength: 100
+        lastName:
+          type: string
+          maxLength: 100
+        email:
+          type: string
+          maxLength: 100
+        zipcode:
+          type: string
+          maxLength: 100
+        place:
+          type: string
+          nullable: true
+          maxLength: 100
+        city:
+          type: string
+          maxLength: 100
+        phone:
+          type: string
+          maxLength: 100
+        mobilePhone:
+          type: string
+          nullable: true
+          maxLength: 100
+        customerNotes:
+          type: string
+          nullable: true
+        orderItemOrder:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        shippingPrice:
+          type: number
+          format: double
+          maximum: 1000000
+          minimum: -1000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          readOnly: true
+        uuid:
+          type: string
+          format: uuid
+          readOnly: true
+        totalPrice:
+          type: number
+          format: double
+          readOnly: true
+        fullAddress:
+          type: string
+          readOnly: true
     PatchedPayWay:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           $ref: '#/components/schemas/NameEnum'
         active:
@@ -10379,7 +10774,6 @@ components:
           minimum: -1000000000
           exclusiveMaximum: true
           exclusiveMinimum: true
-          nullable: true
         vat:
           type: integer
         vatPercent:
@@ -10397,6 +10791,10 @@ components:
         finalPrice:
           type: number
           format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
           readOnly: true
         hits:
           type: integer
@@ -10445,10 +10843,18 @@ components:
         discountValue:
           type: number
           format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
           readOnly: true
         priceSavePercent:
           type: number
           format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
           readOnly: true
         createdAt:
           type: string
@@ -10577,7 +10983,6 @@ components:
         image:
           type: string
           format: uri
-          nullable: true
         thumbnail:
           type: string
           format: uri
@@ -10820,6 +11225,10 @@ components:
           type: string
           format: email
           maxLength: 255
+        image:
+          type: string
+          format: uri
+          nullable: true
         firstName:
           type: string
           maxLength: 255
@@ -10981,6 +11390,9 @@ components:
     PayWay:
       type: object
       properties:
+        id:
+          type: integer
+          readOnly: true
         name:
           $ref: '#/components/schemas/NameEnum'
         active:
@@ -11015,17 +11427,11 @@ components:
           format: uuid
           readOnly: true
       required:
+      - id
       - name
       - sortOrder
       - updatedAt
       - uuid
-    PayWayEnum:
-      enum:
-      - Credit Card
-      - Pay On Delivery
-      - Pay On Store
-      - PayPal
-      type: string
     Product:
       type: object
       properties:
@@ -11054,7 +11460,6 @@ components:
           minimum: -1000000000
           exclusiveMaximum: true
           exclusiveMinimum: true
-          nullable: true
         vat:
           type: integer
         vatPercent:
@@ -11072,6 +11477,10 @@ components:
         finalPrice:
           type: number
           format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
           readOnly: true
         hits:
           type: integer
@@ -11120,10 +11529,18 @@ components:
         discountValue:
           type: number
           format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
           readOnly: true
         priceSavePercent:
           type: number
           format: double
+          maximum: 1000000000
+          minimum: -1000000000
+          exclusiveMaximum: true
+          exclusiveMinimum: true
           readOnly: true
         createdAt:
           type: string
@@ -11155,6 +11572,7 @@ components:
       - mainImageAbsoluteUrl
       - mainImageFilename
       - name
+      - price
       - priceSavePercent
       - reviewAverage
       - reviewCounter
@@ -11293,7 +11711,6 @@ components:
         image:
           type: string
           format: uri
-          nullable: true
         thumbnail:
           type: string
           format: uri
@@ -11323,10 +11740,12 @@ components:
           nullable: true
       required:
       - id
+      - image
       - product
       - productImageAbsoluteUrl
       - productImageFilename
       - sortOrder
+      - title
       - updatedAt
       - uuid
     ProductReview:
@@ -11379,6 +11798,10 @@ components:
       - 'True'
       - 'False'
       type: string
+      description: |-
+        * `New` - NEW
+        * `True` - TRUE
+        * `False` - FALSE
     RateEnum:
       enum:
       - 1
@@ -11392,6 +11815,17 @@ components:
       - 9
       - 10
       type: integer
+      description: |-
+        * `1` - ONE
+        * `2` - TWO
+        * `3` - THREE
+        * `4` - FOUR
+        * `5` - FIVE
+        * `6` - SIX
+        * `7` - SEVEN
+        * `8` - EIGHT
+        * `9` - NINE
+        * `10` - TEN
     Region:
       type: object
       properties:
@@ -11601,6 +12035,10 @@ components:
           type: string
           format: email
           maxLength: 255
+        image:
+          type: string
+          format: uri
+          nullable: true
         firstName:
           type: string
           maxLength: 255
@@ -11758,126 +12196,6 @@ components:
       - user
       - uuid
       - zipcode
-    UserOrder:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        firstName:
-          type: string
-          maxLength: 100
-        lastName:
-          type: string
-          maxLength: 100
-        email:
-          type: string
-          maxLength: 100
-        address:
-          type: string
-          maxLength: 100
-        zipcode:
-          type: string
-          maxLength: 100
-        place:
-          type: string
-          maxLength: 100
-        city:
-          type: string
-          maxLength: 100
-        phone:
-          type: string
-          maxLength: 100
-        stripeToken:
-          type: string
-          nullable: true
-          maxLength: 100
-        customerNotes:
-          type: string
-          nullable: true
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserOrderItem'
-        paidAmount:
-          type: number
-          format: double
-          maximum: 1000000
-          minimum: -1000000
-          exclusiveMaximum: true
-          exclusiveMinimum: true
-          nullable: true
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        uuid:
-          type: string
-          format: uuid
-          readOnly: true
-        getTotalPrice:
-          type: number
-          format: double
-          readOnly: true
-      required:
-      - address
-      - city
-      - email
-      - firstName
-      - getTotalPrice
-      - id
-      - items
-      - lastName
-      - phone
-      - place
-      - updatedAt
-      - uuid
-      - zipcode
-    UserOrderItem:
-      type: object
-      properties:
-        price:
-          type: number
-          format: double
-          maximum: 1000000
-          minimum: -1000000
-          exclusiveMaximum: true
-          exclusiveMinimum: true
-        product:
-          $ref: '#/components/schemas/Product'
-        quantity:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-          readOnly: true
-        uuid:
-          type: string
-          format: uuid
-          readOnly: true
-        sortOrder:
-          type: integer
-          readOnly: true
-          nullable: true
-        getTotalPrice:
-          type: number
-          format: double
-          readOnly: true
-      required:
-      - getTotalPrice
-      - price
-      - product
-      - sortOrder
-      - updatedAt
-      - uuid
     Vat:
       type: object
       properties:
