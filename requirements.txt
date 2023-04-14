@@ -9,7 +9,7 @@ django-js-asset==2.0.0
 strawberry-graphql-django==0.9.4
 django-redis==5.2.0
 celery==5.2.7
-Faker==18.3.4
+Faker==18.4.0
 django-environ==0.10.0
 django-tinymce==3.6.1
 gunicorn==20.1.0
@@ -20,7 +20,7 @@ django-stubs==1.16.0
 django-stubs-ext==0.8.0
 python-semantic-release==7.33.2
 flake8==6.0.0
-coverage==7.2.2
+coverage==7.2.3
 drf-spectacular==0.26.1
 pylint==2.17.2
 pre-commit==3.2.2
