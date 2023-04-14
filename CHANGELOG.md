@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.39.0 (2023-04-14)
+### Feature
+* **Django:** New fields added at order model, API and faker ([`ffe1454`](https://github.com/vasilistotskas/grooveShop/commit/ffe1454dbe5087bb21d59d9ac72df06d1178dd26))
+* **Django:** Create context processor for media stream url and usage ([`6ba5038`](https://github.com/vasilistotskas/grooveShop/commit/6ba503835df20156023add6f0999a8226400530c))
+
 ## v0.38.0 (2023-04-10)
 ### Feature
 * **Nuxt:** User Account order history , useOrdering / usePagination composables and more ([`3a1c328`](https://github.com/vasilistotskas/grooveShop/commit/3a1c3288042535a58fe0c720f9612e084a5cc75c))
