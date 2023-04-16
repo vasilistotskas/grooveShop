@@ -16,11 +16,7 @@ const { cart } = storeToRefs(cartStore)
 const { countries } = storeToRefs(countryStore)
 const { regions } = storeToRefs(regionStore)
 
-const {
-	pending: countryPending,
-	refresh: countryRefresh,
-	error: countriesError
-} = await useAsyncData('country', () => countryStore.fetchCountries())
+await useAsyncData('country', () => countryStore.fetchCountries())
 
 const onCountryChange = (event: Event) => {
 	if (!(event.target instanceof HTMLSelectElement)) return
@@ -57,8 +53,7 @@ const onSubmit = handleSubmit((e) => {
 })
 
 definePageMeta({
-	layout: 'page',
-	middleware: ['breadcrumbs']
+	layout: 'page'
 })
 useHead(() => ({
 	title: t('pages.checkout.title'),
@@ -81,9 +76,8 @@ useServerSeoMeta({
 
 <template>
 	<PageWrapper>
-		<PageTitle :text="t('pages.checkout.title')" class="capitalize" />
+		<PageTitle :text="$t('pages.checkout.title')" class="capitalize" />
 		<PageBody>
-			<PageError v-if="countriesError" :error="countriesError"></PageError>
 			<template v-if="cartItems.length">
 				<form
 					id="checkoutForm"
@@ -93,7 +87,7 @@ useServerSeoMeta({
 				>
 					<div class="grid">
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="firstName">{{
-							t('pages.checkout.form.first_name')
+							$t('pages.checkout.form.first_name')
 						}}</label>
 						<div class="grid">
 							<FormTextInput
@@ -102,7 +96,7 @@ useServerSeoMeta({
 								class="text-gray-700 dark:text-gray-200 mb-2"
 								name="firstName"
 								type="text"
-								:placeholder="t('pages.checkout.form.first_name')"
+								:placeholder="$t('pages.checkout.form.first_name')"
 								autocomplete="firstName"
 							/>
 						</div>
@@ -111,7 +105,7 @@ useServerSeoMeta({
 
 					<div class="grid">
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="lastName">{{
-							t('pages.checkout.form.last_name')
+							$t('pages.checkout.form.last_name')
 						}}</label>
 						<div class="grid">
 							<FormTextInput
@@ -120,7 +114,7 @@ useServerSeoMeta({
 								class="text-gray-700 dark:text-gray-200 mb-2"
 								name="lastName"
 								type="text"
-								:placeholder="t('pages.checkout.form.last_name')"
+								:placeholder="$t('pages.checkout.form.last_name')"
 								autocomplete="lastName"
 							/>
 						</div>
@@ -129,7 +123,7 @@ useServerSeoMeta({
 
 					<div class="grid">
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="address">{{
-							t('pages.checkout.form.address')
+							$t('pages.checkout.form.address')
 						}}</label>
 						<div class="grid">
 							<FormTextInput
@@ -138,7 +132,7 @@ useServerSeoMeta({
 								class="text-gray-700 dark:text-gray-200 mb-2"
 								name="address"
 								type="text"
-								:placeholder="t('pages.checkout.form.address')"
+								:placeholder="$t('pages.checkout.form.address')"
 								autocomplete="address"
 							/>
 						</div>
@@ -147,7 +141,7 @@ useServerSeoMeta({
 
 					<div class="grid">
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="city">{{
-							t('pages.checkout.form.city')
+							$t('pages.checkout.form.city')
 						}}</label>
 						<div class="grid">
 							<FormTextInput
@@ -156,7 +150,7 @@ useServerSeoMeta({
 								class="text-gray-700 dark:text-gray-200 mb-2"
 								name="city"
 								type="text"
-								:placeholder="t('pages.checkout.form.city')"
+								:placeholder="$t('pages.checkout.form.city')"
 								autocomplete="city"
 							/>
 						</div>
@@ -165,7 +159,7 @@ useServerSeoMeta({
 
 					<div class="grid">
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="email">{{
-							t('pages.checkout.form.email')
+							$t('pages.checkout.form.email')
 						}}</label>
 						<div class="grid">
 							<FormTextInput
@@ -174,7 +168,7 @@ useServerSeoMeta({
 								class="text-gray-700 dark:text-gray-200 mb-2"
 								name="email"
 								type="text"
-								:placeholder="t('pages.checkout.form.email')"
+								:placeholder="$t('pages.checkout.form.email')"
 								autocomplete="email"
 							/>
 						</div>
@@ -183,7 +177,7 @@ useServerSeoMeta({
 
 					<div class="grid">
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="phone">{{
-							t('pages.checkout.form.phone')
+							$t('pages.checkout.form.phone')
 						}}</label>
 						<div class="grid">
 							<FormTextInput
@@ -192,7 +186,7 @@ useServerSeoMeta({
 								class="text-gray-700 dark:text-gray-200 mb-2"
 								name="phone"
 								type="text"
-								:placeholder="t('pages.checkout.form.phone')"
+								:placeholder="$t('pages.checkout.form.phone')"
 								autocomplete="phone"
 							/>
 						</div>
@@ -201,7 +195,7 @@ useServerSeoMeta({
 
 					<div class="grid">
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="place">{{
-							t('pages.checkout.form.place')
+							$t('pages.checkout.form.place')
 						}}</label>
 						<div class="grid">
 							<FormTextInput
@@ -210,7 +204,7 @@ useServerSeoMeta({
 								class="text-gray-700 dark:text-gray-200 mb-2"
 								name="place"
 								type="text"
-								:placeholder="t('pages.checkout.form.place')"
+								:placeholder="$t('pages.checkout.form.place')"
 								autocomplete="place"
 							/>
 						</div>
@@ -219,7 +213,7 @@ useServerSeoMeta({
 
 					<div class="grid">
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="zipcode">{{
-							t('pages.checkout.form.zipcode')
+							$t('pages.checkout.form.zipcode')
 						}}</label>
 						<div class="grid">
 							<FormTextInput
@@ -228,7 +222,7 @@ useServerSeoMeta({
 								class="text-gray-700 dark:text-gray-200 mb-2"
 								name="zipcode"
 								type="text"
-								:placeholder="t('pages.checkout.form.zipcode')"
+								:placeholder="$t('pages.checkout.form.zipcode')"
 								autocomplete="zipcode"
 							/>
 						</div>
@@ -237,7 +231,7 @@ useServerSeoMeta({
 
 					<div class="grid">
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="country">{{
-							t('pages.checkout.form.country')
+							$t('pages.checkout.form.country')
 						}}</label>
 						<div class="grid">
 							<select
@@ -248,7 +242,7 @@ useServerSeoMeta({
 								@change="onCountryChange"
 							>
 								<option disabled value="choose">
-									{{ t('pages.checkout.form.choose.country') }}
+									{{ $t('pages.checkout.form.choose.country') }}
 								</option>
 								<option
 									v-for="cntry in countries.results"
@@ -265,7 +259,7 @@ useServerSeoMeta({
 
 					<div class="grid">
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="region">{{
-							t('pages.checkout.form.region')
+							$t('pages.checkout.form.region')
 						}}</label>
 						<div class="grid">
 							<select
@@ -276,7 +270,7 @@ useServerSeoMeta({
 								name="region"
 							>
 								<option disabled value="choose">
-									{{ t('pages.checkout.form.choose.region') }}
+									{{ $t('pages.checkout.form.choose.region') }}
 								</option>
 								<option
 									v-for="rgn in regions.results"
@@ -293,7 +287,7 @@ useServerSeoMeta({
 
 					<div class="grid">
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="customerNotes">{{
-							t('pages.checkout.form.customer_notes')
+							$t('pages.checkout.form.customer_notes')
 						}}</label>
 						<div class="grid">
 							<textarea
@@ -303,22 +297,22 @@ useServerSeoMeta({
 								name="customerNotes"
 								type="text"
 								rows="4"
-								:placeholder="t('pages.checkout.form.customer_notes')"
+								:placeholder="$t('pages.checkout.form.customer_notes')"
 							/>
 						</div>
 					</div>
 
 					<div class="grid items-end">
 						<Button v-if="!tooManyAttempts" type="button">
-							{{ t('pages.checkout.form.submit') }}
+							{{ $t('pages.checkout.form.submit') }}
 						</Button>
 						<Button v-else type="button" disabled>
-							{{ t('pages.checkout.form.too_many_attempts') }}
+							{{ $t('pages.checkout.form.too_many_attempts') }}
 						</Button>
 					</div>
 				</form>
 			</template>
-			<Empty v-else :text="t('pages.checkout.empty')" />
+			<Empty v-else :text="$t('pages.checkout.empty')" />
 		</PageBody>
 	</PageWrapper>
 </template>

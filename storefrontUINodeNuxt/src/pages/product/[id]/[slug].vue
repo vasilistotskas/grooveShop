@@ -27,14 +27,19 @@ const productId = route.params.id
 
 const { account, favourites } = storeToRefs(userStore)
 const { isAuthenticated } = storeToRefs(authStore)
+const { pending: productImagesPending } = storeToRefs(productImagesStore)
+const { pending: reviewsPending } = storeToRefs(reviewsStore)
+const {
+	product,
+	pending: productPending,
+	error: productError
+} = storeToRefs(productStore)
 
-const { pending: productPending, refresh: productRefresh } = await useAsyncData(
-	'product',
-	() => productStore.fetchProduct(productId)
+const { refresh: productRefresh } = await useAsyncData('product', () =>
+	productStore.fetchProduct(productId)
 )
-const { product, error: productError } = storeToRefs(productStore)
 
-const { pending: productImagesPending } = await useAsyncData('productImages', () =>
+await useAsyncData('productImages', () =>
 	productImagesStore.fetchImages({ product: String(productId) })
 )
 
@@ -44,9 +49,8 @@ const routePaginationParams = ref<ReviewQuery>({
 	ordering: route.query.ordering || undefined,
 	expand: 'true'
 })
-const { pending: reviewsPending, refresh: reviewsRefresh } = await useAsyncData(
-	'productReviews',
-	() => reviewsStore.fetchReviews(routePaginationParams.value)
+const { refresh: reviewsRefresh } = await useAsyncData('productReviews', () =>
+	reviewsStore.fetchReviews(routePaginationParams.value)
 )
 
 const { reviews, error: reviewsError } = storeToRefs(reviewsStore)
@@ -80,11 +84,7 @@ const userToProductFavourite = computed(() => {
 	return userStore.getUserToProductFavourite(product.value.id)
 })
 
-const {
-	data: review,
-	pending: reviewPending,
-	refresh: reviewRefresh
-} = await useAsyncData('productReview', () =>
+const { data: review, refresh: reviewRefresh } = await useAsyncData('productReview', () =>
 	reviewsStore.fetchUserToProductReview({
 		product_id: String(productId),
 		user_id: account.value?.id ? String(account.value.id) : undefined,
@@ -173,11 +173,40 @@ watch(
 		})
 	}
 )
-
+const breadcrumbs = [
+	// item is the url and will be resolved to the absolute url
+	{ name: 'Home', item: '/' },
+	{ name: 'Products', item: '/products' },
+	// item is not required for the last list element
+	{ name: 'How do breadcrumbs work' }
+]
+useSchemaOrg([
+	defineBreadcrumb({
+		itemListElement: breadcrumbs
+	})
+])
 definePageMeta({
-	middleware: ['product', 'product-breadcrumbs'],
-	layout: 'page'
+	middleware: ['product'],
+	layout: 'page',
+	customBreadcrumbs: true
 })
+useSeoMeta({
+	title: () => productTitle.value,
+	description: () => product.value?.seoDescription || config.public.appDescription,
+	ogImage: () => product.value?.mainImageAbsoluteUrl || ''
+})
+useSchemaOrg([
+	defineProduct({
+		name: () => product.value?.name || '',
+		description: () => product.value?.description || '',
+		image: () => [product.value?.mainImageAbsoluteUrl || ''],
+		sku: () => product.value?.uuid || '',
+		offer: {
+			price: () => (product.value?.price || 0).toFixed(2)
+		}
+	})
+])
+
 const i18nHead = useLocaleHead({
 	addDirAttribute: true,
 	addSeoAttributes: true,
@@ -207,7 +236,7 @@ useHead(() => ({
 		},
 		{
 			property: 'og:image',
-			content: ''
+			content: product.value?.mainImageAbsoluteUrl || ''
 		},
 		{
 			property: 'og:url',
@@ -235,7 +264,7 @@ useHead(() => ({
 		},
 		{
 			property: 'twitter:image',
-			content: ''
+			content: product.value?.mainImageAbsoluteUrl || ''
 		},
 		{
 			property: 'twitter:url',
@@ -274,12 +303,13 @@ useHead(() => ({
 								<div class="actions flex gap-4">
 									<ClientOnly>
 										<Button
+											v-if="isSupported"
 											:disabled="!isSupported"
 											type="button"
 											:text="
 												isSupported
-													? t('pages.product.share')
-													: t('pages.product.share_not_supported')
+													? $t('pages.product.share')
+													: $t('pages.product.share_not_supported')
 											"
 											@click="startShare"
 										/>
@@ -299,7 +329,7 @@ useHead(() => ({
 									/>
 								</div>
 								<h3 class="text-gray-700 dark:text-gray-200 text-sm">
-									<span>{{ t('pages.product.product_id') }}: </span>
+									<span>{{ $t('pages.product.product_id') }}: </span>
 									<span class="text-indigo-700 dark:text-indigo-200 hover:underline">{{
 										product.id
 									}}</span>
@@ -316,10 +346,10 @@ useHead(() => ({
 									</div>
 									<div class="flex-1">
 										<p class="text-green-500 text-xl font-semibold">
-											{{ t('pages.product.save') }} {{ product.priceSavePercent }}%
+											{{ $t('pages.product.save') }} {{ product.priceSavePercent }}%
 										</p>
 										<p class="text-gray-700 dark:text-gray-200 text-sm">
-											{{ t('pages.product.inclusive_of_taxes') }}
+											{{ $t('pages.product.inclusive_of_taxes') }}
 										</p>
 									</div>
 								</div>
@@ -329,7 +359,7 @@ useHead(() => ({
 										<div
 											class="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-700 dark:text-gray-200 tracking-wide font-semibold"
 										>
-											<label for="quantity">{{ t('pages.product.qty') }}</label>
+											<label for="quantity">{{ $t('pages.product.qty') }}</label>
 										</div>
 										<select
 											id="quantity"
@@ -367,7 +397,7 @@ useHead(() => ({
 										v-if="product"
 										:product="product"
 										:quantity="selectorQuantity as number || 1"
-										:text="t('pages.product.add_to_cart')"
+										:text="$t('pages.product.add_to_cart')"
 									/>
 								</div>
 							</div>

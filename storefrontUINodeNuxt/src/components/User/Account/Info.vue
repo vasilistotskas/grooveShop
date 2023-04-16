@@ -50,13 +50,13 @@ const props = defineProps({
 					<Anchor
 						class="user__info__stats__item__link"
 						:to="`/account/orders`"
-						:title="t('pages.account.orders.title')"
+						:title="$t('pages.account.orders.title')"
 					>
 						<IconMdi:packageVariantClosed
 							class="text-gray-500 dark:text-gray-400 text-xl md:text-2xl"
 						/>
 						<span class="text-gray-500 dark:text-gray-400">{{
-							t('pages.account.orders.title')
+							$t('pages.account.orders.title')
 						}}</span>
 						<span class="text-gray-900 dark:text-gray-100 font-bold text-2xl">{{
 							ordersCount
@@ -67,13 +67,13 @@ const props = defineProps({
 					<Anchor
 						class="user__info__stats__item__link"
 						:to="`/account/favourites`"
-						:title="t('pages.account.favourites.title')"
+						:title="$t('pages.account.favourites.title')"
 					>
 						<IconMdi:heartOutline
 							class="text-gray-500 dark:text-gray-400 text-xl md:text-2xl"
 						/>
 						<span class="text-gray-500 dark:text-gray-400">{{
-							t('pages.account.favourites.title')
+							$t('pages.account.favourites.title')
 						}}</span>
 						<span class="text-gray-900 dark:text-gray-100 font-bold text-2xl">{{
 							favouritesCount
@@ -84,13 +84,13 @@ const props = defineProps({
 					<Anchor
 						class="user__info__stats__item__link"
 						:to="`/account/reviews`"
-						:title="t('pages.account.reviews.title')"
+						:title="$t('pages.account.reviews.title')"
 					>
 						<IconMdi:starOutline
 							class="text-gray-500 dark:text-gray-400 text-xl md:text-2xl"
 						/>
 						<span class="text-gray-500 dark:text-gray-400">{{
-							t('pages.account.reviews.title')
+							$t('pages.account.reviews.title')
 						}}</span>
 						<span class="text-gray-900 dark:text-gray-100 font-bold text-2xl">{{
 							reviewsCount

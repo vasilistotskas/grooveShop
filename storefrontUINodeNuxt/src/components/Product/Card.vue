@@ -7,10 +7,9 @@ import { useAuthStore } from '~/stores/auth'
 import { useUserStore } from '~/stores/user'
 
 const props = defineProps({
-	product: { type: Object as PropType<Product>, required: true, default: null }
+	product: { type: Object as PropType<Product>, required: true }
 })
 
-const { t } = useLang()
 const { contentShorten } = useText()
 const { resolveImageFilenameNoExt, resolveImageFileExtension, resolveImageSrc } =
 	useImageResolver()
@@ -95,11 +94,12 @@ const userToProductFavourite = computed(() => {
 					<div class="card-actions h-6 flex gap-4">
 						<ClientOnly>
 							<Button
+								v-if="isSupported"
 								:disabled="!isSupported"
 								:text="
 									isSupported
-										? t('components.product.card.share')
-										: t('components.product.card.share_not_supported')
+										? $t('components.product.card.share')
+										: $t('components.product.card.share_not_supported')
 								"
 								size="xs"
 								class="font-extrabold capitalize"
@@ -127,7 +127,7 @@ const userToProductFavourite = computed(() => {
 						<div class="card-price d-flex justify-content-between">
 							<p class="text-gray-700 dark:text-gray-200">
 								<span class="text-gray-700 dark:text-gray-200">{{
-									t('components.product.card.price')
+									$t('components.product.card.price')
 								}}</span
 								><span>{{ product.price }}</span>
 							</p>
@@ -135,7 +135,7 @@ const userToProductFavourite = computed(() => {
 						<div class="card-vat-percent d-flex justify-content-between">
 							<p class="text-gray-700 dark:text-gray-200">
 								<span class="text-gray-700 dark:text-gray-200">{{
-									t('components.product.card.vat_percent')
+									$t('components.product.card.vat_percent')
 								}}</span
 								><span>{{ product.vatPercent }}</span>
 							</p>
@@ -146,7 +146,7 @@ const userToProductFavourite = computed(() => {
 					>
 						<p class="text-gray-700 dark:text-gray-200">
 							<span class="text-gray-700 dark:text-gray-200">{{
-								t('components.product.card.total_price')
+								$t('components.product.card.total_price')
 							}}</span
 							><span>{{ product.finalPrice }}</span>
 						</p>
@@ -156,7 +156,7 @@ const userToProductFavourite = computed(() => {
 					<AddToCartButton
 						:product="product"
 						:quantity="1"
-						:text="t('components.product.card.add_to_cart')"
+						:text="$t('components.product.card.add_to_cart')"
 					/>
 				</div>
 			</div>

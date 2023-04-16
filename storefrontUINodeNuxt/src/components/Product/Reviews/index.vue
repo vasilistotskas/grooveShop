@@ -87,7 +87,7 @@ const ordering = computed(() => {
 		class="reviews_list text-gray-700 dark:text-gray-200 p-6 border-t border-gray-900/10 dark:border-gray-50/[0.2]"
 	>
 		<div class="reviews_list__header">
-			<h2 class="reviews_list__title">{{ t('components.product.reviews.title') }}</h2>
+			<h2 class="reviews_list__title">{{ $t('components.product.reviews.title') }}</h2>
 			<div v-if="reviews?.results.length > 0" class="reviews_list__actions">
 				<div class="reviews_list__pagination">
 					<PaginationPageNumber
@@ -131,7 +131,7 @@ const ordering = computed(() => {
 				</div>
 				<div v-else-if="reviews?.results.length === 0" class="reviews_list__item">
 					<div class="reviews_list__item__empty">
-						<Empty :text="t('components.product.reviews.empty')" />
+						<Empty :text="$t('components.product.reviews.empty')" />
 					</div>
 				</div>
 				<template v-if="reviews?.results.length > 0">

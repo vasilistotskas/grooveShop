@@ -22,6 +22,10 @@ const { locale, locales, setLocale } = useI18n()
 const availableLocales = computed(() => {
 	return locales.value
 })
+const switchLocalePath = useSwitchLocalePath()
+const navigateToLocale = (code: string) => {
+	setLocale(code)
+}
 </script>
 
 <template>
@@ -31,13 +35,17 @@ const availableLocales = computed(() => {
 			as="div"
 			class="relative flex items-center"
 		>
-			<ListboxLabel class="sr-only">Theme</ListboxLabel>
+			<ListboxLabel class="sr-only">{{
+				$t('components.language.switcher.theme')
+			}}</ListboxLabel>
 			<ListboxButton
 				type="button"
 				title="Change Language"
 				class="transition-colors duration-300"
 			>
-				<span class="hidden">Change Language</span>
+				<span class="hidden">{{
+					$t('components.language.switcher.change_language')
+				}}</span>
 				<span class="text-gray-700 dark:text-gray-200 justify-center items-center flex">
 					<IconLa:language />
 				</span>
@@ -54,17 +62,19 @@ const availableLocales = computed(() => {
 						'text-sky-500 bg-gray-100 dark:bg-gray-600/30': locale === lang.code,
 						'hover:bg-gray-50 dark:hover:bg-gray-700/30': locale !== lang.code
 					}"
-					@click.prevent.stop="setLocale(lang.code)"
+					@click.prevent.stop="navigateToLocale(lang.code)"
 				>
-					<span class="text-gray-700 dark:text-gray-200 text-sm mr-2">
-						{{ lang.flag }}
-					</span>
-					<span class="text-gray-700 dark:text-gray-200 flex-1 truncate">
-						{{ lang.name }}
-						<span class="text-gray-700 dark:text-gray-200 text-xs"
-							>({{ lang.code }})</span
-						>
-					</span>
+					<NuxtLink :to="switchLocalePath(lang.code)">
+						<span class="text-gray-700 dark:text-gray-200 text-sm mr-2">
+							{{ lang.flag }}
+						</span>
+						<span class="text-gray-700 dark:text-gray-200 flex-1 truncate">
+							{{ lang.name }}
+							<span class="text-gray-700 dark:text-gray-200 text-xs"
+								>({{ lang.code }})</span
+							>
+						</span>
+					</NuxtLink>
 				</ListboxOption>
 			</ListboxOptions>
 		</Listbox>
@@ -77,9 +87,11 @@ const availableLocales = computed(() => {
 				:key="lang.code"
 				:value="lang.code"
 				class="flex items-center space-x-2"
-				@click.prevent.stop="setLocale(lang.code)"
+				@click.prevent.stop="navigateToLocale(lang.code)"
 			>
-				{{ lang.flag }} {{ lang.name }} ({{ lang.code }})
+				<NuxtLink :to="switchLocalePath(lang.code)">
+					{{ lang.flag }} {{ lang.name }} ({{ lang.code }})
+				</NuxtLink>
 			</option>
 		</select>
 	</div>

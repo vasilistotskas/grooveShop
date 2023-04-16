@@ -4,7 +4,6 @@ import { PropType } from 'vue'
 import { OrderingOption } from '~/zod/ordering/ordering'
 
 const route = useRoute()
-const { t } = useLang()
 
 const props = defineProps({
 	orderingOptions: {
@@ -41,7 +40,7 @@ const link = computed(() => {
 							@click="listBoxToggle"
 						>
 							<span class="block truncate text-gray-700 dark:text-gray-200">{{
-								t('components.ordering.title')
+								$t('components.ordering.title')
 							}}</span>
 							<span
 								class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700 dark:text-gray-200"

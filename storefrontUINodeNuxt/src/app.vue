@@ -12,35 +12,37 @@ const { t } = useLang()
 const { locale, locales } = useI18n()
 const cartStore = useCartStore()
 
-// cart
-const { refresh: refreshCart, pending: cartPending } = await useAsyncData('cart', () =>
-	cartStore.fetchCart()
-)
+const { refresh: refreshCart } = await useAsyncData('cart', () => cartStore.fetchCart())
 
-const title = computed(() => (route.meta.title as string) || config.public.appTitle)
-const description = computed(
-	() => (route.meta.description as string) || config.public.appDescription
-)
+const title = computed(() => {
+	if ('title' in route.meta) {
+		return route.meta.title as string
+	}
+	return config.public.appTitle
+})
+const description = computed(() => {
+	if ('description' in route.meta) {
+		return route.meta.description as string
+	}
+	return config.public.appDescription
+})
 const themeClass = computed(() => (theme.value === 'dark' ? 'dark' : 'light'))
 const themeColor = computed(() => (theme.value === 'dark' ? '#1a202c' : '#ffffff'))
 
-// lang events
 const langBus = useEventBus<string>(GlobalEvents.ON_LANGUAGE_SWITCHED)
 langBus.on((event: string, payload) => {
 	// ON_LANGUAGE_SWITCHED event
 })
 
-// cart events
 const cartBus = useEventBus<string>(GlobalEvents.ON_CART_UPDATED)
 cartBus.on((event: string, payload) => {
-	// ON_CART_UPDATED event
 	refreshCart()
 })
 
 const i18nHead = useLocaleHead({
 	addDirAttribute: true,
 	addSeoAttributes: true,
-	identifierAttribute: 'id'
+	identifierAttribute: 'hid'
 })
 useHead({
 	htmlAttrs: {
@@ -51,6 +53,24 @@ useHead({
 	link: [...(i18nHead.value.link || [])],
 	meta: [...(i18nHead.value.meta || [])]
 })
+useSchemaOrg([
+	defineOrganization({
+		name: config.public.appTitle,
+		logo: config.public.appImage,
+		sameAs: [
+			'https://www.facebook.com/...',
+			'https://twitter.com/...',
+			'https://www.instagram.com/...'
+		]
+	}),
+	defineWebSite({
+		url: config.public.baseUrl,
+		name: config.public.appTitle,
+		description: config.public.appDescription,
+		inLanguage: locales.value.map((l: { iso: string }) => l.iso)
+	}),
+	defineWebPage()
+])
 useServerSeoMeta({
 	title: () => title.value,
 	description: () => description.value,
@@ -60,7 +80,18 @@ useServerSeoMeta({
 	author: () => config.public.author.name,
 	creator: () => config.public.author.name,
 	publisher: () => config.public.author.name,
-	ogLocale: () => locale.value
+	ogSiteName: () => config.public.appTitle,
+	ogImage: () => config.public.appImage,
+	ogLocale: () => locale.value,
+	ogLocaleAlternate: () => locales.value.map((l: { iso: string }) => l.iso),
+	fbAppId: () => config.public.facebookAppId,
+	twitterCard: () => 'summary_large_image',
+	twitterTitle: () => title.value,
+	twitterDescription: () => description.value,
+	twitterImage: () => config.public.appImage,
+	mobileWebAppCapable: () => 'yes',
+	msapplicationTileImage: () => config.public.appImage,
+	msapplicationTileColor: () => themeColor.value
 })
 </script>
 
@@ -69,6 +100,8 @@ useServerSeoMeta({
 		<VitePwaManifest />
 		<NuxtLoadingIndicator />
 		<NuxtLayout>
+			<SeoKit :language="locale" />
+			<OgImageStatic />
 			<NuxtPage />
 		</NuxtLayout>
 		<CookieControl />

@@ -17,7 +17,7 @@ const { cart } = storeToRefs(cartStore)
 		<template v-if="false" #banner>
 			<div class="text-white text-xs text-center py-1 px-4 lg:px-8 capitalize">
 				<span class="mr-1 text-gray-700 dark:text-gray-200">
-					{{ t('banners.welcome', { app_name: config.public.appTitle }) }}
+					{{ $t('banners.welcome', { app_name: config.public.appTitle }) }}
 				</span>
 			</div>
 		</template>
@@ -29,21 +29,12 @@ const { cart } = storeToRefs(cartStore)
 							<h2>
 								<Anchor
 									:to="'products'"
-									:title="t('pages.products.title')"
-									:text="t('pages.products.title')"
+									:title="$t('pages.products.title')"
+									:text="$t('pages.products.title')"
 									class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
-									>{{ t('pages.products.title') }}</Anchor
+									>{{ $t('pages.products.title') }}</Anchor
 								>
 							</h2>
-							<h3>
-								<Anchor
-									:to="'testing'"
-									:title="t('pages.testing.title')"
-									:text="t('pages.testing.title')"
-									class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
-									>{{ t('pages.testing.title') }}</Anchor
-								>
-							</h3>
 						</li>
 					</ul>
 				</nav>
@@ -61,8 +52,8 @@ const { cart } = storeToRefs(cartStore)
 						<Anchor
 							class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
 							:to="'cart'"
-							:title="t('pages.cart.title')"
-							:text="t('pages.cart.title')"
+							:title="$t('pages.cart.title')"
+							:text="$t('pages.cart.title')"
 						>
 							<IconFa6Solid:cartShopping />
 						</Anchor>
@@ -71,8 +62,8 @@ const { cart } = storeToRefs(cartStore)
 						<Anchor
 							v-if="isAuthenticated"
 							class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
-							:title="t('pages.accounts.login.title')"
-							:text="t('pages.accounts.login.title')"
+							:title="$t('pages.accounts.login.title')"
+							:text="$t('pages.accounts.login.title')"
 							:to="'account'"
 						>
 							<IconFa6Solid:circleUser />
@@ -80,9 +71,9 @@ const { cart } = storeToRefs(cartStore)
 						<Anchor
 							v-else
 							class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
-							:title="t('pages.accounts.login.title')"
-							:text="t('pages.accounts.login.title')"
-							:href="`${config.public.baseUrl}/accounts/login`"
+							:title="$t('pages.accounts.login.title')"
+							:text="$t('pages.accounts.login.title')"
+							:href="`${config.public.djangoUrl}/accounts/login`"
 						>
 							<IconFa6Solid:circleUser />
 						</Anchor>
@@ -101,29 +92,22 @@ const { cart } = storeToRefs(cartStore)
 							>
 								<Anchor
 									:to="'products'"
-									:title="t('pages.products.title')"
-									:text="t('pages.products.title')"
+									:title="$t('pages.products.title')"
+									:text="$t('pages.products.title')"
 									class="flex-1 hover:no-underline capitalize"
-									>{{ t('pages.products.title') }}</Anchor
-								>
-								<Anchor
-									:to="'testing'"
-									:title="t('pages.testing.title')"
-									:text="t('pages.testing.title')"
-									class="flex-1 hover:no-underline capitalize"
-									>{{ t('pages.testing.title') }}</Anchor
+									>{{ $t('pages.products.title') }}</Anchor
 								>
 							</li>
 						</ul>
 					</nav>
 					<div class="text-gray-700 dark:text-gray-200 mt-6 text-sm font-bold capitalize">
-						{{ t('components.theme_switcher.change_theme') }}
+						{{ $t('components.theme_switcher.change_theme') }}
 					</div>
 					<div class="mt-2">
 						<ThemeSwitcher type="select-box" />
 					</div>
 					<div class="text-gray-700 dark:text-gray-200 mt-6 text-sm font-bold capitalize">
-						{{ t('components.language_switcher.change_language') }}
+						{{ $t('components.language.switcher.change_language') }}
 					</div>
 					<div class="mt-2">
 						<LanguageSwitcher type="select-box" />
@@ -131,12 +115,12 @@ const { cart } = storeToRefs(cartStore)
 					<Anchor
 						class="text-gray-700 dark:text-gray-200 hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center justify-center gap-2 mt-4"
 						:to="'cart'"
-						:title="t('pages.cart.title')"
-						:text="t('pages.cart.title')"
+						:title="$t('pages.cart.title')"
+						:text="$t('pages.cart.title')"
 					>
 						<IconFa6Solid:cartShopping />
 						<span class="ml-1 text-gray-700 dark:text-gray-200">
-							{{ t('pages.cart.title') }}</span
+							{{ $t('pages.cart.title') }}</span
 						>
 					</Anchor>
 				</ActionSheetBody>

@@ -12,7 +12,7 @@ const userStore = useUserStore()
 const { account } = storeToRefs(userStore)
 
 const orderStore = useOrderStore()
-const { orders } = storeToRefs(orderStore)
+const { orders, pending, error } = storeToRefs(orderStore)
 
 const entityOrdering: EntityOrdering<OrderOrderingField> = [
 	{
@@ -36,14 +36,11 @@ const ordering = computed(() => {
 
 const routePaginationParams = ref<OrderQuery>({
 	page: Number(route.query.page) || undefined,
-	ordering: route.query.ordering || undefined
+	ordering: route.query.ordering || undefined,
+	user_id: String(account.value?.id)
 })
 
-const {
-	pending,
-	refresh,
-	error: ordersError
-} = await useAsyncData('orders', () =>
+const { refresh } = await useAsyncData('orders', () =>
 	orderStore.fetchOrders(routePaginationParams.value)
 )
 
@@ -65,8 +62,7 @@ watch(
 )
 
 definePageMeta({
-	layout: 'user',
-	middleware: ['breadcrumbs']
+	layout: 'user'
 })
 useHead(() => ({
 	title: t('pages.account.orders.title')
@@ -76,10 +72,10 @@ useHead(() => ({
 <template>
 	<PageWrapper>
 		<PageHeader>
-			<PageTitle :text="t('pages.account.orders.title')" />
+			<PageTitle :text="$t('pages.account.orders.title')" />
 		</PageHeader>
 		<PageBody>
-			<PageError v-if="ordersError" :error="ordersError"></PageError>
+			<PageError v-if="error" :error="error"></PageError>
 			<LoadingSkeleton
 				:card-height="'606px'"
 				:class="pending ? 'block' : 'hidden'"
@@ -106,13 +102,13 @@ useHead(() => ({
 			</template>
 			<template v-else>
 				<EmptyState
-					:title="t('pages.account.orders.empty.title')"
-					:description="t('pages.account.orders.empty.description')"
+					:title="$t('pages.account.orders.empty.title')"
+					:description="$t('pages.account.orders.empty.description')"
 					:icon="emptyIcon"
 				>
 					<template #actions>
 						<Button
-							:text="t('pages.account.orders.empty.button')"
+							:text="$t('pages.account.orders.empty.button')"
 							:to="{ name: 'home' }"
 						></Button>
 					</template>

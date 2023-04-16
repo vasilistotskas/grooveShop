@@ -4,7 +4,7 @@ const { t } = useLang()
 
 <template>
 	<PageWrapper>
-		<PageTitle :text="t('pages.checkout.success.title')" class="capitalize" />
+		<PageTitle :text="$t('pages.checkout.success.title')" class="capitalize" />
 		<PageBody> </PageBody>
 	</PageWrapper>
 </template>

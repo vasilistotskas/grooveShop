@@ -7,8 +7,7 @@ const config = useRuntimeConfig()
 const { t } = useLang()
 
 definePageMeta({
-	layout: 'testing',
-	middleware: ['breadcrumbs']
+	layout: 'testing'
 })
 useHead(() => ({
 	title: capitalize(t('pages.testing.test.title')),
@@ -27,11 +26,11 @@ const identity = useIdentity()
 <template>
 	<PageWrapper>
 		<PageHeader>
-			<PageTitle :text="t('pages.testing.test.title')" class="capitalize" />
+			<PageTitle :text="$t('pages.testing.test.title')" class="capitalize" />
 		</PageHeader>
 		<PageBody>
 			<PageSection>
-				<PageSectionTitle :text="t('pages.testing.test.counter')" class="capitalize" />
+				<PageSectionTitle :text="$t('pages.testing.test.counter')" class="capitalize" />
 				<div class="">
 					<div class="mb-2">
 						<p class="text-gray-700 dark:text-gray-200">Counter : {{ counter.count }}</p>
@@ -44,7 +43,7 @@ const identity = useIdentity()
 							type="button"
 							:style="'secondary'"
 							size="sm"
-							:text="t('pages.testing.test.increment')"
+							:text="$t('pages.testing.test.increment')"
 							@click.prevent="counter.increment"
 						/>
 						<Button
@@ -60,7 +59,7 @@ const identity = useIdentity()
 							type="button"
 							:style="'secondary'"
 							size="sm"
-							:text="t('pages.testing.test.decrement')"
+							:text="$t('pages.testing.test.decrement')"
 							@click.prevent="counter.decrement"
 						/>
 						<Button
@@ -68,17 +67,17 @@ const identity = useIdentity()
 							type="button"
 							:style="'secondary'"
 							size="sm"
-							:text="t('pages.testing.test.reset')"
+							:text="$t('pages.testing.test.reset')"
 							@click.prevent="counter.reset"
 						/>
 					</div>
 				</div>
 			</PageSection>
 			<PageSection>
-				<PageSectionTitle :text="t('pages.testing.test.identity')" class="capitalize" />
+				<PageSectionTitle :text="$t('pages.testing.test.identity')" class="capitalize" />
 				<div class="mb-2">
 					<span class="capitalize text-gray-700 dark:text-gray-200"
-						>{{ t('pages.testing.test.full_name') }} :
+						>{{ $t('pages.testing.test.full_name') }} :
 					</span>
 					<span class="text-gray-700 dark:text-gray-200">{{ identity.fullName }}</span>
 				</div>
@@ -102,7 +101,7 @@ const identity = useIdentity()
 						/>
 						<Button
 							class="capitalize w-full md:w-auto"
-							:text="t('pages.testing.test.reset')"
+							:text="$t('pages.testing.test.reset')"
 							type="button"
 							:style="'secondary'"
 							size="md"

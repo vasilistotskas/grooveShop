@@ -2,15 +2,14 @@
 const { t } = useLang()
 
 definePageMeta({
-	layout: 'user',
-	middleware: ['breadcrumbs']
+	layout: 'user'
 })
 </script>
 
 <template>
 	<PageWrapper>
 		<PageHeader>
-			<PageTitle :text="t('pages.account.favourites.title')" />
+			<PageTitle :text="$t('pages.account.favourites.title')" />
 		</PageHeader>
 		<PageBody> </PageBody>
 	</PageWrapper>

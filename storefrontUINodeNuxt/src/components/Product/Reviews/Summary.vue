@@ -26,7 +26,7 @@ const maxRate = 10
 		<div class="summary__count">
 			<span class="summary__count__value">{{ reviewsCount }}</span>
 			<span class="summary__count__label">
-				{{ t('components.product.reviews.summary.reviews') }}</span
+				{{ $t('components.product.reviews.summary.reviews') }}</span
 			>
 		</div>
 	</div>

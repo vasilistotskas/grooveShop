@@ -31,7 +31,7 @@ useHead(() => ({
 <template>
 	<PageWrapper class="flex flex-col">
 		<PageHeader>
-			<PageTitle :text="t('pages.category.title')" class="capitalize" />
+			<PageTitle :text="$t('pages.category.title')" class="capitalize" />
 		</PageHeader>
 		<PageBody>
 			<div></div>

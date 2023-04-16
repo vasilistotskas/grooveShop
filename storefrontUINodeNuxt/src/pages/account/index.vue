@@ -2,8 +2,7 @@
 const { t } = useLang()
 
 definePageMeta({
-	layout: 'user',
-	middleware: ['breadcrumbs']
+	layout: 'user'
 })
 useHead(() => ({
 	title: t('pages.account.index.title'),
@@ -27,7 +26,7 @@ useServerSeoMeta({
 <template>
 	<PageWrapper>
 		<PageHeader class="account__header">
-			<PageTitle :text="t('pages.testing.index.title')" class="account__header__title" />
+			<PageTitle :text="$t('pages.account.index.title')" class="account__header__title" />
 		</PageHeader>
 		<PageBody>
 			<PageSection>

@@ -88,7 +88,7 @@ const cartItemQuantity = useState<number>(
 				type="button"
 				@click="bus.emit('delete', { cartItemId: cartItem.id })"
 			>
-				<icon-fa-solid:trash />
+				<IconFaSolid:trash />
 			</button>
 		</div>
 	</div>

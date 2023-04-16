@@ -24,7 +24,6 @@ const { account, favourites, reviews, orders, pending, error } = storeToRefs(use
 						</template>
 					</UserNavbar>
 				</slot>
-
 				<PageError v-if="error" :error="error"></PageError>
 				<LoadingSkeleton
 					:card-height="'184px'"
@@ -71,13 +70,13 @@ const { account, favourites, reviews, orders, pending, error } = storeToRefs(use
 							</div>
 							<div class="flex flex-col w-full">
 								<slot />
-								<slot name="footer">
-									<PageFooter />
-								</slot>
 							</div>
 						</div>
 					</div>
 				</div>
+				<slot name="footer">
+					<PageFooter />
+				</slot>
 			</div>
 		</main>
 		<slot name="app-after" />

@@ -299,7 +299,7 @@ watch(
 				<h5
 					class="review_header__title"
 					v-html="
-						t('components.product.review.write_review_for_product', {
+						$t('components.product.review.write_review_for_product', {
 							product: product?.name
 						})
 					"
@@ -312,7 +312,7 @@ watch(
 			<div class="review_body">
 				<div class="review_body__rating">
 					<div class="review_body__rating__title">
-						<p>{{ t('components.product.review.rating.title') }}</p>
+						<p>{{ $t('components.product.review.rating.title') }}</p>
 					</div>
 					<div class="review_body__rating__content">
 						<div
@@ -361,7 +361,7 @@ watch(
 				<div class="review_body__comment">
 					<div class="review_body__comment__title">
 						<p class="review_body__comment__title__text">
-							{{ t('components.product.review.comment.title') }}
+							{{ $t('components.product.review.comment.title') }}
 						</p>
 					</div>
 					<div class="review_body__comment__content">
@@ -369,7 +369,7 @@ watch(
 							v-model="comment"
 							class="review_body__comment__content__textarea text-gray-700 dark:text-gray-200 bg-gray-100/[0.8] dark:bg-slate-800/[0.8] border border-gray-200"
 							maxlength="10000"
-							:placeholder="t('components.product.review.comment.placeholder')"
+							:placeholder="$t('components.product.review.comment.placeholder')"
 							rows="6"
 						/>
 					</div>
@@ -390,13 +390,13 @@ watch(
 						:style="'success'"
 					/>
 					<Button v-else type="button" disabled>
-						{{ t('components.product.review.too_many_attempts') }}
+						{{ $t('components.product.review.too_many_attempts') }}
 					</Button>
 				</div>
 				<div v-if="existingReview" class="review_footer__content">
 					<Button
 						class="review_footer__button gap-2"
-						:text="t('components.product.review.delete_review')"
+						:text="$t('components.product.review.delete_review')"
 						type="button"
 						:style="'danger'"
 						size="sm"

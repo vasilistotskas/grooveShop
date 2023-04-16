@@ -16,10 +16,10 @@ const pwa = useNuxtApp().$pwa as {
 		<div v-if="pwa?.offlineReady || pwa?.needRefresh" class="pwa-toast" role="alert">
 			<div class="message">
 				<span v-if="pwa?.offlineReady" class="text-gray-700 dark:text-gray-200">
-					{{ t('components.global.pwa.ready_to_work_offline') }}
+					{{ $t('components.global.pwa.ready_to_work_offline') }}
 				</span>
 				<span v-else class="text-gray-700 dark:text-gray-200">
-					{{ t('components.global.pwa.new_content_available') }}
+					{{ $t('components.global.pwa.new_content_available') }}
 				</span>
 			</div>
 			<button
@@ -28,14 +28,14 @@ const pwa = useNuxtApp().$pwa as {
 				type="button"
 				@click="pwa?.updateServiceWorker()"
 			>
-				{{ t('components.global.pwa.reload') }}
+				{{ $t('components.global.pwa.reload') }}
 			</button>
 			<button
 				type="button"
 				class="text-gray-700 dark:text-gray-200"
 				@click="pwa?.cancelPrompt()"
 			>
-				{{ t('components.global.pwa.close') }}
+				{{ $t('components.global.pwa.close') }}
 			</button>
 		</div>
 		<div
@@ -45,7 +45,7 @@ const pwa = useNuxtApp().$pwa as {
 		>
 			<div class="message">
 				<span class="text-gray-700 dark:text-gray-200">
-					{{ t('components.global.pwa.install_pwa') }}
+					{{ $t('components.global.pwa.install_pwa') }}
 				</span>
 			</div>
 			<button
@@ -53,14 +53,14 @@ const pwa = useNuxtApp().$pwa as {
 				type="button"
 				@click="pwa?.install()"
 			>
-				{{ t('components.global.pwa.install') }}
+				{{ $t('components.global.pwa.install') }}
 			</button>
 			<button
 				class="text-gray-700 dark:text-gray-200"
 				type="button"
 				@click="pwa?.cancelInstall()"
 			>
-				{{ t('components.global.pwa.cancel') }}
+				{{ $t('components.global.pwa.cancel') }}
 			</button>
 		</div>
 	</div>

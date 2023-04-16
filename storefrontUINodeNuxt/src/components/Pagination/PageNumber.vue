@@ -113,8 +113,8 @@ const link = computed(() => {
 					:class="{
 						disabled: isInFirstPage
 					}"
-					:text="t('components.pagination.previous_page')"
-					:title="t('components.pagination.previous_page')"
+					:text="$t('components.pagination.previous_page')"
+					:title="$t('components.pagination.previous_page')"
 					:disabled="isInFirstPage"
 				>
 					<span class="text-gray-700 dark:text-gray-200"><IconFaSolid:angleLeft /></span>
@@ -134,8 +134,8 @@ const link = computed(() => {
 						'grid grid-cols-2 gap-1': shouldDisplayPreviousTripleDots,
 						disabled: isInFirstPage
 					}"
-					:text="t('components.pagination.first_page')"
-					:title="t('components.pagination.first_page')"
+					:text="$t('components.pagination.first_page')"
+					:title="$t('components.pagination.first_page')"
 					:disabled="isInFirstPage"
 				>
 					<span
@@ -167,7 +167,7 @@ const link = computed(() => {
 						'bg-primary-400 dark:bg-primary-400': page === currentPage
 					}"
 					:text="String(index)"
-					:title="t('components.pagination.go_to_page', { page: page })"
+					:title="$t('components.pagination.go_to_page', { page: page })"
 				>
 					<span class="text-gray-700 dark:text-gray-200">{{ page }}</span>
 				</Anchor>
@@ -186,8 +186,8 @@ const link = computed(() => {
 						'grid grid-cols-2 gap-1': shouldDisplayNextTripleDots,
 						disabled: isInLastPage
 					}"
-					:text="t('components.pagination.last_page')"
-					:title="t('components.pagination.go_to_page', { page: lastPageNumber })"
+					:text="$t('components.pagination.last_page')"
+					:title="$t('components.pagination.go_to_page', { page: lastPageNumber })"
 				>
 					<span
 						v-if="shouldDisplayNextTripleDots"
@@ -216,11 +216,11 @@ const link = computed(() => {
 					:class="{
 						disabled: isInLastPage
 					}"
-					:text="t('components.pagination.next_page')"
+					:text="$t('components.pagination.next_page')"
 					:title="
 						isInLastPage
-							? t('components.pagination.you_are_on_last_page')
-							: t('components.pagination.next_page')
+							? $t('components.pagination.you_are_on_last_page')
+							: $t('components.pagination.next_page')
 					"
 				>
 					<span class="text-gray-700 dark:text-gray-200"><IconFaSolid:angleRight /></span>

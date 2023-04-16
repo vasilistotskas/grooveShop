@@ -30,7 +30,7 @@ const menus = computed((): IMenuItem[] => [
 	{
 		type: 'external-link',
 		text: t('pages.accounts.security.title'),
-		href: `${config.public.baseUrl}/accounts/email`,
+		href: `${config.public.djangoUrl}/accounts/email`,
 		icon: userShield,
 		cssClass:
 			'text-gray-700 dark:text-gray-200 bg-gray-200 border-gray-200 hover:bg-gray-300 dark:border-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700'
@@ -38,7 +38,7 @@ const menus = computed((): IMenuItem[] => [
 	{
 		type: 'external-link',
 		text: t('pages.accounts.logout.title'),
-		href: `${config.public.baseUrl}/accounts/logout`,
+		href: `${config.public.djangoUrl}/accounts/logout`,
 		icon: doorArrowRight,
 		cssClass:
 			'text-gray-700 dark:text-gray-200 bg-gray-200 border-gray-200 hover:bg-gray-300 dark:border-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700'
@@ -112,8 +112,8 @@ const menus = computed((): IMenuItem[] => [
 						<Anchor
 							class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
 							:to="'cart'"
-							:title="t('pages.cart.title')"
-							:text="t('pages.cart.title')"
+							:title="$t('pages.cart.title')"
+							:text="$t('pages.cart.title')"
 						>
 							<IconFa6Solid:cartShopping />
 						</Anchor>
@@ -122,8 +122,8 @@ const menus = computed((): IMenuItem[] => [
 						<Anchor
 							v-if="isAuthenticated"
 							class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
-							:title="t('pages.accounts.login.title')"
-							:text="t('pages.accounts.login.title')"
+							:title="$t('pages.accounts.login.title')"
+							:text="$t('pages.accounts.login.title')"
 							:to="'account'"
 						>
 							<IconFa6Solid:circleUser />
@@ -131,9 +131,9 @@ const menus = computed((): IMenuItem[] => [
 						<Anchor
 							v-else
 							class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
-							:title="t('pages.accounts.login.title')"
-							:text="t('pages.accounts.login.title')"
-							:href="`${config.public.baseUrl}/accounts/login`"
+							:title="$t('pages.accounts.login.title')"
+							:text="$t('pages.accounts.login.title')"
+							:href="`${config.public.djangoUrl}/accounts/login`"
 						>
 							<IconFa6Solid:circleUser />
 						</Anchor>
@@ -152,29 +152,22 @@ const menus = computed((): IMenuItem[] => [
 							>
 								<Anchor
 									:to="'products'"
-									:title="t('pages.products.title')"
-									:text="t('pages.products.title')"
+									:title="$t('pages.products.title')"
+									:text="$t('pages.products.title')"
 									class="flex-1 hover:no-underline capitalize"
-									>{{ t('pages.products.title') }}</Anchor
-								>
-								<Anchor
-									:to="'testing'"
-									:title="t('pages.testing.title')"
-									:text="t('pages.testing.title')"
-									class="flex-1 hover:no-underline capitalize"
-									>{{ t('pages.testing.title') }}</Anchor
+									>{{ $t('pages.products.title') }}</Anchor
 								>
 							</li>
 						</ul>
 					</nav>
 					<div class="text-gray-700 dark:text-gray-200 mt-6 text-sm font-bold capitalize">
-						{{ t('components.theme_switcher.change_theme') }}
+						{{ $t('components.theme_switcher.change_theme') }}
 					</div>
 					<div class="mt-2">
 						<ThemeSwitcher type="select-box" />
 					</div>
 					<div class="text-gray-700 dark:text-gray-200 mt-6 text-sm font-bold capitalize">
-						{{ t('components.language_switcher.change_language') }}
+						{{ $t('components.language.switcher.change_language') }}
 					</div>
 					<div class="mt-2">
 						<LanguageSwitcher type="select-box" />
@@ -182,12 +175,12 @@ const menus = computed((): IMenuItem[] => [
 					<Anchor
 						class="text-gray-700 dark:text-gray-200 hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center justify-center gap-2 mt-4"
 						:to="'cart'"
-						:title="t('pages.cart.title')"
-						:text="t('pages.cart.title')"
+						:title="$t('pages.cart.title')"
+						:text="$t('pages.cart.title')"
 					>
 						<IconFa6Solid:cartShopping />
 						<span class="ml-1 text-gray-700 dark:text-gray-200">
-							{{ t('pages.cart.title') }}</span
+							{{ $t('pages.cart.title') }}</span
 						>
 					</Anchor>
 				</ActionSheetBody>

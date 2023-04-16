@@ -32,3 +32,4 @@
 		<Pwa></Pwa>
 	</div>
 </template>
+<script setup></script>

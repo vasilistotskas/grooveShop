@@ -70,8 +70,7 @@ watch(
 )
 
 definePageMeta({
-	layout: 'page',
-	middleware: ['breadcrumbs']
+	layout: 'page'
 })
 useHead(() => ({
 	title: t('pages.products.title'),

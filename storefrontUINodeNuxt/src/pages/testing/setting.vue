@@ -16,8 +16,7 @@ const config = useRuntimeConfig()
 
 // compiler macro
 definePageMeta({
-	layout: 'testing',
-	middleware: ['breadcrumbs']
+	layout: 'testing'
 })
 useHead(() => ({
 	title: capitalize(t('pages.testing.setting.title')),
@@ -77,7 +76,7 @@ const validate = async () => {
 			/>
 		</PageSection>
 		<PageHeader>
-			<PageTitle :text="t('pages.testing.setting.title')" class="capitalize" />
+			<PageTitle :text="$t('pages.testing.setting.title')" class="capitalize" />
 		</PageHeader>
 		<PageBody>
 			<PageSection>
@@ -133,11 +132,11 @@ const validate = async () => {
 								<CardContent>
 									<CardTitle
 										class="capitalize"
-										:text="t('pages.testing.setting.sections.validate_username.title')"
+										:text="$t('pages.testing.setting.sections.validate_username.title')"
 									/>
 									<p class="text-gray-700 dark:text-gray-200 mb-2">
 										{{
-											t('pages.testing.setting.sections.validate_username.description')
+											$t('pages.testing.setting.sections.validate_username.description')
 										}}
 									</p>
 									<div class="flex">
@@ -159,11 +158,11 @@ const validate = async () => {
 									class="flex flex-col space-y-2 md:space-y md:flex-row items-center md:justify-between"
 								>
 									<p class="text-gray-700 dark:text-gray-200">
-										{{ t('pages.testing.setting.sections.validate_username.footer') }}
+										{{ $t('pages.testing.setting.sections.validate_username.footer') }}
 										<Anchor
 											class="underline font-bold capitalize"
 											:text="
-												t('pages.testing.setting.sections.validate_username.footer_link')
+												$t('pages.testing.setting.sections.validate_username.footer_link')
 											"
 											href="https://docs.github.com/en/rest/users/users#get-a-user"
 										/>
@@ -174,7 +173,7 @@ const validate = async () => {
 										type="button"
 										:style="'opposite'"
 										:text="
-											t('pages.testing.setting.sections.validate_username.footer_button')
+											$t('pages.testing.setting.sections.validate_username.footer_button')
 										"
 										@click="validate"
 									/>
@@ -184,10 +183,10 @@ const validate = async () => {
 								<CardContent>
 									<CardTitle
 										class="capitalize"
-										:text="t('pages.testing.setting.sections.bot_id.title')"
+										:text="$t('pages.testing.setting.sections.bot_id.title')"
 									/>
 									<p class="text-gray-700 dark:text-gray-200 mb-2">
-										{{ t('pages.testing.setting.sections.bot_id.description') }}
+										{{ $t('pages.testing.setting.sections.bot_id.description') }}
 									</p>
 									<div class="flex">
 										<FormTextInput
@@ -203,7 +202,7 @@ const validate = async () => {
 													class="space-x-1 border-none"
 												>
 													<IconIc:baselineContentCopy />
-													{{ t('others.copy') }}
+													{{ $t('others.copy') }}
 												</Button>
 											</template>
 										</FormTextInput>
@@ -211,7 +210,7 @@ const validate = async () => {
 								</CardContent>
 								<CardFooter class="justify-between">
 									<p class="text-gray-700 dark:text-gray-200">
-										{{ t('pages.testing.setting.sections.bot_id.footer') }}
+										{{ $t('pages.testing.setting.sections.bot_id.footer') }}
 									</p>
 								</CardFooter>
 							</Card>
@@ -226,22 +225,24 @@ const validate = async () => {
 								<CardContent>
 									<CardTitle
 										class="capitalize"
-										:text="t('pages.testing.setting.sections.protection_spam.title')"
+										:text="$t('pages.testing.setting.sections.protection_spam.title')"
 									/>
 									<p class="text-gray-700 dark:text-gray-200 mb-2">
-										{{ t('pages.testing.setting.sections.protection_spam.description') }}
+										{{ $t('pages.testing.setting.sections.protection_spam.description') }}
 									</p>
 									<div class="flex">
 										<FormSwitch v-model="enableSpamProtection">
 											<span class="capitalize text-gray-700 dark:text-gray-200">{{
-												enableSpamProtection ? t('others.enabled') : t('others.disabled')
+												enableSpamProtection
+													? $t('others.enabled')
+													: $t('others.disabled')
 											}}</span>
 										</FormSwitch>
 									</div>
 								</CardContent>
 								<CardFooter class="justify-between">
 									<p class="text-gray-700 dark:text-gray-200">
-										{{ t('pages.testing.setting.sections.protection_spam.footer') }}
+										{{ $t('pages.testing.setting.sections.protection_spam.footer') }}
 									</p>
 								</CardFooter>
 							</Card>
@@ -252,7 +253,7 @@ const validate = async () => {
 									<CardTitle
 										class="capitalize"
 										:text="
-											t('pages.testing.setting.sections.advanced_enable_advanced.title')
+											$t('pages.testing.setting.sections.advanced_enable_advanced.title')
 										"
 									/>
 									<p class="text-gray-700 dark:text-gray-200 mb-2">
@@ -265,7 +266,9 @@ const validate = async () => {
 									<div class="flex">
 										<FormSwitch v-model="enableAdvancedSetting">
 											<span class="capitalize text-gray-700 dark:text-gray-200">{{
-												enableAdvancedSetting ? t('others.enabled') : t('others.disabled')
+												enableAdvancedSetting
+													? $t('others.enabled')
+													: $t('others.disabled')
 											}}</span>
 										</FormSwitch>
 									</div>
@@ -275,7 +278,9 @@ const validate = async () => {
 								<CardContent>
 									<CardTitle
 										class="capitalize"
-										:text="t('pages.testing.setting.sections.advanced_dir_listing.title')"
+										:text="
+											$t('pages.testing.setting.sections.advanced_dir_listing.title')
+										"
 									/>
 									<p class="text-gray-700 dark:text-gray-200 mb-2">
 										{{
@@ -287,7 +292,7 @@ const validate = async () => {
 									<div class="flex">
 										<FormSwitch v-model="enableDirList" on>
 											<span class="capitalize text-gray-700 dark:text-gray-200">{{
-												enableDirList ? t('others.enabled') : t('others.disabled')
+												enableDirList ? $t('others.enabled') : $t('others.disabled')
 											}}</span>
 										</FormSwitch>
 									</div>

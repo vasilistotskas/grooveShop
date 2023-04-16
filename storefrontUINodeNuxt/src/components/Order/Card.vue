@@ -100,11 +100,11 @@ const statusClass = computed(() => {
 					v-if="order.orderItemOrder.length - maxItems === 1"
 					class="order__card__extra__products__text"
 				>
-					{{ t('components.order.card.extra_one') }}
+					{{ $t('components.order.card.extra_one') }}
 				</span>
 				<span v-else class="order__card__extra__products__text">
 					{{
-						t('components.order.card.extra', {
+						$t('components.order.card.extra', {
 							count: order.orderItemOrder.length - maxItems
 						})
 					}}
@@ -122,13 +122,13 @@ const statusClass = computed(() => {
 
 			<div class="order__card__body__id">
 				<span class="order__card__body__id__title">{{
-					t('components.order.card.id')
+					$t('components.order.card.id')
 				}}</span>
 				<span class="order__card__body__id__text">{{ order.id }}</span>
 			</div>
 			<div class="order__card__body__address">
 				<span class="order__card__body__address__title">{{
-					t('components.order.card.address')
+					$t('components.order.card.address')
 				}}</span>
 				<span class="order__card__body__address__text">{{
 					contentShorten(order.fullAddress, 0, 45)
@@ -136,13 +136,13 @@ const statusClass = computed(() => {
 			</div>
 			<div class="order__card__body__pay_way">
 				<span class="order__card__body__pay_way__title">{{
-					t('components.order.card.pay_way')
+					$t('components.order.card.pay_way')
 				}}</span>
 				<span class="order__card__body__pay_way__text">{{ order.payWay.name }}</span>
 			</div>
 			<div class="order__card__body__total_price">
 				<span class="order__card__body__total_price__title">{{
-					t('components.order.card.total_price')
+					$t('components.order.card.total_price')
 				}}</span>
 				<span class="order__card__body__total_price__text">{{ order.totalPrice }}</span>
 			</div>
@@ -154,7 +154,7 @@ const statusClass = computed(() => {
 						name: 'account-order',
 						params: { id: order.id }
 					}"
-					:text="t('components.order.card.actions.details')"
+					:text="$t('components.order.card.actions.details')"
 					:style="'info'"
 					size="lg"
 					class="order__card__footer__item__link text-sm"

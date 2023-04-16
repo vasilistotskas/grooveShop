@@ -195,20 +195,20 @@ init()
 				<div class="cookieControl__BarContainer">
 					<div>
 						<slot name="bar">
-							<h3 v-text="t('components.cookie.banner.title')" />
-							<p v-text="t('components.cookie.banner.description')" />
+							<h3 v-text="$t('components.cookie.banner.title')" />
+							<p v-text="$t('components.cookie.banner.description')" />
 						</slot>
 					</div>
 					<div class="cookieControl__BarButtons">
-						<button @click="accept()" v-text="t('components.cookie.accept')" />
+						<button @click="accept()" v-text="$t('components.cookie.accept')" />
 						<button
 							v-if="moduleOptions.isAcceptNecessaryButtonEnabled"
 							@click="decline()"
-							v-text="t('components.cookie.decline')"
+							v-text="$t('components.cookie.decline')"
 						/>
 						<button
 							@click="isModalActive = true"
-							v-text="t('components.cookie.manage_cookies')"
+							v-text="$t('components.cookie.manage_cookies')"
 						/>
 					</div>
 				</div>
@@ -233,7 +233,7 @@ init()
 				<p
 					v-if="isSaved"
 					class="cookieControl__ModalUnsaved"
-					v-text="t('components.cookie.settings.unsaved')"
+					v-text="$t('components.cookie.settings.unsaved')"
 				/>
 				<div class="cookieControl__ModalContent">
 					<div class="cookieControl__ModalContentInner">
@@ -241,15 +241,15 @@ init()
 						<button
 							class="cookieControl__ModalClose"
 							@click="isModalActive = false"
-							v-text="t('components.cookie.close')"
+							v-text="$t('components.cookie.close')"
 						/>
 						<template v-for="cookieType in CookieTypeEnum.enum" :key="cookieType">
 							<template v-if="moduleOptions.cookies[cookieType].length">
 								<h3
 									v-text="
 										cookieType === CookieTypeEnum.enum.necessary
-											? t('components.cookie.cookies.necessary')
-											: t('components.cookie.cookies.optional')
+											? $t('components.cookie.cookies.necessary')
+											: $t('components.cookie.cookies.optional')
 									"
 								/>
 								<ul>
@@ -332,7 +332,7 @@ init()
 										isModalActive = false
 									}
 								"
-								v-text="t('components.cookie.save')"
+								v-text="$t('components.cookie.save')"
 							/>
 							<button
 								@click="
@@ -341,7 +341,7 @@ init()
 										isModalActive = false
 									}
 								"
-								v-text="t('components.cookie.accept_all')"
+								v-text="$t('components.cookie.accept_all')"
 							/>
 							<button
 								@click="
@@ -350,7 +350,7 @@ init()
 										isModalActive = false
 									}
 								"
-								v-text="t('components.cookie.decline_all')"
+								v-text="$t('components.cookie.decline_all')"
 							/>
 						</div>
 					</div>

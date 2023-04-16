@@ -5,7 +5,6 @@ const showOptions = useState<boolean>('navbar.showOptions', () => false)
 
 const config = useRuntimeConfig()
 const localePath = useLocalePath()
-const { t } = useLang()
 
 let timer: NodeJS.Timer
 onMounted(() => {
@@ -69,7 +68,7 @@ const toggleOptions = (show?: boolean) => {
 							@click="toggleDrawer()"
 						>
 							<span class="hidden">{{
-								t('components.builder.navbar.toggle_drawer_menu')
+								$t('components.builder.navbar.toggle_drawer_menu')
 							}}</span>
 							<span
 								class="flex items-center text-gray-700 dark:text-gray-200 text-lg"
@@ -124,13 +123,13 @@ const toggleOptions = (show?: boolean) => {
 							@click="toggleOptions()"
 						>
 							<span class="hidden">{{
-								t('components.builder.navbar.toggle_options_menu')
+								$t('components.builder.navbar.toggle_options_menu')
 							}}</span>
 							<span
 								class="flex items-center text-gray-700 dark:text-gray-200 text-sm"
 								aria-hidden="true"
 							>
-								<icon-fa-solid:ellipsis-v />
+								<IconFaSolid:ellipsisV />
 							</span>
 						</button>
 					</div>

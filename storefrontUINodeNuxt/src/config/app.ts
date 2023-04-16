@@ -4,8 +4,6 @@ export const app = {
 		viewport: 'width=device-width, initial-scale=1',
 		meta: [
 			{ name: 'robots', content: 'index, follow' },
-			{ name: 'theme-color', content: '#ffffff' },
-			{ name: 'msapplication-TileColor', content: '#ffffff' },
 			{ name: 'msapplication-config', content: '/assets/favicon/browserconfig.xml' },
 			{
 				name: 'google-site-verification',
