@@ -15,8 +15,10 @@ components:
       copyright: 版权所有 © 2022
       rights: 版权所有 。用
       design_by: 由...设计
-  language_switcher:
-    change_language: 改变语言
+  language:
+    switcher:
+      change_language: 改变语言
+      theme: 主题
   theme_switcher:
     theme: 主题
     change_theme: 改变主题
@@ -117,7 +119,7 @@ components:
   add_to_favourite_button:
     not_authenticated: 您必须登录才能添加到收藏夹
     added: 已添加到收藏夹
-    removed: 已从收藏夹中移除
+    removed: 已从收藏夹中删除
     add: 加入“最喜欢的
     remove: 从收藏夹中删除
   user:
@@ -181,7 +183,7 @@ pages:
           description: 这是您的机器人 id。
           footer: 与机器人交互时使用。
         protection_spam:
-          title: 垃圾邮件防护
+          title: 垃圾邮件保护
           description: 切换启用以删除红色边框
           footer: 如果启用，我们将保护您的评论免受垃圾邮件
         advanced_enable_advanced:
@@ -320,7 +322,7 @@ pages:
       description: 帮助
       keywords: 帮助
       updated: 帮助已更新
-      update_error: 帮助更新错误
+      update_error: 求助更新错误
       deleted: 帮助项目已删除
       delete_error: 帮助项目删除错误
 layouts:

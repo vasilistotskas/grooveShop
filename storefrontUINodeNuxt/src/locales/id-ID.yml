@@ -15,8 +15,10 @@ components:
       copyright: hak cipta © 2022
       rights: seluruh hak cipta . dibuat dengan
       design_by: desain oleh
-  language_switcher:
-    change_language: ganti bahasa
+  language:
+    switcher:
+      change_language: ganti bahasa
+      theme: tema
   theme_switcher:
     theme: tema
     change_theme: ganti tema
@@ -289,7 +291,7 @@ pages:
       updated: pesanan diperbarui
       update_error: kesalahan pembaruan pesanan
       deleted: butir pesanan dihapus
-      delete_error: kesalahan penghapusan item pesanan
+      delete_error: kesalahan penghapusan butir pesanan
       empty:
         title: pesanan anda kosong
         description: anda belum melakukan pemesanan apa pun.

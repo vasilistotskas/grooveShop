@@ -15,8 +15,10 @@ components:
       copyright: Copyright © 2022
       rights: All rights reserved . Made with
       design_by: Design by
-  language_switcher:
-    change_language: change language
+  language:
+    switcher:
+      change_language: Change Language
+      theme: Theme
   theme_switcher:
     theme: theme
     change_theme: change theme

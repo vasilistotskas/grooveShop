@@ -17,8 +17,10 @@ components:
       copyright: copyright © 2022
       rights: alle rechte vorbehalten . gemacht mit
       design_by: design von
-  language_switcher:
-    change_language: sprache ändern
+  language:
+    switcher:
+      change_language: sprache ändern
+      theme: thema
   theme_switcher:
     theme: thema
     change_theme: thema wechseln
@@ -193,7 +195,7 @@ pages:
           footer: wird bei der interaktion mit dem bot verwendet.
         protection_spam:
           title: spamschutz
-          description: toggle enable, um den roten rahmen zu entfernen
+          description: toggle enable, um den roten rand zu entfernen
           footer: >-
             wenn sie diese option aktivieren, schützen wir ihre kommentare vor
             spam

@@ -15,8 +15,10 @@ components:
       copyright: 저작권 © 2022
       rights: 판권 소유 . 만든
       design_by: 에 의해 디자인 됨
-  language_switcher:
-    change_language: 언어 변경
+  language:
+    switcher:
+      change_language: 언어 변경
+      theme: 주제
   theme_switcher:
     theme: 주제
     change_theme: 테마 변경
