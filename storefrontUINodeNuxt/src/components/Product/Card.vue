@@ -70,7 +70,7 @@ const userToProductFavourite = computed(() => {
 									<nuxt-img
 										preload
 										placeholder
-										loading="lazy"
+										loading="auto"
 										provider="mediaStream"
 										class="product_img"
 										:style="{ objectFit: 'contain' }"

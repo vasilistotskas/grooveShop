@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
-import { toFormValidator } from '@vee-validate/zod'
+import { toTypedSchema } from '@vee-validate/zod'
 import { z } from 'zod'
 import { FieldContext, useField, useForm } from 'vee-validate'
 import { Review } from '~/zod/product/review'
@@ -223,7 +223,7 @@ const ZodReviewSchema = z.object({
 	rate: z.number().min(1).max(10)
 })
 
-const validationSchema = toFormValidator(ZodReviewSchema)
+const validationSchema = toTypedSchema(ZodReviewSchema)
 const { values, handleSubmit, errors, submitCount } = useForm<ReviewForm>({
 	validationSchema,
 	initialValues: {
@@ -366,7 +366,9 @@ watch(
 					</div>
 					<div class="review_body__comment__content">
 						<textarea
+							id="comment"
 							v-model="comment"
+							name="comment"
 							class="review_body__comment__content__textarea text-gray-700 dark:text-gray-200 bg-gray-100/[0.8] dark:bg-slate-800/[0.8] border border-gray-200"
 							maxlength="10000"
 							:placeholder="$t('components.product.review.comment.placeholder')"

@@ -38,11 +38,11 @@ const orderingFields: Record<ProductOrderingField, OrderingOption[]> = {
 	created_at: []
 }
 
-const { pending, refresh } = await useAsyncData('products', () =>
+const { refresh } = await useAsyncData('products', () =>
 	store.fetchProducts(routePaginationParams.value)
 )
 
-const { products, error } = storeToRefs(store)
+const { products, pending, error } = storeToRefs(store)
 
 const pagination = computed(() => {
 	return usePagination<Product>(products.value)

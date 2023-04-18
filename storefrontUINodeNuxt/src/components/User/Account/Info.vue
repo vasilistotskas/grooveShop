@@ -134,14 +134,13 @@ const props = defineProps({
 			font-weight: 600;
 		}
 		&__stats {
-			display: flex;
+			display: grid;
 			align-items: center;
 			margin-left: auto;
 			gap: 1rem;
-
+			grid-template-columns: repeat(3, minmax(110px, 1fr));
 			@media screen and (max-width: 767px) {
 				width: 100%;
-				display: grid;
 				grid-template-columns: repeat(3, 1fr);
 			}
 			&__item {

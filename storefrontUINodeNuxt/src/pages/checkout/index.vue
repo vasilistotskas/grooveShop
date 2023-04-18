@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { toFormValidator } from '@vee-validate/zod'
+import { toTypedSchema } from '@vee-validate/zod'
 import { FieldContext, useField, useForm } from 'vee-validate'
 import { ZodCheckout } from '~/zod/checkout/checkout'
 import { useCartStore } from '~/stores/cart'
@@ -27,7 +27,7 @@ const onCountryChange = (event: Event) => {
 
 const cartItems = computed(() => cart.value?.cartItems || [])
 
-const validationSchema = toFormValidator(ZodCheckout)
+const validationSchema = toTypedSchema(ZodCheckout)
 const { handleSubmit, errors, submitCount } = useForm({
 	validationSchema
 })

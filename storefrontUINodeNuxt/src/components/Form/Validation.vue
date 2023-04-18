@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { FieldContext, useField, useForm } from 'vee-validate'
-import { toFormValidator } from '@vee-validate/zod'
+import { toTypedSchema } from '@vee-validate/zod'
 import { z } from 'zod'
 
 const ZodLogin = z.object({
@@ -8,7 +8,7 @@ const ZodLogin = z.object({
 	password: z.string().min(8)
 })
 
-const validationSchema = toFormValidator(ZodLogin)
+const validationSchema = toTypedSchema(ZodLogin)
 const { handleSubmit, errors, submitCount } = useForm({
 	validationSchema
 })
