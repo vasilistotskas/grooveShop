@@ -17,10 +17,11 @@ const { resolve } = createResolver(import.meta.url)
 export default defineNuxtConfig({
 	ssr: true,
 	components: true,
+	sourcemap: true,
 	experimental: {
 		componentIslands: true,
-		viewTransition: true
-		// renderJsonPayloads: true
+		viewTransition: true,
+		renderJsonPayloads: true
 	},
 	extends: ['nuxt-seo-kit'],
 	typescript: {
