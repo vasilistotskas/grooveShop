@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.39.1 (2023-04-19)
+### Fix
+* **Nuxt:** Convert every value and property to pascalCase ([`a868ee7`](https://github.com/vasilistotskas/grooveShop/commit/a868ee759b1bd41db2e22e93bb432a17c9edfab5))
+
 ## v0.39.0 (2023-04-14)
 ### Feature
 * **Django:** New fields added at order model, API and faker ([`ffe1454`](https://github.com/vasilistotskas/grooveShop/commit/ffe1454dbe5087bb21d59d9ac72df06d1178dd26))
