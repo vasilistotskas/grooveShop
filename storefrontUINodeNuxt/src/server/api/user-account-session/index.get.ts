@@ -12,7 +12,7 @@ export default defineEventHandler(async (event: H3Event) => {
 	const cookie = event.node.req.headers.cookie
 
 	// Account
-	const accountResponse = await fetch(
+	const accountResponse = await $fetch(
 		`${config.public.apiBaseUrl}/user/account/session/`,
 		{
 			headers: {
@@ -20,58 +20,57 @@ export default defineEventHandler(async (event: H3Event) => {
 			}
 		}
 	)
-	const accountData = await accountResponse.json()
+	const accountParsedData = await parseDataAs(accountResponse, ZodAccount)
 
 	// Favourites
 	const favouritesQuery: FavouriteQuery = {
-		userId: accountData.id,
+		userId: accountParsedData.id,
 		pagination: 'false'
 	}
 	const favouritesUrl = buildFullUrl(
 		`${config.public.apiBaseUrl}/product/favourite/`,
 		favouritesQuery
 	)
-	const favouritesResponse = await fetch(favouritesUrl, {
+	const favouritesResponse = await $fetch(favouritesUrl, {
 		headers: {
 			Cookie: cookie || ''
 		}
 	})
-	const favouritesData = await favouritesResponse.json()
 
 	// Reviews
 	const reviewsQuery: ReviewQuery = {
-		userId: accountData.id,
+		userId: String(accountParsedData.id),
 		pagination: 'false'
 	}
 	const reviewsUrl = buildFullUrl(
 		`${config.public.apiBaseUrl}/product/review/`,
 		reviewsQuery
 	)
-	const reviewsResponse = await fetch(reviewsUrl, {
+	const reviewsResponse = await $fetch(reviewsUrl, {
 		headers: {
 			Cookie: cookie || ''
 		}
 	})
-	const reviewsData = await reviewsResponse.json()
 
 	// Orders
 	const ordersQuery: OrderQuery = {
-		userId: accountData.id,
+		userId: String(accountParsedData.id),
 		pagination: 'false'
 	}
 	const ordersUrl = buildFullUrl(`${config.public.apiBaseUrl}/order/`, ordersQuery)
-	const ordersResponse = await fetch(ordersUrl, {
+	const ordersResponse = await $fetch(ordersUrl, {
 		headers: {
 			Cookie: cookie || ''
 		}
 	})
-	const ordersData = await ordersResponse.json()
 
 	// Parse data
-	const accountParsedData = await parseDataAs(accountData, ZodAccount)
-	const favouritesParsedData = await parseDataAs(favouritesData, z.array(ZodFavourite))
-	const ordersParsedData = await parseDataAs(ordersData, z.array(ZodOrder))
-	const reviewsParsedData = await parseDataAs(reviewsData, z.array(ZodReview))
+	const favouritesParsedData = await parseDataAs(
+		favouritesResponse,
+		z.array(ZodFavourite)
+	)
+	const reviewsParsedData = await parseDataAs(reviewsResponse, z.array(ZodReview))
+	const ordersParsedData = await parseDataAs(ordersResponse, z.array(ZodOrder))
 
 	return {
 		account: accountParsedData,

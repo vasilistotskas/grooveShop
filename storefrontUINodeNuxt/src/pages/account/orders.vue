@@ -56,7 +56,8 @@ watch(
 	() => {
 		bus.emit('orders', {
 			page: Number(route.query.page) || undefined,
-			ordering: route.query.ordering || undefined
+			ordering: route.query.ordering || undefined,
+			userId: String(account.value?.id)
 		})
 	}
 )

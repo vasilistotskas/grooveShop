@@ -9,11 +9,10 @@ export default defineEventHandler(async (event: H3Event) => {
 	const query = parseQueryAs(event, ZodRegionsQuery)
 	const cookie = event.node.req.headers.cookie
 	const url = buildFullUrl(`${config.public.apiBaseUrl}/region/`, query)
-	const response = await fetch(url, {
+	const response = await $fetch(url, {
 		headers: {
 			Cookie: cookie || ''
 		}
 	})
-	const data = await response.json()
-	return await parseDataAs(data, ZodPagination(ZodRegion))
+	return await parseDataAs(response, ZodPagination(ZodRegion))
 })

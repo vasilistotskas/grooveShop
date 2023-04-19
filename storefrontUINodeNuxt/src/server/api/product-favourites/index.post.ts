@@ -7,7 +7,7 @@ export default defineEventHandler(async (event: H3Event) => {
 	const body = await parseBodyAs(event, ZodFavouriteCreateRequest)
 	const cookie = event.node.req.headers.cookie
 	const csrftoken = getCookie(event, 'csrftoken') || ''
-	const response = await fetch(`${config.public.apiBaseUrl}/product/favourite/`, {
+	const response = await $fetch(`${config.public.apiBaseUrl}/product/favourite/`, {
 		headers: {
 			Cookie: cookie || '',
 			'X-CSRFToken': csrftoken,
@@ -17,6 +17,5 @@ export default defineEventHandler(async (event: H3Event) => {
 		body: JSON.stringify(body),
 		method: 'post'
 	})
-	const data = await response.json()
-	return await parseDataAs(data, ZodFavourite)
+	return await parseDataAs(response, ZodFavourite)
 })

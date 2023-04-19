@@ -8,7 +8,7 @@ export default defineEventHandler(async (event: H3Event) => {
 	const cookie = event.node.req.headers.cookie
 	const params = parseParamsAs(event, ZodReviewParams)
 	const csrftoken = getCookie(event, 'csrftoken') || ''
-	const response = await fetch(
+	const response = await $fetch(
 		`${config.public.apiBaseUrl}/product/review/${params.id}/`,
 		{
 			headers: {
@@ -21,6 +21,5 @@ export default defineEventHandler(async (event: H3Event) => {
 			method: 'put'
 		}
 	)
-	const data = await response.json()
-	return await parseDataAs(data, ZodReview)
+	return await parseDataAs(response, ZodReview)
 })

@@ -6,12 +6,11 @@ export default defineEventHandler(async (event: H3Event) => {
 	const config = useRuntimeConfig()
 	const body = await parseBodyAs(event, ZodOrderCreateRequest)
 	const cookie = event.node.req.headers.cookie
-	const response = await fetch(`${config.public.apiBaseUrl}/order`, {
+	const response = await $fetch(`${config.public.apiBaseUrl}/order`, {
 		body: JSON.stringify(body),
 		headers: {
 			Cookie: cookie || ''
 		}
 	})
-	const data = await response.json()
-	return await parseDataAs(data, ZodOrder)
+	return await parseDataAs(response, ZodOrder)
 })

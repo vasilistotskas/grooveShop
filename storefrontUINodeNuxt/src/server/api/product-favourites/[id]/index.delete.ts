@@ -9,7 +9,7 @@ export default defineEventHandler(async (event: H3Event) => {
 	const params = parseParamsAs(event, ZodFavouriteParams)
 	const csrftoken = getCookie(event, 'csrftoken') || ''
 
-	const response = await fetch(
+	const response = await $fetch(
 		`${config.public.apiBaseUrl}/product/favourite/${params.id}`,
 		{
 			headers: {
@@ -21,6 +21,5 @@ export default defineEventHandler(async (event: H3Event) => {
 			method: 'delete'
 		}
 	)
-	const status = response.status
-	return parseDataAs(status, z.number())
+	return await parseDataAs(response, z.any())
 })

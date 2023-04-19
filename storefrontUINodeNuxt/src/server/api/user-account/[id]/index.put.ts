@@ -8,7 +8,7 @@ export default defineEventHandler(async (event: H3Event) => {
 	const cookie = event.node.req.headers.cookie
 	const params = parseParamsAs(event, ZodAccountParams)
 	const csrftoken = getCookie(event, 'csrftoken') || ''
-	const response = await fetch(`${config.public.apiBaseUrl}/user/account/${params.id}`, {
+	const response = await $fetch(`${config.public.apiBaseUrl}/user/account/${params.id}`, {
 		headers: {
 			Cookie: cookie || '',
 			'X-CSRFToken': csrftoken,
@@ -18,6 +18,5 @@ export default defineEventHandler(async (event: H3Event) => {
 		body: JSON.stringify(body),
 		method: 'put'
 	})
-	const data = await response.json()
-	return await parseDataAs(data, ZodAccount)
+	return await parseDataAs(response, ZodAccount)
 })
