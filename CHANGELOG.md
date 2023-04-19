@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.40.0 (2023-04-19)
+### Feature
+* **Nuxt:** Type safe access to process.env vars ([`d1b6ef5`](https://github.com/vasilistotskas/grooveShop/commit/d1b6ef5ccfa2498bd3d5a0cac23371b18eabcb97))
+
 ## v0.39.1 (2023-04-19)
 ### Fix
 * **Nuxt:** Convert every value and property to pascalCase ([`a868ee7`](https://github.com/vasilistotskas/grooveShop/commit/a868ee759b1bd41db2e22e93bb432a17c9edfab5))
