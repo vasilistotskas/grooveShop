@@ -41,7 +41,7 @@ export const ZodOrder = z.object({
 export const ZodOrderQuery = z.object({
 	page: z.string().optional(),
 	ordering: z.string().optional(),
-	user_id: z.string().optional(),
+	userId: z.string().optional(),
 	status: z.string().optional()
 })
 
@@ -49,7 +49,7 @@ export type Order = z.infer<typeof ZodOrder>
 
 export type OrderQuery = PaginationQuery &
 	OrderingQuery & {
-		user_id?: string | undefined
+		userId?: string | undefined
 		status?: string | undefined
 	}
 
@@ -74,4 +74,4 @@ export const ZodOrderParams = z.object({
 
 export type OrderParams = z.infer<typeof ZodOrderParams>
 
-export type OrderOrderingField = 'created_at'
+export type OrderOrderingField = 'createdAt'

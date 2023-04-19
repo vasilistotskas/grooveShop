@@ -36,7 +36,7 @@ export const useReviewsStore = defineStore({
 		}
 	},
 	actions: {
-		async fetchReviews({ product_id, user_id, page, ordering, expand }: ReviewQuery) {
+		async fetchReviews({ productId, userId, page, ordering, expand }: ReviewQuery) {
 			const {
 				data: reviews,
 				error,
@@ -44,8 +44,8 @@ export const useReviewsStore = defineStore({
 			} = await useFetch(`/api/product-reviews`, {
 				method: 'get',
 				params: {
-					product_id,
-					user_id,
+					productId,
+					userId,
 					page,
 					ordering,
 					expand
@@ -58,7 +58,7 @@ export const useReviewsStore = defineStore({
 				this.reviews = reviews.value
 			}
 		},
-		async fetchUserToProductReview({ product_id, user_id, expand }: ReviewQuery) {
+		async fetchUserToProductReview({ productId, userId, expand }: ReviewQuery) {
 			const {
 				data: review,
 				error,
@@ -66,8 +66,8 @@ export const useReviewsStore = defineStore({
 			} = await useFetch(`/api/product-reviews`, {
 				method: 'get',
 				params: {
-					product_id,
-					user_id,
+					productId,
+					userId,
 					expand
 				}
 			})

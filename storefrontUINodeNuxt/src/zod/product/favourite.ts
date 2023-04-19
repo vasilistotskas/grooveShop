@@ -16,8 +16,8 @@ export type Favourite = z.infer<typeof ZodFavourite>
 export type FavouriteQuery = PaginationQuery &
 	OrderingQuery & {
 		id?: number | undefined
-		user_id?: number | undefined
-		product_id?: number | undefined
+		userId?: number | undefined
+		productId?: number | undefined
 	}
 
 export const ZodFavouriteQuery = z.object({
@@ -25,8 +25,8 @@ export const ZodFavouriteQuery = z.object({
 	limit: z.string().optional(),
 	ordering: z.string().optional(),
 	id: z.string().optional(),
-	user_id: z.string().optional(),
-	product_id: z.string().optional()
+	userId: z.string().optional(),
+	productId: z.string().optional()
 })
 
 export const ZodFavouriteCreateRequest = z.object({

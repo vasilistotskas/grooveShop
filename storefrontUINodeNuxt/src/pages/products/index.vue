@@ -26,7 +26,7 @@ const entityOrdering: EntityOrdering<ProductOrderingField> = [
 		options: ['ascending', 'descending']
 	},
 	{
-		value: 'created_at',
+		value: 'createdAt',
 		label: t('pages.product.ordering.created_at'),
 		options: ['ascending', 'descending']
 	}
@@ -35,7 +35,7 @@ const entityOrdering: EntityOrdering<ProductOrderingField> = [
 const orderingFields: Record<ProductOrderingField, OrderingOption[]> = {
 	name: [],
 	price: [],
-	created_at: []
+	createdAt: []
 }
 
 const { refresh } = await useAsyncData('products', () =>

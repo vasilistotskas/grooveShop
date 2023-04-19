@@ -33,7 +33,7 @@ export const useOrderStore = defineStore({
 		}
 	},
 	actions: {
-		async fetchOrders({ page, ordering, user_id }: OrderQuery): Promise<void> {
+		async fetchOrders({ page, ordering, userId }: OrderQuery): Promise<void> {
 			const {
 				data: orders,
 				error,
@@ -43,7 +43,7 @@ export const useOrderStore = defineStore({
 				params: {
 					page,
 					ordering,
-					user_id
+					userId
 				}
 			})
 			this.pending = pending.value

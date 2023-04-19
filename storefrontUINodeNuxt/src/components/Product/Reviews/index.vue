@@ -50,17 +50,17 @@ const entityOrdering: EntityOrdering<ReviewsOrderingField> = [
 		options: ['ascending', 'descending']
 	},
 	{
-		value: 'user_id',
+		value: 'userId',
 		label: t('components.product.reviews.ordering.user_id'),
 		options: ['ascending', 'descending']
 	},
 	{
-		value: 'product_id',
+		value: 'productId',
 		label: t('components.product.reviews.ordering.product_id'),
 		options: ['ascending', 'descending']
 	},
 	{
-		value: 'created_at',
+		value: 'createdAt',
 		label: t('components.product.reviews.ordering.created_at'),
 		options: ['ascending', 'descending']
 	}
@@ -68,9 +68,9 @@ const entityOrdering: EntityOrdering<ReviewsOrderingField> = [
 
 const orderingFields: Record<ReviewsOrderingField, OrderingOption[]> = {
 	id: [],
-	user_id: [],
-	product_id: [],
-	created_at: []
+	userId: [],
+	productId: [],
+	createdAt: []
 }
 
 const pagination = computed(() => {

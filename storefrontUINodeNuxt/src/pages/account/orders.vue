@@ -16,14 +16,14 @@ const { orders, pending, error } = storeToRefs(orderStore)
 
 const entityOrdering: EntityOrdering<OrderOrderingField> = [
 	{
-		value: 'created_at',
+		value: 'createdAt',
 		label: t('pages.account.orders.ordering.created_at'),
 		options: ['ascending', 'descending']
 	}
 ]
 
 const orderingFields: Record<OrderOrderingField, OrderingOption[]> = {
-	created_at: []
+	createdAt: []
 }
 
 const pagination = computed(() => {
@@ -37,7 +37,7 @@ const ordering = computed(() => {
 const routePaginationParams = ref<OrderQuery>({
 	page: Number(route.query.page) || undefined,
 	ordering: route.query.ordering || undefined,
-	user_id: String(account.value?.id)
+	userId: String(account.value?.id)
 })
 
 const { refresh } = await useAsyncData('orders', () =>

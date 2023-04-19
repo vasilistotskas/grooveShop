@@ -24,7 +24,7 @@ export default defineEventHandler(async (event: H3Event) => {
 
 	// Favourites
 	const favouritesQuery: FavouriteQuery = {
-		user_id: accountData.id,
+		userId: accountData.id,
 		pagination: 'false'
 	}
 	const favouritesUrl = buildFullUrl(
@@ -40,7 +40,7 @@ export default defineEventHandler(async (event: H3Event) => {
 
 	// Reviews
 	const reviewsQuery: ReviewQuery = {
-		user_id: accountData.id,
+		userId: accountData.id,
 		pagination: 'false'
 	}
 	const reviewsUrl = buildFullUrl(
@@ -56,7 +56,7 @@ export default defineEventHandler(async (event: H3Event) => {
 
 	// Orders
 	const ordersQuery: OrderQuery = {
-		user_id: accountData.id,
+		userId: accountData.id,
 		pagination: 'false'
 	}
 	const ordersUrl = buildFullUrl(`${config.public.apiBaseUrl}/order/`, ordersQuery)

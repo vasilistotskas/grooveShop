@@ -44,7 +44,7 @@ await useAsyncData('productImages', () =>
 )
 
 const routePaginationParams = ref<ReviewQuery>({
-	product_id: String(productId),
+	productId: String(productId),
 	page: Number(route.query.page) || undefined,
 	ordering: route.query.ordering || undefined,
 	expand: 'true'
@@ -86,8 +86,8 @@ const userToProductFavourite = computed(() => {
 
 const { data: review, refresh: reviewRefresh } = await useAsyncData('productReview', () =>
 	reviewsStore.fetchUserToProductReview({
-		product_id: String(productId),
-		user_id: account.value?.id ? String(account.value.id) : undefined,
+		productId: String(productId),
+		userId: account.value?.id ? String(account.value.id) : undefined,
 		expand: 'true'
 	})
 )
@@ -166,7 +166,7 @@ watch(
 	() => route.query,
 	() => {
 		reviewsBus.emit('productReviews', {
-			product_id: String(productId),
+			productId: String(productId),
 			page: Number(route.query.page) || undefined,
 			ordering: route.query.ordering || undefined,
 			expand: 'true'

@@ -25,8 +25,8 @@ export type Review = z.infer<typeof ZodReview>
 export type ReviewQuery = PaginationQuery &
 	OrderingQuery & {
 		id?: string | undefined
-		product_id?: string | undefined
-		user_id?: string | undefined
+		productId?: string | undefined
+		userId?: string | undefined
 		expand?: string | undefined
 	}
 
@@ -34,12 +34,12 @@ export const ZodReviewQuery = z.object({
 	page: z.string().optional(),
 	ordering: z.string().optional(),
 	id: z.string().optional(),
-	product_id: z.string().optional(),
-	user_id: z.string().optional(),
+	productId: z.string().optional(),
+	userId: z.string().optional(),
 	expand: z.string().optional()
 })
 
-export type ReviewsOrderingField = 'id' | 'user_id' | 'product_id' | 'created_at'
+export type ReviewsOrderingField = 'id' | 'userId' | 'productId' | 'createdAt'
 
 export const ZodReviewCreateRequest = z.object({
 	product: z.string(),

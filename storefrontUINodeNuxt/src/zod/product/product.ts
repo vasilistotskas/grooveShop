@@ -68,4 +68,4 @@ export const ZodProductQuery = z.object({
 })
 
 export type ProductQuery = PaginationQuery & OrderingQuery
-export type ProductOrderingField = 'name' | 'price' | 'created_at'
+export type ProductOrderingField = 'name' | 'price' | 'createdAt'
