@@ -9,11 +9,15 @@ const props = defineProps({
 	},
 	type: {
 		type: String as PropType<ButtonType>,
-		default: 'button'
+		default: 'button',
+		validator: (value: string) =>
+			['button', 'link', 'submit', 'reset', 'input'].includes(value)
 	},
 	style: {
 		type: String as PropType<ButtonStyle>,
-		default: 'primary'
+		default: 'primary',
+		validator: (value: string) =>
+			['primary', 'secondary', 'opposite', 'success', 'danger', 'info'].includes(value)
 	},
 	size: {
 		type: String as PropType<ButtonSize>,

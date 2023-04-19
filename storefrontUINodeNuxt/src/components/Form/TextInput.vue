@@ -11,11 +11,13 @@ const props = defineProps({
 	},
 	size: {
 		type: String,
-		default: 'md'
+		default: 'md',
+		validator: (value: string) => ['lg', 'md', 'sm', 'xs'].includes(value)
 	},
 	type: {
 		type: String,
-		default: 'text'
+		default: 'text',
+		validator: (value: string) => ['text', 'password', 'email', 'number'].includes(value)
 	},
 	id: {
 		type: String,

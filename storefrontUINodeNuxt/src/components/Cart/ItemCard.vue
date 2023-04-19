@@ -4,7 +4,7 @@ import { CartItem } from '~/zod/cart/cart-item'
 import { GlobalEvents } from '~/events/global'
 
 const props = defineProps({
-	cartItem: { type: Object as PropType<CartItem>, required: true, default: null }
+	cartItem: { type: Object as PropType<CartItem>, required: true }
 })
 
 const { cartItem } = toRefs(props)
