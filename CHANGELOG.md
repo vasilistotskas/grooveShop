@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.40.1 (2023-04-20)
+### Fix
+* **Nuxt:** Pinia stores API error handling improve ([`78bf593`](https://github.com/vasilistotskas/grooveShop/commit/78bf593d786271b9eb385031b79b0670002113cd))
+
 ## v0.40.0 (2023-04-19)
 ### Feature
 * **Nuxt:** Type safe access to process.env vars ([`d1b6ef5`](https://github.com/vasilistotskas/grooveShop/commit/d1b6ef5ccfa2498bd3d5a0cac23371b18eabcb97))
