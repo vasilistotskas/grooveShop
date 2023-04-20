@@ -37,7 +37,11 @@ const error = computed(() => {
 <template>
 	<component
 		:is="wrap ? PageWrapper as string : 'div'"
-		:class="wrap ? 'flex flex-col items-center justify-center' : ''"
+		:class="
+			wrap
+				? 'flex flex-col items-center justify-center'
+				: 'grid items-center justify-center gap-4'
+		"
 	>
 		<h1 class="text-center mb-6 leading-3 text-gray-700 dark:text-gray-200">
 			<span class="text-gray-700 dark:text-gray-200 font-bold text-8xl block">{{

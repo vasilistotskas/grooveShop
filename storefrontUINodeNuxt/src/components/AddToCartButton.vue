@@ -5,7 +5,7 @@ import { useCartStore } from '~/stores/cart'
 import { GlobalEvents } from '~/events/global'
 
 const props = defineProps({
-	product: { type: Object as PropType<Product>, required: true, default: null },
+	product: { type: Object as PropType<Product>, required: true },
 	quantity: { type: Number, required: true, default: 1 },
 	text: {
 		type: String,

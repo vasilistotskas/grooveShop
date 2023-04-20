@@ -6,8 +6,7 @@ const { t } = useLang()
 const props = defineProps({
 	account: {
 		type: Object as PropType<Account>,
-		required: false,
-		default: null
+		required: true
 	},
 	ordersCount: {
 		type: Number,

@@ -114,14 +114,14 @@ reviewBus.on((event, payload: ReviewActionPayload) => {
 				})
 				.then(() => {
 					toast.success(t('pages.product.review.created.success'))
+					productRefresh()
+					reviewRefresh()
 				})
 				.catch((err) => {
 					toast.error(err.message)
 				})
 				.finally(() => {
 					modalBus.emit('modal-close-reviewModal')
-					productRefresh()
-					reviewRefresh()
 				})
 			break
 		case 'update':
@@ -134,14 +134,14 @@ reviewBus.on((event, payload: ReviewActionPayload) => {
 				})
 				.then(() => {
 					toast.success(t('pages.product.review.updated.success'))
+					productRefresh()
+					reviewRefresh()
 				})
 				.catch((err) => {
 					toast.error(err.message)
 				})
 				.finally(() => {
 					modalBus.emit('modal-close-reviewModal')
-					productRefresh()
-					reviewRefresh()
 				})
 			break
 		case 'delete':
@@ -149,14 +149,14 @@ reviewBus.on((event, payload: ReviewActionPayload) => {
 				.deleteReview(payload.id)
 				.then(() => {
 					toast.success(t('pages.product.review.deleted.success'))
+					productRefresh()
+					reviewRefresh()
 				})
 				.catch((err) => {
 					toast.error(err.message)
 				})
 				.finally(() => {
 					modalBus.emit('modal-close-reviewModal')
-					productRefresh()
-					reviewRefresh()
 				})
 			break
 	}

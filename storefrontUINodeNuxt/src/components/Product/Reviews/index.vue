@@ -126,7 +126,7 @@ const ordering = computed(() => {
 				</div>
 				<div v-if="error" class="reviews_list__item">
 					<div class="reviews_list__item__error">
-						<Error :error="error" />
+						<Error :code="error.statusCode" />
 					</div>
 				</div>
 				<div v-else-if="reviews?.results.length === 0" class="reviews_list__item">
