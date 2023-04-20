@@ -72,8 +72,13 @@ export const useReviewsStore = defineStore({
 				}
 			})
 			this.pending = pending.value
-			this.error = error.value
-
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 			if (review.value) {
 				return review.value.results[0]
 			}
@@ -88,7 +93,13 @@ export const useReviewsStore = defineStore({
 				body
 			})
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 			if (review.value) {
 				this.reviews.results.push(review.value)
 			}
@@ -98,11 +109,15 @@ export const useReviewsStore = defineStore({
 				method: 'delete'
 			})
 			this.pending = pending.value
-			this.error = error.value
-			if (!error.value) {
-				const index = this.reviews.results.findIndex((review) => review.id === id)
-				this.reviews.results.splice(index, 1)
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
 			}
+			const index = this.reviews.results.findIndex((review) => review.id === id)
+			this.reviews.results.splice(index, 1)
 		},
 		async updateReview(id: number, body: ReviewPutRequest) {
 			const {
@@ -114,7 +129,13 @@ export const useReviewsStore = defineStore({
 				body: JSON.stringify(body)
 			})
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 			if (review.value) {
 				const index = this.reviews.results.findIndex((review) => review.id === id)
 				this.reviews.results[index] = {

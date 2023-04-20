@@ -37,7 +37,13 @@ export const useCartStore = defineStore({
 				method: 'get'
 			})
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 			if (cart.value) {
 				this.cart = cart.value
 			}
@@ -48,7 +54,13 @@ export const useCartStore = defineStore({
 				body: JSON.stringify(body)
 			})
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 		},
 		async updateCartItem(id: number, body: CartItemPutRequest) {
 			const { error, pending } = await useFetch(`/api/cart-items/${id}`, {
@@ -56,14 +68,26 @@ export const useCartStore = defineStore({
 				body: JSON.stringify(body)
 			})
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 		},
 		async deleteCartItem(id: number) {
 			const { error, pending } = await useFetch(`/api/cart-items/${id}`, {
 				method: 'delete'
 			})
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 		}
 	}
 })

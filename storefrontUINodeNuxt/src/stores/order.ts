@@ -47,16 +47,13 @@ export const useOrderStore = defineStore({
 				}
 			})
 			this.pending = pending.value
-			this.error = error.value
-			// @TODO: Better error handling
-			console.log('===== error data=====', error.value?.data)
-			console.log('===== error response =====', error.value?.response)
-			console.log('===== error statusMessage =====', error.value?.statusMessage)
-			console.log('===== error message =====', error.value?.message)
-			console.log('===== error status =====', error.value?.status)
-			console.log('===== error cause =====', error.value?.cause)
-			console.log('===== error statusCode =====', error.value?.statusCode)
-			console.log('===== error statusText =====', error.value?.statusText)
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 			if (orders.value) {
 				this.orders = orders.value
 			}
@@ -70,7 +67,13 @@ export const useOrderStore = defineStore({
 				method: 'get'
 			})
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 			if (order.value) {
 				this.order = order.value
 			}
@@ -85,7 +88,13 @@ export const useOrderStore = defineStore({
 				body
 			})
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 			if (order.value) {
 				this.order = order.value
 			}

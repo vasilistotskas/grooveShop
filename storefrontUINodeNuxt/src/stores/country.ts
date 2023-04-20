@@ -38,7 +38,13 @@ export const useCountryStore = defineStore({
 				params
 			})
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 			if (countries.value) {
 				this.countries = countries.value
 			}

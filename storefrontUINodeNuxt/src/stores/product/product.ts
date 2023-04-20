@@ -47,7 +47,13 @@ export const useProductStore = defineStore({
 				}
 			})
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 			if (products.value) {
 				this.products = products.value
 			}
@@ -74,7 +80,13 @@ export const useProductStore = defineStore({
 				body: JSON.stringify(body)
 			})
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 			if (newProduct.value) {
 				this.products.results.push(newProduct.value)
 			}
@@ -87,7 +99,13 @@ export const useProductStore = defineStore({
 				}
 			)
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 		}
 	}
 })

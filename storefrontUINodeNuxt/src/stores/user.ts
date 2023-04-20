@@ -42,7 +42,13 @@ export const useUserStore = defineStore({
 				method: 'get'
 			})
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 			if (account.value) {
 				this.account = account.value.account
 				this.favourites = account.value.favourites
@@ -60,7 +66,13 @@ export const useUserStore = defineStore({
 				body
 			})
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 			if (account.value) {
 				this.account = account.value
 			}
@@ -81,7 +93,13 @@ export const useUserStore = defineStore({
 				}
 			)
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 			const account = await parseDataAs(data.value, ZodAccount).catch((error) => {
 				this.error = error?.data
 				return null
@@ -100,7 +118,13 @@ export const useUserStore = defineStore({
 				body
 			})
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 			if (favourite.value) {
 				this.favourites?.push(favourite.value)
 			}
@@ -110,11 +134,15 @@ export const useUserStore = defineStore({
 				method: 'delete'
 			})
 			this.pending = pending.value
-			this.error = error.value
-			if (!error.value) {
-				this.favourites =
-					this.favourites?.filter((favourite) => favourite.id !== id) || null
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
 			}
+			this.favourites =
+				this.favourites?.filter((favourite) => favourite.id !== id) || null
 		},
 		async addReview(body: ReviewCreateRequest) {
 			const {
@@ -126,7 +154,13 @@ export const useUserStore = defineStore({
 				body
 			})
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 			if (review.value) {
 				this.reviews?.push(review.value)
 			}
@@ -141,7 +175,13 @@ export const useUserStore = defineStore({
 				body
 			})
 			this.pending = pending.value
-			this.error = error.value
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
+			}
 			if (review.value) {
 				this.reviews =
 					this.reviews?.map((review) => {
@@ -157,10 +197,14 @@ export const useUserStore = defineStore({
 				method: 'delete'
 			})
 			this.pending = pending.value
-			this.error = error.value
-			if (!error.value) {
-				this.reviews = this.reviews?.filter((review) => review.id !== id) || null
+			this.error = error.value?.data
+			if (error.value) {
+				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
+				}`
+				throw new Error(errorMessage)
 			}
+			this.reviews = this.reviews?.filter((review) => review.id !== id) || null
 		}
 	}
 })
