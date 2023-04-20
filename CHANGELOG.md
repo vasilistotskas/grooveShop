@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.40.2 (2023-04-20)
+### Fix
+* **Nuxt:** General minor code fixes ([`84768c5`](https://github.com/vasilistotskas/grooveShop/commit/84768c5c20317b7f89251ab325cbf8e9c4d56e71))
+
 ## v0.40.1 (2023-04-20)
 ### Fix
 * **Nuxt:** Pinia stores API error handling improve ([`78bf593`](https://github.com/vasilistotskas/grooveShop/commit/78bf593d786271b9eb385031b79b0670002113cd))
