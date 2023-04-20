@@ -347,8 +347,10 @@ others:
   copy: menyalin
   enabled: diaktifkan
   disabled: dengan disabilitas
-  readLess: baca lebih sedikit
-  readMore: baca selengkapnya
+  read_less: baca lebih sedikit
+  read_more: baca selengkapnya
+  errors:
+    unknown_internal_api_error: kesalahan api internal yang tidak diketahui
 routes:
   el: orang yunani
   en: bahasa inggris

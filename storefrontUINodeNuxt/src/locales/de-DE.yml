@@ -353,8 +353,10 @@ others:
   copy: kopieren
   enabled: ermöglicht
   disabled: behinderte
-  readLess: lese weniger
-  readMore: weiterlesen
+  read_less: lese weniger
+  read_more: weiterlesen
+  errors:
+    unknown_internal_api_error: unbekannter interner api-fehler
 routes:
   el: griechisch
   en: englisch

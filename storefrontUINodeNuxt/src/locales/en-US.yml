@@ -333,8 +333,10 @@ others:
   copy: copy
   enabled: enabled
   disabled: disabled
-  readLess: read less
-  readMore: read more
+  read_less: read less
+  read_more: read more
+  errors:
+    unknown_internal_api_error: Unknown internal API error
 routes:
   el: Greek
   en: English
