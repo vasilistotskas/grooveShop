@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.41.0 (2023-04-21)
+### Feature
+* **Nuxt:** Account favourites page ready ([`19ae2a1`](https://github.com/vasilistotskas/grooveShop/commit/19ae2a18ed5d983ff617b441fb0f619689538801))
+
 ## v0.40.3 (2023-04-21)
 ### Fix
 * **Nuxt:** Remove useAsyncData from pages that causing hydration missmatch ([`6f756fd`](https://github.com/vasilistotskas/grooveShop/commit/6f756fd8557ac3dc091c73d6e64baa7012fdaff9))
