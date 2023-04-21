@@ -16,7 +16,7 @@ const { cart } = storeToRefs(cartStore)
 const { countries } = storeToRefs(countryStore)
 const { regions } = storeToRefs(regionStore)
 
-await useAsyncData('country', () => countryStore.fetchCountries())
+await countryStore.fetchCountries()
 
 const onCountryChange = (event: Event) => {
 	if (!(event.target instanceof HTMLSelectElement)) return

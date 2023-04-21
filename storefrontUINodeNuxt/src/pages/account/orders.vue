@@ -40,9 +40,8 @@ const routePaginationParams = ref<OrderQuery>({
 	userId: String(account.value?.id)
 })
 
-const { refresh } = await useAsyncData('orders', () =>
-	orderStore.fetchOrders(routePaginationParams.value)
-)
+await orderStore.fetchOrders(routePaginationParams.value)
+const refresh = async () => await orderStore.fetchOrders(routePaginationParams.value)
 
 // @TODO: Event bus like this should have an Enum for key and event name
 const bus = useEventBus<string>('orders')

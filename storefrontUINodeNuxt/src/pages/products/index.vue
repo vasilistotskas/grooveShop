@@ -38,9 +38,8 @@ const orderingFields: Record<ProductOrderingField, OrderingOption[]> = {
 	createdAt: []
 }
 
-const { refresh } = await useAsyncData('products', () =>
-	store.fetchProducts(routePaginationParams.value)
-)
+await store.fetchProducts(routePaginationParams.value)
+const refresh = async () => await store.fetchProducts(routePaginationParams.value)
 
 const { products, pending, error } = storeToRefs(store)
 
@@ -101,7 +100,7 @@ useServerSeoMeta({
 <template>
 	<PageWrapper>
 		<PageTitle
-			:text="`${t('pages.products.title')} - ${pagination.resultsCount}`"
+			:text="`${$t('pages.products.title')} - ${pagination.resultsCount}`"
 			class="capitalize"
 		/>
 		<PageBody>

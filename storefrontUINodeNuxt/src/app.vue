@@ -12,7 +12,8 @@ const { t } = useLang()
 const { locale, locales } = useI18n()
 const cartStore = useCartStore()
 
-const { refresh: refreshCart } = await useAsyncData('cart', () => cartStore.fetchCart())
+await cartStore.fetchCart()
+const refreshCart = async () => await cartStore.fetchCart()
 
 const title = computed(() => {
 	if ('title' in route.meta) {

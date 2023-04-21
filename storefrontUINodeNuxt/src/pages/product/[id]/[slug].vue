@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { isClient } from '@vueuse/shared'
 import { useShare } from '@vueuse/core'
+import { Ref } from 'vue'
 import { useProductStore } from '~/stores/product/product'
 import { capitalize } from '~/utils/str'
 import { useImagesStore } from '~/stores/product/images'
@@ -8,7 +9,7 @@ import { useAuthStore } from '~/stores/auth'
 import { useUserStore } from '~/stores/user'
 import { useReviewsStore } from '~/stores/product/reviews'
 import { ReviewActionPayload, ReviewQuery } from '~/zod/product/review'
-import { ProductQuery } from '~/zod/product/product'
+import { Product, ProductQuery } from '~/zod/product/product'
 import { GlobalEvents } from '~/events/global'
 
 const route = useRoute()
@@ -33,15 +34,16 @@ const {
 	product,
 	pending: productPending,
 	error: productError
+}: {
+	product: Ref<Product | null>
+	pending: Ref<boolean>
+	error: Ref<Error | null>
 } = storeToRefs(productStore)
 
-const { refresh: productRefresh } = await useAsyncData('product', () =>
-	productStore.fetchProduct(productId)
-)
+await productStore.fetchProduct(productId)
+const productRefresh = async () => await productStore.fetchProduct(productId)
 
-await useAsyncData('productImages', () =>
-	productImagesStore.fetchImages({ product: String(productId) })
-)
+await productImagesStore.fetchImages({ product: String(productId) })
 
 const routePaginationParams = ref<ReviewQuery>({
 	productId: String(productId),
@@ -49,9 +51,9 @@ const routePaginationParams = ref<ReviewQuery>({
 	ordering: route.query.ordering || undefined,
 	expand: 'true'
 })
-const { refresh: reviewsRefresh } = await useAsyncData('productReviews', () =>
-	reviewsStore.fetchReviews(routePaginationParams.value)
-)
+await reviewsStore.fetchReviews(routePaginationParams.value)
+const reviewsRefresh = async () =>
+	await reviewsStore.fetchReviews(routePaginationParams.value)
 
 const { reviews, error: reviewsError } = storeToRefs(reviewsStore)
 
