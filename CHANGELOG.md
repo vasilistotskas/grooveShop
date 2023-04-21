@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.40.3 (2023-04-21)
+### Fix
+* **Nuxt:** Remove useAsyncData from pages that causing hydration missmatch ([`6f756fd`](https://github.com/vasilistotskas/grooveShop/commit/6f756fd8557ac3dc091c73d6e64baa7012fdaff9))
+
 ## v0.40.2 (2023-04-20)
 ### Fix
 * **Nuxt:** General minor code fixes ([`84768c5`](https://github.com/vasilistotskas/grooveShop/commit/84768c5c20317b7f89251ab325cbf8e9c4d56e71))
