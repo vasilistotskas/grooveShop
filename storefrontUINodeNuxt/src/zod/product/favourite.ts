@@ -1,11 +1,13 @@
 import { z } from 'zod'
 import { PaginationQuery } from '~/zod/pagination/pagination'
 import { OrderingQuery } from '~/zod/ordering/ordering'
+import { ZodProduct } from '~/zod/product/product'
+import { ZodAccount } from '~/zod/user/account'
 
 export const ZodFavourite = z.object({
 	id: z.number(),
-	user: z.number(),
-	product: z.number(),
+	product: z.union([z.number(), ZodProduct]),
+	user: z.union([z.number(), ZodAccount]),
 	createdAt: z.string().datetime({ offset: true }),
 	updatedAt: z.string().datetime({ offset: true }),
 	uuid: z.string()
@@ -15,18 +17,19 @@ export type Favourite = z.infer<typeof ZodFavourite>
 
 export type FavouriteQuery = PaginationQuery &
 	OrderingQuery & {
-		id?: number | undefined
-		userId?: number | undefined
-		productId?: number | undefined
+		id?: string | undefined
+		userId?: string | undefined
+		productId?: string | undefined
+		expand?: string | undefined
 	}
 
 export const ZodFavouriteQuery = z.object({
-	offset: z.string().optional(),
-	limit: z.string().optional(),
+	page: z.string().optional(),
 	ordering: z.string().optional(),
 	id: z.string().optional(),
 	userId: z.string().optional(),
-	productId: z.string().optional()
+	productId: z.string().optional(),
+	expand: z.string().optional()
 })
 
 export const ZodFavouriteCreateRequest = z.object({
@@ -41,3 +44,5 @@ export const ZodFavouriteParams = z.object({
 })
 
 export type FavouriteParams = z.infer<typeof ZodFavouriteParams>
+
+export type FavouriteOrderingField = 'createdAt'

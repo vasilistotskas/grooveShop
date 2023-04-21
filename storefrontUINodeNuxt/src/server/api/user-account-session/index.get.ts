@@ -24,7 +24,7 @@ export default defineEventHandler(async (event: H3Event) => {
 
 	// Favourites
 	const favouritesQuery: FavouriteQuery = {
-		userId: accountParsedData.id,
+		userId: String(accountParsedData.id),
 		pagination: 'false'
 	}
 	const favouritesUrl = buildFullUrl(
