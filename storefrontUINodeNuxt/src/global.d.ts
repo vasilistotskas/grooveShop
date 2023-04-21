@@ -1,3 +1,5 @@
+/// <reference types="unplugin-icons/types/vue" />
+
 import { z } from 'zod'
 
 declare module '~icons/*' {
