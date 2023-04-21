@@ -54,11 +54,42 @@
 .cookieControl button {
 	border: 0;
 	outline: 0;
-	font-size: 16px;
 	cursor: pointer;
 	padding: 12px 20px;
 	backface-visibility: hidden;
 	transition: background-color 200ms, color 200ms;
+}
+.cookieControl__BarButtons__ManageCookies {
+  background-color: transparent;
+  color: var(--cookie-control-barTextColor);
+  text-decoration: underline;
+  line-height: 1.2;
+  font-size: .813em;
+  font-weight: 600;
+  white-space: normal;
+  word-break: break-word;
+  word-wrap: break-word;
+}
+
+.cookieControl__BarButtons__ManageCookies:hover {
+  background-color: transparent;
+  color: var(--cookie-control-barButtonHoverColor);
+  text-decoration: underline;
+  opacity: 0.8;
+}
+.cookieControl__BarButtons__AcceptAll, .cookieControl__BarButtons__Decline {
+  color: var(--cookie-control-barButtonColor);
+  background-color: var(--cookie-control-barButtonBackground);
+  line-height: 1.2;
+  font-size: .813em;
+  font-weight: 600;
+  white-space: normal;
+  word-break: break-word;
+  word-wrap: break-word;
+}
+.cookieControl__BarButtons__AcceptAll:hover, .cookieControl__BarButtons__Decline:hover {
+  color: var(--cookie-control-barButtonHoverColor);
+  background-color: var(--cookie-control-barButtonHoverBackground);
 }
 .cookieControl__Bar {
 	position: fixed;
@@ -68,23 +99,13 @@
 .cookieControl__Bar h3,
 .cookieControl__Bar p {
 	color: var(--cookie-control-barTextColor);
-	max-width: 900px;
+	max-width: 1200px;
+  font-size: .813em;
+  line-height: 1.5;
 }
 .cookieControl__Bar h3 {
 	margin: 0;
 	font-size: 20px;
-}
-.cookieControl__Bar p {
-	font-size: 16px;
-	margin: 5px 0 0;
-}
-.cookieControl__Bar button {
-	color: var(--cookie-control-barButtonColor);
-	background-color: var(--cookie-control-barButtonBackground);
-}
-.cookieControl__Bar button:hover {
-	color: var(--cookie-control-barButtonHoverColor);
-	background-color: var(--cookie-control-barButtonHoverBackground);
 }
 .cookieControl__Bar button:focus {
 	box-shadow: 0 0 0 3px var(--cookie-control-focusRingColor);
@@ -95,7 +116,7 @@
 .cookieControl__BarContainer {
 	display: flex;
 	padding: 20px;
-	align-items: flex-end;
+	align-items: center;
 	justify-content: space-between;
 }
 .cookieControl__Bar--top-full,

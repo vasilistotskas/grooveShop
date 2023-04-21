@@ -48,7 +48,7 @@ export const DEFAULTS: Required<ModuleOptions> = {
 		barButtonColor: '#000',
 		barButtonHoverBackground: '#333',
 		barButtonHoverColor: '#fff',
-		barTextColor: '#fff',
+		barTextColor: '#696969',
 		checkboxActiveBackground: '#000',
 		checkboxActiveCircleBackground: '#fff',
 		checkboxDisabledBackground: '#ddd',

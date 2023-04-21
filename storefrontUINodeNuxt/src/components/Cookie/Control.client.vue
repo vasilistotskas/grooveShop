@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onBeforeMount, watch } from 'vue'
+import { ref, computed, onBeforeMount, watch, defineExpose } from 'vue'
 import {
 	getAllCookieIdsString,
 	getCookie,
@@ -181,6 +181,13 @@ watch(isConsentGiven, (current, _previous) => {
 		)
 	}
 })
+
+defineExpose({
+	accept,
+	acceptPartial,
+	decline
+})
+
 // initialization
 init()
 </script>
@@ -195,20 +202,26 @@ init()
 				<div class="cookieControl__BarContainer">
 					<div>
 						<slot name="bar">
-							<h3 v-text="$t('components.cookie.banner.title')" />
+							<h3 class="hidden" v-text="$t('components.cookie.banner.title')" />
 							<p v-text="$t('components.cookie.banner.description')" />
 						</slot>
 					</div>
 					<div class="cookieControl__BarButtons">
-						<button @click="accept()" v-text="$t('components.cookie.accept')" />
 						<button
-							v-if="moduleOptions.isAcceptNecessaryButtonEnabled"
-							@click="decline()"
-							v-text="$t('components.cookie.decline')"
-						/>
-						<button
+							class="cookieControl__BarButtons__ManageCookies"
 							@click="isModalActive = true"
 							v-text="$t('components.cookie.manage_cookies')"
+						/>
+						<button
+							class="cookieControl__BarButtons__AcceptAll"
+							@click="accept()"
+							v-text="$t('components.cookie.accept')"
+						/>
+						<button
+							v-if="moduleOptions.isAcceptNecessaryButtonEnabled"
+							class="cookieControl__BarButtons__Decline"
+							@click="decline()"
+							v-text="$t('components.cookie.decline')"
 						/>
 					</div>
 				</div>
