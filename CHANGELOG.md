@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.42.0 (2023-04-21)
+### Feature
+* **Nuxt:** Cookies UI improved ([`6f5b465`](https://github.com/vasilistotskas/grooveShop/commit/6f5b465809d559dd29130ec5476f5db1d5362096))
+
 ## v0.41.0 (2023-04-21)
 ### Feature
 * **Nuxt:** Account favourites page ready ([`19ae2a1`](https://github.com/vasilistotskas/grooveShop/commit/19ae2a18ed5d983ff617b441fb0f619689538801))
