@@ -38,6 +38,9 @@ const cartBus = useEventBus<string>(GlobalEvents.ON_CART_UPDATED)
 					toast.success(t('components.add_to_cart_button.added_to_cart'))
 					cartBus.emit(GlobalEvents.ON_CART_UPDATED)
 				})
+				.catch((err) => {
+					toast.error(err.message)
+				})
 		"
 	/>
 </template>

@@ -1,13 +1,21 @@
 <script lang="ts" setup>
 import { isClient } from '@vueuse/shared'
 import { useShare } from '@vueuse/core'
-import { PropType } from 'vue'
+import { PropType, Ref } from 'vue'
 import { Product } from '~/zod/product/product'
 import { useAuthStore } from '~/stores/auth'
 import { useUserStore } from '~/stores/user'
 
 const props = defineProps({
-	product: { type: Object as PropType<Product>, required: true }
+	product: { type: Object as PropType<Product>, required: true },
+	showAddToFavouriteButton: { type: Boolean, required: false, default: true },
+	showShareButton: { type: Boolean, required: false, default: true },
+	showAddToCartButton: { type: Boolean, required: false, default: true },
+	imgWidth: { type: Number, required: false, default: 250 },
+	imgHeight: { type: Number, required: false, default: 230 },
+	showVat: { type: Boolean, required: false, default: false },
+	showStartPrice: { type: Boolean, required: false, default: false },
+	showDescription: { type: Boolean, required: false, default: false }
 })
 
 const { contentShorten } = useText()
@@ -20,7 +28,27 @@ const { account, favourites } = storeToRefs(userStore)
 
 const isAuthenticated = authStore.isAuthenticated
 
-const { product } = toRefs(props)
+const {
+	product,
+	showAddToFavouriteButton,
+	showShareButton,
+	showAddToCartButton,
+	imgWidth,
+	imgHeight,
+	showVat,
+	showStartPrice,
+	showDescription
+}: {
+	product: Ref<Product>
+	showAddToFavouriteButton: Ref<boolean>
+	showShareButton: Ref<boolean>
+	showAddToCartButton: Ref<boolean>
+	imgWidth: Ref<number>
+	imgHeight: Ref<number>
+	showVat: Ref<boolean>
+	showStartPrice: Ref<boolean>
+	showDescription: Ref<boolean>
+} = toRefs(props)
 
 const productUrl = computed(() => {
 	if (!product.value) return ''
@@ -72,16 +100,16 @@ const userToProductFavourite = computed(() => {
 										placeholder
 										loading="auto"
 										provider="mediaStream"
-										class="product_img"
+										class="product_img bg-gray-700 dark:bg-gray-200"
 										:style="{ objectFit: 'contain' }"
-										:width="250"
-										:height="230"
+										:width="imgWidth"
+										:height="imgHeight"
 										:fit="'contain'"
 										:position="'entropy'"
 										:background="'transparent'"
 										:trim-threshold="5"
 										:format="imageExtension"
-										sizes="sm:100vw md:50vw lg:250px"
+										:sizes="`sm:100vw md:50vw lg:${imgWidth}px`"
 										:src="imageSrc"
 										:alt="product.name"
 									/>
@@ -94,7 +122,7 @@ const userToProductFavourite = computed(() => {
 					<div class="card-actions h-6 flex gap-4">
 						<ClientOnly>
 							<Button
-								v-if="isSupported"
+								v-if="isSupported && showShareButton"
 								:disabled="!isSupported"
 								:text="
 									isSupported
@@ -107,6 +135,7 @@ const userToProductFavourite = computed(() => {
 							/>
 						</ClientOnly>
 						<AddToFavouriteButton
+							v-if="showAddToFavouriteButton"
 							:product-id="product.id"
 							:user-id="account?.id"
 							:is-favourite="productInUserFavourites"
@@ -116,44 +145,57 @@ const userToProductFavourite = computed(() => {
 						/>
 					</div>
 					<h2 class="card-title text-gray-700 dark:text-gray-200">
-						<Anchor :to="`/product${product.absoluteUrl}`" :text="product.name">
+						<Anchor
+							:to="`/product${product.absoluteUrl}`"
+							:text="product.name"
+							css-class="card-title-text"
+						>
 							{{ product.name }}
 						</Anchor>
 					</h2>
-					<p class="card-description text-gray-700 dark:text-gray-200 text-muted">
+					<p
+						v-if="showDescription"
+						class="card-description text-gray-700 dark:text-gray-200 text-muted"
+					>
 						{{ contentShorten(product.description, 0, 100) }}
 					</p>
 					<div class="card-prices">
-						<div class="card-price d-flex justify-content-between">
-							<p class="text-gray-700 dark:text-gray-200">
+						<div v-if="showStartPrice" class="card-price d-flex justify-content-between">
+							<p class="card-prices-start-price">
 								<span class="text-gray-700 dark:text-gray-200">{{
 									$t('components.product.card.price')
 								}}</span
-								><span>{{ product.price }}</span>
+								><span class="text-gray-700 dark:text-gray-200">{{ product.price }}</span>
 							</p>
 						</div>
-						<div class="card-vat-percent d-flex justify-content-between">
-							<p class="text-gray-700 dark:text-gray-200">
+						<div v-if="showVat" class="card-vat-percent d-flex justify-content-between">
+							<p class="card-prices-vat-percent">
 								<span class="text-gray-700 dark:text-gray-200">{{
 									$t('components.product.card.vat_percent')
 								}}</span
-								><span>{{ product.vatPercent }}</span>
+								><span class="text-gray-700 dark:text-gray-200">{{
+									product.vatPercent
+								}}</span>
 							</p>
 						</div>
 					</div>
 					<div
 						class="card-final-price d-flex justify-content-between total font-weight-bold mt-4"
 					>
-						<p class="text-gray-700 dark:text-gray-200">
-							<span class="text-gray-700 dark:text-gray-200">{{
-								$t('components.product.card.total_price')
-							}}</span
-							><span>{{ product.finalPrice }}</span>
+						<p class="card-final-price-total">
+							<span
+								class="card-final-price-total-text text-gray-700 dark:text-gray-200"
+								>{{ $t('components.product.card.total_price') }}</span
+							><span
+								class="card-final-price-total-price text-gray-700 dark:text-gray-200"
+								>{{ product.finalPrice }}</span
+							>
 						</p>
 					</div>
 				</div>
 				<div class="card-footer">
 					<AddToCartButton
+						v-if="showAddToCartButton"
 						:product="product"
 						:quantity="1"
 						:text="$t('components.product.card.add_to_cart')"
@@ -169,6 +211,15 @@ const userToProductFavourite = computed(() => {
 	display: flex;
 	flex-direction: column;
 	min-height: 380px;
+	.card-title {
+		display: grid;
+		align-items: center;
+		&-text {
+			font-size: 1.125rem;
+			line-height: 1.5;
+			font-weight: 600;
+		}
+	}
 	.card-body {
 		transition: transform 0.3s ease, -webkit-transform 0.3s ease;
 		will-change: transform;
@@ -202,11 +253,12 @@ const userToProductFavourite = computed(() => {
 		padding-bottom: 100%;
 	}
 	.card-thumb-image {
-		border: 0;
+		display: grid;
 		position: absolute;
+		border: 0;
 		width: 100%;
 		height: 100%;
-		background: #fff;
+		background: transparent;
 		::v-deep(.product_img) {
 			transition: all 300ms ease-in-out;
 			font-size: 9px;
@@ -219,6 +271,23 @@ const userToProductFavourite = computed(() => {
 			margin: auto;
 			max-height: 100%;
 			max-width: 100%;
+		}
+	}
+	.card-final-price {
+		&-total {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			align-items: center;
+			gap: 0.5rem;
+			&-text {
+				font-size: 0.875rem;
+				line-height: 1.5;
+			}
+			&-price {
+				font-size: 1.125rem;
+				line-height: 1.5;
+				font-weight: 700;
+			}
 		}
 	}
 }

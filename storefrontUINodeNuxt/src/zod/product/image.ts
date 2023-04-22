@@ -20,7 +20,7 @@ export const ZodImage = z.object({
 export const ZodImageQuery = z.object({
 	id: z.string().optional(),
 	product: z.string().optional(),
-	is_main: z.string().optional()
+	isMain: z.string().optional()
 })
 
 export type Image = z.infer<typeof ZodImage>
@@ -29,5 +29,5 @@ export type ImageQuery = PaginationQuery &
 	OrderingQuery & {
 		id?: string | undefined
 		product?: string | undefined
-		is_main?: string | undefined
+		isMain?: string | undefined
 	}

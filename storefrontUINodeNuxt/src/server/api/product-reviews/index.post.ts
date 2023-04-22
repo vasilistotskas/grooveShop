@@ -6,13 +6,12 @@ export default defineEventHandler(async (event: H3Event) => {
 	const config = useRuntimeConfig()
 	const body = await parseBodyAs(event, ZodReviewCreateRequest)
 	const cookie = event.node.req.headers.cookie
-	const cookies = parseCookies(event)
 	const csrftoken = getCookie(event, 'csrftoken') || ''
 	const response = await $fetch(
 		`${config.public.apiBaseUrl}/product/review/?expand=true`,
 		{
 			headers: {
-				Cookie: JSON.stringify(cookies),
+				Cookie: cookie || '',
 				'X-CSRFToken': csrftoken,
 				'Content-Type': 'application/json',
 				method: 'post'

@@ -51,7 +51,7 @@ const identity = useIdentity()
 							type="button"
 							:style="'secondary'"
 							size="sm"
-							:text="`${t('pages.testing.test.increment')} 2x`"
+							:text="`${$t('pages.testing.test.increment')} 2x`"
 							@click.prevent="counter.increment2x"
 						/>
 						<Button

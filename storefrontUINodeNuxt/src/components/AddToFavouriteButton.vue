@@ -48,14 +48,26 @@ const toggleFavourite = async () => {
 	}
 	const favouriteIndex = favourites.value.findIndex((f) => f.product === productId.value)
 	if (favouriteIndex === -1) {
-		await userStore.addFavourite({
-			product: String(productId.value),
-			user: String(userId.value)
-		})
-		toast.success(t('components.add_to_favourite_button.added'))
+		await userStore
+			.addFavourite({
+				product: String(productId.value),
+				user: String(userId.value)
+			})
+			.then(() => {
+				toast.success(t('components.add_to_favourite_button.added'))
+			})
+			.catch((err) => {
+				toast.error(err.message)
+			})
 	} else {
-		await userStore.removeFavourite(favourites.value[favouriteIndex].id)
-		toast.success(t('components.add_to_favourite_button.removed'))
+		await userStore
+			.removeFavourite(favourites.value[favouriteIndex].id)
+			.then(() => {
+				toast.success(t('components.add_to_favourite_button.removed'))
+			})
+			.catch((err) => {
+				toast.error(err.message)
+			})
 	}
 }
 

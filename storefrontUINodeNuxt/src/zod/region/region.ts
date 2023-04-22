@@ -27,5 +27,5 @@ export const ZodRegionsQuery = z.object({
 	ordering: z.string().optional(),
 	name: z.string().optional(),
 	alpha: z.string().optional(),
-	alpha_2: z.string().optional()
+	alpha2: z.string().optional()
 })

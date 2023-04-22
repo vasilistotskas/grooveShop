@@ -33,27 +33,9 @@ const { t } = useLang()
 		max-width: 1070px;
 		margin: 0 auto;
 	}
-	&__header {
-		display: grid;
-		gap: 1rem;
-	}
-	&__header__item {
-		display: grid;
-		gap: 0.5rem;
-		justify-items: start;
-	}
 	&__body {
 		display: grid;
 		gap: 1rem;
-	}
-	&__footer {
-		display: grid;
-		gap: 1rem;
-	}
-	&__footer__item {
-		display: grid;
-		gap: 0.5rem;
-		justify-items: start;
 	}
 }
 </style>

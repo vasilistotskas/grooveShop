@@ -82,7 +82,7 @@ onMounted(() => {
 		ref="sidebar"
 		:class="[
 			{
-				'sidebar md:hidden lg:flex lg:w-30 xl:w-60 md:h-screen': mode === 'normal',
+				'sidebar md:hidden lg:flex lg:w-30 xl:w-60 md:h-fit': mode === 'normal',
 				'relative flex-1 flex flex-col w-full': mode === 'mobile',
 				'grid relative w-full': $route.path === '/account'
 			}

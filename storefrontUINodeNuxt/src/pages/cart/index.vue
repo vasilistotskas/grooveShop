@@ -42,8 +42,8 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 					toast.success(t('pages.cart.updated'))
 					cartBus.emit(GlobalEvents.ON_CART_UPDATED)
 				})
-				.catch(() => {
-					toast.error(t('pages.cart.update_error'))
+				.catch((err) => {
+					toast.error(err.message)
 				})
 			break
 		case 'delete':
@@ -53,8 +53,8 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 					toast.success(t('pages.cart.deleted'))
 					cartBus.emit(GlobalEvents.ON_CART_UPDATED)
 				})
-				.catch(() => {
-					toast.error(t('pages.cart.delete_error'))
+				.catch((err) => {
+					toast.error(err.message)
 				})
 			break
 	}

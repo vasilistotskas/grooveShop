@@ -76,7 +76,7 @@ const uploadImage = async (event: Event) => {
 			<nuxt-img
 				preload
 				placeholder
-				loading="lazy"
+				loading="auto"
 				provider="mediaStream"
 				class="rounded-full"
 				:style="{ objectFit: 'contain' }"

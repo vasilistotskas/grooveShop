@@ -64,7 +64,7 @@ const styles = reactive<{
 const sizes = reactive<{
 	[key: string]: string
 }>({
-	lg: 'h-13 px-8 text-lg rounded-lg',
+	lg: 'h-13 px-8 py-2 text-lg rounded-lg',
 	md: 'h-10 px-6 text-base rounded',
 	sm: 'h-9 px-4 text-sm rounded',
 	xs: 'h-6 px-3 text-xs rounded'

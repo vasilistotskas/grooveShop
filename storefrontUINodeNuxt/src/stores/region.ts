@@ -36,7 +36,7 @@ export const useRegionStore = defineStore({
 			} = await useFetch(`/api/regions`, {
 				method: 'get',
 				params: {
-					alpha_2: alpha2
+					alpha2
 				}
 			})
 			this.pending = pending.value
