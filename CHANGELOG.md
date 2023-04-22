@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.42.1 (2023-04-22)
+### Fix
+* **Nuxt:** General micro fixes and improvements ([`ba85280`](https://github.com/vasilistotskas/grooveShop/commit/ba85280a7f3ffe826066fd6c2659e5572162cb3c))
+
 ## v0.42.0 (2023-04-21)
 ### Feature
 * **Nuxt:** Cookies UI improved ([`6f5b465`](https://github.com/vasilistotskas/grooveShop/commit/6f5b465809d559dd29130ec5476f5db1d5362096))
