@@ -22,7 +22,6 @@ export const useAuthStore = defineStore({
 			} = await useFetch(`/api/auth`, {
 				method: 'get'
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -33,6 +32,7 @@ export const useAuthStore = defineStore({
 			if (auth.value) {
 				this.isAuthenticated = auth.value.isAuthenticated
 			}
+			this.pending = pending.value
 		}
 	}
 })

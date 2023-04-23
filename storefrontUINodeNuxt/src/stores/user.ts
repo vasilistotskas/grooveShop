@@ -34,6 +34,7 @@ export const useUserStore = defineStore({
 	},
 	actions: {
 		async fetchAccount() {
+			this.pending = true
 			const {
 				data: account,
 				error,
@@ -41,7 +42,6 @@ export const useUserStore = defineStore({
 			} = await useFetch(`/api/user-account-session`, {
 				method: 'get'
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -55,8 +55,10 @@ export const useUserStore = defineStore({
 				this.reviews = account.value.reviews
 				this.orders = account.value.orders
 			}
+			this.pending = pending.value
 		},
 		async updateAccount(id: number, body: AccountPutRequest) {
+			this.pending = true
 			const {
 				data: account,
 				error,
@@ -65,7 +67,6 @@ export const useUserStore = defineStore({
 				method: 'put',
 				body
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -76,8 +77,10 @@ export const useUserStore = defineStore({
 			if (account.value) {
 				this.account = account.value
 			}
+			this.pending = pending.value
 		},
 		async updateAccountImage(id: number, body: FormData) {
+			this.pending = true
 			const config = useRuntimeConfig()
 			const csrfToken = useCookie('csrftoken')
 			const sessionID = useCookie('sessionid')
@@ -92,7 +95,6 @@ export const useUserStore = defineStore({
 					body
 				}
 			)
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -107,8 +109,10 @@ export const useUserStore = defineStore({
 			if (account) {
 				this.account = account
 			}
+			this.pending = pending.value
 		},
 		async addFavourite(body: FavouriteCreateRequest) {
+			this.pending = true
 			const {
 				data: favourite,
 				error,
@@ -117,7 +121,6 @@ export const useUserStore = defineStore({
 				method: 'post',
 				body
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -128,12 +131,13 @@ export const useUserStore = defineStore({
 			if (favourite.value) {
 				this.favourites?.push(favourite.value)
 			}
+			this.pending = pending.value
 		},
 		async removeFavourite(id: number) {
+			this.pending = true
 			const { error, pending } = await useFetch(`/api/product-favourites/${id}`, {
 				method: 'delete'
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -143,8 +147,10 @@ export const useUserStore = defineStore({
 			}
 			this.favourites =
 				this.favourites?.filter((favourite) => favourite.id !== id) || null
+			this.pending = pending.value
 		},
 		async addReview(body: ReviewCreateRequest) {
+			this.pending = true
 			const {
 				data: review,
 				error,
@@ -153,7 +159,6 @@ export const useUserStore = defineStore({
 				method: 'post',
 				body
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -164,8 +169,10 @@ export const useUserStore = defineStore({
 			if (review.value) {
 				this.reviews?.push(review.value)
 			}
+			this.pending = pending.value
 		},
 		async updateReview(id: number, body: ReviewPutRequest) {
+			this.pending = true
 			const {
 				data: review,
 				error,
@@ -174,7 +181,6 @@ export const useUserStore = defineStore({
 				method: 'put',
 				body
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -191,12 +197,13 @@ export const useUserStore = defineStore({
 						return review
 					}) || null
 			}
+			this.pending = pending.value
 		},
 		async removeReview(id: number) {
+			this.pending = true
 			const { error, pending } = await useFetch(`/api/product-reviews/${id}`, {
 				method: 'delete'
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -205,6 +212,7 @@ export const useUserStore = defineStore({
 				throw new Error(errorMessage)
 			}
 			this.reviews = this.reviews?.filter((review) => review.id !== id) || null
+			this.pending = pending.value
 		}
 	}
 })

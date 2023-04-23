@@ -34,6 +34,7 @@ export const useProductStore = defineStore({
 	},
 	actions: {
 		async fetchProducts({ offset, limit, ordering }: ProductQuery): Promise<void> {
+			this.pending = true
 			const {
 				data: products,
 				error,
@@ -46,7 +47,6 @@ export const useProductStore = defineStore({
 					ordering
 				}
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -57,8 +57,10 @@ export const useProductStore = defineStore({
 			if (products.value) {
 				this.products = products.value
 			}
+			this.pending = pending.value
 		},
 		async fetchProduct(id: string | string[] | number): Promise<void> {
+			this.pending = true
 			const {
 				data: product,
 				error,
@@ -66,11 +68,12 @@ export const useProductStore = defineStore({
 			} = await useFetch(`/api/product/${id}`, {
 				method: 'get'
 			})
-			this.pending = pending.value
 			this.error = error.value
 			this.product = product.value
+			this.pending = pending.value
 		},
 		async createProduct(body: ProductCreateRequest): Promise<void> {
+			this.pending = true
 			const {
 				data: newProduct,
 				error,
@@ -79,7 +82,6 @@ export const useProductStore = defineStore({
 				method: 'post',
 				body: JSON.stringify(body)
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -90,15 +92,16 @@ export const useProductStore = defineStore({
 			if (newProduct.value) {
 				this.products.results.push(newProduct.value)
 			}
+			this.pending = pending.value
 		},
 		async updateProductHits(id: string | string[]): Promise<void> {
+			this.pending = true
 			const { error, pending } = await useFetch(
 				`/api/product/${id}/update-product-hits`,
 				{
 					method: 'post'
 				}
 			)
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -106,6 +109,7 @@ export const useProductStore = defineStore({
 				}`
 				throw new Error(errorMessage)
 			}
+			this.pending = pending.value
 		}
 	}
 })

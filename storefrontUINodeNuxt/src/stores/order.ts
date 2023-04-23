@@ -34,6 +34,7 @@ export const useOrderStore = defineStore({
 	},
 	actions: {
 		async fetchOrders({ page, ordering, userId }: OrderQuery): Promise<void> {
+			this.pending = true
 			const {
 				data: orders,
 				error,
@@ -46,7 +47,6 @@ export const useOrderStore = defineStore({
 					userId
 				}
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -57,8 +57,10 @@ export const useOrderStore = defineStore({
 			if (orders.value) {
 				this.orders = orders.value
 			}
+			this.pending = pending.value
 		},
 		async fetchOrder(id: string | string[] | number): Promise<void> {
+			this.pending = true
 			const {
 				data: order,
 				error,
@@ -66,7 +68,6 @@ export const useOrderStore = defineStore({
 			} = await useFetch(`/api/order/${id}`, {
 				method: 'get'
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -77,8 +78,10 @@ export const useOrderStore = defineStore({
 			if (order.value) {
 				this.order = order.value
 			}
+			this.pending = pending.value
 		},
 		async createOrder(body: OrderCreateRequest): Promise<void> {
+			this.pending = true
 			const {
 				data: order,
 				error,
@@ -87,7 +90,6 @@ export const useOrderStore = defineStore({
 				method: 'post',
 				body
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -98,6 +100,7 @@ export const useOrderStore = defineStore({
 			if (order.value) {
 				this.order = order.value
 			}
+			this.pending = pending.value
 		}
 	}
 })

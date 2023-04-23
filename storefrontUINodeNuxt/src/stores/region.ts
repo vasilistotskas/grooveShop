@@ -29,6 +29,7 @@ export const useRegionStore = defineStore({
 	}),
 	actions: {
 		async fetchRegions({ alpha2 }: RegionsQuery) {
+			this.pending = true
 			const {
 				data: regions,
 				error,
@@ -39,7 +40,6 @@ export const useRegionStore = defineStore({
 					alpha2
 				}
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -50,6 +50,7 @@ export const useRegionStore = defineStore({
 			if (regions.value) {
 				this.regions = regions.value
 			}
+			this.pending = pending.value
 		}
 	}
 })

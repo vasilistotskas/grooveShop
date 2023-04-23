@@ -32,6 +32,7 @@ export const useImagesStore = defineStore({
 	},
 	actions: {
 		async fetchImages({ product }: ImageQuery): Promise<void> {
+			this.pending = true
 			const {
 				data: images,
 				error,
@@ -42,7 +43,6 @@ export const useImagesStore = defineStore({
 					product
 				}
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -53,6 +53,7 @@ export const useImagesStore = defineStore({
 			if (images.value) {
 				this.images = images.value
 			}
+			this.pending = pending.value
 		}
 	}
 })

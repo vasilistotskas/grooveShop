@@ -32,6 +32,7 @@ export const useFavouriteStore = defineStore({
 			userId,
 			expand
 		}: FavouriteQuery): Promise<void> {
+			this.pending = true
 			const {
 				data: favourites,
 				error,
@@ -45,7 +46,6 @@ export const useFavouriteStore = defineStore({
 					expand
 				}
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -56,6 +56,7 @@ export const useFavouriteStore = defineStore({
 			if (favourites.value) {
 				this.favourites = favourites.value
 			}
+			this.pending = pending.value
 		}
 	}
 })

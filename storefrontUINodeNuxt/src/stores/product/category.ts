@@ -35,6 +35,7 @@ export const useCategoryStore = defineStore({
 	},
 	actions: {
 		async fetchCategories({ offset, limit, ordering }: ProductQuery): Promise<void> {
+			this.pending = true
 			const {
 				data: categories,
 				error,
@@ -47,7 +48,6 @@ export const useCategoryStore = defineStore({
 					ordering
 				}
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -58,8 +58,10 @@ export const useCategoryStore = defineStore({
 			if (categories.value) {
 				this.categories = categories.value
 			}
+			this.pending = pending.value
 		},
 		async fetchCategory(categoryId: string | string[]): Promise<void> {
+			this.pending = true
 			const {
 				data: category,
 				error,
@@ -67,7 +69,6 @@ export const useCategoryStore = defineStore({
 			} = await useFetch(`/api/product-category/${categoryId}`, {
 				method: 'get'
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -78,6 +79,7 @@ export const useCategoryStore = defineStore({
 			if (category.value) {
 				this.category = category.value
 			}
+			this.pending = pending.value
 		}
 	}
 })

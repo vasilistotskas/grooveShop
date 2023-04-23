@@ -37,6 +37,7 @@ export const useReviewsStore = defineStore({
 	},
 	actions: {
 		async fetchReviews({ productId, userId, page, ordering, expand }: ReviewQuery) {
+			this.pending = true
 			const {
 				data: reviews,
 				error,
@@ -51,14 +52,14 @@ export const useReviewsStore = defineStore({
 					expand
 				}
 			})
-			this.pending = pending.value
 			this.error = error.value
-
 			if (reviews.value) {
 				this.reviews = reviews.value
 			}
+			this.pending = pending.value
 		},
 		async fetchUserToProductReview({ productId, userId, expand }: ReviewQuery) {
+			this.pending = true
 			const {
 				data: review,
 				error,
@@ -71,7 +72,6 @@ export const useReviewsStore = defineStore({
 					expand
 				}
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -82,8 +82,10 @@ export const useReviewsStore = defineStore({
 			if (review.value) {
 				return review.value.results[0]
 			}
+			this.pending = pending.value
 		},
 		async addReview(body: ReviewCreateRequest) {
+			this.pending = true
 			const {
 				data: review,
 				error,
@@ -92,7 +94,6 @@ export const useReviewsStore = defineStore({
 				method: 'post',
 				body
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -103,12 +104,13 @@ export const useReviewsStore = defineStore({
 			if (review.value) {
 				this.reviews.results.push(review.value)
 			}
+			this.pending = pending.value
 		},
 		async deleteReview(id: number) {
+			this.pending = true
 			const { error, pending } = await useFetch(`/api/product-reviews/${id}`, {
 				method: 'delete'
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -118,8 +120,10 @@ export const useReviewsStore = defineStore({
 			}
 			const index = this.reviews.results.findIndex((review) => review.id === id)
 			this.reviews.results.splice(index, 1)
+			this.pending = pending.value
 		},
 		async updateReview(id: number, body: ReviewPutRequest) {
+			this.pending = true
 			const {
 				data: review,
 				error,
@@ -128,7 +132,6 @@ export const useReviewsStore = defineStore({
 				method: 'put',
 				body: JSON.stringify(body)
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -152,6 +155,7 @@ export const useReviewsStore = defineStore({
 					user: this.reviews.results[index].user
 				}
 			}
+			this.pending = pending.value
 		}
 	}
 })

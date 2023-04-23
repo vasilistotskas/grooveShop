@@ -29,6 +29,7 @@ export const useCartStore = defineStore({
 	},
 	actions: {
 		async fetchCart() {
+			this.pending = true
 			const {
 				data: cart,
 				error,
@@ -36,7 +37,6 @@ export const useCartStore = defineStore({
 			} = await useFetch(`/api/cart`, {
 				method: 'get'
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -47,13 +47,14 @@ export const useCartStore = defineStore({
 			if (cart.value) {
 				this.cart = cart.value
 			}
+			this.pending = pending.value
 		},
 		async addCartItem(body: CartItemCreateRequest) {
+			this.pending = true
 			const { error, pending } = await useFetch(`/api/cart-items`, {
 				method: 'post',
 				body: JSON.stringify(body)
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -61,13 +62,14 @@ export const useCartStore = defineStore({
 				}`
 				throw new Error(errorMessage)
 			}
+			this.pending = pending.value
 		},
 		async updateCartItem(id: number, body: CartItemPutRequest) {
+			this.pending = true
 			const { error, pending } = await useFetch(`/api/cart-items/${id}`, {
 				method: 'put',
 				body: JSON.stringify(body)
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -75,12 +77,13 @@ export const useCartStore = defineStore({
 				}`
 				throw new Error(errorMessage)
 			}
+			this.pending = pending.value
 		},
 		async deleteCartItem(id: number) {
+			this.pending = true
 			const { error, pending } = await useFetch(`/api/cart-items/${id}`, {
 				method: 'delete'
 			})
-			this.pending = pending.value
 			this.error = error.value?.data
 			if (error.value) {
 				const errorMessage = `Error: ${error.value?.data.data.detail} ${
@@ -88,6 +91,7 @@ export const useCartStore = defineStore({
 				}`
 				throw new Error(errorMessage)
 			}
+			this.pending = pending.value
 		}
 	}
 })
