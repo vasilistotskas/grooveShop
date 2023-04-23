@@ -25,11 +25,11 @@ useServerSeoMeta({
 })
 // vars
 const titlesText = computed<string[]>(() => t('pages.index.title').split('[]'))
-const leadingsText = computed(() => [
+const leadingText = computed(() => [
 	{
 		text: titlesText.value[0],
-		startColor: '#007CF0',
-		endColor: '#00DFD8',
+		startColor: '#bb3939',
+		endColor: '#231a1a',
 		delay: 0
 	},
 	{
@@ -80,37 +80,21 @@ const copyBash = () => {
 		<PageBody>
 			<PageSection class="flex items-center">
 				<div class="flex-1 md:w-5/8 flex flex-col z-10">
-					<Cube></Cube>
 					<p class="text-gray-700 dark:text-gray-200 text-center md:text-left mt-4">
-						<span
-							v-for="(item, i) in leadingsText"
-							:key="i"
-							:style="`--content: '${item.text}'; --start-color: ${
-								item.startColor
-							}; --end-color: ${item.endColor}; --animation-name: anim-fg-${i + 1}`"
-							class="animated-text-bg drop-shadow-xl text-5xl xl:text-8xl 2xl:text-9xl block font-black uppercase text-gray-700 dark:text-gray-200"
-						>
-							<span class="animated-text-fg text-gray-700 dark:text-gray-200">{{
-								item.text
-							}}</span>
-						</span>
+						<template v-for="(item, i) in leadingText" :key="i">
+							<span
+								v-if="item.text"
+								:style="`--content: '${item.text}'; --start-color: ${
+									item.startColor
+								}; --end-color: ${item.endColor}; --animation-name: anim-fg-${i + 1}`"
+								class="animated-text-bg drop-shadow-xl text-5xl xl:text-8xl 2xl:text-9xl block font-black uppercase text-gray-700 dark:text-gray-200"
+							>
+								<span class="animated-text-fg text-gray-700 dark:text-gray-200">{{
+									item.text
+								}}</span>
+							</span>
+						</template>
 					</p>
-					<div class="flex space-x-4 ml-4 mt-10 justify-center md:justify-start">
-						<Button
-							size="lg"
-							text="DeepWeb"
-							class="font-extrabold"
-							href="https://v3.nuxtjs.org"
-						/>
-						<Button
-							size="lg"
-							text="Github"
-							type="button"
-							:style="'secondary'"
-							class="font-extrabold"
-							href="https://github.com/vasilistotskas/grooveShop/storefrontUINodeNuxt"
-						/>
-					</div>
 				</div>
 			</PageSection>
 		</PageBody>

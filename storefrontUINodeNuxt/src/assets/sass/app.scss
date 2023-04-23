@@ -43,6 +43,13 @@ html.dark {
 		background-color: theme('colors.slate.400');
 	}
 }
+body {
+	scroll-behavior: smooth;
+}
+img {
+	image-rendering: crisp-edges;
+	image-rendering: -webkit-optimize-contrast;
+}
 #__nuxt {
 	@apply bg-gray-50 dark:bg-gray-900;
 	display: flex;
@@ -52,5 +59,6 @@ html.dark {
 .wrapper {
 	min-height: 83vh;
 }
+
 // animations
 @import 'animations/transitions';

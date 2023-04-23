@@ -196,9 +196,9 @@ pages:
           description: if no index file is present within a directory, the directory contents will be displayed.
   index:
     nav: home
-    title: DeepWeb[]awesome[]starter
-    description: DeepWeb[]awesome[]starter
-    keywords: DeepWeb[]awesome[]starter
+    title: DeepWeb
+    description: DeepWeb
+    keywords: DeepWeb
     add_to_cart: Add to cart
   404:
     title: page not found

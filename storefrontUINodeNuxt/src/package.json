@@ -27,13 +27,14 @@
 		"analyze": "npx nuxi analyze"
 	},
 	"prettier": {
+		"useTabs": true,
 		"arrowParens": "always",
-		"printWidth": 90,
-		"semi": false,
-		"singleQuote": true,
 		"tabWidth": 2,
 		"trailingComma": "none",
-		"useTabs": true
+		"semi": false,
+		"singleQuote": true,
+		"bracketSameLine": false,
+		"printWidth": 90
 	},
 	"devDependencies": {
 		"@babel/core": "^7.21.4",
@@ -74,7 +75,7 @@
 		"pinia": "^2.0.35",
 		"postcss": "8.4.23",
 		"postcss-loader": "^7.2.4",
-		"prettier": "^2.8.7",
+		"prettier": "^2.8.8",
 		"sass": "1.62.0",
 		"sass-loader": "^13.2.2",
 		"serve": "^14.2.0",
