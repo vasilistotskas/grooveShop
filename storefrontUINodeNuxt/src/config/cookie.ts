@@ -22,7 +22,7 @@ export const cookieControl: Partial<CookieModuleOptions> = {
 			},
 			{
 				id: 'functional',
-				name: 'functional',
+				name: 'components.cookie.cookies.functional',
 				description: 'functional',
 				targetCookieIds: ['functional']
 			},

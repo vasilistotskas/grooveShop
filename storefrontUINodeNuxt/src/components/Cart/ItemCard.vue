@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PropType } from 'vue'
+import { PropType, Ref } from 'vue'
 import { CartItem } from '~/zod/cart/cart-item'
 import { GlobalEvents } from '~/events/global'
 
@@ -7,7 +7,11 @@ const props = defineProps({
 	cartItem: { type: Object as PropType<CartItem>, required: true }
 })
 
-const { cartItem } = toRefs(props)
+const {
+	cartItem
+}: {
+	cartItem: Ref<CartItem>
+} = toRefs(props)
 
 const product = computed(() => cartItem.value.product)
 
@@ -84,7 +88,7 @@ const cartItemQuantity = useState<number>(
 		<div class="remove-from-cart">
 			<button
 				class="text-gray-700 dark:text-gray-200"
-				:title="`Remove from cart ${product.name}`"
+				:title="$t('components.cart.item_card.remove_from_cart', { name: product.name })"
 				type="button"
 				@click="bus.emit('delete', { cartItemId: cartItem.id })"
 			>

@@ -60,36 +60,38 @@
 	transition: background-color 200ms, color 200ms;
 }
 .cookieControl__BarButtons__ManageCookies {
-  background-color: transparent;
-  color: var(--cookie-control-barTextColor);
-  text-decoration: underline;
-  line-height: 1.2;
-  font-size: .813em;
-  font-weight: 600;
-  white-space: normal;
-  word-break: break-word;
-  word-wrap: break-word;
+	background-color: transparent;
+	color: var(--cookie-control-barTextColor);
+	text-decoration: underline;
+	line-height: 1.2;
+	font-size: 0.813em;
+	font-weight: 600;
+	white-space: normal;
+	word-break: break-word;
+	word-wrap: break-word;
 }
 
 .cookieControl__BarButtons__ManageCookies:hover {
-  background-color: transparent;
-  color: var(--cookie-control-barButtonHoverColor);
-  text-decoration: underline;
-  opacity: 0.8;
+	background-color: transparent;
+	color: var(--cookie-control-barButtonHoverColor);
+	text-decoration: underline;
+	opacity: 0.8;
 }
-.cookieControl__BarButtons__AcceptAll, .cookieControl__BarButtons__Decline {
-  color: var(--cookie-control-barButtonColor);
-  background-color: var(--cookie-control-barButtonBackground);
-  line-height: 1.2;
-  font-size: .813em;
-  font-weight: 600;
-  white-space: normal;
-  word-break: break-word;
-  word-wrap: break-word;
+.cookieControl__BarButtons__AcceptAll,
+.cookieControl__BarButtons__Decline {
+	color: var(--cookie-control-barButtonColor);
+	background-color: var(--cookie-control-barButtonBackground);
+	line-height: 1.2;
+	font-size: 0.813em;
+	font-weight: 600;
+	white-space: normal;
+	word-break: break-word;
+	word-wrap: break-word;
 }
-.cookieControl__BarButtons__AcceptAll:hover, .cookieControl__BarButtons__Decline:hover {
-  color: var(--cookie-control-barButtonHoverColor);
-  background-color: var(--cookie-control-barButtonHoverBackground);
+.cookieControl__BarButtons__AcceptAll:hover,
+.cookieControl__BarButtons__Decline:hover {
+	color: var(--cookie-control-barButtonHoverColor);
+	background-color: var(--cookie-control-barButtonHoverBackground);
 }
 .cookieControl__Bar {
 	position: fixed;
@@ -100,8 +102,8 @@
 .cookieControl__Bar p {
 	color: var(--cookie-control-barTextColor);
 	max-width: 1200px;
-  font-size: .813em;
-  line-height: 1.5;
+	font-size: 0.813em;
+	line-height: 1.5;
 }
 .cookieControl__Bar h3 {
 	margin: 0;

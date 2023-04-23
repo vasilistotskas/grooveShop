@@ -134,7 +134,7 @@ const userToProductFavourite = computed(() => {
 								@click="startShare"
 							/>
 						</ClientOnly>
-						<AddToFavouriteButton
+						<ButtonAddToFavourite
 							v-if="showAddToFavouriteButton"
 							:product-id="product.id"
 							:user-id="account?.id"
@@ -194,7 +194,7 @@ const userToProductFavourite = computed(() => {
 					</div>
 				</div>
 				<div class="card-footer">
-					<AddToCartButton
+					<LazyButtonAddToCart
 						v-if="showAddToCartButton"
 						:product="product"
 						:quantity="1"

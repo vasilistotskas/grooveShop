@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onBeforeMount, watch, defineExpose } from 'vue'
+import { ref, computed, onBeforeMount, watch } from 'vue'
 import {
 	getAllCookieIdsString,
 	getCookie,
@@ -69,7 +69,7 @@ const toggleCookie = (cookie: Cookie) => {
 	}
 }
 const getDescription = (description: string) =>
-	`${moduleOptions.isDashInDescriptionEnabled === false ? '' : '-'} ${t(description)}`
+	`${!moduleOptions.isDashInDescriptionEnabled ? '' : '-'} ${t(description)}`
 const getName = (name: string) => {
 	return name === 'functional' ? t('components.cookie.cookies.functional') : t(name)
 }
@@ -119,8 +119,8 @@ onBeforeMount(() => {
 		for (const cookieOptional of moduleOptions.cookies.optional) {
 			if (
 				typeof moduleOptions.isIframeBlocked === 'boolean'
-					? moduleOptions.isIframeBlocked === true
-					: moduleOptions.isIframeBlocked.initialState === true
+					? moduleOptions.isIframeBlocked
+					: moduleOptions.isIframeBlocked.initialState
 			) {
 				localCookiesEnabled.value.push(cookieOptional)
 			}
@@ -209,16 +209,19 @@ init()
 					<div class="cookieControl__BarButtons">
 						<button
 							class="cookieControl__BarButtons__ManageCookies"
+							type="button"
 							@click="isModalActive = true"
 							v-text="$t('components.cookie.manage_cookies')"
 						/>
 						<button
 							class="cookieControl__BarButtons__AcceptAll"
+							type="button"
 							@click="accept()"
 							v-text="$t('components.cookie.accept')"
 						/>
 						<button
 							v-if="moduleOptions.isAcceptNecessaryButtonEnabled"
+							type="button"
 							class="cookieControl__BarButtons__Decline"
 							@click="decline()"
 							v-text="$t('components.cookie.decline')"
@@ -229,6 +232,7 @@ init()
 		</Transition>
 		<button
 			v-if="moduleOptions.isControlButtonEnabled && isConsentGiven"
+			type="button"
 			aria-label="Cookie control"
 			class="cookieControl__ControlButton"
 			data-testid="nuxt-cookie-control-control-button"
@@ -253,6 +257,7 @@ init()
 						<slot name="modal" />
 						<button
 							class="cookieControl__ModalClose"
+							type="button"
 							@click="isModalActive = false"
 							v-text="$t('components.cookie.close')"
 						/>
@@ -298,7 +303,7 @@ init()
 												"
 												@change="toggleCookie(cookie)"
 											/>
-											<button @click="toggleButton($event)">
+											<button type="button" @click="toggleButton($event)">
 												{{ getName(cookie.name) }}
 											</button>
 											<label
@@ -339,6 +344,7 @@ init()
 						</template>
 						<div class="cookieControl__ModalButtons">
 							<button
+								type="button"
 								@click="
 									() => {
 										acceptPartial()
@@ -348,6 +354,7 @@ init()
 								v-text="$t('components.cookie.save')"
 							/>
 							<button
+								type="button"
 								@click="
 									() => {
 										accept()
@@ -357,6 +364,7 @@ init()
 								v-text="$t('components.cookie.accept_all')"
 							/>
 							<button
+								type="button"
 								@click="
 									() => {
 										declineAll()

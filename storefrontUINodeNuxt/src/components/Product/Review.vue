@@ -219,8 +219,22 @@ modalBus.on((event: string) => {
 })
 
 const ZodReviewSchema = z.object({
-	comment: z.string().min(10).max(1000),
-	rate: z.number().min(1).max(10)
+	comment: z
+		.string()
+		.min(10, {
+			message: t('components.product.review.validation.comment_too_short', { min: 10 })
+		})
+		.max(1000, {
+			message: t('components.product.review.validation.comment_too_long', { max: 1000 })
+		}),
+	rate: z
+		.number()
+		.min(1, {
+			message: t('components.product.review.validation.rate_too_low', { min: 1 })
+		})
+		.max(10, {
+			message: t('components.product.review.validation.rate_too_high', { max: 10 })
+		})
 })
 
 const validationSchema = toTypedSchema(ZodReviewSchema)
@@ -296,6 +310,7 @@ watch(
 	>
 		<template #header>
 			<div class="review_header">
+				<!-- eslint-disable vue/no-v-html -->
 				<h5
 					class="review_header__title"
 					v-html="
@@ -304,6 +319,7 @@ watch(
 						})
 					"
 				></h5>
+				<!-- eslint-enable -->
 				<IconFaSolid:pen />
 			</div>
 		</template>
@@ -326,6 +342,7 @@ watch(
 							@touchmove.passive="updateNewSelectionRatio($event)"
 							@touchstart.passive="unlockSelection()"
 						>
+							<!-- eslint-disable vue/no-v-html -->
 							<svg
 								v-for="(star, i) of backgroundStars"
 								:key="i"
@@ -339,8 +356,10 @@ watch(
 								xmlns="http://www.w3.org/2000/svg"
 								v-html="star"
 							/>
+							<!-- eslint-enable -->
 						</div>
 						<div class="rating-board rating-foreground">
+							<!-- eslint-disable vue/no-v-html -->
 							<svg
 								v-for="(star, i) of foregroundStars"
 								:key="i"
@@ -352,6 +371,7 @@ watch(
 								xmlns="http://www.w3.org/2000/svg"
 								v-html="star"
 							/>
+							<!-- eslint-enable -->
 						</div>
 						<span class="px-2">{{ reviewScoreText }}</span>
 					</div>

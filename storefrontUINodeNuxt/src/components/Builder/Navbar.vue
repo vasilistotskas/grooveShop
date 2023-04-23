@@ -43,6 +43,7 @@ const toggleOptions = (show?: boolean) => {
 		showOptions.value = !showOptions.value
 	}
 }
+const appTitle = computed(() => config.public.appTitle)
 </script>
 
 <template>
@@ -83,13 +84,12 @@ const toggleOptions = (show?: boolean) => {
 					<slot name="title">
 						<h1>
 							<strong>
-								<NuxtLink
-									tag="a"
+								<Anchor
+									:to="localePath('index')"
 									aria-label="index"
 									class="grid overflow-hidden md:w-auto text-md font-bold text-gray-700 dark:text-gray-200 items-center"
-									:to="localePath('index')"
 								>
-									<span class="hidden">{{ config.public.appTitle }}</span>
+									<span class="hidden">{{ appTitle }}</span>
 									<nuxt-img
 										preload
 										placeholder
@@ -106,9 +106,9 @@ const toggleOptions = (show?: boolean) => {
 										:trim-threshold="5"
 										:format="'png'"
 										sizes="sm:75vw md:125vw lg:300px"
-										:alt="config.public.appTitle"
+										:alt="appTitle"
 									/>
-								</NuxtLink>
+								</Anchor>
 							</strong>
 						</h1>
 					</slot>

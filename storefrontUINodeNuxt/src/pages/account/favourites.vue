@@ -78,13 +78,14 @@ definePageMeta({
 			<PageTitle :text="$t('pages.account.favourites.title')" />
 		</PageHeader>
 		<PageBody>
-			<PageError v-if="error" :error="error"></PageError>
-			<LoadingSkeleton
+			<LazyPageError v-if="error" :error="error"></LazyPageError>
+			<LazyLoadingSkeleton
+				v-if="pending"
 				:card-height="'606px'"
 				:class="pending ? 'block' : 'hidden'"
 				:loading="pending"
 				:replicas="favourites.results.length || 3"
-			></LoadingSkeleton>
+			></LazyLoadingSkeleton>
 			<template v-if="favourites.results.length">
 				<div class="grid gap-2 md:flex md:items-center">
 					<PaginationPageNumber

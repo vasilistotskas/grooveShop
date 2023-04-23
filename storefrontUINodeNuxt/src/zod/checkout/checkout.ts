@@ -5,7 +5,7 @@ export const ZodCheckout = z.object({
 	lastName: z.string().min(3).max(100),
 	address: z.string().min(3).max(100),
 	city: z.string().min(3).max(100),
-	email: z.string().email({ message: 'Must be a valid email' }),
+	email: z.string().email(),
 	phone: z.string(),
 	place: z.string().min(3).max(100),
 	zipcode: z.string().min(3).max(100),

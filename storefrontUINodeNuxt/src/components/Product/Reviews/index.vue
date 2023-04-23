@@ -110,7 +110,8 @@ const ordering = computed(() => {
 			<div class="reviews_list__items">
 				<div v-show="pending" class="reviews_list__item">
 					<div class="reviews_list__item__loading">
-						<LoadingSkeleton
+						<LazyLoadingSkeleton
+							v-if="pending"
 							:card-height="'130px'"
 							:class="
 								pending ? 'grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4' : 'hidden'
@@ -121,7 +122,7 @@ const ordering = computed(() => {
 							:columns-lg="1"
 							:cart-body-paragraphs="5"
 							:replicas="reviews?.results.length || 4"
-						></LoadingSkeleton>
+						></LazyLoadingSkeleton>
 					</div>
 				</div>
 				<div v-if="error" class="reviews_list__item">

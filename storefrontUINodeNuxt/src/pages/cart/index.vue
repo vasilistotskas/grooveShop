@@ -75,8 +75,9 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 			</h2>
 		</div>
 		<PageBody>
-			<PageError v-if="error" :error="error"></PageError>
-			<LoadingSkeleton
+			<LazyPageError v-if="error" :error="error"></LazyPageError>
+			<LazyLoadingSkeleton
+				v-if="pending"
 				:card-height="'130px'"
 				:class="
 					pending ? 'grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4' : 'hidden'
@@ -87,7 +88,7 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 				:columns-lg="1"
 				:cart-body-paragraphs="5"
 				:replicas="cart?.cartItems.length || 1"
-			></LoadingSkeleton>
+			></LazyLoadingSkeleton>
 			<template v-if="cart?.cartItems.length">
 				<div class="grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4">
 					<CartItemCard

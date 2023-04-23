@@ -21,6 +21,10 @@ const props = defineProps({
 	}
 })
 const { ordering, orderingOptions } = toRefs(props)
+const selectedOrderingLabel = computed(() => {
+	const selectedOrdering = orderingOptions.value.find((o) => o.value === ordering.value)
+	return selectedOrdering?.label
+})
 const listBox = ref(null)
 const { listBoxOpen, listBoxToggle } = useListBox(listBox)
 
@@ -40,7 +44,7 @@ const link = computed(() => {
 							@click="listBoxToggle"
 						>
 							<span class="block truncate text-gray-700 dark:text-gray-200">{{
-								$t('components.ordering.title')
+								selectedOrderingLabel ?? $t('components.ordering.title')
 							}}</span>
 							<span
 								class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700 dark:text-gray-200"

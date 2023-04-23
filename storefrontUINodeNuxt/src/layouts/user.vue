@@ -24,8 +24,9 @@ const { account, favourites, reviews, orders, pending, error } = storeToRefs(use
 						</template>
 					</UserNavbar>
 				</slot>
-				<PageError v-if="error" :error="error"></PageError>
-				<LoadingSkeleton
+				<LazyPageError v-if="error" :error="error"></LazyPageError>
+				<LazyLoadingSkeleton
+					v-if="pending"
 					:card-height="'184px'"
 					:class="pending ? 'grid items-start pt-8' : 'hidden'"
 					:loading="pending"
@@ -39,7 +40,7 @@ const { account, favourites, reviews, orders, pending, error } = storeToRefs(use
 					:header-direction="'row'"
 					:show-paragraph="false"
 					:footer-paragraphs="3"
-				></LoadingSkeleton>
+				></LazyLoadingSkeleton>
 				<UserAccountInfo
 					v-if="account"
 					:account="account"
@@ -81,6 +82,6 @@ const { account, favourites, reviews, orders, pending, error } = storeToRefs(use
 		</main>
 		<slot name="app-after" />
 		<div id="app-after"></div>
-		<Pwa></Pwa>
+		<Pwa />
 	</div>
 </template>

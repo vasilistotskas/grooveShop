@@ -1,8 +1,6 @@
-import { createResolver } from '@nuxt/kit'
 import { pwa } from './config/pwa'
 import { runtimeConfig } from './config/runtime'
 import { cookieControl } from './config/cookie'
-import { devtools } from './config/devtools'
 import { pinia } from './config/pinia'
 import { vite } from './config/vite'
 import { nitro } from './config/nitro'
@@ -11,16 +9,17 @@ import { image } from './config/image'
 import { eslint } from './config/eslint'
 import { postcss } from './config/postcss'
 import { htmlValidator } from './config/html-validator'
-const { resolve } = createResolver(import.meta.url)
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
 	ssr: true,
-	components: true,
 	sourcemap: true,
+	devtools: {
+		enabled: process.env.NODE_ENV !== 'production'
+	},
 	experimental: {
 		componentIslands: true,
-		viewTransition: true,
+		viewTransition: false,
 		renderJsonPayloads: true
 	},
 	extends: ['nuxt-seo-kit'],
@@ -38,10 +37,10 @@ export default defineNuxtConfig({
 		'~/assets/sass/app.scss',
 		'vue-toastification/dist/index.css'
 	],
-	plugins: ['~/plugins/navbar.ts', '~/plugins/i18n.ts'],
-	imports: {
-		dirs: [resolve('./stores'), '~/stores']
-	},
+	/*
+	 ** All plugins in your plugins/ directory are auto-registered
+	 */
+	plugins: [],
 	build: {
 		transpile: ['@headlessui/vue', 'vue-toastification']
 	},
@@ -49,7 +48,6 @@ export default defineNuxtConfig({
 		failOn404: true
 	},
 	modules: [
-		'@nuxt/devtools',
 		'@nuxt/image-edge',
 		'@nuxt/content',
 		'@nuxtjs/html-validator',
@@ -65,7 +63,7 @@ export default defineNuxtConfig({
 		strategy: 'prefix_except_default',
 		lazy: true,
 		defaultLocale: process.env.NUXT_APP_DEFAULT_LOCALE,
-		debug: process.env.NODE_ENV !== 'production',
+		debug: false, // process.env.NODE_ENV !== 'production',
 		langDir: 'locales/',
 		baseUrl: process.env.NUXT_APP_PUBLIC_BASE_URL || 'http://localhost:3000',
 		detectBrowserLanguage: {
@@ -129,7 +127,6 @@ export default defineNuxtConfig({
 	},
 	eslint,
 	runtimeConfig,
-	devtools,
 	cookieControl,
 	pinia,
 	vite,

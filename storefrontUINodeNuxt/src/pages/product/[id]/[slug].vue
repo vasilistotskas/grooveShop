@@ -279,11 +279,12 @@ useHead(() => ({
 <template>
 	<PageWrapper class="gap-16">
 		<PageBody>
-			<PageError v-if="productError" :error="productError"></PageError>
-			<LoadingSkeleton
+			<LazyPageError v-if="productError" :error="productError"></LazyPageError>
+			<LazyLoadingSkeleton
+				v-if="productPending"
 				:loading="productPending"
 				:class="productPending ? 'block' : 'hidden'"
-			></LoadingSkeleton>
+			></LazyLoadingSkeleton>
 			<template v-if="product">
 				<div class="product mb-12 md:mb-24">
 					<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
@@ -322,7 +323,7 @@ useHead(() => ({
 										:user="account || undefined"
 										:is-authenticated="isAuthenticated"
 									></ProductReview>
-									<AddToFavouriteButton
+									<ButtonAddToFavourite
 										:product-id="product.id"
 										:user-id="account?.id"
 										:is-favourite="productInUserFavourites"
@@ -395,7 +396,7 @@ useHead(() => ({
 										</svg>
 									</div>
 
-									<AddToCartButton
+									<LazyButtonAddToCart
 										v-if="product"
 										:product="product"
 										:quantity="selectorQuantity as number || 1"

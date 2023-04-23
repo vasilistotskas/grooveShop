@@ -22,6 +22,6 @@
 		</slot>
 		<slot name="app-after" />
 		<div id="app-after"></div>
-		<Pwa></Pwa>
+		<Pwa />
 	</div>
 </template>

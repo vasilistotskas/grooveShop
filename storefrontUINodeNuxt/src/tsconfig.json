@@ -11,10 +11,9 @@
 			"@nuxtjs/i18n",
 			"@pinia/nuxt",
 			"@nuxt/image-edge",
-			"@nuxt/devtools",
 			"unplugin-icons/types/vue"
 		],
-		"typeRoots": ["node_modules/@types", "global.d.ts", "components.d.ts"]
+		"typeRoots": ["node_modules/@types", "global.d.ts", "components.d.ts", "custom.d.ts"]
 	},
-	"files": ["global.d.ts", "components.d.ts"]
+	"files": ["global.d.ts", "components.d.ts", "custom.d.ts"]
 }
