@@ -45,12 +45,9 @@ components:
     accept_all: terima semua
     banner:
       description: >-
-        kami menggunakan cookie kami sendiri dan cookie pihak ketiga sehingga
-        kami dapat menampilkan situs web ini dengan benar dan lebih memahami
-        bagaimana situs web ini digunakan, dengan maksud untuk meningkatkan
-        layanan yang kami tawarkan. keputusan tentang izin penggunaan cookie
-        dapat diubah kapan saja menggunakan tombol cookie yang akan muncul
-        setelah pemilihan dilakukan pada spanduk ini.
+        dengan mengeklik "terima semua cookie", anda menyetujui penyimpanan
+        cookie di perangkat anda untuk menyempurnakan navigasi situs,
+        menganalisis penggunaan situs, dan membantu upaya pemasaran kami.
       title: kue
     close: menutup
     cookies:
@@ -71,7 +68,7 @@ components:
     decline_all: tolak semua
     here: di sini
     iframe_blocked: untuk melihatnya, harap aktifkan cookie fungsional.
-    manage_cookies: kelola cookie
+    manage_cookies: pengaturan cookie
     save: menyimpan
     settings:
       unsaved: anda memiliki perubahan yang belum disimpan.
@@ -111,7 +108,7 @@ components:
       rating:
         title: peringkat
         bad: buruk
-        not_that_good: tidak sebagus itu
+        not_that_good: tidak begitu bagus
         meh: meh
         its_ok: tidak apa-apa
         good: bagus
@@ -120,6 +117,11 @@ components:
       comment:
         title: komentar
         placeholder: bagikan pengalaman anda...
+      validation:
+        comment_too_short: panjang komentar minimal harus %{min} karakter
+        comment_too_long: panjang komentar harus maksimal %{max} karakter
+        rate_too_low: peringkat minimal harus %{min}
+        rate_too_high: peringkat harus maksimal %{max}
   add_to_cart_button:
     text: masukkan ke keranjang
     added_to_cart: ditambahkan ke troli
@@ -147,6 +149,9 @@ components:
       total_price: total harga
       actions:
         details: detail
+  cart:
+    item_card:
+      remove_from_cart: hapus dari keranjang %{name}
 pages:
   '404':
     title: halaman tidak ditemukan
@@ -303,11 +308,16 @@ pages:
       nav: favorit
       description: favorit
       keywords: favorit
-      empty: favorit anda kosong
+      empty:
+        title: favorit anda kosong
+        description: anda belum menambahkan favorit apa pun.
+        button: pergi ke toko
       updated: favorit diperbarui
       update_error: kesalahan pembaruan favorit
       deleted: item favorit dihapus
       delete_error: kesalahan penghapusan item favorit
+      ordering:
+        created_at: dibuat di
     reviews:
       title: ulasan
       nav: ulasan

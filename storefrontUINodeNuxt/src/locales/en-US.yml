@@ -44,7 +44,7 @@ components:
     accept: Accept
     accept_all: Accept All
     banner:
-      description: We use our own cookies and third-party cookies so that we can display this website correctly and better understand how this website is used, with a view to improving the services we offer. A decision on cookie usage permissions can be changed anytime using the cookie button that will appear after a selection has been made on this banner.
+      description: By clicking “Accept All Cookies”, you agree to the storing of cookies on your device to enhance site navigation, analyze site usage, and assist in our marketing efforts.
       title: Cookies
     close: Close
     cookies:
@@ -61,7 +61,7 @@ components:
     decline_all: Decline All
     here: here
     iframe_blocked: To see this, please enable functional cookies.
-    manage_cookies: Manage Cookies
+    manage_cookies: Cookies Settings
     save: Save
     settings:
       unsaved: You have unsaved changes.
@@ -110,6 +110,11 @@ components:
       comment:
         title: Comment
         placeholder: Share your experience...
+      validation:
+        comment_too_short: Comment must be at least %{min} characters long
+        comment_too_long: Comment must be at most %{max} characters long
+        rate_too_low: Rating must be at least %{min}
+        rate_too_high: Rating must be at most %{max}
   add_to_cart_button:
     text: Add to cart
     added_to_cart: Added to cart
@@ -137,6 +142,9 @@ components:
       total_price: Total Price
       actions:
         details: Details
+  cart:
+    item_card:
+      remove_from_cart: Remove from cart %{name}
 pages:
   testing:
     nav: testing
@@ -289,11 +297,16 @@ pages:
       nav: favourites
       description: favourites
       keywords: favourites
-      empty: Your favourites is empty
+      empty:
+        title: Your favourites is empty
+        description: You have not added any favourites yet.
+        button: Go to shop
       updated: Favourites updated
       update_error: Favourites update error
       deleted: Favourites Item deleted
       delete_error: Favourites Item delete error
+      ordering:
+        created_at: Created At
     reviews:
       title: Reviews
       nav: reviews

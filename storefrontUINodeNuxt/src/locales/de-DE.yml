@@ -47,12 +47,10 @@ components:
     accept_all: akzeptiere alle
     banner:
       description: >-
-        wir verwenden unsere eigenen cookies und cookies von drittanbietern,
-        damit wir diese website korrekt anzeigen und besser verstehen können,
-        wie diese website verwendet wird, um die von uns angebotenen dienste zu
-        verbessern. eine entscheidung über die erlaubnis zur verwendung von
-        cookies kann jederzeit über die cookie-schaltfläche geändert werden, die
-        erscheint, nachdem eine auswahl auf diesem banner getroffen wurde.
+        indem sie auf „alle cookies akzeptieren“ klicken, stimmen sie der
+        speicherung von cookies auf ihrem gerät zu, um die website-navigation zu
+        verbessern, die website-nutzung zu analysieren und unsere
+        marketingbemühungen zu unterstützen.
       title: kekse
     close: schließen
     cookies:
@@ -73,7 +71,7 @@ components:
     decline_all: alle ablehnen
     here: hier
     iframe_blocked: um dies zu sehen, aktivieren sie bitte funktionale cookies.
-    manage_cookies: cookies verwalten
+    manage_cookies: cookie-einstellungen
     save: speichern
     settings:
       unsaved: du hast nicht gespeicherte änderungen.
@@ -122,6 +120,11 @@ components:
       comment:
         title: kommentar
         placeholder: teile deine erfahrung...
+      validation:
+        comment_too_short: kommentar muss mindestens %{min} zeichen lang sein
+        comment_too_long: kommentar darf höchstens %{max} zeichen lang sein
+        rate_too_low: bewertung muss mindestens %{min} betragen
+        rate_too_high: die bewertung darf höchstens %{max} betragen
   add_to_cart_button:
     text: in den warenkorb legen
     added_to_cart: zum warenkorb hinzugefügt
@@ -149,6 +152,9 @@ components:
       total_price: gesamtpreis
       actions:
         details: einzelheiten
+  cart:
+    item_card:
+      remove_from_cart: aus einkaufswagen entfernen %{name}
 pages:
   '404':
     title: seite nicht gefunden
@@ -309,11 +315,16 @@ pages:
       nav: favoriten
       description: favoriten
       keywords: favoriten
-      empty: ihre favoriten sind leer
+      empty:
+        title: ihre favoriten sind leer
+        description: sie haben noch keine favoriten hinzugefügt.
+        button: zum laden gehen
       updated: favoriten aktualisiert
       update_error: fehler bei der aktualisierung der favoriten
       deleted: favoriten artikel gelöscht
       delete_error: fehler beim löschen des favoriten-elements
+      ordering:
+        created_at: hergestellt in
     reviews:
       title: bewertungen
       nav: bewertungen

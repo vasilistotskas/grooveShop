@@ -45,9 +45,9 @@ components:
     accept_all: すべて受け入れる
     banner:
       description: >-
-        当社は、提供するサービスを改善する目的で、この web サイトを正しく表示し、この web
-        サイトがどのように使用されているかをよりよく理解できるように、独自の cookie とサードパーティの cookie を使用しています。
-        cookie の使用許可に関する決定は、このバナーで選択した後に表示される cookie ボタンを使用していつでも変更できます。
+        「すべての cookie
+        を受け入れる」をクリックすると、サイトのナビゲーションを強化し、サイトの使用状況を分析し、当社のマーケティング活動を支援するために、デバイスに
+        cookie を保存することに同意したことになります。
       title: クッキー
     close: 近い
     cookies:
@@ -66,7 +66,7 @@ components:
     decline_all: すべて辞退
     here: ここ
     iframe_blocked: これを表示するには、機能性 cookie を有効にしてください。
-    manage_cookies: cookie の管理
+    manage_cookies: クッキーの設定
     save: 保存
     settings:
       unsaved: 保存されていない変更があります。
@@ -115,6 +115,11 @@ components:
       comment:
         title: コメント
         placeholder: あなたの経験を共有してください...
+      validation:
+        comment_too_short: コメントは少なくとも %{min} 文字の長さでなければなりません
+        comment_too_long: コメントは最大 %{max} 文字の長さにする必要があります
+        rate_too_low: 評価は少なくとも %{min} である必要があります
+        rate_too_high: 評価は最大で %{max} でなければなりません
   add_to_cart_button:
     text: カートに追加
     added_to_cart: カートに追加
@@ -142,6 +147,9 @@ components:
       total_price: 合計金額
       actions:
         details: 詳細
+  cart:
+    item_card:
+      remove_from_cart: カート %{name} から削除
 pages:
   '404':
     title: ページが見つかりません
@@ -218,7 +226,7 @@ pages:
         error: レビュー作成エラー
       updated:
         success: レビューが正常に更新されました
-        error: レビュー更新エラー
+        error: 更新エラーの確認
       deleted:
         success: レビューは正常に削除されました
         error: 削除エラーの確認
@@ -294,11 +302,16 @@ pages:
       nav: お気に入り
       description: お気に入り
       keywords: お気に入り
-      empty: お気に入りは空です
+      empty:
+        title: お気に入りは空です
+        description: まだお気に入りを追加していません。
+        button: 店へ出かける
       updated: お気に入りを更新しました
       update_error: お気に入り更新エラー
       deleted: お気に入りアイテムが削除されました
       delete_error: お気に入りアイテムの削除エラー
+      ordering:
+        created_at: 作成日
     reviews:
       title: レビュー
       nav: レビュー

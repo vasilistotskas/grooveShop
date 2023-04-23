@@ -44,10 +44,7 @@ components:
     accept: 接受
     accept_all: 全都接受
     banner:
-      description: >-
-        我们使用我们自己的 cookie 和第三方 cookie
-        以便我们能够正确显示本网站并更好地了解本网站的使用情况，以改善我们提供的服务。可以随时使用在此横幅上做出选择后出现的 cookie 按钮更改有关
-        cookie 使用权限的决定。
+      description: 单击“接受所有 cookie”，即表示您同意在您的设备上存储 cookie，以增强网站导航、分析网站使用情况并协助我们的营销工作。
       title: 饼干
     close: 关闭
     cookies:
@@ -64,7 +61,7 @@ components:
     decline_all: 全部拒绝
     here: 这里
     iframe_blocked: 要查看此内容，请启用功能性 cookie。
-    manage_cookies: 管理 cookie
+    manage_cookies: 饼干设置
     save: 节省
     settings:
       unsaved: 您有未保存的更改。
@@ -113,13 +110,18 @@ components:
       comment:
         title: 评论
         placeholder: 分享你的经验...
+      validation:
+        comment_too_short: 评论必须至少有 %{min} 个字符长
+        comment_too_long: 评论的长度不得超过 %{max} 个字符
+        rate_too_low: 评分必须至少为 %{min}
+        rate_too_high: 评级最多不能超过 %{max}
   add_to_cart_button:
     text: 添加到购物车
     added_to_cart: 加入购物车
   add_to_favourite_button:
     not_authenticated: 您必须登录才能添加到收藏夹
     added: 已添加到收藏夹
-    removed: 已从收藏夹中删除
+    removed: 已从收藏夹中移除
     add: 加入“最喜欢的
     remove: 从收藏夹中删除
   user:
@@ -140,6 +142,9 @@ components:
       total_price: 总价
       actions:
         details: 细节
+  cart:
+    item_card:
+      remove_from_cart: 从购物车中移除 %{name}
 pages:
   '404':
     title: 找不到网页
@@ -292,11 +297,16 @@ pages:
       nav: 最爱
       description: 最爱
       keywords: 最爱
-      empty: 你的收藏夹是空的
+      empty:
+        title: 你的收藏夹是空的
+        description: 您还没有添加任何收藏夹。
+        button: 去商店
       updated: 收藏夹已更新
       update_error: 收藏夹更新错误
       deleted: 收藏夹项目已删除
       delete_error: 收藏夹项目删除错误
+      ordering:
+        created_at: 创建于
     reviews:
       title: 点评
       nav: 评论
@@ -322,7 +332,7 @@ pages:
       description: 帮助
       keywords: 帮助
       updated: 帮助已更新
-      update_error: 帮助更新错误
+      update_error: 求助更新错误
       deleted: 帮助项目已删除
       delete_error: 帮助项目删除错误
 layouts:

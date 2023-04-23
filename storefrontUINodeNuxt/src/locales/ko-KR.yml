@@ -45,9 +45,8 @@ components:
     accept_all: 모든것을 받아 들인다
     banner:
       description: >-
-        당사는 당사가 제공하는 서비스를 개선하기 위해 이 웹사이트를 올바르게 표시하고 이 웹사이트가 어떻게 사용되는지 더 잘 이해할 수
-        있도록 자체 쿠키 및 타사 쿠키를 사용합니다. 쿠키 사용 권한에 대한 결정은 이 배너에서 선택 후 나타나는 쿠키 버튼을 사용하여
-        언제든지 변경할 수 있습니다.
+        "모든 쿠키 허용"을 클릭하면 사이트 탐색을 개선하고 사이트 사용을 분석하며 마케팅 활동을 지원하기 위해 장치에 쿠키를 저장하는
+        데 동의하는 것입니다.
       title: 쿠키
     close: 닫다
     cookies:
@@ -66,7 +65,7 @@ components:
     decline_all: 모두 거절
     here: 여기
     iframe_blocked: 이를 보려면 기능 쿠키를 활성화하십시오.
-    manage_cookies: 쿠키 관리
+    manage_cookies: 쿠키 설정
     save: 구하다
     settings:
       unsaved: 저장되지 않은 변경사항이 있습니다.
@@ -115,6 +114,11 @@ components:
       comment:
         title: 논평
         placeholder: 경험을 공유하세요...
+      validation:
+        comment_too_short: 댓글은 최소 %{min}자 이상이어야 합니다.
+        comment_too_long: 댓글은 %{max}자 이하여야 합니다.
+        rate_too_low: 평점은 %{min} 이상이어야 합니다.
+        rate_too_high: 등급은 최대 %{max}이어야 합니다.
   add_to_cart_button:
     text: 장바구니에 담기
     added_to_cart: 장바구니에 추가됨
@@ -142,6 +146,9 @@ components:
       total_price: 총 가격
       actions:
         details: 세부
+  cart:
+    item_card:
+      remove_from_cart: 카트 %{name}에서 제거
 pages:
   '404':
     title: 페이지를 찾을 수 없음
@@ -294,18 +301,23 @@ pages:
       nav: 즐겨찾기
       description: 즐겨찾기
       keywords: 즐겨찾기
-      empty: 즐겨찾기가 비어 있습니다.
+      empty:
+        title: 즐겨찾기가 비어 있습니다.
+        description: 아직 즐겨찾기를 추가하지 않았습니다.
+        button: 가게에 가다
       updated: 즐겨찾기 업데이트됨
       update_error: 즐겨찾기 업데이트 오류
       deleted: 즐겨찾기 항목 삭제됨
       delete_error: 즐겨찾기 항목 삭제 오류
+      ordering:
+        created_at: 만든 시간
     reviews:
       title: 리뷰
       nav: 리뷰
       description: 리뷰
       keywords: 리뷰
       empty: 리뷰가 비어 있습니다.
-      updated: 리뷰 업데이트됨
+      updated: 업데이트된 리뷰
       update_error: 리뷰 업데이트 오류
       deleted: 리뷰 항목 삭제됨
       delete_error: 리뷰 항목 삭제 오류
