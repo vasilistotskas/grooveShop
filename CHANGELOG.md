@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.42.3 (2023-04-24)
+### Fix
+* **Nuxt:** Global fixes and improvements ([`f878b1f`](https://github.com/vasilistotskas/grooveShop/commit/f878b1f91c60432fc136a8bbde465311bd1bd0f9))
+
 ## v0.42.2 (2023-04-23)
 ### Fix
 * **Nuxt:** Set pending true before API call ([`96f2a4c`](https://github.com/vasilistotskas/grooveShop/commit/96f2a4c162c522a7831f0266c9b82fb1b301a3dd))
