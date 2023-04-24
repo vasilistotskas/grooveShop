@@ -202,7 +202,7 @@ const validate = async () => {
 													class="space-x-1 border-none"
 												>
 													<IconIc:baselineContentCopy />
-													{{ $t('others.copy') }}
+													{{ $t('common.copy') }}
 												</Button>
 											</template>
 										</FormTextInput>
@@ -234,8 +234,8 @@ const validate = async () => {
 										<FormSwitch v-model="enableSpamProtection">
 											<span class="capitalize text-gray-700 dark:text-gray-200">{{
 												enableSpamProtection
-													? $t('others.enabled')
-													: $t('others.disabled')
+													? $t('common.enabled')
+													: $t('common.disabled')
 											}}</span>
 										</FormSwitch>
 									</div>
@@ -267,8 +267,8 @@ const validate = async () => {
 										<FormSwitch v-model="enableAdvancedSetting">
 											<span class="capitalize text-gray-700 dark:text-gray-200">{{
 												enableAdvancedSetting
-													? $t('others.enabled')
-													: $t('others.disabled')
+													? $t('common.enabled')
+													: $t('common.disabled')
 											}}</span>
 										</FormSwitch>
 									</div>
@@ -292,7 +292,7 @@ const validate = async () => {
 									<div class="flex">
 										<FormSwitch v-model="enableDirList" on>
 											<span class="capitalize text-gray-700 dark:text-gray-200">{{
-												enableDirList ? $t('others.enabled') : $t('others.disabled')
+												enableDirList ? $t('common.enabled') : $t('common.disabled')
 											}}</span>
 										</FormSwitch>
 									</div>

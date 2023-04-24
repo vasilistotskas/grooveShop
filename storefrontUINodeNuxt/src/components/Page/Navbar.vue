@@ -29,10 +29,10 @@ const { cart } = storeToRefs(cartStore)
 							<h2>
 								<Anchor
 									:to="'products'"
-									:title="$t('others.shop')"
-									:text="$t('others.shop')"
+									:title="$t('common.shop')"
+									:text="$t('common.shop')"
 									class="text-lg hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
-									>{{ $t('others.shop') }}</Anchor
+									>{{ $t('common.shop') }}</Anchor
 								>
 							</h2>
 						</li>
@@ -92,10 +92,10 @@ const { cart } = storeToRefs(cartStore)
 							>
 								<Anchor
 									:to="'products'"
-									:title="$t('others.shop')"
-									:text="$t('others.shop')"
+									:title="$t('common.shop')"
+									:text="$t('common.shop')"
 									class="flex-1 hover:no-underline capitalize"
-									>{{ $t('others.shop') }}</Anchor
+									>{{ $t('common.shop') }}</Anchor
 								>
 							</li>
 						</ul>
