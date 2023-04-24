@@ -83,7 +83,6 @@ export const useReviewsStore = defineStore({
 				return review.value.results[0]
 			}
 			this.pending = pending.value
-			console.log('===== pending =====', pending.value)
 		},
 		async addReview(body: ReviewCreateRequest) {
 			this.pending = true

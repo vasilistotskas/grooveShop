@@ -30,7 +30,7 @@ defineProps({
 			'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4': replicas > 1
 		}"
 	>
-		<div v-for="i in replicas" :key="i" class="container">
+		<div v-for="i in replicas" :key="i" class="container-skeleton">
 			<a
 				id="card-link"
 				aria-label="skeleton"
@@ -57,7 +57,7 @@ img[alt] {
 	text-indent: -10000px;
 }
 
-.container {
+.container-skeleton {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: flex-start;

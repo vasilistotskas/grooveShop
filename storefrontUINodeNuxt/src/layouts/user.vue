@@ -35,7 +35,7 @@ const { account, favourites, reviews, orders, pending, error } = storeToRefs(use
 							:direction="'row'"
 							:columns-md="1"
 							:columns-lg="1"
-							:cart-body-paragraphs="5"
+							:card-body-paragraphs="5"
 							:replicas="1"
 							:image-height="'120px'"
 							:image-width="'120px'"
@@ -53,7 +53,6 @@ const { account, favourites, reviews, orders, pending, error } = storeToRefs(use
 						</UserAccountInfo>
 						<div class="relative mb-12 md:mb-20">
 							<div class="flex-1 w-full flex flex-col md:gap-4">
-								<Breadcrumbs />
 								<div
 									:class="[
 										'relative flex-1 flex flex-col lg:flex-row mx-auto w-full h-full',

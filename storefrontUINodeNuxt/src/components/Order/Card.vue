@@ -173,10 +173,6 @@ const statusClass = computed(() => {
 	padding: 1rem;
 	gap: 1rem;
 	align-items: center;
-	@media screen and (min-width: 1200px) {
-		max-width: 1070px;
-		margin: 0 auto;
-	}
 	@media screen and (min-width: 961px) {
 		padding: 40px;
 		gap: 40px;

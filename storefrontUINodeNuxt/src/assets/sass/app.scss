@@ -7,6 +7,9 @@
 // vars
 @import 'variables';
 
+// common
+@import "commons";
+
 // components
 ::-webkit-scrollbar {
 	width: 16px;
@@ -43,7 +46,7 @@ html.dark {
 }
 html,
 body {
-  @apply bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+	@apply bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
 	scroll-behavior: smooth;
 }
 img {
@@ -54,9 +57,6 @@ img {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-}
-.wrapper {
-	min-height: 83vh;
 }
 
 // animations

@@ -37,10 +37,6 @@ const { t } = useLang()
 	width: 100%;
 	display: grid;
 	align-items: start;
-	@media screen and (min-width: 1200px) {
-		max-width: 1070px;
-		margin: 0 auto;
-	}
 	&__body {
 		display: grid;
 		gap: 1rem;

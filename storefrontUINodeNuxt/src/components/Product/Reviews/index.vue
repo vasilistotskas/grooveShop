@@ -109,7 +109,7 @@ const ordering = computed(() => {
 					:direction="'row'"
 					:columns-md="1"
 					:columns-lg="1"
-					:cart-body-paragraphs="5"
+					:card-body-paragraphs="5"
 					:replicas="reviews?.results.length || 4"
 				></LazyLoadingSkeleton>
 				<div v-if="error" class="reviews_list__item">
@@ -138,10 +138,6 @@ const ordering = computed(() => {
 .reviews_list {
 	width: 100%;
 	display: grid;
-	@media screen and (min-width: 1200px) {
-		max-width: 1070px;
-		margin: 0 auto;
-	}
 	&__header {
 		display: grid;
 		gap: 1rem;

@@ -32,11 +32,7 @@ export default defineNuxtConfig({
 			}
 		}
 	},
-	css: [
-		'~/assets/sass/vendor.scss',
-		'~/assets/sass/app.scss',
-		'vue-toastification/dist/index.css'
-	],
+	css: ['~/assets/sass/app.scss', 'vue-toastification/dist/index.css'],
 	/*
 	 ** All plugins in your plugins/ directory are auto-registered
 	 */

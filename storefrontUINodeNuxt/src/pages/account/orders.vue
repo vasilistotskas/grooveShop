@@ -70,7 +70,7 @@ useHead(() => ({
 </script>
 
 <template>
-	<PageWrapper>
+	<PageWrapper class="container flex flex-col gap-4">
 		<PageHeader>
 			<PageTitle :text="$t('pages.account.orders.title')" />
 		</PageHeader>
@@ -78,10 +78,14 @@ useHead(() => ({
 			<LazyPageError v-if="error" :error="error"></LazyPageError>
 			<LazyLoadingSkeleton
 				v-if="pending"
-				:card-height="'606px'"
+				:card-height="'195px'"
 				:class="pending ? 'block' : 'hidden'"
 				:loading="pending"
-				:replicas="orders.results.length || 3"
+				:direction="'row'"
+				:columns-md="1"
+				:columns-lg="1"
+				:card-body-paragraphs="2"
+				:replicas="orders?.results.length || 4"
 			></LazyLoadingSkeleton>
 			<template v-if="orders.results.length">
 				<div class="grid gap-2 md:flex md:items-center">

@@ -69,35 +69,37 @@ watch(
 </script>
 
 <template>
-	<LazyPageError v-if="error" :error="error"></LazyPageError>
-	<LazyLoadingSkeleton
-		v-if="pending"
-		:card-height="'512px'"
-		:class="pending ? 'block' : 'hidden'"
-		:loading="pending"
-		:replicas="products.results.length || 4"
-	></LazyLoadingSkeleton>
-	<template v-if="products.results.length">
-		<div class="grid gap-2 md:flex md:items-center">
-			<LazyPaginationLimitOffset
-				:current-page="pagination.currentPage"
-				:limit="pagination.limit"
-				:offset="pagination.offset"
-				:total-pages="pagination.totalPages"
-			/>
-			<LazyOrdering
-				:ordering="String(routePaginationParams.ordering)"
-				:ordering-options="ordering.orderingOptionsArray.value"
-			></LazyOrdering>
-		</div>
-	</template>
-	<template v-if="products.results.length">
-		<ol
-			class="grid items-center justify-center grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
-		>
-			<template v-for="(product, index) in products.results" :key="index">
-				<ProductCard :product="product" />
-			</template>
-		</ol>
-	</template>
+	<div class="products-list grid gap-4">
+		<LazyPageError v-if="error" :error="error"></LazyPageError>
+		<LazyLoadingSkeleton
+			v-if="pending"
+			:card-height="'512px'"
+			:class="pending ? 'block' : 'hidden'"
+			:loading="pending"
+			:replicas="products.results.length || 4"
+		></LazyLoadingSkeleton>
+		<template v-if="products.results.length">
+			<div class="grid gap-2 md:flex md:items-center">
+				<LazyPaginationLimitOffset
+					:current-page="pagination.currentPage"
+					:limit="pagination.limit"
+					:offset="pagination.offset"
+					:total-pages="pagination.totalPages"
+				/>
+				<LazyOrdering
+					:ordering="String(routePaginationParams.ordering)"
+					:ordering-options="ordering.orderingOptionsArray.value"
+				></LazyOrdering>
+			</div>
+		</template>
+		<template v-if="products.results.length">
+			<ol
+				class="grid items-center justify-center grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+			>
+				<template v-for="(product, index) in products.results" :key="index">
+					<ProductCard :product="product" />
+				</template>
+			</ol>
+		</template>
+	</div>
 </template>

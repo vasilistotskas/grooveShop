@@ -87,7 +87,7 @@ const appTitle = computed(() => config.public.appTitle)
 								<Anchor
 									:to="localePath('index')"
 									aria-label="index"
-									class="flex items-center gap-3 overflow-hidden md:w-auto text-md font-bold text-gray-700 dark:text-gray-200 items-center"
+									class="flex items-center gap-3 overflow-hidden md:w-auto text-md font-bold text-gray-700 dark:text-gray-200"
 								>
 									<nuxt-img
 										preload

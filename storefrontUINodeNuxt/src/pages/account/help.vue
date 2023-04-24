@@ -7,7 +7,7 @@ definePageMeta({
 </script>
 
 <template>
-	<PageWrapper>
+	<PageWrapper class="container flex flex-col gap-4">
 		<PageHeader>
 			<PageTitle :text="$t('pages.account.help.title')" />
 		</PageHeader>

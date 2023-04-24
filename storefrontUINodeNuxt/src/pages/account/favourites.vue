@@ -73,7 +73,7 @@ definePageMeta({
 </script>
 
 <template>
-	<PageWrapper>
+	<PageWrapper class="container flex flex-col gap-4">
 		<PageHeader>
 			<PageTitle :text="$t('pages.account.favourites.title')" />
 		</PageHeader>
@@ -81,7 +81,7 @@ definePageMeta({
 			<LazyPageError v-if="error" :error="error"></LazyPageError>
 			<LazyLoadingSkeleton
 				v-if="pending"
-				:card-height="'606px'"
+				:card-height="'422px'"
 				:class="pending ? 'block' : 'hidden'"
 				:loading="pending"
 				:replicas="favourites.results.length || 3"

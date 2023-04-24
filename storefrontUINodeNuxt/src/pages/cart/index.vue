@@ -62,7 +62,7 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 </script>
 
 <template>
-	<PageWrapper>
+	<PageWrapper class="container grid gap-4 grid-rows-auto-1fr mt-4">
 		<div class="grid grid-cols-2 items-center">
 			<PageTitle :text="$t('pages.cart.title')" class="capitalize" />
 			<h2 class="grid justify-items-center justify-self-end">
@@ -86,7 +86,7 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 				:direction="'row'"
 				:columns-md="1"
 				:columns-lg="1"
-				:cart-body-paragraphs="5"
+				:card-body-paragraphs="5"
 				:replicas="cart?.cartItems.length || 1"
 			></LazyLoadingSkeleton>
 			<template v-if="cart?.cartItems.length">

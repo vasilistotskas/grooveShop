@@ -68,7 +68,11 @@ const props = defineProps({
 		type: Number,
 		default: 4
 	},
-	cartBodyParagraphs: {
+	cardHeadParagraphs: {
+		type: Number,
+		default: 2
+	},
+	cardBodyParagraphs: {
 		type: Number,
 		default: 10
 	},
@@ -98,7 +102,7 @@ const {
 	columns,
 	columnsMd,
 	columnsLg,
-	cartBodyParagraphs
+	cardBodyParagraphs
 } = toRefs(props)
 </script>
 
@@ -107,7 +111,7 @@ const {
 		v-if="loading"
 		:class="`wrapper grid grid-cols-${columns} md:grid-cols-${columnsMd} lg:grid-cols-${columnsLg} gap-4`"
 	>
-		<div v-for="i in replicas" :key="i" class="container">
+		<div v-for="i in replicas" :key="i" class="container-skeleton">
 			<a
 				id="card-link"
 				aria-label="skeleton"
@@ -143,8 +147,11 @@ const {
 								: 'flex-row w-3/5'
 						"
 					>
-						<span class="skeleton skeleton-text"></span>
-						<span class="skeleton skeleton-text"></span>
+						<span
+							v-for="n in cardHeadParagraphs"
+							:key="n"
+							class="skeleton skeleton-text"
+						></span>
 					</h3>
 				</div>
 
@@ -155,7 +162,7 @@ const {
 						class="card__body body__text grid gap-3"
 					>
 						<div
-							v-for="n in cartBodyParagraphs"
+							v-for="n in cardBodyParagraphs"
 							:key="n"
 							class="skeleton skeleton-text skeleton-text__body"
 						></div>
@@ -189,7 +196,7 @@ img[alt] {
 	text-indent: -10000px;
 }
 
-.container {
+.container-skeleton {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -238,6 +245,9 @@ img[alt] {
 		.body__text {
 			color: #525866;
 			font-size: 0.8125rem;
+			display: grid;
+			justify-items: center;
+			align-items: center;
 		}
 
 		.body__img {

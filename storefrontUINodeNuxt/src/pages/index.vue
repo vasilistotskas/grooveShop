@@ -64,37 +64,26 @@ const copyBash = () => {
 </script>
 
 <template>
-	<PageWrapper class="flex">
-		<div class="background-overlay">
-			<div
-				class="absolute top-0 left-0 transform translate-x-64 translate-y-4 h-14 w-14 rounded-full bg-gray-900 dark:bg-white"
-			></div>
-			<div
-				class="absolute hidden md:block top-0 left-0 transform translate-x-18 translate-y-20 h-28 w-28 rounded-full bg-blue-600 linear-wipe"
-			></div>
-			<div
-				class="absolute hidden md:block bottom-0 right-0 transform -translate-x-4 -translate-y-40 h-16 w-16 rounded bg-purple-600 linear-wipe"
-			></div>
-			<div class="absolute bottom-0 right-0 triangle-shape"></div>
-		</div>
+	<PageWrapper>
 		<PageBody>
-			<PageSection class="flex items-center">
-				<div class="flex-1 md:w-5/8 flex flex-col z-10">
-					<p class="text-gray-700 dark:text-gray-200 text-center md:text-left mt-4">
-						<template v-for="(item, i) in leadingText" :key="i">
-							<span
-								v-if="item.text"
-								:style="`--content: '${item.text}'; --start-color: ${
-									item.startColor
-								}; --end-color: ${item.endColor}; --animation-name: anim-fg-${i + 1}`"
-								class="animated-text-bg drop-shadow-xl text-5xl xl:text-8xl 2xl:text-9xl block font-black uppercase text-gray-700 dark:text-gray-200"
-							>
-								<span class="animated-text-fg text-gray-700 dark:text-gray-200">{{
-									item.text
-								}}</span>
-							</span>
-						</template>
-					</p>
+			<PageSection>
+				<div class="main-banner">
+					<nuxt-img
+						src="/assets/images/dummy/1920x640.png"
+						alt="Main Banner"
+						class="w-full h-full object-cover"
+					/>
+				</div>
+				<div
+					class="usps container-small flex flex-wrap items-center justify-center gap-8 my-16 text-center brand lg:justify-between"
+				>
+					<nuxt-img
+						v-for="i in 6"
+						:key="i"
+						src="/assets/images/dummy/80x40.png"
+						alt="Usp"
+						class="w-auto h-auto object-cover"
+					/>
 				</div>
 			</PageSection>
 		</PageBody>
@@ -102,8 +91,6 @@ const copyBash = () => {
 </template>
 
 <style lang="scss">
-@import '../assets/sass/variables';
-
 @keyframes anim-fg-1 {
 	0%,
 	16.667%,
@@ -159,8 +146,8 @@ const copyBash = () => {
 	bottom: 0;
 	left: 0;
 	z-index: 0;
-	padding-left: $padding;
-	padding-right: $padding;
+	padding-left: 0.05em;
+	padding-right: 0.05em;
 	&:before {
 		content: var(--content);
 		position: absolute;
@@ -171,16 +158,16 @@ const copyBash = () => {
 		bottom: 0;
 		left: 0;
 		z-index: 0;
-		padding-left: $padding;
-		padding-right: $padding;
+		padding-left: 0.05em;
+		padding-right: 0.05em;
 	}
 }
 .animated-text-fg {
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	padding-left: $padding;
-	padding-right: $padding;
+	padding-left: 0.05em;
+	padding-right: 0.05em;
 	background-image: linear-gradient(90deg, var(--start-color), var(--end-color));
 	position: relative;
 	opacity: 0;
