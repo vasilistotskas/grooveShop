@@ -99,7 +99,7 @@ const menus = computed((): IMenuItem[] => [
 					<slot name="image" />
 				</div>
 				<ul
-					class="flex space-x-4 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2] text-gray-700 dark:text-gray-200"
+					class="flex items-center gap-3 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2] text-gray-700 dark:text-gray-200"
 				>
 					<li class="relative">
 						<LanguageSwitcher />

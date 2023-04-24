@@ -4,7 +4,7 @@ const { t } = useLang()
 
 <template>
 	<PageWrapper>
-		<PageHeader> </PageHeader>
-		<PageBody> </PageBody>
+		<PageHeader />
+		<PageBody />
 	</PageWrapper>
 </template>

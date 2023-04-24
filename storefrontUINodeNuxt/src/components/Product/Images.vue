@@ -32,10 +32,7 @@ const mainImage = computed(() => {
 	return images.find((image) => image.isMain)
 })
 
-const resolveImageFileExtension = (fileName: string | undefined) => {
-	if (!fileName) return undefined
-	return fileName.split('.').pop()
-}
+const { resolveImageFileExtension } = useImageResolver()
 
 const imageId = useState<number>(`${product.value.uuid}-imageID`, () => {
 	return mainImage.value?.id || productImages.value?.results[0]?.id || 0

@@ -79,16 +79,16 @@ watch(
 	></LazyLoadingSkeleton>
 	<template v-if="products.results.length">
 		<div class="grid gap-2 md:flex md:items-center">
-			<PaginationLimitOffset
+			<LazyPaginationLimitOffset
 				:current-page="pagination.currentPage"
 				:limit="pagination.limit"
 				:offset="pagination.offset"
 				:total-pages="pagination.totalPages"
 			/>
-			<Ordering
+			<LazyOrdering
 				:ordering="String(routePaginationParams.ordering)"
 				:ordering-options="ordering.orderingOptionsArray.value"
-			></Ordering>
+			></LazyOrdering>
 		</div>
 	</template>
 	<template v-if="products.results.length">

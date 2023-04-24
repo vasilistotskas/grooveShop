@@ -88,24 +88,24 @@ definePageMeta({
 			></LazyLoadingSkeleton>
 			<template v-if="favourites.results.length">
 				<div class="grid gap-2 md:flex md:items-center">
-					<PaginationPageNumber
+					<LazyPaginationPageNumber
 						:results-count="pagination.resultsCount"
 						:total-pages="pagination.totalPages"
 						:page-size="pagination.pageSize"
 						:current-page="pagination.currentPage"
 						:links="pagination.links"
 					/>
-					<Ordering
+					<LazyOrdering
 						:ordering="String(routePaginationParams.ordering)"
 						:ordering-options="ordering.orderingOptionsArray.value"
-					></Ordering>
+					></LazyOrdering>
 				</div>
 			</template>
 			<template v-if="favourites.results.length">
-				<FavouriteList :favourites="favourites.results"></FavouriteList>
+				<LazyFavouriteList :favourites="favourites.results"></LazyFavouriteList>
 			</template>
 			<template v-else>
-				<EmptyState
+				<LazyEmptyState
 					:title="$t('pages.account.favourites.empty.title')"
 					:description="$t('pages.account.favourites.empty.description')"
 					:icon="emptyIcon"
@@ -116,7 +116,7 @@ definePageMeta({
 							:to="{ name: 'home' }"
 						></Button>
 					</template>
-				</EmptyState>
+				</LazyEmptyState>
 			</template>
 		</PageBody>
 	</PageWrapper>

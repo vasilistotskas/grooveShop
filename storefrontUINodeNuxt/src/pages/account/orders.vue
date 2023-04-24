@@ -85,24 +85,24 @@ useHead(() => ({
 			></LazyLoadingSkeleton>
 			<template v-if="orders.results.length">
 				<div class="grid gap-2 md:flex md:items-center">
-					<PaginationPageNumber
+					<LazyPaginationPageNumber
 						:results-count="pagination.resultsCount"
 						:total-pages="pagination.totalPages"
 						:page-size="pagination.pageSize"
 						:current-page="pagination.currentPage"
 						:links="pagination.links"
 					/>
-					<Ordering
+					<LazyOrdering
 						:ordering="String(routePaginationParams.ordering)"
 						:ordering-options="ordering.orderingOptionsArray.value"
-					></Ordering>
+					></LazyOrdering>
 				</div>
 			</template>
 			<template v-if="orders.results.length">
-				<OrderList :orders="orders.results"></OrderList>
+				<LazyOrderList :orders="orders.results"></LazyOrderList>
 			</template>
 			<template v-else>
-				<EmptyState
+				<LazyEmptyState
 					:title="$t('pages.account.orders.empty.title')"
 					:description="$t('pages.account.orders.empty.description')"
 					:icon="emptyIcon"
@@ -113,7 +113,7 @@ useHead(() => ({
 							:to="{ name: 'home' }"
 						></Button>
 					</template>
-				</EmptyState>
+				</LazyEmptyState>
 			</template>
 		</PageBody>
 	</PageWrapper>

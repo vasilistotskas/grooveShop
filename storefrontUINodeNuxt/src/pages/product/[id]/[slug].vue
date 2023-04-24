@@ -7,10 +7,10 @@ import { capitalize } from '~/utils/str'
 import { useImagesStore } from '~/stores/product/images'
 import { useAuthStore } from '~/stores/auth'
 import { useUserStore } from '~/stores/user'
-import { useReviewsStore } from '~/stores/product/reviews'
 import { ReviewActionPayload, ReviewQuery } from '~/zod/product/review'
 import { Product, ProductQuery } from '~/zod/product/product'
 import { GlobalEvents } from '~/events/global'
+import { useReviewsStore } from '~/stores/product/reviews'
 
 const route = useRoute()
 const config = useRuntimeConfig()
@@ -29,7 +29,6 @@ const productId = route.params.id
 const { account, favourites } = storeToRefs(userStore)
 const { isAuthenticated } = storeToRefs(authStore)
 const { pending: productImagesPending } = storeToRefs(productImagesStore)
-const { pending: reviewsPending } = storeToRefs(reviewsStore)
 const {
 	product,
 	pending: productPending,
@@ -51,11 +50,8 @@ const routePaginationParams = ref<ReviewQuery>({
 	ordering: route.query.ordering || undefined,
 	expand: 'true'
 })
-await reviewsStore.fetchReviews(routePaginationParams.value)
 const reviewsRefresh = async () =>
 	await reviewsStore.fetchReviews(routePaginationParams.value)
-
-const { reviews, error: reviewsError } = storeToRefs(reviewsStore)
 
 const { images: productImages, error: productImagesError } =
 	storeToRefs(productImagesStore)
@@ -66,7 +62,7 @@ const productTitle = computed(() => {
 const selectorQuantity = ref(1)
 const productUrl = computed(() => {
 	if (!product.value) return ''
-	return `/product/${product.value.id}/${product.value.slug}`
+	return `/product/${product.value?.id}/${product.value?.slug}`
 })
 
 const shareOptions = ref({
@@ -78,20 +74,26 @@ const { share, isSupported } = useShare(shareOptions)
 const startShare = () => share().catch((err) => err)
 const productInUserFavourites = computed(() => {
 	if (!product.value) return false
-	return userStore.getIsProductInFavourites(product.value.id)
+	const productId = product.value?.id
+	if (!productId) return false
+	return userStore.getIsProductInFavourites(productId)
 })
 
 const userToProductFavourite = computed(() => {
 	if (!product.value) return null
-	return userStore.getUserToProductFavourite(product.value.id)
+	const productId = product.value?.id
+	if (!productId) return null
+	return userStore.getUserToProductFavourite(productId)
 })
 
-const { data: review, refresh: reviewRefresh } = await useAsyncData('productReview', () =>
-	reviewsStore.fetchUserToProductReview({
-		productId: String(productId),
-		userId: account.value?.id ? String(account.value.id) : undefined,
-		expand: 'true'
-	})
+const { data: existingReview, refresh: existingReviewRefresh } = await useAsyncData(
+	'productReview',
+	() =>
+		reviewsStore.fetchUserToProductReview({
+			productId: String(productId),
+			userId: account.value?.id ? String(account.value.id) : undefined,
+			expand: 'true'
+		})
 )
 
 const reviewBus = useEventBus<string>('productReview')
@@ -117,7 +119,7 @@ reviewBus.on((event, payload: ReviewActionPayload) => {
 				.then(() => {
 					toast.success(t('pages.product.review.created.success'))
 					productRefresh()
-					reviewRefresh()
+					existingReviewRefresh().finally(() => (reviewsStore.pending = false))
 				})
 				.catch((err) => {
 					toast.error(err.message)
@@ -137,7 +139,7 @@ reviewBus.on((event, payload: ReviewActionPayload) => {
 				.then(() => {
 					toast.success(t('pages.product.review.updated.success'))
 					productRefresh()
-					reviewRefresh()
+					existingReviewRefresh().finally(() => (reviewsStore.pending = false))
 				})
 				.catch((err) => {
 					toast.error(err.message)
@@ -152,7 +154,7 @@ reviewBus.on((event, payload: ReviewActionPayload) => {
 				.then(() => {
 					toast.success(t('pages.product.review.deleted.success'))
 					productRefresh()
-					reviewRefresh()
+					existingReviewRefresh().finally(() => (reviewsStore.pending = false))
 				})
 				.catch((err) => {
 					toast.error(err.message)
@@ -318,7 +320,7 @@ useHead(() => ({
 										/>
 									</ClientOnly>
 									<ProductReview
-										:existing-review="review || undefined"
+										:existing-review="existingReview || undefined"
 										:product="product"
 										:user="account || undefined"
 										:is-authenticated="isAuthenticated"
@@ -409,9 +411,6 @@ useHead(() => ({
 				</div>
 			</template>
 			<ProductReviews
-				:reviews="reviews"
-				:pending="reviewsPending"
-				:error="reviewsError"
 				:reviews-average="product?.reviewAverage"
 				:reviews-count="product?.reviewCounter"
 			>

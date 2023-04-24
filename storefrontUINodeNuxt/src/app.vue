@@ -97,7 +97,7 @@ useServerSeoMeta({
 </script>
 
 <template>
-	<Body class="bg-white text-white dark:bg-black dark:text-black">
+	<Body>
 		<VitePwaManifest />
 		<NuxtLoadingIndicator />
 		<NuxtLayout>

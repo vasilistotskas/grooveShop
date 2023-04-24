@@ -111,7 +111,7 @@ const identity = useIdentity()
 				</div>
 			</PageSection>
 			<PageSection>
-				<FormValidation> </FormValidation>
+				<TestingFormValidation> </TestingFormValidation>
 			</PageSection>
 		</PageBody>
 	</PageWrapper>

@@ -91,14 +91,14 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 			></LazyLoadingSkeleton>
 			<template v-if="cart?.cartItems.length">
 				<div class="grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4">
-					<CartItemCard
+					<LazyCartItemCard
 						v-for="(cartItem, index) in cart.cartItems"
 						:key="index"
 						:cart-item="cartItem"
 					/>
 				</div>
 			</template>
-			<Empty v-else :text="$t('pages.cart.empty')" />
+			<LazyEmpty v-else :text="$t('pages.cart.empty')" />
 		</PageBody>
 	</PageWrapper>
 </template>

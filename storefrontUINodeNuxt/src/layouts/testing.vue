@@ -1,5 +1,5 @@
 <template>
-	<div class="relative bg-gray-50 dark:bg-gray-900">
+	<div class="relative">
 		<slot name="app-before" />
 		<div id="app-before"></div>
 		<main class="relative flex-1 flex flex-col mx-auto max-w-8xl w-full h-full">

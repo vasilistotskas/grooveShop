@@ -83,6 +83,7 @@ export const useReviewsStore = defineStore({
 				return review.value.results[0]
 			}
 			this.pending = pending.value
+			console.log('===== pending =====', pending.value)
 		},
 		async addReview(body: ReviewCreateRequest) {
 			this.pending = true
@@ -102,7 +103,10 @@ export const useReviewsStore = defineStore({
 				throw new Error(errorMessage)
 			}
 			if (review.value) {
-				this.reviews.results.push(review.value)
+				// If current page results are less than pageSize then add review to results
+				if (this.reviews.results.length < this.reviews.pageSize) {
+					this.reviews.results.push(review.value)
+				}
 			}
 			this.pending = pending.value
 		},
@@ -119,7 +123,10 @@ export const useReviewsStore = defineStore({
 				throw new Error(errorMessage)
 			}
 			const index = this.reviews.results.findIndex((review) => review.id === id)
-			this.reviews.results.splice(index, 1)
+			// If current review in results listing delete it
+			if (index !== -1) {
+				this.reviews.results.splice(index, 1)
+			}
 			this.pending = pending.value
 		},
 		async updateReview(id: number, body: ReviewPutRequest) {
@@ -141,18 +148,21 @@ export const useReviewsStore = defineStore({
 			}
 			if (review.value) {
 				const index = this.reviews.results.findIndex((review) => review.id === id)
-				this.reviews.results[index] = {
-					comment: review.value.comment,
-					createdAt: review.value.createdAt,
-					id: review.value.id,
-					isPublished: review.value.isPublished,
-					publishedAt: review.value.publishedAt,
-					rate: review.value.rate,
-					status: review.value.status,
-					updatedAt: review.value.updatedAt,
-					uuid: review.value.uuid,
-					product: this.reviews.results[index].product,
-					user: this.reviews.results[index].user
+				// If current review in results listing update it
+				if (index !== -1) {
+					this.reviews.results[index] = {
+						comment: review.value.comment,
+						createdAt: review.value.createdAt,
+						id: review.value.id,
+						isPublished: review.value.isPublished,
+						publishedAt: review.value.publishedAt,
+						rate: review.value.rate,
+						status: review.value.status,
+						updatedAt: review.value.updatedAt,
+						uuid: review.value.uuid,
+						product: this.reviews.results[index].product,
+						user: this.reviews.results[index].user
+					}
 				}
 			}
 			this.pending = pending.value

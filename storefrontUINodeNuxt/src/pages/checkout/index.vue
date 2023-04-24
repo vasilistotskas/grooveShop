@@ -306,13 +306,13 @@ useServerSeoMeta({
 						<Button v-if="!tooManyAttempts" type="button">
 							{{ $t('pages.checkout.form.submit') }}
 						</Button>
-						<Button v-else type="button" disabled>
+						<LazyButton v-else type="button" disabled>
 							{{ $t('pages.checkout.form.too_many_attempts') }}
-						</Button>
+						</LazyButton>
 					</div>
 				</form>
 			</template>
-			<Empty v-else :text="$t('pages.checkout.empty')" />
+			<LazyEmpty v-else :text="$t('pages.checkout.empty')" />
 		</PageBody>
 	</PageWrapper>
 </template>

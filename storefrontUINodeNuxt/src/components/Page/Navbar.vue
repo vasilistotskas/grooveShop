@@ -29,17 +29,17 @@ const { cart } = storeToRefs(cartStore)
 							<h2>
 								<Anchor
 									:to="'products'"
-									:title="$t('pages.products.title')"
-									:text="$t('pages.products.title')"
-									class="hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
-									>{{ $t('pages.products.title') }}</Anchor
+									:title="$t('others.shop')"
+									:text="$t('others.shop')"
+									class="text-lg hover:no-underline hover:text-slate-900 hover:dark:text-white capitalize"
+									>{{ $t('others.shop') }}</Anchor
 								>
 							</h2>
 						</li>
 					</ul>
 				</nav>
 				<ul
-					class="flex space-x-4 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2] text-gray-700 dark:text-gray-200"
+					class="flex items-center gap-3 border-l ml-6 pl-6 border-gray-900/10 dark:border-gray-50/[0.2] text-gray-700 dark:text-gray-200"
 				>
 					<li class="relative">
 						<LanguageSwitcher />
@@ -92,10 +92,10 @@ const { cart } = storeToRefs(cartStore)
 							>
 								<Anchor
 									:to="'products'"
-									:title="$t('pages.products.title')"
-									:text="$t('pages.products.title')"
+									:title="$t('others.shop')"
+									:text="$t('others.shop')"
 									class="flex-1 hover:no-underline capitalize"
-									>{{ $t('pages.products.title') }}</Anchor
+									>{{ $t('others.shop') }}</Anchor
 								>
 							</li>
 						</ul>
