@@ -110,46 +110,6 @@
   ### DRF-Spectacular :
   -     Generate schema : python manage.py spectacular --color --file schema.yml
 
-## SCSS:
-  ### Lint :
-  -     Step 1: cd src/frontend
-  -     (EXPERIMENTAL): scss-lint -c .scss-lint.yml
-  -     (NPM):
-        npm run lint:scss
-        npm run lint:scss:fix
-
-## FRONTEND:
-  ### NPM :
-   ### --- VERSION 17.5.0 ---
-   -     Step 1: cd src/frontend
-   -     Run npm Install : npm install
-
-  ### Package.json :
-  -  ### SCRIPTS
-  -  #### VUE :
-        -     npm run serve:vue
-              npm run build:vue
-              npm run watch:vue
-        - #### Lint :
-              npm run lint:vue
-  -  #### VITE :
-        -     npm run build:vite
-              npm run watch:vite
-              npm run dts:vite
-              npm run dev
-  -  #### LINT :
-        -  ### SCSS
-        -     npm run lint:scss
-              npm run lint:scss:fix
-
-  -  ### FORMAT:
-        -     npm run lint:prettier
-              npm run lint:prettier:fix
-
-  -  ### Packages Update
-        -     npm install -g npm-check-updates
-              (check for updates): ncu
-              (update all packages): ncu -u
 
 ## MEDIA STREAM:
   ### NPM :
