@@ -217,9 +217,9 @@ pages:
             inhalt des verzeichnisses angezeigt.
   index:
     nav: heim
-    title: deepweb[]fantastischer[]starter
-    description: deepweb[]fantastischer[]starter
-    keywords: deepweb[]fantastischer[]starter
+    title: deep web
+    description: deep web
+    keywords: deep web
     add_to_cart: in den warenkorb legen
   product:
     add_to_cart: in den warenkorb legen
@@ -368,6 +368,7 @@ others:
   read_more: weiterlesen
   errors:
     unknown_internal_api_error: unbekannter interner api-fehler
+  shop: geschäft
 routes:
   el: griechisch
   en: englisch

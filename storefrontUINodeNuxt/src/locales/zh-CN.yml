@@ -121,7 +121,7 @@ components:
   add_to_favourite_button:
     not_authenticated: 您必须登录才能添加到收藏夹
     added: 已添加到收藏夹
-    removed: 已从收藏夹中移除
+    removed: 已从收藏夹中删除
     add: 加入“最喜欢的
     remove: 从收藏夹中删除
   user:
@@ -188,7 +188,7 @@ pages:
           description: 这是您的机器人 id。
           footer: 与机器人交互时使用。
         protection_spam:
-          title: 垃圾邮件保护
+          title: 垃圾邮件防护
           description: 切换启用以删除红色边框
           footer: 如果启用，我们将保护您的评论免受垃圾邮件
         advanced_enable_advanced:
@@ -199,9 +199,9 @@ pages:
           description: 如果目录中没有索引文件，则显示目录内容。
   index:
     nav: 家
-    title: deepweb[]awesome[]starter
-    description: deepweb[]awesome[]starter
-    keywords: deepweb[]awesome[]starter
+    title: 深网
+    description: 深网
+    keywords: 深网
     add_to_cart: 添加到购物车
   product:
     add_to_cart: 添加到购物车
@@ -332,7 +332,7 @@ pages:
       description: 帮助
       keywords: 帮助
       updated: 帮助已更新
-      update_error: 求助更新错误
+      update_error: 帮助更新错误
       deleted: 帮助项目已删除
       delete_error: 帮助项目删除错误
 layouts:
@@ -350,6 +350,7 @@ others:
   read_more: 阅读更多
   errors:
     unknown_internal_api_error: 未知的内部 api 错误
+  shop: 店铺
 routes:
   el: 希腊语
   en: 英语

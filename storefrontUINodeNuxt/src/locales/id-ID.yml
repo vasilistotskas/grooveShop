@@ -108,7 +108,7 @@ components:
       rating:
         title: peringkat
         bad: buruk
-        not_that_good: tidak begitu bagus
+        not_that_good: tidak sebagus itu
         meh: meh
         its_ok: tidak apa-apa
         good: bagus
@@ -210,9 +210,9 @@ pages:
             ditampilkan.
   index:
     nav: rumah
-    title: deepweb[]mengagumkan[]pemula
-    description: deepweb[]mengagumkan[]pemula
-    keywords: deepweb[]mengagumkan[]pemula
+    title: deepweb
+    description: deepweb
+    keywords: deepweb
     add_to_cart: masukkan ke keranjang
   product:
     add_to_cart: masukkan ke keranjang
@@ -361,6 +361,7 @@ others:
   read_more: baca selengkapnya
   errors:
     unknown_internal_api_error: kesalahan api internal yang tidak diketahui
+  shop: toko
 routes:
   el: orang yunani
   en: bahasa inggris

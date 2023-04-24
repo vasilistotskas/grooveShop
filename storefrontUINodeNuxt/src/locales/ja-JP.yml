@@ -55,7 +55,7 @@ components:
       necessary: 必要なクッキー
       necessary_description: >-
         必要な cookie は、ページ ナビゲーションや web サイトの安全な領域へのアクセスなどの基本的な機能を有効にすることで、web
-        サイトを使いやすくします。これらの cookie がないと、web サイトは正しく機能しません。
+        サイトを使いやすくするのに役立ちます。これらの cookie がないと、web サイトは正しく機能しません。
       optional: オプションのクッキー
       optional_links:
         privacy_policy: プライバシーポリシー
@@ -184,7 +184,7 @@ pages:
       sections:
         validate_username:
           title: github プロファイルを検証する
-          description: github ユーザー名を入力し、ボタンをクリックして検証します。
+          description: github のユーザー名を入力し、ボタンをクリックして検証します。
           footer: 詳しくはこちら
           footer_button: 検証
           footer_link: github ユーザー api
@@ -204,9 +204,9 @@ pages:
           description: ディレクトリ内にインデックス ファイルが存在しない場合は、ディレクトリの内容が表示されます。
   index:
     nav: 家
-    title: ディープウェブ[]素晴らしい[]スターター
-    description: ディープウェブ[]素晴らしい[]スターター
-    keywords: ディープウェブ[]素晴らしい[]スターター
+    title: ディープウェブ
+    description: ディープウェブ
+    keywords: ディープウェブ
     add_to_cart: カートに追加
   product:
     add_to_cart: カートに追加
@@ -355,6 +355,7 @@ others:
   read_more: 続きを読む
   errors:
     unknown_internal_api_error: 不明な内部 api エラー
+  shop: 店
 routes:
   el: ギリシャ語
   en: 英語

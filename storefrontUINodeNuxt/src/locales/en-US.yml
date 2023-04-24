@@ -350,6 +350,7 @@ others:
   read_more: read more
   errors:
     unknown_internal_api_error: Unknown internal API error
+  shop: Shop
 routes:
   el: Greek
   en: English
