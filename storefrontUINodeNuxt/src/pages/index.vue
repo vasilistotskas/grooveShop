@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 // composable
 const { t } = useLang()
-
 // meta
 definePageMeta({
 	layout: 'page'
@@ -67,13 +66,35 @@ const copyBash = () => {
 	<PageWrapper>
 		<PageBody>
 			<PageSection>
-				<div class="main-banner">
-					<nuxt-img
-						src="/assets/images/dummy/1920x640.png"
-						alt="Main Banner"
-						class="w-full h-full object-cover"
-					/>
-				</div>
+				<LazyNativeSlider
+					:drag-speed="1"
+					:autoplay-interval="6000"
+					:left-button-scroll-left-by="-1"
+					:right-button-scroll-left-by="1"
+				>
+					<a href="/">
+						<nuxt-img
+							src="/assets/images/dummy/1920x640.png"
+							alt="Main Banner"
+							class="w-full h-full object-cover"
+						/>
+					</a>
+					<a href="/">
+						<nuxt-img
+							src="/assets/images/dummy/1920x640.png"
+							alt="Main Banner"
+							class="w-full h-full object-cover"
+						/>
+					</a>
+					<a href="/">
+						<nuxt-img
+							src="/assets/images/dummy/1920x640.png"
+							alt="Main Banner"
+							class="w-full h-full object-cover"
+						/>
+					</a>
+				</LazyNativeSlider>
+
 				<div
 					class="usps container-small flex flex-wrap items-center justify-center gap-8 my-16 text-center brand lg:justify-between"
 				>
