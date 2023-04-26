@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.43.0 (2023-04-26)
+### Feature
+* **Nuxt:** Native slider init ([`0271419`](https://github.com/vasilistotskas/grooveShop/commit/0271419e3e8d677cbecbac3b1495dd3e507401e3))
+
 ## v0.42.3 (2023-04-24)
 ### Fix
 * **Nuxt:** Global fixes and improvements ([`f878b1f`](https://github.com/vasilistotskas/grooveShop/commit/f878b1f91c60432fc136a8bbde465311bd1bd0f9))
