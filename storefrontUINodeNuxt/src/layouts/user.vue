@@ -26,23 +26,7 @@ const { account, favourites, reviews, orders, pending, error } = storeToRefs(use
 				</slot>
 				<slot name="main">
 					<div class="mx-auto w-full container">
-						<LazyPageError v-if="error" :error="error"></LazyPageError>
-						<LazyLoadingSkeleton
-							v-if="pending"
-							:card-height="'184px'"
-							:class="pending ? 'grid items-start pt-8' : 'hidden'"
-							:loading="pending"
-							:direction="'row'"
-							:columns-md="1"
-							:columns-lg="1"
-							:card-body-paragraphs="5"
-							:replicas="1"
-							:image-height="'120px'"
-							:image-width="'120px'"
-							:header-direction="'row'"
-							:show-paragraph="false"
-							:footer-paragraphs="3"
-						></LazyLoadingSkeleton>
+						<LazyError v-if="error" :code="error.statusCode" />
 						<UserAccountInfo
 							v-if="account"
 							:account="account"

@@ -2,6 +2,7 @@
 import { isClient } from '@vueuse/shared'
 import { useShare } from '@vueuse/core'
 import { Ref } from 'vue'
+import { FetchError } from 'ofetch/dist/node'
 import { useProductStore } from '~/stores/product/product'
 import { capitalize } from '~/utils/str'
 import { useImagesStore } from '~/stores/product/images'
@@ -11,6 +12,7 @@ import { ReviewActionPayload, ReviewQuery } from '~/zod/product/review'
 import { Product, ProductQuery } from '~/zod/product/product'
 import { GlobalEvents } from '~/events/global'
 import { useReviewsStore } from '~/stores/product/reviews'
+import emptyIcon from '~icons/mdi/package-variant-remove'
 
 const route = useRoute()
 const config = useRuntimeConfig()
@@ -32,11 +34,11 @@ const { pending: productImagesPending } = storeToRefs(productImagesStore)
 const {
 	product,
 	pending: productPending,
-	error: productError
+	error
 }: {
 	product: Ref<Product | null>
 	pending: Ref<boolean>
-	error: Ref<Error | null>
+	error: Ref<FetchError | null>
 } = storeToRefs(productStore)
 
 await productStore.fetchProduct(productId)
@@ -281,18 +283,19 @@ useHead(() => ({
 <template>
 	<PageWrapper class="gap-16">
 		<PageBody>
-			<LazyPageError v-if="productError" :error="productError"></LazyPageError>
-			<LazyLoadingSkeleton
+			<LazyError v-if="error" :code="error.statusCode" />
+			<LoadingSkeleton
 				v-if="productPending"
 				:loading="productPending"
 				:class="productPending ? 'block' : 'hidden'"
-			></LazyLoadingSkeleton>
-			<template v-if="product">
+			></LoadingSkeleton>
+			<template v-if="!productPending && product">
 				<div class="product mb-12 md:mb-24">
 					<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
 						<div class="grid md:grid-cols-2 gap-2">
 							<div class="md:flex-1 px-4">
 								<ProductImages
+									v-if="product"
 									:product="product"
 									:product-images="productImages"
 									:pending="productImagesPending"
@@ -320,6 +323,7 @@ useHead(() => ({
 										/>
 									</ClientOnly>
 									<ProductReview
+										v-if="product"
 										:existing-review="existingReview || undefined"
 										:product="product"
 										:user="account || undefined"
@@ -409,12 +413,24 @@ useHead(() => ({
 						</div>
 					</div>
 				</div>
+				<ProductReviews
+					:reviews-average="product.reviewAverage"
+					:reviews-count="product.reviewCounter"
+					display-image-of="user"
+				>
+				</ProductReviews>
 			</template>
-			<ProductReviews
-				:reviews-average="product?.reviewAverage"
-				:reviews-count="product?.reviewCounter"
-			>
-			</ProductReviews>
+			<template v-if="!productPending && !product">
+				<LazyEmptyState :icon="emptyIcon">
+					<template #actions>
+						<Button
+							:text="$t('common.empty.button')"
+							:type="'link'"
+							:to="'index'"
+						></Button>
+					</template>
+				</LazyEmptyState>
+			</template>
 		</PageBody>
 	</PageWrapper>
 </template>

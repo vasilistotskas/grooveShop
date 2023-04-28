@@ -13,6 +13,11 @@ const props = defineProps({
 		required: true,
 		default: 1
 	},
+	pageTotalResults: {
+		type: Number,
+		required: true,
+		default: 0
+	},
 	pageSize: {
 		type: Number,
 		required: true,
@@ -37,8 +42,15 @@ const props = defineProps({
 const route = useRoute()
 const { t } = useLang()
 
-const { resultsCount, totalPages, pageSize, currentPage, links, maxVisibleButtons } =
-	toRefs(props)
+const {
+	resultsCount,
+	totalPages,
+	pageTotalResults,
+	pageSize,
+	currentPage,
+	links,
+	maxVisibleButtons
+} = toRefs(props)
 
 const firstPageNumber = computed(() => 1)
 const lastPageNumber = computed(() => totalPages.value)

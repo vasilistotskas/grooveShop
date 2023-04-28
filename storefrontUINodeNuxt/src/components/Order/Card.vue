@@ -117,7 +117,7 @@ const statusClass = computed(() => {
 				<span class="order__card__body__status__text" :class="statusClass.color">
 					{{ order.status }}
 				</span>
-				<component :is="statusClass.icon" :class="statusClass.color" />
+				<Component :is="statusClass.icon" :class="statusClass.color" />
 			</div>
 
 			<div class="order__card__body__id">

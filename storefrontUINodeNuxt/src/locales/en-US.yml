@@ -49,6 +49,7 @@ components:
     close: Close
     cookies:
       functional: Functional cookies
+      functional_description: Functional cookies help to perform certain functionalities like sharing the content of the website on social media platforms, collect feedbacks, and other third-party features.
       necessary: Necessary cookies
       necessary_description: Necessary cookies help make a website usable by enabling basic functions like page navigation and access to secure areas of the website. The website cannot function properly without these cookies.
       optional: Optional cookies
@@ -235,12 +236,15 @@ pages:
     nav: cart
     description: cart
     keywords: cart
-    empty: Your cart is empty
     updated: Cart updated
     update_error: Cart update error
     deleted: Cart Item deleted
     delete_error: Cart Item delete error
     checkout: Checkout
+    empty:
+      title: Your cart is empty
+      description: Your cart is empty
+      button: Go to products
   checkout:
     title: Checkout
     nav: checkout
@@ -286,37 +290,42 @@ pages:
       update_error: Orders update error
       deleted: Orders Item deleted
       delete_error: Orders Item delete error
+      ordering:
+        created_at: Created At
       empty:
         title: Your orders is empty
         description: You have not placed any orders yet.
         button: Go to shop
-      ordering:
-        created_at: Created At
     favourites:
       title: Favourites
       nav: favourites
       description: favourites
       keywords: favourites
-      empty:
-        title: Your favourites is empty
-        description: You have not added any favourites yet.
-        button: Go to shop
       updated: Favourites updated
       update_error: Favourites update error
       deleted: Favourites Item deleted
       delete_error: Favourites Item delete error
       ordering:
         created_at: Created At
+      empty:
+        title: Your favourites is empty
+        description: You have not added any favourites yet.
+        button: Go to shop
     reviews:
       title: Reviews
       nav: reviews
       description: reviews
       keywords: reviews
-      empty: Your reviews is empty
       updated: Reviews updated
       update_error: Reviews update error
       deleted: Reviews Item deleted
       delete_error: Reviews Item delete error
+      ordering:
+        created_at: Created At
+      empty:
+        title: Your reviews are empty
+        description: You have not added any reviews yet.
+        button: Go to shop
     settings:
       title: Settings
       nav: settings
@@ -353,6 +362,10 @@ common:
   shop: Shop
   next: Next
   previous: Previous
+  empty:
+    title: Empty
+    description: Empty
+    button: Return to home
 routes:
   el: Greek
   en: English

@@ -75,7 +75,7 @@ useServerSeoMeta({
 </script>
 
 <template>
-	<PageWrapper>
+	<PageWrapper class="container flex flex-col gap-4 mt-4">
 		<PageTitle :text="$t('pages.checkout.title')" class="capitalize" />
 		<PageBody>
 			<template v-if="cartItems.length">

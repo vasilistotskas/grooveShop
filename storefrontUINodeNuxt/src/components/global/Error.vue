@@ -32,11 +32,12 @@ const error = computed(() => {
 		message: errorsMap[code.toString()] || 'Unknown Error'
 	}
 })
+const divTag = ref('div')
 </script>
 
 <template>
-	<component
-		:is="wrap ? PageWrapper as string : 'div'"
+	<Component
+		:is="wrap ? PageWrapper : divTag"
 		:class="
 			wrap
 				? 'flex flex-col items-center justify-center'
@@ -52,5 +53,5 @@ const error = computed(() => {
 			}}</span>
 		</h1>
 		<Button text="Home" to="/" size="sm" />
-	</component>
+	</Component>
 </template>

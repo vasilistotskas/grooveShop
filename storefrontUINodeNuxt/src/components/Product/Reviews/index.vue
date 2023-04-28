@@ -1,7 +1,10 @@
 <script lang="ts" setup>
-import { Review, ReviewQuery, ReviewsOrderingField } from '~/zod/product/review'
+import { PropType } from 'vue'
+import { Review, ReviewQuery, ReviewOrderingField } from '~/zod/product/review'
 import { EntityOrdering, OrderingOption } from '~/zod/ordering/ordering'
 import { useReviewsStore } from '~/stores/product/reviews'
+import { ProductReviewsListDisplayableImage } from '~/components/Product/Reviews/List.vue'
+import emptyIcon from '~icons/mdi/package-variant-remove'
 
 const props = defineProps({
 	reviewsAverage: {
@@ -13,6 +16,11 @@ const props = defineProps({
 		type: Number,
 		required: false,
 		default: 0
+	},
+	displayImageOf: {
+		type: String as PropType<ProductReviewsListDisplayableImage>,
+		required: true,
+		validator: (value: string) => ['user', 'product'].includes(value)
 	}
 })
 
@@ -34,7 +42,7 @@ const reviewsStore = useReviewsStore()
 const { reviews, error, pending } = storeToRefs(reviewsStore)
 await reviewsStore.fetchReviews(routePaginationParams.value)
 
-const entityOrdering: EntityOrdering<ReviewsOrderingField> = [
+const entityOrdering: EntityOrdering<ReviewOrderingField> = [
 	{
 		value: 'id',
 		label: t('components.product.reviews.ordering.id'),
@@ -57,7 +65,7 @@ const entityOrdering: EntityOrdering<ReviewsOrderingField> = [
 	}
 ]
 
-const orderingFields: Record<ReviewsOrderingField, OrderingOption[]> = {
+const orderingFields: Partial<Record<ReviewOrderingField, OrderingOption[]>> = {
 	id: [],
 	userId: [],
 	productId: [],
@@ -69,13 +77,13 @@ const pagination = computed(() => {
 })
 
 const ordering = computed(() => {
-	return useOrdering<ReviewsOrderingField>(entityOrdering, orderingFields)
+	return useOrdering<ReviewOrderingField>(entityOrdering, orderingFields)
 })
 </script>
 
 <template>
 	<div
-		class="reviews_list text-gray-700 dark:text-gray-200 p-6 border-t border-gray-900/10 dark:border-gray-50/[0.2]"
+		class="container-small reviews_list text-gray-700 dark:text-gray-200 p-6 border-t border-gray-900/10 dark:border-gray-50/[0.2]"
 	>
 		<div class="reviews_list__header">
 			<h2 class="reviews_list__title">{{ $t('components.product.reviews.title') }}</h2>
@@ -84,6 +92,7 @@ const ordering = computed(() => {
 					<LazyPaginationPageNumber
 						:results-count="pagination.resultsCount"
 						:total-pages="pagination.totalPages"
+						:page-total-results="pagination.pageTotalResults"
 						:page-size="pagination.pageSize"
 						:current-page="pagination.currentPage"
 						:links="pagination.links"
@@ -99,7 +108,7 @@ const ordering = computed(() => {
 		</div>
 		<div class="reviews_list__body">
 			<div class="reviews_list__items">
-				<LazyLoadingSkeleton
+				<LoadingSkeleton
 					v-if="pending"
 					:card-height="'130px'"
 					:class="
@@ -110,24 +119,26 @@ const ordering = computed(() => {
 					:columns-md="1"
 					:columns-lg="1"
 					:card-body-paragraphs="5"
-					:replicas="reviews?.results.length || 4"
-				></LazyLoadingSkeleton>
-				<div v-if="error" class="reviews_list__item">
-					<div class="reviews_list__item__error">
-						<Error :code="error.statusCode" />
-					</div>
-				</div>
-				<div v-else-if="reviews?.results.length === 0" class="reviews_list__item">
-					<div class="reviews_list__item__empty">
-						<Empty :text="$t('components.product.reviews.empty')" />
-					</div>
-				</div>
+					:replicas="reviews.results.length || 4"
+				></LoadingSkeleton>
 				<LazyProductReviewsList
-					v-if="reviews?.results.length > 0"
+					v-if="!pending && reviews?.results.length"
 					:reviews-average="reviewsAverage"
 					:reviews-count="reviewsCount"
 					:reviews="reviews.results"
+					:display-image-of="displayImageOf"
 				/>
+				<template v-if="!pending && !reviews?.results.length">
+					<LazyEmptyState :icon="emptyIcon">
+						<template #actions>
+							<Button
+								:text="$t('common.empty.button')"
+								:type="'link'"
+								:to="'index'"
+							></Button>
+						</template>
+					</LazyEmptyState>
+				</template>
 			</div>
 		</div>
 		<div class="reviews_list__footer"></div>

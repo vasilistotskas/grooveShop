@@ -19,6 +19,10 @@ const menus = computed((): IMenuItem[] => [
 		route: { name: 'testing-setting' }
 	}
 ])
+
+const fps = useFps()
+const { isOnline, offlineAt, downlink, downlinkMax, effectiveType, saveData, type } =
+	useNetwork()
 </script>
 
 <template>
@@ -47,6 +51,56 @@ const menus = computed((): IMenuItem[] => [
 				</ul>
 			</nav>
 			<div class="relative hidden lg:flex items-center ml-auto">
+				<div class="flex items-center justify-center">
+					<span class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-200"
+						>FPS {{ fps }}</span
+					>
+				</div>
+
+				<ClientOnly>
+					<div class="flex items-center justify-center">
+						<span
+							v-if="isOnline"
+							class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-200"
+							>Online</span
+						>
+						<span
+							v-else
+							class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-200"
+							>Offline</span
+						>
+						<span
+							v-if="offlineAt"
+							class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-200"
+							>Offline at {{ offlineAt }}</span
+						>
+						<span
+							v-if="downlink"
+							class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-200"
+							>Down-link {{ downlink }}</span
+						>
+						<span
+							v-if="downlinkMax"
+							class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-200"
+							>Down-link Max {{ downlinkMax }}</span
+						>
+						<span
+							v-if="effectiveType"
+							class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-200"
+							>Effective Type {{ effectiveType }}</span
+						>
+						<span
+							v-if="saveData"
+							class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-200"
+							>Save Data {{ saveData }}</span
+						>
+						<span
+							v-if="type"
+							class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-200"
+							>Network {{ type }}</span
+						>
+					</div>
+				</ClientOnly>
 				<div class="flex items-center justify-center">
 					<span class="ml-2 text-sm font-semibold text-gray-700 dark:text-gray-200"
 						>Alfian</span

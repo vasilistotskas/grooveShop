@@ -66,7 +66,7 @@ const menus = computed((): IMenuItem[] => [
 							]"
 						>
 							<span class="hidden md:grid">{{ item.text }}</span>
-							<component :is="item.icon" />
+							<Component :is="item.icon" />
 						</Anchor>
 						<Anchor
 							v-if="item.type === 'external-link'"
@@ -81,7 +81,7 @@ const menus = computed((): IMenuItem[] => [
 							]"
 						>
 							<span class="hidden md:grid">{{ item.text }}</span>
-							<component :is="item.icon" />
+							<Component :is="item.icon" />
 						</Anchor>
 						<Button
 							v-else-if="item.type === 'button'"

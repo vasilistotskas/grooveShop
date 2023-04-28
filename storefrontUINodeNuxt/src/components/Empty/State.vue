@@ -3,11 +3,13 @@
 const props = defineProps({
 	title: {
 		type: String,
-		required: true
+		required: false,
+		default: 'common.empty.title'
 	},
 	description: {
 		type: String,
-		required: true
+		required: false,
+		default: 'common.empty.description'
 	},
 	icon: {
 		type: Object,
@@ -24,10 +26,10 @@ const { title, description, icon } = toRefs(props)
 	>
 		<div class="empty-state__icon"></div>
 		<div class="empty-state__title">
-			{{ title }}
+			{{ $t(title) }}
 		</div>
 		<div class="empty-state__description">
-			{{ description }}
+			{{ $t(description) }}
 		</div>
 		<div class="empty-state__actions">
 			<slot name="actions"></slot>

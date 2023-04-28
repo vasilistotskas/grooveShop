@@ -130,12 +130,12 @@ const getMyId = computed(() => `modal-${props.uniqueId}`)
 
 const bus = useEventBus<string>(GlobalEvents.GENERIC_MODAL)
 
-function openModal() {
+const openModal = () => {
 	isModalCurrentlyOpen.value = true
 	bus.emit(props.modalOpenedTriggerHandlerId)
 }
 
-function closeModal() {
+const closeModal = () => {
 	isModalCurrentlyOpen.value = false
 	bus.emit(props.modalClosedTriggerHandlerId)
 }
@@ -191,25 +191,43 @@ onMounted(() => {
 				<span class="hidden">{{ $t('components.global.generic_modal.close') }}</span>
 				<IconEntypo:circleWithCross></IconEntypo:circleWithCross>
 			</button>
-			<component
-				:is="isForm ? 'form' : 'div'"
-				:id="formId"
-				class="cp-utilities-generic_modal"
-				:style="`position:${position}; width:${width}; height:${height}; max-height: ${maxHeight};
+			<template v-if="isForm">
+				<form
+					:id="formId"
+					class="cp-utilities-generic_modal"
+					:style="`position:${position}; width:${width}; height:${height}; max-height: ${maxHeight};
           max-width: ${maxWidth}; overflow: ${overflow}; gap: ${gap}; padding: ${padding};`"
-				:name="formName"
-				@submit="$emit('submitForm', $event)"
-			>
-				<div v-if="hasHeader" class="cp-utilities-generic_modal-header">
-					<slot name="header" />
+					:name="formName"
+					@submit="$emit('submitForm', $event)"
+				>
+					<div v-if="hasHeader" class="cp-utilities-generic_modal-header">
+						<slot name="header" />
+					</div>
+					<div class="cp-utilities-generic_modal-body">
+						<slot name="body" />
+					</div>
+					<div v-if="hasFooter" class="cp-utilities-generic_modal-footer">
+						<slot name="footer" />
+					</div>
+				</form>
+			</template>
+			<template v-else>
+				<div
+					class="cp-utilities-generic_modal"
+					:style="`position:${position}; width:${width}; height:${height}; max-height: ${maxHeight};
+          max-width: ${maxWidth}; overflow: ${overflow}; gap: ${gap}; padding: ${padding};`"
+				>
+					<div v-if="hasHeader" class="cp-utilities-generic_modal-header">
+						<slot name="header" />
+					</div>
+					<div class="cp-utilities-generic_modal-body">
+						<slot name="body" />
+					</div>
+					<div v-if="hasFooter" class="cp-utilities-generic_modal-footer">
+						<slot name="footer" />
+					</div>
 				</div>
-				<div class="cp-utilities-generic_modal-body">
-					<slot name="body" />
-				</div>
-				<div v-if="hasFooter" class="cp-utilities-generic_modal-footer">
-					<slot name="footer" />
-				</div>
-			</component>
+			</template>
 		</div>
 	</Teleport>
 </template>

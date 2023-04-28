@@ -57,7 +57,7 @@ const props = defineProps({
 		<div
 			:class="['native_slider-lg', sliderClass]"
 			:data-drag_speed="dragSpeed"
-			:data-autoplay_interval="autoplayInterval"
+			:data-autoplay_interval="autoplayInterval > 0 ? autoplayInterval : null"
 		>
 			<slot />
 		</div>

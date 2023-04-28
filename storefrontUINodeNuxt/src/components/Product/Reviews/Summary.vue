@@ -19,7 +19,7 @@ const maxRate = 10
 
 <template>
 	<div class="summary">
-		<div class="summary__average">
+		<div v-if="reviewsAverage > 0" class="summary__average">
 			<span class="summary__average__value">{{ reviewsAverage.toFixed(1) }}</span>
 			<span class="summary__average__label">/{{ maxRate }}</span>
 		</div>

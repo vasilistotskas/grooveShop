@@ -15,6 +15,7 @@ class CountPaginator(pagination.PageNumberPagination):
                 "count": self.page.paginator.count,
                 "total_pages": self.page.paginator.num_pages,
                 "page_size": self.page.paginator.per_page,
+                "page_total_results": len(data),
                 "page": self.page.number,
                 "results": data,
             }
@@ -32,6 +33,7 @@ class LimitOffsetPaginator(pagination.LimitOffsetPagination):
                 "count": self.count,
                 "total_pages": math.ceil(self.count / self.limit),
                 "page_size": self.limit,
+                "page_total_results": len(data),
                 "page": math.ceil(self.offset / self.limit) + 1,
                 "results": data,
             }
@@ -78,6 +80,7 @@ class CursorPaginator(pagination.CursorPagination):
                 "count": self.total_items,
                 "total_pages": self.total_pages,
                 "page_size": self.page_size,
+                "page_total_results": len(data),
                 "page": self.current_page_number,
                 "results": data,
             }

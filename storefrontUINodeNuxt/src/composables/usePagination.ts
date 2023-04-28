@@ -4,6 +4,7 @@ export const usePagination = <T>(results: Pagination<T>) => {
 	const resultsCount = results.count
 
 	const totalPages = results.totalPages
+	const pageTotalResults = results.pageTotalResults
 
 	const pageSize = results.pageSize
 
@@ -17,6 +18,7 @@ export const usePagination = <T>(results: Pagination<T>) => {
 	return {
 		resultsCount,
 		totalPages,
+		pageTotalResults,
 		pageSize,
 		currentPage,
 		links,

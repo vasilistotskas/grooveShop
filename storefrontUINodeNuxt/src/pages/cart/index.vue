@@ -1,6 +1,10 @@
 <script lang="ts" setup>
+import { Ref } from 'vue'
+import { FetchError } from 'ofetch/dist/node'
 import { useCartStore } from '~/stores/cart'
 import { GlobalEvents } from '~/events/global'
+import emptyIcon from '~icons/mdi/package-variant-remove'
+import { Cart } from '~/zod/cart/cart'
 
 const { t } = useLang()
 const config = useRuntimeConfig()
@@ -75,8 +79,8 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 			</h2>
 		</div>
 		<PageBody>
-			<LazyPageError v-if="error" :error="error"></LazyPageError>
-			<LazyLoadingSkeleton
+			<LazyError v-if="error" :code="error.statusCode" />
+			<LoadingSkeleton
 				v-if="pending"
 				:card-height="'130px'"
 				:class="
@@ -87,9 +91,9 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 				:columns-md="1"
 				:columns-lg="1"
 				:card-body-paragraphs="5"
-				:replicas="cart?.cartItems.length || 1"
-			></LazyLoadingSkeleton>
-			<template v-if="cart?.cartItems.length">
+				:replicas="cart?.cartItems.length || 4"
+			></LoadingSkeleton>
+			<template v-if="!pending && cart?.cartItems.length">
 				<div class="grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4">
 					<LazyCartItemCard
 						v-for="(cartItem, index) in cart.cartItems"
@@ -98,7 +102,17 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 					/>
 				</div>
 			</template>
-			<LazyEmpty v-else :text="$t('pages.cart.empty')" />
+			<template v-if="!pending && !cart?.cartItems.length">
+				<LazyEmptyState :icon="emptyIcon">
+					<template #actions>
+						<Button
+							:text="$t('common.empty.button')"
+							:type="'link'"
+							:to="'index'"
+						></Button>
+					</template>
+				</LazyEmptyState>
+			</template>
 		</PageBody>
 	</PageWrapper>
 </template>

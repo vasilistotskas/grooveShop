@@ -156,7 +156,9 @@ const uploadImage = async (event: Event) => {
 			</form>
 		</div>
 		<div v-if="showName" class="flex flex-col">
-			<span class="text-gray-700 dark:text-gray-200">{{ userAccount?.firstName }}</span>
+			<span class="text-gray-700 dark:text-gray-200 font-bold">{{
+				userAccount?.firstName
+			}}</span>
 		</div>
 	</div>
 </template>

@@ -22,7 +22,7 @@ const entityOrdering: EntityOrdering<OrderOrderingField> = [
 	}
 ]
 
-const orderingFields: Record<OrderOrderingField, OrderingOption[]> = {
+const orderingFields: Partial<Record<OrderOrderingField, OrderingOption[]>> = {
 	createdAt: []
 }
 
@@ -44,7 +44,7 @@ await orderStore.fetchOrders(routePaginationParams.value)
 const refresh = async () => await orderStore.fetchOrders(routePaginationParams.value)
 
 // @TODO: Event bus like this should have an Enum for key and event name
-const bus = useEventBus<string>('orders')
+const bus = useEventBus<string>('userOrders')
 bus.on((event, payload: OrderQuery) => {
 	routePaginationParams.value = payload
 	refresh()
@@ -53,7 +53,7 @@ bus.on((event, payload: OrderQuery) => {
 watch(
 	() => route.query,
 	() => {
-		bus.emit('orders', {
+		bus.emit('userOrders', {
 			page: Number(route.query.page) || undefined,
 			ordering: route.query.ordering || undefined,
 			userId: String(account.value?.id)
@@ -75,8 +75,8 @@ useHead(() => ({
 			<PageTitle :text="$t('pages.account.orders.title')" />
 		</PageHeader>
 		<PageBody>
-			<LazyPageError v-if="error" :error="error"></LazyPageError>
-			<LazyLoadingSkeleton
+			<LazyError v-if="error" :code="error.statusCode" />
+			<LoadingSkeleton
 				v-if="pending"
 				:card-height="'195px'"
 				:class="pending ? 'block' : 'hidden'"
@@ -85,13 +85,14 @@ useHead(() => ({
 				:columns-md="1"
 				:columns-lg="1"
 				:card-body-paragraphs="2"
-				:replicas="orders?.results.length || 4"
-			></LazyLoadingSkeleton>
-			<template v-if="orders.results.length">
+				:replicas="orders.results.length || 4"
+			></LoadingSkeleton>
+			<template v-if="!pending && orders.results.length">
 				<div class="grid gap-2 md:flex md:items-center">
 					<LazyPaginationPageNumber
 						:results-count="pagination.resultsCount"
 						:total-pages="pagination.totalPages"
+						:page-total-results="pagination.pageTotalResults"
 						:page-size="pagination.pageSize"
 						:current-page="pagination.currentPage"
 						:links="pagination.links"
@@ -101,20 +102,15 @@ useHead(() => ({
 						:ordering-options="ordering.orderingOptionsArray.value"
 					></LazyOrdering>
 				</div>
-			</template>
-			<template v-if="orders.results.length">
 				<LazyOrderList :orders="orders.results"></LazyOrderList>
 			</template>
-			<template v-else>
-				<LazyEmptyState
-					:title="$t('pages.account.orders.empty.title')"
-					:description="$t('pages.account.orders.empty.description')"
-					:icon="emptyIcon"
-				>
+			<template v-if="!pending && !orders.results.length">
+				<LazyEmptyState :icon="emptyIcon">
 					<template #actions>
 						<Button
-							:text="$t('pages.account.orders.empty.button')"
-							:to="{ name: 'home' }"
+							:text="$t('common.empty.button')"
+							:type="'link'"
+							:to="'index'"
 						></Button>
 					</template>
 				</LazyEmptyState>

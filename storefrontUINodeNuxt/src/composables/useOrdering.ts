@@ -2,7 +2,7 @@ import { EntityOrdering, OrderingOption } from '~/zod/ordering/ordering'
 
 export const useOrdering = <T extends string>(
 	ordering: EntityOrdering<T>,
-	orderingFields: Record<T, OrderingOption[]>
+	orderingFields: Partial<Record<T, OrderingOption[]>>
 ) => {
 	const orderingOptions = computed(() => {
 		ordering.forEach(({ value, label, options: opt }) => {

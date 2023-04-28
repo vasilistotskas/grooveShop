@@ -18,6 +18,7 @@ export const useFavouriteStore = defineStore({
 			},
 			count: 0,
 			totalPages: 0,
+			pageTotalResults: 0,
 			pageSize: 0,
 			page: 0,
 			results: []

@@ -39,7 +39,7 @@ export const ZodReviewQuery = z.object({
 	expand: z.string().optional()
 })
 
-export type ReviewsOrderingField = 'id' | 'userId' | 'productId' | 'createdAt'
+export type ReviewOrderingField = 'id' | 'userId' | 'productId' | 'createdAt'
 
 export const ZodReviewCreateRequest = z.object({
 	product: z.string(),

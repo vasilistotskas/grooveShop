@@ -111,7 +111,7 @@ onMounted(() => {
 									route.path !== item.route?.path
 							}"
 						>
-							<component :is="item.icon" class="text-2xl md:text-xl" />
+							<Component :is="item.icon" class="text-2xl md:text-xl" />
 						</div>
 						<span
 							class="text-2xl md:text-xl font-semibold capitalize text-gray-700 dark:text-gray-200"
@@ -138,7 +138,7 @@ onMounted(() => {
 									item.route?.path !== route.path
 							}"
 						>
-							<component :is="item.icon" class="text-2xl md:text-xl" />
+							<Component :is="item.icon" class="text-2xl md:text-xl" />
 						</div>
 						<span
 							class="text-2xl md:text-xl font-semibold capitalize text-gray-700 dark:text-gray-200"

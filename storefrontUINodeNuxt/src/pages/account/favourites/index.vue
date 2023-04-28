@@ -26,7 +26,7 @@ const entityOrdering: EntityOrdering<FavouriteOrderingField> = [
 	}
 ]
 
-const orderingFields: Record<FavouriteOrderingField, OrderingOption[]> = {
+const orderingFields: Partial<Record<FavouriteOrderingField, OrderingOption[]>> = {
 	createdAt: []
 }
 
@@ -49,7 +49,7 @@ await favouriteStore.fetchFavourites(routePaginationParams.value)
 const refresh = async () =>
 	await favouriteStore.fetchFavourites(routePaginationParams.value)
 
-const bus = useEventBus<string>('favourites')
+const bus = useEventBus<string>('userFavourites')
 bus.on((event, payload: FavouriteQuery) => {
 	routePaginationParams.value = payload
 	refresh()
@@ -58,7 +58,7 @@ bus.on((event, payload: FavouriteQuery) => {
 watch(
 	() => route.query,
 	() => {
-		bus.emit('favourites', {
+		bus.emit('userFavourites', {
 			page: Number(route.query.page) || undefined,
 			ordering: route.query.ordering || undefined,
 			userId: String(account.value?.id),
@@ -78,19 +78,20 @@ definePageMeta({
 			<PageTitle :text="$t('pages.account.favourites.title')" />
 		</PageHeader>
 		<PageBody>
-			<LazyPageError v-if="error" :error="error"></LazyPageError>
-			<LazyLoadingSkeleton
+			<LazyError v-if="error" :code="error.statusCode" />
+			<LoadingSkeleton
 				v-if="pending"
 				:card-height="'422px'"
 				:class="pending ? 'block' : 'hidden'"
 				:loading="pending"
-				:replicas="favourites.results.length || 3"
-			></LazyLoadingSkeleton>
-			<template v-if="favourites.results.length">
+				:replicas="favourites.results.length || 4"
+			></LoadingSkeleton>
+			<template v-if="!pending && favourites.results.length">
 				<div class="grid gap-2 md:flex md:items-center">
 					<LazyPaginationPageNumber
 						:results-count="pagination.resultsCount"
 						:total-pages="pagination.totalPages"
+						:page-total-results="pagination.pageTotalResults"
 						:page-size="pagination.pageSize"
 						:current-page="pagination.currentPage"
 						:links="pagination.links"
@@ -101,19 +102,16 @@ definePageMeta({
 					></LazyOrdering>
 				</div>
 			</template>
-			<template v-if="favourites.results.length">
+			<template v-if="!pending && favourites.results.length">
 				<LazyFavouriteList :favourites="favourites.results"></LazyFavouriteList>
 			</template>
 			<template v-else>
-				<LazyEmptyState
-					:title="$t('pages.account.favourites.empty.title')"
-					:description="$t('pages.account.favourites.empty.description')"
-					:icon="emptyIcon"
-				>
+				<LazyEmptyState :icon="emptyIcon">
 					<template #actions>
 						<Button
-							:text="$t('pages.account.favourites.empty.button')"
-							:to="{ name: 'home' }"
+							:text="$t('common.empty.button')"
+							:type="'link'"
+							:to="'index'"
 						></Button>
 					</template>
 				</LazyEmptyState>

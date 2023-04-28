@@ -2,6 +2,7 @@
 import { useProductStore } from '~/stores/product/product'
 import { Product, ProductOrderingField, ProductQuery } from '~/zod/product/product'
 import { EntityOrdering, OrderingOption } from '~/zod/ordering/ordering'
+import emptyIcon from '~icons/mdi/package-variant-remove'
 
 const route = useRoute()
 const { t } = useLang()
@@ -31,7 +32,7 @@ const entityOrdering: EntityOrdering<ProductOrderingField> = [
 	}
 ]
 
-const orderingFields: Record<ProductOrderingField, OrderingOption[]> = {
+const orderingFields: Partial<Record<ProductOrderingField, OrderingOption[]>> = {
 	name: [],
 	price: [],
 	createdAt: []
@@ -70,29 +71,28 @@ watch(
 
 <template>
 	<div class="products-list grid gap-4">
-		<LazyPageError v-if="error" :error="error"></LazyPageError>
-		<LazyLoadingSkeleton
+		<LazyError v-if="error" :code="error.statusCode" />
+		<LoadingSkeleton
 			v-if="pending"
 			:card-height="'512px'"
 			:class="pending ? 'block' : 'hidden'"
 			:loading="pending"
 			:replicas="products.results.length || 4"
-		></LazyLoadingSkeleton>
-		<template v-if="products.results.length">
+		></LoadingSkeleton>
+		<template v-if="!pending && products.results.length">
 			<div class="grid gap-2 md:flex md:items-center">
 				<LazyPaginationLimitOffset
 					:current-page="pagination.currentPage"
 					:limit="pagination.limit"
 					:offset="pagination.offset"
 					:total-pages="pagination.totalPages"
+					:page-total-results="pagination.pageTotalResults"
 				/>
 				<LazyOrdering
 					:ordering="String(routePaginationParams.ordering)"
 					:ordering-options="ordering.orderingOptionsArray.value"
 				></LazyOrdering>
 			</div>
-		</template>
-		<template v-if="products.results.length">
 			<ol
 				class="grid items-center justify-center grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
 			>
@@ -100,6 +100,13 @@ watch(
 					<ProductCard :product="product" />
 				</template>
 			</ol>
+		</template>
+		<template v-if="!pending && !products.results.length">
+			<LazyEmptyState :icon="emptyIcon">
+				<template #actions>
+					<Button :text="$t('common.empty.button')" :type="'link'" :to="'index'"></Button>
+				</template>
+			</LazyEmptyState>
 		</template>
 	</div>
 </template>
