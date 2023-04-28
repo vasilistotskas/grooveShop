@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.44.0 (2023-04-28)
+### Feature
+* **Nuxt/Django:** Account reviews page , added page total results in pagination and more ([`a448613`](https://github.com/vasilistotskas/grooveShop/commit/a4486133b6737dce8b4b6edad44768d57aac67eb))
+
 ## v0.43.0 (2023-04-26)
 ### Feature
 * **Nuxt:** Native slider init ([`0271419`](https://github.com/vasilistotskas/grooveShop/commit/0271419e3e8d677cbecbac3b1495dd3e507401e3))
