@@ -2,8 +2,6 @@
 import { PropType } from 'vue'
 import { Review } from '~/zod/product/review'
 
-export type ProductReviewsListDisplayableImage = 'user' | 'product'
-
 const props = defineProps({
 	reviewsAverage: {
 		type: Number,
@@ -20,7 +18,7 @@ const props = defineProps({
 		required: true
 	},
 	displayImageOf: {
-		type: String as PropType<ProductReviewsListDisplayableImage>,
+		type: String as PropType<'user' | 'product'>,
 		required: true,
 		validator: (value: string) => ['user', 'product'].includes(value)
 	}
@@ -28,16 +26,21 @@ const props = defineProps({
 </script>
 
 <template>
-	<LazyProductReviewsSummary
-		:reviews-average="reviewsAverage"
-		:reviews-count="reviewsCount"
-	></LazyProductReviewsSummary>
-	<LazyProductReviewsCard
-		v-for="review in reviews"
-		:key="review.id"
-		:review="review"
-		:display-image-of="displayImageOf"
-		class="reviews_list__item bg-white dark:bg-slate-800 border border-gray-900/10 dark:border-gray-50/[0.2] rounded p-4"
-	>
-	</LazyProductReviewsCard>
+	<div class="reviews_list grid gap-4">
+		<ProductReviewsSummary
+			:reviews-average="reviewsAverage"
+			:reviews-count="reviewsCount"
+			class="reviews_list__summary"
+		></ProductReviewsSummary>
+		<div class="reviews_list__items grid gap-4">
+			<ProductReviewsCard
+				v-for="review in reviews"
+				:key="review.id"
+				:review="review"
+				:display-image-of="displayImageOf"
+				class="reviews_list__item bg-white dark:bg-slate-800 border border-gray-900/10 dark:border-gray-50/[0.2] rounded p-4"
+			>
+			</ProductReviewsCard>
+		</div>
+	</div>
 </template>

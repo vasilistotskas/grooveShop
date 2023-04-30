@@ -48,8 +48,8 @@ const tooManyAttempts = computed(() => {
 	return submitCount.value >= 10
 })
 
-const onSubmit = handleSubmit((e) => {
-	// console.log(e)
+const onSubmit = handleSubmit((values) => {
+	// console.log(values)
 })
 
 definePageMeta({
@@ -302,17 +302,17 @@ useServerSeoMeta({
 						</div>
 					</div>
 
-					<div class="grid items-end">
+					<div class="grid items-end justify-end">
 						<Button v-if="!tooManyAttempts" type="button">
 							{{ $t('pages.checkout.form.submit') }}
 						</Button>
-						<LazyButton v-else type="button" disabled>
+						<Button v-else type="button" disabled>
 							{{ $t('pages.checkout.form.too_many_attempts') }}
-						</LazyButton>
+						</Button>
 					</div>
 				</form>
 			</template>
-			<LazyEmpty v-else :text="$t('pages.checkout.empty')" />
+			<Empty v-else :text="$t('pages.checkout.empty')" />
 		</PageBody>
 	</PageWrapper>
 </template>

@@ -78,7 +78,7 @@ definePageMeta({
 			<PageTitle :text="$t('pages.account.favourites.title')" />
 		</PageHeader>
 		<PageBody>
-			<LazyError v-if="error" :code="error.statusCode" />
+			<Error v-if="error" :code="error.statusCode" />
 			<LoadingSkeleton
 				v-if="pending"
 				:card-height="'422px'"
@@ -88,7 +88,7 @@ definePageMeta({
 			></LoadingSkeleton>
 			<template v-if="!pending && favourites.results.length">
 				<div class="grid gap-2 md:flex md:items-center">
-					<LazyPaginationPageNumber
+					<PaginationPageNumber
 						:results-count="pagination.resultsCount"
 						:total-pages="pagination.totalPages"
 						:page-total-results="pagination.pageTotalResults"
@@ -96,17 +96,17 @@ definePageMeta({
 						:current-page="pagination.currentPage"
 						:links="pagination.links"
 					/>
-					<LazyOrdering
+					<Ordering
 						:ordering="String(routePaginationParams.ordering)"
 						:ordering-options="ordering.orderingOptionsArray.value"
-					></LazyOrdering>
+					/>
 				</div>
 			</template>
 			<template v-if="!pending && favourites.results.length">
-				<LazyFavouriteList :favourites="favourites.results"></LazyFavouriteList>
+				<FavouriteList :favourites="favourites.results" />
 			</template>
 			<template v-else>
-				<LazyEmptyState :icon="emptyIcon">
+				<EmptyState :icon="emptyIcon">
 					<template #actions>
 						<Button
 							:text="$t('common.empty.button')"
@@ -114,7 +114,7 @@ definePageMeta({
 							:to="'index'"
 						></Button>
 					</template>
-				</LazyEmptyState>
+				</EmptyState>
 			</template>
 		</PageBody>
 	</PageWrapper>

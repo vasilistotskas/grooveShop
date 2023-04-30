@@ -8,8 +8,13 @@ export default defineNuxtRouteMiddleware(async () => {
 	const isAuthenticated = authStore.isAuthenticated
 
 	if (isAuthenticated && !account) {
-		await userStore.fetchAccount().then(() => {
-			// console.log('========== account fetched ==========')
-		})
+		await userStore
+			.fetchAccount()
+			.then(() => {
+				// console.log('========== account fetched ==========')
+			})
+			.catch((error) => {
+				console.log(error)
+			})
 	}
 })

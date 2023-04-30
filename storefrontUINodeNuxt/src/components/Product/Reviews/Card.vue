@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { PropType, Ref } from 'vue'
 import { Review } from '~/zod/product/review'
-import { ProductReviewsListDisplayableImage } from '~/components/Product/Reviews/List.vue'
-import { Product } from '~/zod/product/product'
 
 const props = defineProps({
 	review: {
@@ -10,7 +8,7 @@ const props = defineProps({
 		required: true
 	},
 	displayImageOf: {
-		type: String as PropType<ProductReviewsListDisplayableImage>,
+		type: String as PropType<'user' | 'product'>,
 		required: true,
 		validator: (value: string) => ['user', 'product'].includes(value)
 	}
@@ -21,7 +19,7 @@ const {
 	displayImageOf
 }: {
 	review: Ref<Review>
-	displayImageOf: Ref<ProductReviewsListDisplayableImage>
+	displayImageOf: Ref<'user' | 'product'>
 } = toRefs(props)
 
 const product = computed(() => {
@@ -39,37 +37,47 @@ const { resolveImageFilenameNoExt, resolveImageFileExtension, resolveImageSrc } 
 </script>
 
 <template>
-	<div class="reviews_list__item__content">
+	<div class="card reviews_list__item__content">
 		<div class="reviews_list__item__content__header">
 			<div class="reviews_list__item__content__header__user">
 				<div class="reviews_list__item__content__header__avatar">
 					<UserAvatar v-if="displayImageOf === 'user'" :user-account="userAccount" />
-					<div v-if="displayImageOf === 'product' && product">
-						<nuxt-img
-							preload
-							placeholder
-							loading="lazy"
-							provider="mediaStream"
-							class="product_img"
-							:style="{ objectFit: 'contain' }"
-							:width="80"
-							:height="80"
-							:fit="'contain'"
-							:position="'entropy'"
-							:background="'transparent'"
-							:trim-threshold="5"
-							:format="resolveImageFileExtension(product.mainImageFilename)"
-							sizes="sm:100vw md:50vw lg:80px"
-							:src="
-								resolveImageSrc(
-									product.mainImageFilename,
-									`media/uploads/products/${resolveImageFilenameNoExt(
-										product.mainImageFilename
-									)}`
-								)
-							"
-							:alt="product.name"
-						/>
+					<div
+						v-if="displayImageOf === 'product' && product"
+						class="reviews_list__item__content__header__avatar__product"
+					>
+						<Anchor :to="`/product${product.absoluteUrl}`" :text="product.name">
+							<NuxtImg
+								preload
+								placeholder
+								loading="lazy"
+								provider="mediaStream"
+								class="product_img"
+								:style="{ objectFit: 'contain' }"
+								:width="120"
+								:height="80"
+								:fit="'contain'"
+								:position="'entropy'"
+								:background="'transparent'"
+								:trim-threshold="5"
+								:format="resolveImageFileExtension(product.mainImageFilename)"
+								sizes="sm:100vw md:50vw lg:120px"
+								:src="
+									resolveImageSrc(
+										product.mainImageFilename,
+										`media/uploads/products/${resolveImageFilenameNoExt(
+											product.mainImageFilename
+										)}`
+									)
+								"
+								:alt="product.name"
+							/>
+						</Anchor>
+						<Anchor :to="`/product${product.absoluteUrl}`" :text="product.name">
+							<span class="reviews_list__item__content__header__avatar__product__name">
+								{{ product.name }}
+							</span>
+						</Anchor>
 					</div>
 				</div>
 				<div class="reviews_list__item__content__header__rate">
@@ -102,9 +110,22 @@ const { resolveImageFilenameNoExt, resolveImageFileExtension, resolveImageSrc } 
 		}
 		&__avatar {
 			margin-right: 1rem;
+			&__product {
+				display: grid;
+				gap: 0.5rem;
+				&__name {
+					font-size: 1.2rem;
+					font-weight: 500;
+				}
+			}
 		}
 		&__rate {
 			font-size: 1.5rem;
+		}
+		&__user {
+			display: grid;
+			align-items: center;
+			gap: 1rem;
 		}
 	}
 	&__body {

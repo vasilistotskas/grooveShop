@@ -79,7 +79,7 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 			</h2>
 		</div>
 		<PageBody>
-			<LazyError v-if="error" :code="error.statusCode" />
+			<Error v-if="error" :code="error.statusCode" />
 			<LoadingSkeleton
 				v-if="pending"
 				:card-height="'130px'"
@@ -95,7 +95,7 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 			></LoadingSkeleton>
 			<template v-if="!pending && cart?.cartItems.length">
 				<div class="grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4">
-					<LazyCartItemCard
+					<CartItemCard
 						v-for="(cartItem, index) in cart.cartItems"
 						:key="index"
 						:cart-item="cartItem"
@@ -103,7 +103,7 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 				</div>
 			</template>
 			<template v-if="!pending && !cart?.cartItems.length">
-				<LazyEmptyState :icon="emptyIcon">
+				<EmptyState :icon="emptyIcon">
 					<template #actions>
 						<Button
 							:text="$t('common.empty.button')"
@@ -111,7 +111,7 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 							:to="'index'"
 						></Button>
 					</template>
-				</LazyEmptyState>
+				</EmptyState>
 			</template>
 		</PageBody>
 	</PageWrapper>

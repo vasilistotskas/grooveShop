@@ -1,5 +1,10 @@
 import { FetchError } from 'ofetch'
-import { Account, AccountPutRequest, ZodAccount } from '~/zod/user/account'
+import {
+	Account,
+	AccountPatchRequest,
+	AccountPutRequest,
+	ZodAccount
+} from '~/zod/user/account'
 import { Favourite, FavouriteCreateRequest } from '~/zod/product/favourite'
 import { Review, ReviewCreateRequest, ReviewPutRequest } from '~/zod/product/review'
 import { Order } from '~/zod/order/order'

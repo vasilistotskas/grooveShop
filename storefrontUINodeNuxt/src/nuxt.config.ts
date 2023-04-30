@@ -13,7 +13,7 @@ import { htmlValidator } from './config/html-validator'
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
 	ssr: true,
-	sourcemap: true,
+	sourcemap: false,
 	devtools: {
 		enabled: process.env.NODE_ENV !== 'production'
 	},

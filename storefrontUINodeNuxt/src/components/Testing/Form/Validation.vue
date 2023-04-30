@@ -20,8 +20,8 @@ const tooManyAttempts = computed(() => {
 	return submitCount.value >= 10
 })
 
-const onSubmit = handleSubmit((e) => {
-	// console.log(e)
+const onSubmit = handleSubmit((values) => {
+	// console.log(values)
 })
 </script>
 

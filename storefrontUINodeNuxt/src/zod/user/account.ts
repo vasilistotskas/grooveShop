@@ -52,7 +52,7 @@ export type AccountPatchRequest = z.infer<typeof ZodAccountPatchRequest>
 
 export const ZodAccountPutRequest = z.object({
 	email: z.string(),
-	image: z.string().nullable(),
+	image: z.string().nullable().optional(),
 	firstName: z.string(),
 	lastName: z.string(),
 	phone: z.string().nullable(),
@@ -62,8 +62,8 @@ export const ZodAccountPutRequest = z.object({
 	place: z.string().nullable(),
 	country: z.string().nullable(),
 	region: z.string().nullable(),
-	isActive: z.boolean(),
-	isStaff: z.boolean()
+	isActive: z.boolean().optional(),
+	isStaff: z.boolean().optional()
 })
 
 export type AccountPutRequest = z.infer<typeof ZodAccountPutRequest>

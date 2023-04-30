@@ -3,7 +3,6 @@ import { PropType } from 'vue'
 import { Review, ReviewQuery, ReviewOrderingField } from '~/zod/product/review'
 import { EntityOrdering, OrderingOption } from '~/zod/ordering/ordering'
 import { useReviewsStore } from '~/stores/product/reviews'
-import { ProductReviewsListDisplayableImage } from '~/components/Product/Reviews/List.vue'
 import emptyIcon from '~icons/mdi/package-variant-remove'
 
 const props = defineProps({
@@ -18,7 +17,7 @@ const props = defineProps({
 		default: 0
 	},
 	displayImageOf: {
-		type: String as PropType<ProductReviewsListDisplayableImage>,
+		type: String as PropType<'user' | 'product'>,
 		required: true,
 		validator: (value: string) => ['user', 'product'].includes(value)
 	}
@@ -89,7 +88,7 @@ const ordering = computed(() => {
 			<h2 class="reviews_list__title">{{ $t('components.product.reviews.title') }}</h2>
 			<div v-if="reviews?.results.length > 0" class="reviews_list__actions">
 				<div class="reviews_list__pagination">
-					<LazyPaginationPageNumber
+					<PaginationPageNumber
 						:results-count="pagination.resultsCount"
 						:total-pages="pagination.totalPages"
 						:page-total-results="pagination.pageTotalResults"
@@ -99,10 +98,10 @@ const ordering = computed(() => {
 					/>
 				</div>
 				<div class="reviews_list__ordering">
-					<LazyOrdering
+					<Ordering
 						:ordering="String(routePaginationParams.ordering)"
 						:ordering-options="ordering.orderingOptionsArray.value"
-					></LazyOrdering>
+					></Ordering>
 				</div>
 			</div>
 		</div>
@@ -121,7 +120,7 @@ const ordering = computed(() => {
 					:card-body-paragraphs="5"
 					:replicas="reviews.results.length || 4"
 				></LoadingSkeleton>
-				<LazyProductReviewsList
+				<ProductReviewsList
 					v-if="!pending && reviews?.results.length"
 					:reviews-average="reviewsAverage"
 					:reviews-count="reviewsCount"
@@ -129,7 +128,7 @@ const ordering = computed(() => {
 					:display-image-of="displayImageOf"
 				/>
 				<template v-if="!pending && !reviews?.results.length">
-					<LazyEmptyState :icon="emptyIcon">
+					<EmptyState :icon="emptyIcon">
 						<template #actions>
 							<Button
 								:text="$t('common.empty.button')"
@@ -137,7 +136,7 @@ const ordering = computed(() => {
 								:to="'index'"
 							></Button>
 						</template>
-					</LazyEmptyState>
+					</EmptyState>
 				</template>
 			</div>
 		</div>

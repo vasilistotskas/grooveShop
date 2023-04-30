@@ -75,7 +75,7 @@ useHead(() => ({
 			<PageTitle :text="$t('pages.account.orders.title')" />
 		</PageHeader>
 		<PageBody>
-			<LazyError v-if="error" :code="error.statusCode" />
+			<Error v-if="error" :code="error.statusCode" />
 			<LoadingSkeleton
 				v-if="pending"
 				:card-height="'195px'"
@@ -89,7 +89,7 @@ useHead(() => ({
 			></LoadingSkeleton>
 			<template v-if="!pending && orders.results.length">
 				<div class="grid gap-2 md:flex md:items-center">
-					<LazyPaginationPageNumber
+					<PaginationPageNumber
 						:results-count="pagination.resultsCount"
 						:total-pages="pagination.totalPages"
 						:page-total-results="pagination.pageTotalResults"
@@ -97,15 +97,15 @@ useHead(() => ({
 						:current-page="pagination.currentPage"
 						:links="pagination.links"
 					/>
-					<LazyOrdering
+					<Ordering
 						:ordering="String(routePaginationParams.ordering)"
 						:ordering-options="ordering.orderingOptionsArray.value"
-					></LazyOrdering>
+					/>
 				</div>
-				<LazyOrderList :orders="orders.results"></LazyOrderList>
+				<OrderList :orders="orders.results" />
 			</template>
 			<template v-if="!pending && !orders.results.length">
-				<LazyEmptyState :icon="emptyIcon">
+				<EmptyState :icon="emptyIcon">
 					<template #actions>
 						<Button
 							:text="$t('common.empty.button')"
@@ -113,7 +113,7 @@ useHead(() => ({
 							:to="'index'"
 						></Button>
 					</template>
-				</LazyEmptyState>
+				</EmptyState>
 			</template>
 		</PageBody>
 	</PageWrapper>

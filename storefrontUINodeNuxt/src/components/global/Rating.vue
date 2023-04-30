@@ -71,21 +71,21 @@ const backgroundStars = (productRate: number): string[] => {
 	align-items: center;
 	.star {
 		color: #f68b24;
-		width: 26px;
-		height: 26px;
+		width: 20px;
+		height: 20px;
 	}
 	&__stars {
 		display: flex;
 		width: auto;
 		max-width: 130px;
-		height: 26px;
+		height: auto;
 	}
 	&__user {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		&__rate {
-			margin-left: 0.5rem;
+			font-size: 0.8rem;
 		}
 	}
 }

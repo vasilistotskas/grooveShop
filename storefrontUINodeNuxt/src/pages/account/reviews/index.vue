@@ -74,7 +74,7 @@ definePageMeta({
 			<PageTitle :text="$t('pages.account.reviews.title')" />
 		</PageHeader>
 		<PageBody>
-			<LazyError v-if="error" :code="error.statusCode" />
+			<Error v-if="error" :code="error.statusCode" />
 			<LoadingSkeleton
 				v-if="pending"
 				:card-height="'195px'"
@@ -88,7 +88,7 @@ definePageMeta({
 			></LoadingSkeleton>
 			<template v-if="!pending && reviews.results.length">
 				<div class="grid gap-2 md:flex md:items-center">
-					<LazyPaginationPageNumber
+					<PaginationPageNumber
 						:results-count="pagination.resultsCount"
 						:total-pages="pagination.totalPages"
 						:page-total-results="pagination.pageTotalResults"
@@ -96,19 +96,19 @@ definePageMeta({
 						:current-page="pagination.currentPage"
 						:links="pagination.links"
 					/>
-					<LazyOrdering
+					<Ordering
 						:ordering="String(routePaginationParams.ordering)"
 						:ordering-options="ordering.orderingOptionsArray.value"
-					></LazyOrdering>
+					/>
 				</div>
-				<LazyProductReviewsList
+				<ProductReviewsList
 					:reviews="reviews.results"
 					:reviews-count="reviews.count"
 					display-image-of="product"
 				/>
 			</template>
 			<template v-if="!pending && !reviews.results.length">
-				<LazyEmptyState :icon="emptyIcon">
+				<EmptyState :icon="emptyIcon">
 					<template #actions>
 						<Button
 							:text="$t('common.empty.button')"
@@ -116,7 +116,7 @@ definePageMeta({
 							:to="'index'"
 						></Button>
 					</template>
-				</LazyEmptyState>
+				</EmptyState>
 			</template>
 		</PageBody>
 	</PageWrapper>

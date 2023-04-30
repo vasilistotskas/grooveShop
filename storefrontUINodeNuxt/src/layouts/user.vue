@@ -26,15 +26,14 @@ const { account, favourites, reviews, orders, pending, error } = storeToRefs(use
 				</slot>
 				<slot name="main">
 					<div class="mx-auto w-full container">
-						<LazyError v-if="error" :code="error.statusCode" />
+						<Error v-if="error" :code="error.statusCode" />
 						<UserAccountInfo
 							v-if="account"
 							:account="account"
 							:orders-count="orders?.length"
 							:favourites-count="favourites?.length"
 							:reviews-count="reviews?.length"
-						>
-						</UserAccountInfo>
+						/>
 						<div class="relative mb-12 md:mb-20">
 							<div class="flex-1 w-full flex flex-col md:gap-4">
 								<div

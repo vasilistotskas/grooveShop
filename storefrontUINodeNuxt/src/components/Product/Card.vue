@@ -194,7 +194,7 @@ const userToProductFavourite = computed(() => {
 					</div>
 				</div>
 				<div class="card-footer">
-					<LazyButtonAddToCart
+					<ButtonAddToCart
 						v-if="showAddToCartButton"
 						:product="product"
 						:quantity="1"

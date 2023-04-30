@@ -283,7 +283,7 @@ useHead(() => ({
 <template>
 	<PageWrapper class="gap-16">
 		<PageBody>
-			<LazyError v-if="error" :code="error.statusCode" />
+			<Error v-if="error" :code="error.statusCode" />
 			<LoadingSkeleton
 				v-if="productPending"
 				:loading="productPending"
@@ -402,7 +402,7 @@ useHead(() => ({
 										</svg>
 									</div>
 
-									<LazyButtonAddToCart
+									<ButtonAddToCart
 										v-if="product"
 										:product="product"
 										:quantity="selectorQuantity as number || 1"
@@ -421,7 +421,7 @@ useHead(() => ({
 				</ProductReviews>
 			</template>
 			<template v-if="!productPending && !product">
-				<LazyEmptyState :icon="emptyIcon">
+				<EmptyState :icon="emptyIcon">
 					<template #actions>
 						<Button
 							:text="$t('common.empty.button')"
@@ -429,7 +429,7 @@ useHead(() => ({
 							:to="'index'"
 						></Button>
 					</template>
-				</LazyEmptyState>
+				</EmptyState>
 			</template>
 		</PageBody>
 	</PageWrapper>

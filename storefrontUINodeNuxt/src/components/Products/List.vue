@@ -71,7 +71,7 @@ watch(
 
 <template>
 	<div class="products-list grid gap-4">
-		<LazyError v-if="error" :code="error.statusCode" />
+		<Error v-if="error" :code="error.statusCode" />
 		<LoadingSkeleton
 			v-if="pending"
 			:card-height="'512px'"
@@ -81,17 +81,17 @@ watch(
 		></LoadingSkeleton>
 		<template v-if="!pending && products.results.length">
 			<div class="grid gap-2 md:flex md:items-center">
-				<LazyPaginationLimitOffset
+				<PaginationLimitOffset
 					:current-page="pagination.currentPage"
 					:limit="pagination.limit"
 					:offset="pagination.offset"
 					:total-pages="pagination.totalPages"
 					:page-total-results="pagination.pageTotalResults"
 				/>
-				<LazyOrdering
+				<Ordering
 					:ordering="String(routePaginationParams.ordering)"
 					:ordering-options="ordering.orderingOptionsArray.value"
-				></LazyOrdering>
+				/>
 			</div>
 			<ol
 				class="grid items-center justify-center grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
@@ -102,11 +102,11 @@ watch(
 			</ol>
 		</template>
 		<template v-if="!pending && !products.results.length">
-			<LazyEmptyState :icon="emptyIcon">
+			<EmptyState :icon="emptyIcon">
 				<template #actions>
 					<Button :text="$t('common.empty.button')" :type="'link'" :to="'index'"></Button>
 				</template>
-			</LazyEmptyState>
+			</EmptyState>
 		</template>
 	</div>
 </template>
