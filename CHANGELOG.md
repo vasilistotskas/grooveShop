@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.45.0 (2023-04-30)
+### Feature
+* **Nuxt:** User Account settings ready and general improvements ([`96fb580`](https://github.com/vasilistotskas/grooveShop/commit/96fb5804a72cfe32666f07b60a4a9d38aaf011de))
+
 ## v0.44.0 (2023-04-28)
 ### Feature
 * **Nuxt/Django:** Account reviews page , added page total results in pagination and more ([`a448613`](https://github.com/vasilistotskas/grooveShop/commit/a4486133b6737dce8b4b6edad44768d57aac67eb))
