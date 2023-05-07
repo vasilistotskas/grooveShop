@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.46.0 (2023-05-07)
+### Feature
+* **MediaStream:** New API endpoint for nuxt public images , versions bump and added eslint and prettier config. ([`6f77617`](https://github.com/vasilistotskas/grooveShop/commit/6f776173e924cdf57dba129f870aa86e63041467))
+
 ## v0.45.0 (2023-04-30)
 ### Feature
 * **Nuxt:** User Account settings ready and general improvements ([`96fb580`](https://github.com/vasilistotskas/grooveShop/commit/96fb5804a72cfe32666f07b60a4a9d38aaf011de))
