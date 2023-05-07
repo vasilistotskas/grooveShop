@@ -1,1 +1,1 @@
-export type ResourceIdentifierKP = string;
+export type ResourceIdentifierKP = string

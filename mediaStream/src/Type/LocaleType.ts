@@ -1,3 +1,3 @@
-type Locale = string;
+type Locale = string
 
-export default Locale;
+export default Locale

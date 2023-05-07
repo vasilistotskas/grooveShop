@@ -1,1 +1,1 @@
-export type CategoryKP = number;
+export type CategoryKP = number
