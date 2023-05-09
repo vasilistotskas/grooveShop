@@ -1,8 +1,21 @@
 from backend.user.models import UserAccount
+from django.http import HttpRequest
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 
 class UserAccountSerializer(serializers.ModelSerializer):
+    last_login = serializers.SerializerMethodField("get_last_login")
+
+    @extend_schema_field(serializers.DateTimeField)
+    def get_last_login(self, user_account) -> str or None:
+        request: HttpRequest = self.context.get("request")
+        try:
+            last_login = request.session.get("last_login", None)
+        except AttributeError:
+            last_login = None
+        return last_login
+
     class Meta:
         model = UserAccount
         fields = (

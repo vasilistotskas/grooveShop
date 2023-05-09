@@ -4,6 +4,7 @@ from django.contrib.auth.signals import user_logged_in
 from django.contrib.auth.signals import user_logged_out
 from django.core.serializers import serialize
 from django.dispatch import receiver
+from django.utils.timezone import now
 
 
 @receiver(user_logged_in)
@@ -49,6 +50,8 @@ def update_session_user_log_in(sender, request, user, **kwargs):
             caches.ONE_HOUR,
         )
 
+        # update last login for session
+        request.session["last_login"] = now()
         request.session.save()
     except AttributeError:
         pass
