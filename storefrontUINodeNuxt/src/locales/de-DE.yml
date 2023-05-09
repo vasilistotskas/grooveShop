@@ -55,6 +55,10 @@ components:
     close: schließen
     cookies:
       functional: funktionale cookies
+      functional_description: >-
+        funktionale cookies helfen dabei, bestimmte funktionen auszuführen, wie
+        z. b. das teilen des inhalts der website auf social-media-plattformen,
+        das sammeln von rückmeldungen und andere funktionen von drittanbietern.
       necessary: notwendige kekse
       necessary_description: >-
         notwendige cookies helfen dabei, eine website nutzbar zu machen, indem
@@ -120,6 +124,7 @@ components:
       comment:
         title: kommentar
         placeholder: teile deine erfahrung...
+        label: kommentar
       validation:
         comment_too_short: kommentar muss mindestens %{min} zeichen lang sein
         comment_too_long: kommentar darf höchstens %{max} zeichen lang sein
@@ -139,6 +144,9 @@ components:
       change: ändern
       no_file_selected: keine datei ausgewählt
       file_extension_not_allowed: dateierweiterung nicht zulässig
+      image:
+        updated: bild aktualisiert
+        not_updated: bild nicht aktualisiert
   order:
     list:
       footer: fusszeile
@@ -201,7 +209,7 @@ pages:
           footer: wird bei der interaktion mit dem bot verwendet.
         protection_spam:
           title: spamschutz
-          description: toggle enable, um den roten rand zu entfernen
+          description: toggle enable, um den roten rahmen zu entfernen
           footer: >-
             wenn sie diese option aktivieren, schützen wir ihre kommentare vor
             spam
@@ -253,12 +261,15 @@ pages:
     nav: wagen
     description: wagen
     keywords: wagen
-    empty: ihr warenkorb ist leer
     updated: warenkorb aktualisiert
     update_error: fehler bei der warenkorbaktualisierung
     deleted: warenkorb artikel gelöscht
     delete_error: fehler beim löschen des warenkorbartikels
     checkout: kasse
+    empty:
+      title: ihr warenkorb ist leer
+      description: ihr warenkorb ist leer
+      button: gehen sie zu den produkten
   checkout:
     title: kasse
     nav: kasse
@@ -304,37 +315,42 @@ pages:
       update_error: fehler bei der auftragsaktualisierung
       deleted: bestellungen artikel gelöscht
       delete_error: fehler beim löschen des auftragsartikels
+      ordering:
+        created_at: hergestellt in
       empty:
         title: ihre bestellungen sind leer
         description: sie haben noch keine bestellungen aufgegeben.
         button: zum laden gehen
-      ordering:
-        created_at: hergestellt in
     favourites:
       title: favoriten
       nav: favoriten
       description: favoriten
       keywords: favoriten
-      empty:
-        title: ihre favoriten sind leer
-        description: sie haben noch keine favoriten hinzugefügt.
-        button: zum laden gehen
       updated: favoriten aktualisiert
       update_error: fehler bei der aktualisierung der favoriten
       deleted: favoriten artikel gelöscht
       delete_error: fehler beim löschen des favoriten-elements
       ordering:
         created_at: hergestellt in
+      empty:
+        title: ihre favoriten sind leer
+        description: sie haben noch keine favoriten hinzugefügt.
+        button: zum laden gehen
     reviews:
       title: bewertungen
       nav: bewertungen
       description: bewertungen
       keywords: bewertungen
-      empty: ihre bewertungen sind leer
       updated: bewertungen aktualisiert
       update_error: fehler bei der aktualisierung der bewertungen
       deleted: bewertungen artikel gelöscht
       delete_error: fehler beim löschen des rezensionsartikels
+      ordering:
+        created_at: hergestellt in
+      empty:
+        title: ihre bewertungen sind leer
+        description: sie haben noch keine bewertungen hinzugefügt.
+        button: zum laden gehen
     settings:
       title: einstellungen
       nav: einstellungen
@@ -344,6 +360,40 @@ pages:
       update_error: fehler bei der aktualisierung der einstellungen
       deleted: einstellungselement gelöscht
       delete_error: fehler beim löschen des einstellungselements
+      region:
+        required: region ist erforderlich
+      form:
+        email: email
+        first_name: vorname
+        last_name: familienname, nachname
+        phone: telefon
+        city: stadt
+        zipcode: plz
+        address: adresse
+        place: ort
+        country: land
+        region: region
+        submit: einreichen
+        success: einstellungen erfolgreich aktualisiert
+        error: fehler bei der aktualisierung der einstellungen
+        choose:
+          country: land auswählen
+          region: wählen sie region
+    addresses:
+      title: adressen
+      nav: adressen
+      description: adressen
+      keywords: adressen
+      updated: adressen aktualisiert
+      update_error: adressaktualisierungsfehler
+      deleted: adressen artikel gelöscht
+      delete_error: behebt fehler beim löschen des elements
+      ordering:
+        created_at: hergestellt in
+      empty:
+        title: ihre adressen sind leer
+        description: sie haben noch keine adressen hinzugefügt.
+        button: zum laden gehen
     help:
       title: hilfe
       nav: hilfe
@@ -358,7 +408,7 @@ layouts:
   description: deepweb-beschreibung %{description}
 banners:
   welcome: willkommen bei %{app_name}!
-others:
+common:
   home: heim
   learn_more: lern mehr
   copy: kopieren
@@ -369,6 +419,12 @@ others:
   errors:
     unknown_internal_api_error: unbekannter interner api-fehler
   shop: geschäft
+  next: nächste
+  previous: vorherige
+  empty:
+    title: leer
+    description: leer
+    button: nach hause zurückkehren
 routes:
   el: griechisch
   en: englisch

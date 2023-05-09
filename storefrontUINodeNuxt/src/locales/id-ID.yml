@@ -52,6 +52,10 @@ components:
     close: menutup
     cookies:
       functional: cookie fungsional
+      functional_description: >-
+        cookie fungsional membantu menjalankan fungsi tertentu seperti berbagi
+        konten situs web di platform media sosial, mengumpulkan umpan balik, dan
+        fitur pihak ketiga lainnya.
       necessary: cookie yang diperlukan
       necessary_description: >-
         cookie yang diperlukan membantu membuat situs web dapat digunakan dengan
@@ -117,6 +121,7 @@ components:
       comment:
         title: komentar
         placeholder: bagikan pengalaman anda...
+        label: komentar
       validation:
         comment_too_short: panjang komentar minimal harus %{min} karakter
         comment_too_long: panjang komentar harus maksimal %{max} karakter
@@ -136,6 +141,9 @@ components:
       change: mengubah
       no_file_selected: tidak ada file yang dipilih
       file_extension_not_allowed: ekstensi file tidak diizinkan
+      image:
+        updated: gambar diperbarui
+        not_updated: gambar tidak diperbarui
   order:
     list:
       footer: catatan kaki
@@ -246,12 +254,15 @@ pages:
     nav: keranjang
     description: keranjang
     keywords: keranjang
-    empty: keranjang anda kosong
     updated: keranjang diperbarui
     update_error: kesalahan pembaruan keranjang
     deleted: item keranjang dihapus
     delete_error: kesalahan penghapusan item keranjang
     checkout: periksa
+    empty:
+      title: keranjang anda kosong
+      description: keranjang anda kosong
+      button: buka produk
   checkout:
     title: periksa
     nav: periksa
@@ -297,37 +308,42 @@ pages:
       update_error: kesalahan pembaruan pesanan
       deleted: butir pesanan dihapus
       delete_error: kesalahan penghapusan butir pesanan
+      ordering:
+        created_at: dibuat di
       empty:
         title: pesanan anda kosong
         description: anda belum melakukan pemesanan apa pun.
         button: pergi ke toko
-      ordering:
-        created_at: dibuat di
     favourites:
       title: favorit
       nav: favorit
       description: favorit
       keywords: favorit
-      empty:
-        title: favorit anda kosong
-        description: anda belum menambahkan favorit apa pun.
-        button: pergi ke toko
       updated: favorit diperbarui
       update_error: kesalahan pembaruan favorit
       deleted: item favorit dihapus
       delete_error: kesalahan penghapusan item favorit
       ordering:
         created_at: dibuat di
+      empty:
+        title: favorit anda kosong
+        description: anda belum menambahkan favorit apa pun.
+        button: pergi ke toko
     reviews:
       title: ulasan
       nav: ulasan
       description: ulasan
       keywords: ulasan
-      empty: ulasan anda kosong
       updated: ulasan diperbarui
       update_error: kesalahan pembaruan ulasan
       deleted: tinjauan item dihapus
       delete_error: ulasan item menghapus kesalahan
+      ordering:
+        created_at: dibuat di
+      empty:
+        title: ulasan anda kosong
+        description: anda belum menambahkan ulasan apa pun.
+        button: pergi ke toko
     settings:
       title: pengaturan
       nav: pengaturan
@@ -337,6 +353,40 @@ pages:
       update_error: kesalahan pembaruan pengaturan
       deleted: pengaturan item dihapus
       delete_error: kesalahan penghapusan item setelan
+      region:
+        required: wilayah diperlukan
+      form:
+        email: surel
+        first_name: nama depan
+        last_name: nama keluarga
+        phone: telepon
+        city: kota
+        zipcode: kode pos
+        address: alamat
+        place: tempat
+        country: negara
+        region: wilayah
+        submit: kirim
+        success: setelan berhasil diperbarui
+        error: kesalahan pembaruan pengaturan
+        choose:
+          country: pilih negara
+          region: pilih wilayah
+    addresses:
+      title: alamat
+      nav: alamat
+      description: alamat
+      keywords: alamat
+      updated: alamat diperbarui
+      update_error: kesalahan pembaruan alamat
+      deleted: alamat item dihapus
+      delete_error: alamat item menghapus kesalahan
+      ordering:
+        created_at: dibuat di
+      empty:
+        title: alamat anda kosong
+        description: anda belum menambahkan alamat apa pun.
+        button: pergi ke toko
     help:
       title: membantu
       nav: membantu
@@ -351,7 +401,7 @@ layouts:
   description: deepweb-deskripsi %{description}
 banners:
   welcome: selamat datang di %{app_name}!
-others:
+common:
   home: rumah
   learn_more: belajarlah lagi
   copy: menyalin
@@ -362,6 +412,12 @@ others:
   errors:
     unknown_internal_api_error: kesalahan api internal yang tidak diketahui
   shop: toko
+  next: berikutnya
+  previous: sebelumnya
+  empty:
+    title: kosong
+    description: kosong
+    button: kembali ke rumah
 routes:
   el: orang yunani
   en: bahasa inggris

@@ -52,6 +52,9 @@ components:
     close: 近い
     cookies:
       functional: 機能性クッキー
+      functional_description: >-
+        機能性 cookie は、ソーシャル メディア プラットフォームでの web
+        サイトのコンテンツの共有、フィードバックの収集、その他のサードパーティ機能など、特定の機能を実行するのに役立ちます。
       necessary: 必要なクッキー
       necessary_description: >-
         必要な cookie は、ページ ナビゲーションや web サイトの安全な領域へのアクセスなどの基本的な機能を有効にすることで、web
@@ -115,8 +118,9 @@ components:
       comment:
         title: コメント
         placeholder: あなたの経験を共有してください...
+        label: コメント
       validation:
-        comment_too_short: コメントは少なくとも %{min} 文字の長さでなければなりません
+        comment_too_short: コメントは %{min} 文字以上にする必要があります
         comment_too_long: コメントは最大 %{max} 文字の長さにする必要があります
         rate_too_low: 評価は少なくとも %{min} である必要があります
         rate_too_high: 評価は最大で %{max} でなければなりません
@@ -134,6 +138,9 @@ components:
       change: 変化
       no_file_selected: ファイルが選択されていません
       file_extension_not_allowed: ファイル拡張子は許可されていません
+      image:
+        updated: 画像を更新しました
+        not_updated: 画像が更新されていません
   order:
     list:
       footer: フッター
@@ -240,12 +247,15 @@ pages:
     nav: カート
     description: カート
     keywords: カート
-    empty: あなたのカートは空です
     updated: カートを更新しました
     update_error: カート更新エラー
     deleted: カートの商品を削除しました
     delete_error: カート項目削除エラー
     checkout: チェックアウト
+    empty:
+      title: あなたのカートは空です
+      description: あなたのカートは空です
+      button: 製品に移動
   checkout:
     title: チェックアウト
     nav: チェックアウト
@@ -291,37 +301,42 @@ pages:
       update_error: 注文更新エラー
       deleted: 注文アイテムが削除されました
       delete_error: 注文アイテム削除エラー
+      ordering:
+        created_at: 作成日
       empty:
         title: 注文は空です
         description: まだ注文していません。
         button: 店へ出かける
-      ordering:
-        created_at: 作成日
     favourites:
       title: お気に入り
       nav: お気に入り
       description: お気に入り
       keywords: お気に入り
-      empty:
-        title: お気に入りは空です
-        description: まだお気に入りを追加していません。
-        button: 店へ出かける
       updated: お気に入りを更新しました
       update_error: お気に入り更新エラー
       deleted: お気に入りアイテムが削除されました
       delete_error: お気に入りアイテムの削除エラー
       ordering:
         created_at: 作成日
+      empty:
+        title: お気に入りは空です
+        description: まだお気に入りを追加していません。
+        button: 店へ出かける
     reviews:
       title: レビュー
       nav: レビュー
       description: レビュー
       keywords: レビュー
-      empty: あなたのレビューは空です
       updated: レビューが更新されました
       update_error: レビュー更新エラー
       deleted: レビュー アイテムを削除しました
       delete_error: レビュー アイテムの削除エラー
+      ordering:
+        created_at: 作成日
+      empty:
+        title: あなたのレビューは空です
+        description: まだレビューを追加していません。
+        button: 店へ出かける
     settings:
       title: 設定
       nav: 設定
@@ -331,6 +346,40 @@ pages:
       update_error: 設定更新エラー
       deleted: 設定項目を削除しました
       delete_error: 設定項目削除エラー
+      region:
+        required: 地域が必要です
+      form:
+        email: eメール
+        first_name: ファーストネーム
+        last_name: 苗字
+        phone: 電話
+        city: 街
+        zipcode: 郵便番号
+        address: 住所
+        place: 場所
+        country: 国
+        region: 領域
+        submit: 送信
+        success: 設定が正常に更新されました
+        error: 設定更新エラー
+        choose:
+          country: 国を選択します
+          region: リージョンを選択
+    addresses:
+      title: 住所
+      nav: 住所
+      description: 住所
+      keywords: 住所
+      updated: 住所を更新しました
+      update_error: アドレス更新エラー
+      deleted: 住所 項目が削除されました
+      delete_error: アドレス アイテム削除エラー
+      ordering:
+        created_at: 作成日
+      empty:
+        title: あなたの住所は空です
+        description: まだアドレスを追加していません。
+        button: 店へ出かける
     help:
       title: ヘルプ
       nav: ヘルプ
@@ -345,7 +394,7 @@ layouts:
   description: deepweb 説明 %{description}
 banners:
   welcome: '%{app_name} へようこそ!'
-others:
+common:
   home: 家
   learn_more: もっと詳しく知る
   copy: コピー
@@ -356,6 +405,12 @@ others:
   errors:
     unknown_internal_api_error: 不明な内部 api エラー
   shop: 店
+  next: 次
+  previous: 前
+  empty:
+    title: 空
+    description: 空
+    button: 家に帰る
 routes:
   el: ギリシャ語
   en: 英語

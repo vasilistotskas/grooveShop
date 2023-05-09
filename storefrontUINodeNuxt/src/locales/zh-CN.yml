@@ -49,6 +49,7 @@ components:
     close: 关闭
     cookies:
       functional: 功能性 cookie
+      functional_description: 功能性 cookie 有助于执行某些功能，例如在社交媒体平台上共享网站内容、收集反馈和其他第三方功能。
       necessary: 必要的饼干
       necessary_description: 必要的 cookie 通过启用页面导航和访问网站安全区域等基本功能来帮助使网站可用。没有这些 cookie，网站将无法正常运行。
       optional: 可选的 cookie
@@ -110,6 +111,7 @@ components:
       comment:
         title: 评论
         placeholder: 分享你的经验...
+        label: 评论
       validation:
         comment_too_short: 评论必须至少有 %{min} 个字符长
         comment_too_long: 评论的长度不得超过 %{max} 个字符
@@ -129,6 +131,9 @@ components:
       change: 改变
       no_file_selected: 没有选择文件
       file_extension_not_allowed: 不允许的文件扩展名
+      image:
+        updated: 图片已更新
+        not_updated: 图片未更新
   order:
     list:
       footer: 页脚
@@ -188,7 +193,7 @@ pages:
           description: 这是您的机器人 id。
           footer: 与机器人交互时使用。
         protection_spam:
-          title: 垃圾邮件防护
+          title: 垃圾邮件保护
           description: 切换启用以删除红色边框
           footer: 如果启用，我们将保护您的评论免受垃圾邮件
         advanced_enable_advanced:
@@ -235,12 +240,15 @@ pages:
     nav: 大车
     description: 大车
     keywords: 大车
-    empty: 您的购物车是空的
     updated: 购物车已更新
     update_error: 购物车更新错误
     deleted: 购物车项目已删除
     delete_error: 购物车项目删除错误
     checkout: 查看
+    empty:
+      title: 您的购物车是空的
+      description: 您的购物车是空的
+      button: 转到产品
   checkout:
     title: 查看
     nav: 查看
@@ -286,37 +294,42 @@ pages:
       update_error: 订单更新错误
       deleted: 订单项目已删除
       delete_error: 订单项目删除错误
+      ordering:
+        created_at: 创建于
       empty:
         title: 您的订单为空
         description: 您还没有下任何订单。
         button: 去商店
-      ordering:
-        created_at: 创建于
     favourites:
       title: 收藏夹
       nav: 最爱
       description: 最爱
       keywords: 最爱
-      empty:
-        title: 你的收藏夹是空的
-        description: 您还没有添加任何收藏夹。
-        button: 去商店
       updated: 收藏夹已更新
       update_error: 收藏夹更新错误
       deleted: 收藏夹项目已删除
       delete_error: 收藏夹项目删除错误
       ordering:
         created_at: 创建于
+      empty:
+        title: 你的收藏夹是空的
+        description: 您还没有添加任何收藏夹。
+        button: 去商店
     reviews:
       title: 点评
       nav: 评论
       description: 评论
       keywords: 评论
-      empty: 你的评论是空的
       updated: 评论已更新
       update_error: 评论更新错误
       deleted: 评论项目已删除
       delete_error: 评论项目删除错误
+      ordering:
+        created_at: 创建于
+      empty:
+        title: 你的评论是空的
+        description: 您还没有添加任何评论。
+        button: 去商店
     settings:
       title: 设置
       nav: 设置
@@ -326,6 +339,40 @@ pages:
       update_error: 设置更新错误
       deleted: 设置项已删除
       delete_error: 设置项删除错误
+      region:
+        required: 地区为必填项
+      form:
+        email: 电子邮件
+        first_name: 名
+        last_name: 姓
+        phone: 电话
+        city: 城市
+        zipcode: 邮政编码
+        address: 地址
+        place: 地方
+        country: 国家
+        region: 地区
+        submit: 提交
+        success: 设置更新成功
+        error: 设置更新错误
+        choose:
+          country: 选择国家
+          region: 选择地区
+    addresses:
+      title: 地址
+      nav: 地址
+      description: 地址
+      keywords: 地址
+      updated: 地址已更新
+      update_error: 地址更新错误
+      deleted: 地址项目已删除
+      delete_error: 解决项目删除错误
+      ordering:
+        created_at: 创建于
+      empty:
+        title: 您的地址为空
+        description: 您还没有添加任何地址。
+        button: 去商店
     help:
       title: 帮助
       nav: 帮助
@@ -340,7 +387,7 @@ layouts:
   description: deepweb-描述 %{description}
 banners:
   welcome: 欢迎使用 %{app_name}！
-others:
+common:
   home: 家
   learn_more: 了解更多
   copy: 复制
@@ -351,6 +398,12 @@ others:
   errors:
     unknown_internal_api_error: 未知的内部 api 错误
   shop: 店铺
+  next: 下一个
+  previous: 以前的
+  empty:
+    title: 空的
+    description: 空的
+    button: 回到家
 routes:
   el: 希腊语
   en: 英语

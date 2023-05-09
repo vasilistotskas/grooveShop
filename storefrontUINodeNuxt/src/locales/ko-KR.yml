@@ -34,7 +34,7 @@ components:
     next_page: 다음 페이지
     first_page: 첫 페이지
     last_page: 마지막 페이지
-    go_to_page: '%{page} 페이지로 이동'
+    go_to_page: 페이지 %{page}로 이동
     you_are_on_last_page: 당신은 마지막 페이지에 있습니다
   builder:
     navbar:
@@ -51,6 +51,9 @@ components:
     close: 닫다
     cookies:
       functional: 기능 쿠키
+      functional_description: >-
+        기능 쿠키는 소셜 미디어 플랫폼에서 웹사이트 콘텐츠 공유, 피드백 수집 및 기타 타사 기능과 같은 특정 기능을 수행하는 데 도움이
+        됩니다.
       necessary: 필요한 쿠키
       necessary_description: >-
         필수 쿠키는 페이지 탐색 및 웹사이트의 보안 영역에 대한 액세스와 같은 기본 기능을 활성화하여 웹사이트를 사용할 수 있도록
@@ -114,6 +117,7 @@ components:
       comment:
         title: 논평
         placeholder: 경험을 공유하세요...
+        label: 논평
       validation:
         comment_too_short: 댓글은 최소 %{min}자 이상이어야 합니다.
         comment_too_long: 댓글은 최대 %{max}자 길이여야 합니다.
@@ -133,6 +137,9 @@ components:
       change: 변화
       no_file_selected: 파일이 선택되지 않았습니다
       file_extension_not_allowed: 파일 확장자가 허용되지 않음
+      image:
+        updated: 이미지 업데이트됨
+        not_updated: 이미지가 업데이트되지 않음
   order:
     list:
       footer: 보행인
@@ -239,12 +246,15 @@ pages:
     nav: 카트
     description: 카트
     keywords: 카트
-    empty: 장바구니가 비어 있습니다.
     updated: 장바구니 업데이트됨
     update_error: 장바구니 업데이트 오류
     deleted: 장바구니 항목이 삭제되었습니다.
     delete_error: 장바구니 상품 삭제 오류
     checkout: 점검
+    empty:
+      title: 장바구니가 비어 있습니다.
+      description: 장바구니가 비어 있습니다.
+      button: 제품으로 이동
   checkout:
     title: 점검
     nav: 점검
@@ -290,37 +300,42 @@ pages:
       update_error: 주문 업데이트 오류
       deleted: 주문 항목 삭제됨
       delete_error: 주문 항목 삭제 오류
+      ordering:
+        created_at: 만든 시간
       empty:
         title: 주문이 비어 있습니다.
         description: 아직 주문을 하지 않았습니다.
         button: 가게에 가다
-      ordering:
-        created_at: 만든 시간
     favourites:
       title: 즐겨찾기
       nav: 즐겨찾기
       description: 즐겨찾기
       keywords: 즐겨찾기
-      empty:
-        title: 즐겨찾기가 비어 있습니다.
-        description: 아직 즐겨찾기를 추가하지 않았습니다.
-        button: 가게에 가다
       updated: 즐겨찾기 업데이트됨
       update_error: 즐겨찾기 업데이트 오류
       deleted: 즐겨찾기 항목 삭제됨
       delete_error: 즐겨찾기 항목 삭제 오류
       ordering:
         created_at: 만든 시간
+      empty:
+        title: 즐겨찾기가 비어 있습니다.
+        description: 아직 즐겨찾기를 추가하지 않았습니다.
+        button: 가게에 가다
     reviews:
       title: 리뷰
       nav: 리뷰
       description: 리뷰
       keywords: 리뷰
-      empty: 리뷰가 비어 있습니다.
       updated: 업데이트된 리뷰
       update_error: 리뷰 업데이트 오류
       deleted: 리뷰 항목 삭제됨
       delete_error: 리뷰 항목 삭제 오류
+      ordering:
+        created_at: 만든 시간
+      empty:
+        title: 리뷰가 비어 있습니다.
+        description: 아직 리뷰를 추가하지 않았습니다.
+        button: 가게에 가다
     settings:
       title: 설정
       nav: 설정
@@ -330,6 +345,40 @@ pages:
       update_error: 설정 업데이트 오류
       deleted: 설정 항목 삭제됨
       delete_error: 설정 항목 삭제 오류
+      region:
+        required: 지역은 필수 항목입니다.
+      form:
+        email: 이메일
+        first_name: 이름
+        last_name: 성
+        phone: 핸드폰
+        city: 도시
+        zipcode: 우편 번호
+        address: 주소
+        place: 장소
+        country: 국가
+        region: 지역
+        submit: 제출하다
+        success: 설정이 업데이트되었습니다.
+        error: 설정 업데이트 오류
+        choose:
+          country: 국가 선택
+          region: 지역 선택
+    addresses:
+      title: 구애
+      nav: 구애
+      description: 구애
+      keywords: 구애
+      updated: 업데이트된 주소
+      update_error: 주소 업데이트 오류
+      deleted: 삭제된 주소 항목
+      delete_error: 항목 삭제 오류 해결
+      ordering:
+        created_at: 만든 시간
+      empty:
+        title: 주소가 비어 있습니다.
+        description: 아직 주소를 추가하지 않았습니다.
+        button: 가게에 가다
     help:
       title: 돕다
       nav: 돕다
@@ -344,7 +393,7 @@ layouts:
   description: deepweb 설명 %{description}
 banners:
   welcome: '%{app_name}에 오신 것을 환영합니다!'
-others:
+common:
   home: 집
   learn_more: 더 알아보기
   copy: 복사
@@ -355,6 +404,12 @@ others:
   errors:
     unknown_internal_api_error: 알 수 없는 내부 api 오류
   shop: 가게
+  next: 다음
+  previous: 이전의
+  empty:
+    title: 비어 있는
+    description: 비어 있는
+    button: 집으로 돌아가다
 routes:
   el: 그리스 어
   en: 영어

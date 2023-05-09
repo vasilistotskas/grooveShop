@@ -55,6 +55,10 @@ components:
     close: κλείσε
     cookies:
       functional: λειτουργικά cookies
+      functional_description: >-
+        τα λειτουργικά cookies βοηθούν στην εκτέλεση ορισμένων λειτουργιών, όπως
+        η κοινή χρήση του περιεχομένου του ιστότοπου σε πλατφόρμες μέσων
+        κοινωνικής δικτύωσης, η συλλογή σχολίων και άλλες λειτουργίες τρίτων.
       necessary: απαραίτητα μπισκότα
       necessary_description: >-
         τα απαραίτητα cookies βοηθούν να γίνει ένας ιστότοπος εύχρηστος,
@@ -120,6 +124,7 @@ components:
       comment:
         title: σχόλιο
         placeholder: μοιραστείτε την εμπειρία σας...
+        label: σχόλιο
       validation:
         comment_too_short: το σχόλιο πρέπει να έχει τουλάχιστον %{min} χαρακτήρες
         comment_too_long: το σχόλιο πρέπει να έχει το πολύ %{max} χαρακτήρες
@@ -139,6 +144,9 @@ components:
       change: αλλαγή
       no_file_selected: κανένα επιλεγμένο αρχείο
       file_extension_not_allowed: δεν επιτρέπεται η επέκταση αρχείου
+      image:
+        updated: η εικόνα ενημερώθηκε
+        not_updated: η εικόνα δεν ενημερώθηκε
   order:
     list:
       footer: υποσέλιδο
@@ -160,13 +168,13 @@ pages:
     title: η σελίδα δεν βρέθηκε
     description: η σελίδα δεν βρέθηκε
   testing:
-    nav: δοκιμή
-    title: δοκιμή
+    nav: δοκιμές
+    title: δοκιμές
     index:
-      nav: δοκιμή
-      title: δοκιμή
+      nav: δοκιμές
+      title: δοκιμές
       description: αυτή είναι μια δοκιμαστική σελίδα
-      keywords: δοκιμή
+      keywords: δοκιμές
     blank:
       nav: κενό
       title: κενή σελίδα
@@ -174,7 +182,7 @@ pages:
       just_blank_page_with_title: απλά κενή σελίδα με τίτλο
     test:
       nav: δοκιμή
-      title: δοκιμή
+      title: δοκιμές
       description: αυτή είναι μια δοκιμαστική σελίδα
       counter: μετρητής
       increment: αύξηση
@@ -206,7 +214,7 @@ pages:
             εάν ενεργοποιηθεί, θα προστατεύσουμε τα σχόλιά σας από ανεπιθύμητα
             μηνύματα
         advanced_enable_advanced:
-          title: ενεργοποίηση σύνθετων ρυθμίσεων
+          title: ενεργοποιήστε τις σύνθετες ρυθμίσεις
           description: >-
             μπορείτε να ενεργοποιήσετε τις σύνθετες ρυθμίσεις για να αλλάξετε
             τις ρυθμίσεις
@@ -253,12 +261,15 @@ pages:
     nav: καροτσάκι
     description: καροτσάκι
     keywords: καροτσάκι
-    empty: το καλάθι σας είναι άδειο
     updated: το καλάθι ενημερώθηκε
     update_error: σφάλμα ενημέρωσης καλαθιού
     deleted: το προϊόν καλαθιού διαγράφηκε
     delete_error: σφάλμα διαγραφής προϊόντος καλαθιού
     checkout: ολοκλήρωση αγοράς
+    empty:
+      title: το καλάθι σας είναι άδειο
+      description: το καλάθι σας είναι άδειο
+      button: μεταβείτε στα προϊόντα
   checkout:
     title: ολοκλήρωση αγοράς
     nav: ολοκλήρωση αγοράς
@@ -304,37 +315,42 @@ pages:
       update_error: σφάλμα ενημέρωσης παραγγελιών
       deleted: το στοιχείο παραγγελιών διαγράφηκε
       delete_error: σφάλμα διαγραφής στοιχείων παραγγελιών
+      ordering:
+        created_at: δημιουργήθηκε στο
       empty:
         title: οι παραγγελίες σας είναι κενές
         description: δεν έχετε κάνει ακόμη παραγγελίες.
         button: πηγαίνετε στο κατάστημα
-      ordering:
-        created_at: δημιουργήθηκε στο
     favourites:
       title: αγαπημένα
       nav: αγαπημένα
       description: αγαπημένα
       keywords: αγαπημένα
-      empty:
-        title: τα αγαπημένα σας είναι άδεια
-        description: δεν έχετε προσθέσει ακόμη αγαπημένα.
-        button: πηγαίνετε στο κατάστημα
       updated: τα αγαπημένα ενημερώθηκαν
       update_error: σφάλμα ενημέρωσης αγαπημένων
       deleted: αγαπημένα το αντικείμενο διαγράφηκε
       delete_error: σφάλμα διαγραφής αγαπημένων στοιχείων
       ordering:
         created_at: δημιουργήθηκε στο
+      empty:
+        title: τα αγαπημένα σας είναι άδεια
+        description: δεν έχετε προσθέσει ακόμη αγαπημένα.
+        button: πηγαίνετε στο κατάστημα
     reviews:
       title: κριτικές
       nav: κριτικές
       description: κριτικές
       keywords: κριτικές
-      empty: οι κριτικές σας είναι κενές
       updated: οι κριτικές ενημερώθηκαν
       update_error: σφάλμα ενημέρωσης αξιολογήσεων
       deleted: κριτικές το στοιχείο διαγράφηκε
       delete_error: κριτικές σφάλμα διαγραφής στοιχείου
+      ordering:
+        created_at: δημιουργήθηκε στο
+      empty:
+        title: οι κριτικές σας είναι κενές
+        description: δεν έχετε προσθέσει ακόμα καμία κριτική.
+        button: πηγαίνετε στο κατάστημα
     settings:
       title: ρυθμίσεις
       nav: ρυθμίσεις
@@ -342,8 +358,42 @@ pages:
       keywords: ρυθμίσεις
       updated: οι ρυθμίσεις ενημερώθηκαν
       update_error: σφάλμα ενημέρωσης ρυθμίσεων
-      deleted: ρυθμίσεις το στοιχείο διαγράφηκε
+      deleted: το στοιχείο ρυθμίσεων διαγράφηκε
       delete_error: σφάλμα διαγραφής στοιχείου ρυθμίσεων
+      region:
+        required: απαιτείται περιοχή
+      form:
+        email: ηλεκτρονικη διευθυνση
+        first_name: ονομα
+        last_name: επίθετο
+        phone: τηλέφωνο
+        city: πόλη
+        zipcode: ταχυδρομικός κώδικας
+        address: διεύθυνση
+        place: θέση
+        country: χώρα
+        region: περιοχή
+        submit: υποβάλλουν
+        success: οι ρυθμίσεις ενημερώθηκαν με επιτυχία
+        error: σφάλμα ενημέρωσης ρυθμίσεων
+        choose:
+          country: διάλεξε χώρα
+          region: επιλέξτε περιοχή
+    addresses:
+      title: διευθύνσεις
+      nav: διευθύνσεις
+      description: διευθύνσεις
+      keywords: διευθύνσεις
+      updated: οι διευθύνσεις ενημερώθηκαν
+      update_error: διευθύνει το σφάλμα ενημέρωσης
+      deleted: διευθύνσεις το στοιχείο διαγράφηκε
+      delete_error: διευθύνσεις σφάλμα διαγραφής στοιχείου
+      ordering:
+        created_at: δημιουργήθηκε στο
+      empty:
+        title: οι διευθύνσεις σας είναι κενές
+        description: δεν έχετε προσθέσει ακόμη διευθύνσεις.
+        button: πηγαίνετε στο κατάστημα
     help:
       title: βοήθεια
       nav: βοήθεια
@@ -358,7 +408,7 @@ layouts:
   description: deepweb-description %{description}
 banners:
   welcome: καλώς ορίσατε στο %{app_name}!
-others:
+common:
   home: σπίτι
   learn_more: μάθε περισσότερα
   copy: αντίγραφο
@@ -369,6 +419,12 @@ others:
   errors:
     unknown_internal_api_error: άγνωστο εσωτερικό σφάλμα api
   shop: κατάστημα
+  next: επόμενο
+  previous: προηγούμενος
+  empty:
+    title: αδειάζω
+    description: αδειάζω
+    button: επέστρεψε στο σπίτι
 routes:
   el: ελληνικά
   en: αγγλικά

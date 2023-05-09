@@ -111,6 +111,7 @@ components:
       comment:
         title: Comment
         placeholder: Share your experience...
+        label: Comment
       validation:
         comment_too_short: Comment must be at least %{min} characters long
         comment_too_long: Comment must be at most %{max} characters long
@@ -130,6 +131,9 @@ components:
       change: Change
       no_file_selected: No file selected
       file_extension_not_allowed: File extension not allowed
+      image:
+        updated: Image updated
+        not_updated: Image not updated
   order:
     list:
       footer: Footer
@@ -354,6 +358,21 @@ pages:
         choose:
           country: Choose Country
           region: Choose Region
+    addresses:
+      title: Addresses
+      nav: addresses
+      description: addresses
+      keywords: addresses
+      updated: Addresses updated
+      update_error: Addresses update error
+      deleted: Addresses Item deleted
+      delete_error: Addresses Item delete error
+      ordering:
+        created_at: Created At
+      empty:
+        title: Your addresses are empty
+        description: You have not added any addresses yet.
+        button: Go to shop
     help:
       title: Help
       nav: help
