@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.46.1 (2023-05-09)
+### Fix
+* **Django:** Last login method in user account serializer and user model phone field type change ([`3b84a75`](https://github.com/vasilistotskas/grooveShop/commit/3b84a75e23a88f58096909894e1bde084ccc0182))
+
 ## v0.46.0 (2023-05-07)
 ### Feature
 * **MediaStream:** New API endpoint for nuxt public images , versions bump and added eslint and prettier config. ([`6f77617`](https://github.com/vasilistotskas/grooveShop/commit/6f776173e924cdf57dba129f870aa86e63041467))
