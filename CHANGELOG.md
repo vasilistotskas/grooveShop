@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.46.2 (2023-05-09)
+### Fix
+* **Nuxt:** Ui/Ux fixes , try catch at route/component store actions and more minor fixes ([`2c39bf4`](https://github.com/vasilistotskas/grooveShop/commit/2c39bf405289c152ebb8964e89fc2a89412bc83b))
+
 ## v0.46.1 (2023-05-09)
 ### Fix
 * **Django:** Last login method in user account serializer and user model phone field type change ([`3b84a75`](https://github.com/vasilistotskas/grooveShop/commit/3b84a75e23a88f58096909894e1bde084ccc0182))
