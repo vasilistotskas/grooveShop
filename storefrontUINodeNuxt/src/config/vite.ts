@@ -25,6 +25,22 @@ export const vite: UserConfig = {
 			]
 		})
 	],
+	build: {
+		rollupOptions: {
+			output: {
+				manualChunks(id) {
+					const chunks = ['vue', 'lodash']
+					if (id.includes('/node_modules/')) {
+						for (const chunkName of chunks) {
+							if (id.includes(chunkName)) {
+								return chunkName
+							}
+						}
+					}
+				}
+			}
+		}
+	},
 	server: {
 		hmr: {
 			protocol: process.env.NODE_ENV === 'production' ? 'wss' : 'ws',
