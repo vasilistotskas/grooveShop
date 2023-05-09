@@ -113,7 +113,7 @@ export default class MediaStreamImageRESTController {
 		@Param('format') format: 'jpg' | 'jpeg' | 'png' | 'webp' = 'jpg',
 		@Res() res: Response
 	): Promise<void> {
-		let target = 'http://backend:3000/assets/images'
+		let target = 'http://storefront_uinode_nuxt:3000/assets/images'
 		if (path) {
 			target += `/${path}`
 		}
