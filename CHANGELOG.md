@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.46.3 (2023-05-09)
+### Fix
+* **Nuxt:** Minor UI fixes and improvements ([`f83a0ad`](https://github.com/vasilistotskas/grooveShop/commit/f83a0ade7a383f55e92a54ad902bbc4b71402e0b))
+
 ## v0.46.2 (2023-05-09)
 ### Fix
 * **Nuxt:** Ui/Ux fixes , try catch at route/component store actions and more minor fixes ([`2c39bf4`](https://github.com/vasilistotskas/grooveShop/commit/2c39bf405289c152ebb8964e89fc2a89412bc83b))
