@@ -8,11 +8,6 @@ import { GlobalEvents } from '~/events/global'
 import { Product } from '~/zod/product/product'
 import { Account } from '~/zod/user/account'
 
-interface ReviewForm {
-	comment?: string | null
-	rate?: number | null
-}
-
 const starSvg =
 	'<path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z" class=""></path>'
 const starHalfSvg =
@@ -222,23 +217,23 @@ const ZodReviewSchema = z.object({
 	comment: z
 		.string()
 		.min(10, {
-			message: t('components.product.review.validation.comment_too_short', { min: 10 })
+			message: t('components.product.review.validation.comment.min', { min: 10 })
 		})
 		.max(1000, {
-			message: t('components.product.review.validation.comment_too_long', { max: 1000 })
+			message: t('components.product.review.validation.comment.max', { max: 1000 })
 		}),
 	rate: z
 		.number()
 		.min(1, {
-			message: t('components.product.review.validation.rate_too_low', { min: 1 })
+			message: t('components.product.review.validation.rate.min', { min: 1 })
 		})
 		.max(10, {
-			message: t('components.product.review.validation.rate_too_high', { max: 10 })
+			message: t('components.product.review.validation.rate.max', { max: 10 })
 		})
 })
 
 const validationSchema = toTypedSchema(ZodReviewSchema)
-const { values, handleSubmit, errors, submitCount } = useForm<ReviewForm>({
+const { values, handleSubmit, errors, submitCount } = useForm({
 	validationSchema,
 	initialValues: {
 		comment: existingReview?.value?.comment || '',
@@ -381,13 +376,12 @@ watch(
 				<div class="review_body__comment">
 					<div class="review_body__comment__title">
 						<p class="review_body__comment__title__text">
-							{{ $t('components.product.review.comment.title') }}
+							<label for="comment">{{
+								$t('components.product.review.comment.label')
+							}}</label>
 						</p>
 					</div>
 					<div class="review_body__comment__content">
-						<label class="text-gray-700 dark:text-gray-200 mb-2" for="comment">{{
-							$t('components.product.review.comment.label')
-						}}</label>
 						<textarea
 							id="comment"
 							v-model="comment"
@@ -411,7 +405,7 @@ watch(
 						v-if="!tooManyAttempts"
 						class="review_footer__button"
 						:text="reviewButtonText"
-						type="submit"
+						type="input"
 						:style="'success'"
 					/>
 					<Button v-else type="button" disabled>
@@ -472,6 +466,9 @@ watch(
 			}
 			&__content {
 				position: relative;
+				display: grid;
+				grid-template-columns: auto 1fr;
+				align-items: center;
 			}
 			&__error {
 				color: #f56565;

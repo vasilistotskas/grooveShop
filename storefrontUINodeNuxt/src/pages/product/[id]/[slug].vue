@@ -284,11 +284,6 @@ useHead(() => ({
 	<PageWrapper class="gap-16">
 		<PageBody>
 			<Error v-if="error" :code="error.statusCode" />
-			<LoadingSkeleton
-				v-if="productPending && !error"
-				:loading="productPending"
-				:class="productPending ? 'block' : 'hidden'"
-			></LoadingSkeleton>
 			<template v-if="!productPending && product">
 				<div class="product mb-12 md:mb-24">
 					<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">

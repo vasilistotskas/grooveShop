@@ -126,10 +126,12 @@ components:
         placeholder: μοιραστείτε την εμπειρία σας...
         label: σχόλιο
       validation:
-        comment_too_short: το σχόλιο πρέπει να έχει τουλάχιστον %{min} χαρακτήρες
-        comment_too_long: το σχόλιο πρέπει να έχει το πολύ %{max} χαρακτήρες
-        rate_too_low: η βαθμολογία πρέπει να είναι τουλάχιστον %{min}
-        rate_too_high: η βαθμολογία πρέπει να είναι το πολύ %{max}
+        comment:
+          min: το σχόλιο πρέπει να έχει τουλάχιστον %{min} χαρακτήρες
+          max: το σχόλιο πρέπει να έχει το πολύ %{max} χαρακτήρες
+        rate:
+          min: η βαθμολογία πρέπει να είναι τουλάχιστον %{min}
+          max: η βαθμολογία πρέπει να είναι το πολύ %{max}
   add_to_cart_button:
     text: προσθήκη στο καλάθι
     added_to_cart: προστέθηκε στο καλάθι
@@ -168,13 +170,13 @@ pages:
     title: η σελίδα δεν βρέθηκε
     description: η σελίδα δεν βρέθηκε
   testing:
-    nav: δοκιμές
-    title: δοκιμές
+    nav: δοκιμή
+    title: δοκιμή
     index:
-      nav: δοκιμές
-      title: δοκιμές
+      nav: δοκιμή
+      title: δοκιμή
       description: αυτή είναι μια δοκιμαστική σελίδα
-      keywords: δοκιμές
+      keywords: δοκιμή
     blank:
       nav: κενό
       title: κενή σελίδα
@@ -182,7 +184,7 @@ pages:
       just_blank_page_with_title: απλά κενή σελίδα με τίτλο
     test:
       nav: δοκιμή
-      title: δοκιμές
+      title: δοκιμή
       description: αυτή είναι μια δοκιμαστική σελίδα
       counter: μετρητής
       increment: αύξηση
@@ -360,8 +362,13 @@ pages:
       update_error: σφάλμα ενημέρωσης ρυθμίσεων
       deleted: το στοιχείο ρυθμίσεων διαγράφηκε
       delete_error: σφάλμα διαγραφής στοιχείου ρυθμίσεων
-      region:
-        required: απαιτείται περιοχή
+      validation:
+        region:
+          required: απαιτείται περιοχή
+        first_name:
+          min: το όνομα πρέπει να είναι τουλάχιστον %{min} χαρακτήρες
+        last_name:
+          min: το επώνυμο πρέπει να είναι τουλάχιστον %{min} χαρακτήρες
       form:
         email: ηλεκτρονικη διευθυνση
         first_name: ονομα

@@ -25,8 +25,12 @@ await regionStore.fetchRegions({
 
 const ZodAccountSettings = z.object({
 	email: z.string().email(),
-	firstName: z.string(),
-	lastName: z.string(),
+	firstName: z.string().min(2, {
+		message: t('pages.account.settings.validation.first_name.min', { min: 2 })
+	}),
+	lastName: z.string().min(2, {
+		message: t('pages.account.settings.validation.last_name.min', { min: 2 })
+	}),
 	phone: z.string(),
 	city: z.string(),
 	zipcode: z.string(),
@@ -35,7 +39,7 @@ const ZodAccountSettings = z.object({
 	country: z.string(),
 	// region not 'choose'
 	region: z.string().refine((value) => value !== 'choose', {
-		message: t('pages.account.settings.region.required')
+		message: t('pages.account.settings.validation.region.required')
 	})
 })
 

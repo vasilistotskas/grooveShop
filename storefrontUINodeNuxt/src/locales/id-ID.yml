@@ -123,10 +123,12 @@ components:
         placeholder: bagikan pengalaman anda...
         label: komentar
       validation:
-        comment_too_short: panjang komentar minimal harus %{min} karakter
-        comment_too_long: panjang komentar harus maksimal %{max} karakter
-        rate_too_low: peringkat minimal harus %{min}
-        rate_too_high: peringkat harus maksimal %{max}
+        comment:
+          min: panjang komentar minimal harus %{min} karakter
+          max: panjang komentar harus maksimal %{max} karakter
+        rate:
+          min: peringkat minimal harus %{min}
+          max: peringkat harus maksimal %{max}
   add_to_cart_button:
     text: masukkan ke keranjang
     added_to_cart: ditambahkan ke troli
@@ -353,8 +355,13 @@ pages:
       update_error: kesalahan pembaruan pengaturan
       deleted: pengaturan item dihapus
       delete_error: kesalahan penghapusan item setelan
-      region:
-        required: wilayah diperlukan
+      validation:
+        region:
+          required: wilayah diperlukan
+        first_name:
+          min: nama depan minimal harus %{min} karakter
+        last_name:
+          min: nama belakang minimal harus %{min} karakter
       form:
         email: surel
         first_name: nama depan

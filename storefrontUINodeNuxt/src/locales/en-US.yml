@@ -113,10 +113,12 @@ components:
         placeholder: Share your experience...
         label: Comment
       validation:
-        comment_too_short: Comment must be at least %{min} characters long
-        comment_too_long: Comment must be at most %{max} characters long
-        rate_too_low: Rating must be at least %{min}
-        rate_too_high: Rating must be at most %{max}
+        comment:
+          min: Comment must be at least %{min} characters long
+          max: Comment must be at most %{max} characters long
+        rate:
+          min: Rating must be at least %{min}
+          max: Rating must be at most %{max}
   add_to_cart_button:
     text: Add to cart
     added_to_cart: Added to cart
@@ -339,8 +341,13 @@ pages:
       update_error: Settings update error
       deleted: Settings Item deleted
       delete_error: Settings Item delete error
-      region:
-        required: Region is required
+      validation:
+        region:
+          required: Region is required
+        first_name:
+          min: First Name must be at least %{min} characters
+        last_name:
+          min: Last Name must be at least %{min} characters
       form:
         email: Email
         first_name: First Name

@@ -56,8 +56,8 @@ const acceptPartial = () => {
 }
 const declineAll = () => {
 	setCookies({
-		isConsentGiven: false,
-		cookiesOptionalEnabled: []
+		isConsentGiven: true,
+		cookiesOptionalEnabled: moduleOptions.cookies.necessary
 	})
 }
 const toggleCookie = (cookie: Cookie) => {
@@ -227,6 +227,7 @@ init()
 							v-text="$t('components.cookie.decline')"
 						/>
 					</div>
+					type="button"
 				</div>
 			</div>
 		</Transition>

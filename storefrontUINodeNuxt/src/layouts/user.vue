@@ -26,7 +26,6 @@ const { account, favourites, reviews, orders, pending, error } = storeToRefs(use
 				</slot>
 				<slot name="main">
 					<div class="mx-auto w-full container">
-						<Error v-if="error" :code="error.statusCode" />
 						<UserAccountInfo
 							v-if="account"
 							:account="account"

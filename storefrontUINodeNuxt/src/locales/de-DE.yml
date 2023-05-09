@@ -126,10 +126,12 @@ components:
         placeholder: teile deine erfahrung...
         label: kommentar
       validation:
-        comment_too_short: kommentar muss mindestens %{min} zeichen lang sein
-        comment_too_long: kommentar darf höchstens %{max} zeichen lang sein
-        rate_too_low: bewertung muss mindestens %{min} betragen
-        rate_too_high: die bewertung darf höchstens %{max} betragen
+        comment:
+          min: kommentar muss mindestens %{min} zeichen lang sein
+          max: kommentar darf höchstens %{max} zeichen lang sein
+        rate:
+          min: bewertung muss mindestens %{min} betragen
+          max: die bewertung darf höchstens %{max} betragen
   add_to_cart_button:
     text: in den warenkorb legen
     added_to_cart: zum warenkorb hinzugefügt
@@ -360,8 +362,13 @@ pages:
       update_error: fehler bei der aktualisierung der einstellungen
       deleted: einstellungselement gelöscht
       delete_error: fehler beim löschen des einstellungselements
-      region:
-        required: region ist erforderlich
+      validation:
+        region:
+          required: region ist erforderlich
+        first_name:
+          min: der vorname muss mindestens %{min} zeichen lang sein
+        last_name:
+          min: nachname muss mindestens %{min} zeichen lang sein
       form:
         email: email
         first_name: vorname

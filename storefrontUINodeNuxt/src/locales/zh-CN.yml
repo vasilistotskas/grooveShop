@@ -113,10 +113,12 @@ components:
         placeholder: 分享你的经验...
         label: 评论
       validation:
-        comment_too_short: 评论必须至少有 %{min} 个字符长
-        comment_too_long: 评论的长度不得超过 %{max} 个字符
-        rate_too_low: 评分必须至少为 %{min}
-        rate_too_high: 评级最多不能超过 %{max}
+        comment:
+          min: 评论必须至少有 %{min} 个字符长
+          max: 评论的长度不得超过 %{max} 个字符
+        rate:
+          min: 评分必须至少为 %{min}
+          max: 评级最多不能超过 %{max}
   add_to_cart_button:
     text: 添加到购物车
     added_to_cart: 加入购物车
@@ -339,8 +341,13 @@ pages:
       update_error: 设置更新错误
       deleted: 设置项已删除
       delete_error: 设置项删除错误
-      region:
-        required: 地区为必填项
+      validation:
+        region:
+          required: 地区为必填项
+        first_name:
+          min: 名字必须至少为 %{min} 个字符
+        last_name:
+          min: 姓氏必须至少为 %{min} 个字符
       form:
         email: 电子邮件
         first_name: 名

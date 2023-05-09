@@ -194,7 +194,7 @@ onMounted(() => {
 			<template v-if="isForm">
 				<form
 					:id="formId"
-					class="cp-utilities-generic_modal"
+					class="cp-utilities-generic_modal bg-white dark:bg-zinc-900"
 					:style="`position:${position}; width:${width}; height:${height}; max-height: ${maxHeight};
           max-width: ${maxWidth}; overflow: ${overflow}; gap: ${gap}; padding: ${padding};`"
 					:name="formName"
@@ -213,7 +213,7 @@ onMounted(() => {
 			</template>
 			<template v-else>
 				<div
-					class="cp-utilities-generic_modal"
+					class="cp-utilities-generic_modal bg-white dark:bg-zinc-900"
 					:style="`position:${position}; width:${width}; height:${height}; max-height: ${maxHeight};
           max-width: ${maxWidth}; overflow: ${overflow}; gap: ${gap}; padding: ${padding};`"
 				>
@@ -271,7 +271,6 @@ $transitional-profile-1: all 0.2s ease-out;
 				max-height: 680px;
 				max-width: 1190px;
 				padding: 1rem;
-				background: white;
 				border-radius: 10px;
 				@media screen and (max-width: 1200px) {
 					max-height: unset;
@@ -300,7 +299,6 @@ $transitional-profile-1: all 0.2s ease-out;
 		}
 
 		&-close {
-			background: white;
 			border-radius: 20px;
 			border: none;
 			position: absolute;

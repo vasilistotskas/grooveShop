@@ -120,10 +120,12 @@ components:
         placeholder: あなたの経験を共有してください...
         label: コメント
       validation:
-        comment_too_short: コメントは %{min} 文字以上にする必要があります
-        comment_too_long: コメントは最大 %{max} 文字の長さにする必要があります
-        rate_too_low: 評価は少なくとも %{min} である必要があります
-        rate_too_high: 評価は最大で %{max} でなければなりません
+        comment:
+          min: コメントは %{min} 文字以上にする必要があります
+          max: コメントは最大 %{max} 文字の長さにする必要があります
+        rate:
+          min: 評価は少なくとも %{min} である必要があります
+          max: 評価は最大で %{max} でなければなりません
   add_to_cart_button:
     text: カートに追加
     added_to_cart: カートに追加
@@ -346,8 +348,13 @@ pages:
       update_error: 設定更新エラー
       deleted: 設定項目を削除しました
       delete_error: 設定項目削除エラー
-      region:
-        required: 地域が必要です
+      validation:
+        region:
+          required: 地域が必要です
+        first_name:
+          min: 名は %{min} 文字以上にする必要があります
+        last_name:
+          min: 姓は %{min} 文字以上にする必要があります
       form:
         email: eメール
         first_name: ファーストネーム

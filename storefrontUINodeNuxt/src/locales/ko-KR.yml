@@ -119,10 +119,12 @@ components:
         placeholder: 경험을 공유하세요...
         label: 논평
       validation:
-        comment_too_short: 댓글은 최소 %{min}자 이상이어야 합니다.
-        comment_too_long: 댓글은 최대 %{max}자 길이여야 합니다.
-        rate_too_low: 평점은 %{min} 이상이어야 합니다.
-        rate_too_high: 등급은 최대 %{max}이어야 합니다.
+        comment:
+          min: 댓글은 최소 %{min}자 이상이어야 합니다.
+          max: 댓글은 최대 %{max}자 길이여야 합니다.
+        rate:
+          min: 평점은 %{min} 이상이어야 합니다.
+          max: 등급은 최대 %{max}이어야 합니다.
   add_to_cart_button:
     text: 장바구니에 담기
     added_to_cart: 장바구니에 추가됨
@@ -345,8 +347,13 @@ pages:
       update_error: 설정 업데이트 오류
       deleted: 설정 항목 삭제됨
       delete_error: 설정 항목 삭제 오류
-      region:
-        required: 지역은 필수 항목입니다.
+      validation:
+        region:
+          required: 지역은 필수 항목입니다.
+        first_name:
+          min: 이름은 %{min}자 이상이어야 합니다.
+        last_name:
+          min: 성은 %{min}자 이상이어야 합니다.
       form:
         email: 이메일
         first_name: 이름
