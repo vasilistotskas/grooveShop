@@ -1,4 +1,4 @@
-FROM node:18.12.1-alpine as construction
+FROM node:18.16.0-alpine as construction
 
 COPY ./docker/dev/docker_entrypoint.sh /app/docker_entrypoint.sh
 

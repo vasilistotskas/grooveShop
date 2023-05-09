@@ -1,4 +1,4 @@
-FROM node:18.12.1-alpine as construction
+FROM node:18.16.0-alpine as construction
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ RUN rm -rf ./node_modules & \
 
 RUN npm ci && npm run build
 
-FROM node:18.12.1-alpine as deployment
+FROM node:18.16.0-alpine as deployment
 
 USER node
 
