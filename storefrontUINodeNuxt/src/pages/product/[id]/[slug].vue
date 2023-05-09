@@ -285,7 +285,7 @@ useHead(() => ({
 		<PageBody>
 			<Error v-if="error" :code="error.statusCode" />
 			<LoadingSkeleton
-				v-if="productPending"
+				v-if="productPending && !error"
 				:loading="productPending"
 				:class="productPending ? 'block' : 'hidden'"
 			></LoadingSkeleton>
@@ -308,7 +308,7 @@ useHead(() => ({
 								>
 									{{ product.name }}
 								</h2>
-								<div class="actions flex gap-4">
+								<section class="actions flex gap-4">
 									<ClientOnly>
 										<Button
 											v-if="isSupported"
@@ -336,7 +336,7 @@ useHead(() => ({
 										:favourite="userToProductFavourite"
 										:is-authenticated="isAuthenticated"
 									/>
-								</div>
+								</section>
 								<h3 class="text-gray-700 dark:text-gray-200 text-sm">
 									<span>{{ $t('pages.product.product_id') }}: </span>
 									<span class="text-indigo-700 dark:text-indigo-200 hover:underline">{{

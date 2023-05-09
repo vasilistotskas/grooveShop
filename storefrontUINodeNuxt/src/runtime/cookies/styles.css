@@ -117,7 +117,7 @@
 }
 .cookieControl__BarContainer {
 	display: flex;
-	padding: 20px;
+	padding: 10px;
 	align-items: center;
 	justify-content: space-between;
 }

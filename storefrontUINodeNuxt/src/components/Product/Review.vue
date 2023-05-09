@@ -311,14 +311,14 @@ watch(
 		<template #header>
 			<div class="review_header">
 				<!-- eslint-disable vue/no-v-html -->
-				<h5
+				<h2
 					class="review_header__title"
 					v-html="
 						$t('components.product.review.write_review_for_product', {
 							product: product?.name
 						})
 					"
-				></h5>
+				></h2>
 				<!-- eslint-enable -->
 				<IconFaSolid:pen />
 			</div>
@@ -385,6 +385,9 @@ watch(
 						</p>
 					</div>
 					<div class="review_body__comment__content">
+						<label class="text-gray-700 dark:text-gray-200 mb-2" for="comment">{{
+							$t('components.product.review.comment.label')
+						}}</label>
 						<textarea
 							id="comment"
 							v-model="comment"
@@ -398,7 +401,7 @@ watch(
 					<span class="review_body__rating__error h-6">{{ errors.comment }}</span>
 				</div>
 
-				<input v-model="rate" type="hidden" name="rate" placeholder="rate" />
+				<input v-model="rate" type="hidden" name="rate" />
 			</div>
 		</template>
 		<template #footer>
@@ -408,7 +411,7 @@ watch(
 						v-if="!tooManyAttempts"
 						class="review_footer__button"
 						:text="reviewButtonText"
-						type="input"
+						type="submit"
 						:style="'success'"
 					/>
 					<Button v-else type="button" disabled>

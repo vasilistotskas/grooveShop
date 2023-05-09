@@ -45,7 +45,12 @@ const routePaginationParams = ref<FavouriteQuery>({
 	expand: 'true'
 })
 
-await favouriteStore.fetchFavourites(routePaginationParams.value)
+try {
+	await favouriteStore.fetchFavourites(routePaginationParams.value)
+} catch (error) {
+	//
+}
+
 const refresh = async () =>
 	await favouriteStore.fetchFavourites(routePaginationParams.value)
 
@@ -74,13 +79,13 @@ definePageMeta({
 
 <template>
 	<PageWrapper class="container flex flex-col gap-4">
-		<PageHeader>
+		<PageHeader class="mb-4">
 			<PageTitle :text="$t('pages.account.favourites.title')" />
 		</PageHeader>
 		<PageBody>
 			<Error v-if="error" :code="error.statusCode" />
 			<LoadingSkeleton
-				v-if="pending"
+				v-if="pending && !error"
 				:card-height="'422px'"
 				:class="pending ? 'block' : 'hidden'"
 				:loading="pending"

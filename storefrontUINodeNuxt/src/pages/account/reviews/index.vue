@@ -42,7 +42,11 @@ const routePaginationParams = ref<ReviewQuery>({
 	expand: 'true'
 })
 
-await reviewsStore.fetchReviews(routePaginationParams.value)
+try {
+	await reviewsStore.fetchReviews(routePaginationParams.value)
+} catch (error) {
+	//
+}
 const refresh = () => reviewsStore.fetchReviews(routePaginationParams.value)
 
 const bus = useEventBus<string>('userReviews')
@@ -70,13 +74,13 @@ definePageMeta({
 
 <template>
 	<PageWrapper class="container flex flex-col gap-4">
-		<PageHeader>
+		<PageHeader class="mb-4">
 			<PageTitle :text="$t('pages.account.reviews.title')" />
 		</PageHeader>
 		<PageBody>
 			<Error v-if="error" :code="error.statusCode" />
 			<LoadingSkeleton
-				v-if="pending"
+				v-if="pending && !error"
 				:card-height="'195px'"
 				:class="pending ? 'block' : 'hidden'"
 				:loading="pending"

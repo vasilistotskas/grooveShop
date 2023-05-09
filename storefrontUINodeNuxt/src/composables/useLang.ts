@@ -1,8 +1,11 @@
 import { useI18n } from 'vue-i18n'
 
 export const useLang = () => {
-	const { t } = useI18n()
+	const { t, locale, locales, setLocale } = useI18n()
 	return {
-		t
+		t,
+		locale,
+		locales,
+		setLocale
 	}
 }

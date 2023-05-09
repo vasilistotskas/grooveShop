@@ -397,6 +397,9 @@ export function NativeSlider() {
 					const scrollMode = computedSliderStyle.scrollSnapType.startsWith('y')
 						? 'y'
 						: 'x'
+					if (!this.dragDataLayer) {
+						this.dragDataLayer = new Map()
+					}
 					this.dragDataLayer.set(nativeSlider, {
 						isDown: false,
 						startXY: 0,

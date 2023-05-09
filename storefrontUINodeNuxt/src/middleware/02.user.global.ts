@@ -13,8 +13,8 @@ export default defineNuxtRouteMiddleware(async () => {
 			.then(() => {
 				// console.log('========== account fetched ==========')
 			})
-			.catch((error) => {
-				console.log(error)
+			.catch(() => {
+				// console.log(error)
 			})
 	}
 })

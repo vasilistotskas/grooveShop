@@ -114,7 +114,6 @@ const onClick = (event: MouseEvent) => {
 		type="submit"
 		:value="text"
 		:name="text"
-		:placeholder="text"
 		:class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"
 	/>
 	<a

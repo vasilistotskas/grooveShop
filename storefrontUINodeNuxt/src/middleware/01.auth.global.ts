@@ -5,9 +5,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 	const authStore = useAuthStore()
 	const userStore = useUserStore()
 
-	await authStore.fetchAuth().then(() => {
-		// console.log('========== authStore initialized ==========')
-	})
+	try {
+		await authStore.fetchAuth()
+	} catch (error) {
+		//
+	}
 
 	if (
 		(!authStore.isAuthenticated || !userStore.account?.isSuperuser) &&

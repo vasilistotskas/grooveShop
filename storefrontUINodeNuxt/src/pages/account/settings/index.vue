@@ -75,7 +75,7 @@ const onCountryChange = (event: Event) => {
 	regionStore.fetchRegions({
 		alpha2: event.target.value
 	})
-	region.value.value = 'choose'
+	region.value = 'choose'
 }
 
 const onSubmit = handleSubmit((values) => {
@@ -108,10 +108,38 @@ definePageMeta({
 
 <template>
 	<PageWrapper class="container flex flex-col gap-4">
-		<PageHeader>
+		<PageHeader class="pb-4">
 			<PageTitle :text="$t('pages.account.settings.title')" />
 		</PageHeader>
-		<div class="grid items-center justify-start">
+		<nav class="user__account__navbar">
+			<ul role="tablist" class="user__account__navbar__list">
+				<li role="tab" class="user__account__navbar__list__item">
+					<Anchor
+						:to="`/account/settings`"
+						:aria-label="$t('pages.account.settings.title')"
+						:title="$t('pages.account.settings.title')"
+						class="user__account__navbar__list__item__link"
+					>
+						<span class="text-black dark:text-white">
+							{{ $t('pages.account.settings.title') }}
+						</span>
+					</Anchor>
+				</li>
+				<li role="tab" class="user__account__navbar__list__item">
+					<Anchor
+						:to="`/account/addresses`"
+						:aria-label="$t('pages.account.settings.title')"
+						:title="$t('pages.account.addresses.title')"
+						class="user__account__navbar__list__item__link"
+					>
+						<span class="text-black dark:text-white">
+							{{ $t('pages.account.addresses.title') }}
+						</span>
+					</Anchor>
+				</li>
+			</ul>
+		</nav>
+		<div class="grid items-center justify-start pt-4">
 			<span
 				class="text-gray-500 dark:text-gray-400 cursor-not-allowed italic p-2 border rounded-md border-gray-900/10 dark:border-gray-50/[0.2]"
 				>{{ email }}</span
@@ -139,7 +167,7 @@ definePageMeta({
 							autocomplete="given-name"
 						/>
 					</div>
-					<span class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.firstName" class="text-sm text-red-700 px-4 py-3 relative">{{
 						errors.firstName
 					}}</span>
 				</div>
@@ -158,7 +186,7 @@ definePageMeta({
 							autocomplete="family-name"
 						/>
 					</div>
-					<span class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.lastName" class="text-sm text-red-700 px-4 py-3 relative">{{
 						errors.lastName
 					}}</span>
 				</div>
@@ -177,7 +205,9 @@ definePageMeta({
 							autocomplete="tel"
 						/>
 					</div>
-					<span class="text-sm text-red-700 px-4 py-3 relative">{{ errors.phone }}</span>
+					<span v-if="errors.phone" class="text-sm text-red-700 px-4 py-3 relative">{{
+						errors.phone
+					}}</span>
 				</div>
 				<div class="grid">
 					<label class="text-gray-700 dark:text-gray-200 mb-2" for="city">{{
@@ -194,7 +224,9 @@ definePageMeta({
 							autocomplete="address-level2"
 						/>
 					</div>
-					<span class="text-sm text-red-700 px-4 py-3 relative">{{ errors.city }}</span>
+					<span v-if="errors.city" class="text-sm text-red-700 px-4 py-3 relative">{{
+						errors.city
+					}}</span>
 				</div>
 				<div class="grid">
 					<label class="text-gray-700 dark:text-gray-200 mb-2" for="zipcode">{{
@@ -211,7 +243,7 @@ definePageMeta({
 							autocomplete="postal-code"
 						/>
 					</div>
-					<span class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.zipcode" class="text-sm text-red-700 px-4 py-3 relative">{{
 						errors.zipcode
 					}}</span>
 				</div>
@@ -230,7 +262,7 @@ definePageMeta({
 							autocomplete="street-address"
 						/>
 					</div>
-					<span class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.address" class="text-sm text-red-700 px-4 py-3 relative">{{
 						errors.address
 					}}</span>
 				</div>
@@ -249,7 +281,9 @@ definePageMeta({
 							autocomplete="address-level3"
 						/>
 					</div>
-					<span class="text-sm text-red-700 px-4 py-3 relative">{{ errors.place }}</span>
+					<span v-if="errors.place" class="text-sm text-red-700 px-4 py-3 relative">{{
+						errors.place
+					}}</span>
 				</div>
 				<div class="grid">
 					<label class="text-gray-700 dark:text-gray-200 mb-2" for="country">{{
@@ -276,7 +310,7 @@ definePageMeta({
 							</option>
 						</select>
 					</div>
-					<span class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.country" class="text-sm text-red-700 px-4 py-3 relative">{{
 						errors.country
 					}}</span>
 				</div>
@@ -288,7 +322,7 @@ definePageMeta({
 						<select
 							id="region"
 							ref="regionSelectElement"
-							v-model="region.value.value"
+							v-model="region.value"
 							class="form-select text-gray-700 dark:text-gray-300 bg-gray-100/[0.8] dark:bg-slate-800/[0.8] border border-gray-200"
 							name="region"
 						>
@@ -305,7 +339,9 @@ definePageMeta({
 							</option>
 						</select>
 					</div>
-					<span class="text-sm text-red-700 px-4 py-3 relative">{{ errors.region }}</span>
+					<span v-if="errors.region" class="text-sm text-red-700 px-4 py-3 relative">{{
+						errors.region
+					}}</span>
 				</div>
 
 				<div class="grid items-end justify-end">
@@ -336,5 +372,58 @@ definePageMeta({
 	transition: all 0.3s ease-in-out;
 	vertical-align: middle;
 	width: 100%;
+}
+.user__account__navbar {
+	position: fixed;
+	top: 56px;
+	left: 0;
+	z-index: 149;
+	width: 100%;
+	box-shadow: 0 2px 4px 0 #dcdcdc;
+	background-color: #fff;
+	@media screen and (min-width: 1020px) {
+		position: static;
+		width: auto;
+		border-bottom: 1px solid #dcdcdc;
+		box-shadow: none;
+		background-color: transparent;
+	}
+	@media screen and (max-width: 1020px) {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+	&__list {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		gap: 1rem;
+		position: relative;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		@media screen and (min-width: 1020px) {
+			-webkit-box-pack: start;
+			-ms-flex-pack: start;
+			justify-content: flex-start;
+		}
+		&__item {
+			&__link {
+				font-size: 14px;
+				line-height: 18px;
+				display: block;
+				outline: 0;
+				padding: 16px 0;
+				white-space: nowrap;
+				color: #999;
+				@media screen and (max-width: 1020px) {
+					padding: 8px 0;
+				}
+				&.router-link-active {
+					border-bottom: 1px solid black;
+				}
+			}
+		}
+	}
 }
 </style>

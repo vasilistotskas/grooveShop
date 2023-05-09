@@ -41,6 +41,7 @@ $color-primary: #f0c14b;
 	&__average {
 		display: flex;
 		align-items: center;
+		gap: 0.25rem;
 		&__value {
 			font-size: 1.5rem;
 			font-weight: 600;
@@ -50,13 +51,12 @@ $color-primary: #f0c14b;
 			font-size: 0.75rem;
 			font-weight: 600;
 			color: $color-primary;
-			margin-left: 0.25rem;
 		}
 	}
 	&__count {
 		display: flex;
 		align-items: center;
-		margin-left: 1rem;
+		gap: 0.25rem;
 		&__value {
 			font-size: 0.75rem;
 			font-weight: 600;
@@ -66,7 +66,6 @@ $color-primary: #f0c14b;
 			font-size: 0.75rem;
 			font-weight: 600;
 			color: $color-primary;
-			margin-left: 0.25rem;
 		}
 	}
 }

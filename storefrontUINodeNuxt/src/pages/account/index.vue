@@ -25,7 +25,7 @@ useServerSeoMeta({
 
 <template>
 	<PageWrapper>
-		<PageHeader class="account__header">
+		<PageHeader class="account__header mb-4">
 			<PageTitle :text="$t('pages.account.index.title')" class="account__header__title" />
 		</PageHeader>
 		<PageBody>

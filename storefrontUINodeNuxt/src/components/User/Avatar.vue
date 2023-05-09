@@ -54,7 +54,14 @@ const uploadImage = async (event: Event) => {
 	const formData = new FormData()
 	formData.append('image', file)
 	if (!props.userAccount) return
-	await userStore.updateAccountImage(props.userAccount.id, formData)
+	await userStore.updateAccountImage(props.userAccount.id, formData).then(
+		() => {
+			toast.success(t('components.user.avatar.image.updated'))
+		},
+		() => {
+			toast.error(t('components.user.avatar.image.not_updated'))
+		}
+	)
 }
 </script>
 

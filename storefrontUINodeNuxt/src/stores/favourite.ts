@@ -49,7 +49,7 @@ export const useFavouriteStore = defineStore({
 			})
 			this.error = error.value?.data
 			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data.data.detail} ${
+				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
 					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
 				}`
 				throw new Error(errorMessage)

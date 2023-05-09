@@ -40,7 +40,11 @@ const routePaginationParams = ref<OrderQuery>({
 	userId: String(account.value?.id)
 })
 
-await orderStore.fetchOrders(routePaginationParams.value)
+try {
+	await orderStore.fetchOrders(routePaginationParams.value)
+} catch (error) {
+	//
+}
 const refresh = async () => await orderStore.fetchOrders(routePaginationParams.value)
 
 // @TODO: Event bus like this should have an Enum for key and event name
@@ -71,13 +75,13 @@ useHead(() => ({
 
 <template>
 	<PageWrapper class="container flex flex-col gap-4">
-		<PageHeader>
+		<PageHeader class="mb-4">
 			<PageTitle :text="$t('pages.account.orders.title')" />
 		</PageHeader>
 		<PageBody>
 			<Error v-if="error" :code="error.statusCode" />
 			<LoadingSkeleton
-				v-if="pending"
+				v-if="pending && !error"
 				:card-height="'195px'"
 				:class="pending ? 'block' : 'hidden'"
 				:loading="pending"

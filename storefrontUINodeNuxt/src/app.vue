@@ -8,11 +8,22 @@ AppSetup()
 const theme = useState<ITheme>('theme.current')
 const config = useRuntimeConfig()
 const route = useRoute()
-const { t } = useLang()
-const { locale, locales } = useI18n()
+const {
+	t,
+	locale,
+	locales
+}: {
+	t: any
+	locale: any
+	locales: any
+} = useLang()
 const cartStore = useCartStore()
 
-await cartStore.fetchCart()
+try {
+	await cartStore.fetchCart()
+} catch (error) {
+	//
+}
 const refreshCart = async () => await cartStore.fetchCart()
 
 const title = computed(() => {
@@ -68,7 +79,7 @@ useSchemaOrg([
 		url: config.public.baseUrl,
 		name: config.public.appTitle,
 		description: config.public.appDescription,
-		inLanguage: locales.value.map((l: { iso: string }) => l.iso)
+		inLanguage: locales.value.map((l: any) => l.iso)
 	}),
 	defineWebPage()
 ])
@@ -84,7 +95,7 @@ useServerSeoMeta({
 	ogSiteName: () => config.public.appTitle,
 	ogImage: () => config.public.appImage,
 	ogLocale: () => locale.value,
-	ogLocaleAlternate: () => locales.value.map((l: { iso: string }) => l.iso),
+	ogLocaleAlternate: () => locales.value.map((l: any) => l.iso),
 	fbAppId: () => config.public.facebookAppId,
 	twitterCard: () => 'summary_large_image',
 	twitterTitle: () => title.value,

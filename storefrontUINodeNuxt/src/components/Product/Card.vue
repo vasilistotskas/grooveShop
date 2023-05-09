@@ -100,7 +100,7 @@ const userToProductFavourite = computed(() => {
 										placeholder
 										loading="auto"
 										provider="mediaStream"
-										class="product_img bg-gray-200 dark:bg-gray-700"
+										class="product_img bg-transparent"
 										:style="{ objectFit: 'contain' }"
 										:width="imgWidth"
 										:height="imgHeight"

@@ -38,7 +38,11 @@ const orderingFields: Partial<Record<ProductOrderingField, OrderingOption[]>> = 
 	createdAt: []
 }
 
-await store.fetchProducts(routePaginationParams.value)
+try {
+	await store.fetchProducts(routePaginationParams.value)
+} catch (error) {
+	//
+}
 const refresh = async () => await store.fetchProducts(routePaginationParams.value)
 
 const { products, pending, error } = storeToRefs(store)
@@ -73,7 +77,7 @@ watch(
 	<div class="products-list grid gap-4">
 		<Error v-if="error" :code="error.statusCode" />
 		<LoadingSkeleton
-			v-if="pending"
+			v-if="pending && !error"
 			:card-height="'512px'"
 			:class="pending ? 'block' : 'hidden'"
 			:loading="pending"

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+// @ts-nocheck
 import {
 	Listbox,
 	ListboxButton,
@@ -18,10 +19,7 @@ const props = defineProps({
 // state
 const currentStyle = toRef(props, 'type')
 
-const { locale, locales, setLocale } = useI18n()
-const availableLocales = computed(() => {
-	return locales.value
-})
+const { locale, locales, setLocale } = useLang()
 const switchLocalePath = useSwitchLocalePath()
 const navigateToLocale = (code: string) => {
 	setLocale(code)
@@ -54,7 +52,7 @@ const navigateToLocale = (code: string) => {
 				class="p-1 absolute z-50 top-full right-0 outline-none bg-white rounded-lg ring-1 ring-gray-900/10 shadow-lg overflow-hidden w-36 py-1 text-sm text-gray-700 font-semibold dark:bg-gray-800 dark:ring-0 dark:highlight-white/5 dark:text-gray-300"
 			>
 				<ListboxOption
-					v-for="lang in availableLocales"
+					v-for="lang in locales"
 					:key="lang.code"
 					:value="lang.code"
 					:class="{
@@ -83,7 +81,7 @@ const navigateToLocale = (code: string) => {
 			class="w-full px-2 pr-3 py-1 outline-none rounded border bg-transparent text-gray-700 dark:text-gray-300 border-gray-900/10 dark:border-gray-50/[0.2]"
 		>
 			<option
-				v-for="lang in availableLocales"
+				v-for="lang in locales"
 				:key="lang.code"
 				:value="lang.code"
 				class="flex items-center space-x-2"

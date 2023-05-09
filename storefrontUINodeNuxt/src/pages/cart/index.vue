@@ -81,7 +81,7 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 		<PageBody>
 			<Error v-if="error" :code="error.statusCode" />
 			<LoadingSkeleton
-				v-if="pending"
+				v-if="pending && !error"
 				:card-height="'130px'"
 				:class="
 					pending ? 'grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4' : 'hidden'

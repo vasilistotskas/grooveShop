@@ -52,11 +52,11 @@ watch([x, y], ([x, y]) => {
 	transform: rotateY(calc(90deg * var(--i))) translateZ(50px);
 }
 [logo-vue] {
-	--un-url: url(/assets/images/websiteLogo_circle.png);
+	--un-url: url(/images/websiteLogo_circle.png);
 	background-image: var(--un-url);
 }
 [logo-vueuse] {
-	--un-url: url(/assets/images/websiteLogo_circle.png);
+	--un-url: url(/images/websiteLogo_circle.png);
 	background-image: var(--un-url);
 }
 </style>
