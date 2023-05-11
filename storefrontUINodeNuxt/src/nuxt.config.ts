@@ -89,34 +89,6 @@ export default defineNuxtConfig({
 				file: 'el-GR.yml',
 				iso: 'el-GR',
 				flag: '🇬🇷'
-			},
-			{
-				code: 'id',
-				name: 'Bahasa',
-				file: 'id-ID.yml',
-				iso: 'id-ID',
-				flag: '🇮🇩'
-			},
-			{
-				code: 'ja',
-				name: '日本語',
-				file: 'ja-JP.yml',
-				iso: 'ja-JP',
-				flag: '🇯🇵'
-			},
-			{
-				code: 'ko',
-				name: '한국어',
-				file: 'ko-KR.yml',
-				iso: 'ko-KR',
-				flag: '🇰🇷'
-			},
-			{
-				code: 'zh',
-				name: '简体中文',
-				file: 'zh-CN.yml',
-				iso: 'zh-CN',
-				flag: '🇨🇳'
 			}
 		],
 		vueI18n: 'i18n.config.ts'

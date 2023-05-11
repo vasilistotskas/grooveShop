@@ -69,6 +69,7 @@ const backgroundStars = (productRate: number): string[] => {
 .rating {
 	display: flex;
 	align-items: center;
+	gap: 5px;
 	.star {
 		color: #f68b24;
 		width: 20px;

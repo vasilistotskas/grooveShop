@@ -29,7 +29,7 @@ export const vite: UserConfig = {
 		rollupOptions: {
 			output: {
 				manualChunks(id) {
-					const chunks = ['vue', 'lodash']
+					const chunks = ['lodash']
 					if (id.includes('/node_modules/')) {
 						for (const chunkName of chunks) {
 							if (id.includes(chunkName)) {

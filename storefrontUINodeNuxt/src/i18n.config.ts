@@ -1,6 +1,6 @@
 export default defineI18nConfig(() => ({
 	legacy: false,
-	availableLocales: ['en', 'de', 'el', 'id', 'ja', 'ko', 'zh'],
+	availableLocales: ['en', 'de', 'el'],
 	locale: 'en',
 	fallbackLocale: 'en'
 }))

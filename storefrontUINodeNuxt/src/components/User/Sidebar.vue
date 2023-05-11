@@ -72,7 +72,7 @@ const menus = computed((): IMenuItem[] => [
 const sidebar = ref(null)
 onMounted(() => {
 	if (!sidebar.value) return
-	const { onScroll } = useSticky(sidebar.value, 150)
+	const { onScroll } = useSticky(sidebar.value as HTMLElement, 150)
 	setTimeout(() => onScroll(), 50)
 })
 </script>
@@ -85,7 +85,7 @@ onMounted(() => {
 				'transition-all duration-300 ease-in-out': true,
 				'sidebar md:hidden lg:flex lg:w-30 xl:w-60 md:h-fit': mode === 'normal',
 				'relative flex-1 flex flex-col w-full': mode === 'mobile',
-				'grid relative w-full': $route.path === '/account'
+				'grid relative w-full': route.path === '/account'
 			}
 		]"
 	>

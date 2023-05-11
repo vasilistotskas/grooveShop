@@ -199,7 +199,7 @@ const statusClass = computed(() => {
 		gap: 1rem;
 		grid-template-rows: auto auto;
 		@media screen and (min-width: 961px) {
-			grid-template-columns: 135px 255px 140px 70px;
+			grid-template-columns: 135px 255px 140px;
 			grid-column: 2;
 			grid-row: 1/3;
 		}

@@ -306,14 +306,14 @@ watch(
 		<template #header>
 			<div class="review_header">
 				<!-- eslint-disable vue/no-v-html -->
-				<h2
+				<span
 					class="review_header__title"
 					v-html="
 						$t('components.product.review.write_review_for_product', {
 							product: product?.name
 						})
 					"
-				></h2>
+				></span>
 				<!-- eslint-enable -->
 				<IconFaSolid:pen />
 			</div>

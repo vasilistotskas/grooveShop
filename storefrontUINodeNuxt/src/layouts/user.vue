@@ -2,6 +2,7 @@
 import { useUserStore } from '~/stores/user'
 
 const { t } = useLang()
+const route = useRoute()
 
 const userStore = useUserStore()
 
@@ -38,15 +39,15 @@ const { account, favourites, reviews, orders, pending, error } = storeToRefs(use
 								<div
 									:class="[
 										'relative flex-1 flex flex-col lg:flex-row mx-auto w-full h-full',
-										{ 'flex-col': $route.path === '/account' }
+										{ 'flex-col': route.path === '/account' }
 									]"
 								>
 									<div
 										class="lg:pl-8 md:py-4 md:w-auto md:grid"
 										:class="[
 											{
-												'grid w-full': $route.path === '/account',
-												hidden: $route.path !== '/account'
+												'grid w-full': route.path === '/account',
+												hidden: route.path !== '/account'
 											}
 										]"
 									>
