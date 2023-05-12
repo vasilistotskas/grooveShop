@@ -8,15 +8,7 @@ AppSetup()
 const theme = useState<ITheme>('theme.current')
 const config = useRuntimeConfig()
 const route = useRoute()
-const {
-	t,
-	locale,
-	locales
-}: {
-	t: any
-	locale: any
-	locales: any
-} = useLang()
+const { t, locale, locales } = useLang()
 const cartStore = useCartStore()
 
 try {
@@ -108,14 +100,16 @@ useServerSeoMeta({
 </script>
 
 <template>
-	<Body>
-		<VitePwaManifest />
-		<NuxtLoadingIndicator />
-		<NuxtLayout>
-			<SeoKit :language="locale" />
-			<OgImageStatic />
-			<NuxtPage />
-		</NuxtLayout>
-		<CookieControl />
-	</Body>
+	<ion-app>
+		<Body>
+			<VitePwaManifest />
+			<NuxtLoadingIndicator />
+			<NuxtLayout>
+				<SeoKit :language="locale" />
+				<OgImageStatic />
+				<NuxtPage />
+			</NuxtLayout>
+			<CookieControl />
+		</Body>
+	</ion-app>
 </template>

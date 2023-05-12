@@ -49,6 +49,7 @@ export default defineNuxtConfig({
 		'@nuxtjs/html-validator',
 		'@nuxtjs/i18n',
 		'@nuxtjs/eslint-module',
+		'@nuxtjs/ionic',
 		'@pinia/nuxt',
 		'@vueuse/nuxt',
 		'@vite-pwa/nuxt',
@@ -92,6 +93,19 @@ export default defineNuxtConfig({
 			}
 		],
 		vueI18n: 'i18n.config.ts'
+	},
+	ionic: {
+		integrations: {
+			icons: false,
+			meta: true,
+			pwa: false,
+			router: true
+		},
+		css: {
+			core: true,
+			basic: true,
+			utilities: false
+		}
 	},
 	eslint,
 	runtimeConfig,

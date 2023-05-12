@@ -1,0 +1,7 @@
+{
+  "name": "nuxt3",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
