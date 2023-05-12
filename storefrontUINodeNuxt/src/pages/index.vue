@@ -35,7 +35,7 @@ useServerSeoMeta({
 				>
 					<a href="/">
 						<NuxtImg
-							src="/images/dummy/1920x640.png"
+							src="/assets/images/dummy/1920x640.png"
 							alt="Main Banner"
 							class="w-full h-full object-cover"
 							:modifiers="{ w: 1920, h: 640, format: 'webp' }"
@@ -44,7 +44,7 @@ useServerSeoMeta({
 					</a>
 					<a href="/">
 						<NuxtImg
-							src="/images/dummy/1920x640.png"
+							src="/assets/images/dummy/1920x640.png"
 							alt="Main Banner"
 							class="w-full h-full object-cover"
 							:modifiers="{ w: 1920, h: 640, format: 'webp' }"
@@ -53,7 +53,7 @@ useServerSeoMeta({
 					</a>
 					<a href="/">
 						<NuxtImg
-							src="/images/dummy/1920x640.png"
+							src="/assets/images/dummy/1920x640.png"
 							alt="Main Banner"
 							class="w-full h-full object-cover"
 							:modifiers="{ w: 1920, h: 640, format: 'webp' }"
@@ -68,7 +68,7 @@ useServerSeoMeta({
 					<NuxtImg
 						v-for="i in 6"
 						:key="i"
-						src="/images/dummy/80x40.png"
+						src="/assets/images/dummy/80x40.png"
 						alt="Usp"
 						class="w-auto h-auto object-cover"
 						:modifiers="{ w: 80, h: 40, format: 'webp' }"

@@ -1,11 +1,14 @@
-import UnpluginComponentsVite from 'unplugin-vue-components/vite'
 import IconsResolver from 'unplugin-icons/resolver'
 import { UserConfig } from 'vite'
+import Icons from 'unplugin-icons/vite'
+import Components from 'unplugin-vue-components/vite'
 
 export const vite: UserConfig = {
 	plugins: [
-		UnpluginComponentsVite({
-			dts: true,
+		Components({
+			deep: true,
+			dts: 'components.d.ts',
+			directoryAsNamespace: true,
 			resolvers: [
 				IconsResolver({
 					prefix: 'Icon',
@@ -23,6 +26,9 @@ export const vite: UserConfig = {
 					]
 				})
 			]
+		}),
+		Icons({
+			compiler: 'vue3'
 		})
 	],
 	build: {

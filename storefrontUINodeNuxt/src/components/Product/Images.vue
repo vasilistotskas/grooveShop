@@ -65,7 +65,7 @@ const imageId = useState<number>(`${product.value.uuid}-imageID`, () => {
 					sizes="sm:100vw md:50vw lg:592px"
 					:src="
 						`media/uploads/products/${productImage.productImageFilename}` ||
-						'/images/placeholder.png'
+						'/assets/images/placeholder.png'
 					"
 					:alt="product.name"
 				/>
@@ -102,7 +102,7 @@ const imageId = useState<number>(`${product.value.uuid}-imageID`, () => {
 							sizes="sm:100vw md:50vw lg:278px"
 							:src="
 								`media/uploads/products/${productImage.productImageFilename}` ||
-								'/images/placeholder.png'
+								'/assets/images/placeholder.png'
 							"
 							:alt="product.name"
 						/>
