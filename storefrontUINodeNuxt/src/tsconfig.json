@@ -2,13 +2,13 @@
 	// https://v3.nuxtjs.org/concepts/typescript
 	"extends": "./.nuxt/tsconfig.json",
 	"compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+		"target": "esnext",
+		"module": "esnext",
 		"outDir": "./.output",
 		"strict": true,
 		"skipLibCheck": true,
-    "esModuleInterop": true,
-    "moduleResolution": "node",
+		"esModuleInterop": true,
+		"moduleResolution": "node",
 		"types": [
 			"@vueuse/nuxt",
 			"@nuxt/types",
