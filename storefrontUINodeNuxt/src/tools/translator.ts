@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-var-requires */
-const fs = require('fs')
-const path = require('path')
-const yaml = require('js-yaml')
+import path from 'path'
+import * as fs from 'fs'
+
+import yaml from 'js-yaml'
+
 const args = process.argv.slice(2)
 
 // funcs
@@ -100,7 +101,6 @@ async function main(): Promise<void> {
 	console.log(`Target Locales Path: ${localePath}`)
 	console.log(`Main Locale: ${engLocale}`)
 	console.log(`Locales to translate: ${listLocaleToTranslate.map((f) => f.lang)}`)
-
 	// translating
 	console.log('==============================================')
 	for (const locale of listLocaleToTranslate) {

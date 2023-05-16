@@ -152,6 +152,10 @@ components:
   cart:
     item_card:
       remove_from_cart: Remove from cart %{name}
+  address:
+    add_new:
+      title: You can add a new address and use it on all your next purchases.
+      button: Add
 pages:
   testing:
     nav: testing
@@ -344,6 +348,8 @@ pages:
       deleted: Settings Item deleted
       delete_error: Settings Item delete error
       validation:
+        email:
+          invalid: Email is invalid
         region:
           required: Region is required
         first_name:
@@ -376,12 +382,99 @@ pages:
       update_error: Addresses update error
       deleted: Addresses Item deleted
       delete_error: Addresses Item delete error
+      total: Total
+      delete: Delete
       ordering:
         created_at: Created At
       empty:
         title: Your addresses are empty
         description: You have not added any addresses yet.
         button: Go to shop
+      new:
+        title: New Address
+        error: Address creation error
+        success: Address created successfully
+        back: Back To Addresses
+        main:
+          title: Main Address
+          success: Main Address updated successfully
+          error: Main Address update error
+        form:
+          title: Address
+          first_name: First Name
+          last_name: Last Name
+          street: Street
+          street_number: Street Number
+          city: City
+          zipcode: Zipcode
+          phone: Phone
+          mobile_phone: Mobile Phone
+          notes: Notes
+          floor: Floor
+          location_type: Location Type
+          country: Country
+          region: Region
+          submit: Submit
+        validation:
+          title:
+            min: Title must be at least %{min} characters
+          first_name:
+            min: First Name must be at least %{min} characters
+          last_name:
+            min: Last Name must be at least %{min} characters
+          street:
+            min: Street must be at least %{min} characters
+          street_number:
+            min: Street Number must be at least %{min} characters
+          city:
+            min: City must be at least %{min} characters
+          zipcode:
+            min: Zipcode must be at least %{min} characters
+          region:
+            required: Region is required
+      edit:
+        title: Edit Address
+        error: Address update error
+        success: Address updated successfully
+        back: Back To Addresses
+        main:
+          title: Main Address
+          success: Main Address updated successfully
+          error: Main Address update error
+        form:
+          title: Address
+          first_name: First Name
+          last_name: Last Name
+          street: Street
+          street_number: Street Number
+          city: City
+          zipcode: Zipcode
+          phone: Phone
+          mobile_phone: Mobile Phone
+          notes: Notes
+          floor: Floor
+          location_type: Location Type
+          country: Country
+          region: Region
+          submit: Submit
+          update: Update
+        validation:
+          title:
+            min: Title must be at least %{min} characters
+          first_name:
+            min: First Name must be at least %{min} characters
+          last_name:
+            min: Last Name must be at least %{min} characters
+          street:
+            min: Street must be at least %{min} characters
+          street_number:
+            min: Street Number must be at least %{min} characters
+          city:
+            min: City must be at least %{min} characters
+          zipcode:
+            min: Zipcode must be at least %{min} characters
+          region:
+            required: Region is required
     help:
       title: Help
       nav: help
@@ -404,6 +497,13 @@ common:
   disabled: disabled
   read_less: read less
   read_more: read more
+  choose: Choose...
+  floor: Floor
+  location_type: Location Type
+  phone: Phone
+  mobile_phone: Mobile Phone
+  notes: Notes
+  back: Back
   errors:
     unknown_internal_api_error: Unknown internal API error
   shop: Shop
