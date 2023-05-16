@@ -15,9 +15,9 @@ export enum LocationChoicesEnum {
 	OTHER = 2
 }
 
-const locationChoicesList = Object.keys(LocationChoicesEnum).filter((element) => {
+export const locationChoicesList = Object.keys(LocationChoicesEnum).filter((element) => {
 	return isNaN(Number(element))
 })
-const floorChoicesList = Object.keys(FloorChoicesEnum).filter((element) => {
+export const floorChoicesList = Object.keys(FloorChoicesEnum).filter((element) => {
 	return isNaN(Number(element))
 })

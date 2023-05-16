@@ -1,20 +1,17 @@
 import { FetchError } from 'ofetch'
-import {
-	Account,
-	AccountPatchRequest,
-	AccountPutRequest,
-	ZodAccount
-} from '~/zod/user/account'
+import { Account, AccountPutRequest, ZodAccount } from '~/zod/user/account'
 import { Favourite, FavouriteCreateRequest } from '~/zod/product/favourite'
 import { Review, ReviewCreateRequest, ReviewPutRequest } from '~/zod/product/review'
 import { Order } from '~/zod/order/order'
 import { parseDataAs } from '~/zod/parser'
+import { Address } from '~/zod/user/address'
 
 export interface UserState {
 	account: Account | null
 	favourites: Favourite[] | null
 	reviews: Review[] | null
 	orders: Order[] | null
+	addresses: Address[] | null
 	pending: boolean
 	error: FetchError<unknown> | null
 }
@@ -26,6 +23,7 @@ export const useUserStore = defineStore({
 		favourites: null as Favourite[] | null,
 		reviews: null as Review[] | null,
 		orders: null as Order[] | null,
+		addresses: null as Address[] | null,
 		pending: true,
 		error: null as FetchError<unknown> | null
 	}),
@@ -39,7 +37,6 @@ export const useUserStore = defineStore({
 	},
 	actions: {
 		async fetchAccount() {
-			this.pending = true
 			const {
 				data: account,
 				error,
@@ -59,11 +56,11 @@ export const useUserStore = defineStore({
 				this.favourites = account.value.favourites
 				this.reviews = account.value.reviews
 				this.orders = account.value.orders
+				this.addresses = account.value.addresses
 			}
 			this.pending = pending.value
 		},
 		async updateAccount(id: number, body: AccountPutRequest) {
-			this.pending = true
 			const {
 				data: account,
 				error,
@@ -85,7 +82,6 @@ export const useUserStore = defineStore({
 			this.pending = pending.value
 		},
 		async updateAccountImage(id: number, body: FormData) {
-			this.pending = true
 			const config = useRuntimeConfig()
 			const csrfToken = useCookie('csrftoken')
 			const sessionID = useCookie('sessionid')
@@ -117,7 +113,6 @@ export const useUserStore = defineStore({
 			this.pending = pending.value
 		},
 		async addFavourite(body: FavouriteCreateRequest) {
-			this.pending = true
 			const {
 				data: favourite,
 				error,
@@ -139,7 +134,6 @@ export const useUserStore = defineStore({
 			this.pending = pending.value
 		},
 		async removeFavourite(id: number) {
-			this.pending = true
 			const { error, pending } = await useFetch(`/api/product-favourites/${id}`, {
 				method: 'delete'
 			})
@@ -155,7 +149,6 @@ export const useUserStore = defineStore({
 			this.pending = pending.value
 		},
 		async addReview(body: ReviewCreateRequest) {
-			this.pending = true
 			const {
 				data: review,
 				error,
@@ -177,7 +170,6 @@ export const useUserStore = defineStore({
 			this.pending = pending.value
 		},
 		async updateReview(id: number, body: ReviewPutRequest) {
-			this.pending = true
 			const {
 				data: review,
 				error,
@@ -205,7 +197,6 @@ export const useUserStore = defineStore({
 			this.pending = pending.value
 		},
 		async removeReview(id: number) {
-			this.pending = true
 			const { error, pending } = await useFetch(`/api/product-reviews/${id}`, {
 				method: 'delete'
 			})

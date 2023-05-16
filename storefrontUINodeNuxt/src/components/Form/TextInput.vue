@@ -26,6 +26,14 @@ const props = defineProps({
 	name: {
 		type: String,
 		default: ''
+	},
+	required: {
+		type: Boolean,
+		default: false
+	},
+	autocomplete: {
+		type: String,
+		default: 'off'
 	}
 })
 const emit = defineEmits(['update:modelValue'])
@@ -90,6 +98,8 @@ const selectedFontSizeStyle = computed(
 				} ${selectedBorderStyle} ${selectedOnHoverBorderStyle} ${selectedPaddingStyle} ${selectedFontSizeStyle}`"
 				:type="type"
 				:placeholder="type === 'text' ? placeholder : ''"
+				:required="required"
+				:autocomplete="autocomplete"
 			/>
 		</div>
 		<div v-if="slots.suffix" :class="`flex rounded-r border ${selectedBorderStyle}`">

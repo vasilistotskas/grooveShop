@@ -6,6 +6,7 @@ import { buildFullUrl } from '~/helpers/api'
 import { FavouriteQuery, ZodFavourite } from '~/zod/product/favourite'
 import { OrderQuery, ZodOrder } from '~/zod/order/order'
 import { ReviewQuery, ZodReview } from '~/zod/product/review'
+import { AddressQuery, ZodAddress } from '~/zod/user/address'
 
 export default defineEventHandler(async (event: H3Event) => {
 	const config = useRuntimeConfig()
@@ -64,6 +65,24 @@ export default defineEventHandler(async (event: H3Event) => {
 		}
 	})
 
+	// Addresses
+	const addressesQuery: AddressQuery = {
+		userId: String(accountParsedData.id),
+		pagination: 'false'
+	}
+
+	const addressesUrl = buildFullUrl(
+		`${config.public.apiBaseUrl}/user/address/`,
+		addressesQuery
+	)
+	const addressesResponse = await $fetch(addressesUrl, {
+		headers: {
+			Cookie: cookie || ''
+		}
+	})
+
+	console.log('===== addressesResponse =====', addressesResponse)
+
 	// Parse data
 	const favouritesParsedData = await parseDataAs(
 		favouritesResponse,
@@ -71,11 +90,13 @@ export default defineEventHandler(async (event: H3Event) => {
 	)
 	const reviewsParsedData = await parseDataAs(reviewsResponse, z.array(ZodReview))
 	const ordersParsedData = await parseDataAs(ordersResponse, z.array(ZodOrder))
+	const addressesParsedData = await parseDataAs(addressesResponse, z.array(ZodAddress))
 
 	return {
 		account: accountParsedData,
 		favourites: favouritesParsedData,
 		orders: ordersParsedData,
-		reviews: reviewsParsedData
+		reviews: reviewsParsedData,
+		addresses: addressesParsedData
 	}
 })

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { useUserStore } from '~/stores/user'
-import { useAddressStore } from '~/stores/address'
-import { Address, AddressOrderingField, AddressQuery } from '~/zod/address/address'
+import { Address, AddressOrderingField, AddressQuery } from '~/zod/user/address'
 import { EntityOrdering, OrderingOption } from '~/zod/ordering/ordering'
 import emptyIcon from '~icons/mdi/package-variant-remove'
+import { useUserAddressStore } from '~/stores/user/address'
 
 const { t } = useLang()
 const route = useRoute()
@@ -11,7 +11,7 @@ const route = useRoute()
 const userStore = useUserStore()
 const { account } = storeToRefs(userStore)
 
-const addressStore = useAddressStore()
+const addressStore = useUserAddressStore()
 const { addresses, pending, error } = storeToRefs(addressStore)
 
 const entityOrdering: EntityOrdering<AddressOrderingField> = [
@@ -79,7 +79,7 @@ definePageMeta({
 		<PageBody>
 			<Error v-if="error" :code="error.statusCode" />
 			<LoadingSkeleton
-				v-if="pending && !error"
+				v-else-if="pending"
 				:card-height="'422px'"
 				:class="pending ? 'block' : 'hidden'"
 				:loading="pending"
@@ -102,9 +102,9 @@ definePageMeta({
 				</div>
 			</template>
 			<template v-if="!pending && addresses.results.length">
-				<AddressesList :addresses="addresses.results" />
+				<AddressList :addresses="addresses.results" />
 			</template>
-			<template v-else>
+			<template v-else-if="!addresses.results.length">
 				<EmptyState :icon="emptyIcon">
 					<template #actions>
 						<Button
