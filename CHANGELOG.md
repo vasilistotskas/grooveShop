@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.46.4 (2023-05-16)
+### Fix
+* **Nuxt:** Convert translator to ESM and generate locales ([`664399b`](https://github.com/vasilistotskas/grooveShop/commit/664399b7d6f2b32642ee024689713407d7d4af15))
+
 ## v0.46.3 (2023-05-09)
 ### Fix
 * **Nuxt:** Minor UI fixes and improvements ([`f83a0ad`](https://github.com/vasilistotskas/grooveShop/commit/f83a0ade7a383f55e92a54ad902bbc4b71402e0b))
