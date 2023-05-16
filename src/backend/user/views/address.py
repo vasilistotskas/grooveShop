@@ -6,6 +6,7 @@ from backend.user.paginators.address import UserAddressPagination
 from backend.user.serializers.address import UserAddressSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
@@ -48,6 +49,15 @@ class UserAddressViewSet(BaseExpandView, ModelViewSet):
 
     def list(self, request, *args, **kwargs) -> Response:
         queryset = self.filter_queryset(self.get_queryset())
+
+        # Check for 'pagination' query parameter
+        pagination_param = request.query_params.get("pagination", "true")
+        if pagination_param.lower() == "false":
+            # Return non-paginated response
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        # Return paginated response
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -87,3 +97,13 @@ class UserAddressViewSet(BaseExpandView, ModelViewSet):
         address = get_object_or_404(UserAddress, pk=pk)
         address.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(detail=True, methods=["post"])
+    def set_main(self, request, pk=None, *args, **kwargs) -> Response:
+        main_address = UserAddress.objects.filter(user=request.user, is_main=True)
+        if main_address.exists():
+            main_address.update(is_main=False)
+        address = get_object_or_404(UserAddress, pk=pk)
+        address.is_main = True
+        address.save()
+        return Response(status=status.HTTP_200_OK)

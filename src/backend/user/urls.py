@@ -40,6 +40,10 @@ urlpatterns = [
             }
         ),
     ),
+    path(
+        "user/address/<int:pk>/set_main/",
+        UserAddressViewSet.as_view({"post": "set_main"}),
+    ),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

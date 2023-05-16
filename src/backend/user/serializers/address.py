@@ -49,3 +49,15 @@ class UserAddressSerializer(BaseExpandSerializer):
             "country": CountrySerializer,
             "region": RegionSerializer,
         }
+
+    def validate(self, data):
+        print("===== data =====", data)
+        if data["is_main"]:
+            user = data["user"]
+            if UserAddress.objects.filter(user=user, is_main=True).exclude(
+                pk=self.instance.pk
+            ):
+                raise serializers.ValidationError(
+                    "A main address already exists for this user"
+                )
+        return data
