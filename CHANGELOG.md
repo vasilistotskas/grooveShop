@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.47.0 (2023-05-16)
+### Feature
+* **Django:** User address API endpoint for main address set post method ([`28fecc1`](https://github.com/vasilistotskas/grooveShop/commit/28fecc16bbd559d185d115c1458661dcc973efe2))
+
 ## v0.46.4 (2023-05-16)
 ### Fix
 * **Nuxt:** Convert translator to ESM and generate locales ([`664399b`](https://github.com/vasilistotskas/grooveShop/commit/664399b7d6f2b32642ee024689713407d7d4af15))
