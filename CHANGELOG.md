@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.48.0 (2023-05-16)
+### Feature
+* **Nuxt:** User Addresses list , create and edit pages implemented ([`42e26fa`](https://github.com/vasilistotskas/grooveShop/commit/42e26fa1a762d8a8a82124b2af3767c7f2ad83c3))
+
 ## v0.47.0 (2023-05-16)
 ### Feature
 * **Django:** User address API endpoint for main address set post method ([`28fecc1`](https://github.com/vasilistotskas/grooveShop/commit/28fecc16bbd559d185d115c1458661dcc973efe2))
