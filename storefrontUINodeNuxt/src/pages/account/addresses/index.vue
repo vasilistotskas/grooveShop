@@ -19,11 +19,17 @@ const entityOrdering: EntityOrdering<AddressOrderingField> = [
 		value: 'createdAt',
 		label: t('pages.account.addresses.ordering.created_at'),
 		options: ['ascending', 'descending']
+	},
+	{
+		value: 'isMain',
+		label: t('pages.account.addresses.ordering.is_main'),
+		options: ['ascending', 'descending']
 	}
 ]
 
 const orderingFields: Partial<Record<AddressOrderingField, OrderingOption[]>> = {
-	createdAt: []
+	createdAt: [],
+	isMain: []
 }
 
 const pagination = computed(() => {
@@ -36,7 +42,7 @@ const ordering = computed(() => {
 
 const routePaginationParams = ref<AddressQuery>({
 	page: Number(route.query.page) || undefined,
-	ordering: route.query.ordering || undefined,
+	ordering: route.query.ordering || '-isMain',
 	userId: String(account.value?.id),
 	expand: 'true'
 })
@@ -46,20 +52,28 @@ try {
 } catch (error) {
 	//
 }
-const refresh = async () => await addressStore.fetchAddresses(routePaginationParams.value)
+
+const refresh = () => addressStore.fetchAddresses(routePaginationParams.value)
 
 const bus = useEventBus<string>('userAddresses')
 bus.on((event, payload: AddressQuery) => {
-	routePaginationParams.value = payload
-	refresh()
+	switch (event) {
+		case 'update':
+			routePaginationParams.value = payload
+			refresh()
+			break
+		case 'delete':
+			refresh()
+			break
+	}
 })
 
 watch(
 	() => route.query,
 	() => {
-		bus.emit('userAddresses', {
-			page: Number(route.query.page) || undefined,
-			ordering: route.query.ordering || undefined,
+		bus.emit('update', {
+			page: Number(route.query.page) || 1,
+			ordering: route.query.ordering || '-isMain',
 			userId: String(account.value?.id),
 			expand: 'true'
 		})
@@ -77,9 +91,8 @@ definePageMeta({
 			<PageTitle :text="$t('pages.account.addresses.title')" />
 		</PageHeader>
 		<PageBody>
-			<Error v-if="error" :code="error.statusCode" />
 			<LoadingSkeleton
-				v-else-if="pending"
+				v-if="pending"
 				:card-height="'422px'"
 				:class="pending ? 'block' : 'hidden'"
 				:loading="pending"
@@ -100,10 +113,9 @@ definePageMeta({
 						:ordering-options="ordering.orderingOptionsArray.value"
 					/>
 				</div>
-			</template>
-			<template v-if="!pending && addresses.results.length">
 				<AddressList :addresses="addresses.results" />
 			</template>
+			<Error v-else-if="error" :code="error.statusCode" :error="error" />
 			<template v-else-if="!addresses.results.length">
 				<EmptyState :icon="emptyIcon">
 					<template #actions>

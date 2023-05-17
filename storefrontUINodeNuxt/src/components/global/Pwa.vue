@@ -1,15 +1,7 @@
 <script lang="ts" setup>
 const { t } = useLang()
 
-const pwa = useNuxtApp().$pwa as {
-	offlineReady: boolean
-	needRefresh: boolean
-	showInstallPrompt: boolean
-	updateServiceWorker: () => void
-	install: () => void
-	cancelInstall: () => void
-	cancelPrompt: () => void
-}
+const pwa = useNuxtApp().$pwa
 </script>
 <template>
 	<ClientOnly>

@@ -81,8 +81,6 @@ export default defineEventHandler(async (event: H3Event) => {
 		}
 	})
 
-	console.log('===== addressesResponse =====', addressesResponse)
-
 	// Parse data
 	const favouritesParsedData = await parseDataAs(
 		favouritesResponse,

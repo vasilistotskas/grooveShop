@@ -2,7 +2,7 @@
 import { isClient } from '@vueuse/shared'
 import { useShare } from '@vueuse/core'
 import { Ref } from 'vue'
-import { FetchError } from 'ofetch/dist/node'
+import { FetchError } from 'ofetch'
 import { useProductStore } from '~/stores/product/product'
 import { capitalize } from '~/utils/str'
 import { useImagesStore } from '~/stores/product/images'
@@ -26,7 +26,7 @@ const userStore = useUserStore()
 const reviewsStore = useReviewsStore()
 
 const fullPath = config.public.baseUrl + route.fullPath
-const productId = route.params.id
+const productId = 'id' in route.params ? route.params.id : 0
 
 const { account, favourites } = storeToRefs(userStore)
 const { isAuthenticated } = storeToRefs(authStore)
@@ -41,15 +41,23 @@ const {
 	error: Ref<FetchError | null>
 } = storeToRefs(productStore)
 
-await productStore.fetchProduct(productId)
+try {
+	await productStore.fetchProduct(productId)
+} catch (error) {
+	//
+}
 const productRefresh = async () => await productStore.fetchProduct(productId)
 
-await productImagesStore.fetchImages({ product: String(productId) })
+try {
+	await productImagesStore.fetchImages({ product: String(productId) })
+} catch (error) {
+	//
+}
 
 const routePaginationParams = ref<ReviewQuery>({
 	productId: String(productId),
 	page: Number(route.query.page) || undefined,
-	ordering: route.query.ordering || undefined,
+	ordering: route.query.ordering || '-createdAt',
 	expand: 'true'
 })
 const reviewsRefresh = async () =>
@@ -174,7 +182,7 @@ watch(
 		reviewsBus.emit('productReviews', {
 			productId: String(productId),
 			page: Number(route.query.page) || undefined,
-			ordering: route.query.ordering || undefined,
+			ordering: route.query.ordering || '-createdAt',
 			expand: 'true'
 		})
 	}
@@ -283,7 +291,7 @@ useHead(() => ({
 <template>
 	<PageWrapper class="gap-16">
 		<PageBody>
-			<Error v-if="error" :code="error.statusCode" />
+			<Error v-if="error" :code="error.statusCode" :error="error" />
 			<template v-if="!productPending && product">
 				<div class="product mb-12 md:mb-24">
 					<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
@@ -409,6 +417,7 @@ useHead(() => ({
 					</div>
 				</div>
 				<ProductReviews
+					:product-id="String(product.id)"
 					:reviews-average="product.reviewAverage"
 					:reviews-count="product.reviewCounter"
 					display-image-of="user"

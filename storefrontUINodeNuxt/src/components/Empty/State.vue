@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// EmptyState.vue
 const props = defineProps({
 	title: {
 		type: String,

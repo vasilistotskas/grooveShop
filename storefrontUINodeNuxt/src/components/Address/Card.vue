@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
-import { Address } from '~/zod/user/address'
+import { Address, AddressQuery } from '~/zod/user/address'
+import { useUserAddressStore } from '~/stores/user/address'
 
 const props = defineProps({
 	address: {
@@ -10,18 +11,43 @@ const props = defineProps({
 })
 
 const { t } = useLang()
+const toast = useToast()
+const router = useRouter()
+const { contentShorten } = useText()
+
+const userAddressStore = useUserAddressStore()
+const bus = useEventBus<string>('userAddresses')
+
+const deleteAddress = async (id: string) => {
+	if (props.address && props.address.isMain) {
+		toast.error(t('components.address.card.delete.cant_delete_main'))
+		return
+	}
+	await userAddressStore
+		.deleteAddress(id)
+		.then(() => {
+			toast.success(t('components.address.card.delete.success'))
+			bus.emit('delete', id)
+		})
+		.catch(() => {
+			toast.error(t('components.address.card.delete.error'))
+		})
+}
 </script>
 
 <template>
 	<li
 		class="address__card p-5 bg-white text-white dark:bg-slate-800 dark:text-black rounded-lg"
 	>
+		<div v-if="address.isMain" class="address__card__main">
+			<IconMdi:star></IconMdi:star>
+		</div>
 		<div class="address__card__header">
 			<div class="address__card__header__title">
 				<h3
 					class="address__card__header__title__value font-bold text-gray-700 dark:text-gray-200"
 				>
-					{{ address.title }}
+					{{ contentShorten(address.title, 0, 25) }}
 				</h3>
 			</div>
 			<div class="address__card__header__actions">
@@ -40,6 +66,7 @@ const { t } = useLang()
 					type="button"
 					size="sm"
 					:style="'secondary'"
+					@click="deleteAddress(String(address.id))"
 				>
 					<span class="hidden">{{ t('pages.account.addresses.delete') }}</span>
 					<IconFa6Solid:trash class="text-red-600" />
@@ -123,7 +150,7 @@ const { t } = useLang()
 			gap: 0.5rem;
 			&__value,
 			&__label {
-				font-size: 1.4rem;
+				font-size: 1.3rem;
 			}
 		}
 		&__actions {
@@ -157,6 +184,12 @@ const { t } = useLang()
 				font-weight: 400;
 			}
 		}
+	}
+	&__main {
+		position: absolute;
+		top: 0.75rem;
+		right: 0.75rem;
+		color: #f0c14b;
 	}
 }
 </style>

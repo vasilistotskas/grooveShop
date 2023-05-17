@@ -30,7 +30,7 @@ export const useUserAddressStore = defineStore({
 			results: []
 		},
 		address: null as Address | null,
-		pending: true,
+		pending: false,
 		error: null as FetchError<unknown> | null
 	}),
 	getters: {
@@ -59,6 +59,9 @@ export const useUserAddressStore = defineStore({
 				}`
 				throw new Error(errorMessage)
 			}
+			console.log('page', page)
+			console.log('ordering', ordering)
+			console.log('userId', userId)
 			if (addresses.value) {
 				this.addresses = addresses.value
 			}
@@ -130,11 +133,7 @@ export const useUserAddressStore = defineStore({
 			this.pending = pending.value
 		},
 		async deleteAddress(id: string | string[] | number): Promise<void> {
-			const {
-				data: address,
-				error,
-				pending
-			} = await useFetch(`/api/user-address/${id}`, {
+			const { error, pending } = await useFetch(`/api/user-address/${id}`, {
 				method: 'delete'
 			})
 			this.error = error.value?.data
@@ -144,8 +143,12 @@ export const useUserAddressStore = defineStore({
 				}`
 				throw new Error(errorMessage)
 			}
-			if (address.value) {
-				this.address = address.value
+
+			const index = this.addresses.results.findIndex(
+				(address) => Number(address.id) === Number(id)
+			)
+			if (index !== -1) {
+				this.addresses.results.splice(index, 1)
 			}
 			this.pending = pending.value
 		},

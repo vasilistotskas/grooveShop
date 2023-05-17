@@ -18,13 +18,19 @@ const { regions } = storeToRefs(regionStore)
 
 const userId = account.value?.id
 
-await countryStore.fetchCountries()
-await regionStore.fetchRegions({
-	alpha2: account.value?.country ?? ''
-})
+try {
+	await countryStore.fetchCountries()
+	await regionStore.fetchRegions({
+		alpha2: account.value?.country ?? ''
+	})
+} catch (error) {
+	//
+}
 
 const ZodAccountSettings = z.object({
-	email: z.string().email(),
+	email: z.string().email({
+		message: t('pages.account.settings.validation.email.invalid')
+	}),
 	firstName: z.string().min(2, {
 		message: t('pages.account.settings.validation.first_name.min', { min: 2 })
 	}),
@@ -37,7 +43,6 @@ const ZodAccountSettings = z.object({
 	address: z.string(),
 	place: z.string(),
 	country: z.string(),
-	// region not 'choose'
 	region: z.string().refine((value) => value !== 'choose', {
 		message: t('pages.account.settings.validation.region.required')
 	})
@@ -105,6 +110,10 @@ const onSubmit = handleSubmit((values) => {
 		})
 })
 
+const submitButtonDisabled = computed(() => {
+	return isSubmitting.value || Object.keys(errors.value).length > 0
+})
+
 definePageMeta({
 	layout: 'user'
 })
@@ -169,9 +178,10 @@ definePageMeta({
 							type="text"
 							:placeholder="$t('pages.account.settings.form.first_name')"
 							autocomplete="given-name"
+							:required="true"
 						/>
 					</div>
-					<span v-if="errors.firstName" class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.firstName" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.firstName
 					}}</span>
 				</div>
@@ -188,9 +198,10 @@ definePageMeta({
 							type="text"
 							:placeholder="$t('pages.account.settings.form.last_name')"
 							autocomplete="family-name"
+							:required="true"
 						/>
 					</div>
-					<span v-if="errors.lastName" class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.lastName" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.lastName
 					}}</span>
 				</div>
@@ -209,7 +220,7 @@ definePageMeta({
 							autocomplete="tel"
 						/>
 					</div>
-					<span v-if="errors.phone" class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.phone" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.phone
 					}}</span>
 				</div>
@@ -228,7 +239,7 @@ definePageMeta({
 							autocomplete="address-level2"
 						/>
 					</div>
-					<span v-if="errors.city" class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.city" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.city
 					}}</span>
 				</div>
@@ -247,7 +258,7 @@ definePageMeta({
 							autocomplete="postal-code"
 						/>
 					</div>
-					<span v-if="errors.zipcode" class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.zipcode" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.zipcode
 					}}</span>
 				</div>
@@ -266,7 +277,7 @@ definePageMeta({
 							autocomplete="street-address"
 						/>
 					</div>
-					<span v-if="errors.address" class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.address" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.address
 					}}</span>
 				</div>
@@ -285,7 +296,7 @@ definePageMeta({
 							autocomplete="address-level3"
 						/>
 					</div>
-					<span v-if="errors.place" class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.place" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.place
 					}}</span>
 				</div>
@@ -302,7 +313,7 @@ definePageMeta({
 							@change="onCountryChange"
 						>
 							<option disabled value="choose">
-								{{ $t('pages.account.settings.form.choose.country') }}
+								{{ $t('common.choose') }}
 							</option>
 							<option
 								v-for="cntry in countries.results"
@@ -314,7 +325,7 @@ definePageMeta({
 							</option>
 						</select>
 					</div>
-					<span v-if="errors.country" class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.country" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.country
 					}}</span>
 				</div>
@@ -331,7 +342,7 @@ definePageMeta({
 							name="region"
 						>
 							<option disabled value="choose">
-								{{ $t('pages.account.settings.form.choose.region') }}
+								{{ $t('common.choose') }}
 							</option>
 							<option
 								v-for="rgn in regions.results"
@@ -343,7 +354,7 @@ definePageMeta({
 							</option>
 						</select>
 					</div>
-					<span v-if="errors.region" class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.region" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.region
 					}}</span>
 				</div>
@@ -351,8 +362,8 @@ definePageMeta({
 				<div class="grid items-end justify-end">
 					<button
 						type="submit"
-						class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-						:disabled="isSubmitting"
+						class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+						:disabled="submitButtonDisabled"
 						:aria-busy="isSubmitting"
 					>
 						{{ $t('pages.account.settings.form.submit') }}

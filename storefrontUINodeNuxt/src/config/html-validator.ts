@@ -1,5 +1,4 @@
-import { ModuleOptions as HtmlValidatorModuleOptions } from '@nuxtjs/html-validator'
-export const htmlValidator: HtmlValidatorModuleOptions = {
+export const htmlValidator = {
 	usePrettier: true,
 	logLevel: 'verbose',
 	failOnError: false,

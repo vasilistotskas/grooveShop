@@ -6,6 +6,10 @@ import { useReviewsStore } from '~/stores/product/reviews'
 import emptyIcon from '~icons/mdi/package-variant-remove'
 
 const props = defineProps({
+	productId: {
+		type: String,
+		required: true
+	},
 	reviewsAverage: {
 		type: Number,
 		required: false,
@@ -29,32 +33,25 @@ const { t } = useLang()
 const toast = useToast()
 const route = useRoute()
 
-const productId = route.params.id
 const routePaginationParams = ref<ReviewQuery>({
-	productId: String(productId),
+	productId: String(props.productId),
 	page: Number(route.query.page) || undefined,
-	ordering: route.query.ordering || undefined,
+	ordering: route.query.ordering || '-createdAt',
 	expand: 'true'
 })
 
 const reviewsStore = useReviewsStore()
 const { reviews, error, pending } = storeToRefs(reviewsStore)
-await reviewsStore.fetchReviews(routePaginationParams.value)
+try {
+	await reviewsStore.fetchReviews(routePaginationParams.value)
+} catch (error) {
+	//
+}
 
 const entityOrdering: EntityOrdering<ReviewOrderingField> = [
 	{
 		value: 'id',
 		label: t('components.product.reviews.ordering.id'),
-		options: ['ascending', 'descending']
-	},
-	{
-		value: 'userId',
-		label: t('components.product.reviews.ordering.user_id'),
-		options: ['ascending', 'descending']
-	},
-	{
-		value: 'productId',
-		label: t('components.product.reviews.ordering.product_id'),
 		options: ['ascending', 'descending']
 	},
 	{
@@ -108,7 +105,7 @@ const ordering = computed(() => {
 		<div class="reviews_list__body">
 			<div class="reviews_list__items">
 				<LoadingSkeleton
-					v-if="pending && !error"
+					v-if="pending && !error && !reviews?.results.length"
 					:card-height="'130px'"
 					:class="
 						pending ? 'grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4' : 'hidden'

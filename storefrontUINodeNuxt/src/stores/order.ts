@@ -35,7 +35,6 @@ export const useOrderStore = defineStore({
 	},
 	actions: {
 		async fetchOrders({ page, ordering, userId }: OrderQuery): Promise<void> {
-			this.pending = true
 			const {
 				data: orders,
 				error,
@@ -61,7 +60,6 @@ export const useOrderStore = defineStore({
 			this.pending = pending.value
 		},
 		async fetchOrder(id: string | string[] | number): Promise<void> {
-			this.pending = true
 			const {
 				data: order,
 				error,
@@ -82,7 +80,6 @@ export const useOrderStore = defineStore({
 			this.pending = pending.value
 		},
 		async createOrder(body: OrderCreateRequest): Promise<void> {
-			this.pending = true
 			const {
 				data: order,
 				error,

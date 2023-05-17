@@ -5,10 +5,15 @@ const config = useRuntimeConfig()
 const route = useRoute()
 const { t } = useLang()
 
-const categoryId = route.params.id
+const categoryId = 'id' in route.params ? route.params.id : ''
 const { category, pending, error } = storeToRefs(useCategoryStore())
 const { fetchCategory } = useCategoryStore()
-fetchCategory(categoryId)
+
+try {
+	await fetchCategory(categoryId)
+} catch (e) {
+	//
+}
 
 definePageMeta({
 	layout: 'page'

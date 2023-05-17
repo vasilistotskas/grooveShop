@@ -1,4 +1,3 @@
-import { ModuleOptions as EslintModuleOptions } from '@nuxtjs/eslint-module'
-export const eslint: EslintModuleOptions = {
+export const eslint = {
 	/* module options */
 }

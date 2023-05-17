@@ -37,7 +37,7 @@ const ordering = computed(() => {
 
 const routePaginationParams = ref<ReviewQuery>({
 	page: Number(route.query.page) || undefined,
-	ordering: route.query.ordering || undefined,
+	ordering: route.query.ordering || '-createdAt',
 	userId: String(account.value?.id),
 	expand: 'true'
 })
@@ -60,7 +60,7 @@ watch(
 	() => {
 		bus.emit('userReviews', {
 			page: Number(route.query.page) || undefined,
-			ordering: route.query.ordering || undefined,
+			ordering: route.query.ordering || '-createdAt',
 			userId: String(account.value?.id),
 			expand: 'true'
 		})
@@ -78,9 +78,9 @@ definePageMeta({
 			<PageTitle :text="$t('pages.account.reviews.title')" />
 		</PageHeader>
 		<PageBody>
-			<Error v-if="error" :code="error.statusCode" />
+			<Error v-if="error" :code="error.statusCode" :error="error" />
 			<LoadingSkeleton
-				v-if="pending && !error"
+				v-else-if="pending && !reviews.results.length"
 				:card-height="'195px'"
 				:class="pending ? 'block' : 'hidden'"
 				:loading="pending"

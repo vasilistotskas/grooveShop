@@ -8,7 +8,7 @@
 		"strict": true,
 		"skipLibCheck": true,
 		"esModuleInterop": true,
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"types": [
 			"@vueuse/nuxt",
 			"@nuxt/types",

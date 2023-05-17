@@ -11,7 +11,7 @@ const store = useProductStore()
 const routePaginationParams = ref<ProductQuery>({
 	limit: Number(route.query.limit) || undefined,
 	offset: Number(route.query.offset) || undefined,
-	ordering: route.query.ordering || undefined
+	ordering: route.query.ordering || '-createdAt'
 })
 
 const entityOrdering: EntityOrdering<ProductOrderingField> = [
@@ -67,7 +67,7 @@ watch(
 		bus.emit('products', {
 			limit: Number(route.query.limit) || undefined,
 			offset: Number(route.query.offset) || undefined,
-			ordering: route.query.ordering || undefined
+			ordering: route.query.ordering || '-createdAt'
 		})
 	}
 )
@@ -75,9 +75,9 @@ watch(
 
 <template>
 	<div class="products-list grid gap-4">
-		<Error v-if="error" :code="error.statusCode" />
+		<Error v-if="error" :code="error.statusCode" :error="error" />
 		<LoadingSkeleton
-			v-if="pending && !error"
+			v-else-if="pending && !products.results.length"
 			:card-height="'512px'"
 			:class="pending ? 'block' : 'hidden'"
 			:loading="pending"

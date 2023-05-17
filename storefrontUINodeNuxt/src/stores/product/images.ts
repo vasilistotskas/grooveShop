@@ -33,7 +33,6 @@ export const useImagesStore = defineStore({
 	},
 	actions: {
 		async fetchImages({ product }: ImageQuery): Promise<void> {
-			this.pending = true
 			const {
 				data: images,
 				error,

@@ -33,7 +33,6 @@ export const useFavouriteStore = defineStore({
 			userId,
 			expand
 		}: FavouriteQuery): Promise<void> {
-			this.pending = true
 			const {
 				data: favourites,
 				error,

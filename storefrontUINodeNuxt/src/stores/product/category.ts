@@ -36,7 +36,6 @@ export const useCategoryStore = defineStore({
 	},
 	actions: {
 		async fetchCategories({ offset, limit, ordering }: ProductQuery): Promise<void> {
-			this.pending = true
 			const {
 				data: categories,
 				error,
@@ -62,7 +61,6 @@ export const useCategoryStore = defineStore({
 			this.pending = pending.value
 		},
 		async fetchCategory(categoryId: string | string[]): Promise<void> {
-			this.pending = true
 			const {
 				data: category,
 				error,

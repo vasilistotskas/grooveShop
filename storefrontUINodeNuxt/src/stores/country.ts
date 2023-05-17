@@ -30,7 +30,6 @@ export const useCountryStore = defineStore({
 	}),
 	actions: {
 		async fetchCountries(params?: CountriesQuery) {
-			this.pending = true
 			const {
 				data: countries,
 				error,

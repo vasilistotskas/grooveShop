@@ -89,4 +89,13 @@ export type AddressPutRequest = z.infer<typeof ZodAddressPutRequest>
 
 export type AddressParams = z.infer<typeof ZodAddressParams>
 
-export type AddressOrderingField = 'createdAt'
+export type AddressOrderingField =
+	| 'id'
+	| 'user'
+	| 'country'
+	| 'zipcode'
+	| 'floor'
+	| 'locationType'
+	| 'isMain'
+	| 'createdAt'
+	| 'updatedAt'

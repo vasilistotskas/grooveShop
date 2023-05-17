@@ -36,7 +36,7 @@ const ordering = computed(() => {
 
 const routePaginationParams = ref<OrderQuery>({
 	page: Number(route.query.page) || undefined,
-	ordering: route.query.ordering || undefined,
+	ordering: route.query.ordering || '-createdAt',
 	userId: String(account.value?.id)
 })
 
@@ -59,7 +59,7 @@ watch(
 	() => {
 		bus.emit('userOrders', {
 			page: Number(route.query.page) || undefined,
-			ordering: route.query.ordering || undefined,
+			ordering: route.query.ordering || '-createdAt',
 			userId: String(account.value?.id)
 		})
 	}
@@ -79,9 +79,9 @@ useHead(() => ({
 			<PageTitle :text="$t('pages.account.orders.title')" />
 		</PageHeader>
 		<PageBody>
-			<Error v-if="error" :code="error.statusCode" />
+			<Error v-if="error" :code="error.statusCode" :error="error" />
 			<LoadingSkeleton
-				v-if="pending && !error"
+				v-else-if="pending && !orders.results.length"
 				:card-height="'195px'"
 				:class="pending ? 'block' : 'hidden'"
 				:loading="pending"

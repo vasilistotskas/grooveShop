@@ -38,6 +38,7 @@ $color-primary: #f0c14b;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	gap: 2rem;
 	&__average {
 		display: flex;
 		align-items: center;

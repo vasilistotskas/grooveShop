@@ -53,45 +53,45 @@ const {
 } = toRefs(props)
 
 const firstPageNumber = computed(() => 1)
-const lastPageNumber = computed(() => totalPages.value)
+const lastPageNumber = computed(() => totalPages?.value)
 const startPage = computed(() => {
-	if (currentPage.value === 1) {
+	if (currentPage?.value === 1) {
 		return 1
 	}
 	if (currentPage === totalPages) {
-		if (totalPages.value - maxVisibleButtons.value + 1 === 0) {
+		if (totalPages?.value - maxVisibleButtons?.value + 1 === 0) {
 			return 1
 		}
-		return totalPages.value - maxVisibleButtons.value + 1
+		return totalPages?.value - maxVisibleButtons?.value + 1
 	}
-	return currentPage.value - 1
+	return currentPage?.value - 1
 })
 
-const isInFirstPage = computed(() => currentPage.value === 1)
-const isInLastPage = computed(() => currentPage.value === totalPages.value)
+const isInFirstPage = computed(() => currentPage?.value === 1)
+const isInLastPage = computed(() => currentPage?.value === totalPages?.value)
 
 const shouldDisplayFirstPage = computed(() => {
-	return !isInFirstPage.value && currentPage.value > firstPageNumber.value + 1
+	return !isInFirstPage.value && currentPage?.value > firstPageNumber.value + 1
 })
 const shouldDisplayLastPage = computed(() => {
-	return !isInLastPage.value && currentPage.value < lastPageNumber.value - 1
+	return !isInLastPage.value && currentPage?.value < lastPageNumber.value - 1
 })
 const shouldDisplayPreviousTripleDots = computed(() => {
-	return currentPage.value > maxVisibleButtons.value
+	return currentPage?.value > maxVisibleButtons?.value
 })
 const shouldDisplayNextTripleDots = computed(() => {
-	return currentPage.value < totalPages.value - maxVisibleButtons.value + 1
+	return currentPage?.value < totalPages?.value - maxVisibleButtons?.value + 1
 })
 
 const pages = computed(() => {
 	const range = []
 	let lastPageNumber: number
 	if (totalPages < maxVisibleButtons) {
-		lastPageNumber = totalPages.value
+		lastPageNumber = totalPages?.value || 1
 	} else {
 		lastPageNumber = Math.min(
-			startPage.value + maxVisibleButtons.value - 1,
-			totalPages.value
+			startPage.value + maxVisibleButtons?.value - 1,
+			totalPages?.value || 1
 		)
 	}
 	const startPageNumber = isInLastPage.value ? startPage.value - 1 : startPage.value

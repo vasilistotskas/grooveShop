@@ -156,6 +156,11 @@ components:
     add_new:
       title: You can add a new address and use it on all your next purchases.
       button: Add
+    card:
+      delete:
+        success: Address deleted
+        error: Address not deleted
+        cant_delete_main: You can't delete your main address, please set another address as main and try again.
 pages:
   testing:
     nav: testing
@@ -386,6 +391,7 @@ pages:
       delete: Delete
       ordering:
         created_at: Created At
+        is_main: Main
       empty:
         title: Your addresses are empty
         description: You have not added any addresses yet.
@@ -441,6 +447,7 @@ pages:
           title: Main Address
           success: Main Address updated successfully
           error: Main Address update error
+          button: Set as Main Address
         form:
           title: Address
           first_name: First Name
@@ -504,6 +511,8 @@ common:
   mobile_phone: Mobile Phone
   notes: Notes
   back: Back
+  unknown:
+    error: Unknown error
   errors:
     unknown_internal_api_error: Unknown internal API error
   shop: Shop

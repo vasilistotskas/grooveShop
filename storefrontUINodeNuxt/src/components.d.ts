@@ -35,6 +35,7 @@ declare module '@vue/runtime-core' {
     'IconMdi:heart': typeof import('~icons/mdi/heart')['default']
     'IconMdi:heartOutline': typeof import('~icons/mdi/heart-outline')['default']
     'IconMdi:packageVariantClosed': typeof import('~icons/mdi/package-variant-closed')['default']
+    'IconMdi:star': typeof import('~icons/mdi/star')['default']
     'IconMdi:starOutline': typeof import('~icons/mdi/star-outline')['default']
     'IconUil:angleDown': typeof import('~icons/uil/angle-down')['default']
     'IconUil:apps': typeof import('~icons/uil/apps')['default']

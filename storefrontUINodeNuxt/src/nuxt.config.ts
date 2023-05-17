@@ -19,8 +19,9 @@ export default defineNuxtConfig({
 	},
 	experimental: {
 		componentIslands: true,
-		viewTransition: false,
-		renderJsonPayloads: true
+		viewTransition: true,
+		renderJsonPayloads: true,
+		typedPages: true
 	},
 	extends: ['nuxt-seo-kit'],
 	typescript: {
@@ -28,6 +29,7 @@ export default defineNuxtConfig({
 		typeCheck: true,
 		tsConfig: {
 			compilerOptions: {
+				moduleResolution: 'bundler',
 				types: ['unplugin-icons/types/vue']
 			}
 		}

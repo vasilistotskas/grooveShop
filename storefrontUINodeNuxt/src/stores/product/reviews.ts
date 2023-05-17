@@ -38,7 +38,6 @@ export const useReviewsStore = defineStore({
 	},
 	actions: {
 		async fetchReviews({ productId, userId, page, ordering, expand }: ReviewQuery) {
-			this.pending = true
 			const {
 				data: reviews,
 				error,
@@ -60,7 +59,6 @@ export const useReviewsStore = defineStore({
 			this.pending = pending.value
 		},
 		async fetchUserToProductReview({ productId, userId, expand }: ReviewQuery) {
-			this.pending = true
 			const {
 				data: review,
 				error,
@@ -86,7 +84,6 @@ export const useReviewsStore = defineStore({
 			this.pending = pending.value
 		},
 		async addReview(body: ReviewCreateRequest) {
-			this.pending = true
 			const {
 				data: review,
 				error,
@@ -111,7 +108,6 @@ export const useReviewsStore = defineStore({
 			this.pending = pending.value
 		},
 		async deleteReview(id: number) {
-			this.pending = true
 			const { error, pending } = await useFetch(`/api/product-reviews/${id}`, {
 				method: 'delete'
 			})
@@ -130,7 +126,6 @@ export const useReviewsStore = defineStore({
 			this.pending = pending.value
 		},
 		async updateReview(id: number, body: ReviewPutRequest) {
-			this.pending = true
 			const {
 				data: review,
 				error,

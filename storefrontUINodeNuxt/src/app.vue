@@ -8,15 +8,7 @@ AppSetup()
 const theme = useState<ITheme>('theme.current')
 const config = useRuntimeConfig()
 const route = useRoute()
-const {
-	t,
-	locale,
-	locales
-}: {
-	t: any
-	locale: any
-	locales: any
-} = useLang()
+const { t, locale, locales } = useLang()
 const cartStore = useCartStore()
 
 try {

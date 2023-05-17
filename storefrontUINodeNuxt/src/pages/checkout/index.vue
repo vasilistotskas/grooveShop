@@ -16,7 +16,11 @@ const { cart } = storeToRefs(cartStore)
 const { countries } = storeToRefs(countryStore)
 const { regions } = storeToRefs(regionStore)
 
-await countryStore.fetchCountries()
+try {
+	await countryStore.fetchCountries()
+} catch (error) {
+	//
+}
 
 const onCountryChange = (event: Event) => {
 	if (!(event.target instanceof HTMLSelectElement)) return
@@ -242,7 +246,7 @@ useServerSeoMeta({
 								@change="onCountryChange"
 							>
 								<option disabled value="choose">
-									{{ $t('pages.checkout.form.choose.country') }}
+									{{ $t('common.choose') }}
 								</option>
 								<option
 									v-for="cntry in countries.results"
@@ -270,7 +274,7 @@ useServerSeoMeta({
 								name="region"
 							>
 								<option disabled value="choose">
-									{{ $t('pages.checkout.form.choose.region') }}
+									{{ $t('common.choose') }}
 								</option>
 								<option
 									v-for="rgn in regions.results"

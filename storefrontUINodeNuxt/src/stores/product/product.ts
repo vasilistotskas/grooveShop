@@ -35,7 +35,6 @@ export const useProductStore = defineStore({
 	},
 	actions: {
 		async fetchProducts({ offset, limit, ordering }: ProductQuery): Promise<void> {
-			this.pending = true
 			const {
 				data: products,
 				error,
@@ -61,7 +60,6 @@ export const useProductStore = defineStore({
 			this.pending = pending.value
 		},
 		async fetchProduct(id: string | string[] | number): Promise<void> {
-			this.pending = true
 			const {
 				data: product,
 				error,
@@ -74,7 +72,6 @@ export const useProductStore = defineStore({
 			this.pending = pending.value
 		},
 		async createProduct(body: ProductCreateRequest): Promise<void> {
-			this.pending = true
 			const {
 				data: newProduct,
 				error,
@@ -96,7 +93,6 @@ export const useProductStore = defineStore({
 			this.pending = pending.value
 		},
 		async updateProductHits(id: string | string[]): Promise<void> {
-			this.pending = true
 			const { error, pending } = await useFetch(
 				`/api/product/${id}/update-product-hits`,
 				{

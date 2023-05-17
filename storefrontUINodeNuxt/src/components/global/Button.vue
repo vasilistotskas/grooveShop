@@ -95,6 +95,7 @@ const onClick = (event: MouseEvent) => {
 		:aria-label="text"
 		:to="localePath(to)"
 		:class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"
+		:title="text"
 	>
 		<slot>{{ text }}</slot>
 		<slot name="icon"></slot>
@@ -104,6 +105,7 @@ const onClick = (event: MouseEvent) => {
 		:type="type"
 		:class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"
 		:aria-label="text"
+		:title="text"
 		@click="onClick"
 	>
 		<slot>{{ text }}</slot>
@@ -115,12 +117,14 @@ const onClick = (event: MouseEvent) => {
 		:value="text"
 		:name="text"
 		:class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"
+		:title="text"
 	/>
 	<a
 		v-else
 		:class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"
 		:href="href"
 		:aria-label="text"
+		:title="text"
 		@click="onClick"
 	>
 		<slot>{{ text }}</slot>

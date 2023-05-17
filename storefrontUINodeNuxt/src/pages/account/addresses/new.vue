@@ -135,6 +135,10 @@ const onSubmit = handleSubmit(async (values) => {
 		})
 })
 
+const submitButtonDisabled = computed(() => {
+	return isSubmitting.value || Object.keys(errors.value).length > 0
+})
+
 definePageMeta({
 	layout: 'user'
 })
@@ -164,7 +168,7 @@ definePageMeta({
 				name="AddressEditForm"
 				@submit="onSubmit"
 			>
-				<div class="grid">
+				<div class="grid content-evenly items-start">
 					<label class="text-gray-700 dark:text-gray-200" for="title">{{
 						$t('pages.account.addresses.new.form.title')
 					}}</label>
@@ -180,11 +184,11 @@ definePageMeta({
 							:required="true"
 						/>
 					</div>
-					<span v-if="errors.title" class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.title" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.title
 					}}</span>
 				</div>
-				<div class="grid">
+				<div class="grid content-evenly items-start">
 					<label class="text-gray-700 dark:text-gray-200" for="firstName">{{
 						$t('pages.account.addresses.new.form.first_name')
 					}}</label>
@@ -200,11 +204,11 @@ definePageMeta({
 							:required="true"
 						/>
 					</div>
-					<span v-if="errors.firstName" class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.firstName" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.firstName
 					}}</span>
 				</div>
-				<div class="grid">
+				<div class="grid content-evenly items-start">
 					<label class="text-gray-700 dark:text-gray-200" for="lastName">{{
 						$t('pages.account.addresses.new.form.last_name')
 					}}</label>
@@ -220,11 +224,11 @@ definePageMeta({
 							:required="true"
 						/>
 					</div>
-					<span v-if="errors.lastName" class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.lastName" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.lastName
 					}}</span>
 				</div>
-				<div class="grid">
+				<div class="grid content-evenly items-start">
 					<label class="text-gray-700 dark:text-gray-200" for="street">{{
 						$t('pages.account.addresses.new.form.street')
 					}}</label>
@@ -240,11 +244,11 @@ definePageMeta({
 							:required="true"
 						/>
 					</div>
-					<span v-if="errors.street" class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.street" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.street
 					}}</span>
 				</div>
-				<div class="grid">
+				<div class="grid content-evenly items-start">
 					<label class="text-gray-700 dark:text-gray-200" for="streetNumber">{{
 						$t('pages.account.addresses.new.form.street_number')
 					}}</label>
@@ -262,11 +266,11 @@ definePageMeta({
 					</div>
 					<span
 						v-if="errors.streetNumber"
-						class="text-sm text-red-700 px-4 py-3 relative"
+						class="text-sm text-red-600 px-4 py-3 relative"
 						>{{ errors.streetNumber }}</span
 					>
 				</div>
-				<div class="grid">
+				<div class="grid content-evenly items-start">
 					<label class="text-gray-700 dark:text-gray-200" for="city">{{
 						$t('pages.account.addresses.new.form.city')
 					}}</label>
@@ -282,11 +286,11 @@ definePageMeta({
 							:required="true"
 						/>
 					</div>
-					<span v-if="errors.city" class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.city" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.city
 					}}</span>
 				</div>
-				<div class="grid">
+				<div class="grid content-evenly items-start">
 					<label class="text-gray-700 dark:text-gray-200" for="zipcode">{{
 						$t('pages.account.addresses.new.form.zipcode')
 					}}</label>
@@ -302,11 +306,11 @@ definePageMeta({
 							:required="true"
 						/>
 					</div>
-					<span v-if="errors.zipcode" class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.zipcode" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.zipcode
 					}}</span>
 				</div>
-				<div class="grid">
+				<div class="grid content-evenly items-start">
 					<label class="text-gray-700 dark:text-gray-200" for="phone">{{
 						$t('pages.account.addresses.new.form.phone')
 					}}</label>
@@ -321,11 +325,11 @@ definePageMeta({
 							autocomplete="tel"
 						/>
 					</div>
-					<span v-if="errors.phone" class="text-sm text-red-700 px-4 py-3 relative">{{
+					<span v-if="errors.phone" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.phone
 					}}</span>
 				</div>
-				<div class="grid">
+				<div class="grid content-evenly items-start">
 					<label class="text-gray-700 dark:text-gray-200" for="mobilePhone">{{
 						$t('pages.account.addresses.new.form.mobile_phone')
 					}}</label>
@@ -342,12 +346,12 @@ definePageMeta({
 					</div>
 					<span
 						v-if="errors.mobilePhone"
-						class="text-sm text-red-700 px-4 py-3 relative"
+						class="text-sm text-red-600 px-4 py-3 relative"
 						>{{ errors.mobilePhone }}</span
 					>
 				</div>
 
-				<div class="grid gap-4">
+				<div class="grid content-evenly items-start gap-4">
 					<div class="grid">
 						<label class="text-gray-700 dark:text-gray-200" for="floor">{{
 							$t('pages.account.addresses.new.form.floor')
@@ -370,7 +374,7 @@ definePageMeta({
 								{{ floorChoice }}
 							</option>
 						</select>
-						<span v-if="errors.floor" class="text-sm text-red-700 px-4 py-3 relative">{{
+						<span v-if="errors.floor" class="text-sm text-red-600 px-4 py-3 relative">{{
 							errors.floor
 						}}</span>
 					</div>
@@ -398,13 +402,13 @@ definePageMeta({
 						</select>
 						<span
 							v-if="errors.locationType"
-							class="text-sm text-red-700 px-4 py-3 relative"
+							class="text-sm text-red-600 px-4 py-3 relative"
 							>{{ errors.locationType }}</span
 						>
 					</div>
 				</div>
 
-				<div class="grid gap-4">
+				<div class="grid content-evenly items-start gap-4">
 					<div class="grid">
 						<label class="text-gray-700 dark:text-gray-200" for="country">{{
 							$t('pages.account.addresses.new.form.country')
@@ -432,7 +436,7 @@ definePageMeta({
 								</option>
 							</select>
 						</div>
-						<span v-if="errors.country" class="text-sm text-red-700 px-4 py-3 relative">{{
+						<span v-if="errors.country" class="text-sm text-red-600 px-4 py-3 relative">{{
 							errors.country
 						}}</span>
 					</div>
@@ -463,13 +467,13 @@ definePageMeta({
 								</option>
 							</select>
 						</div>
-						<span v-if="errors.region" class="text-sm text-red-700 px-4 py-3 relative">{{
+						<span v-if="errors.region" class="text-sm text-red-600 px-4 py-3 relative">{{
 							errors.region
 						}}</span>
 					</div>
 				</div>
 
-				<div class="grid">
+				<div class="grid content-evenly items-start">
 					<label class="text-gray-700 dark:text-gray-200" for="notes">{{
 						$t('pages.account.addresses.new.form.notes')
 					}}</label>
@@ -489,8 +493,8 @@ definePageMeta({
 				<div class="grid items-end justify-end col-start-3">
 					<button
 						type="submit"
-						class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-						:disabled="isSubmitting"
+						class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed"
+						:disabled="submitButtonDisabled"
 						:aria-busy="isSubmitting"
 					>
 						{{ $t('pages.account.addresses.new.form.submit') }}

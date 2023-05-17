@@ -1,10 +1,7 @@
 <script lang="ts" setup>
-import { Ref } from 'vue'
-import { FetchError } from 'ofetch/dist/node'
 import { useCartStore } from '~/stores/cart'
 import { GlobalEvents } from '~/events/global'
 import emptyIcon from '~icons/mdi/package-variant-remove'
-import { Cart } from '~/zod/cart/cart'
 
 const { t } = useLang()
 const config = useRuntimeConfig()
@@ -79,9 +76,9 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 			</h2>
 		</div>
 		<PageBody>
-			<Error v-if="error" :code="error.statusCode" />
+			<Error v-if="error" :code="error.statusCode" :error="error" />
 			<LoadingSkeleton
-				v-if="pending && !error"
+				v-if="pending"
 				:card-height="'130px'"
 				:class="
 					pending ? 'grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4' : 'hidden'

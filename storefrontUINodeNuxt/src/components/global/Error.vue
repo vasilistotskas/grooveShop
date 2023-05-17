@@ -1,9 +1,15 @@
 <script lang="ts" setup>
-// components
-const PageWrapper = resolveComponent('PageWrapper')
+import { PropType } from 'vue'
+import { FetchError } from 'ofetch'
 
-// compiler macro
+const PageWrapper = resolveComponent('PageWrapper') as string
+
 const props = defineProps({
+	error: {
+		type: Object as PropType<FetchError | null>,
+		required: false,
+		default: null
+	},
 	code: {
 		type: Number,
 		default: 400
@@ -14,24 +20,8 @@ const props = defineProps({
 	}
 })
 
-const { code, wrap } = toRefs(props)
+const { code, wrap, error } = toRefs(props)
 
-// computed
-const errorsMap: {
-	[key: string]: string
-} = {
-	'400': 'Bad Request',
-	'401': 'Unauthorized',
-	'403': 'Forbidden',
-	'404': 'Not Found'
-}
-const error = computed(() => {
-	const { code } = props
-	return {
-		code,
-		message: errorsMap[code.toString()] || 'Unknown Error'
-	}
-})
 const divTag = ref('div')
 </script>
 
@@ -41,17 +31,26 @@ const divTag = ref('div')
 		:class="
 			wrap
 				? 'flex flex-col items-center justify-center'
-				: 'grid items-center justify-center gap-4'
+				: 'grid items-center justify-center gap-4 bg-gray-100 dark:bg-slate-800 p-4 md:p-8 rounded-lg'
 		"
 	>
-		<h1 class="text-center mb-6 leading-3 text-gray-700 dark:text-gray-200">
+		<h1 v-if="!error">
+			{{ $t('common.unknown.error') }}
+		</h1>
+		<h1 v-else class="grid gap-4 text-center leading-3 text-gray-700 dark:text-gray-200">
 			<span class="text-gray-700 dark:text-gray-200 font-bold text-8xl block">{{
-				error.code
+				error.statusCode
 			}}</span>
 			<span class="text-gray-700 dark:text-gray-200 block italic">{{
-				error.message
+				error.statusMessage
 			}}</span>
 		</h1>
-		<Button text="Home" to="/" size="sm" />
+		<h2
+			v-if="error?.data.detail"
+			class="text-center text-sm text-gray-700 dark:text-gray-200"
+		>
+			( {{ error?.data.detail }} )
+		</h2>
+		<Button class="mt-4" text="Home" to="/" size="sm" />
 	</Component>
 </template>
