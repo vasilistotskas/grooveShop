@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.50.0 (2023-05-17)
+### Feature
+* **Nuxt:** Versions bumb and general code improvements ([`6eadf34`](https://github.com/vasilistotskas/grooveShop/commit/6eadf344ad9e8939fdeb24159fda4a591987a298))
+
 ## v0.49.0 (2023-05-17)
 ### Feature
 * **Django:** Custom API filter PascalSnakeCaseOrderingFilter and usage ([`145fe4e`](https://github.com/vasilistotskas/grooveShop/commit/145fe4e2ad36b35dbb00752d0fbcb59a7b56cdc1))
