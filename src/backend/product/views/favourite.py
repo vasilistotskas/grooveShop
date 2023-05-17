@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 from backend.core.api.views import BaseExpandView
+from backend.core.filters.custom_filters import PascalSnakeCaseOrderingFilter
 from backend.product.models.favourite import ProductFavourite
 from backend.product.paginators.favourite import ProductFavouritePagination
 from backend.product.serializers.favourite import ProductFavouriteSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -17,7 +17,7 @@ class ProductFavouriteViewSet(BaseExpandView, ModelViewSet):
     queryset = ProductFavourite.objects.all()
     serializer_class = ProductFavouriteSerializer
     pagination_class = ProductFavouritePagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     filterset_fields = ["id", "user_id", "product_id"]
     ordering_fields = [
         "id",

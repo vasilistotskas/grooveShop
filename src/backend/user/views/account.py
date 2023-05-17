@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+from backend.core.filters.custom_filters import PascalSnakeCaseOrderingFilter
 from backend.user.paginators.account import UserAccountPagination
 from backend.user.serializers.account import UserAccountSerializer
 from django.contrib.auth import get_user_model
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
@@ -20,7 +20,7 @@ class UserAccountViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserAccountSerializer
     pagination_class = UserAccountPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     filterset_fields = ["id", "email"]
     ordering_fields = ["id", "email"]
     ordering = ["id"]

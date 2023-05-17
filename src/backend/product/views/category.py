@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+from backend.core.filters.custom_filters import PascalSnakeCaseOrderingFilter
 from backend.product.models.category import ProductCategory
 from backend.product.paginators.category import ProductCategoryPagination
 from backend.product.serializers.category import ProductCategorySerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -16,7 +16,7 @@ class ProductCategoryViewSet(ModelViewSet):
     queryset = ProductCategory.objects.all()
     serializer_class = ProductCategorySerializer
     pagination_class = ProductCategoryPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     filterset_fields = ["id", "name"]
     ordering_fields = [
         "id",

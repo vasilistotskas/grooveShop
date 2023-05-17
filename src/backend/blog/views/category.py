@@ -3,9 +3,9 @@ from __future__ import annotations
 from backend.blog.models.category import BlogCategory
 from backend.blog.paginators.category import BlogCategoryPagination
 from backend.blog.serializers.category import BlogCategorySerializer
+from backend.core.filters.custom_filters import PascalSnakeCaseOrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -16,7 +16,7 @@ class BlogCategoryViewSet(ModelViewSet):
     queryset = BlogCategory.objects.all()
     serializer_class = BlogCategorySerializer
     pagination_class = BlogCategoryPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     filterset_fields = ["id", "name"]
     ordering_fields = ["id", "name", "created_at"]
     ordering = ["id"]

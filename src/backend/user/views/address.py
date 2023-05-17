@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 from backend.core.api.views import BaseExpandView
+from backend.core.filters.custom_filters import PascalSnakeCaseOrderingFilter
 from backend.user.models import UserAddress
 from backend.user.paginators.address import UserAddressPagination
 from backend.user.serializers.address import UserAddressSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
@@ -20,7 +20,7 @@ class UserAddressViewSet(BaseExpandView, ModelViewSet):
     queryset = UserAddress.objects.all()
     serializer_class = UserAddressSerializer
     pagination_class = UserAddressPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     filterset_fields = [
         "id",
         "user",
@@ -36,15 +36,14 @@ class UserAddressViewSet(BaseExpandView, ModelViewSet):
         "id",
         "user",
         "country",
-        "city",
-        "street",
         "zipcode",
         "floor",
         "location_type",
         "is_main",
         "created_at",
+        "updated_at",
     ]
-    ordering = ["id"]
+    ordering = ["-created_at"]
     search_fields = ["id", "user", "country", "city", "street", "zipcode"]
 
     def list(self, request, *args, **kwargs) -> Response:
@@ -95,6 +94,11 @@ class UserAddressViewSet(BaseExpandView, ModelViewSet):
 
     def destroy(self, request, pk=None, *args, **kwargs) -> Response:
         address = get_object_or_404(UserAddress, pk=pk)
+        if address.is_main:
+            return Response(
+                {"error": "Cannot delete main address"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         address.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

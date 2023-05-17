@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 from backend.core.api.views import BaseExpandView
+from backend.core.filters.custom_filters import PascalSnakeCaseOrderingFilter
 from backend.region.models import Region
 from backend.region.paginators import RegionPagination
 from backend.region.serializers import RegionSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -18,7 +18,7 @@ class RegionViewSet(BaseExpandView, ModelViewSet):
     queryset = Region.objects.all()
     serializer_class = RegionSerializer
     pagination_class = RegionPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     filterset_fields = ["name", "alpha", "alpha_2"]
     ordering_fields = ["name", "created_at"]
     ordering = ["-created_at"]

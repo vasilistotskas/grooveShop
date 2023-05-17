@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+from backend.core.filters.custom_filters import PascalSnakeCaseOrderingFilter
 from backend.tip.models import Tip
 from backend.tip.paginators import TipPagination
 from backend.tip.serializers import TipSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -16,7 +16,7 @@ class TipViewSet(ModelViewSet):
     queryset = Tip.objects.all()
     serializer_class = TipSerializer
     pagination_class = TipPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     filterset_fields = ["id", "title", "kind", "active"]
     ordering_fields = ["id", "title", "kind", "active", "created_at"]
     ordering = ["id"]

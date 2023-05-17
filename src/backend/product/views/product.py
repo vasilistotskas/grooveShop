@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from backend.core.api.views import BaseExpandView
+from backend.core.filters.custom_filters import PascalSnakeCaseOrderingFilter
 from backend.product.filters.product import ProductFilter
 from backend.product.models.product import Product
 from backend.product.models.product import ProductImages
@@ -11,7 +12,6 @@ from backend.product.serializers.product import ProductSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -22,7 +22,7 @@ class ProductViewSet(BaseExpandView, ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     pagination_class = ProductPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     filterset_class = ProductFilter
     ordering_fields = [
         "name",
@@ -94,7 +94,7 @@ class ProductImagesViewSet(BaseExpandView, ModelViewSet):
     queryset = ProductImages.objects.all()
     serializer_class = ProductImagesSerializer
     pagination_class = ProductImagesPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     filterset_fields = ["id", "product", "is_main"]
     ordering_fields = ["created_at", "is_main"]
     ordering = ["-is_main", "-created_at"]

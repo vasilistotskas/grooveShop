@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+from backend.core.filters.custom_filters import PascalSnakeCaseOrderingFilter
 from backend.country.models import Country
 from backend.country.paginators import CountryPagination
 from backend.country.serializers import CountrySerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -16,7 +16,7 @@ class CountryViewSet(ModelViewSet):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
     pagination_class = CountryPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     filterset_fields = ["alpha_2", "alpha_3", "name", "iso_cc", "phone_code"]
     ordering_fields = ["alpha_2", "name", "-created_at"]
     ordering = ["-created_at"]

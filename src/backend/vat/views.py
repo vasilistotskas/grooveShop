@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+from backend.core.filters.custom_filters import PascalSnakeCaseOrderingFilter
 from backend.vat.models import Vat
 from backend.vat.paginators import VatPagination
 from backend.vat.serializers import VatSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -16,7 +16,7 @@ class VatViewSet(ModelViewSet):
     queryset = Vat.objects.all()
     serializer_class = VatSerializer
     pagination_class = VatPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     filterset_fields = ["id", "value"]
     ordering_fields = ["id", "value", "created_at"]
     ordering = ["id"]

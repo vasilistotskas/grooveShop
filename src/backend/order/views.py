@@ -1,3 +1,4 @@
+from backend.core.filters.custom_filters import PascalSnakeCaseOrderingFilter
 from backend.order.enum.pay_way_enum import PayWayEnum
 from backend.order.models import Order
 from backend.order.paginators import OrderListPagination
@@ -6,7 +7,6 @@ from backend.pay_way.models import PayWay
 from django.contrib.auth import get_user_model
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -75,7 +75,7 @@ class OrderViewSet(ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     pagination_class = OrderListPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     ordering_fields = ["created_at", "status"]
     filterset_fields = ["user_id", "status"]
     ordering = ["-created_at"]

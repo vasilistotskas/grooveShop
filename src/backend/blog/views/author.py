@@ -4,9 +4,9 @@ from backend.blog.models.author import BlogAuthor
 from backend.blog.paginators.author import BlogAuthorPagination
 from backend.blog.serializers.author import BlogAuthorSerializer
 from backend.core.api.views import BaseExpandView
+from backend.core.filters.custom_filters import PascalSnakeCaseOrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -17,7 +17,7 @@ class BlogAuthorViewSet(BaseExpandView, ModelViewSet):
     queryset = BlogAuthor.objects.all()
     serializer_class = BlogAuthorSerializer
     pagination_class = BlogAuthorPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     filterset_fields = ["id", "user"]
     ordering_fields = ["id", "user", "created_at"]
     ordering = ["id"]

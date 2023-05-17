@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from backend.core.api.views import BaseExpandView
+from backend.core.filters.custom_filters import PascalSnakeCaseOrderingFilter
 from backend.slider.models import Slide
 from backend.slider.models import Slider
 from backend.slider.paginators import SlidePagination
@@ -9,7 +10,6 @@ from backend.slider.serializers import SliderSerializer
 from backend.slider.serializers import SlideSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -20,7 +20,7 @@ class SliderViewSet(ModelViewSet):
     queryset = Slider.objects.all()
     serializer_class = SliderSerializer
     pagination_class = SliderPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     filterset_fields = ["id", "name"]
     ordering_fields = ["id", "name", "created_at"]
     ordering = ["id"]
@@ -73,7 +73,7 @@ class SlideViewSet(BaseExpandView, ModelViewSet):
     queryset = Slide.objects.all()
     serializer_class = SlideSerializer
     pagination_class = SlidePagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     filterset_fields = ["id", "slider", "title"]
     ordering_fields = ["id", "slider", "order_position", "created_at"]
     ordering = ["id"]

@@ -4,9 +4,9 @@ from backend.blog.models.comment import BlogComment
 from backend.blog.paginators.comment import BlogCommentPagination
 from backend.blog.serializers.comment import BlogCommentSerializer
 from backend.core.api.views import BaseExpandView
+from backend.core.filters.custom_filters import PascalSnakeCaseOrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -17,7 +17,7 @@ class BlogCommentViewSet(BaseExpandView, ModelViewSet):
     queryset = BlogComment.objects.all()
     serializer_class = BlogCommentSerializer
     pagination_class = BlogCommentPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     filterset_fields = ["id", "user", "post"]
     ordering_fields = ["id", "user", "post", "created_at"]
     ordering = ["id"]

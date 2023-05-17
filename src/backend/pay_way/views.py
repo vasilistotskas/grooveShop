@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+from backend.core.filters.custom_filters import PascalSnakeCaseOrderingFilter
 from backend.pay_way.models import PayWay
 from backend.pay_way.paginators import PayWayPagination
 from backend.pay_way.serializers import PayWaySerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
-from rest_framework.filters import OrderingFilter
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -16,7 +16,7 @@ class PayWayViewSet(ModelViewSet):
     queryset = PayWay.objects.all()
     serializer_class = PayWaySerializer
     pagination_class = PayWayPagination
-    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filter_backends = [DjangoFilterBackend, PascalSnakeCaseOrderingFilter, SearchFilter]
     filterset_fields = ["name", "active", "cost", "free_for_order_amount"]
     ordering_fields = ["name", "cost", "free_for_order_amount", "created_at"]
     ordering = ["-created_at"]
