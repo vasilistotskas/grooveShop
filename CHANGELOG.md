@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.49.0 (2023-05-17)
+### Feature
+* **Django:** Custom API filter PascalSnakeCaseOrderingFilter and usage ([`145fe4e`](https://github.com/vasilistotskas/grooveShop/commit/145fe4e2ad36b35dbb00752d0fbcb59a7b56cdc1))
+
 ## v0.48.0 (2023-05-16)
 ### Feature
 * **Nuxt:** User Addresses list , create and edit pages implemented ([`42e26fa`](https://github.com/vasilistotskas/grooveShop/commit/42e26fa1a762d8a8a82124b2af3767c7f2ad83c3))
