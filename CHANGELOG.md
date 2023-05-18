@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.51.0 (2023-05-18)
+### Feature
+* **Nuxt:** Sweetaler2 plugin and composable ([`c8815bc`](https://github.com/vasilistotskas/grooveShop/commit/c8815bc3f9e0739c5e23ffd539d91c7836f50147))
+
 ## v0.50.0 (2023-05-17)
 ### Feature
 * **Nuxt:** Versions bumb and general code improvements ([`6eadf34`](https://github.com/vasilistotskas/grooveShop/commit/6eadf344ad9e8939fdeb24159fda4a591987a298))
