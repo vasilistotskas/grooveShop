@@ -107,7 +107,7 @@ components:
       write_review: eine rezension schreiben
       edit_review: rezension bearbeiten
       update_review: update-überprüfung
-      delete_review: rezension löschen
+      delete_review: bewertung löschen
       must_be_logged_in: sie müssen angemeldet sein, um eine bewertung schreiben zu können
       write_review_for_product: schreiben sie eine bewertung für produkt %{product}
       confirm_delete: sind sie sicher, dass sie diese bewertung löschen möchten?
@@ -171,6 +171,13 @@ components:
         sie können eine neue adresse hinzufügen und diese für alle ihre nächsten
         einkäufe verwenden.
       button: hinzufügen
+    card:
+      delete:
+        success: adresse gelöscht
+        error: adresse nicht gelöscht
+        cant_delete_main: >-
+          sie können ihre hauptadresse nicht löschen. legen sie bitte eine
+          andere adresse als hauptadresse fest und versuchen sie es erneut.
 pages:
   '404':
     title: seite nicht gefunden
@@ -411,6 +418,7 @@ pages:
       delete: löschen
       ordering:
         created_at: hergestellt in
+        is_main: hauptsächlich
       empty:
         title: ihre adressen sind leer
         description: sie haben noch keine adressen hinzugefügt.
@@ -466,6 +474,7 @@ pages:
           title: hauptadresse
           success: hauptadresse erfolgreich aktualisiert
           error: fehler bei der aktualisierung der hauptadresse
+          button: als hauptadresse festlegen
         form:
           title: adresse
           first_name: vorname
@@ -529,6 +538,8 @@ common:
   mobile_phone: mobiltelefon
   notes: anmerkungen
   back: zurück
+  unknown:
+    error: unbekannter fehler
   errors:
     unknown_internal_api_error: unbekannter interner api-fehler
   shop: geschäft
@@ -561,3 +572,33 @@ routes:
   reviews: rezensionen
   settings: einstellungen
   help: hilfe
+swal:
+  default:
+    warning:
+      title: bist du dir sicher?
+      text: sie können dies nicht rückgängig machen!
+      confirm_button_text: ja, löschen sie es!
+      cancel_button_text: stornieren
+    error:
+      title: fehler
+      text: etwas ist schief gelaufen!
+      confirm_button_text: ok
+      cancel_button_text: stornieren
+    success:
+      title: erfolg
+      text: operation erfolgreich abgeschlossen!
+      confirm_button_text: ok
+      cancel_button_text: stornieren
+    info:
+      title: die info
+      text: die info
+      confirm_button_text: ok
+      cancel_button_text: stornieren
+    question:
+      title: frage
+      text: frage
+      confirm_button_text: ok
+      cancel_button_text: stornieren
+  delete_address:
+    title: adresse löschen
+    text: sind sie sicher, dass sie diese adresse löschen möchten?

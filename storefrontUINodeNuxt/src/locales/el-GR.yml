@@ -171,18 +171,25 @@ components:
         μπορείτε να προσθέσετε μια νέα διεύθυνση και να τη χρησιμοποιήσετε σε
         όλες τις επόμενες αγορές σας.
       button: προσθήκη
+    card:
+      delete:
+        success: η διεύθυνση διαγράφηκε
+        error: η διεύθυνση δεν διαγράφηκε
+        cant_delete_main: >-
+          δεν μπορείτε να διαγράψετε την κύρια διεύθυνσή σας, ορίστε μια άλλη
+          διεύθυνση ως κύρια και δοκιμάστε ξανά.
 pages:
   '404':
     title: η σελίδα δεν βρέθηκε
     description: η σελίδα δεν βρέθηκε
   testing:
-    nav: δοκιμές
-    title: δοκιμές
+    nav: δοκιμή
+    title: δοκιμή
     index:
-      nav: δοκιμές
-      title: δοκιμές
+      nav: δοκιμή
+      title: δοκιμή
       description: αυτή είναι μια δοκιμαστική σελίδα
-      keywords: δοκιμές
+      keywords: δοκιμή
     blank:
       nav: κενό
       title: κενή σελίδα
@@ -190,7 +197,7 @@ pages:
       just_blank_page_with_title: απλά κενή σελίδα με τίτλο
     test:
       nav: δοκιμή
-      title: δοκιμές
+      title: δοκιμή
       description: αυτή είναι μια δοκιμαστική σελίδα
       counter: μετρητής
       increment: αύξηση
@@ -368,7 +375,7 @@ pages:
       keywords: ρυθμίσεις
       updated: οι ρυθμίσεις ενημερώθηκαν
       update_error: σφάλμα ενημέρωσης ρυθμίσεων
-      deleted: ρυθμίσεις το στοιχείο διαγράφηκε
+      deleted: το στοιχείο ρυθμίσεων διαγράφηκε
       delete_error: σφάλμα διαγραφής στοιχείου ρυθμίσεων
       validation:
         email:
@@ -409,6 +416,7 @@ pages:
       delete: διαγράφω
       ordering:
         created_at: δημιουργήθηκε στο
+        is_main: κύριος
       empty:
         title: οι διευθύνσεις σας είναι κενές
         description: δεν έχετε προσθέσει ακόμη διευθύνσεις.
@@ -466,6 +474,7 @@ pages:
           title: κύρια διεύθυνση
           success: η κύρια διεύθυνση ενημερώθηκε με επιτυχία
           error: σφάλμα ενημέρωσης κύριας διεύθυνσης
+          button: ορισμός ως κύρια διεύθυνση
         form:
           title: διεύθυνση
           first_name: ονομα
@@ -531,6 +540,8 @@ common:
   mobile_phone: κινητό τηλέφωνο
   notes: σημειώσεις
   back: πίσω
+  unknown:
+    error: αγνωστο σφάλμα
   errors:
     unknown_internal_api_error: άγνωστο εσωτερικό σφάλμα api
   shop: κατάστημα
@@ -563,3 +574,33 @@ routes:
   reviews: κριτικές
   settings: ρυθμίσεις
   help: βοήθεια
+swal:
+  default:
+    warning:
+      title: είσαι σίγουρος?
+      text: δεν θα μπορείτε να το επαναφέρετε!
+      confirm_button_text: ναι, διαγράψτε το!
+      cancel_button_text: ματαίωση
+    error:
+      title: λάθος
+      text: κάτι πήγε στραβά!
+      confirm_button_text: εντάξει
+      cancel_button_text: ματαίωση
+    success:
+      title: επιτυχία
+      text: η λειτουργία ολοκληρώθηκε με επιτυχία!
+      confirm_button_text: εντάξει
+      cancel_button_text: ματαίωση
+    info:
+      title: πληροφορίες
+      text: πληροφορίες
+      confirm_button_text: εντάξει
+      cancel_button_text: ματαίωση
+    question:
+      title: ερώτηση
+      text: ερώτηση
+      confirm_button_text: εντάξει
+      cancel_button_text: ματαίωση
+  delete_address:
+    title: διαγραφή διεύθυνσης
+    text: είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν τη διεύθυνση;

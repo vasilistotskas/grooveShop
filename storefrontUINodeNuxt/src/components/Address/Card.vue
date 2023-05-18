@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
-import { Address, AddressQuery } from '~/zod/user/address'
+import { Address } from '~/zod/user/address'
 import { useUserAddressStore } from '~/stores/user/address'
 
 const props = defineProps({
@@ -11,6 +11,7 @@ const props = defineProps({
 })
 
 const { t } = useLang()
+const swal = useSwal()
 const toast = useToast()
 const router = useRouter()
 const { contentShorten } = useText()
@@ -23,14 +24,37 @@ const deleteAddress = async (id: string) => {
 		toast.error(t('components.address.card.delete.cant_delete_main'))
 		return
 	}
-	await userAddressStore
-		.deleteAddress(id)
-		.then(() => {
-			toast.success(t('components.address.card.delete.success'))
-			bus.emit('delete', id)
+	await swal
+		.fire({
+			title: t('swal.delete_address.title'),
+			text: t('swal.delete_address.text'),
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#0891b2',
+			cancelButtonColor: '#ff2c2c',
+			width: 420,
+			confirmButtonText: t('swal.default.warning.confirm_button_text'),
+			cancelButtonText: t('swal.default.warning.cancel_button_text')
 		})
-		.catch(() => {
-			toast.error(t('components.address.card.delete.error'))
+		.then(async (result) => {
+			if (!result.isConfirmed) {
+				return
+			}
+			await userAddressStore
+				.deleteAddress(id)
+				.then(async () => {
+					await bus.emit('delete', id)
+					toast.success(t('components.address.card.delete.success'))
+					await swal.fire({
+						title: t('swal.delete_address.success.title'),
+						text: t('swal.delete_address.success.text'),
+						html: t('swal.delete_address.success.html'),
+						icon: 'success'
+					})
+				})
+				.catch(() => {
+					toast.error(t('components.address.card.delete.error'))
+				})
 		})
 }
 </script>

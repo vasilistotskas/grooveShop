@@ -545,3 +545,37 @@ routes:
   reviews: Reviews
   settings: Settings
   help: Help
+swal:
+  default:
+    warning:
+      title: Are you sure?
+      text: You won't be able to revert this!
+      confirm_button_text: Yes, delete it!
+      cancel_button_text: Cancel
+    error:
+      title: Error
+      text: Something went wrong!
+      confirm_button_text: Ok
+      cancel_button_text: Cancel
+    success:
+      title: Success
+      text: Operation completed successfully!
+      confirm_button_text: Ok
+      cancel_button_text: Cancel
+    info:
+      title: Info
+      text: Info
+      confirm_button_text: Ok
+      cancel_button_text: Cancel
+    question:
+      title: Question
+      text: Question
+      confirm_button_text: Ok
+      cancel_button_text: Cancel
+  delete_address:
+    title: Delete Address
+    text: Are you sure you want to delete this address?
+    success:
+      title: Address deleted
+      text: Address deleted successfully
+      html: Address deleted successfully
