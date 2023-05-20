@@ -370,6 +370,7 @@ pages:
         zipcode: Zipcode
         address: Address
         place: Place
+        birth_date: Birth Date
         country: Country
         region: Region
         submit: Submit
@@ -496,32 +497,6 @@ layouts:
   description: DeepWeb-Description %{description}
 banners:
   welcome: Welcome to %{app_name}!
-common:
-  home: home
-  learn_more: learn more
-  copy: copy
-  enabled: enabled
-  disabled: disabled
-  read_less: read less
-  read_more: read more
-  choose: Choose...
-  floor: Floor
-  location_type: Location Type
-  phone: Phone
-  mobile_phone: Mobile Phone
-  notes: Notes
-  back: Back
-  unknown:
-    error: Unknown error
-  errors:
-    unknown_internal_api_error: Unknown internal API error
-  shop: Shop
-  next: Next
-  previous: Previous
-  empty:
-    title: Empty
-    description: Empty
-    button: Return to home
 routes:
   el: Greek
   en: English
@@ -579,3 +554,51 @@ swal:
       title: Address deleted
       text: Address deleted successfully
       html: Address deleted successfully
+common:
+  home: home
+  learn_more: learn more
+  copy: copy
+  enabled: enabled
+  disabled: disabled
+  read_less: read less
+  read_more: read more
+  choose: Choose...
+  floor: Floor
+  location_type: Location Type
+  phone: Phone
+  mobile_phone: Mobile Phone
+  notes: Notes
+  back: Back
+  unknown:
+    error: Unknown error
+  errors:
+    unknown_internal_api_error: Unknown internal API error
+  shop: Shop
+  next: Next
+  previous: Previous
+  empty:
+    title: Empty
+    description: Empty
+    button: Return to home
+  validation:
+    date:
+      required_error: Please select a date and time
+      invalid_error: That's not a date!
+    email:
+      invalid: Email is invalid
+    first_name:
+      min: First Name must be at least %{min} characters
+    last_name:
+      min: Last Name must be at least %{min} characters
+    street:
+      min: Street must be at least %{min} characters
+    street_number:
+      min: Street Number must be at least %{min} characters
+    city:
+      min: City must be at least %{min} characters
+    zipcode:
+      min: Zipcode must be at least %{min} characters
+    country:
+      required: Country is required
+    region:
+      required: Region is required

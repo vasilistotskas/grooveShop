@@ -6,7 +6,7 @@ import emptyIcon from '~icons/mdi/package-variant-remove'
 import { useUserAddressStore } from '~/stores/user/address'
 
 const { t } = useLang()
-const route = useRoute()
+const route = useRoute('account-addresses___en')
 
 const userStore = useUserStore()
 const { account } = storeToRefs(userStore)

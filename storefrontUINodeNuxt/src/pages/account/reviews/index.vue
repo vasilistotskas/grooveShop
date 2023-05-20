@@ -6,7 +6,7 @@ import { Review, ReviewOrderingField, ReviewQuery } from '~/zod/product/review'
 import emptyIcon from '~icons/mdi/package-variant-remove'
 
 const { t } = useLang()
-const route = useRoute()
+const route = useRoute('account-reviews___en')
 
 const userStore = useUserStore()
 const { account } = storeToRefs(userStore)

@@ -17,8 +17,8 @@ export type Pagination<T> = {
 export const ZodPagination = <T>(resultSchema: z.Schema<T>): z.Schema<Pagination<T>> =>
 	z.object({
 		links: z.object({
-			next: z.string().nullable().optional(),
-			prev: z.string().nullable().optional()
+			next: z.string().nullish().nullish(),
+			prev: z.string().nullish().nullish()
 		}),
 		count: z.number(),
 		totalPages: z.number(),

@@ -395,6 +395,7 @@ pages:
         zipcode: ταχυδρομικός κώδικας
         address: διεύθυνση
         place: θέση
+        birth_date: ημερομηνία γέννησης
         country: χώρα
         region: περιοχή
         submit: υποβάλλουν
@@ -525,32 +526,6 @@ layouts:
   description: deepweb-description %{description}
 banners:
   welcome: καλώς ορίσατε στο %{app_name}!
-common:
-  home: σπίτι
-  learn_more: μάθε περισσότερα
-  copy: αντίγραφο
-  enabled: ενεργοποιημένη
-  disabled: άτομα με ειδικές ανάγκες
-  read_less: διάβασε λιγότερο
-  read_more: διαβάστε περισσότερα
-  choose: επιλέγω...
-  floor: πάτωμα
-  location_type: τύπος τοποθεσίας
-  phone: τηλέφωνο
-  mobile_phone: κινητό τηλέφωνο
-  notes: σημειώσεις
-  back: πίσω
-  unknown:
-    error: αγνωστο σφάλμα
-  errors:
-    unknown_internal_api_error: άγνωστο εσωτερικό σφάλμα api
-  shop: κατάστημα
-  next: επόμενο
-  previous: προηγούμενος
-  empty:
-    title: αδειάζω
-    description: αδειάζω
-    button: επέστρεψε στο σπίτι
 routes:
   el: ελληνικά
   en: αγγλικά
@@ -604,3 +579,55 @@ swal:
   delete_address:
     title: διαγραφή διεύθυνσης
     text: είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν τη διεύθυνση;
+    success:
+      title: η διεύθυνση διαγράφηκε
+      text: η διεύθυνση διαγράφηκε με επιτυχία
+      html: η διεύθυνση διαγράφηκε με επιτυχία
+common:
+  home: σπίτι
+  learn_more: μάθε περισσότερα
+  copy: αντίγραφο
+  enabled: ενεργοποιημένη
+  disabled: άτομα με ειδικές ανάγκες
+  read_less: διάβασε λιγότερο
+  read_more: διαβάστε περισσότερα
+  choose: επιλέγω...
+  floor: πάτωμα
+  location_type: τύπος τοποθεσίας
+  phone: τηλέφωνο
+  mobile_phone: κινητό τηλέφωνο
+  notes: σημειώσεις
+  back: πίσω
+  unknown:
+    error: αγνωστο σφάλμα
+  errors:
+    unknown_internal_api_error: άγνωστο εσωτερικό σφάλμα api
+  shop: κατάστημα
+  next: επόμενο
+  previous: προηγούμενος
+  empty:
+    title: αδειάζω
+    description: αδειάζω
+    button: επέστρεψε στο σπίτι
+  validation:
+    date:
+      required_error: επιλέξτε ημερομηνία και ώρα
+      invalid_error: δεν είναι ραντεβού!
+    email:
+      invalid: το email δεν είναι έγκυρο
+    first_name:
+      min: το όνομα πρέπει να είναι τουλάχιστον %{min} χαρακτήρες
+    last_name:
+      min: το επώνυμο πρέπει να είναι τουλάχιστον %{min} χαρακτήρες
+    street:
+      min: η οδός πρέπει να έχει τουλάχιστον %{min} χαρακτήρες
+    street_number:
+      min: ο αριθμός οδού πρέπει να είναι τουλάχιστον %{min} χαρακτήρες
+    city:
+      min: η πόλη πρέπει να έχει τουλάχιστον %{min} χαρακτήρες
+    zipcode:
+      min: ο ταχυδρομικός κώδικας πρέπει να είναι τουλάχιστον %{min} χαρακτήρες
+    country:
+      required: απαιτείται χώρα
+    region:
+      required: απαιτείται περιοχή

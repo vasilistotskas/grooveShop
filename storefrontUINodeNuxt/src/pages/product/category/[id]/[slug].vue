@@ -2,10 +2,10 @@
 import { useCategoryStore } from '~/stores/product/category'
 
 const config = useRuntimeConfig()
-const route = useRoute()
+const route = useRoute('product-category-id-slug___en')
 const { t } = useLang()
 
-const categoryId = 'id' in route.params ? route.params.id : ''
+const categoryId = route.params.id
 const { category, pending, error } = storeToRefs(useCategoryStore())
 const { fetchCategory } = useCategoryStore()
 

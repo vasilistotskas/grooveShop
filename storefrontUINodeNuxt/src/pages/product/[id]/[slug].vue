@@ -14,7 +14,7 @@ import { GlobalEvents } from '~/events/global'
 import { useReviewsStore } from '~/stores/product/reviews'
 import emptyIcon from '~icons/mdi/package-variant-remove'
 
-const route = useRoute()
+const route = useRoute('product-id-slug___en')
 const config = useRuntimeConfig()
 const { t } = useLang()
 const toast = useToast()
@@ -26,7 +26,7 @@ const userStore = useUserStore()
 const reviewsStore = useReviewsStore()
 
 const fullPath = config.public.baseUrl + route.fullPath
-const productId = 'id' in route.params ? route.params.id : 0
+const productId = route.params.id
 
 const { account, favourites } = storeToRefs(userStore)
 const { isAuthenticated } = storeToRefs(authStore)
@@ -105,7 +105,6 @@ const { data: existingReview, refresh: existingReviewRefresh } = await useAsyncD
 			expand: 'true'
 		})
 )
-
 const reviewBus = useEventBus<string>('productReview')
 const reviewsBus = useEventBus<string>('productReviews')
 const modalBus = useEventBus<string>(GlobalEvents.GENERIC_MODAL)

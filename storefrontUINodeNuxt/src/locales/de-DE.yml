@@ -361,7 +361,7 @@ pages:
       description: bewertungen
       keywords: bewertungen
       updated: bewertungen aktualisiert
-      update_error: fehler bei der aktualisierung der bewertungen
+      update_error: fehler bei der aktualisierung der rezensionen
       deleted: bewertungen artikel gelöscht
       delete_error: fehler beim löschen des artikels
       ordering:
@@ -397,6 +397,7 @@ pages:
         zipcode: plz
         address: adresse
         place: ort
+        birth_date: geburtsdatum
         country: land
         region: region
         submit: einreichen
@@ -523,32 +524,6 @@ layouts:
   description: deepweb-beschreibung %{description}
 banners:
   welcome: willkommen bei %{app_name}!
-common:
-  home: heim
-  learn_more: lern mehr
-  copy: kopieren
-  enabled: ermöglicht
-  disabled: behinderte
-  read_less: lese weniger
-  read_more: weiterlesen
-  choose: wählen...
-  floor: boden
-  location_type: standorttyp
-  phone: telefon
-  mobile_phone: mobiltelefon
-  notes: anmerkungen
-  back: zurück
-  unknown:
-    error: unbekannter fehler
-  errors:
-    unknown_internal_api_error: unbekannter interner api-fehler
-  shop: geschäft
-  next: nächste
-  previous: vorherige
-  empty:
-    title: leer
-    description: leer
-    button: nach hause zurückkehren
 routes:
   el: griechisch
   en: englisch
@@ -602,3 +577,55 @@ swal:
   delete_address:
     title: adresse löschen
     text: sind sie sicher, dass sie diese adresse löschen möchten?
+    success:
+      title: adresse gelöscht
+      text: adresse erfolgreich gelöscht
+      html: adresse erfolgreich gelöscht
+common:
+  home: heim
+  learn_more: lern mehr
+  copy: kopieren
+  enabled: ermöglicht
+  disabled: behinderte
+  read_less: lese weniger
+  read_more: weiterlesen
+  choose: wählen...
+  floor: boden
+  location_type: standorttyp
+  phone: telefon
+  mobile_phone: mobiltelefon
+  notes: anmerkungen
+  back: zurück
+  unknown:
+    error: unbekannter fehler
+  errors:
+    unknown_internal_api_error: unbekannter interner api-fehler
+  shop: geschäft
+  next: nächste
+  previous: vorherige
+  empty:
+    title: leer
+    description: leer
+    button: nach hause zurückkehren
+  validation:
+    date:
+      required_error: bitte wählen sie ein datum und eine uhrzeit aus
+      invalid_error: das ist kein date!
+    email:
+      invalid: e-mail ist ungültig
+    first_name:
+      min: der vorname muss mindestens %{min} zeichen lang sein
+    last_name:
+      min: der nachname muss mindestens %{min} zeichen lang sein
+    street:
+      min: die straße muss mindestens %{min} zeichen lang sein
+    street_number:
+      min: die straßennummer muss mindestens %{min} zeichen lang sein
+    city:
+      min: die stadt muss mindestens %{min} zeichen lang sein
+    zipcode:
+      min: die postleitzahl muss mindestens %{min} zeichen lang sein
+    country:
+      required: land ist erforderlich
+    region:
+      required: region ist erforderlich

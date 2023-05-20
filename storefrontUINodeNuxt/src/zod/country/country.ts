@@ -4,13 +4,13 @@ import { OrderingQuery } from '~/zod/ordering/ordering'
 
 export const ZodCountry = z.object({
 	name: z.string(),
-	alpha2: z.string().min(2).max(2),
-	alpha3: z.string().min(3).max(3),
+	alpha2: z.string().min(2),
+	alpha3: z.string().min(3),
 	isoCc: z.number(),
 	phoneCode: z.number(),
 	createdAt: z.string().datetime({ offset: true }),
 	updatedAt: z.string().datetime({ offset: true }),
-	sortOrder: z.number().nullable(),
+	sortOrder: z.number().nullish(),
 	uuid: z.string()
 })
 
@@ -26,12 +26,12 @@ export type CountriesQuery = PaginationQuery &
 	}
 
 export const ZodCountriesQuery = z.object({
-	offset: z.string().optional(),
-	limit: z.string().optional(),
-	ordering: z.string().optional(),
-	alpha2: z.string().optional(),
-	alpha3: z.string().optional(),
-	name: z.string().optional(),
-	isoCc: z.string().optional(),
-	phoneCode: z.string().optional()
+	offset: z.string().nullish(),
+	limit: z.string().nullish(),
+	ordering: z.string().nullish(),
+	alpha2: z.string().nullish(),
+	alpha3: z.string().nullish(),
+	name: z.string().nullish(),
+	isoCc: z.string().nullish(),
+	phoneCode: z.string().nullish()
 })

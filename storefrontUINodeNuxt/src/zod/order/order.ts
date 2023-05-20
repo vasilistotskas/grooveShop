@@ -11,24 +11,24 @@ export const StatusEnum = z.enum(['Sent', 'Paid and sent', 'Canceled', 'Pending'
 
 export const ZodOrder = z.object({
 	id: z.number(),
-	user: z.number().nullable(),
+	user: z.number().nullish(),
 	payWay: ZodPayWay,
 	country: ZodCountry,
 	region: ZodRegion,
-	floor: z.nativeEnum(FloorChoicesEnum).nullable(),
-	locationType: z.nativeEnum(LocationChoicesEnum).nullable(),
-	street: z.string(),
-	streetNumber: z.string(),
-	status: StatusEnum,
+	floor: z.nativeEnum(FloorChoicesEnum).nullish(),
+	locationType: z.nativeEnum(LocationChoicesEnum).nullish(),
+	email: z.string(),
 	firstName: z.string(),
 	lastName: z.string(),
-	email: z.string(),
+	street: z.string(),
+	streetNumber: z.string(),
 	zipcode: z.string(),
 	place: z.string(),
 	city: z.string(),
 	phone: z.string(),
-	mobilePhone: z.string().nullable(),
-	customerNotes: z.string().nullable(),
+	mobilePhone: z.string().nullish(),
+	status: StatusEnum,
+	customerNotes: z.string().nullish(),
 	shippingPrice: z.number(),
 	orderItemOrder: z.array(ZodOrderItem),
 	createdAt: z.string().datetime({ offset: true }),
@@ -39,10 +39,10 @@ export const ZodOrder = z.object({
 })
 
 export const ZodOrderQuery = z.object({
-	page: z.string().optional(),
-	ordering: z.string().optional(),
-	userId: z.string().optional(),
-	status: z.string().optional()
+	page: z.string().nullish(),
+	ordering: z.string().nullish(),
+	userId: z.string().nullish(),
+	status: z.string().nullish()
 })
 
 export type Order = z.infer<typeof ZodOrder>
@@ -62,7 +62,7 @@ export const ZodOrderCreateRequest = z.object({
 	place: z.string(),
 	city: z.string(),
 	phone: z.string(),
-	customerNotes: z.string().nullable(),
+	customerNotes: z.string().nullish(),
 	orderItemOrder: z.array(ZodOrderItem)
 })
 

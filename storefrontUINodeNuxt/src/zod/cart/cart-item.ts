@@ -6,9 +6,9 @@ export const ZodCartItem = z.object({
 	cart: z.number(),
 	product: ZodProduct,
 	quantity: z.number(),
-	totalPrice: z.number().optional(),
-	totalDiscountValue: z.number().optional(),
-	productDiscountPercent: z.number().optional()
+	totalPrice: z.number().nullish(),
+	totalDiscountValue: z.number().nullish(),
+	productDiscountPercent: z.number().nullish()
 })
 
 export type CartItem = Readonly<z.infer<typeof ZodCartItem>>

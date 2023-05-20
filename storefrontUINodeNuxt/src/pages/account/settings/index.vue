@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { useUserStore } from '~/stores/user'
 import { useCountryStore } from '~/stores/country'
 import { useRegionStore } from '~/stores/region'
+import { defaultSelectOptionChoose } from '~/zod/global/general'
 
 const { t } = useLang()
 const toast = useToast()
@@ -42,9 +43,17 @@ const ZodAccountSettings = z.object({
 	zipcode: z.string(),
 	address: z.string(),
 	place: z.string(),
-	country: z.string(),
-	region: z.string().refine((value) => value !== 'choose', {
-		message: t('pages.account.settings.validation.region.required')
+	birthDate: z.coerce
+		.date({
+			required_error: t('common.validation.date.required_error'),
+			invalid_type_error: t('common.validation.date.invalid_type_error')
+		})
+		.nullish(),
+	country: z.string().refine((value) => value !== defaultSelectOptionChoose, {
+		message: t('common.validation.region.required')
+	}),
+	region: z.string().refine((value) => value !== defaultSelectOptionChoose, {
+		message: t('common.validation.region.required')
 	})
 })
 
@@ -59,8 +68,9 @@ const initialValues = ZodAccountSettings.parse({
 	zipcode: account.value?.zipcode ?? '',
 	address: account.value?.address ?? '',
 	place: account.value?.place ?? '',
+	birthDate: account.value?.birthDate ?? null,
 	country: account.value?.country ?? '',
-	region: account.value?.region ?? 'choose'
+	region: account.value?.region ?? defaultSelectOptionChoose
 })
 
 const { handleSubmit, errors, isSubmitting } = useForm({
@@ -76,6 +86,7 @@ const { value: city }: FieldContext<string> = useField('city')
 const { value: zipcode }: FieldContext<string> = useField('zipcode')
 const { value: address }: FieldContext<string> = useField('address')
 const { value: place }: FieldContext<string> = useField('place')
+const { value: birthDate }: FieldContext<string> = useField('birthDate')
 const { value: country }: FieldContext<string> = useField('country')
 const region = reactive(useField('region'))
 
@@ -84,7 +95,7 @@ const onCountryChange = (event: Event) => {
 	regionStore.fetchRegions({
 		alpha2: event.target.value
 	})
-	region.value = 'choose'
+	region.value = defaultSelectOptionChoose
 }
 
 const onSubmit = handleSubmit((values) => {
@@ -99,6 +110,7 @@ const onSubmit = handleSubmit((values) => {
 			zipcode: values.zipcode,
 			address: values.address,
 			place: values.place,
+			birthDate: String(values.birthDate),
 			country: values.country,
 			region: values.region
 		})
@@ -298,6 +310,25 @@ definePageMeta({
 					</div>
 					<span v-if="errors.place" class="text-sm text-red-600 px-4 py-3 relative">{{
 						errors.place
+					}}</span>
+				</div>
+				<div class="grid">
+					<label class="text-gray-700 dark:text-gray-200 mb-2" for="birthDate">{{
+						$t('pages.account.settings.form.birth_date')
+					}}</label>
+					<div class="grid">
+						<FormTextInput
+							id="birthDate"
+							v-model="birthDate"
+							class="text-gray-700 dark:text-gray-200 mb-2"
+							name="birthDate"
+							type="date"
+							:birth-dateholder="$t('pages.account.settings.form.birth_date')"
+							autocomplete="address-level3"
+						/>
+					</div>
+					<span v-if="errors.birthDate" class="text-sm text-red-600 px-4 py-3 relative">{{
+						errors.birthDate
 					}}</span>
 				</div>
 				<div class="grid">

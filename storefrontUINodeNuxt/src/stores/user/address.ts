@@ -59,9 +59,6 @@ export const useUserAddressStore = defineStore({
 				}`
 				throw new Error(errorMessage)
 			}
-			console.log('page', page)
-			console.log('ordering', ordering)
-			console.log('userId', userId)
 			if (addresses.value) {
 				this.addresses = addresses.value
 			}

@@ -10,7 +10,7 @@ import { EntityOrdering, OrderingOption } from '~/zod/ordering/ordering'
 import emptyIcon from '~icons/mdi/package-variant-remove'
 
 const { t } = useLang()
-const route = useRoute()
+const route = useRoute('account-favourites___en')
 
 const userStore = useUserStore()
 const { account } = storeToRefs(userStore)

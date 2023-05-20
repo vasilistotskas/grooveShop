@@ -28,14 +28,14 @@ const props = defineProps({
 const { product, productImages } = toRefs(props)
 
 const mainImage = computed(() => {
-	const images = productImages.value?.results || []
+	const images = productImages?.value?.results || []
 	return images.find((image) => image.isMain)
 })
 
 const { resolveImageFileExtension } = useImageResolver()
 
-const imageId = useState<number>(`${product.value.uuid}-imageID`, () => {
-	return mainImage.value?.id || productImages.value?.results[0]?.id || 0
+const imageId = useState<number>(`${product?.value?.uuid}-imageID`, () => {
+	return mainImage.value?.id || productImages?.value?.results[0]?.id || 0
 })
 </script>
 
@@ -43,10 +43,13 @@ const imageId = useState<number>(`${product.value.uuid}-imageID`, () => {
 	<div class="grid">
 		<div class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4">
 			<div
-				v-for="(productImage, index) in productImages.results"
+				v-for="(productImage, index) in productImages?.results"
 				v-show="imageId === productImage.id"
 				:key="index"
 				class="product-images-main grid h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
+				:class="{
+					'main-image': imageId === productImage.id
+				}"
 			>
 				<nuxt-img
 					preload
@@ -67,16 +70,16 @@ const imageId = useState<number>(`${product.value.uuid}-imageID`, () => {
 						`media/uploads/products/${productImage.productImageFilename}` ||
 						'/assets/images/placeholder.png'
 					"
-					:alt="product.name"
+					:alt="product?.name || ''"
 				/>
 			</div>
 		</div>
 
 		<div
-			v-if="productImages.results.length > 1"
+			v-if="productImages?.results.length > 1"
 			class="product-images-others flex -mx-2 mb-4"
 		>
-			<template v-for="(productImage, index) in productImages.results" :key="index">
+			<template v-for="(productImage, index) in productImages?.results" :key="index">
 				<div class="flex-1 px-2">
 					<button
 						:class="{
@@ -104,7 +107,7 @@ const imageId = useState<number>(`${product.value.uuid}-imageID`, () => {
 								`media/uploads/products/${productImage.productImageFilename}` ||
 								'/assets/images/placeholder.png'
 							"
-							:alt="product.name"
+							:alt="product?.name || ''"
 						/>
 					</button>
 				</div>

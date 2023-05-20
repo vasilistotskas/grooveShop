@@ -21,3 +21,5 @@ export const locationChoicesList = Object.keys(LocationChoicesEnum).filter((elem
 export const floorChoicesList = Object.keys(FloorChoicesEnum).filter((element) => {
 	return isNaN(Number(element))
 })
+
+export const defaultSelectOptionChoose = 'choose'

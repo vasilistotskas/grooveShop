@@ -34,6 +34,7 @@ const { account, favourites, reviews, orders, pending, error } = storeToRefs(use
 							:favourites-count="favourites?.length"
 							:reviews-count="reviews?.length"
 						/>
+						<Breadcrumbs />
 						<div class="relative mb-12 md:mb-20">
 							<div class="flex-1 w-full flex flex-col md:gap-4">
 								<div

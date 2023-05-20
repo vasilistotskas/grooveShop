@@ -7,6 +7,7 @@ import { useCountryStore } from '~/stores/country'
 import { useRegionStore } from '~/stores/region'
 import { useUserAddressStore } from '~/stores/user/address'
 import {
+	defaultSelectOptionChoose,
 	FloorChoicesEnum,
 	floorChoicesList,
 	LocationChoicesEnum,
@@ -55,18 +56,18 @@ const ZodAddress = z.object({
 	zipcode: z
 		.string()
 		.min(3, t('pages.account.addresses.new.validation.zipcode.min', { min: 3 })),
-	floor: z.union([z.nativeEnum(FloorChoicesEnum), z.string()]).nullable(),
-	locationType: z.union([z.nativeEnum(LocationChoicesEnum), z.string()]).nullable(),
-	phone: z.string().optional(),
-	mobilePhone: z.string().optional(),
-	notes: z.string().optional(),
-	isMain: z.boolean().optional(),
-	user: z.number().optional(),
-	country: z.string().refine((value) => value !== 'choose', {
-		message: t('pages.account.addresses.new.validation.region.required')
+	floor: z.union([z.nativeEnum(FloorChoicesEnum), z.string()]).nullish(),
+	locationType: z.union([z.nativeEnum(LocationChoicesEnum), z.string()]).nullish(),
+	phone: z.string().nullish(),
+	mobilePhone: z.string().nullish(),
+	notes: z.string().nullish(),
+	isMain: z.boolean().nullish(),
+	user: z.number().nullish(),
+	country: z.string().refine((value) => value !== defaultSelectOptionChoose, {
+		message: t('common.validation.region.required')
 	}),
-	region: z.string().refine((value) => value !== 'choose', {
-		message: t('pages.account.addresses.new.validation.region.required')
+	region: z.string().refine((value) => value !== defaultSelectOptionChoose, {
+		message: t('common.validation.region.required')
 	})
 })
 const validationSchema = toTypedSchema(ZodAddress)
@@ -74,10 +75,10 @@ const { handleSubmit, errors, isSubmitting } = useForm({
 	validationSchema,
 	initialValues: {
 		isMain: false,
-		country: 'choose',
-		region: 'choose',
-		floor: 'choose',
-		locationType: 'choose'
+		country: defaultSelectOptionChoose,
+		region: defaultSelectOptionChoose,
+		floor: defaultSelectOptionChoose,
+		locationType: defaultSelectOptionChoose
 	}
 })
 const { value: title }: FieldContext<string> = useField('title')
@@ -101,12 +102,12 @@ const onCountryChange = (event: Event) => {
 	regionStore.fetchRegions({
 		alpha2: event.target.value
 	})
-	region.value = 'choose'
+	region.value = defaultSelectOptionChoose
 }
 
 const onSubmit = handleSubmit(async (values) => {
-	if (String(floor) === 'choose') values.floor = null
-	if (String(locationType) === 'choose') values.locationType = null
+	if (String(floor) === defaultSelectOptionChoose) values.floor = null
+	if (String(locationType) === defaultSelectOptionChoose) values.locationType = null
 	await userAddressStore
 		.createAddress({
 			title: values.title,

@@ -16,9 +16,9 @@ export const ZodCategory = z.object({
 	treeId: z.number(),
 	absoluteUrl: z.string(),
 	recursiveProductCount: z.number(),
-	seoTitle: z.string().nullable(),
-	seoDescription: z.string().nullable(),
-	seoKeywords: z.string().nullable(),
+	seoTitle: z.string().nullish(),
+	seoDescription: z.string().nullish(),
+	seoKeywords: z.string().nullish(),
 	createdAt: z.string().datetime({ offset: true }),
 	updatedAt: z.string().datetime({ offset: true }),
 	uuid: z.string()
@@ -29,12 +29,12 @@ export type Category = z.infer<typeof ZodCategory>
 export const ZodCategoryCreateRequest = z.object({
 	name: z.string(),
 	slug: z.string(),
-	description: z.string().optional(),
-	parent: z.number().optional(),
-	seoTitle: z.string().optional(),
-	seoDescription: z.string().optional(),
-	seoKeywords: z.string().optional(),
-	createdAt: z.string().optional()
+	description: z.string().nullish(),
+	parent: z.number().nullish(),
+	seoTitle: z.string().nullish(),
+	seoDescription: z.string().nullish(),
+	seoKeywords: z.string().nullish(),
+	createdAt: z.string().nullish()
 })
 
 export type CategoryCreateRequest = Readonly<z.infer<typeof ZodCategoryCreateRequest>>

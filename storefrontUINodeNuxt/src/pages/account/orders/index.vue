@@ -6,7 +6,7 @@ import { Order, OrderOrderingField, OrderQuery } from '~/zod/order/order'
 import { EntityOrdering, OrderingOption } from '~/zod/ordering/ordering'
 
 const { t } = useLang()
-const route = useRoute()
+const route = useRoute('account-orders___en')
 
 const userStore = useUserStore()
 const { account } = storeToRefs(userStore)

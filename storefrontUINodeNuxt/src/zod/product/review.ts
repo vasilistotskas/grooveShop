@@ -15,7 +15,7 @@ export const ZodReview = z.object({
 	status: StatusEnum,
 	createdAt: z.string().datetime({ offset: true }),
 	updatedAt: z.string().datetime({ offset: true }),
-	publishedAt: z.string().datetime({ offset: true }).nullable(),
+	publishedAt: z.string().datetime({ offset: true }).nullish(),
 	isPublished: z.boolean(),
 	uuid: z.string()
 })
@@ -31,12 +31,12 @@ export type ReviewQuery = PaginationQuery &
 	}
 
 export const ZodReviewQuery = z.object({
-	page: z.string().optional(),
-	ordering: z.string().optional(),
-	id: z.string().optional(),
-	productId: z.string().optional(),
-	userId: z.string().optional(),
-	expand: z.string().optional()
+	page: z.string().nullish(),
+	ordering: z.string().nullish(),
+	id: z.string().nullish(),
+	productId: z.string().nullish(),
+	userId: z.string().nullish(),
+	expand: z.string().nullish()
 })
 
 export type ReviewOrderingField = 'id' | 'userId' | 'productId' | 'createdAt'

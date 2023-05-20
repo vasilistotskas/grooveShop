@@ -24,12 +24,12 @@ export type FavouriteQuery = PaginationQuery &
 	}
 
 export const ZodFavouriteQuery = z.object({
-	page: z.string().optional(),
-	ordering: z.string().optional(),
-	id: z.string().optional(),
-	userId: z.string().optional(),
-	productId: z.string().optional(),
-	expand: z.string().optional()
+	page: z.string().nullish(),
+	ordering: z.string().nullish(),
+	id: z.string().nullish(),
+	userId: z.string().nullish(),
+	productId: z.string().nullish(),
+	expand: z.string().nullish()
 })
 
 export const ZodFavouriteCreateRequest = z.object({

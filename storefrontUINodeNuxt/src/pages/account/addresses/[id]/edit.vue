@@ -7,6 +7,7 @@ import { useCountryStore } from '~/stores/country'
 import { useRegionStore } from '~/stores/region'
 import { useUserAddressStore } from '~/stores/user/address'
 import {
+	defaultSelectOptionChoose,
 	FloorChoicesEnum,
 	floorChoicesList,
 	LocationChoicesEnum,
@@ -15,7 +16,7 @@ import {
 
 const { t } = useLang()
 const toast = useToast()
-const route = useRoute()
+const route = useRoute('account-addresses-id-edit___en')
 const router = useRouter()
 const userStore = useUserStore()
 const userAddressStore = useUserAddressStore()
@@ -26,7 +27,7 @@ const { account } = storeToRefs(userStore)
 const { countries } = storeToRefs(countryStore)
 const { regions } = storeToRefs(regionStore)
 
-const addressId = 'id' in route.params ? Number(route.params.id) : 0
+const addressId = route.params.id
 
 try {
 	await userAddressStore.fetchAddress(addressId)
@@ -65,16 +66,16 @@ const ZodAddress = z.object({
 	zipcode: z
 		.string()
 		.min(3, t('pages.account.addresses.edit.validation.zipcode.min', { min: 3 })),
-	floor: z.union([z.nativeEnum(FloorChoicesEnum), z.string()]).nullable(),
-	locationType: z.union([z.nativeEnum(LocationChoicesEnum), z.string()]).nullable(),
-	phone: z.string().optional(),
-	mobilePhone: z.string().optional(),
-	notes: z.string().optional(),
-	isMain: z.boolean().optional(),
-	user: z.number().optional(),
+	floor: z.union([z.nativeEnum(FloorChoicesEnum), z.string()]).nullish(),
+	locationType: z.union([z.nativeEnum(LocationChoicesEnum), z.string()]).nullish(),
+	phone: z.string().nullish(),
+	mobilePhone: z.string().nullish(),
+	notes: z.string().nullish(),
+	isMain: z.boolean().nullish(),
+	user: z.number().nullish(),
 	country: z.string(),
-	region: z.string().refine((value) => value !== 'choose', {
-		message: t('pages.account.addresses.edit.validation.region.required')
+	region: z.string().refine((value) => value !== defaultSelectOptionChoose, {
+		message: t('common.validation.region.required')
 	})
 })
 const validationSchema = toTypedSchema(ZodAddress)
@@ -86,15 +87,15 @@ const initialValues = ZodAddress.parse({
 	streetNumber: address.value?.streetNumber ?? '',
 	city: address.value?.city ?? '',
 	zipcode: address.value?.zipcode ?? '',
-	floor: address.value?.floor ?? 'choose',
-	locationType: address.value?.locationType ?? 'choose',
+	floor: address.value?.floor ?? defaultSelectOptionChoose,
+	locationType: address.value?.locationType ?? defaultSelectOptionChoose,
 	phone: address.value?.phone ?? null,
 	mobilePhone: address.value?.mobilePhone ?? '',
 	notes: address.value?.notes ?? '',
 	isMain: address.value?.isMain ?? false,
 	user: address.value?.user ?? null,
 	country: address.value?.country ?? '',
-	region: address.value?.region ?? 'choose'
+	region: address.value?.region ?? defaultSelectOptionChoose
 })
 const { handleSubmit, errors, isSubmitting } = useForm({
 	validationSchema,
@@ -121,11 +122,11 @@ const onCountryChange = (event: Event) => {
 	regionStore.fetchRegions({
 		alpha2: event.target.value
 	})
-	region.value = 'choose'
+	region.value = defaultSelectOptionChoose
 }
 const onSubmit = handleSubmit((values) => {
-	if (String(floor) === 'choose') values.floor = null
-	if (String(locationType) === 'choose') values.locationType = null
+	if (String(floor) === defaultSelectOptionChoose) values.floor = null
+	if (String(locationType) === defaultSelectOptionChoose) values.locationType = null
 	userAddressStore
 		.updateAddress(addressId, {
 			title: values.title,

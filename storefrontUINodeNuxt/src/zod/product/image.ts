@@ -7,7 +7,7 @@ export const ZodImage = z.object({
 	title: z.string(),
 	product: z.number(),
 	image: z.string(),
-	thumbnail: z.string().nullable(),
+	thumbnail: z.string().nullish(),
 	isMain: z.boolean(),
 	productImageAbsoluteUrl: z.string(),
 	productImageFilename: z.string(),
@@ -18,9 +18,9 @@ export const ZodImage = z.object({
 })
 
 export const ZodImageQuery = z.object({
-	id: z.string().optional(),
-	product: z.string().optional(),
-	isMain: z.string().optional()
+	id: z.string().nullish(),
+	product: z.string().nullish(),
+	isMain: z.string().nullish()
 })
 
 export type Image = z.infer<typeof ZodImage>
