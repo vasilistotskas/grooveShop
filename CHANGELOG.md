@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.53.0 (2023-05-20)
+### Feature
+* **Nuxt:** Zod nullish and named routes plust minor improvements ([`218ea2a`](https://github.com/vasilistotskas/grooveShop/commit/218ea2a38a33a1e1d196e0997d6b3e57007fb1b2))
+
 ## v0.52.0 (2023-05-20)
 ### Feature
 * **Django:** Add birth_date field in user account model and serializer ([`cf17426`](https://github.com/vasilistotskas/grooveShop/commit/cf17426da85e35521eed1721684aece0c8ff1204))
