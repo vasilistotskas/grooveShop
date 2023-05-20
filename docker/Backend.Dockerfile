@@ -2,7 +2,7 @@
 FROM python:3.11-alpine as base
 
 RUN python -m venv /py && \
-    /py/bin/pip install --upgrade pip && \
+    /py/bin/pip install --upgrade pip setuptools wheel && \
     apk add --update --no-cache postgresql-client && \
     apk add --update --no-cache libffi-dev && \
     apk add --update --no-cache jpeg-dev zlib-dev && \
