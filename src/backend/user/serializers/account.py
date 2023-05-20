@@ -33,6 +33,7 @@ class UserAccountSerializer(serializers.ModelSerializer):
             "region",
             "is_active",
             "is_staff",
+            "birth_date",
             "main_image_absolute_url",
             "main_image_filename",
             "is_superuser",

@@ -83,6 +83,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin, UUIDModel, TimeStampMixinM
     image = models.ImageField(upload_to="uploads/users/", blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    birth_date = models.DateField(blank=True, null=True)
 
     objects: UserAccountManager = UserAccountManager()
 
