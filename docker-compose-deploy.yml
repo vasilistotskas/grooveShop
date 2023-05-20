@@ -49,8 +49,16 @@ services:
       - SYSTEM_ENV=${SYSTEM_ENV}
       - CORS_ORIGIN_ALLOW_ALL=${CORS_ORIGIN_ALLOW_ALL}
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent --write-out 'HTTP CODE : %{http_code}\n' --output /dev/null http://127.0.0.1:8001/"
+      start_period: 60s
+      interval: 60s
+      timeout: 10s
+      retries: 10
     ports:
       - "8001:8001"
     networks:
@@ -223,6 +231,12 @@ services:
       - "5432:5432"
     networks:
       - groovy-backbone
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
 
   nginx:
     container_name: nginx
@@ -265,6 +279,11 @@ services:
       - "6379:6379"
     networks:
       - groovy-backbone
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   redisinsight:
     image: 'redislabs/redisinsight:latest'
