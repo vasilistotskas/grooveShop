@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.51.1 (2023-05-20)
+### Fix
+* **Backend.Dockerfile:** Pip setuptools wheel added ([`97964e9`](https://github.com/vasilistotskas/grooveShop/commit/97964e95c34e6e6eb4647832f8e0ef3202c4869d))
+
 ## v0.51.0 (2023-05-18)
 ### Feature
 * **Nuxt:** Sweetaler2 plugin and composable ([`c8815bc`](https://github.com/vasilistotskas/grooveShop/commit/c8815bc3f9e0739c5e23ffd539d91c7836f50147))
