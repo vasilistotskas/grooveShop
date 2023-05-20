@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.52.0 (2023-05-20)
+### Feature
+* **Django:** Add birth_date field in user account model and serializer ([`cf17426`](https://github.com/vasilistotskas/grooveShop/commit/cf17426da85e35521eed1721684aece0c8ff1204))
+* **docker-compose:** Add healthcheck , Django requirement versions and pyproject.toml update ([`20145c1`](https://github.com/vasilistotskas/grooveShop/commit/20145c13621d05df4158305e2b8f50bb43ed2843))
+
 ## v0.51.1 (2023-05-20)
 ### Fix
 * **Backend.Dockerfile:** Pip setuptools wheel added ([`97964e9`](https://github.com/vasilistotskas/grooveShop/commit/97964e95c34e6e6eb4647832f8e0ef3202c4869d))
