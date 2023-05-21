@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.53.1 (2023-05-21)
+### Fix
+* **Nuxt:** Title seperator added , bump versions, breadcrumb component name change cause of nuxt-seo-kit name conflict and more fixes ([`9b492e1`](https://github.com/vasilistotskas/grooveShop/commit/9b492e1d03e58fcd3c8b68300af7d1fe115c3536))
+
 ## v0.53.0 (2023-05-20)
 ### Feature
 * **Nuxt:** Zod nullish and named routes plust minor improvements ([`218ea2a`](https://github.com/vasilistotskas/grooveShop/commit/218ea2a38a33a1e1d196e0997d6b3e57007fb1b2))
