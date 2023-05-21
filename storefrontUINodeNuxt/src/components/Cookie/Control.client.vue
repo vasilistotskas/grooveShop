@@ -227,7 +227,6 @@ init()
 							v-text="$t('components.cookie.decline')"
 						/>
 					</div>
-					type="button"
 				</div>
 			</div>
 		</Transition>

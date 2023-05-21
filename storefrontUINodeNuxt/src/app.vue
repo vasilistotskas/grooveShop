@@ -97,6 +97,11 @@ useServerSeoMeta({
 	msapplicationTileImage: () => config.public.appImage,
 	msapplicationTileColor: () => themeColor.value
 })
+defineOgImageScreenshot({
+	// wait 2seconds for animations
+	delay: 2000,
+	mask: '.cookieControl'
+})
 </script>
 
 <template>
@@ -105,7 +110,6 @@ useServerSeoMeta({
 		<NuxtLoadingIndicator />
 		<NuxtLayout>
 			<SeoKit :language="locale" />
-			<OgImageStatic />
 			<NuxtPage />
 		</NuxtLayout>
 		<CookieControl />

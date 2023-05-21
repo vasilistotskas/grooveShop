@@ -5,6 +5,7 @@ export const runtimeConfig = {
 
 	// Keys within public are also exposed client-side
 	public: {
+		titleSeparator: process.env.NUXT_APP_PUBLIC_TITLE_SEPARATOR || '|',
 		appTitle: process.env.NUXT_APP_TITLE,
 		appDescription: process.env.NUXT_APP_DESCRIPTION,
 		appImage: process.env.NUXT_APP_IMAGE,

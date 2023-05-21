@@ -1,7 +1,6 @@
-import { ModuleOptions as ImageModuleOptions } from '@nuxt/image-edge'
-export const image: Partial<ImageModuleOptions> = {
+export const image = {
 	dir: 'public',
-	staticFilename: '[publicPath]/images/[name]-[hash][ext]',
+	staticFilename: '[publicPath]/assets/images/[name]-[hash][ext]',
 	providers: {
 		mediaStream: {
 			name: 'mediaStream', // optional value to overrider provider name

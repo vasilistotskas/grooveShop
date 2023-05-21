@@ -1,5 +1,4 @@
-import { ModuleOptions as CookieModuleOptions } from '#cookie-control/types'
-export const cookieControl: Partial<CookieModuleOptions> = {
+export const cookieControl = {
 	cookies: {
 		necessary: [
 			{
