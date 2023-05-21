@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.54.0 (2023-05-21)
+### Feature
+* **Nuxt:** View data picker package implement plugin and usage (prototype) ([`ba29b57`](https://github.com/vasilistotskas/grooveShop/commit/ba29b57c9e83f76221f1ce609370658cb0ebf665))
+
 ## v0.53.1 (2023-05-21)
 ### Fix
 * **Nuxt:** Title seperator added , bump versions, breadcrumb component name change cause of nuxt-seo-kit name conflict and more fixes ([`9b492e1`](https://github.com/vasilistotskas/grooveShop/commit/9b492e1d03e58fcd3c8b68300af7d1fe115c3536))
