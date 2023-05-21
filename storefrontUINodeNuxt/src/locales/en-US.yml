@@ -379,6 +379,10 @@ pages:
         choose:
           country: Choose Country
           region: Choose Region
+        date_picker:
+          cancel: Cancel
+          select: Select
+          now: Now
     addresses:
       title: Addresses
       nav: addresses
@@ -583,7 +587,7 @@ common:
   validation:
     date:
       required_error: Please select a date and time
-      invalid_error: That's not a date!
+      invalid_type_error: That's not a date!
     email:
       invalid: Email is invalid
     first_name:

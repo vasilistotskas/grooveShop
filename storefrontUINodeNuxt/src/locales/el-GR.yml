@@ -229,7 +229,7 @@ pages:
             εάν ενεργοποιηθεί, θα προστατεύσουμε τα σχόλιά σας από ανεπιθύμητα
             μηνύματα
         advanced_enable_advanced:
-          title: ενεργοποίηση σύνθετων ρυθμίσεων
+          title: ενεργοποιήστε τις σύνθετες ρυθμίσεις
           description: >-
             μπορείτε να ενεργοποιήσετε τις σύνθετες ρυθμίσεις για να αλλάξετε
             τις ρυθμίσεις
@@ -404,6 +404,10 @@ pages:
         choose:
           country: διάλεξε χώρα
           region: επιλέξτε περιοχή
+        date_picker:
+          cancel: ματαίωση
+          select: επιλέγω
+          now: τώρα
     addresses:
       title: διευθύνσεις
       nav: διευθύνσεις
@@ -612,7 +616,7 @@ common:
   validation:
     date:
       required_error: επιλέξτε ημερομηνία και ώρα
-      invalid_error: δεν είναι ραντεβού!
+      invalid_type_error: δεν είναι ραντεβού!
     email:
       invalid: το email δεν είναι έγκυρο
     first_name:
