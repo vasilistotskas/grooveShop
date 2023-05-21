@@ -1,9 +1,8 @@
 import IconsResolver from 'unplugin-icons/resolver'
-import { UserConfig } from 'vite'
 import Icons from 'unplugin-icons/vite'
 import Components from 'unplugin-vue-components/vite'
 
-export const vite: UserConfig = {
+export const vite = {
 	plugins: [
 		Components({
 			deep: true,
@@ -34,8 +33,8 @@ export const vite: UserConfig = {
 	build: {
 		rollupOptions: {
 			output: {
-				manualChunks(id) {
-					const chunks = ['lodash', 'sweetalert2']
+				manualChunks(id: string) {
+					const chunks = ['lodash', 'sweetalert2', 'vue-toastification', 'vuepic', 'zod']
 					if (id.includes('/node_modules/')) {
 						for (const chunkName of chunks) {
 							if (id.includes(chunkName)) {

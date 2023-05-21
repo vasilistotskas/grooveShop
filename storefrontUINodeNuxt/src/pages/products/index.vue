@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const { t } = useLang()
 const config = useRuntimeConfig()
-const route = useRoute()
+const route = useRoute('products___en')
 
 definePageMeta({
 	layout: 'page'

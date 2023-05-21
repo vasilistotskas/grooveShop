@@ -34,7 +34,11 @@ export default defineNuxtConfig({
 			}
 		}
 	},
-	css: ['~/assets/sass/app.scss', 'vue-toastification/dist/index.css'],
+	css: [
+		'~/assets/sass/app.scss',
+		'vue-toastification/dist/index.css',
+		'@vuepic/vue-datepicker/dist/main.css'
+	],
 	/*
 	 ** All plugins in your plugins/ directory are auto-registered
 	 */

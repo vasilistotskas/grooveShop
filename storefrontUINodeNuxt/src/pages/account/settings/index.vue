@@ -6,8 +6,9 @@ import { useUserStore } from '~/stores/user'
 import { useCountryStore } from '~/stores/country'
 import { useRegionStore } from '~/stores/region'
 import { defaultSelectOptionChoose } from '~/zod/global/general'
+import { ITheme } from '~/utils/theme'
 
-const { t } = useLang()
+const { t, locale } = useLang()
 const toast = useToast()
 
 const userStore = useUserStore()
@@ -18,6 +19,8 @@ const { countries } = storeToRefs(countryStore)
 const { regions } = storeToRefs(regionStore)
 
 const userId = account.value?.id
+const flow: ('month' | 'year' | 'calendar' | 'time' | 'minutes' | 'hours' | 'seconds')[] =
+	['year', 'month', 'calendar']
 
 try {
 	await countryStore.fetchCountries()
@@ -68,7 +71,8 @@ const initialValues = ZodAccountSettings.parse({
 	zipcode: account.value?.zipcode ?? '',
 	address: account.value?.address ?? '',
 	place: account.value?.place ?? '',
-	birthDate: account.value?.birthDate ?? null,
+	birthDate:
+		account.value?.birthDate ?? new Date('2000-01-01').toISOString().slice(0, 10),
 	country: account.value?.country ?? '',
 	region: account.value?.region ?? defaultSelectOptionChoose
 })
@@ -86,7 +90,7 @@ const { value: city }: FieldContext<string> = useField('city')
 const { value: zipcode }: FieldContext<string> = useField('zipcode')
 const { value: address }: FieldContext<string> = useField('address')
 const { value: place }: FieldContext<string> = useField('place')
-const { value: birthDate }: FieldContext<string> = useField('birthDate')
+const { value: birthDate }: FieldContext<Date> = useField('birthDate')
 const { value: country }: FieldContext<string> = useField('country')
 const region = reactive(useField('region'))
 
@@ -110,7 +114,7 @@ const onSubmit = handleSubmit((values) => {
 			zipcode: values.zipcode,
 			address: values.address,
 			place: values.place,
-			birthDate: String(values.birthDate),
+			birthDate: values.birthDate?.toISOString().slice(0, 10),
 			country: values.country,
 			region: values.region
 		})
@@ -129,6 +133,18 @@ const submitButtonDisabled = computed(() => {
 definePageMeta({
 	layout: 'user'
 })
+
+const theme = useState<ITheme>('theme.current')
+const isDark = computed(() => theme.value === 'dark')
+const date = ref(new Date())
+// In case of a range picker, you'll receive [Date, Date]
+const format = (date: Date) => {
+	const day = date.getDate()
+	const month = date.getMonth() + 1
+	const year = date.getFullYear()
+
+	return `${day}/${month}/${year}`
+}
 </script>
 
 <template>
@@ -317,14 +333,18 @@ definePageMeta({
 						$t('pages.account.settings.form.birth_date')
 					}}</label>
 					<div class="grid">
-						<FormTextInput
-							id="birthDate"
+						<VueDatePicker
 							v-model="birthDate"
-							class="text-gray-700 dark:text-gray-200 mb-2"
-							name="birthDate"
-							type="date"
-							:birth-dateholder="$t('pages.account.settings.form.birth_date')"
-							autocomplete="address-level3"
+							:locale="locale"
+							:cancel-text="$t('pages.account.settings.form.date_picker.cancel')"
+							:select-text="$t('pages.account.settings.form.date_picker.select')"
+							:now-button-label="$t('pages.account.settings.form.date_picker.now')"
+							:flow="flow"
+							:format="format"
+							:dark="isDark"
+							:auto-apply="true"
+							:max-date="date"
+							:enable-time-picker="false"
 						/>
 					</div>
 					<span v-if="errors.birthDate" class="text-sm text-red-600 px-4 py-3 relative">{{

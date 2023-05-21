@@ -35,3 +35,9 @@ declare global {
 		interface ProcessEnv extends z.infer<typeof envVariables> {}
 	}
 }
+
+declare module '@vue/runtime-core' {
+	export interface GlobalComponents {
+		VueDatePicker: typeof import('@vuepic/vue-datepicker')['default']
+	}
+}
