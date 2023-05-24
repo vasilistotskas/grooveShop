@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.55.0 (2023-05-24)
+### Feature
+* **Nuxt:** Checkout payways ready, versions bump, general fixes and improvements ([`e251208`](https://github.com/vasilistotskas/grooveShop/commit/e251208d0297136995df132c8a235ae38c31ca24))
+
 ## v0.54.0 (2023-05-21)
 ### Feature
 * **Nuxt:** View data picker package implement plugin and usage (prototype) ([`ba29b57`](https://github.com/vasilistotskas/grooveShop/commit/ba29b57c9e83f76221f1ce609370658cb0ebf665))

@@ -1,6 +1,6 @@
 from setuptools import setup
 
-__version__ = "0.54.0"
+__version__ = "0.55.0"
 
 setup(
     name="src",
