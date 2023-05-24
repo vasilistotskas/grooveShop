@@ -8,6 +8,7 @@ import { FloorChoicesEnum, LocationChoicesEnum } from '~/zod/global/general'
 import { ZodPayWay } from '~/zod/pay-way/pay-way'
 
 export const StatusEnum = z.enum(['Sent', 'Paid and sent', 'Canceled', 'Pending'])
+export const documentTypeEnum = z.enum(['receipt', 'invoice'])
 
 export const ZodOrder = z.object({
 	id: z.number(),
@@ -30,6 +31,7 @@ export const ZodOrder = z.object({
 	status: StatusEnum,
 	customerNotes: z.string().nullish(),
 	shippingPrice: z.number(),
+	documentType: documentTypeEnum,
 	orderItemOrder: z.array(ZodOrderItem),
 	createdAt: z.string().datetime({ offset: true }),
 	updatedAt: z.string().datetime({ offset: true }),

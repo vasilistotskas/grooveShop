@@ -161,6 +161,20 @@ components:
         success: Address deleted
         error: Address not deleted
         cant_delete_main: You can't delete your main address, please set another address as main and try again.
+  checkout:
+    sidebar:
+      title: Checkout
+      items: Items
+      items_unique: Item
+      shipping: Shipping
+      discount: Discount
+      vat: VAT
+      total: Total
+    pay_ways:
+      title: Choose the payment method
+      label: Pay Way
+    items:
+      title: Items
 pages:
   testing:
     nav: testing
@@ -277,6 +291,9 @@ pages:
       zipcode: Zipcode
       country: Country
       region: Region
+      mobile_phone: Mobile Phone
+      floor: Floor
+      location_type: Location Type
       customer_notes: Customer Notes
       submit: Submit
       too_many_attempts: Too many attempts, please try again later.
@@ -285,6 +302,34 @@ pages:
         region: Choose Region
     success:
       title: Order created
+    validation:
+      email:
+        required: Email is required
+        email: Email must be a valid email address
+      first_name:
+        required: First Name is required
+        min: First Name must be at least %{min} characters long
+      last_name:
+        required: Last Name is required
+        min: Last Name must be at least %{min} characters long
+      street:
+        required: Street is required
+        min: Street must be at least %{min} characters long
+      street_number:
+        required: Street Number is required
+        min: Street Number must be at least %{min} characters long
+      zipcode:
+        required: Zipcode is required
+        min: Zipcode must be at least %{min} characters long
+      place:
+        required: Place is required
+        min: Place must be at least %{min} characters long
+      city:
+        required: City is required
+        min: City must be at least %{min} characters long
+      phone:
+        required: Phone is required
+        min: Phone must be at least %{min} characters long
   accounts:
     login:
       title: Account

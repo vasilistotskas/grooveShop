@@ -11,7 +11,7 @@ const pwa = useNuxtApp().$pwa
 					<span v-if="pwa?.offlineReady" class="text-gray-700 dark:text-gray-200">
 						{{ $t('components.global.pwa.ready_to_work_offline') }}
 					</span>
-					<span v-else class="text-gray-700 dark:text-gray-200">
+					<span v-if="pwa?.needRefresh" class="text-gray-700 dark:text-gray-200">
 						{{ $t('components.global.pwa.new_content_available') }}
 					</span>
 				</div>

@@ -35,29 +35,35 @@ useServerSeoMeta({
 				>
 					<a href="/">
 						<NuxtImg
-							src="/assets/images/dummy/1920x640.png"
+							:modifiers="{ w: 1920, h: 640, format: 'webp' }"
 							alt="Main Banner"
 							class="w-full h-full object-cover"
-							:modifiers="{ w: 1920, h: 640, format: 'webp' }"
 							format="webp"
+							height="640"
+							src="/assets/images/dummy/1920x640.png"
+							width="1920"
 						/>
 					</a>
 					<a href="/">
 						<NuxtImg
-							src="/assets/images/dummy/1920x640.png"
+							:modifiers="{ w: 1920, h: 640, format: 'webp' }"
 							alt="Main Banner"
 							class="w-full h-full object-cover"
-							:modifiers="{ w: 1920, h: 640, format: 'webp' }"
 							format="webp"
+							height="640"
+							src="/assets/images/dummy/1920x640.png"
+							width="1920"
 						/>
 					</a>
 					<a href="/">
 						<NuxtImg
-							src="/assets/images/dummy/1920x640.png"
+							:modifiers="{ w: 1920, h: 640, format: 'webp' }"
 							alt="Main Banner"
 							class="w-full h-full object-cover"
-							:modifiers="{ w: 1920, h: 640, format: 'webp' }"
 							format="webp"
+							height="640"
+							src="/assets/images/dummy/1920x640.png"
+							width="1920"
 						/>
 					</a>
 				</NativeSlider>
@@ -68,11 +74,13 @@ useServerSeoMeta({
 					<NuxtImg
 						v-for="i in 6"
 						:key="i"
-						src="/assets/images/dummy/80x40.png"
+						:modifiers="{ w: 80, h: 40, format: 'webp' }"
 						alt="Usp"
 						class="w-auto h-auto object-cover"
-						:modifiers="{ w: 80, h: 40, format: 'webp' }"
 						format="webp"
+						height="40"
+						src="/assets/images/dummy/80x40.png"
+						width="80"
 					/>
 				</div>
 			</PageSection>

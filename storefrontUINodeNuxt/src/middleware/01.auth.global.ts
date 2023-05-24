@@ -5,6 +5,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 	const authStore = useAuthStore()
 	const userStore = useUserStore()
 
+	if (process.client) {
+		const pwa = useNuxtApp().$pwa
+		pwa?.updateServiceWorker()
+	}
+
 	try {
 		await authStore.fetchAuth()
 	} catch (error) {

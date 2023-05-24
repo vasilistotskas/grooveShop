@@ -19,8 +19,6 @@ const { countries } = storeToRefs(countryStore)
 const { regions } = storeToRefs(regionStore)
 
 const userId = account.value?.id
-const flow: ('month' | 'year' | 'calendar' | 'time' | 'minutes' | 'hours' | 'seconds')[] =
-	['year', 'month', 'calendar']
 
 try {
 	await countryStore.fetchCountries()
@@ -135,9 +133,11 @@ definePageMeta({
 })
 
 const theme = useState<ITheme>('theme.current')
-const isDark = computed(() => theme.value === 'dark')
+const dark = computed(() => theme.value === 'dark')
+// Date picker
+const flow: ('month' | 'year' | 'calendar' | 'time' | 'minutes' | 'hours' | 'seconds')[] =
+	['year', 'month', 'calendar']
 const date = ref(new Date())
-// In case of a range picker, you'll receive [Date, Date]
 const format = (date: Date) => {
 	const day = date.getDate()
 	const month = date.getMonth() + 1
@@ -341,7 +341,7 @@ const format = (date: Date) => {
 							:now-button-label="$t('pages.account.settings.form.date_picker.now')"
 							:flow="flow"
 							:format="format"
-							:dark="isDark"
+							:dark="dark"
 							:auto-apply="true"
 							:max-date="date"
 							:enable-time-picker="false"
@@ -443,7 +443,7 @@ const format = (date: Date) => {
 	position: fixed;
 	top: 56px;
 	left: 0;
-	z-index: 149;
+	z-index: 10;
 	width: 100%;
 	box-shadow: 0 2px 4px 0 #dcdcdc;
 	background-color: #fff;

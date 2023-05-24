@@ -1,6 +1,6 @@
 import { FetchError } from 'ofetch'
 import { Cart } from '~/zod/cart/cart'
-import { CartItemCreateRequest, CartItemPutRequest } from '~/zod/cart/cart-item'
+import { CartItem, CartItemCreateRequest, CartItemPutRequest } from '~/zod/cart/cart-item'
 
 export interface CartState {
 	cart: Cart | null
@@ -16,8 +16,9 @@ export const useCartStore = defineStore({
 		error: null as FetchError<unknown> | null
 	}),
 	getters: {
-		getCartItems: (state) => {
-			return state.cart?.cartItems
+		getCartItems: (state): CartItem[] => {
+			if (!state.cart) return []
+			return state.cart.cartItems
 		},
 		getCartItemById: (state) => (id: number) => {
 			return state.cart?.cartItems.find((item) => item.id === id)

@@ -210,7 +210,7 @@ const openModal = () => {
 	}
 }
 modalBus.on((event: string) => {
-	// console.log(event)
+	//
 })
 
 const ZodReviewSchema = z.object({
