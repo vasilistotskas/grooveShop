@@ -64,6 +64,11 @@ class Order(TimeStampMixinModel, UUIDModel):
         max_length=20, choices=StatusEnum.choices(), default=StatusEnum.PENDING.value
     )
     shipping_price = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+    document_type = models.CharField(
+        max_length=10,
+        choices=[("receipt", "Receipt"), ("invoice", "Invoice")],
+        default="receipt",
+    )
 
     class Meta:
         ordering = [

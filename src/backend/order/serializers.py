@@ -68,6 +68,7 @@ class OrderSerializer(serializers.ModelSerializer):
             "customer_notes",
             "order_item_order",
             "shipping_price",
+            "document_type",
             "created_at",
             "updated_at",
             "uuid",
