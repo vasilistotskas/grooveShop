@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.56.0 (2023-05-25)
+### Feature
+* **Django:** Pay ways model added new field for icon ([`d84f34b`](https://github.com/vasilistotskas/grooveShop/commit/d84f34bdea96129811ec0f76db201fac25435be7))
+
 ## v0.55.0 (2023-05-24)
 ### Feature
 * **Nuxt:** Checkout payways ready, versions bump, general fixes and improvements ([`e251208`](https://github.com/vasilistotskas/grooveShop/commit/e251208d0297136995df132c8a235ae38c31ca24))
