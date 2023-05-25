@@ -1,4 +1,3 @@
-from backend.core.graphql.schema import schema
 from backend.session.views import ActiveUserViewSet
 from django.conf import settings
 from django.conf.urls.static import static
@@ -7,15 +6,12 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.http import HttpResponse
 from django.urls import include
 from django.urls import path
-from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET
 from drf_spectacular.views import SpectacularAPIView
 from drf_spectacular.views import SpectacularRedocView
 from drf_spectacular.views import SpectacularSwaggerView
 from rest_framework import routers
 from rest_framework.authtoken import views
-from strawberry.django.views import AsyncGraphQLView
-from strawberry.django.views import GraphQLView
 
 app_name = "app"
 
@@ -56,9 +52,6 @@ urlpatterns = [
     path("api/v1/", include("backend.cart.urls")),
     path("accounts/", include("allauth_2fa.urls")),
     path("accounts/", include("allauth.urls")),
-    # GraphQL Experimental
-    path("graphql/async", AsyncGraphQLView.as_view(schema=schema)),
-    path("graphql/", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=schema))),
     # admin html editor
     path("tinymce/", include("tinymce.urls")),  # vue urls
     # Spectacular

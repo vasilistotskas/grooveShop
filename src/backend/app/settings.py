@@ -120,7 +120,6 @@ THIRD_PARTY_APPS = [
     "mptt",
     "tinymce",
     "django_filters",
-    "strawberry.django",
     "drf_spectacular",
     "allauth",
     "allauth.account",
@@ -137,11 +136,6 @@ THIRD_PARTY_APPS = [
     "django_celery_results",
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
-
-STRAWBERRY_DJANGO = {
-    "FIELD_DESCRIPTION_FROM_HELP_TEXT": True,
-    "TYPE_DESCRIPTION_FROM_MODEL_DOCSTRING": True,
-}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -361,11 +355,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "backend/media")
 
 STATICFILES_DIRS = (BASE_DIR.joinpath("files"),)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-
-# graphql schema
-GRAPHENE = {
-    "SCHEMA": "backend.core.schema.schema",
-}
 
 # Tinymce admin panel editor config
 TINYMCE_DEFAULT_CONFIG = {

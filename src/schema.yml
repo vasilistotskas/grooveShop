@@ -8850,6 +8850,81 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/user/address/{id}/set_main/:
+    post:
+      operationId: api_v1_user_address_set_main_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserAddress'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserAddress'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAddress'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAddress'
+          description: ''
+  /api/v1/user/address/{id}/set_main{format}:
+    post:
+      operationId: api_v1_user_address_set_main_formatted_create
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserAddress'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserAddress'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAddress'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAddress'
+          description: ''
   /api/v1/vat/:
     get:
       operationId: api_v1_vat_list
@@ -9660,6 +9735,14 @@ components:
       - sortOrder
       - updatedAt
       - uuid
+    DocumentTypeEnum:
+      enum:
+      - receipt
+      - invoice
+      type: string
+      description: |-
+        * `receipt` - Receipt
+        * `invoice` - Invoice
     FloorEnum:
       enum:
       - 0
@@ -9798,6 +9881,8 @@ components:
           minimum: -1000000
           exclusiveMaximum: true
           exclusiveMinimum: true
+        documentType:
+          $ref: '#/components/schemas/DocumentTypeEnum'
         createdAt:
           type: string
           format: date-time
@@ -10689,6 +10774,8 @@ components:
           minimum: -1000000
           exclusiveMaximum: true
           exclusiveMinimum: true
+        documentType:
+          $ref: '#/components/schemas/DocumentTypeEnum'
         createdAt:
           type: string
           format: date-time
@@ -10731,6 +10818,10 @@ components:
           minimum: -1000000000
           exclusiveMaximum: true
           exclusiveMinimum: true
+        icon:
+          type: string
+          format: uri
+          nullable: true
         createdAt:
           type: string
           format: date-time
@@ -10745,6 +10836,12 @@ components:
         uuid:
           type: string
           format: uuid
+          readOnly: true
+        iconAbsoluteUrl:
+          type: string
+          readOnly: true
+        iconFilename:
+          type: string
           readOnly: true
     PatchedProduct:
       type: object
@@ -11236,11 +11333,9 @@ components:
           type: string
           maxLength: 255
         phone:
-          type: integer
-          maximum: 9223372036854775807
-          minimum: 0
-          format: int64
+          type: string
           nullable: true
+          maxLength: 100
         city:
           type: string
           nullable: true
@@ -11267,6 +11362,10 @@ components:
           type: boolean
         isStaff:
           type: boolean
+        birthDate:
+          type: string
+          format: date
+          nullable: true
         mainImageAbsoluteUrl:
           type: string
           readOnly: true
@@ -11281,7 +11380,7 @@ components:
         lastLogin:
           type: string
           format: date-time
-          nullable: true
+          readOnly: true
         createdAt:
           type: string
           format: date-time
@@ -11411,6 +11510,10 @@ components:
           minimum: -1000000000
           exclusiveMaximum: true
           exclusiveMinimum: true
+        icon:
+          type: string
+          format: uri
+          nullable: true
         createdAt:
           type: string
           format: date-time
@@ -11426,7 +11529,15 @@ components:
           type: string
           format: uuid
           readOnly: true
+        iconAbsoluteUrl:
+          type: string
+          readOnly: true
+        iconFilename:
+          type: string
+          readOnly: true
       required:
+      - iconAbsoluteUrl
+      - iconFilename
       - id
       - name
       - sortOrder
@@ -12046,11 +12157,9 @@ components:
           type: string
           maxLength: 255
         phone:
-          type: integer
-          maximum: 9223372036854775807
-          minimum: 0
-          format: int64
+          type: string
           nullable: true
+          maxLength: 100
         city:
           type: string
           nullable: true
@@ -12077,6 +12186,10 @@ components:
           type: boolean
         isStaff:
           type: boolean
+        birthDate:
+          type: string
+          format: date
+          nullable: true
         mainImageAbsoluteUrl:
           type: string
           readOnly: true
@@ -12091,7 +12204,7 @@ components:
         lastLogin:
           type: string
           format: date-time
-          nullable: true
+          readOnly: true
         createdAt:
           type: string
           format: date-time
@@ -12107,6 +12220,7 @@ components:
       - email
       - firstName
       - id
+      - lastLogin
       - lastName
       - mainImageAbsoluteUrl
       - mainImageFilename

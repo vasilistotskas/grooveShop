@@ -6,7 +6,6 @@ pillow==9.5.0
 django-admin-thumbnails==0.2.7
 django-mptt==0.14.0
 django-js-asset==2.0.0
-strawberry-graphql-django==0.9.4
 django-redis==5.2.0
 celery==5.2.7
 Faker==18.9.0
@@ -16,7 +15,7 @@ gunicorn==20.1.0
 whitenoise==6.4.0
 django-filter==23.2
 black==23.3.0
-python-semantic-release==7.33.4
+python-semantic-release==7.33.5
 flake8==6.0.0
 coverage==7.2.5
 drf-spectacular==0.26.2
@@ -24,7 +23,7 @@ pylint==2.17.4
 pre-commit==3.3.2
 django-allauth==0.54.0
 django-allauth-2fa==0.10.0
-poetry==1.4.2
+poetry==1.5.0
 django-celery-beat==2.5.0
 django-celery-results==2.5.1
 flower==1.2.0
