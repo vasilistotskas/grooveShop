@@ -11,8 +11,11 @@ class PayWaySerializer(serializers.ModelSerializer):
             "active",
             "cost",
             "free_for_order_amount",
+            "icon",
             "created_at",
             "updated_at",
             "sort_order",
             "uuid",
+            "icon_absolute_url",
+            "icon_filename",
         )
