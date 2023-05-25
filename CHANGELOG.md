@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.57.0 (2023-05-25)
+### Feature
+* **Django:** Order model added new field for document_type ([`03dd540`](https://github.com/vasilistotskas/grooveShop/commit/03dd540e23677acd94d9576e28378b12a53adcaf))
+
 ## v0.56.0 (2023-05-25)
 ### Feature
 * **Django:** Pay ways model added new field for icon ([`d84f34b`](https://github.com/vasilistotskas/grooveShop/commit/d84f34bdea96129811ec0f76db201fac25435be7))
