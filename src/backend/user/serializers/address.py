@@ -51,7 +51,7 @@ class UserAddressSerializer(BaseExpandSerializer):
         }
 
     def validate(self, data):
-        if data["is_main"]:
+        if self.instance and data["is_main"]:
             user = data["user"]
             if UserAddress.objects.filter(user=user, is_main=True).exclude(
                 pk=self.instance.pk

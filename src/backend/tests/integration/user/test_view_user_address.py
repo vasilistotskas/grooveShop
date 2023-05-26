@@ -29,7 +29,7 @@ class UserAddressViewSetTestCase(TestCase):
             street_number="test",
             city="test",
             zipcode="test",
-            is_main=True,
+            is_main=False,
         )
         self.client = APIClient()
         self.client.login(email=self.user.email, password="test12345@!")
@@ -56,14 +56,14 @@ class UserAddressViewSetTestCase(TestCase):
         )
         payload = {
             "user": self.user.pk,
-            "title": "test_one",
-            "first_name": "test_one",
-            "last_name": "test_one",
-            "street": "test_one",
-            "street_number": "test_one",
-            "city": "test_one",
-            "zipcode": "test_one",
-            "is_main": True,
+            "title": "test",
+            "first_name": "test",
+            "last_name": "test",
+            "street": "test",
+            "street_number": "test",
+            "city": "test",
+            "zipcode": "test",
+            "is_main": False,
             "country": country.pk,
             "region": region.pk,
         }
@@ -120,14 +120,14 @@ class UserAddressViewSetTestCase(TestCase):
         )
         payload = {
             "user": self.user.pk,
-            "title": "test_one",
-            "first_name": "test_one",
-            "last_name": "test_one",
-            "street": "test_one",
-            "street_number": "test_one",
-            "city": "test_one",
-            "zipcode": "test_one",
-            "is_main": True,
+            "title": "test",
+            "first_name": "test",
+            "last_name": "test",
+            "street": "test",
+            "street_number": "test",
+            "city": "test",
+            "zipcode": "test",
+            "is_main": False,
             "country": country.pk,
             "region": region.pk,
         }
@@ -149,7 +149,7 @@ class UserAddressViewSetTestCase(TestCase):
             "street_number": "INVALID",
             "city": "INVALID",
             "zipcode": "INVALID",
-            "is_main": "INVALID",
+            "is_main": False,
         }
         response = self.client.put(
             f"/api/v1/user/address/{self.user_address.pk}/",
@@ -160,7 +160,9 @@ class UserAddressViewSetTestCase(TestCase):
 
     def test_partial_update_valid(self):
         payload = {
-            "title": "test_one",
+            "user": self.user.pk,
+            "title": "test",
+            "is_main": False,
         }
         response = self.client.patch(
             f"/api/v1/user/address/{self.user_address.pk}/",
@@ -187,3 +189,18 @@ class UserAddressViewSetTestCase(TestCase):
             f"/api/v1/user/address/{self.user_address.pk + 1}/"
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_destroy_main_address(self):
+        user_address = UserAddress.objects.create(
+            user=self.user,
+            title="test",
+            first_name="test",
+            last_name="test",
+            street="test",
+            street_number="test",
+            city="test",
+            zipcode="test",
+            is_main=True,
+        )
+        response = self.client.delete(f"/api/v1/user/address/{user_address.pk}/")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
