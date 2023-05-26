@@ -92,7 +92,9 @@ class Product(TimeStampMixinModel, SeoModel, UUIDModel):
             vat_value = (self.price * self.vat.value) / 100
 
         self.discount_value = (self.price * self.discount_percent) / 100
-        self.final_price = float(self.price + vat_value) - float(self.discount_value)
+        self.final_price = (
+            float(self.price) + float(vat_value) - float(self.discount_value)
+        )
         self.price_save_percent = (
             (self.price - self.discount_value)
             * (self.price - self.price - self.discount_value)
