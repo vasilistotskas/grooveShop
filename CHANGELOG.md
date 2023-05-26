@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.57.2 (2023-05-26)
+### Fix
+* **Django:** Address test cases and address serializer validate method fix ([`a0c5ca9`](https://github.com/vasilistotskas/grooveShop/commit/a0c5ca90f97be68d96e1274c6cc5b294be8bd5e1))
+
 ## v0.57.1 (2023-05-26)
 ### Fix
 * **Django:** Product model save method type fix for final price calc ([`7291fa5`](https://github.com/vasilistotskas/grooveShop/commit/7291fa57d2572a1525ff4f8d6e094bd44ad80a1b))
