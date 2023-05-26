@@ -99,10 +99,9 @@ export default class MediaStreamImageRESTController {
 	}
 
 	@Get(
-		'public/nuxt/images/:imageName/:path?/:width?/:height?/:fit?/:position?/:background?/:trimThreshold?/:format?'
+		'public/nuxt/images/:imageName/:width?/:height?/:fit?/:position?/:background?/:trimThreshold?/:format?/:path?'
 	)
 	public async publicNuxtImage(
-		@Param('path') path: string,
 		@Param('imageName') imageName: string,
 		@Param('width') width: number = null,
 		@Param('height') height: number = null,
@@ -111,6 +110,7 @@ export default class MediaStreamImageRESTController {
 		@Param('background') background = BackgroundOptions.transparent,
 		@Param('trimThreshold') trimThreshold = 5,
 		@Param('format') format: 'jpg' | 'jpeg' | 'png' | 'webp' = 'jpg',
+		@Param('path') path: string,
 		@Res() res: Response
 	): Promise<void> {
 		let target = 'http://storefront_uinode_nuxt:3000/assets/images'
