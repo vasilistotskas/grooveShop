@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.57.1 (2023-05-26)
+### Fix
+* **Django:** Product model save method type fix for final price calc ([`7291fa5`](https://github.com/vasilistotskas/grooveShop/commit/7291fa57d2572a1525ff4f8d6e094bd44ad80a1b))
+
 ## v0.57.0 (2023-05-25)
 ### Feature
 * **Django:** Order model added new field for document_type ([`03dd540`](https://github.com/vasilistotskas/grooveShop/commit/03dd540e23677acd94d9576e28378b12a53adcaf))
