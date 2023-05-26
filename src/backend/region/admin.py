@@ -7,4 +7,6 @@ class RegionInline(admin.TabularInline):
     extra = 1
 
 
-admin.site.register(Region)
+@admin.register(Region)
+class RegionAdmin(admin.ModelAdmin):
+    search_fields = ["alpha", "alpha_2", "name"]

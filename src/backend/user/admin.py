@@ -8,6 +8,7 @@ class AddressInline(admin.TabularInline):
     extra = 1
 
 
+@admin.register(UserAccount)
 class UserAccountAdmin(admin.ModelAdmin):
     list_display = [
         "email",
@@ -27,6 +28,3 @@ class UserAccountAdmin(admin.ModelAdmin):
     ]
     inlines = [AddressInline]
     search_fields = ["email", "phone"]
-
-
-admin.site.register(UserAccount, UserAccountAdmin)

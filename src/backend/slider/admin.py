@@ -14,6 +14,7 @@ class SliderSlidesInline(admin.StackedInline):
     extra = 0
 
 
+@admin.register(Slider)
 class SliderAdmin(admin.ModelAdmin):
     list_display = ["id", "title", "image_tag"]
     search_fields = ["id", "title"]
@@ -23,12 +24,9 @@ class SliderAdmin(admin.ModelAdmin):
     actions = [""]
 
 
+@admin.register(Slide)
 class SlideAdmin(admin.ModelAdmin):
     list_display = ["id", "title", "image_tag", "order_position"]
     search_fields = ["id", "title", "slider__name"]
     readonly_fields = ("image_tag", "thumbnail")
     actions = [""]
-
-
-admin.site.register(Slider, SliderAdmin)
-admin.site.register(Slide, SlideAdmin)

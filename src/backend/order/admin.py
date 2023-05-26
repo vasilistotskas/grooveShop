@@ -10,6 +10,7 @@ class OrderItemLine(admin.TabularInline):
     extra = 0
 
 
+@admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = [
         "user",
@@ -40,10 +41,7 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemLine]
 
 
+@admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
     list_display = ["order", "product", "price", "quantity"]
     list_filter = ["order"]
-
-
-admin.site.register(Order, OrderAdmin)
-admin.site.register(OrderItem, OrderItemAdmin)

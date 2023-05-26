@@ -31,7 +31,6 @@ class SortableModel(models.Model):
         if self.pk is None:
             qs = self.get_ordering_queryset()
             existing_max = self.get_max_sort_order(qs)
-            print(existing_max)
             self.sort_order = 0 if existing_max is None else existing_max + 1
         super().save(*args, **kwargs)
 

@@ -13,7 +13,7 @@ from mptt.admin import DraggableMPTTAdmin
 
 
 def category_update_action(category):
-    def category_update(modeladmin, request, queryset):
+    def category_update(model_admin, request, queryset):
         return queryset.update(category=category)
 
     category_update.__name__ = "make_action_%s" % category.name
