@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.58.1 (2023-05-27)
+### Fix
+* **Django:** Api tests extend APITestCase class from django rest framework ([`b188bd5`](https://github.com/vasilistotskas/grooveShop/commit/b188bd528a6614b4e81d491058210fbf78730df3))
+
 ## v0.58.0 (2023-05-27)
 ### Feature
 * **Nuxt:** Lottie component, pinia stores auto discover HMR and some general fixes ([`2512e63`](https://github.com/vasilistotskas/grooveShop/commit/2512e63f19207e03722e2c8e2ecf0e87782ae9db))
