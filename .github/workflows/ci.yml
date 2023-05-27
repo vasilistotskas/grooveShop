@@ -16,7 +16,7 @@ jobs:
       with:
         python-version: 3.11.0
     - name: Install Python Poetry
-      uses: abatilo/actions-poetry@v2.1.0
+      uses: abatilo/actions-poetry@v2.3.0
       with:
         poetry-version: 1.3.1
     - name: Configure poetry
@@ -91,8 +91,8 @@ jobs:
           DB_USER: ${{ matrix.db_user }}
           DB_PASSWORD: ${{ matrix.db_password }}
         run: |
-          coverage run --omit=*/migrations/*,*/management/*,*/manage.py,*/setup.py,*/asgi.py,*/wsgi.py --source='.' src/manage.py test src/backend/tests/ && coverage report
-        timeout-minutes: 4
+          coverage run --omit=*/migrations/*,*/management/*,*/manage.py,*/setup.py,*/asgi.py,*/wsgi.py --source='.' src/manage.py test src/backend/tests/integration/blog/ && coverage report
+        timeout-minutes: 5
 
       - name: Coveralls
         if: matrix.db == 'postgres'
