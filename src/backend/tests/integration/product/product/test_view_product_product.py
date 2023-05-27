@@ -6,12 +6,11 @@ from backend.product.models.category import ProductCategory
 from backend.product.models.product import Product
 from backend.product.serializers.product import ProductSerializer
 from backend.vat.models import Vat
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
-class ProductViewSetTestCase(TestCase):
+class ProductViewSetTestCase(APITestCase):
     product: Product
 
     def setUp(self):
@@ -26,7 +25,6 @@ class ProductViewSetTestCase(TestCase):
             hits=0,
             weight=0.00,
         )
-        self.client = APIClient()
 
     def test_list(self):
         response = self.client.get("/api/v1/product/")

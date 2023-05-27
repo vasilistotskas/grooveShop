@@ -7,12 +7,11 @@ from backend.app.settings import BASE_DIR
 from backend.blog.models.category import BlogCategory
 from backend.blog.serializers.category import BlogCategorySerializer
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
-class BlogCategoryViewSetTestCase(TestCase):
+class BlogCategoryViewSetTestCase(APITestCase):
     image: str | SimpleUploadedFile = ""
     category: BlogCategory
 
@@ -20,7 +19,6 @@ class BlogCategoryViewSetTestCase(TestCase):
         self.category = BlogCategory.objects.create(
             name="name", slug="slug", description="description", image=self.image
         )
-        self.client = APIClient()
 
     def test_list(self):
         response = self.client.get("/api/v1/blog/category/")

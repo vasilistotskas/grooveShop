@@ -4,17 +4,15 @@ import json
 
 from backend.vat.models import Vat
 from backend.vat.serializers import VatSerializer
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
-class VatViewSetTestCase(TestCase):
+class VatViewSetTestCase(APITestCase):
     vat: Vat
 
     def setUp(self):
         self.vat = Vat.objects.create(value=20)
-        self.client = APIClient()
 
     def test_list(self):
         response = self.client.get("/api/v1/vat/")

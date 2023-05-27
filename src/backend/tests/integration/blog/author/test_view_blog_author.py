@@ -3,14 +3,13 @@ import json
 from backend.blog.models.author import BlogAuthor
 from backend.blog.serializers.author import BlogAuthorSerializer
 from django.contrib.auth import get_user_model
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 User = get_user_model()
 
 
-class BlogAuthorViewSetTestCase(TestCase):
+class BlogAuthorViewSetTestCase(APITestCase):
     author: BlogAuthor
 
     def setUp(self):
@@ -18,7 +17,6 @@ class BlogAuthorViewSetTestCase(TestCase):
         self.author = BlogAuthor.objects.create(
             user_id=self.user.id, website="https://www.google.com", bio="bio"
         )
-        self.client = APIClient()
 
     def test_list(self):
         response = self.client.get("/api/v1/blog/author/")

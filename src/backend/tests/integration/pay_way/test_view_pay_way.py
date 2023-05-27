@@ -4,19 +4,17 @@ import json
 
 from backend.pay_way.models import PayWay
 from backend.pay_way.serializers import PayWaySerializer
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
-class PayWayViewSetTestCase(TestCase):
+class PayWayViewSetTestCase(APITestCase):
     pay_way: PayWay
 
     def setUp(self):
         self.pay_way = PayWay.objects.create(
             name="Credit Card", active=True, cost=10, free_for_order_amount=100
         )
-        self.client = APIClient()
 
     def test_list(self):
         response = self.client.get("/api/v1/pay_way/")

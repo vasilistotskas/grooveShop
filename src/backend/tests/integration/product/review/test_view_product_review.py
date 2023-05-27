@@ -6,12 +6,11 @@ from backend.product.models.product import Product
 from backend.product.models.review import ProductReview
 from backend.product.serializers.review import ProductReviewSerializer
 from backend.user.models import UserAccount
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
-class ProductReviewViewSetTestCase(TestCase):
+class ProductReviewViewSetTestCase(APITestCase):
     user_account: UserAccount
     product: Product
     product_review: ProductReview
@@ -38,8 +37,8 @@ class ProductReviewViewSetTestCase(TestCase):
             rate=1,
             status="True",
         )
-        self.client = APIClient()
-        self.client.login(email=self.user_account.email, password="test12345@!")
+
+        self.client.force_authenticate(user=self.user_account)
 
     def test_list(self):
         response = self.client.get("/api/v1/product/review/")

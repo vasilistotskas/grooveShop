@@ -7,12 +7,11 @@ from backend.region.models import Region
 from backend.user.models import UserAccount
 from backend.user.models import UserAddress
 from backend.user.serializers.address import UserAddressSerializer
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
-class UserAddressViewSetTestCase(TestCase):
+class UserAddressViewSetTestCase(APITestCase):
     user: UserAccount
     user_address: UserAddress
 
@@ -31,8 +30,7 @@ class UserAddressViewSetTestCase(TestCase):
             zipcode="test",
             is_main=False,
         )
-        self.client = APIClient()
-        self.client.login(email=self.user.email, password="test12345@!")
+        self.client.force_authenticate(user=self.user)
 
     def test_list(self):
         response = self.client.get("/api/v1/user/address/")

@@ -4,12 +4,11 @@ import json
 
 from backend.tip.models import Tip
 from backend.tip.serializers import TipSerializer
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
-class TipViewSetTestCase(TestCase):
+class TipViewSetTestCase(APITestCase):
     tip: Tip
 
     def setUp(self):
@@ -19,7 +18,6 @@ class TipViewSetTestCase(TestCase):
             kind="success",
             active=True,
         )
-        self.client = APIClient()
 
     def test_list(self):
         response = self.client.get("/api/v1/tip/")

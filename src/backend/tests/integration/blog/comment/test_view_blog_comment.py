@@ -8,14 +8,13 @@ from backend.blog.models.comment import BlogComment
 from backend.blog.models.post import BlogPost
 from backend.blog.serializers.comment import BlogCommentSerializer
 from django.contrib.auth import get_user_model
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 User = get_user_model()
 
 
-class BlogCommentViewSetTestCase(TestCase):
+class BlogCommentViewSetTestCase(APITestCase):
     comment: BlogComment
 
     def setUp(self):
@@ -36,7 +35,6 @@ class BlogCommentViewSetTestCase(TestCase):
         self.comment = BlogComment.objects.create(
             content="content", post_id=post.id, user_id=user.id
         )
-        self.client = APIClient()
 
     def test_list(self):
         response = self.client.get("/api/v1/blog/comment/")

@@ -5,12 +5,11 @@ import json
 from backend.country.models import Country
 from backend.region.models import Region
 from backend.region.serializers import RegionSerializer
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
-class RegionViewSetTestCase(TestCase):
+class RegionViewSetTestCase(APITestCase):
     region: Region
     country: Country
 
@@ -27,7 +26,6 @@ class RegionViewSetTestCase(TestCase):
             alpha_2=self.country,
             name="Central Greece",
         )
-        self.client = APIClient()
 
     def test_list(self):
         response = self.client.get("/api/v1/region/")

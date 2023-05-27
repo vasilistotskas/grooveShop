@@ -5,19 +5,17 @@ import json
 from backend.blog.models.tag import BlogTag
 from backend.blog.serializers.tag import BlogTagSerializer
 from django.contrib.auth import get_user_model
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 User = get_user_model()
 
 
-class BlogTagViewSetTestCase(TestCase):
+class BlogTagViewSetTestCase(APITestCase):
     tag: BlogTag
 
     def setUp(self):
         self.tag = BlogTag.objects.create(name="test")
-        self.client = APIClient()
 
     def test_list(self):
         response = self.client.get("/api/v1/blog/tag/")

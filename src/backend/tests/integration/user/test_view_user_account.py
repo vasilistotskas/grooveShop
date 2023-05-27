@@ -4,20 +4,17 @@ import json
 
 from backend.user.models import UserAccount
 from backend.user.serializers.account import UserAccountSerializer
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
-class UserAccountViewSetTestCase(TestCase):
+class UserAccountViewSetTestCase(APITestCase):
     user_account: UserAccount
 
     def setUp(self):
         self.user_account = UserAccount.objects.create_user(
             email="test@test.com", password="test12345@!"
         )
-        self.client = APIClient()
-        self.client.login(email=self.user_account.email, password="test12345@!")
 
     def test_list(self):
         response = self.client.get("/api/v1/user/account/")

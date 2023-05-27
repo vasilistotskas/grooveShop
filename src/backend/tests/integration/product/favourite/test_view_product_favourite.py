@@ -6,12 +6,11 @@ from backend.product.models.favourite import ProductFavourite
 from backend.product.models.product import Product
 from backend.product.serializers.favourite import ProductFavouriteSerializer
 from backend.user.models import UserAccount
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
-class ProductFavouriteViewSetTestCase(TestCase):
+class ProductFavouriteViewSetTestCase(APITestCase):
     user_account: UserAccount
     product: Product
     product_favourite: ProductFavourite
@@ -35,8 +34,6 @@ class ProductFavouriteViewSetTestCase(TestCase):
             product=self.product,
             user=self.user_account,
         )
-        self.client = APIClient()
-        self.client.login(email=self.user_account.email, password="test12345@!")
 
     def test_list(self):
         response = self.client.get("/api/v1/product/favourite/")

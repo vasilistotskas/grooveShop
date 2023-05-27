@@ -5,13 +5,12 @@ import json
 from backend.slider.models import Slide
 from backend.slider.models import Slider
 from backend.slider.serializers import SlideSerializer
-from django.test import TestCase
 from django.utils.timezone import now
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
-class SlideViewSetTestCase(TestCase):
+class SlideViewSetTestCase(APITestCase):
     slide: Slide
     slider: Slider
 
@@ -35,7 +34,6 @@ class SlideViewSetTestCase(TestCase):
             date_start=now(),
             date_end=now(),
         )
-        self.client = APIClient()
 
     def test_list(self):
         response = self.client.get("/api/v1/slide/")

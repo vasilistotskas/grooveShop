@@ -4,12 +4,11 @@ import json
 
 from backend.country.models import Country
 from backend.country.serializers import CountrySerializer
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
-class CountryViewSetTestCase(TestCase):
+class CountryViewSetTestCase(APITestCase):
     country: Country
 
     def setUp(self):
@@ -20,12 +19,11 @@ class CountryViewSetTestCase(TestCase):
             iso_cc=300,
             phone_code=30,
         )
-        self.client = APIClient()
 
     def test_list(self):
         response = self.client.get("/api/v1/country/")
-        countrys = Country.objects.all()
-        serializer = CountrySerializer(countrys, many=True)
+        countries = Country.objects.all()
+        serializer = CountrySerializer(countries, many=True)
         self.assertEqual(response.data["results"], serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 

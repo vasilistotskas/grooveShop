@@ -8,14 +8,13 @@ from backend.blog.models.post import BlogPost
 from backend.blog.models.tag import BlogTag
 from backend.blog.serializers.post import BlogPostSerializer
 from django.contrib.auth import get_user_model
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 User = get_user_model()
 
 
-class BlogPostViewSetTestCase(TestCase):
+class BlogPostViewSetTestCase(APITestCase):
     post: BlogPost
 
     def setUp(self):
@@ -33,7 +32,6 @@ class BlogPostViewSetTestCase(TestCase):
             category_id=category.id,
             author_id=author.id,
         )
-        self.client = APIClient()
 
     def test_list(self):
         response = self.client.get("/api/v1/blog/post/")

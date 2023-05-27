@@ -4,12 +4,11 @@ import json
 
 from backend.slider.models import Slider
 from backend.slider.serializers import SliderSerializer
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
-class SliderViewSetTestCase(TestCase):
+class SliderViewSetTestCase(APITestCase):
     slider: Slider
 
     def setUp(self):
@@ -19,7 +18,6 @@ class SliderViewSetTestCase(TestCase):
             title="test",
             description="test",
         )
-        self.client = APIClient()
 
     def test_list(self):
         response = self.client.get("/api/v1/slider/")

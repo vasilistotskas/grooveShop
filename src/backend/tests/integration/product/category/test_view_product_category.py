@@ -4,12 +4,11 @@ import json
 
 from backend.product.models.category import ProductCategory
 from backend.product.serializers.category import ProductCategorySerializer
-from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
-class ProductCategoryViewSetTestCase(TestCase):
+class ProductCategoryViewSetTestCase(APITestCase):
     product_category: ProductCategory
 
     def setUp(self):
@@ -18,7 +17,6 @@ class ProductCategoryViewSetTestCase(TestCase):
             slug="test",
             description="test",
         )
-        self.client = APIClient()
 
     def test_list(self):
         response = self.client.get("/api/v1/product/category/")
