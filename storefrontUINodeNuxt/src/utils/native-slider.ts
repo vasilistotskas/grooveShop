@@ -15,7 +15,7 @@ interface NativeSliderInstance {
 	pollingInterval: number
 	deltaPadding: number
 	diffThreshold: number
-	renderLoopTimingBelt: number | null
+	renderLoopTimingBelt: NodeJS.Timer | null
 	renderQueue: Set<HTMLElement> | null
 	classList: {
 		draggable: string
@@ -437,8 +437,7 @@ export function NativeSlider() {
 				}
 				const detail = e.detail as { renderQueue: any }
 				this.update(detail)
-				// @ts-ignore
-				this.renderLoopTimingBelt = setInterval((e) => {
+				this.renderLoopTimingBelt = setInterval(() => {
 					this.dispatchNativeSliderRenderLoopPreUpdate()
 				}, this.pollingInterval)
 			})
