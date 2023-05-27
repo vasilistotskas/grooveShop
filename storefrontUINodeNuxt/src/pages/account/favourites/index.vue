@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useUserStore } from '~/stores/user'
-import { useFavouriteStore } from '~/stores/favourite'
 import {
 	Favourite,
 	FavouriteOrderingField,

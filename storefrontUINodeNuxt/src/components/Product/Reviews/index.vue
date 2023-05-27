@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
-import { Review, ReviewQuery, ReviewOrderingField } from '~/zod/product/review'
+import { Review, ReviewOrderingField, ReviewQuery } from '~/zod/product/review'
 import { EntityOrdering, OrderingOption } from '~/zod/ordering/ordering'
-import { useReviewsStore } from '~/stores/product/reviews'
 import emptyIcon from '~icons/mdi/package-variant-remove'
 
 const props = defineProps({
@@ -26,8 +25,6 @@ const props = defineProps({
 		validator: (value: string) => ['user', 'product'].includes(value)
 	}
 })
-
-const { reviewsAverage, reviewsCount } = toRefs(props)
 
 const { t } = useLang()
 const toast = useToast()

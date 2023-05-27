@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 import { Product } from '~/zod/product/product'
-import { useCartStore } from '~/stores/cart'
 import { GlobalEvents } from '~/events/global'
 
 const props = defineProps({
@@ -12,8 +11,6 @@ const props = defineProps({
 		required: true
 	}
 })
-
-const { product, quantity, text } = toRefs(props)
 
 const { t } = useLang()
 const store = useCartStore()

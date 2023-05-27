@@ -2,7 +2,6 @@
 import { AppSetup } from '~/utils/app'
 import { ITheme } from '~/utils/theme'
 import { GlobalEvents } from '~/events/global'
-import { useCartStore } from '~/stores/cart'
 
 AppSetup()
 const theme = useState<ITheme>('theme.current')

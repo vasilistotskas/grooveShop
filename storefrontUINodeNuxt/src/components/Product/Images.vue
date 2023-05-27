@@ -25,17 +25,15 @@ const props = defineProps({
 	}
 })
 
-const { product, productImages } = toRefs(props)
-
 const mainImage = computed(() => {
-	const images = productImages?.value?.results || []
+	const images = props.productImages?.results || []
 	return images.find((image) => image.isMain)
 })
 
 const { resolveImageFileExtension } = useImageResolver()
 
-const imageId = useState<number>(`${product?.value?.uuid}-imageID`, () => {
-	return mainImage.value?.id || productImages?.value?.results[0]?.id || 0
+const imageId = useState<number>(`${props.product?.uuid}-imageID`, () => {
+	return mainImage.value?.id || props.productImages?.results[0]?.id || 0
 })
 </script>
 
@@ -46,7 +44,7 @@ const imageId = useState<number>(`${product?.value?.uuid}-imageID`, () => {
 				v-for="(productImage, index) in productImages?.results"
 				v-show="imageId === productImage.id"
 				:key="index"
-				class="product-images-main grid h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center"
+				class="product-images-main grid h-64 md:h-80 rounded-lg bg-gray-100 mb-4 items-center justify-center"
 				:class="{
 					'main-image': imageId === productImage.id
 				}"

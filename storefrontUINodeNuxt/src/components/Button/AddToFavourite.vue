@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 import { Favourite } from '~/zod/product/favourite'
-import { useUserStore } from '~/stores/user'
 import { ButtonSize } from '~/zod/global/button'
 
 const props = defineProps({
@@ -34,24 +33,22 @@ const props = defineProps({
 	}
 })
 
-const { productId, userId, isFavourite, favourite, isAuthenticated } = toRefs(props)
-
 const { t } = useLang()
 const toast = useToast()
 const userStore = useUserStore()
 const { favourites } = storeToRefs(userStore)
 
 const toggleFavourite = async () => {
-	if (!isAuthenticated.value || !userId?.value || !favourites.value) {
+	if (!props.isAuthenticated || !props.userId || !favourites.value) {
 		toast.error(t('components.add_to_favourite_button.not_authenticated'))
 		return
 	}
-	const favouriteIndex = favourites.value.findIndex((f) => f.product === productId.value)
+	const favouriteIndex = favourites.value.findIndex((f) => f.product === props.productId)
 	if (favouriteIndex === -1) {
 		await userStore
 			.addFavourite({
-				product: String(productId.value),
-				user: String(userId.value)
+				product: String(props.productId),
+				user: String(props.userId)
 			})
 			.then(() => {
 				toast.success(t('components.add_to_favourite_button.added'))
@@ -72,13 +69,13 @@ const toggleFavourite = async () => {
 }
 
 const buttonLabel = computed(() => {
-	return isFavourite.value
+	return props.isFavourite
 		? t('components.add_to_favourite_button.remove')
 		: t('components.add_to_favourite_button.add')
 })
 
 const buttonColor = computed(() => {
-	return isFavourite.value ? 'red' : 'grey'
+	return !props.isFavourite || props.isFavourite ? 'red' : 'grey'
 })
 </script>
 

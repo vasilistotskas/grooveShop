@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { useCounter } from '~/stores/testing/counter'
-import { useIdentity } from '~/stores/testing/identity'
 import { capitalize } from '~/utils/str'
+import { useIdentityStore } from '~/stores/testing/identity'
+import { useCounterStore } from '~/stores/testing/counter'
 
 const config = useRuntimeConfig()
 const { t } = useLang()
@@ -19,8 +19,8 @@ useHead(() => ({
 	]
 }))
 
-const counter = useCounter()
-const identity = useIdentity()
+const counter = useCounterStore()
+const identity = useIdentityStore()
 </script>
 
 <template>

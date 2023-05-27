@@ -24,6 +24,12 @@ export default defineNuxtConfig({
 		typedPages: true
 	},
 	extends: ['nuxt-seo-kit'],
+	imports: {
+		dirs: [
+			// all directories under store/ will be auto-imported
+			'stores/**'
+		]
+	},
 	typescript: {
 		strict: true,
 		typeCheck: true,

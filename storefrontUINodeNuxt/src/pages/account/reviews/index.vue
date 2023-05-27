@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useUserStore } from '~/stores/user'
-import { useReviewsStore } from '~/stores/product/reviews'
 import { EntityOrdering, OrderingOption } from '~/zod/ordering/ordering'
 import { Review, ReviewOrderingField, ReviewQuery } from '~/zod/product/review'
 import emptyIcon from '~icons/mdi/package-variant-remove'

@@ -14,13 +14,16 @@ const props = defineProps({
 	}
 })
 
-const { text, maxChars } = toRefs(props)
-
 const uuid = uuidv4()
 const { t } = useLang()
 const showFullText = useState<boolean>(`${uuid}-read-more`, () => false)
-const trimmedText =
-	text.value.length > maxChars.value ? `${text.value.slice(0, maxChars.value)}...` : text
+const trimmedText = () => {
+	if (!props.text) return props.text
+	if (!props.maxChars) return props.text
+	return props.text.length > props.maxChars
+		? `${props.text.slice(0, props.maxChars)}...`
+		: props.text
+}
 
 const toggleFullText = () => {
 	showFullText.value = !showFullText.value
@@ -28,7 +31,7 @@ const toggleFullText = () => {
 </script>
 
 <template>
-	<div v-if="text.length > maxChars" class="relative">
+	<div v-if="text && text.length > maxChars" class="relative">
 		<div v-if="!showFullText" class="overflow-hidden text-gray-700 dark:text-gray-200">
 			{{ trimmedText }}
 		</div>

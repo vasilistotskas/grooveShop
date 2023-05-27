@@ -1,4 +1,3 @@
-]
 <script lang="ts" setup>
 // compiler macro
 const props = defineProps({
@@ -15,8 +14,6 @@ const props = defineProps({
 		default: undefined
 	}
 })
-
-const { modelValue, on } = toRefs(props)
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -42,7 +39,10 @@ onMounted(() => {
 	if (props.on) {
 		checked.value = true
 		emit('update:modelValue', true)
-		if (input.value) input.value.checked = true
+		if (input.value)
+			if ('checked' in input.value) {
+				input.value.checked = true
+			}
 	}
 })
 </script>

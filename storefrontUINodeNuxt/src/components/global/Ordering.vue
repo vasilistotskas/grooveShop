@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/vue'
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { PropType } from 'vue'
 import { OrderingOption } from '~/zod/ordering/ordering'
 
@@ -20,9 +20,11 @@ const props = defineProps({
 		default: true
 	}
 })
-const { ordering, orderingOptions } = toRefs(props)
+const { ordering } = toRefs(props)
 const selectedOrderingLabel = computed(() => {
-	const selectedOrdering = orderingOptions.value.find((o) => o.value === ordering.value)
+	if (!ordering?.value) return
+	const orderingOptions = props.orderingOptions ?? []
+	const selectedOrdering = orderingOptions.find((o) => o.value === ordering.value)
 	return selectedOrdering?.label
 })
 const listBox = ref(null)

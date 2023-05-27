@@ -5,8 +5,9 @@ import {
 	RadioGroupLabel,
 	RadioGroupOption
 } from '@headlessui/vue'
-import { usePayWayStore } from '~/stores/pay-way'
-import { PayWay } from '~/zod/pay-way/pay-way'
+import { PayWay, PayWaysEnum } from '~/zod/pay-way/pay-way'
+import CreditCardJSON from '~/assets/lotties/credit_card.json'
+import PayOnDeliveryJSON from '~/assets/lotties/pay_on_delivery.json'
 
 const { t } = useLang()
 
@@ -35,6 +36,21 @@ const selectedPayWay = computed<PayWay>(() => {
 	}
 	return payWay.value
 })
+
+const getPayWayLottie = (name: string) => {
+	switch (name) {
+		case PayWaysEnum.CREDIT_CARD: {
+			return CreditCardJSON
+		}
+		case PayWaysEnum.PAY_ON_DELIVERY: {
+			return PayOnDeliveryJSON
+		}
+		default: {
+			return CreditCardJSON
+		}
+	}
+}
+
 const updatePayWay = (value: PayWay) => {
 	emit('update:model-value', payWay)
 	payWay.value = value
@@ -84,8 +100,8 @@ const updatePayWay = (value: PayWay) => {
 								]"
 								class="relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none"
 							>
-								<div class="flex w-full items-center justify-between">
-									<div class="flex items-center">
+								<div class="grid grid-cols-3 w-full items-center justify-between">
+									<div class="grid items-center">
 										<div class="text-sm">
 											<RadioGroupLabel
 												:class="
@@ -103,11 +119,19 @@ const updatePayWay = (value: PayWay) => {
 												as="span"
 												class="inline"
 											>
-												{{ option.cost }}
+												<span>{{ option.cost }}</span>
 											</RadioGroupDescription>
 										</div>
 									</div>
-									<div v-show="checked" class="shrink-0">
+									<Lottie
+										class="grid"
+										:animation-data="getPayWayLottie(option.name)"
+										:width="'40px'"
+									></Lottie>
+									<div
+										v-show="checked"
+										class="grid w-full h-full items-center justify-items-end"
+									>
 										<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24">
 											<circle cx="12" cy="12" fill="#fff" fill-opacity="0.2" r="12" />
 											<path

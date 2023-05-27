@@ -32,7 +32,7 @@ const props = defineProps({
 					</div>
 					<div class="sidebar__list__item__value">
 						<span class="text-gray-700 dark:text-gray-200">
-							{{ props.totalItems }}
+							{{ totalItems }}
 						</span>
 					</div>
 				</div>
@@ -44,7 +44,7 @@ const props = defineProps({
 					</div>
 					<div class="sidebar__list__item__value">
 						<span class="text-gray-700 dark:text-gray-200">
-							{{ props.totalItemsUnique }}
+							{{ totalItemsUnique }}
 						</span>
 					</div>
 				</div>
@@ -55,9 +55,7 @@ const props = defineProps({
 						</span>
 					</div>
 					<div class="sidebar__list__item__value">
-						<span class="text-gray-700 dark:text-gray-200"
-							>{{ props.shippingPrice }}€
-						</span>
+						<span class="text-gray-700 dark:text-gray-200">{{ shippingPrice }}€ </span>
 					</div>
 				</div>
 				<div class="sidebar__list__item">
@@ -68,7 +66,7 @@ const props = defineProps({
 					</div>
 					<div class="sidebar__list__item__value">
 						<span class="text-gray-700 dark:text-gray-200"
-							>{{ props.totalDiscountValue }}€</span
+							>{{ totalDiscountValue }}€</span
 						>
 					</div>
 				</div>
@@ -79,9 +77,7 @@ const props = defineProps({
 						</span>
 					</div>
 					<div class="sidebar__list__item__value">
-						<span class="text-gray-700 dark:text-gray-200"
-							>{{ props.totalVatValue }}€</span
-						>
+						<span class="text-gray-700 dark:text-gray-200">{{ totalVatValue }}€</span>
 					</div>
 				</div>
 				<div class="sidebar__list__item">
@@ -91,7 +87,7 @@ const props = defineProps({
 						</span>
 					</div>
 					<div class="sidebar__list__item__value">
-						<span class="text-gray-700 dark:text-gray-200">{{ props.totalPrice }}€</span>
+						<span class="text-gray-700 dark:text-gray-200">{{ totalPrice }}€</span>
 					</div>
 				</div>
 			</div>

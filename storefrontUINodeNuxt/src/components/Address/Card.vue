@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 import { Address } from '~/zod/user/address'
-import { useUserAddressStore } from '~/stores/user/address'
 
 const props = defineProps({
 	address: {

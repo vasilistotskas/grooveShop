@@ -1,25 +1,38 @@
 <script lang="ts" setup>
+import { PropType } from 'vue'
 import { Account } from '~/zod/user/account'
-import { useUserStore } from '~/stores/user'
 
-const props = withDefaults(
-	defineProps<{
-		userAccount?: Account | null
-		showName?: boolean
-		imgWidth?: number | string
-		imgHeight?: number | string
-		backgroundBorder?: boolean
-		changeAvatar?: boolean
-	}>(),
-	{
-		userAccount: null,
-		showName: true,
-		imgWidth: 100,
-		imgHeight: 100,
-		backgroundBorder: false,
-		changeAvatar: false
+const props = defineProps({
+	userAccount: {
+		type: Object as PropType<Account>,
+		required: true
+	},
+	showName: {
+		type: Boolean,
+		required: false,
+		default: true
+	},
+	imgWidth: {
+		type: [Number, String],
+		required: false,
+		default: 100
+	},
+	imgHeight: {
+		type: [Number, String],
+		required: false,
+		default: 100
+	},
+	backgroundBorder: {
+		type: Boolean,
+		required: false,
+		default: false
+	},
+	changeAvatar: {
+		type: Boolean,
+		required: false,
+		default: false
 	}
-)
+})
 
 const { t } = useLang()
 const toast = useToast()

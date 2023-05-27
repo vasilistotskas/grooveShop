@@ -1,16 +1,14 @@
 <script lang="ts" setup>
-import { useCategoryStore } from '~/stores/product/category'
-
 const config = useRuntimeConfig()
 const route = useRoute('product-category-id-slug___en')
 const { t } = useLang()
 
+const categoryStore = useCategoryStore()
 const categoryId = route.params.id
-const { category, pending, error } = storeToRefs(useCategoryStore())
-const { fetchCategory } = useCategoryStore()
+const { category, pending, error } = storeToRefs(categoryStore)
 
 try {
-	await fetchCategory(categoryId)
+	await categoryStore.fetchCategory(categoryId)
 } catch (e) {
 	//
 }

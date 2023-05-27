@@ -4,7 +4,7 @@ export interface ICounterState {
 	count: number
 }
 
-export const useCounter = defineStore('counter', {
+export const useCounterStore = defineStore('counter', {
 	state: (): ICounterState => ({
 		count: 0
 	}),

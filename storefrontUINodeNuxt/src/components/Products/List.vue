@@ -1,12 +1,11 @@
 <script lang="ts" setup>
-import { useProductStore } from '~/stores/product/product'
 import { Product, ProductOrderingField, ProductQuery } from '~/zod/product/product'
 import { EntityOrdering, OrderingOption } from '~/zod/ordering/ordering'
 import emptyIcon from '~icons/mdi/package-variant-remove'
 
 const route = useRoute()
 const { t } = useLang()
-const store = useProductStore()
+const store = useProductsStore()
 
 const routePaginationParams = ref<ProductQuery>({
 	limit: Number(route.query.limit) || undefined,
@@ -75,15 +74,19 @@ watch(
 
 <template>
 	<div class="products-list grid gap-4">
-		<Error v-if="error" :code="error.statusCode" :error="error" />
+		<Error
+			v-if="error.products"
+			:code="error.products?.statusCode"
+			:error="error.products"
+		/>
 		<LoadingSkeleton
-			v-else-if="pending && !products.results.length"
+			v-else-if="pending.products && !products.results.length"
 			:card-height="'512px'"
-			:class="pending ? 'block' : 'hidden'"
-			:loading="pending"
+			:class="pending.products ? 'block' : 'hidden'"
+			:loading="pending.products"
 			:replicas="products.results.length || 4"
 		></LoadingSkeleton>
-		<template v-if="!pending && products.results.length">
+		<template v-if="!pending.products && products.results.length">
 			<div class="grid gap-2 md:flex md:items-center">
 				<PaginationLimitOffset
 					:current-page="pagination.currentPage"

@@ -5,8 +5,6 @@ const props = defineProps({
 		required: true
 	}
 })
-
-const { text } = toRefs(props)
 </script>
 
 <template>

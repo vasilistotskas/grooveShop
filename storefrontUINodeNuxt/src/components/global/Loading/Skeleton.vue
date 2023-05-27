@@ -85,25 +85,6 @@ const props = defineProps({
 		default: 1
 	}
 })
-const {
-	showImage,
-	showBodyImage,
-	imageWidth,
-	imageHeight,
-	isCircle,
-	showHeading,
-	showParagraph,
-	showFooter,
-	replicas,
-	cardWidth,
-	cardHeight,
-	loading,
-	direction,
-	columns,
-	columnsMd,
-	columnsLg,
-	cardBodyParagraphs
-} = toRefs(props)
 </script>
 
 <template>

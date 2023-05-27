@@ -2,9 +2,6 @@
 import { FieldContext, useField, useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import { z } from 'zod'
-import { useUserStore } from '~/stores/user'
-import { useCountryStore } from '~/stores/country'
-import { useRegionStore } from '~/stores/region'
 import { defaultSelectOptionChoose } from '~/zod/global/general'
 import { ITheme } from '~/utils/theme'
 

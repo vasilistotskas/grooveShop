@@ -15,8 +15,6 @@ const props = defineProps({
 		required: true
 	}
 })
-
-const { title, description, icon } = toRefs(props)
 </script>
 
 <template>

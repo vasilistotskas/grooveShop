@@ -2,9 +2,6 @@
 import { toTypedSchema } from '@vee-validate/zod'
 import { FieldContext, useField, useForm } from 'vee-validate'
 import { z } from 'zod'
-import { useCartStore } from '~/stores/cart'
-import { useCountryStore } from '~/stores/country'
-import { useRegionStore } from '~/stores/region'
 import {
 	defaultSelectOptionChoose,
 	FloorChoicesEnum,

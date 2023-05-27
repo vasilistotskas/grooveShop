@@ -28,7 +28,7 @@ const updateIndicator = () => {
 	const currentActiveIndex = tabItems.value.findIndex(
 		({ name }) => name === activeTab.value
 	)
-	const tabItem = tabs.value.querySelectorAll('.tabs-header-item')[
+	const tabItem = tabs.value?.querySelectorAll('.tabs-header-item')[
 		currentActiveIndex
 	] as HTMLDivElement
 	if (!tabItem) return
@@ -36,8 +36,10 @@ const updateIndicator = () => {
 	// set dom position and size to tab item
 	const padding = 24
 	const diff = 30
-	dom.style.width = `${tabItem.offsetWidth + diff}px`
-	dom.style.left = `${tabItem.offsetLeft - padding - diff / 2}px`
+	if ('style' in dom) {
+		dom.style.width = `${tabItem.offsetWidth + diff}px`
+		dom.style.left = `${tabItem.offsetLeft - padding - diff / 2}px`
+	}
 }
 
 // watches

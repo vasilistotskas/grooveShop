@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PropType, Ref } from 'vue'
+import { PropType } from 'vue'
 import { CartItem } from '~/zod/cart/cart-item'
 import { GlobalEvents } from '~/events/global'
 
@@ -7,13 +7,7 @@ const props = defineProps({
 	cartItem: { type: Object as PropType<CartItem>, required: true }
 })
 
-const {
-	cartItem
-}: {
-	cartItem: Ref<CartItem>
-} = toRefs(props)
-
-const product = computed(() => cartItem.value.product)
+const product = computed(() => props.cartItem?.product)
 
 const { contentShorten } = useText()
 const { resolveImageFilenameNoExt, resolveImageFileExtension, resolveImageSrc } =
@@ -41,6 +35,7 @@ const cartItemQuantity = useState<number>(
 
 <template>
 	<div
+		v-if="product"
 		class="grid grid-cols-6 items-center gap-4 py-4 bg-white dark:bg-slate-800 border rounded-md border-gray-900/10 dark:border-gray-50/[0.2]"
 	>
 		<div class="image">

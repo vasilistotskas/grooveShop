@@ -34,8 +34,6 @@ const props = defineProps({
 	}
 })
 
-const { text, type, size, to, href } = toRefs(props)
-
 const localePath = useLocalePath()
 
 // state:styles

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useCartStore } from '~/stores/cart'
 import { GlobalEvents } from '~/events/global'
 import emptyIcon from '~icons/mdi/package-variant-remove'
 

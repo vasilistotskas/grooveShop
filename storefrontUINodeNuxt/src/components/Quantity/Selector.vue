@@ -6,25 +6,23 @@ const props = defineProps({
 	cartItemId: { type: Number, required: true }
 })
 
-const { max, cartItemId } = toRefs(props)
-
 const bus = useEventBus<string>(GlobalEvents.CART_QUANTITY_SELECTOR)
-const cartItemQuantity = useState<number>(`${cartItemId.value}-quantity`)
+const cartItemQuantity = useState<number>(`${props.cartItemId}-quantity`)
 
 const decreaseQuantityEvent = () => {
 	if (cartItemQuantity.value <= 1) return
 	cartItemQuantity.value -= 1
 	bus.emit('update', {
 		quantity: cartItemQuantity.value,
-		cartItemId: cartItemId.value
+		cartItemId: props.cartItemId
 	})
 }
 const increaseQuantityEvent = () => {
-	if (cartItemQuantity.value >= max.value) return
+	if (cartItemQuantity.value >= props.max) return
 	cartItemQuantity.value += 1
 	bus.emit('update', {
 		quantity: cartItemQuantity.value,
-		cartItemId: cartItemId.value
+		cartItemId: props.cartItemId
 	})
 }
 const changeQuantityEvent = (event: Event) => {
@@ -32,7 +30,7 @@ const changeQuantityEvent = (event: Event) => {
 	const value = parseInt(event.target.value)
 	bus.emit('update', {
 		quantity: value,
-		cartItemId: cartItemId.value
+		cartItemId: props.cartItemId
 	})
 }
 </script>

@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import { useUserStore } from '~/stores/user'
 import { Address, AddressOrderingField, AddressQuery } from '~/zod/user/address'
 import { EntityOrdering, OrderingOption } from '~/zod/ordering/ordering'
 import emptyIcon from '~icons/mdi/package-variant-remove'
-import { useUserAddressStore } from '~/stores/user/address'
 
 const { t } = useLang()
 const route = useRoute('account-addresses___en')

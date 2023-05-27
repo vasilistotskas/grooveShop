@@ -35,8 +35,6 @@ const props = defineProps({
 	}
 })
 
-const { existingReview, product, user, isAuthenticated } = toRefs(props)
-
 const { t } = useLang()
 const toast = useToast()
 
@@ -49,7 +47,7 @@ const selectedRatio = ref(0)
 const ratingBoard = ref<HTMLElement | null>(null)
 
 const reviewButtonText = computed(() => {
-	if (existingReview?.value === undefined) {
+	if (props.existingReview === undefined) {
 		return t('components.product.review.write_review')
 	}
 	return t('components.product.review.update_review')
@@ -57,10 +55,10 @@ const reviewButtonText = computed(() => {
 
 const reviewCount = computed(() => {
 	if (
-		existingReview?.value?.rate !== null &&
-		!isNaN(existingReview?.value?.rate as unknown as number)
+		props.existingReview?.rate !== null &&
+		!isNaN(props.existingReview?.rate as unknown as number)
 	) {
-		return Number(existingReview?.value?.rate.toFixed(1))
+		return Number(props.existingReview?.rate.toFixed(1))
 	}
 	return null
 })
@@ -116,7 +114,7 @@ const reviewScoreText = computed(() => {
 	if (
 		liveReviewCountRatio.value < 0.01 ||
 		(newSelectionRatio === null &&
-			(reviewCount.value === null || existingReview?.value?.rate === 0))
+			(reviewCount.value === null || props.existingReview?.rate === 0))
 	) {
 		return ''
 	}
@@ -188,11 +186,11 @@ const updateNewSelectionRatio = (event: TouchEvent | MouseEvent) => {
 const bus = useEventBus<string>('productReview')
 
 const deleteReviewHandle = () => {
-	if (isAuthenticated.value && existingReview?.value) {
+	if (props.isAuthenticated && props.existingReview) {
 		const confirmed = confirm(t('components.product.review.confirm_delete'))
 		if (!confirmed) return
 		bus.emit('delete', {
-			id: existingReview?.value?.id
+			id: props.existingReview.id
 		})
 		values.rate = 0
 		values.comment = ''
@@ -203,7 +201,7 @@ const deleteReviewHandle = () => {
 
 const modalBus = useEventBus<string>(GlobalEvents.GENERIC_MODAL)
 const openModal = () => {
-	if (isAuthenticated.value) {
+	if (props.isAuthenticated) {
 		modalBus.emit('modal-open-reviewModal')
 	} else {
 		toast.error(t('components.product.review.must_be_logged_in'))
@@ -236,8 +234,8 @@ const validationSchema = toTypedSchema(ZodReviewSchema)
 const { values, handleSubmit, errors, submitCount } = useForm({
 	validationSchema,
 	initialValues: {
-		comment: existingReview?.value?.comment || '',
-		rate: existingReview?.value?.rate || 0
+		comment: props.existingReview?.comment || '',
+		rate: props.existingReview?.rate || 0
 	}
 })
 
@@ -249,22 +247,22 @@ const tooManyAttempts = computed(() => {
 })
 
 const onSubmit = handleSubmit((event) => {
-	if (isAuthenticated.value) {
-		if (existingReview?.value === undefined) {
+	if (props.isAuthenticated) {
+		if (props.existingReview === undefined) {
 			bus.emit('create', {
 				comment: event.comment,
 				rate: event.rate,
-				productId: product.value?.id,
-				userId: user?.value?.id,
+				productId: props.product?.id,
+				userId: props.user?.id,
 				status: 'True'
 			})
 		} else {
 			bus.emit('update', {
-				id: existingReview?.value?.id,
+				id: props.existingReview?.id,
 				comment: event.comment,
 				rate: event.rate,
-				productId: product.value?.id,
-				userId: user?.value?.id,
+				productId: props.product?.id,
+				userId: props.user?.id,
 				status: 'True'
 			})
 		}

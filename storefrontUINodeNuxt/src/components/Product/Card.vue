@@ -1,10 +1,8 @@
 <script lang="ts" setup>
 import { isClient } from '@vueuse/shared'
 import { useShare } from '@vueuse/core'
-import { PropType, Ref } from 'vue'
+import { PropType } from 'vue'
 import { Product } from '~/zod/product/product'
-import { useAuthStore } from '~/stores/auth'
-import { useUserStore } from '~/stores/user'
 
 const props = defineProps({
 	product: { type: Object as PropType<Product>, required: true },
@@ -28,59 +26,38 @@ const { account, favourites } = storeToRefs(userStore)
 
 const isAuthenticated = authStore.isAuthenticated
 
-const {
-	product,
-	showAddToFavouriteButton,
-	showShareButton,
-	showAddToCartButton,
-	imgWidth,
-	imgHeight,
-	showVat,
-	showStartPrice,
-	showDescription
-}: {
-	product: Ref<Product>
-	showAddToFavouriteButton: Ref<boolean>
-	showShareButton: Ref<boolean>
-	showAddToCartButton: Ref<boolean>
-	imgWidth: Ref<number>
-	imgHeight: Ref<number>
-	showVat: Ref<boolean>
-	showStartPrice: Ref<boolean>
-	showDescription: Ref<boolean>
-} = toRefs(props)
-
 const productUrl = computed(() => {
-	if (!product.value) return ''
-	return `/product/${product.value.id}/${product.value.slug}`
+	if (!props.product) return ''
+	return `/product/${props.product.id}/${props.product.slug}`
 })
 
 const imageExtension = computed(() => {
-	return resolveImageFileExtension(product.value.mainImageFilename)
+	return resolveImageFileExtension(props.product?.mainImageFilename)
 })
 
 const imageSrc = computed(() => {
 	return resolveImageSrc(
-		product.value?.mainImageFilename,
+		props.product?.mainImageFilename,
 		`media/uploads/products/${resolveImageFilenameNoExt(
-			product.value?.mainImageFilename
+			props.product?.mainImageFilename
 		)}`
 	)
 })
 
 const shareOptions = ref({
-	title: product.value.name,
-	text: product.value.description || '',
+	title: props.product?.name,
+	text: props.product?.description || '',
 	url: isClient ? productUrl : ''
 })
 const { share, isSupported } = useShare(shareOptions)
 const startShare = () => share().catch((err) => err)
+
 const productInUserFavourites = computed(() => {
-	return userStore.getIsProductInFavourites(product.value.id)
+	return userStore.getIsProductInFavourites(props.product?.id)
 })
 
 const userToProductFavourite = computed(() => {
-	return userStore.getUserToProductFavourite(product.value.id)
+	return userStore.getUserToProductFavourite(props.product?.id)
 })
 </script>
 

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { TransitionRoot, TransitionChild } from '@headlessui/vue'
+import { TransitionChild, TransitionRoot } from '@headlessui/vue'
+
 export type IStyles = 'primary' | 'success' | 'warning' | 'danger'
 
 const props = defineProps({
@@ -18,8 +19,6 @@ const props = defineProps({
 			['primary', 'success', 'warning', 'danger'].includes(value)
 	}
 })
-
-const { title, text, type } = toRefs(props)
 
 const styles = reactive<{
 	[key: string]: string
@@ -43,7 +42,8 @@ const textStyles = reactive<{
 
 const isDestroyed = ref<Boolean>(false)
 const selectedType = computed<IStyles>((): IStyles => {
-	if (['primary', 'success', 'warning', 'danger'].includes(type.value))
+	if (!props.type) return 'primary'
+	if (['primary', 'success', 'warning', 'danger'].includes(props.type))
 		return props.type as IStyles
 	return 'primary'
 })
@@ -88,11 +88,11 @@ const close = () => {
 				</div>
 				<div class="flex-1">
 					<div :class="`font-bold text-lg mb-0.5 ${selectedTextStyle}`">
-						<slot name="title">{{ props.title }}</slot>
+						<slot name="title">{{ title }}</slot>
 					</div>
 					<div>
 						<p class="text-gray-700 dark:text-gray-100">
-							<slot name="title">{{ props.text }}</slot>
+							<slot name="title">{{ text }}</slot>
 						</p>
 					</div>
 				</div>
@@ -102,7 +102,7 @@ const close = () => {
 						class="text-slate-600 hover:text-red-500 dark:text-gray-400 font-bold"
 						@click="close"
 					>
-						<span class="hidden">{{ props.title }}</span>
+						<span class="hidden">{{ title }}</span>
 						<IconClarity:timesLine />
 					</button>
 				</div>

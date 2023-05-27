@@ -17,9 +17,6 @@ const props = defineProps({
 		default: ''
 	}
 })
-
-const { text, to, href, cssClass } = toRefs(props)
-
 const localePath = useLocalePath()
 </script>
 

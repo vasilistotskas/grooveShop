@@ -20,8 +20,6 @@ const props = defineProps({
 	}
 })
 
-const { code, wrap, error } = toRefs(props)
-
 const divTag = ref('div')
 </script>
 

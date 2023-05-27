@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PropType, Ref } from 'vue'
+import { PropType } from 'vue'
 import { Review } from '~/zod/product/review'
 
 const props = defineProps({
@@ -14,17 +14,9 @@ const props = defineProps({
 	}
 })
 
-const {
-	review,
-	displayImageOf
-}: {
-	review: Ref<Review>
-	displayImageOf: Ref<'user' | 'product'>
-} = toRefs(props)
-
 const product = computed(() => {
-	if (typeof review.value.product === 'number') return undefined
-	return review.value.product
+	if (typeof props.review?.product === 'number') return undefined
+	return props.review?.product
 })
 
 const userAccount = computed(() => {
@@ -41,7 +33,10 @@ const { resolveImageFilenameNoExt, resolveImageFileExtension, resolveImageSrc } 
 		<div class="reviews_list__item__content__header">
 			<div class="reviews_list__item__content__header__user">
 				<div class="reviews_list__item__content__header__avatar">
-					<UserAvatar v-if="displayImageOf === 'user'" :user-account="userAccount" />
+					<UserAvatar
+						v-if="userAccount && displayImageOf === 'user'"
+						:user-account="userAccount"
+					/>
 					<div
 						v-if="displayImageOf === 'product' && product"
 						class="reviews_list__item__content__header__avatar__product"

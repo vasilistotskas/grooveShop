@@ -1,7 +1,5 @@
 <script lang="ts" setup>
 import { FunctionalComponent, SVGAttributes } from 'vue'
-import { useAuthStore } from '~/stores/auth'
-import { useCartStore } from '~/stores/cart'
 import userShield from '~icons/fa6-solid/user-shield'
 import doorArrowRight from '~icons/fluent/door-arrow-right-28-regular'
 

@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useUserStore } from '~/stores/user'
-
 const { t } = useLang()
 const route = useRoute()
 
@@ -20,7 +18,7 @@ const { account, favourites, reviews, orders, pending, error } = storeToRefs(use
 						<template #drawer>
 							<UserSidebar mode="mobile" />
 						</template>
-						<template #image>
+						<template v-if="account" #image>
 							<UserAvatar :user-account="account" :img-width="40" :img-height="40" />
 						</template>
 					</UserNavbar>

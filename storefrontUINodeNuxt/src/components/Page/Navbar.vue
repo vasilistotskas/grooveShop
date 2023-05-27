@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import { useCartStore } from '~/stores/cart'
-import { useAuthStore } from '~/stores/auth'
-
 const config = useRuntimeConfig()
 const { t } = useLang()
 

@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useUserStore } from '~/stores/user'
-import { useOrderStore } from '~/stores/order'
 import emptyIcon from '~icons/mdi/package-variant-remove'
 import { Order, OrderOrderingField, OrderQuery } from '~/zod/order/order'
 import { EntityOrdering, OrderingOption } from '~/zod/ordering/ordering'
