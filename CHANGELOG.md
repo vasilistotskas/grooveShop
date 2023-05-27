@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.58.0 (2023-05-27)
+### Feature
+* **Nuxt:** Lottie component, pinia stores auto discover HMR and some general fixes ([`2512e63`](https://github.com/vasilistotskas/grooveShop/commit/2512e63f19207e03722e2c8e2ecf0e87782ae9db))
+
 ## v0.57.3 (2023-05-27)
 ### Fix
 * **NativeSlider:** Updated renderLoopTimingBelt type ([`811ba2c`](https://github.com/vasilistotskas/grooveShop/commit/811ba2cf86a5f4621b0b382acb015edb525254dc))
