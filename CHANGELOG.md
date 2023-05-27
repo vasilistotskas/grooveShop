@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.57.3 (2023-05-27)
+### Fix
+* **NativeSlider:** Updated renderLoopTimingBelt type ([`811ba2c`](https://github.com/vasilistotskas/grooveShop/commit/811ba2cf86a5f4621b0b382acb015edb525254dc))
+
 ## v0.57.2 (2023-05-26)
 ### Fix
 * **Django:** Address test cases and address serializer validate method fix ([`a0c5ca9`](https://github.com/vasilistotskas/grooveShop/commit/a0c5ca90f97be68d96e1274c6cc5b294be8bd5e1))
