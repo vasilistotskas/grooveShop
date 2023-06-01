@@ -55,7 +55,7 @@ bus.on((event, payload: OrderQuery) => {
 watch(
 	() => route.query,
 	() => {
-		bus.emit('userOrders', {
+		bus.emit('update', {
 			page: Number(route.query.page) || undefined,
 			ordering: route.query.ordering || '-createdAt',
 			userId: String(account.value?.id)

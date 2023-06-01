@@ -63,7 +63,7 @@ bus.on((event, payload: ProductQuery) => {
 watch(
 	() => route.query,
 	() => {
-		bus.emit('products', {
+		bus.emit('update', {
 			limit: Number(route.query.limit) || undefined,
 			offset: Number(route.query.offset) || undefined,
 			ordering: route.query.ordering || '-createdAt'

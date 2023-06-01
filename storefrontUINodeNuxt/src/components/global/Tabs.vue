@@ -101,6 +101,9 @@ onMounted(() => {
 					<span class="flex-1 bg-slate-500/40 rounded-lg" />
 				</span>
 			</div>
+			<template #fallback>
+				<ClientOnlyFallback />
+			</template>
 		</ClientOnly>
 		<div
 			class="tabs-body relative text-slate-800 dark:text-white bg-gray-200 dark:bg-slate-800 shadow rounded-b-lg"

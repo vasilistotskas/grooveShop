@@ -13,6 +13,9 @@
 				</p>
 			</div>
 		</Teleport>
+		<template #fallback>
+			<ClientOnlyFallback />
+		</template>
 	</ClientOnly>
 </template>
 

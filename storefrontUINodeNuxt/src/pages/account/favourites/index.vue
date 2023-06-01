@@ -61,7 +61,7 @@ bus.on((event, payload: FavouriteQuery) => {
 watch(
 	() => route.query,
 	() => {
-		bus.emit('userFavourites', {
+		bus.emit('update', {
 			page: Number(route.query.page) || undefined,
 			ordering: route.query.ordering || '-createdAt',
 			userId: String(account.value?.id),

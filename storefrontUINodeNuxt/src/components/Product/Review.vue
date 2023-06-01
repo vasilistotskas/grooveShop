@@ -37,6 +37,7 @@ const props = defineProps({
 
 const { t } = useLang()
 const toast = useToast()
+const swal = useSwal()
 
 const editingLocked = ref(false)
 const reviewCountMax = ref(10)
@@ -58,7 +59,7 @@ const reviewCount = computed(() => {
 		props.existingReview?.rate !== null &&
 		!isNaN(props.existingReview?.rate as unknown as number)
 	) {
-		return Number(props.existingReview?.rate.toFixed(1))
+		return Number(props.existingReview?.rate).toFixed(1)
 	}
 	return null
 })
@@ -187,13 +188,28 @@ const bus = useEventBus<string>('productReview')
 
 const deleteReviewHandle = () => {
 	if (props.isAuthenticated && props.existingReview) {
-		const confirmed = confirm(t('components.product.review.confirm_delete'))
-		if (!confirmed) return
-		bus.emit('delete', {
-			id: props.existingReview.id
-		})
-		values.rate = 0
-		values.comment = ''
+		swal
+			.fire({
+				title: t('components.product.review.delete_review'),
+				text: t('components.product.review.delete_review_confirm'),
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonText: t('components.product.review.delete_review_confirm'),
+				cancelButtonText: t('components.product.review.delete_review_cancel'),
+				customClass: {
+					container: 'z-40'
+				}
+			})
+			.then((result) => {
+				if (!result.isConfirmed) {
+					return
+				}
+				bus.emit('delete', {
+					id: props.existingReview?.id
+				})
+				values.rate = 0
+				values.comment = ''
+			})
 	} else {
 		toast.error(t('components.product.review.must_be_logged_in'))
 	}

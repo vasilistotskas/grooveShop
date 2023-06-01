@@ -11,7 +11,7 @@ export interface CategoryState {
 }
 
 export const useCategoryStore = defineStore({
-	id: 'productCategory',
+	id: 'product-category',
 	state: (): CategoryState => ({
 		categories: {
 			links: {

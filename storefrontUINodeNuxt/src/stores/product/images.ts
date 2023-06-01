@@ -9,7 +9,7 @@ export interface ImagesState {
 }
 
 export const useImagesStore = defineStore({
-	id: 'productImages',
+	id: 'product-images',
 	state: (): ImagesState => ({
 		images: {
 			links: {

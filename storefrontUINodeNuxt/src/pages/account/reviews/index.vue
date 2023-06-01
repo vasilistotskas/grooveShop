@@ -56,7 +56,7 @@ bus.on((event, payload: ReviewQuery) => {
 watch(
 	() => route.query,
 	() => {
-		bus.emit('userReviews', {
+		bus.emit('update', {
 			page: Number(route.query.page) || undefined,
 			ordering: route.query.ordering || '-createdAt',
 			userId: String(account.value?.id),

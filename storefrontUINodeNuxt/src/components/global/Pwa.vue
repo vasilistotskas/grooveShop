@@ -57,6 +57,9 @@ const pwa = useNuxtApp().$pwa
 				</button>
 			</div>
 		</div>
+		<template #fallback>
+			<ClientOnlyFallback />
+		</template>
 	</ClientOnly>
 </template>
 

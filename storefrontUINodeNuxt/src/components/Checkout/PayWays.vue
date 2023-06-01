@@ -127,7 +127,7 @@ const updatePayWay = (value: PayWay) => {
 										class="grid"
 										:animation-data="getPayWayLottie(option.name)"
 										:width="'40px'"
-									></Lottie>
+									/>
 									<div
 										v-show="checked"
 										class="grid w-full h-full items-center justify-items-end"

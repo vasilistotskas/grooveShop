@@ -14,7 +14,7 @@ export interface ReviewsState {
 }
 
 export const useReviewsStore = defineStore({
-	id: 'productReviews',
+	id: 'product-reviews',
 	state: (): ReviewsState => ({
 		reviews: {
 			links: {

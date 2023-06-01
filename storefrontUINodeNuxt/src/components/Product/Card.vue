@@ -110,6 +110,9 @@ const userToProductFavourite = computed(() => {
 								class="font-extrabold capitalize"
 								@click="startShare"
 							/>
+							<template #fallback>
+								<ClientOnlyFallback />
+							</template>
 						</ClientOnly>
 						<ButtonAddToFavourite
 							v-if="showAddToFavouriteButton"
