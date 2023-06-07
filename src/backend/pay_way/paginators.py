@@ -1,4 +1,4 @@
-from backend.helpers.paginator import CountPaginator
+from backend.core.pagination.count import CountPaginator
 
 
 class PayWayPagination(CountPaginator):

@@ -1,4 +1,4 @@
-from backend.helpers.paginator import LimitOffsetPaginator
+from backend.core.pagination.limit_offset import LimitOffsetPaginator
 
 
 class ProductPagination(LimitOffsetPaginator):
