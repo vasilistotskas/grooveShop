@@ -10,7 +10,6 @@ from django.core.management import BaseCommand
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-
         img = "uploads/country/no_photo.jpg"
         if not default_storage.exists(img):
             img_path = os.path.join(BASE_DIR, "files/images") + "/no_photo.jpg"

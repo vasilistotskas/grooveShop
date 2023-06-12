@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: DeepWeb API
   version: 1.0.0
-  description: DeepWeb API Documentation
+  description: DeepWeb API description
 paths:
   /api/v1/active_users/active_users_count/:
     get:

@@ -42,7 +42,6 @@ class Checkout(APIView):
         return paid_amount
 
     def create_order(self, request, paid_amount, serializer, items, pay_way_name):
-
         self.decrease_product_stock(items)
 
         if request.data.get("user_id"):

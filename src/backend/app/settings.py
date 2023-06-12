@@ -6,6 +6,7 @@ import environ
 
 env = environ.Env(
     # set casting, default value
+    SECRET_KEY=(str, "django-insecure-1#t2p3u4^=5)6@7(8)9-0"),
     DEBUG=(bool, False),
     SYSTEM_ENV=(str, None),
     CORS_ORIGIN_ALLOW_ALL=(bool, False),
@@ -385,7 +386,7 @@ REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "COERCE_DECIMAL_TO_STRING": False,
-    "DEFAULT_PAGINATION_CLASS": "backend.helpers.paginator.CountPaginator",
+    "DEFAULT_PAGINATION_CLASS": "backend.core.pagination.count.CountPaginator",
     "DEFAULT_RENDERER_CLASSES": (
         "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
         "djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer",
