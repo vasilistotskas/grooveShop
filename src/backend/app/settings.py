@@ -7,6 +7,7 @@ import environ
 env = environ.Env(
     # set casting, default value
     SECRET_KEY=(str, "django-insecure-1#t2p3u4^=5)6@7(8)9-0"),
+    BACKEND_BASE_URL=(str, "http://localhost:8000"),
     DEBUG=(bool, False),
     SYSTEM_ENV=(str, None),
     CORS_ORIGIN_ALLOW_ALL=(bool, False),
