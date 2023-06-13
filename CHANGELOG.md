@@ -2,6 +2,15 @@
 
 <!--next-version-placeholder-->
 
+## v0.58.2 (2023-06-13)
+
+### Fix
+
+* **Django:** Miss match name for env default fix ([`978b1f5`](https://github.com/vasilistotskas/grooveShop/commit/978b1f5371d41ff4f6673e4daba53100fedd0375))
+* **Django:** Add env default SECRET_KEY var for github actions. Minor fixes and versions bump ([`9c8d44c`](https://github.com/vasilistotskas/grooveShop/commit/9c8d44caa8859e311dd74170fe0ce627e53eda6b))
+* **Django:** Pagination API classes moved to core/pagination and splited ([`9a1894a`](https://github.com/vasilistotskas/grooveShop/commit/9a1894ae5c8f5d75d50f73aa1e56fe810585a05a))
+* **env:** Env added to gitignore, useless env file removed, nuxt env key fixes and add .env.example for main app ([`3b4e523`](https://github.com/vasilistotskas/grooveShop/commit/3b4e523d358ea549e2a98ecb7096b28347c48077))
+
 ## v0.58.1 (2023-05-27)
 ### Fix
 * **Django:** Api tests extend APITestCase class from django rest framework ([`b188bd5`](https://github.com/vasilistotskas/grooveShop/commit/b188bd528a6614b4e81d491058210fbf78730df3))
