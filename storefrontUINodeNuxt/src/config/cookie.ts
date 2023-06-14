@@ -1,4 +1,5 @@
 export const cookieControl = {
+	isCssPonyfillEnabled: true,
 	cookies: {
 		necessary: [
 			{

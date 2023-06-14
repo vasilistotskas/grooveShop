@@ -1,17 +1,18 @@
 import { resolve } from 'node:path'
 import {
-	defineNuxtModule,
 	addPlugin,
-	extendWebpackConfig,
 	addTemplate,
-	createResolver
+	createResolver,
+	defineNuxtModule,
+	extendWebpackConfig
 } from '@nuxt/kit'
 
 import { version } from '../package.json'
 import { DEFAULTS, ModuleOptions } from '../runtime/cookies/types'
 
 const resolver = createResolver(import.meta.url)
-const runtimeDir = resolver.resolve('../runtime/cookies')
+const runtimeDir = resolver.resolve('../runtime')
+const cookiesDir = resolver.resolve('../runtime/cookies')
 
 export default defineNuxtModule<ModuleOptions>({
 	meta: {
@@ -27,13 +28,13 @@ export default defineNuxtModule<ModuleOptions>({
 			? resolve(runtimeDir, 'set-vars/ponyfill')
 			: resolve(runtimeDir, 'set-vars/native')
 
-		nuxt.options.alias['#cookie-control'] = runtimeDir
-		nuxt.options.build.transpile.push(runtimeDir)
+		nuxt.options.alias['#cookie-control'] = cookiesDir
+		nuxt.options.build.transpile.push(cookiesDir)
 
 		pushCss(moduleOptions, nuxt)
 		blockIframes(moduleOptions)
 
-		addPlugin(resolve(runtimeDir, 'plugin'))
+		addPlugin(resolve(cookiesDir, 'plugin'))
 		addTemplate({
 			filename: 'cookie-control-options.ts',
 			write: true,
@@ -82,7 +83,6 @@ const blockIframes = (moduleOptions: ModuleOptions) => {
 	}
 }
 
-// @ts-ignore
-const pushCss = (moduleOptions: ModuleOptions, nuxt) => {
-	if (moduleOptions.isCssEnabled) nuxt.options.css.push(resolve(runtimeDir, 'styles.css'))
+const pushCss = (moduleOptions: ModuleOptions, nuxt: any) => {
+	if (moduleOptions.isCssEnabled) nuxt.options.css.push(resolve(cookiesDir, 'styles.css'))
 }

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref, computed, onBeforeMount, watch } from 'vue'
+import { computed, onBeforeMount, ref, watch } from 'vue'
 import {
 	getAllCookieIdsString,
-	getCookie,
 	getCookieId,
 	getCookieIds,
 	removeCookie,
@@ -24,6 +23,8 @@ const {
 const expires = new Date()
 const localCookiesEnabled = ref([...(cookiesEnabled.value || [])])
 const allCookieIdsString = getAllCookieIdsString(moduleOptions)
+const cookieIsConsentGiven = useCookie(moduleOptions.cookieNameIsConsentGiven)
+const cookieCookiesEnabledIds = useCookie(moduleOptions.cookieNameCookiesEnabledIds)
 // computations
 const isSaved = computed(
 	() =>
@@ -115,7 +116,7 @@ onBeforeMount(() => {
 		}
 		setCssVariables(variables)
 	}
-	if (getCookie(moduleOptions.cookieNameIsConsentGiven) === allCookieIdsString) {
+	if (cookieIsConsentGiven.value === allCookieIdsString) {
 		for (const cookieOptional of moduleOptions.cookies.optional) {
 			if (
 				typeof moduleOptions.isIframeBlocked === 'boolean'
@@ -146,7 +147,7 @@ watch(
 				document.getElementsByTagName('head')[0].appendChild(script)
 			}
 		} else {
-			removeCookie(moduleOptions.cookieNameCookiesEnabledIds)
+			cookieCookiesEnabledIds.value = undefined
 		}
 		// delete formerly enabled cookies that are now disabled
 		const cookiesOptionalDisabled = moduleOptions.cookies.optional.filter(
@@ -170,7 +171,7 @@ watch(
 )
 watch(isConsentGiven, (current, _previous) => {
 	if (current === undefined) {
-		removeCookie(moduleOptions.cookieNameIsConsentGiven)
+		cookieIsConsentGiven.value = undefined
 	} else {
 		setCookie(
 			moduleOptions.cookieNameIsConsentGiven,
@@ -296,8 +297,7 @@ init()
 													getCookieIds(localCookiesEnabled).includes(
 														getCookieId(cookie)
 													) ||
-													(getCookie(moduleOptions.cookieNameIsConsentGiven) !==
-														allCookieIdsString &&
+													(cookieIsConsentGiven !== allCookieIdsString &&
 														typeof moduleOptions.isIframeBlocked === 'object' &&
 														moduleOptions.isIframeBlocked.initialState)
 												"

@@ -1,6 +1,5 @@
-import Cookies from 'js-cookie'
 import slugify from '@sindresorhus/slugify'
-
+import { type CookieSerializeOptions, serialize } from 'cookie-es'
 import { Cookie, ModuleOptions } from './types'
 
 export const getAllCookieIdsString = (moduleOptions: ModuleOptions) =>
@@ -9,8 +8,6 @@ export const getAllCookieIdsString = (moduleOptions: ModuleOptions) =>
 		...moduleOptions.cookies.optional
 	]).join('')
 
-export const getCookie = (name: string) => Cookies.get(name)
-
 export const getCookieId = (cookie: Cookie) => cookie.id || slugify(cookie.name)
 
 export const getCookieIds = (cookies: Cookie[] | undefined) => {
@@ -18,10 +15,10 @@ export const getCookieIds = (cookies: Cookie[] | undefined) => {
 	return cookies.map((cookie) => getCookieId(cookie))
 }
 
-export const removeCookie = (name: string) => Cookies.remove(name)
-
-export const setCookie = (
-	name: string,
-	value: string,
-	options: Cookies.CookieAttributes
-) => Cookies.set(name, value, { sameSite: 'Strict', ...options })
+export const removeCookie = (name: string) =>
+	(document.cookie = serialize(name, '', { expires: new Date(0) }))
+export const setCookie = (name: string, value: string, options: CookieSerializeOptions) =>
+	(document.cookie = serialize(name, value, {
+		sameSite: 'strict',
+		...options
+	}))
