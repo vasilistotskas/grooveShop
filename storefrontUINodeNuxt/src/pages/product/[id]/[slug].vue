@@ -1,19 +1,13 @@
 <script lang="ts" setup>
 import { isClient } from '@vueuse/shared'
 import { useShare } from '@vueuse/core'
-import { Ref } from 'vue'
-import { FetchError } from 'ofetch'
-import { useProductStore } from '~/stores/product/product'
 import { capitalize } from '~/utils/str'
-import { useImagesStore } from '~/stores/product/images'
-import { useAuthStore } from '~/stores/auth'
-import { useUserStore } from '~/stores/user'
 import { ReviewActionPayload, ReviewQuery } from '~/zod/product/review'
-import { Product, ProductQuery } from '~/zod/product/product'
+import { ProductQuery } from '~/zod/product/product'
 import { GlobalEvents } from '~/events/global'
-import { useReviewsStore } from '~/stores/product/reviews'
 import emptyIcon from '~icons/mdi/package-variant-remove'
 
+const router = useRouter()
 const route = useRoute('product-id-slug___en')
 const config = useRuntimeConfig()
 const { t } = useLang()
@@ -31,28 +25,22 @@ const productId = route.params.id
 const { account, favourites } = storeToRefs(userStore)
 const { isAuthenticated } = storeToRefs(authStore)
 const { pending: productImagesPending } = storeToRefs(productImagesStore)
-const {
-	product,
-	pending: productPending,
-	error
-}: {
-	product: Ref<Product | null>
-	pending: Ref<boolean>
-	error: Ref<FetchError | null>
-} = storeToRefs(productStore)
+const { product, pending: productPending, error } = storeToRefs(productStore)
 
 try {
 	await productStore.fetchProduct(productId)
 } catch (error) {
 	//
 }
-const productRefresh = async () => await productStore.fetchProduct(productId)
 
+const productRefresh = async () => await productStore.fetchProduct(productId)
 try {
 	await productImagesStore.fetchImages({ product: String(productId) })
 } catch (error) {
 	//
 }
+const reviewsRefresh = async () =>
+	await reviewsStore.fetchReviews(routePaginationParams.value)
 
 const routePaginationParams = ref<ReviewQuery>({
 	productId: String(productId),
@@ -60,8 +48,6 @@ const routePaginationParams = ref<ReviewQuery>({
 	ordering: route.query.ordering || '-createdAt',
 	expand: 'true'
 })
-const reviewsRefresh = async () =>
-	await reviewsStore.fetchReviews(routePaginationParams.value)
 
 const { images: productImages, error: productImagesError } =
 	storeToRefs(productImagesStore)
@@ -128,7 +114,7 @@ reviewBus.on((event, payload: ReviewActionPayload) => {
 				.then(() => {
 					toast.success(t('pages.product.review.created.success'))
 					productRefresh()
-					existingReviewRefresh().finally(() => (reviewsStore.pending = false))
+					existingReviewRefresh().finally(() => (reviewsStore.pending.reviews = false))
 				})
 				.catch((err) => {
 					toast.error(err.message)
@@ -148,7 +134,7 @@ reviewBus.on((event, payload: ReviewActionPayload) => {
 				.then(() => {
 					toast.success(t('pages.product.review.updated.success'))
 					productRefresh()
-					existingReviewRefresh().finally(() => (reviewsStore.pending = false))
+					existingReviewRefresh().finally(() => (reviewsStore.pending.reviews = false))
 				})
 				.catch((err) => {
 					toast.error(err.message)
@@ -163,7 +149,7 @@ reviewBus.on((event, payload: ReviewActionPayload) => {
 				.then(() => {
 					toast.success(t('pages.product.review.deleted.success'))
 					productRefresh()
-					existingReviewRefresh().finally(() => (reviewsStore.pending = false))
+					existingReviewRefresh().finally(() => (reviewsStore.pending.reviews = false))
 				})
 				.catch((err) => {
 					toast.error(err.message)
@@ -178,7 +164,7 @@ reviewBus.on((event, payload: ReviewActionPayload) => {
 watch(
 	() => route.query,
 	() => {
-		reviewsBus.emit('productReviews', {
+		reviewsBus.emit('update', {
 			productId: String(productId),
 			page: Number(route.query.page) || undefined,
 			ordering: route.query.ordering || '-createdAt',
@@ -220,16 +206,8 @@ useSchemaOrg([
 	})
 ])
 
-const i18nHead = useLocaleHead({
-	addDirAttribute: true,
-	addSeoAttributes: true,
-	identifierAttribute: 'id'
-})
 useHead(() => ({
 	title: productTitle.value,
-	htmlAttrs: {
-		lang: i18nHead.value.htmlAttrs!.lang
-	},
 	meta: [
 		{
 			name: 'description',
@@ -290,8 +268,12 @@ useHead(() => ({
 <template>
 	<PageWrapper class="gap-16">
 		<PageBody>
-			<Error v-if="error" :code="error.statusCode" :error="error" />
-			<template v-if="!productPending && product">
+			<Error
+				v-if="error.product"
+				:code="error.product?.statusCode"
+				:error="error.product"
+			/>
+			<template v-if="!productPending.product && product">
 				<div class="product mb-12 md:mb-24">
 					<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
 						<div class="grid md:grid-cols-2 gap-2">
@@ -323,6 +305,9 @@ useHead(() => ({
 											"
 											@click="startShare"
 										/>
+										<template #fallback>
+											<ClientOnlyFallback />
+										</template>
 									</ClientOnly>
 									<ProductReview
 										v-if="product"
@@ -331,7 +316,7 @@ useHead(() => ({
 										:user="account || undefined"
 										:is-authenticated="isAuthenticated"
 									></ProductReview>
-									<ButtonAddToFavourite
+									<LottieAddToFavourite
 										:product-id="product.id"
 										:user-id="account?.id"
 										:is-favourite="productInUserFavourites"
@@ -423,7 +408,7 @@ useHead(() => ({
 				>
 				</ProductReviews>
 			</template>
-			<template v-if="!productPending && !product">
+			<template v-if="!productPending.product && !product">
 				<EmptyState :icon="emptyIcon">
 					<template #actions>
 						<Button

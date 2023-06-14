@@ -57,8 +57,8 @@ components:
       functional: funktionelle cookies
       functional_description: >-
         funktionale cookies helfen dabei, bestimmte funktionen auszuführen, wie
-        das teilen des inhalts der website auf social-media-plattformen, das
-        sammeln von feedback und andere funktionen von drittanbietern.
+        z. b. das teilen des inhalts der website auf social-media-plattformen,
+        das sammeln von feedback und andere funktionen von drittanbietern.
       necessary: notwendige cookies
       necessary_description: >-
         notwendige cookies tragen dazu bei, eine website nutzbar zu machen,
@@ -107,11 +107,13 @@ components:
       write_review: eine rezension schreiben
       edit_review: rezension bearbeiten
       update_review: update-überprüfung
-      delete_review: bewertung löschen
+      delete_review: rezension löschen
       must_be_logged_in: sie müssen angemeldet sein, um eine bewertung schreiben zu können
       write_review_for_product: schreiben sie eine bewertung für produkt %{product}
       confirm_delete: sind sie sicher, dass sie diese bewertung löschen möchten?
       too_many_attempts: zu viele versuche. bitte später erneut versuchen.
+      delete_review_confirm: löschen
+      delete_review_cancel: stornieren
       rating:
         title: bewertung
         bad: schlecht
@@ -178,6 +180,20 @@ components:
         cant_delete_main: >-
           sie können ihre hauptadresse nicht löschen. legen sie bitte eine
           andere adresse als hauptadresse fest und versuchen sie es erneut.
+  checkout:
+    sidebar:
+      title: kasse
+      items: artikel
+      items_unique: artikel
+      shipping: versand
+      discount: rabatt
+      vat: mwst
+      total: gesamt
+    pay_ways:
+      title: wählen sie die zahlungsmethode
+      label: bezahlungsweise
+    items:
+      title: artikel
 pages:
   '404':
     title: seite nicht gefunden
@@ -304,6 +320,9 @@ pages:
       zipcode: plz
       country: land
       region: region
+      mobile_phone: mobiltelefon
+      floor: boden
+      location_type: standorttyp
       customer_notes: kundenhinweise
       submit: einreichen
       too_many_attempts: zu viele versuche. bitte später erneut versuchen.
@@ -312,6 +331,34 @@ pages:
         region: wählen sie region
     success:
       title: auftrag erstellt
+    validation:
+      email:
+        required: e-mail ist erforderlich
+        email: e-mail muss eine gültige e-mail-adresse sein
+      first_name:
+        required: vorname ist erforderlich
+        min: der vorname muss mindestens %{min} zeichen lang sein
+      last_name:
+        required: nachname ist erforderlich
+        min: der nachname muss mindestens %{min} zeichen lang sein
+      street:
+        required: straße ist erforderlich
+        min: die straße muss mindestens %{min} zeichen lang sein
+      street_number:
+        required: die hausnummer ist erforderlich
+        min: die straßennummer muss mindestens %{min} zeichen lang sein
+      zipcode:
+        required: postleitzahl ist erforderlich
+        min: die postleitzahl muss mindestens %{min} zeichen lang sein
+      place:
+        required: platz ist erforderlich
+        min: der ort muss mindestens %{min} zeichen lang sein
+      city:
+        required: stadt ist erforderlich
+        min: die stadt muss mindestens %{min} zeichen lang sein
+      phone:
+        required: telefon ist erforderlich
+        min: das telefon muss mindestens %{min} zeichen lang sein
   accounts:
     login:
       title: konto
@@ -600,6 +647,7 @@ common:
   mobile_phone: mobiltelefon
   notes: anmerkungen
   back: zurück
+  client_only_fallback: wird geladen...
   unknown:
     error: unbekannter fehler
   errors:

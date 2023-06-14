@@ -99,6 +99,8 @@ components:
       write_review_for_product: Write a review for product %{product}
       confirm_delete: Are you sure you want to delete this review?
       too_many_attempts: Too many attempts, please try again later.
+      delete_review_confirm: Delete
+      delete_review_cancel: Cancel
       rating:
         title: Rating
         bad: Bad
@@ -618,6 +620,7 @@ common:
   mobile_phone: Mobile Phone
   notes: Notes
   back: Back
+  client_only_fallback: Loading...
   unknown:
     error: Unknown error
   errors:

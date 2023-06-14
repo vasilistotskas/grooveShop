@@ -89,7 +89,7 @@ const appTitle = computed(() => config.public.appTitle)
 									aria-label="index"
 									class="flex items-center gap-3 overflow-hidden md:w-auto text-md font-bold text-gray-700 dark:text-gray-200"
 								>
-									<nuxt-img
+									<NuxtImg
 										preload
 										placeholder
 										loading="eager"

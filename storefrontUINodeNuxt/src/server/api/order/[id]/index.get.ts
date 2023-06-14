@@ -8,7 +8,7 @@ export default defineEventHandler(async (event: H3Event) => {
 	const query = parseQueryAs(event, ZodOrderQuery)
 	const cookie = event.node.req.headers.cookie
 	const params = parseParamsAs(event, ZodOrderParams)
-	const url = buildFullUrl(`${config.public.apiBaseUrl}/order/${params.id}`, query)
+	const url = buildFullUrl(`${config.public.apiBaseUrl}/order/${params.id}/`, query)
 	const response = await $fetch(url, {
 		headers: {
 			Cookie: cookie || ''

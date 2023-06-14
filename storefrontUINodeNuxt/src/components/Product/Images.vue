@@ -49,7 +49,7 @@ const imageId = useState<number>(`${props.product?.uuid}-imageID`, () => {
 					'main-image': imageId === productImage.id
 				}"
 			>
-				<nuxt-img
+				<NuxtImg
 					preload
 					placeholder
 					loading="lazy"
@@ -87,7 +87,7 @@ const imageId = useState<number>(`${props.product?.uuid}-imageID`, () => {
 						class="focus:outline-none w-full rounded-lg h-24 md:h-32 bg-gray-100 flex items-center justify-center"
 						@click="imageId = productImage.id"
 					>
-						<nuxt-img
+						<NuxtImg
 							preload
 							placeholder
 							loading="lazy"

@@ -119,11 +119,11 @@ module.exports = {
 					css: {
 						color: theme('colors.gray.200'),
 						a: {
-							color: theme('colors.blue.400'),
+							color: theme('colors.red.400'),
 							'&:hover': {
-								color: theme('colors.blue.600')
+								color: theme('colors.red.600')
 							},
-							code: { color: theme('colors.blue.400') }
+							code: { color: theme('colors.red.400') }
 						},
 						blockquote: {
 							borderLeftColor: theme('colors.gray.700'),

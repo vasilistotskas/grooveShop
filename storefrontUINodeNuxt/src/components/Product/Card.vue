@@ -72,7 +72,7 @@ const userToProductFavourite = computed(() => {
 						<div class="card-thumb-container">
 							<div class="card-thumb-image">
 								<Anchor :to="`/product${product.absoluteUrl}`" :text="product.name">
-									<nuxt-img
+									<NuxtImg
 										preload
 										placeholder
 										loading="auto"

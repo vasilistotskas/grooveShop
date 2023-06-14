@@ -26,8 +26,8 @@ const envVariables = z.object({
 
 	NUXT_APP_PUBLIC_FACEBOOK_APP_ID: z.string(),
 
-	NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID: z.string(),
-	NEXT_PUBLIC_GOOGLE_TAG_ID: z.string()
+	NUXT_PUBLIC_GOOGLE_TAG_MANAGER_ID: z.string(),
+	NUXT_PUBLIC_GOOGLE_TAG_ID: z.string()
 })
 
 declare global {

@@ -66,7 +66,7 @@ const statusClass = computed(() => {
 				:key="item.product.id"
 				class="order__card__image__container"
 			>
-				<nuxt-img
+				<NuxtImg
 					preload
 					placeholder
 					loading="lazy"

@@ -56,11 +56,7 @@ const link = computed(() => {
 						</ListboxButton>
 
 						<div v-show="listBoxOpen">
-							<Transition
-								leave-active-class="transition duration-100 ease-in"
-								leave-from-class="opacity-100"
-								leave-to-class="opacity-0"
-							>
+							<Transition>
 								<ListboxOptions
 									role="none"
 									static

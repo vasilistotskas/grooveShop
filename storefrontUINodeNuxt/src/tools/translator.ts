@@ -54,7 +54,8 @@ const translateFile = async (
 			const nextParent = parentKey ? `${parentKey}.${key}` : key
 			if (typeof value === 'string') {
 				translatedRes[`${nextParent}`] = await translate(value, {
-					to: locale.lang || 'en-US'
+					to: locale.lang || 'en-US',
+					engine: 'google'
 				})
 			} else if (typeof value === 'object') {
 				await eachCurrLevel(value as Record<string, unknown>, `${nextParent}`)

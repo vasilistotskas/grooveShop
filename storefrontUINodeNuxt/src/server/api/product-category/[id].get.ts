@@ -7,7 +7,7 @@ export default defineEventHandler(async (event: H3Event) => {
 	const params = parseParamsAs(event, ZodCategoryParams)
 	const cookie = event.node.req.headers.cookie
 	const response = await $fetch(
-		`${config.public.apiBaseUrl}/product/category/${params.id}`,
+		`${config.public.apiBaseUrl}/product/category/${params.id}/`,
 		{
 			headers: {
 				Cookie: cookie || ''

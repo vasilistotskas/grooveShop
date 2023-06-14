@@ -18,12 +18,12 @@ const { contentShorten } = useText()
 const userAddressStore = useUserAddressStore()
 const bus = useEventBus<string>('userAddresses')
 
-const deleteAddress = async (id: string) => {
+const deleteAddress = (id: string) => {
 	if (props.address && props.address.isMain) {
 		toast.error(t('components.address.card.delete.cant_delete_main'))
 		return
 	}
-	await swal
+	swal
 		.fire({
 			title: t('swal.delete_address.title'),
 			text: t('swal.delete_address.text'),
@@ -35,11 +35,11 @@ const deleteAddress = async (id: string) => {
 			confirmButtonText: t('swal.default.warning.confirm_button_text'),
 			cancelButtonText: t('swal.default.warning.cancel_button_text')
 		})
-		.then(async (result) => {
+		.then((result) => {
 			if (!result.isConfirmed) {
 				return
 			}
-			await userAddressStore
+			userAddressStore
 				.deleteAddress(id)
 				.then(async () => {
 					await bus.emit('delete', id)

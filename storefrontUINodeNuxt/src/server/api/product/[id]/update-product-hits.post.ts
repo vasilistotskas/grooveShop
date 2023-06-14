@@ -1,5 +1,5 @@
 import { H3Event } from 'h3'
-import { ZodProductParams, ZodProduct } from '~/zod/product/product'
+import { ZodProduct, ZodProductParams } from '~/zod/product/product'
 import { parseDataAs, parseParamsAs } from '~/zod/parser'
 
 export default defineEventHandler(async (event: H3Event) => {
@@ -7,7 +7,7 @@ export default defineEventHandler(async (event: H3Event) => {
 	const params = parseParamsAs(event, ZodProductParams)
 	const cookie = event.node.req.headers.cookie
 	const response = await $fetch(
-		`${config.public.apiBaseUrl}/product/${params.id}/update_product_hits`,
+		`${config.public.apiBaseUrl}/product/${params.id}/update_product_hits/`,
 		{
 			headers: {
 				Cookie: cookie || ''

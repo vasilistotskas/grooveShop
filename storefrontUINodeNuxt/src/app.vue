@@ -7,6 +7,7 @@ AppSetup()
 const theme = useState<ITheme>('theme.current')
 const config = useRuntimeConfig()
 const route = useRoute()
+const router = useRouter()
 const { t, locale, locales } = useLang()
 const cartStore = useCartStore()
 
@@ -45,7 +46,10 @@ cartBus.on((event: string, payload) => {
 const i18nHead = useLocaleHead({
 	addDirAttribute: true,
 	addSeoAttributes: true,
-	identifierAttribute: 'hid'
+	identifierAttribute: 'hid',
+	route,
+	router,
+	i18n: useI18n()
 })
 useHead({
 	htmlAttrs: {

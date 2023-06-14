@@ -10,7 +10,7 @@ export default defineEventHandler(async (event: H3Event) => {
 	const csrftoken = getCookie(event, 'csrftoken') || ''
 
 	const response = await $fetch(
-		`${config.public.apiBaseUrl}/product/review/${params.id}`,
+		`${config.public.apiBaseUrl}/product/review/${params.id}/`,
 		{
 			headers: {
 				Cookie: cookie || '',

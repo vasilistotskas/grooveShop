@@ -13,7 +13,7 @@ import { htmlValidator } from './config/html-validator'
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
 	ssr: true,
-	sourcemap: false,
+	sourcemap: true,
 	devtools: {
 		enabled: process.env.NODE_ENV !== 'production'
 	},
@@ -56,7 +56,7 @@ export default defineNuxtConfig({
 		failOn404: true
 	},
 	modules: [
-		'@nuxt/image-edge',
+		'@nuxt/image',
 		'@nuxt/content',
 		'@nuxtjs/html-validator',
 		'@nuxtjs/i18n',

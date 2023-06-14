@@ -40,7 +40,7 @@ const cartItemQuantity = useState<number>(
 	>
 		<div class="image">
 			<Anchor :to="`/product${product.absoluteUrl}`" :title="product.name">
-				<nuxt-img
+				<NuxtImg
 					preload
 					placeholder
 					loading="lazy"

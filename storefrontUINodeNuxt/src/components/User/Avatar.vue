@@ -93,7 +93,7 @@ const uploadImage = async (event: Event) => {
 				height: typeof imgHeight === 'number' ? imgHeight + 'px' : imgHeight
 			}"
 		>
-			<nuxt-img
+			<NuxtImg
 				preload
 				placeholder
 				loading="auto"
