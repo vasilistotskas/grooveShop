@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.59.0 (2023-06-14)
+
+### Feature
+
+* **Nuxt:** Cookies module remove js-cookie usage and use UseCookie built in and cookie-es ([`772c6fc`](https://github.com/vasilistotskas/grooveShop/commit/772c6fc8a1840bf58f07267ec6bc6183db9ec876))
+
 ## v0.58.2 (2023-06-13)
 
 ### Fix
