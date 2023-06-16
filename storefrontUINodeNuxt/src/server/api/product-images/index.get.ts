@@ -1,6 +1,6 @@
 import { H3Event } from 'h3'
 import { ZodPagination } from '~/zod/pagination/pagination'
-import { buildFullUrl } from '~/helpers/api'
+import { buildFullUrl } from '~/utils/api'
 import { parseDataAs, parseQueryAs } from '~/zod/parser'
 import { ZodImage, ZodImageQuery } from '~/zod/product/image'
 

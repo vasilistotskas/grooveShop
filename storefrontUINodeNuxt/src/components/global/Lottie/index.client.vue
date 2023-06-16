@@ -9,8 +9,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, PropType, ref, watch } from 'vue'
 import Lottie from 'lottie-web'
+import { PropType } from 'vue'
 
 export interface LottieProps {
 	animationData: any
@@ -343,7 +343,6 @@ export default defineComponent({
 		const goToAndStop = (frame: number, isFrame: Boolean = true) => {
 			// value: numeric value.
 			// isFrame: defines if first argument is a time based value or a frame based (default true).
-
 			if (lottieAnimation.value) {
 				lottieAnimation.value.goToAndStop(frame, isFrame)
 			}

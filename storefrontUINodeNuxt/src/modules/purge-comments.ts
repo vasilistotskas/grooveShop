@@ -1,4 +1,5 @@
-import { defineNuxtModule, addVitePlugin } from '@nuxt/kit'
+import { addVitePlugin, defineNuxtModule } from '@nuxt/kit'
+import MagicString from 'magic-string'
 
 export default defineNuxtModule({
 	meta: {
@@ -8,9 +9,18 @@ export default defineNuxtModule({
 		addVitePlugin({
 			name: 'purge-comments',
 			enforce: 'pre',
-			transform: (code, id) => {
-				if (!id.endsWith('.vue') && !id.endsWith('.vue?macro=true')) return
-				return code.replace(/<!--(?:.*?)-->/gs, '')
+			transform: (code: string, id: string) => {
+				if (!id.endsWith('.vue') || !code.includes('<!--')) return
+
+				const s = new MagicString(code)
+				s.replace(/<!--(?:.*?)-->/gs, '')
+
+				if (s.hasChanged()) {
+					return {
+						code: s.toString(),
+						map: s.generateMap({ source: id, includeContent: true })
+					}
+				}
 			}
 		})
 	}

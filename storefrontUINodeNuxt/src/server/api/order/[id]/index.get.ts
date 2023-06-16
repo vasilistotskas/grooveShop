@@ -1,5 +1,5 @@
 import { H3Event } from 'h3'
-import { buildFullUrl } from '~/helpers/api'
+import { buildFullUrl } from '~/utils/api'
 import { parseDataAs, parseParamsAs, parseQueryAs } from '~/zod/parser'
 import { ZodOrder, ZodOrderParams, ZodOrderQuery } from '~/zod/order/order'
 

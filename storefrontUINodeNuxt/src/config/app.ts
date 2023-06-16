@@ -1,9 +1,9 @@
 export const app = {
+	keepalive: true,
 	head: {
 		charset: 'utf-8',
-		viewport: 'width=device-width, initial-scale=1',
+		viewport: 'width=device-width,initial-scale=1,viewport-fit=cover',
 		meta: [
-			{ name: 'robots', content: 'index, follow' },
 			{ name: 'msapplication-config', content: '/assets/favicon/browserconfig.xml' },
 			{
 				name: 'google-site-verification',
@@ -44,12 +44,4 @@ export const app = {
 			}
 		]
 	}
-	// pageTransition: {
-	// 	name: 'page',
-	// 	mode: 'out-in' // default
-	// },
-	// layoutTransition: {
-	// 	name: 'layout',
-	// 	mode: 'out-in' // default
-	// }
 }

@@ -45,9 +45,6 @@ export default defineNuxtConfig({
 		'vue-toastification/dist/index.css',
 		'@vuepic/vue-datepicker/dist/main.css'
 	],
-	/*
-	 ** All plugins in your plugins/ directory are auto-registered
-	 */
 	plugins: [],
 	build: {
 		transpile: ['@headlessui/vue', 'vue-toastification']

@@ -1,6 +1,32 @@
-// capitalize each word in a string
-export function capitalize(str: string): string {
-	return str.replace(/\w\S*/g, (txt) => {
-		return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-	})
+export function capitalize(str: string, allWords = false): string {
+	if (allWords) {
+		return str
+			.split(' ')
+			.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+			.join(' ')
+	}
+	return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+export function contentShorten(
+	content: string | null | undefined = '',
+	from = 0,
+	to = 200,
+	suffix = '...'
+): string {
+	if (!content) return ''
+
+	if (content.length < to) return content
+	return content.substring(from, to) + suffix
+}
+
+export function contentShortenByWords(
+	content: string,
+	from = 0,
+	to = 200,
+	suffix = '...'
+): string {
+	const words = content.split(' ')
+	if (words.length < to) return content
+	return words.slice(from, to).join(' ') + suffix
 }

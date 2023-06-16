@@ -1,7 +1,7 @@
 import { H3Event } from 'h3'
 import { ZodProduct, ZodProductQuery } from '~/zod/product/product'
 import { ZodPagination } from '~/zod/pagination/pagination'
-import { buildFullUrl } from '~/helpers/api'
+import { buildFullUrl } from '~/utils/api'
 import { parseDataAs, parseQueryAs } from '~/zod/parser'
 
 export default defineEventHandler(async (event: H3Event) => {
