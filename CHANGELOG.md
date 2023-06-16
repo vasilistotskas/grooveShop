@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.61.0 (2023-06-16)
+
+### Feature
+
+* **Nuxt:** Generic modal improved , defineSlots added and props for border style and button position added ([`49ed67b`](https://github.com/vasilistotskas/grooveShop/commit/49ed67bf77e2ce75c48e8be8f0f47ba6875e93a3))
+
 ## v0.60.0 (2023-06-16)
 
 ### Feature
