@@ -2,6 +2,16 @@
 
 <!--next-version-placeholder-->
 
+## v0.60.0 (2023-06-16)
+
+### Feature
+
+* **Nuxt:** Introduce new utils for str, array, color and api (Usage also), modules/purge-comments.ts rewrite, ClientOnlyFallback components implemented and implemented lottie add to favourite button for product ([`a48eaff`](https://github.com/vasilistotskas/grooveShop/commit/a48eaff468444f9cdfb6bdab89c720bf28a06226))
+
+### Fix
+
+* **Django:** Settings.py fixed value for default env and poetry lock ([`8e7eaef`](https://github.com/vasilistotskas/grooveShop/commit/8e7eaef28217df1d5bc8feda419b20b9683f0e6c))
+
 ## v0.59.0 (2023-06-14)
 
 ### Feature
