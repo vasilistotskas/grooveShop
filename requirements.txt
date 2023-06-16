@@ -1,7 +1,7 @@
 Django==4.2.2
 psycopg2-binary==2.9.6
 djangorestframework==3.14.0
-django-cors-headers==4.0.0
+django-cors-headers==4.1.0
 pillow==9.5.0
 django-admin-thumbnails==0.2.8
 django-mptt==0.14.0
@@ -15,12 +15,12 @@ gunicorn==20.1.0
 whitenoise==6.4.0
 django-filter==23.2
 black==23.3.0
-python-semantic-release==7.34.3
+python-semantic-release==7.34.4
 flake8==6.0.0
 coverage==7.2.7
 drf-spectacular==0.26.2
 pylint==2.17.4
-pre-commit==3.3.2
+pre-commit==3.3.3
 django-allauth==0.54.0
 django-allauth-2fa==0.10.0
 poetry==1.5.1
