@@ -1,6 +1,12 @@
 <script lang="ts" setup>
 import { GlobalEvents } from '~/events/global'
 
+defineSlots<{
+	header(props: {}): any
+	body(props: {}): any
+	footer(props: {}): any
+}>()
+
 const props = defineProps({
 	shouldModalStartInOpenState: {
 		type: Boolean,
@@ -15,6 +21,12 @@ const props = defineProps({
 		type: String,
 		required: false,
 		default: '#9A9A9B'
+	},
+	closeBtnPosition: {
+		type: String,
+		required: false,
+		default: 'out',
+		validator: (value: string) => ['in', 'out'].includes(value)
 	},
 	hasHeader: {
 		type: Boolean,
@@ -105,6 +117,16 @@ const props = defineProps({
 		required: false,
 		default: 'blur(1rem)'
 	},
+	borderRadius: {
+		type: String,
+		required: false,
+		default: '10px'
+	},
+	border: {
+		type: String,
+		required: false,
+		default: 'none'
+	},
 	isForm: {
 		type: Boolean,
 		required: false,
@@ -182,6 +204,7 @@ onMounted(() => {
 				</svg>
 			</div>
 			<button
+				v-if="closeBtnPosition === 'out'"
 				:style="`color: ${closeBtnColor}`"
 				class="cp-utilities-generic_modal-overlay-close"
 				type="button"
@@ -195,8 +218,6 @@ onMounted(() => {
 				<form
 					:id="formId"
 					class="cp-utilities-generic_modal bg-white dark:bg-zinc-900"
-					:style="`position:${position}; width:${width}; height:${height}; max-height: ${maxHeight};
-          max-width: ${maxWidth}; overflow: ${overflow}; gap: ${gap}; padding: ${padding};`"
 					:name="formName"
 					@submit="$emit('submitForm', $event)"
 				>
@@ -209,14 +230,21 @@ onMounted(() => {
 					<div v-if="hasFooter" class="cp-utilities-generic_modal-footer">
 						<slot name="footer" />
 					</div>
+					<button
+						v-if="closeBtnPosition === 'in'"
+						:style="`color: ${closeBtnColor}`"
+						class="cp-utilities-generic_modal-overlay-close"
+						type="button"
+						aria-label="Close"
+						@click="closeModal"
+					>
+						<span class="hidden">{{ $t('components.global.generic_modal.close') }}</span>
+						<IconEntypo:circleWithCross></IconEntypo:circleWithCross>
+					</button>
 				</form>
 			</template>
 			<template v-else>
-				<div
-					class="cp-utilities-generic_modal bg-white dark:bg-zinc-900"
-					:style="`position:${position}; width:${width}; height:${height}; max-height: ${maxHeight};
-          max-width: ${maxWidth}; overflow: ${overflow}; gap: ${gap}; padding: ${padding};`"
-				>
+				<div class="cp-utilities-generic_modal bg-white dark:bg-zinc-900">
 					<div v-if="hasHeader" class="cp-utilities-generic_modal-header">
 						<slot name="header" />
 					</div>
@@ -226,19 +254,38 @@ onMounted(() => {
 					<div v-if="hasFooter" class="cp-utilities-generic_modal-footer">
 						<slot name="footer" />
 					</div>
+					<button
+						v-if="closeBtnPosition === 'in'"
+						:style="`color: ${closeBtnColor}`"
+						class="cp-utilities-generic_modal-overlay-close"
+						type="button"
+						aria-label="Close"
+						@click="closeModal"
+					>
+						<span class="hidden">{{ $t('components.global.generic_modal.close') }}</span>
+						<IconEntypo:circleWithCross></IconEntypo:circleWithCross>
+					</button>
 				</div>
 			</template>
 		</div>
 	</Teleport>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 $transitional-profile-1: all 0.2s ease-out;
 
 .cp-utilities-generic_modal {
 	visibility: hidden;
 	content-visibility: hidden;
-	z-index: 9002;
+	z-index: 32;
+	position: v-bind(position);
+	width: v-bind(width);
+	height: v-bind(height);
+	max-height: v-bind(maxHeight);
+	max-width: v-bind(maxWidth);
+	overflow: v-bind(overflow);
+	gap: v-bind(gap);
+	padding: v-bind(padding);
 
 	&-wrapper {
 		position: fixed;
@@ -255,7 +302,7 @@ $transitional-profile-1: all 0.2s ease-out;
 		align-content: center;
 		justify-items: center;
 		justify-content: center;
-		z-index: 9000;
+		z-index: 31;
 		&.open {
 			opacity: 1;
 			pointer-events: auto;
@@ -266,12 +313,9 @@ $transitional-profile-1: all 0.2s ease-out;
 				content-visibility: visible;
 				display: grid;
 				align-items: center;
-				width: 100%;
-				height: 100%;
-				max-height: 680px;
-				max-width: 1190px;
 				padding: 1rem;
-				border-radius: 10px;
+				border: v-bind(border);
+				border-radius: v-bind(borderRadius);
 				@media screen and (max-width: 1200px) {
 					max-height: unset;
 				}
@@ -289,8 +333,13 @@ $transitional-profile-1: all 0.2s ease-out;
 		width: 100%;
 		height: 100%;
 		opacity: 1;
-		z-index: 1001;
+		z-index: 30;
 		transition: $transitional-profile-1;
+
+		@media screen and (max-width: 767px) {
+			width: 100svw;
+			height: 100lvh;
+		}
 
 		&-static {
 			width: 100%;
@@ -306,7 +355,7 @@ $transitional-profile-1: all 0.2s ease-out;
 			right: 1rem;
 			cursor: pointer;
 			color: #ef1b1b;
-			z-index: 9999;
+			z-index: 33;
 			transition: $transitional-profile-1;
 			span {
 				i {
