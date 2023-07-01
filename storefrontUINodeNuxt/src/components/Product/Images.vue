@@ -1,39 +1,38 @@
 <script lang="ts" setup>
-import { FetchError } from 'ofetch'
 import { PropType } from 'vue'
 import { Product } from '~/zod/product/product'
-import { Image } from '~/zod/product/image'
-import { Pagination } from '~/zod/pagination/pagination'
 
 const props = defineProps({
 	product: {
 		type: Object as PropType<Product>,
 		required: true
-	},
-	productImages: {
-		type: Object as PropType<Pagination<Image>>,
-		required: true
-	},
-	pending: {
-		type: Boolean,
-		required: true
-	},
-	error: {
-		type: Object as PropType<FetchError | null>,
-		required: false,
-		default: null
 	}
 })
 
+const imagesStore = useImagesStore()
+
+try {
+	await imagesStore.fetchImages({ product: String(props.product.id) })
+} catch (error) {
+	//
+}
+
+const { images, error } = storeToRefs(imagesStore)
+
 const mainImage = computed(() => {
-	const images = props.productImages?.results || []
-	return images.find((image) => image.isMain)
+	if (!images.value?.results) {
+		return null
+	}
+	return images.value.results.find((image) => image.isMain)
 })
 
 const { resolveImageFileExtension } = useImageResolver()
 
 const imageId = useState<number>(`${props.product?.uuid}-imageID`, () => {
-	return mainImage.value?.id || props.productImages?.results[0]?.id || 0
+	if (!images?.value?.results) {
+		return 0
+	}
+	return mainImage.value?.id || images?.value.results[0]?.id || 0
 })
 </script>
 
@@ -41,7 +40,7 @@ const imageId = useState<number>(`${props.product?.uuid}-imageID`, () => {
 	<div class="grid">
 		<div class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4">
 			<div
-				v-for="(productImage, index) in productImages?.results"
+				v-for="(productImage, index) in images?.results"
 				v-show="imageId === productImage.id"
 				:key="index"
 				class="product-images-main grid h-64 md:h-80 rounded-lg bg-gray-100 mb-4 items-center justify-center"
@@ -74,10 +73,10 @@ const imageId = useState<number>(`${props.product?.uuid}-imageID`, () => {
 		</div>
 
 		<div
-			v-if="productImages?.results.length > 1"
+			v-if="images?.results && images?.results?.length > 1"
 			class="product-images-others flex -mx-2 mb-4"
 		>
-			<template v-for="(productImage, index) in productImages?.results" :key="index">
+			<template v-for="(productImage, index) in images?.results" :key="index">
 				<div class="flex-1 px-2">
 					<button
 						:class="{

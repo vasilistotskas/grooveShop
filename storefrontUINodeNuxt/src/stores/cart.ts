@@ -2,93 +2,106 @@ import { FetchError } from 'ofetch'
 import { Cart } from '~/zod/cart/cart'
 import { CartItem, CartItemCreateRequest, CartItemPutRequest } from '~/zod/cart/cart-item'
 
+interface ErrorRecord {
+	cart: FetchError | null
+}
+
+interface PendingRecord {
+	cart: boolean
+}
+
+const errorsFactory = (): ErrorRecord => ({
+	cart: null
+})
+
+const pendingFactory = (): PendingRecord => ({
+	cart: false
+})
+
 export interface CartState {
 	cart: Cart | null
-	pending: boolean
-	error: FetchError<unknown> | null
+	pending: PendingRecord
+	error: ErrorRecord
 }
 
 export const useCartStore = defineStore({
 	id: 'cart',
 	state: (): CartState => ({
-		cart: null as Cart | null,
-		pending: true,
-		error: null as FetchError<unknown> | null
+		cart: null,
+		pending: pendingFactory(),
+		error: errorsFactory()
 	}),
 	getters: {
-		getCartItems: (state): CartItem[] => {
-			if (!state.cart) return []
+		getCartItems: (state): CartItem[] | null => {
+			if (!state.cart) return null
 			return state.cart.cartItems
 		},
-		getCartItemById: (state) => (id: number) => {
-			return state.cart?.cartItems.find((item) => item.id === id)
-		},
-		getCartItemByProductId: (state) => (productId: number) => {
-			const cartProducts = state.cart?.cartItems.map((item) => item.product)
-			return cartProducts?.find((product) => product.id === productId)
-		}
+		getCartItemById:
+			(state) =>
+			(id: number): CartItem | null => {
+				return state.cart?.cartItems.find((item) => item.id === id) || null
+			},
+		getCartItemByProductId:
+			(state) =>
+			(productId: number): CartItem | null => {
+				return (state.cart?.cartItems
+					.map((item) => item.product)
+					.find((product) => product.id === productId) || null) as CartItem | null
+			}
 	},
 	actions: {
 		async fetchCart() {
-			const {
-				data: cart,
-				error,
-				pending
-			} = await useFetch(`/api/cart`, {
-				method: 'get'
-			})
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
-			}
-			if (cart.value) {
+			try {
+				const {
+					data: cart,
+					error,
+					pending
+				} = await useFetch(`/api/cart`, {
+					method: 'get'
+				})
 				this.cart = cart.value
+				this.error.cart = error.value
+				this.pending.cart = pending.value
+			} catch (error) {
+				this.error.cart = error as FetchError
 			}
-			this.pending = pending.value
 		},
 		async addCartItem(body: CartItemCreateRequest) {
-			const { error, pending } = await useFetch(`/api/cart-items`, {
-				method: 'post',
-				body: JSON.stringify(body)
-			})
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
+			try {
+				const { error, pending } = await useFetch(`/api/cart-items`, {
+					method: 'post',
+					body: JSON.stringify(body)
+				})
+				this.error.cart = error.value
+				this.pending.cart = pending.value
+			} catch (error) {
+				this.error.cart = error as FetchError
 			}
-			this.pending = pending.value
 		},
 		async updateCartItem(id: number, body: CartItemPutRequest) {
-			const { error, pending } = await useFetch(`/api/cart-items/${id}`, {
-				method: 'put',
-				body: JSON.stringify(body)
-			})
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
+			try {
+				const { error, pending } = await useFetch(`/api/cart-items/${id}`, {
+					method: 'put',
+					body
+				})
+				this.error.cart = error.value
+				this.pending.cart = pending.value
+				console.log('this.error.cart', this.error.cart)
+				console.log('this.error.cart', this.error.cart)
+			} catch (error) {
+				this.error.cart = error as FetchError
 			}
-			this.pending = pending.value
 		},
 		async deleteCartItem(id: number) {
-			const { error, pending } = await useFetch(`/api/cart-items/${id}`, {
-				method: 'delete'
-			})
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
+			try {
+				const { error, pending } = await useFetch(`/api/cart-items/${id}`, {
+					method: 'delete'
+				})
+				this.error.cart = error.value
+				this.pending.cart = pending.value
+			} catch (error) {
+				this.error.cart = error as FetchError
 			}
-			this.pending = pending.value
 		}
 	}
 })

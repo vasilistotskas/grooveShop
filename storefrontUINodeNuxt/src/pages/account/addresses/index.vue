@@ -90,13 +90,13 @@ definePageMeta({
 		</PageHeader>
 		<PageBody>
 			<LoadingSkeleton
-				v-if="pending"
+				v-if="pending.addresses"
 				:card-height="'422px'"
-				:class="pending ? 'block' : 'hidden'"
-				:loading="pending"
-				:replicas="addresses.results.length || 4"
+				:class="pending.addresses ? 'block' : 'hidden'"
+				:loading="pending.addresses"
+				:replicas="addresses?.results?.length || 4"
 			></LoadingSkeleton>
-			<template v-if="!pending && addresses.results.length">
+			<template v-if="!pending.addresses && addresses?.results?.length">
 				<div class="grid gap-2 md:flex md:items-center">
 					<PaginationPageNumber
 						:results-count="pagination.resultsCount"
@@ -113,8 +113,12 @@ definePageMeta({
 				</div>
 				<AddressList :addresses="addresses.results" />
 			</template>
-			<Error v-else-if="error" :code="error.statusCode" :error="error" />
-			<template v-else-if="!addresses.results.length">
+			<Error
+				v-else-if="error.addresses"
+				:code="error.addresses.statusCode"
+				:error="error.addresses"
+			/>
+			<template v-else-if="!addresses?.results?.length">
 				<EmptyState :icon="emptyIcon">
 					<template #actions>
 						<Button

@@ -2,103 +2,102 @@ import { FetchError } from 'ofetch'
 import { Order, OrderCreateRequest, OrderQuery } from '~/zod/order/order'
 import { Pagination } from '~/zod/pagination/pagination'
 
+interface ErrorRecord {
+	orders: FetchError | null
+	order: FetchError | null
+}
+
+interface PendingRecord {
+	orders: boolean
+	order: boolean
+}
+
+const errorsFactory = (): ErrorRecord => ({
+	orders: null,
+	order: null
+})
+
+const pendingFactory = (): PendingRecord => ({
+	orders: false,
+	order: false
+})
+
 export interface OrderState {
-	orders: Pagination<Order>
+	orders: Pagination<Order> | null
 	order: Order | null
-	pending: boolean
-	error: FetchError<unknown> | null
+	pending: PendingRecord
+	error: ErrorRecord
 }
 
 export const useOrderStore = defineStore({
 	id: 'order',
 	state: (): OrderState => ({
-		orders: {
-			links: {
-				next: null,
-				prev: null
-			},
-			count: 0,
-			totalPages: 0,
-			pageTotalResults: 0,
-			pageSize: 0,
-			page: 0,
-			results: []
-		},
-		order: null as Order | null,
-		pending: true,
-		error: null as FetchError<unknown> | null
+		orders: null,
+		order: null,
+		pending: pendingFactory(),
+		error: errorsFactory()
 	}),
 	getters: {
-		getOrderById: (state) => (id: number) => {
-			return state.orders.results?.find((order) => order.id === id)
-		}
+		getOrderById:
+			(state) =>
+			(id: number): Order | null => {
+				return state.orders?.results?.find((order) => order.id === id) || null
+			}
 	},
 	actions: {
-		async fetchOrders({ page, ordering, userId }: OrderQuery): Promise<void> {
-			const {
-				data: orders,
-				error,
-				pending
-			} = await useFetch(`/api/orders`, {
-				method: 'get',
-				params: {
-					page,
-					ordering,
-					userId
-				}
-			})
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
-			}
-			if (orders.value) {
+		async fetchOrders({ page, ordering, userId }: OrderQuery) {
+			try {
+				const {
+					data: orders,
+					error,
+					pending
+				} = await useFetch(`/api/orders`, {
+					method: 'get',
+					params: {
+						page,
+						ordering,
+						userId
+					}
+				})
 				this.orders = orders.value
+				this.error.orders = error.value
+				this.pending.orders = pending.value
+			} catch (error) {
+				this.error.orders = error as FetchError
 			}
-			this.pending = pending.value
 		},
-		async fetchOrder(id: string | string[] | number): Promise<void> {
-			const {
-				data: order,
-				error,
-				pending
-			} = await useFetch(`/api/order/${id}`, {
-				method: 'get'
-			})
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
-			}
-			if (order.value) {
+		async fetchOrder(id: string | number) {
+			try {
+				const {
+					data: order,
+					error,
+					pending
+				} = await useFetch(`/api/order/${id}`, {
+					method: 'get'
+				})
 				this.order = order.value
+				this.error.order = error.value
+				this.pending.order = pending.value
+			} catch (error) {
+				this.error.order = error as FetchError
 			}
-			this.pending = pending.value
 		},
-		async createOrder(body: OrderCreateRequest): Promise<void> {
-			const {
-				data: order,
-				error,
-				pending
-			} = await useFetch(`/api/orders`, {
-				method: 'post',
-				body
-			})
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
-			}
-			if (order.value) {
+		async createOrder(body: OrderCreateRequest) {
+			try {
+				const {
+					data: order,
+					error,
+					pending
+				} = await useFetch(`/api/orders`, {
+					method: 'post',
+					body
+				})
 				this.order = order.value
+				this.error.order = error.value
+				this.pending.order = pending.value
+			} catch (error) {
+				this.error.order = error as FetchError
 			}
-			this.pending = pending.value
 		}
 	}
 })

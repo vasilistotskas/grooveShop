@@ -14,7 +14,6 @@ const { t } = useLang()
 const toast = useToast()
 
 const productStore = useProductStore()
-const productImagesStore = useImagesStore()
 const authStore = useAuthStore()
 const userStore = useUserStore()
 const reviewsStore = useReviewsStore()
@@ -24,8 +23,7 @@ const productId = route.params.id
 
 const { account, favourites } = storeToRefs(userStore)
 const { isAuthenticated } = storeToRefs(authStore)
-const { pending: productImagesPending } = storeToRefs(productImagesStore)
-const { product, pending: productPending, error } = storeToRefs(productStore)
+const { product, pending, error } = storeToRefs(productStore)
 
 try {
 	await productStore.fetchProduct(productId)
@@ -34,11 +32,7 @@ try {
 }
 
 const productRefresh = async () => await productStore.fetchProduct(productId)
-try {
-	await productImagesStore.fetchImages({ product: String(productId) })
-} catch (error) {
-	//
-}
+
 const reviewsRefresh = async () =>
 	await reviewsStore.fetchReviews(routePaginationParams.value)
 
@@ -48,9 +42,6 @@ const routePaginationParams = ref<ReviewQuery>({
 	ordering: route.query.ordering || '-createdAt',
 	expand: 'true'
 })
-
-const { images: productImages, error: productImagesError } =
-	storeToRefs(productImagesStore)
 
 const productTitle = computed(() => {
 	return capitalize(product.value?.seoTitle || product.value?.name || '')
@@ -273,18 +264,12 @@ useHead(() => ({
 				:code="error.product?.statusCode"
 				:error="error.product"
 			/>
-			<template v-if="!productPending.product && product">
+			<template v-if="!pending.product && product">
 				<div class="product mb-12 md:mb-24">
 					<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
 						<div class="grid md:grid-cols-2 gap-2">
 							<div class="md:flex-1 px-4">
-								<ProductImages
-									v-if="product"
-									:product="product"
-									:product-images="productImages"
-									:pending="productImagesPending"
-									:error="productImagesError"
-								></ProductImages>
+								<ProductImages v-if="product" :product="product"></ProductImages>
 							</div>
 							<div class="grid gap-6 px-4 items-center content-center">
 								<h2
@@ -408,7 +393,7 @@ useHead(() => ({
 				>
 				</ProductReviews>
 			</template>
-			<template v-if="!productPending.product && !product">
+			<template v-if="!pending.product && !product">
 				<EmptyState :icon="emptyIcon">
 					<template #actions>
 						<Button

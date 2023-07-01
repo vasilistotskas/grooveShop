@@ -1,65 +1,37 @@
 import { FetchError } from 'ofetch'
-import { ProductCreateRequest, Product, ProductQuery } from '~/zod/product/product'
-import { Pagination } from '~/zod/pagination/pagination'
+import { Product, ProductCreateRequest } from '~/zod/product/product'
 
-export interface ProductState {
-	products: Pagination<Product>
+interface ErrorRecord {
+	product: FetchError | null
+}
+
+interface PendingRecord {
+	product: boolean
+}
+
+const errorsFactory = (): ErrorRecord => ({
+	product: null
+})
+
+const pendingFactory = (): PendingRecord => ({
+	product: false
+})
+
+interface ProductState {
 	product: Product | null
-	pending: boolean
-	error: FetchError<unknown> | null
+	pending: PendingRecord
+	error: ErrorRecord
 }
 
 export const useProductStore = defineStore({
 	id: 'product',
 	state: (): ProductState => ({
-		products: {
-			links: {
-				next: null,
-				prev: null
-			},
-			count: 0,
-			totalPages: 0,
-			pageTotalResults: 0,
-			pageSize: 0,
-			page: 0,
-			results: []
-		},
-		product: null as Product | null,
-		pending: true,
-		error: null as FetchError<unknown> | null
+		product: null,
+		pending: pendingFactory(),
+		error: errorsFactory()
 	}),
-	getters: {
-		getProductById: (state) => (id: number) => {
-			return state.products.results?.find((product) => product.id === id)
-		}
-	},
 	actions: {
-		async fetchProducts({ offset, limit, ordering }: ProductQuery): Promise<void> {
-			const {
-				data: products,
-				error,
-				pending
-			} = await useFetch(`/api/products`, {
-				method: 'get',
-				params: {
-					offset,
-					limit,
-					ordering
-				}
-			})
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
-			}
-			if (products.value) {
-				this.products = products.value
-			}
-			this.pending = pending.value
-		},
-		async fetchProduct(id: string | string[] | number): Promise<void> {
+		async fetchProduct(id: string | number) {
 			const {
 				data: product,
 				error,
@@ -67,46 +39,39 @@ export const useProductStore = defineStore({
 			} = await useFetch(`/api/product/${id}`, {
 				method: 'get'
 			})
-			this.error = error.value
 			this.product = product.value
-			this.pending = pending.value
+			this.error.product = error.value
+			this.pending.product = pending.value
 		},
-		async createProduct(body: ProductCreateRequest): Promise<void> {
-			const {
-				data: newProduct,
-				error,
-				pending
-			} = await useFetch(`/api/products`, {
-				method: 'post',
-				body: JSON.stringify(body)
-			})
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
+		async createProduct(body: ProductCreateRequest) {
+			try {
+				const {
+					data: newProduct,
+					error,
+					pending
+				} = await useFetch(`/api/products`, {
+					method: 'post',
+					body: JSON.stringify(body)
+				})
+				this.error.product = error.value
+				this.pending.product = pending.value
+			} catch (error) {
+				this.error.product = error as FetchError
 			}
-			if (newProduct.value) {
-				this.products.results.push(newProduct.value)
-			}
-			this.pending = pending.value
 		},
-		async updateProductHits(id: string | string[]): Promise<void> {
-			const { error, pending } = await useFetch(
-				`/api/product/${id}/update-product-hits`,
-				{
-					method: 'post'
-				}
-			)
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
+		async updateProductHits(id: string | number) {
+			try {
+				const { error, pending } = await useFetch(
+					`/api/product/${id}/update-product-hits`,
+					{
+						method: 'post'
+					}
+				)
+				this.error.product = error.value
+				this.pending.product = pending.value
+			} catch (error) {
+				this.error.product = error as FetchError
 			}
-			this.pending = pending.value
 		}
 	}
 })

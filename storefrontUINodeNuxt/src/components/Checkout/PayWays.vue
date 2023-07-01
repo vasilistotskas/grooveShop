@@ -30,8 +30,8 @@ try {
 	//
 }
 
-const selectedPayWay = computed<PayWay>(() => {
-	if (!payWay.value) {
+const selectedPayWay = computed(() => {
+	if (getActivePayWays.value && !payWay.value) {
 		return getActivePayWays.value[0]
 	}
 	return payWay.value
@@ -65,15 +65,19 @@ const updatePayWay = (value: PayWay) => {
 			</h3>
 		</div>
 		<div class="pay-ways__list">
-			<Error v-if="error" :code="error.statusCode" :error="error" />
+			<Error
+				v-if="error.payWays"
+				:code="error.payWays.statusCode"
+				:error="error.payWays"
+			/>
 			<LoadingSkeleton
 				v-else-if="pending && !getActivePayWays?.length"
 				:card-height="'422px'"
 				:class="pending ? 'block' : 'hidden'"
-				:loading="pending"
-				:replicas="getActivePayWays.length || 4"
+				:loading="pending.payWays"
+				:replicas="getActivePayWays?.length || 4"
 			></LoadingSkeleton>
-			<template v-if="!pending && getActivePayWays.length">
+			<template v-if="selectedPayWay && !pending && getActivePayWays?.length">
 				<RadioGroup
 					:model-value="selectedPayWay"
 					by="id"

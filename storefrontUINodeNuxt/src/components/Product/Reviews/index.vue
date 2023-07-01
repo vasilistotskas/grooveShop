@@ -78,63 +78,71 @@ const ordering = computed(() => {
 	<div
 		class="container-small reviews_list text-gray-700 dark:text-gray-200 p-6 border-t border-gray-900/10 dark:border-gray-50/[0.2]"
 	>
-		<div class="reviews_list__header">
-			<h2 class="reviews_list__title">{{ $t('components.product.reviews.title') }}</h2>
-			<div v-if="reviews?.results.length > 0" class="reviews_list__actions">
-				<div class="reviews_list__pagination">
-					<PaginationPageNumber
-						:results-count="pagination.resultsCount"
-						:total-pages="pagination.totalPages"
-						:page-total-results="pagination.pageTotalResults"
-						:page-size="pagination.pageSize"
-						:current-page="pagination.currentPage"
-						:links="pagination.links"
+		<Error v-if="error.reviews" :code="error.reviews.statusCode" :error="error.reviews" />
+		<template v-else>
+			<div class="reviews_list__header">
+				<h2 class="reviews_list__title">{{ $t('components.product.reviews.title') }}</h2>
+				<div
+					v-if="reviews?.results && reviews?.results?.length > 0"
+					class="reviews_list__actions"
+				>
+					<div class="reviews_list__pagination">
+						<PaginationPageNumber
+							:results-count="pagination.resultsCount"
+							:total-pages="pagination.totalPages"
+							:page-total-results="pagination.pageTotalResults"
+							:page-size="pagination.pageSize"
+							:current-page="pagination.currentPage"
+							:links="pagination.links"
+						/>
+					</div>
+					<div class="reviews_list__ordering">
+						<Ordering
+							:ordering="String(routePaginationParams.ordering)"
+							:ordering-options="ordering.orderingOptionsArray.value"
+						></Ordering>
+					</div>
+				</div>
+			</div>
+			<div class="reviews_list__body">
+				<div class="reviews_list__items">
+					<LoadingSkeleton
+						v-if="pending.reviews && !error.reviews && !reviews?.results?.length"
+						:card-height="'130px'"
+						:class="
+							pending.reviews
+								? 'grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4'
+								: 'hidden'
+						"
+						:loading="pending.reviews"
+						:direction="'row'"
+						:columns-md="1"
+						:columns-lg="1"
+						:card-body-paragraphs="5"
+						:replicas="reviews?.results?.length || 4"
+					></LoadingSkeleton>
+					<ProductReviewsList
+						v-if="!pending.reviews && reviews?.results?.length"
+						:reviews-average="reviewsAverage"
+						:reviews-count="reviewsCount"
+						:reviews="reviews.results"
+						:display-image-of="displayImageOf"
 					/>
-				</div>
-				<div class="reviews_list__ordering">
-					<Ordering
-						:ordering="String(routePaginationParams.ordering)"
-						:ordering-options="ordering.orderingOptionsArray.value"
-					></Ordering>
+					<template v-if="!pending.reviews && !reviews?.results?.length">
+						<EmptyState :icon="emptyIcon">
+							<template #actions>
+								<Button
+									:text="$t('common.empty.button')"
+									:type="'link'"
+									:to="'index'"
+								></Button>
+							</template>
+						</EmptyState>
+					</template>
 				</div>
 			</div>
-		</div>
-		<div class="reviews_list__body">
-			<div class="reviews_list__items">
-				<LoadingSkeleton
-					v-if="pending && !error && !reviews?.results.length"
-					:card-height="'130px'"
-					:class="
-						pending ? 'grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4' : 'hidden'
-					"
-					:loading="pending"
-					:direction="'row'"
-					:columns-md="1"
-					:columns-lg="1"
-					:card-body-paragraphs="5"
-					:replicas="reviews.results.length || 4"
-				></LoadingSkeleton>
-				<ProductReviewsList
-					v-if="!pending && reviews?.results.length"
-					:reviews-average="reviewsAverage"
-					:reviews-count="reviewsCount"
-					:reviews="reviews.results"
-					:display-image-of="displayImageOf"
-				/>
-				<template v-if="!pending && !reviews?.results.length">
-					<EmptyState :icon="emptyIcon">
-						<template #actions>
-							<Button
-								:text="$t('common.empty.button')"
-								:type="'link'"
-								:to="'index'"
-							></Button>
-						</template>
-					</EmptyState>
-				</template>
-			</div>
-		</div>
-		<div class="reviews_list__footer"></div>
+			<div class="reviews_list__footer"></div>
+		</template>
 	</div>
 </template>
 

@@ -1,37 +1,49 @@
 import { FetchError } from 'ofetch'
 
+interface ErrorRecord {
+	isAuthenticated: FetchError | null
+}
+
+interface PendingRecord {
+	isAuthenticated: boolean
+}
+
+const errorsFactory = (): ErrorRecord => ({
+	isAuthenticated: null
+})
+
+const pendingFactory = (): PendingRecord => ({
+	isAuthenticated: false
+})
+
 export interface AuthState {
 	isAuthenticated: boolean
-	pending: boolean
-	error: FetchError<unknown> | null
+	pending: PendingRecord
+	error: ErrorRecord
 }
 export const useAuthStore = defineStore({
 	id: 'auth',
 	state: (): AuthState => ({
 		isAuthenticated: false,
-		pending: true,
-		error: null as FetchError<unknown> | null
+		pending: pendingFactory(),
+		error: errorsFactory()
 	}),
 	actions: {
 		async fetchAuth() {
-			const {
-				data: auth,
-				error,
-				pending
-			} = await useFetch(`/api/auth`, {
-				method: 'get'
-			})
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
+			try {
+				const {
+					data: auth,
+					error,
+					pending
+				} = await useFetch(`/api/auth`, {
+					method: 'get'
+				})
+				this.isAuthenticated = auth.value?.isAuthenticated || false
+				this.error.isAuthenticated = error.value
+				this.pending.isAuthenticated = pending.value
+			} catch (error) {
+				this.error.isAuthenticated = error as FetchError
 			}
-			if (auth.value) {
-				this.isAuthenticated = auth.value.isAuthenticated
-			}
-			this.pending = pending.value
 		}
 	}
 })

@@ -352,7 +352,7 @@ const format = (date: Date) => {
 					<label class="text-gray-700 dark:text-gray-200 mb-2" for="country">{{
 						$t('pages.account.settings.form.country')
 					}}</label>
-					<div class="grid">
+					<div v-if="countries" class="grid">
 						<select
 							id="country"
 							v-model="country"
@@ -381,7 +381,7 @@ const format = (date: Date) => {
 					<label class="text-gray-700 dark:text-gray-200 mb-2" for="region">{{
 						$t('pages.account.settings.form.region')
 					}}</label>
-					<div class="grid">
+					<div v-if="regions" class="grid">
 						<select
 							id="region"
 							ref="regionSelectElement"

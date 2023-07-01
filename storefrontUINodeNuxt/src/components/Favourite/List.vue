@@ -4,7 +4,7 @@ import { Favourite } from '~/zod/product/favourite'
 
 const props = defineProps({
 	favourites: {
-		type: Array as PropType<Favourite[]>,
+		type: Array as PropType<Favourite[] | null>,
 		required: true
 	},
 	displayTotal: {
@@ -21,7 +21,9 @@ const { t } = useLang()
 	<div class="favourite__list gap-4">
 		<div class="favourite__list__header">
 			<div v-if="displayTotal" class="favourite__list__header__total">
-				<span class="favourite__list__header__total__value">{{ favourites.length }}</span>
+				<span class="favourite__list__header__total__value">{{
+					favourites?.length
+				}}</span>
 				<span class="favourite__list__header__total__label">
 					{{ $t('components.product.reviews.summary.reviews') }}</span
 				>

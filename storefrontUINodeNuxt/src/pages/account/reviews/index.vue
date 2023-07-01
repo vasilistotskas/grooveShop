@@ -76,19 +76,23 @@ definePageMeta({
 			<PageTitle :text="$t('pages.account.reviews.title')" />
 		</PageHeader>
 		<PageBody>
-			<Error v-if="error" :code="error.statusCode" :error="error" />
+			<Error
+				v-if="error.reviews"
+				:code="error.reviews.statusCode"
+				:error="error.reviews"
+			/>
 			<LoadingSkeleton
-				v-else-if="pending && !reviews.results.length"
+				v-else-if="pending.reviews && !reviews?.results?.length"
 				:card-height="'195px'"
-				:class="pending ? 'block' : 'hidden'"
-				:loading="pending"
+				:class="pending.reviews ? 'block' : 'hidden'"
+				:loading="pending.reviews"
 				:direction="'row'"
 				:columns-md="1"
 				:columns-lg="1"
 				:card-body-paragraphs="2"
-				:replicas="reviews.results.length || 4"
+				:replicas="reviews?.results?.length || 4"
 			></LoadingSkeleton>
-			<template v-if="!pending && reviews.results.length">
+			<template v-if="reviews && !pending.reviews && reviews?.results?.length">
 				<div class="grid gap-2 md:flex md:items-center">
 					<PaginationPageNumber
 						:results-count="pagination.resultsCount"
@@ -109,7 +113,7 @@ definePageMeta({
 					display-image-of="product"
 				/>
 			</template>
-			<template v-if="!pending && !reviews.results.length">
+			<template v-if="!pending.reviews && !reviews?.results?.length">
 				<EmptyState :icon="emptyIcon">
 					<template #actions>
 						<Button

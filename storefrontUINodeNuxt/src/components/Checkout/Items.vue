@@ -3,7 +3,7 @@ import { PropType } from 'vue'
 import { CartItem } from '~/zod/cart/cart-item'
 
 const props = defineProps({
-	items: { type: Array as PropType<CartItem[]>, required: true }
+	items: { type: Array as PropType<CartItem[] | null>, required: true }
 })
 </script>
 

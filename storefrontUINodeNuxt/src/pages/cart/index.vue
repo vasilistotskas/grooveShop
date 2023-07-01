@@ -75,21 +75,21 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 			</h2>
 		</div>
 		<PageBody>
-			<Error v-if="error" :code="error.statusCode" :error="error" />
+			<Error v-if="error.cart" :code="error.cart.statusCode" :error="error.cart" />
 			<LoadingSkeleton
-				v-if="pending"
+				v-if="pending.cart"
 				:card-height="'130px'"
 				:class="
-					pending ? 'grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4' : 'hidden'
+					pending.cart ? 'grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4' : 'hidden'
 				"
-				:loading="pending"
+				:loading="pending.cart"
 				:direction="'row'"
 				:columns-md="1"
 				:columns-lg="1"
 				:card-body-paragraphs="5"
 				:replicas="cart?.cartItems.length || 4"
 			></LoadingSkeleton>
-			<template v-if="!pending && cart?.cartItems.length">
+			<template v-if="!pending.cart && cart?.cartItems.length">
 				<div class="grid grid-rows-repeat-auto-fill-mimax-100-130 gap-4">
 					<CartItemCard
 						v-for="(cartItem, index) in cart.cartItems"
@@ -98,7 +98,7 @@ querySelectorBus.on((event, payload: { cartItemId: number; quantity: number }) =
 					/>
 				</div>
 			</template>
-			<template v-if="!pending && !cart?.cartItems.length">
+			<template v-if="!pending.cart && !cart?.cartItems.length">
 				<EmptyState :icon="emptyIcon">
 					<template #actions>
 						<Button

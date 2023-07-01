@@ -4,7 +4,7 @@ import { Order } from '~/zod/order/order'
 
 const props = defineProps({
 	orders: {
-		type: Array as PropType<Order[]>,
+		type: Array as PropType<Order[] | null>,
 		required: true
 	}
 })

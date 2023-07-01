@@ -11,7 +11,7 @@ export type Pagination<T> = {
 	pageTotalResults: number
 	pageSize: number
 	page: number
-	results: T[]
+	results: T[] | null
 }
 
 export const ZodPagination = <T>(resultSchema: z.Schema<T>): z.Schema<Pagination<T>> =>

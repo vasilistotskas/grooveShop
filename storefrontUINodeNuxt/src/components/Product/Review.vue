@@ -207,8 +207,8 @@ const deleteReviewHandle = () => {
 				bus.emit('delete', {
 					id: props.existingReview?.id
 				})
-				values.rate = 0
-				values.comment = ''
+				setFieldValue('rate', 0)
+				setFieldValue('comment', '')
 			})
 	} else {
 		toast.error(t('components.product.review.must_be_logged_in'))
@@ -247,7 +247,7 @@ const ZodReviewSchema = z.object({
 })
 
 const validationSchema = toTypedSchema(ZodReviewSchema)
-const { values, handleSubmit, errors, submitCount } = useForm({
+const { values, setFieldValue, handleSubmit, errors, submitCount } = useForm({
 	validationSchema,
 	initialValues: {
 		comment: props.existingReview?.comment || '',
@@ -291,7 +291,7 @@ watch(
 	() => liveReviewCount.value,
 	(to: number | undefined) => {
 		if (to !== undefined) {
-			values.rate = to
+			setFieldValue('rate', to)
 		}
 	}
 )

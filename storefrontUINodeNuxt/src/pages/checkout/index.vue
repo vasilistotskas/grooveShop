@@ -126,7 +126,7 @@ useServerSeoMeta({
 	<PageWrapper class="container-x_small flex flex-col gap-4 mt-4">
 		<PageTitle :text="$t('pages.checkout.title')" class="capitalize" />
 		<PageBody>
-			<template v-if="cart && getCartItems.length">
+			<template v-if="cart && getCartItems?.length">
 				<form
 					id="checkoutForm"
 					class="_form grid gap-2 md:grid-cols-2fr-1fr md:gap-4"
@@ -395,7 +395,7 @@ useServerSeoMeta({
 									<label class="text-gray-700 dark:text-gray-200 mb-2" for="country">{{
 										$t('pages.checkout.form.country')
 									}}</label>
-									<div class="grid">
+									<div v-if="countries" class="grid">
 										<select
 											id="country"
 											v-model="country"
@@ -427,7 +427,7 @@ useServerSeoMeta({
 									<label class="text-gray-700 dark:text-gray-200 mb-2" for="region">{{
 										$t('pages.checkout.form.region')
 									}}</label>
-									<div class="grid">
+									<div v-if="regions" class="grid">
 										<select
 											id="region"
 											ref="regionSelectElement"

@@ -81,15 +81,19 @@ definePageMeta({
 			<PageTitle :text="$t('pages.account.favourites.title')" />
 		</PageHeader>
 		<PageBody>
-			<Error v-if="error" :code="error.statusCode" :error="error" />
+			<Error
+				v-if="error.favourites"
+				:code="error.favourites.statusCode"
+				:error="error.favourites"
+			/>
 			<LoadingSkeleton
-				v-else-if="pending && !favourites.results.length"
+				v-else-if="pending.favourites && !favourites?.results?.length"
 				:card-height="'422px'"
-				:class="pending ? 'block' : 'hidden'"
-				:loading="pending"
-				:replicas="favourites.results.length || 4"
+				:class="pending.favourites ? 'block' : 'hidden'"
+				:loading="pending.favourites"
+				:replicas="favourites?.results?.length || 4"
 			></LoadingSkeleton>
-			<template v-if="!pending && favourites.results.length">
+			<template v-if="!pending.favourites && favourites?.results?.length">
 				<div class="grid gap-2 md:flex md:items-center">
 					<PaginationPageNumber
 						:results-count="pagination.resultsCount"
@@ -105,7 +109,7 @@ definePageMeta({
 					/>
 				</div>
 			</template>
-			<template v-if="!pending && favourites.results.length">
+			<template v-if="!pending.favourites && favourites?.results?.length">
 				<FavouriteList :favourites="favourites.results" />
 			</template>
 			<template v-else>

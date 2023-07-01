@@ -77,19 +77,19 @@ useHead(() => ({
 			<PageTitle :text="$t('pages.account.orders.title')" />
 		</PageHeader>
 		<PageBody>
-			<Error v-if="error" :code="error.statusCode" :error="error" />
+			<Error v-if="error.orders" :code="error.orders.statusCode" :error="error.orders" />
 			<LoadingSkeleton
-				v-else-if="pending && !orders.results.length"
+				v-else-if="pending.orders && !orders?.results?.length"
 				:card-height="'195px'"
-				:class="pending ? 'block' : 'hidden'"
-				:loading="pending"
+				:class="pending.orders ? 'block' : 'hidden'"
+				:loading="pending.orders"
 				:direction="'row'"
 				:columns-md="1"
 				:columns-lg="1"
 				:card-body-paragraphs="2"
-				:replicas="orders.results.length || 4"
+				:replicas="orders?.results?.length || 4"
 			></LoadingSkeleton>
-			<template v-if="!pending && orders.results.length">
+			<template v-if="orders && !pending.orders && orders?.results?.length">
 				<div class="grid gap-2 md:flex md:items-center">
 					<PaginationPageNumber
 						:results-count="pagination.resultsCount"
@@ -106,7 +106,7 @@ useHead(() => ({
 				</div>
 				<OrderList :orders="orders.results" />
 			</template>
-			<template v-if="!pending && !orders.results.length">
+			<template v-if="!pending.orders && !orders?.results?.length">
 				<EmptyState :icon="emptyIcon">
 					<template #actions>
 						<Button

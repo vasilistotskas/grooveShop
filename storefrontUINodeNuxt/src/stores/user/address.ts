@@ -7,163 +7,148 @@ import {
 } from '~/zod/user/address'
 import { Pagination } from '~/zod/pagination/pagination'
 
+interface ErrorRecord {
+	addresses: FetchError | null
+	address: FetchError | null
+}
+
+interface PendingRecord {
+	addresses: boolean
+	address: boolean
+}
+
+const errorsFactory = (): ErrorRecord => ({
+	addresses: null,
+	address: null
+})
+
+const pendingFactory = (): PendingRecord => ({
+	addresses: false,
+	address: false
+})
+
 export interface AddressState {
-	addresses: Pagination<Address>
+	addresses: Pagination<Address> | null
 	address: Address | null
-	pending: boolean
-	error: FetchError<unknown> | null
+	pending: PendingRecord
+	error: ErrorRecord
 }
 
 export const useUserAddressStore = defineStore({
 	id: 'user-address',
 	state: (): AddressState => ({
-		addresses: {
-			links: {
-				next: null,
-				prev: null
-			},
-			count: 0,
-			totalPages: 0,
-			pageTotalResults: 0,
-			pageSize: 0,
-			page: 0,
-			results: []
-		},
-		address: null as Address | null,
-		pending: false,
-		error: null as FetchError<unknown> | null
+		addresses: null,
+		address: null,
+		pending: pendingFactory(),
+		error: errorsFactory()
 	}),
 	getters: {
 		getAddressById: (state) => (id: number) => {
-			return state.addresses.results?.find((address) => address.id === id)
+			return state.addresses?.results?.find((address) => address.id === id)
 		}
 	},
 	actions: {
 		async fetchAddresses({ page, ordering, userId }: AddressQuery): Promise<void> {
-			const {
-				data: addresses,
-				error,
-				pending
-			} = await useFetch(`/api/user-address`, {
-				method: 'get',
-				params: {
-					page,
-					ordering,
-					userId
-				}
-			})
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
-			}
-			if (addresses.value) {
+			try {
+				const {
+					data: addresses,
+					error,
+					pending
+				} = await useFetch(`/api/user-address`, {
+					method: 'get',
+					params: {
+						page,
+						ordering,
+						userId
+					}
+				})
 				this.addresses = addresses.value
+				this.error.addresses = error.value
+				this.pending.addresses = pending.value
+			} catch (error) {
+				this.error.addresses = error as FetchError
 			}
-			this.pending = pending.value
 		},
-		async fetchAddress(id: string | string[] | number): Promise<void> {
-			const {
-				data: address,
-				error,
-				pending
-			} = await useFetch(`/api/user-address/${id}`, {
-				method: 'get'
-			})
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
-			}
-			if (address.value) {
+		async fetchAddress(id: string | number): Promise<void> {
+			try {
+				const {
+					data: address,
+					error,
+					pending
+				} = await useFetch(`/api/user-address/${id}`, {
+					method: 'get'
+				})
 				this.address = address.value
+				this.error.address = error.value
+				this.pending.address = pending.value
+			} catch (error) {
+				this.error.address = error as FetchError
 			}
-			this.pending = pending.value
 		},
 		async createAddress(body: AddressCreateRequest): Promise<void> {
-			const {
-				data: newAddress,
-				error,
-				pending
-			} = await useFetch(`/api/user-address`, {
-				method: 'post',
-				body
-			})
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
-			}
-			if (newAddress.value) {
-				this.address = newAddress.value
-			}
-			this.pending = pending.value
-		},
-		async updateAddress(
-			id: string | string[] | number,
-			body: AddressPutRequest
-		): Promise<void> {
-			const {
-				data: address,
-				error,
-				pending
-			} = await useFetch(`/api/user-address/${id}`, {
-				method: 'put',
-				body
-			})
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
-			}
-			if (address.value) {
+			try {
+				const {
+					data: address,
+					error,
+					pending
+				} = await useFetch(`/api/user-address`, {
+					method: 'post',
+					body
+				})
 				this.address = address.value
+				this.error.address = error.value
+				this.pending.address = pending.value
+			} catch (error) {
+				this.error.address = error as FetchError
 			}
-			this.pending = pending.value
 		},
-		async deleteAddress(id: string | string[] | number): Promise<void> {
-			const { error, pending } = await useFetch(`/api/user-address/${id}`, {
-				method: 'delete'
-			})
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
+		async updateAddress(id: string | number, body: AddressPutRequest): Promise<void> {
+			try {
+				const {
+					data: address,
+					error,
+					pending
+				} = await useFetch(`/api/user-address/${id}`, {
+					method: 'put',
+					body
+				})
+				this.address = address.value
+				this.error.address = error.value
+				this.pending.address = pending.value
+			} catch (error) {
+				this.error.address = error as FetchError
 			}
-
-			const index = this.addresses.results.findIndex(
-				(address) => Number(address.id) === Number(id)
-			)
-			if (index !== -1) {
-				this.addresses.results.splice(index, 1)
-			}
-			this.pending = pending.value
 		},
-		async setMainAddress(id: string | string[] | number): Promise<void> {
-			const { error, pending } = await useFetch(`/api/user-address/${id}/set-main`, {
-				method: 'post'
-			})
-			this.error = error.value?.data
-			if (error.value) {
-				const errorMessage = `Error: ${error.value?.data?.data?.detail} ${
-					error.value?.statusMessage ? '(' + error.value?.statusMessage + ')' : ''
-				}`
-				throw new Error(errorMessage)
+		async deleteAddress(id: string | number): Promise<void> {
+			try {
+				const { error, pending } = await useFetch(`/api/user-address/${id}`, {
+					method: 'delete'
+				})
+				this.error.address = error.value
+				this.pending.address = pending.value
+				const index = this.addresses?.results?.findIndex(
+					(address) => Number(address.id) === Number(id)
+				)
+				if (index && index !== -1) {
+					this.addresses?.results?.splice(index, 1)
+				}
+			} catch (error) {
+				this.error.address = error as FetchError
 			}
-			if (this.address) {
-				this.address.isMain = true
+		},
+		async setMainAddress(id: string | number): Promise<void> {
+			try {
+				const { error, pending } = await useFetch(`/api/user-address/${id}/set-main`, {
+					method: 'post'
+				})
+				this.error.address = error.value
+				this.pending.address = pending.value
+				if (this.address) {
+					this.address.isMain = true
+				}
+			} catch (error) {
+				this.error.address = error as FetchError
 			}
-			this.pending = pending.value
 		}
 	}
 })

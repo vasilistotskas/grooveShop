@@ -14,7 +14,7 @@ const props = defineProps({
 		default: 0
 	},
 	reviews: {
-		type: Array as PropType<Review[]>,
+		type: Array as PropType<Review[] | null>,
 		required: true
 	},
 	displayImageOf: {

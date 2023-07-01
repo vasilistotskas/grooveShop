@@ -215,22 +215,28 @@ definePageMeta({
 			</template>
 		</PageHeader>
 		<PageBody>
-			<Error v-if="error" :code="error.statusCode" :error="error" />
+			<Error
+				v-if="error.address"
+				:code="error.address.statusCode"
+				:error="error.address"
+			/>
 			<LoadingSkeleton
-				v-else-if="pending"
+				v-else-if="pending.address"
 				:card-height="'512px'"
-				:class="pending ? 'block' : 'hidden'"
-				:loading="pending"
+				:class="pending.address ? 'block' : 'hidden'"
+				:loading="pending.address"
 				:columns="1"
 				:columns-md="1"
 				:columns-lg="1"
 				:replicas="1"
 			></LoadingSkeleton>
 			<form
-				v-if="!pending && !error && address"
+				v-if="!pending.address && !error.address && address"
 				id="AddressEditForm"
 				class="_form grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-white dark:bg-slate-800 rounded-lg"
 				name="AddressEditForm"
+				:action="`/api/v1/user/addresses/${address.id}`"
+				method="post"
 				@submit="onSubmit"
 			>
 				<div class="grid content-evenly items-start">
@@ -478,7 +484,7 @@ definePageMeta({
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="country">{{
 							$t('pages.account.addresses.edit.form.country')
 						}}</label>
-						<div class="grid">
+						<div v-if="countries" class="grid">
 							<select
 								id="country"
 								v-model="country"
@@ -508,7 +514,7 @@ definePageMeta({
 						<label class="text-gray-700 dark:text-gray-200 mb-2" for="region">{{
 							$t('pages.account.addresses.edit.form.region')
 						}}</label>
-						<div class="grid">
+						<div v-if="regions" class="grid">
 							<select
 								id="region"
 								ref="regionSelectElement"

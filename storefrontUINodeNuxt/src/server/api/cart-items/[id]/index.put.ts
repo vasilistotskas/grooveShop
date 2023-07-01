@@ -12,7 +12,7 @@ export default defineEventHandler(async (event: H3Event) => {
 	const cookie = event.node.req.headers.cookie
 	const params = parseParamsAs(event, ZodCartItemParams)
 	const csrftoken = getCookie(event, 'csrftoken') || ''
-	const response = await $fetch(`${config.public.apiBaseUrl}/cart/item/${params.id}/`, {
+	const response = await $fetch(`${config.public.apiBaseUrl}/cart/item/${params.id}`, {
 		headers: {
 			Cookie: cookie || '',
 			'X-CSRFToken': csrftoken,

@@ -1,7 +1,7 @@
 import { joinURL } from 'ufo'
 import { defu } from 'defu'
-import { createOperationsGenerator } from '#image'
 import { ProviderGetImage } from '@nuxt/image'
+import { createOperationsGenerator } from '#image'
 
 const removePathExtension = (value: string) => value.replace(/\.[^/.]+$/, '')
 

@@ -4,7 +4,7 @@ import { Address } from '~/zod/user/address'
 
 const props = defineProps({
 	addresses: {
-		type: Array as PropType<Address[]>,
+		type: Array as PropType<Address[] | null>,
 		required: true
 	},
 	displayTotal: {
@@ -21,7 +21,7 @@ const { t } = useLang()
 	<div class="address__list gap-4">
 		<div class="address__list__header">
 			<div v-if="displayTotal" class="address__list__header__total">
-				<span class="address__list__header__total__value">{{ addresses.length }}</span>
+				<span class="address__list__header__total__value">{{ addresses?.length }}</span>
 				<span class="address__list__header__total__label">
 					{{ t('pages.account.addresses.total') }}
 				</span>

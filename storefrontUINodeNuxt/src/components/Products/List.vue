@@ -80,13 +80,13 @@ watch(
 			:error="error.products"
 		/>
 		<LoadingSkeleton
-			v-else-if="pending.products && !products.results.length"
+			v-else-if="pending.products && !products?.results?.length"
 			:card-height="'512px'"
 			:class="pending.products ? 'block' : 'hidden'"
 			:loading="pending.products"
-			:replicas="products.results.length || 4"
+			:replicas="products?.results?.length || 4"
 		></LoadingSkeleton>
-		<template v-if="!pending.products && products.results.length">
+		<template v-if="!pending.products && products?.results?.length">
 			<div class="grid gap-2 md:flex md:items-center">
 				<PaginationLimitOffset
 					:current-page="pagination.currentPage"
@@ -108,7 +108,7 @@ watch(
 				</template>
 			</ol>
 		</template>
-		<template v-if="!pending && !products.results.length">
+		<template v-if="!pending.products && !products?.results?.length">
 			<EmptyState :icon="emptyIcon">
 				<template #actions>
 					<Button :text="$t('common.empty.button')" :type="'link'" :to="'index'"></Button>
