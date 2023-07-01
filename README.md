@@ -5,41 +5,41 @@
 
 ## DOCKER :
    ### DJANGO :
-   #### Run django db migrations through docker-compose :
-   -     docker-compose run backend sh -c "python manage.py makemigrations --noinput"
+   #### Run django db migrations through docker compose :
+   -     docker compose run backend sh -c "python manage.py makemigrations --noinput"
 
-   #### Run django db migrate through docker-compose :
-   -     docker-compose run backend sh -c "python manage.py migrate"
+   #### Run django db migrate through docker compose :
+   -     docker compose run backend sh -c "python manage.py migrate"
 
-   #### Create superuser through docker-compose :
-   -     docker-compose run backend sh -c "python manage.py createsuperuser"
+   #### Create superuser through docker compose :
+   -     docker compose run backend sh -c "python manage.py createsuperuser"
 
-   #### Run django collectstatic through docker-compose :
-   -     docker-compose run backend sh -c "python manage.py collectstatic --noinput"
+   #### Run django collectstatic through docker compose :
+   -     docker compose run backend sh -c "python manage.py collectstatic --noinput"
 
-   #### Run django tests through docker-compose :
-   -     docker-compose run backend sh -c "python manage.py test backend/tests/"
+   #### Run django tests through docker compose :
+   -     docker compose run backend sh -c "python manage.py test backend/tests/"
 
-   #### Run django tests with coverage and html through docker-compose :
-   -     docker-compose run backend sh -c "coverage run --omit=*/migrations/*,*/management/*,*/manage.py,*/setup.py,*/asgi.py,*/wsgi.py --source='.' manage.py test backend/tests/ && coverage report && coverage html"
+   #### Run django tests with coverage and html through docker compose :
+   -     docker compose run backend sh -c "coverage run --omit=*/migrations/*,*/management/*,*/manage.py,*/setup.py,*/asgi.py,*/wsgi.py --source='.' manage.py test backend/tests/ && coverage report && coverage html"
 
-   #### Run django coverage html through docker-compose :
-   -     docker-compose run backend sh -c "coverage html"
+   #### Run django coverage html through docker compose :
+   -     docker compose run backend sh -c "coverage html"
 
-   #### Seed database with fake data through docker-compose :
-   -     docker-compose run backend sh -c "python manage.py populate_all"
+   #### Seed database with fake data through docker compose :
+   -     docker compose run backend sh -c "python manage.py populate_all"
    -   #### Separate seed commands :
-   -     docker-compose run backend sh -c "python manage.py populate_users"
-         docker-compose run backend sh -c "python manage.py populate_products"
-         docker-compose run backend sh -c "python manage.py populate_orders"
-         docker-compose run backend sh -c "python manage.py populate_blog"
-         docker-compose run backend sh -c "python manage.py populate_reviews"
-         docker-compose run backend sh -c "python manage.py populate_countries"
-         docker-compose run backend sh -c "python manage.py populate_sliders"
-         docker-compose run backend sh -c "python manage.py populate_tips"
+   -     docker compose run backend sh -c "python manage.py populate_users"
+         docker compose run backend sh -c "python manage.py populate_products"
+         docker compose run backend sh -c "python manage.py populate_orders"
+         docker compose run backend sh -c "python manage.py populate_blog"
+         docker compose run backend sh -c "python manage.py populate_reviews"
+         docker compose run backend sh -c "python manage.py populate_countries"
+         docker compose run backend sh -c "python manage.py populate_sliders"
+         docker compose run backend sh -c "python manage.py populate_tips"
 
    #### Run docker compose for specific yml file :
-   -     docker-compose -f <docker-compose-file.yml> up -d --build
+   -     docker compose -f <docker compose-file.yml> up -d --build
 
    #### Run docker commands through docker exec :
    -     docker exec -it <container_id> <command>

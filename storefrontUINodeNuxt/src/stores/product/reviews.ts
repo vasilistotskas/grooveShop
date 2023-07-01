@@ -151,13 +151,10 @@ export const useReviewsStore = defineStore({
 					method: 'put',
 					body: JSON.stringify(body)
 				})
-				console.log('review.value', review.value)
-				console.log('this.reviews?.results', this.reviews?.results)
 				if (review.value && this.reviews?.results) {
 					const index = this.reviews?.results?.findIndex((review) => review.id === id)
 					// If current review in results listing update it
 					if (index !== -1) {
-						console.log('this.reviews.results[index]', this.reviews.results[index])
 						this.reviews.results[index] = {
 							comment: review.value.comment,
 							createdAt: review.value.createdAt,

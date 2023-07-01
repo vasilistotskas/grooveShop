@@ -86,8 +86,6 @@ export const useCartStore = defineStore({
 				})
 				this.error.cart = error.value
 				this.pending.cart = pending.value
-				console.log('this.error.cart', this.error.cart)
-				console.log('this.error.cart', this.error.cart)
 			} catch (error) {
 				this.error.cart = error as FetchError
 			}
