@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.62.0 (2023-07-01)
+
+### Feature
+
+* **Nuxt:** Pinia stores refactor and more ([`c06d079`](https://github.com/vasilistotskas/grooveShop/commit/c06d079ca1708268102ee0f3eb311ba0623aa93d))
+
 ## v0.61.0 (2023-06-16)
 
 ### Feature
