@@ -4,9 +4,10 @@ import { fileURLToPath } from 'node:url'
 export default defineVitestConfig({
 	test: {
 		dir: 'tests',
-		testTimeout: 30000,
+		testTimeout: 10000,
 		setupFiles: ['tests/setup.ts'],
 		coverage: {
+			providers: 'v8',
 			reportsDirectory: 'coverage'
 		},
 		environmentOptions: {

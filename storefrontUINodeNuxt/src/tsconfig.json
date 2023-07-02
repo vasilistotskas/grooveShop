@@ -15,9 +15,15 @@
 			"@pinia/nuxt",
 			"@nuxt/image",
 			"unplugin-icons/types/vue",
-			"vitest/globals"
+			"@testing-library/jest-dom"
 		],
-		"typeRoots": ["node_modules/@types", "global.d.ts", "components.d.ts", "custom.d.ts"]
+		"typeRoots": [
+			"node_modules/@types",
+			"global.d.ts",
+			"components.d.ts",
+			"custom.d.ts",
+			"auto-imports.d.ts"
+		]
 	},
 	"files": ["global.d.ts", "components.d.ts", "custom.d.ts"]
 }

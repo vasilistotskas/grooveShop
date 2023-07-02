@@ -1,6 +1,7 @@
 import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
 import Components from 'unplugin-vue-components/vite'
+import AutoImport from 'unplugin-auto-import/vite'
 
 export const vite = {
 	plugins: [
@@ -28,6 +29,10 @@ export const vite = {
 		}),
 		Icons({
 			compiler: 'vue3'
+		}),
+		AutoImport({
+			imports: ['vitest'],
+			dts: true // generate TypeScript declaration
 		})
 	],
 	build: {
@@ -45,15 +50,15 @@ export const vite = {
 				}
 			}
 		}
-	},
-	server: {
-		hmr: {
-			protocol: process.env.NODE_ENV === 'production' ? 'wss' : 'ws',
-			clientPort: 24678,
-			path: 'hmr/'
-		},
-		watch: {
-			usePolling: false // process.env.NODE_ENV !== 'production'
-		}
 	}
+	// server: {
+	// 	hmr: {
+	// 		protocol: process.env.NODE_ENV === 'production' ? 'wss' : 'ws',
+	// 		clientPort: 24678,
+	// 		path: 'hmr/'
+	// 	},
+	// 	watch: {
+	// 		usePolling: false // process.env.NODE_ENV !== 'production'
+	// 	}
+	// }
 }
