@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.63.0 (2023-07-02)
+
+### Feature
+
+* **Nuxt:** Added nuxt-vitest lib, introduce unit and nuxt testing and more ([`93a8233`](https://github.com/vasilistotskas/grooveShop/commit/93a82334073734357c0cbdf07a3bde8ba3276245))
+
 ## v0.62.0 (2023-07-01)
 
 ### Feature
