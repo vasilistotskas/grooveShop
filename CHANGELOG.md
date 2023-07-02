@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.63.1 (2023-07-02)
+
+### Fix
+
+* **Nuxt:** Tests fixed and more improvements on testing ([`54bc504`](https://github.com/vasilistotskas/grooveShop/commit/54bc5049f35f2fbecc9863e698455c5529100db4))
+
 ## v0.63.0 (2023-07-02)
 
 ### Feature
