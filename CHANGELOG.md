@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.63.2 (2023-07-02)
+
+### Fix
+
+* **Django:** Cart service simplified ([`5324380`](https://github.com/vasilistotskas/grooveShop/commit/5324380af5bed0319132a09ff27db4fe89fce65d))
+
 ## v0.63.1 (2023-07-02)
 
 ### Fix
