@@ -14,7 +14,8 @@
 			"@vueuse/nuxt",
 			"@pinia/nuxt",
 			"@nuxt/image",
-			"unplugin-icons/types/vue"
+			"unplugin-icons/types/vue",
+			"vitest/globals"
 		],
 		"typeRoots": ["node_modules/@types", "global.d.ts", "components.d.ts", "custom.d.ts"]
 	},

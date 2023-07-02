@@ -199,13 +199,13 @@ pages:
     title: η σελίδα δεν βρέθηκε
     description: η σελίδα δεν βρέθηκε
   testing:
-    nav: δοκιμή
-    title: δοκιμή
+    nav: δοκιμές
+    title: δοκιμές
     index:
-      nav: δοκιμή
-      title: δοκιμή
+      nav: δοκιμές
+      title: δοκιμές
       description: αυτή είναι μια δοκιμαστική σελίδα
-      keywords: δοκιμή
+      keywords: δοκιμές
     blank:
       nav: κενό
       title: κενή σελίδα
@@ -213,7 +213,7 @@ pages:
       just_blank_page_with_title: απλά κενή σελίδα με τίτλο
     test:
       nav: δοκιμή
-      title: δοκιμή
+      title: δοκιμές
       description: αυτή είναι μια δοκιμαστική σελίδα
       counter: μετρητής
       increment: αύξηση
@@ -236,7 +236,7 @@ pages:
           footer_link: api χρηστών github
         bot_id:
           title: αναγνωριστικό ρομπότ
-          description: αυτό είναι το αναγνωριστικό του bot σας.
+          description: αυτό είναι το αναγνωριστικό ρομπότ σας.
           footer: χρησιμοποιείται κατά την αλληλεπίδραση με το bot.
         protection_spam:
           title: προστασία ανεπιθύμητων
@@ -245,7 +245,7 @@ pages:
             εάν ενεργοποιηθεί, θα προστατεύσουμε τα σχόλιά σας από ανεπιθύμητα
             μηνύματα
         advanced_enable_advanced:
-          title: ενεργοποίηση σύνθετων ρυθμίσεων
+          title: ενεργοποιήστε τις σύνθετες ρυθμίσεις
           description: >-
             μπορείτε να ενεργοποιήσετε τις σύνθετες ρυθμίσεις για να αλλάξετε
             τις ρυθμίσεις
@@ -424,7 +424,7 @@ pages:
       keywords: ρυθμίσεις
       updated: οι ρυθμίσεις ενημερώθηκαν
       update_error: σφάλμα ενημέρωσης ρυθμίσεων
-      deleted: ρυθμίσεις το στοιχείο διαγράφηκε
+      deleted: το στοιχείο ρυθμίσεων διαγράφηκε
       delete_error: σφάλμα διαγραφής στοιχείου ρυθμίσεων
       validation:
         email:

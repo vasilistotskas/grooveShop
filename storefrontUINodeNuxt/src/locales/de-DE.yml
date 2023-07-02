@@ -57,8 +57,8 @@ components:
       functional: funktionelle cookies
       functional_description: >-
         funktionale cookies helfen dabei, bestimmte funktionen auszuführen, wie
-        z. b. das teilen des inhalts der website auf social-media-plattformen,
-        das sammeln von feedback und andere funktionen von drittanbietern.
+        das teilen des inhalts der website auf social-media-plattformen, das
+        sammeln von feedback und andere funktionen von drittanbietern.
       necessary: notwendige cookies
       necessary_description: >-
         notwendige cookies tragen dazu bei, eine website nutzbar zu machen,
@@ -107,7 +107,7 @@ components:
       write_review: eine rezension schreiben
       edit_review: rezension bearbeiten
       update_review: update-überprüfung
-      delete_review: rezension löschen
+      delete_review: bewertung löschen
       must_be_logged_in: sie müssen angemeldet sein, um eine bewertung schreiben zu können
       write_review_for_product: schreiben sie eine bewertung für produkt %{product}
       confirm_delete: sind sie sicher, dass sie diese bewertung löschen möchten?

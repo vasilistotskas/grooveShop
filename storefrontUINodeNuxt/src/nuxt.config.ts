@@ -21,7 +21,8 @@ export default defineNuxtConfig({
 		componentIslands: true,
 		viewTransition: true,
 		renderJsonPayloads: true,
-		typedPages: true
+		typedPages: true,
+		watcher: 'chokidar'
 	},
 	extends: ['nuxt-seo-kit'],
 	imports: {
@@ -62,7 +63,8 @@ export default defineNuxtConfig({
 		'@vueuse/nuxt',
 		'@vite-pwa/nuxt',
 		'unplugin-icons/nuxt',
-		'nuxt-lodash'
+		'nuxt-lodash',
+		'nuxt-vitest'
 	],
 	i18n: {
 		strategy: 'prefix_except_default',

@@ -77,7 +77,7 @@ const updatePayWay = (value: PayWay) => {
 				:loading="pending.payWays"
 				:replicas="getActivePayWays?.length || 4"
 			></LoadingSkeleton>
-			<template v-if="selectedPayWay && !pending && getActivePayWays?.length">
+			<template v-if="selectedPayWay && !pending.payWays && getActivePayWays?.length">
 				<RadioGroup
 					:model-value="selectedPayWay"
 					by="id"
