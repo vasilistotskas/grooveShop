@@ -20,6 +20,11 @@ const props = defineProps({
 	}
 })
 
+defineSlots<{
+	icon(props: {}): any
+	title(props: {}): any
+}>()
+
 const styles = reactive<{
 	[key: string]: string
 }>({

@@ -15,6 +15,10 @@ const props = defineProps({
 		required: true
 	}
 })
+
+defineSlots<{
+	actions(props: {}): any
+}>()
 </script>
 
 <template>

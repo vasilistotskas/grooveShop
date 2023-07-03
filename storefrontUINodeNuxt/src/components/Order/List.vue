@@ -8,7 +8,11 @@ const props = defineProps({
 		required: true
 	}
 })
-
+defineSlots<{
+	default(props: {}): any
+	header(props: {}): any
+	footer(props: {}): any
+}>()
 const { t } = useLang()
 </script>
 

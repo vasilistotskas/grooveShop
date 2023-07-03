@@ -17,6 +17,9 @@ const props = defineProps({
 		default: ''
 	}
 })
+defineSlots<{
+	default(props: {}): any
+}>()
 const localePath = useLocalePath()
 </script>
 

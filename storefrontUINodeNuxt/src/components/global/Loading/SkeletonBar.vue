@@ -21,6 +21,9 @@ defineProps({
 		default: false
 	}
 })
+defineSlots<{
+	default(props: {}): any
+}>()
 </script>
 
 <template>

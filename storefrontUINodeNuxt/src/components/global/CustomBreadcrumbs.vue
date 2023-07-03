@@ -20,7 +20,10 @@ const customBreadcrumbs = computed(() => {
 </script>
 
 <template>
-	<section v-if="hasChildren && !customBreadcrumbs" class="cp-breadcrumbs-breadcrumbs">
+	<PageSection
+		v-if="hasChildren && !customBreadcrumbs"
+		class="cp-breadcrumbs-breadcrumbs"
+	>
 		<nav class="cp-breadcrumbs-breadcrumbs-itm_li">
 			<ul class="cp-breadcrumbs-breadcrumbs-itm">
 				<template v-for="(item, key) in breadcrumbs" :key="key">
@@ -57,7 +60,7 @@ const customBreadcrumbs = computed(() => {
 				</template>
 			</ul>
 		</nav>
-	</section>
+	</PageSection>
 	<div v-else-if="!hasChildren" class="cp-breadcrumbs-breadcrumbs-empty"></div>
 </template>
 

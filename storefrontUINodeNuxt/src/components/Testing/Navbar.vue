@@ -6,6 +6,10 @@ interface IMenuItem {
 	route?: { name: string; path?: string }
 }
 
+defineSlots<{
+	drawer(props: {}): any
+}>()
+
 const { t } = useLang()
 const consoleLogImageLoaded = () => {
 	// Image loaded

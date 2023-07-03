@@ -10,6 +10,11 @@ import {
 import { Cookie, CookieTypeEnum } from '#cookie-control/types'
 import setCssVariables from '#cookie-control/set-vars'
 
+defineSlots<{
+	bar(props: {}): any
+	modal(props: {}): any
+}>()
+
 const { t } = useLang()
 
 const {

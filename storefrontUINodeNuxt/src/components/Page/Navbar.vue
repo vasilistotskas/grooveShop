@@ -70,7 +70,7 @@ const { cart } = storeToRefs(cartStore)
 							class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
 							:title="$t('pages.accounts.login.title')"
 							:text="$t('pages.accounts.login.title')"
-							:href="`${config.public.djangoUrl}/accounts/login`"
+							:href="`${config.public.djangoUrl}/accounts/login/`"
 						>
 							<IconFa6Solid:circleUser />
 						</Anchor>

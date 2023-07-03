@@ -1,5 +1,9 @@
 <script lang="ts" setup>
-import { TransitionRoot, TransitionChild } from '@headlessui/vue'
+import { TransitionChild, TransitionRoot } from '@headlessui/vue'
+
+defineSlots<{
+	default(props: {}): any
+}>()
 
 const emit = defineEmits(['onClose'])
 

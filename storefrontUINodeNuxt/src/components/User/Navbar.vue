@@ -12,6 +12,11 @@ interface IMenuItem {
 	cssClass?: string
 }
 
+defineSlots<{
+	image(props: {}): any
+	drawer(props: {}): any
+}>()
+
 const { t } = useLang()
 const config = useRuntimeConfig()
 
@@ -36,7 +41,7 @@ const menus = computed((): IMenuItem[] => [
 	{
 		type: 'external-link',
 		text: t('pages.accounts.logout.title'),
-		href: `${config.public.djangoUrl}/accounts/logout`,
+		href: `${config.public.djangoUrl}/accounts/logout/`,
 		icon: doorArrowRight,
 		cssClass:
 			'text-gray-700 dark:text-gray-200 bg-gray-200 border-gray-200 hover:bg-gray-300 dark:border-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700'
@@ -131,7 +136,7 @@ const menus = computed((): IMenuItem[] => [
 							class="hover:no-underline hover:text-slate-900 hover:dark:text-white text-lg flex self-center items-center"
 							:title="$t('pages.accounts.login.title')"
 							:text="$t('pages.accounts.login.title')"
-							:href="`${config.public.djangoUrl}/accounts/login`"
+							:href="`${config.public.djangoUrl}/accounts/login/`"
 						>
 							<IconFa6Solid:circleUser />
 						</Anchor>

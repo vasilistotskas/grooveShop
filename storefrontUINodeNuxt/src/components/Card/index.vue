@@ -5,6 +5,9 @@ defineProps({
 		required: false
 	}
 })
+defineSlots<{
+	default(props: {}): any
+}>()
 </script>
 
 <template>

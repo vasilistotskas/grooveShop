@@ -1,4 +1,12 @@
 <script lang="ts" setup>
+defineSlots<{
+	banner(props: {}): any
+	title(props: {}): any
+	menu(props: {}): any
+	drawer(props: { toggleDrawer: () => boolean }): any
+	options(props: { toggleOptions: (show?: boolean) => void; showOptions: boolean }): any
+}>()
+
 const navbar = ref(null)
 const showDrawer = useState<boolean>('navbar.showDrawer', () => false)
 const showOptions = useState<boolean>('navbar.showOptions', () => false)

@@ -1,4 +1,13 @@
 <script lang="ts" setup>
+defineSlots<{
+	default(props: {}): any
+	main(props: {}): any
+	header(props: {}): any
+	footer(props: {}): any
+	'app-before'(props: {}): any
+	'app-after'(props: {}): any
+}>()
+
 const { t } = useLang()
 const route = useRoute()
 

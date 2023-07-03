@@ -89,15 +89,16 @@ const onAnimationLoaded = () => {
 </script>
 
 <template>
-	<Button type="button" :text="buttonLabel" :size="size" @click="toggleFavourite">
-		<Lottie
-			ref="lottie"
-			class="grid"
-			:animation-data="heartJSON"
-			:width="'100px'"
-			:loop="false"
-			:auto-play="false"
-			@on-animation-loaded="onAnimationLoaded"
-		/>
-	</Button>
+	<Lottie
+		ref="lottie"
+		:text="buttonLabel"
+		:component-element="'button'"
+		:size="size"
+		:animation-data="heartJSON"
+		:width="'100px'"
+		:loop="false"
+		:auto-play="false"
+		@on-animation-loaded="onAnimationLoaded"
+		@click="toggleFavourite"
+	/>
 </template>

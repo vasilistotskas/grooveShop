@@ -1,12 +1,6 @@
 <script lang="ts" setup>
 import { GlobalEvents } from '~/events/global'
 
-defineSlots<{
-	header(props: {}): any
-	body(props: {}): any
-	footer(props: {}): any
-}>()
-
 const props = defineProps({
 	shouldModalStartInOpenState: {
 		type: Boolean,
@@ -143,6 +137,12 @@ const props = defineProps({
 		default: ''
 	}
 })
+
+defineSlots<{
+	header(props: {}): any
+	body(props: {}): any
+	footer(props: {}): any
+}>()
 
 const { t } = useLang()
 const emit = defineEmits(['submitForm'])

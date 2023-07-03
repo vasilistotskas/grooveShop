@@ -11,6 +11,12 @@ const props = defineProps({
 	totalPrice: { type: Number, required: true },
 	totalVatValue: { type: Number, required: true }
 })
+
+defineSlots<{
+	'pay-ways'(props: {}): any
+	items(props: {}): any
+	button(props: {}): any
+}>()
 </script>
 
 <template>

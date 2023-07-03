@@ -19,6 +19,11 @@ const props = defineProps({
 		required: false,
 		default: undefined
 	},
+	userHadReviewed: {
+		type: Boolean as PropType<boolean | null>,
+		required: false,
+		default: null
+	},
 	product: {
 		type: Object as PropType<Product>,
 		required: true
@@ -48,7 +53,7 @@ const selectedRatio = ref(0)
 const ratingBoard = ref<HTMLElement | null>(null)
 
 const reviewButtonText = computed(() => {
-	if (props.existingReview === undefined) {
+	if (!props.userHadReviewed) {
 		return t('components.product.review.write_review')
 	}
 	return t('components.product.review.update_review')
@@ -187,7 +192,7 @@ const updateNewSelectionRatio = (event: TouchEvent | MouseEvent) => {
 const bus = useEventBus<string>('productReview')
 
 const deleteReviewHandle = () => {
-	if (props.isAuthenticated && props.existingReview) {
+	if (props.isAuthenticated && props.userHadReviewed) {
 		swal
 			.fire({
 				title: t('components.product.review.delete_review'),
@@ -264,7 +269,7 @@ const tooManyAttempts = computed(() => {
 
 const onSubmit = handleSubmit((event) => {
 	if (props.isAuthenticated) {
-		if (props.existingReview === undefined) {
+		if (!props.userHadReviewed) {
 			bus.emit('create', {
 				comment: event.comment,
 				rate: event.rate,

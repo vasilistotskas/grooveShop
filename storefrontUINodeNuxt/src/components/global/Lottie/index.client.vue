@@ -1,11 +1,14 @@
-<template>
-	<span
+<template :style="getCurrentStyle">
+	<component
+		:is="componentElement"
 		:data-id="elementId"
 		class="lottie-animation-container"
-		:style="getCurrentStyle"
+		v-bind="$attrs"
 		@mouseenter="hoverStarted"
 		@mouseleave="hoverEnded"
-	></span>
+	>
+		<span class="hidden"></span>
+	</component>
 </template>
 
 <script lang="ts">
@@ -28,6 +31,7 @@ export interface LottieProps {
 	backgroundColor: string
 	pauseAnimation: boolean
 	assetsPath: string
+	componentElement: string
 }
 
 export default defineComponent({
@@ -95,6 +99,10 @@ export default defineComponent({
 		assetsPath: {
 			type: String as PropType<LottieProps['assetsPath']>,
 			default: ''
+		},
+		componentElement: {
+			type: String as PropType<LottieProps['componentElement']>,
+			default: 'div'
 		}
 	},
 

@@ -1,3 +1,9 @@
+<script setup lang="ts">
+defineSlots<{
+	default(props: {}): any
+}>()
+</script>
+
 <template>
 	<main>
 		<div class="flex flex-col min-h-screen">

@@ -14,6 +14,9 @@ const props = defineProps({
 		default: undefined
 	}
 })
+defineSlots<{
+	default(props: {}): any
+}>()
 
 const emit = defineEmits(['update:modelValue'])
 

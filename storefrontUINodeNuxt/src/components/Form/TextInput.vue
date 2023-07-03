@@ -37,6 +37,12 @@ const props = defineProps({
 	}
 })
 const emit = defineEmits(['update:modelValue'])
+defineSlots<{
+	'prefix-disabled'(props: {}): any
+	prefix(props: {}): any
+	suffix(props: {}): any
+}>()
+
 const slots = useSlots()
 
 // list styles

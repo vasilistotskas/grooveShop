@@ -1,3 +1,13 @@
+<script setup lang="ts">
+defineSlots<{
+	default(props: {}): any
+	header(props: {}): any
+	footer(props: {}): any
+	'app-before'(props: {}): any
+	'app-after'(props: {}): any
+}>()
+</script>
+
 <template>
 	<div class="relative">
 		<slot name="app-before" />
@@ -9,11 +19,11 @@
 		</slot>
 		<div class="relative flex-1 flex flex-col w-full h-full">
 			<PageMain>
-				<section class="flex flex-col">
+				<PageSection class="flex flex-col">
 					<div class="flex-1 w-full flex flex-col">
 						<slot />
 					</div>
-				</section>
+				</PageSection>
 			</PageMain>
 		</div>
 		<slot name="footer">

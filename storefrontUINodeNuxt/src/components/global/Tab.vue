@@ -9,6 +9,9 @@ defineProps({
 		required: true
 	}
 })
+defineSlots<{
+	default(props: {}): any
+}>()
 const activeTab = inject<string>('activeTab')
 </script>
 
