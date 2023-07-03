@@ -1,4 +1,13 @@
 <script lang="ts" setup>
+defineSlots<{
+	breadcrumb(props: {
+		to: string | Record<string, unknown>
+		title: string
+		last: boolean
+		first: boolean
+	}): any
+}>()
+
 const route = useRoute()
 const breadcrumbs = useBreadcrumbs()
 const schemaBreadcrumbs = computed(() =>

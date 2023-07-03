@@ -34,6 +34,11 @@ const props = defineProps({
 	}
 })
 
+defineSlots<{
+	default(props: {}): any
+	icon(props: {}): any
+}>()
+
 const localePath = useLocalePath()
 
 // state:styles
