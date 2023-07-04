@@ -75,6 +75,10 @@ urlpatterns = [
             }
         ),
     ),
+    path(
+        "product/review/user_had_reviewed/",
+        ProductReviewViewSet.as_view({"post": "user_had_reviewed"}),
+    ),
     # Images
     path(
         "product/images/",

@@ -24,9 +24,21 @@ const productId = route.params.id
 const { account, favourites } = storeToRefs(userStore)
 const { isAuthenticated } = storeToRefs(authStore)
 const { product, pending, error } = storeToRefs(productStore)
+const { userHadReviewed } = storeToRefs(reviewsStore)
 
 try {
 	await productStore.fetchProduct(productId)
+} catch (error) {
+	//
+}
+
+try {
+	if (account.value?.id && productId) {
+		await reviewsStore.fetchUserHadReviewed({
+			product: String(productId),
+			user: String(account.value?.id)
+		})
+	}
 } catch (error) {
 	//
 }
@@ -35,6 +47,12 @@ const productRefresh = async () => await productStore.fetchProduct(productId)
 
 const reviewsRefresh = async () =>
 	await reviewsStore.fetchReviews(routePaginationParams.value)
+
+const userHadReviewedRefresh = async () =>
+	await reviewsStore.fetchUserHadReviewed({
+		product: String(productId),
+		user: String(account.value?.id)
+	})
 
 const routePaginationParams = ref<ReviewQuery>({
 	productId: String(productId),
@@ -95,17 +113,21 @@ reviewBus.on((event, payload: ReviewActionPayload) => {
 	switch (event) {
 		case 'create':
 			reviewsStore
-				.addReview({
-					product: String(payload.productId),
-					user: String(payload.userId),
-					comment: payload.comment,
-					rate: String(payload.rate),
-					status: 'True'
-				})
+				.addReview(
+					{
+						product: String(payload.productId),
+						user: String(payload.userId),
+						comment: payload.comment,
+						rate: String(payload.rate),
+						status: 'True'
+					},
+					{ expand: 'true' }
+				)
 				.then(() => {
 					toast.success(t('pages.product.review.created.success'))
 					productRefresh()
-					existingReviewRefresh().finally(() => (reviewsStore.pending.reviews = false))
+					existingReviewRefresh()
+					userHadReviewedRefresh()
 				})
 				.catch((err) => {
 					toast.error(err.message)
@@ -125,7 +147,8 @@ reviewBus.on((event, payload: ReviewActionPayload) => {
 				.then(() => {
 					toast.success(t('pages.product.review.updated.success'))
 					productRefresh()
-					existingReviewRefresh().finally(() => (reviewsStore.pending.reviews = false))
+					existingReviewRefresh()
+					userHadReviewedRefresh()
 				})
 				.catch((err) => {
 					toast.error(err.message)
@@ -140,7 +163,8 @@ reviewBus.on((event, payload: ReviewActionPayload) => {
 				.then(() => {
 					toast.success(t('pages.product.review.deleted.success'))
 					productRefresh()
-					existingReviewRefresh().finally(() => (reviewsStore.pending.reviews = false))
+					existingReviewRefresh()
+					userHadReviewedRefresh()
 				})
 				.catch((err) => {
 					toast.error(err.message)
@@ -277,7 +301,7 @@ useHead(() => ({
 								>
 									{{ product.name }}
 								</h2>
-								<section class="actions flex gap-4">
+								<PageSection class="actions flex gap-4">
 									<ClientOnly>
 										<Button
 											v-if="isSupported"
@@ -297,6 +321,7 @@ useHead(() => ({
 									<ProductReview
 										v-if="product"
 										:existing-review="existingReview || undefined"
+										:user-had-reviewed="userHadReviewed"
 										:product="product"
 										:user="account || undefined"
 										:is-authenticated="isAuthenticated"
@@ -308,7 +333,7 @@ useHead(() => ({
 										:favourite="userToProductFavourite"
 										:is-authenticated="isAuthenticated"
 									/>
-								</section>
+								</PageSection>
 								<h3 class="text-gray-700 dark:text-gray-200 text-sm">
 									<span>{{ $t('pages.product.product_id') }}: </span>
 									<span class="text-indigo-700 dark:text-indigo-200 hover:underline">{{

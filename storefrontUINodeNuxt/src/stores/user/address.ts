@@ -129,7 +129,7 @@ export const useUserAddressStore = defineStore({
 				const index = this.addresses?.results?.findIndex(
 					(address) => Number(address.id) === Number(id)
 				)
-				if (index && index !== -1) {
+				if (index !== undefined && index !== -1) {
 					this.addresses?.results?.splice(index, 1)
 				}
 			} catch (error) {

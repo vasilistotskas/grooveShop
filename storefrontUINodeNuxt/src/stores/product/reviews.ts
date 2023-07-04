@@ -2,29 +2,36 @@ import { FetchError } from 'ofetch'
 import { Pagination } from '~/zod/pagination/pagination'
 import {
 	Review,
+	ReviewCreateQuery,
 	ReviewCreateRequest,
 	ReviewPutRequest,
-	ReviewQuery
+	ReviewQuery,
+	ReviewUserHadReviewedRequest
 } from '~/zod/product/review'
 
 interface ErrorRecord {
 	reviews: FetchError | null
+	userHadReviewed: FetchError | null
 }
 
 interface PendingRecord {
 	reviews: boolean
+	userHadReviewed: boolean
 }
 
 const errorsFactory = (): ErrorRecord => ({
-	reviews: null
+	reviews: null,
+	userHadReviewed: null
 })
 
 const pendingFactory = (): PendingRecord => ({
-	reviews: false
+	reviews: false,
+	userHadReviewed: false
 })
 
 export interface ReviewsState {
 	reviews: Pagination<Review> | null
+	userHadReviewed: boolean | null
 	pending: PendingRecord
 	error: ErrorRecord
 }
@@ -32,18 +39,8 @@ export interface ReviewsState {
 export const useReviewsStore = defineStore({
 	id: 'product-reviews',
 	state: (): ReviewsState => ({
-		reviews: {
-			links: {
-				next: null,
-				prev: null
-			},
-			count: 0,
-			totalPages: 0,
-			pageTotalResults: 0,
-			pageSize: 0,
-			page: 0,
-			results: []
-		},
+		reviews: null,
+		userHadReviewed: null,
 		pending: pendingFactory(),
 		error: errorsFactory()
 	}),
@@ -101,7 +98,27 @@ export const useReviewsStore = defineStore({
 				this.error.reviews = error as FetchError
 			}
 		},
-		async addReview(body: ReviewCreateRequest) {
+		async fetchUserHadReviewed({ product, user }: ReviewUserHadReviewedRequest) {
+			try {
+				const {
+					data: userHadReviewed,
+					error,
+					pending
+				} = await useFetch(`/api/product-reviews/user-had-reviewed`, {
+					method: 'post',
+					body: {
+						product,
+						user
+					}
+				})
+				this.userHadReviewed = userHadReviewed.value
+				this.error.userHadReviewed = error.value
+				this.pending.userHadReviewed = pending.value
+			} catch (error) {
+				this.error.userHadReviewed = error as FetchError
+			}
+		},
+		async addReview(body: ReviewCreateRequest, params: ReviewCreateQuery) {
 			try {
 				const {
 					data: review,
@@ -109,15 +126,16 @@ export const useReviewsStore = defineStore({
 					pending
 				} = await useFetch(`/api/product-reviews`, {
 					method: 'post',
-					body
+					body,
+					params
 				})
-				// If current page results are less than pageSize then add review to results
 				if (
 					review.value &&
+					this.reviews &&
 					this.reviews?.results &&
-					this.reviews.results?.length < this.reviews.pageSize
+					this.reviews?.results?.length < this.reviews?.pageSize
 				) {
-					this.reviews.results.push(review.value)
+					this.reviews?.results?.push(review.value)
 				}
 				this.error.reviews = error.value
 				this.pending.reviews = pending.value
@@ -132,7 +150,7 @@ export const useReviewsStore = defineStore({
 				})
 				const index = this.reviews?.results?.findIndex((review) => review.id === id)
 				// If current review in results listing delete it
-				if (index && index !== -1) {
+				if (index !== undefined && index !== -1) {
 					this.reviews?.results?.splice(index, 1)
 				}
 				this.error.reviews = error.value

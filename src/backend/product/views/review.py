@@ -7,6 +7,7 @@ from backend.product.paginators.review import ProductReviewPagination
 from backend.product.serializers.review import ProductReviewSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
@@ -87,3 +88,27 @@ class ProductReviewViewSet(BaseExpandView, ModelViewSet):
         if self.action in ["create", "update", "partial_update", "destroy"]:
             self.permission_classes = [IsAuthenticated]
         return super().get_permissions()
+
+    @action(detail=False, methods=["post"])
+    def user_had_reviewed(self, request, *args, **kwargs) -> Response:
+        user_id = request.data.get("user")
+        product_id = request.data.get("product")
+
+        if user_id is None or product_id is None:
+            return Response(
+                {"detail": "user_id and product_id must be provided"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            user_had_reviewed = ProductReview.objects.filter(
+                user_id=user_id, product_id=product_id
+            ).exists()
+
+            return Response(user_had_reviewed, status=status.HTTP_200_OK)
+
+        except ValueError:
+            return Response(
+                {"detail": "Invalid user_id or product_id provided"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
