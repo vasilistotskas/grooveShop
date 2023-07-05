@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.64.0 (2023-07-05)
+
+### Feature
+
+* **semantic_release:** Add parser_angular_patch_types and changelog_sections ([`9e2a016`](https://github.com/vasilistotskas/grooveShop/commit/9e2a016bdef9e889a4a398b1ed131cd6133b24fe))
+
 ## v0.63.2 (2023-07-02)
 
 ### Fix
