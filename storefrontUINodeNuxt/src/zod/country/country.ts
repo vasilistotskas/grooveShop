@@ -14,17 +14,6 @@ export const ZodCountry = z.object({
 	uuid: z.string()
 })
 
-export type Country = z.infer<typeof ZodCountry>
-
-export type CountriesQuery = PaginationQuery &
-	OrderingQuery & {
-		alpha2?: string | undefined
-		alpha3?: string | undefined
-		name?: string | undefined
-		isoCc?: string | undefined
-		phoneCode?: string | undefined
-	}
-
 export const ZodCountriesQuery = z.object({
 	offset: z.string().nullish(),
 	limit: z.string().nullish(),
@@ -35,3 +24,13 @@ export const ZodCountriesQuery = z.object({
 	isoCc: z.string().nullish(),
 	phoneCode: z.string().nullish()
 })
+
+export type Country = z.infer<typeof ZodCountry>
+export type CountriesQuery = PaginationQuery &
+	OrderingQuery & {
+		alpha2?: string | undefined
+		alpha3?: string | undefined
+		name?: string | undefined
+		isoCc?: string | undefined
+		phoneCode?: string | undefined
+	}

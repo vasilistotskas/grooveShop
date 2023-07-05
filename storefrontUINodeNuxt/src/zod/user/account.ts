@@ -25,13 +25,9 @@ export const ZodAccount = z.object({
 	uuid: z.string()
 })
 
-export type Account = z.infer<typeof ZodAccount>
-
 export const ZodAccountParams = z.object({
 	id: z.string()
 })
-
-export type AccountParams = z.infer<typeof ZodAccountParams>
 
 export const ZodAccountPatchRequest = z.object({
 	email: z.string().nullish(),
@@ -50,8 +46,6 @@ export const ZodAccountPatchRequest = z.object({
 	birthDate: z.string().nullish()
 })
 
-export type AccountPatchRequest = z.infer<typeof ZodAccountPatchRequest>
-
 export const ZodAccountPutRequest = z.object({
 	email: z.string(),
 	image: z.string().nullish().nullish(),
@@ -69,4 +63,7 @@ export const ZodAccountPutRequest = z.object({
 	birthDate: z.string().nullish()
 })
 
+export type Account = z.infer<typeof ZodAccount>
 export type AccountPutRequest = z.infer<typeof ZodAccountPutRequest>
+export type AccountParams = z.infer<typeof ZodAccountParams>
+export type AccountPatchRequest = z.infer<typeof ZodAccountPatchRequest>

@@ -13,16 +13,6 @@ export const ZodFavourite = z.object({
 	uuid: z.string()
 })
 
-export type Favourite = z.infer<typeof ZodFavourite>
-
-export type FavouriteQuery = PaginationQuery &
-	OrderingQuery & {
-		id?: string | undefined
-		userId?: string | undefined
-		productId?: string | undefined
-		expand?: string | undefined
-	}
-
 export const ZodFavouriteQuery = z.object({
 	page: z.string().nullish(),
 	ordering: z.string().nullish(),
@@ -37,12 +27,18 @@ export const ZodFavouriteCreateRequest = z.object({
 	product: z.string()
 })
 
-export type FavouriteCreateRequest = z.infer<typeof ZodFavouriteCreateRequest>
-
 export const ZodFavouriteParams = z.object({
 	id: z.string()
 })
 
+export type Favourite = z.infer<typeof ZodFavourite>
 export type FavouriteParams = z.infer<typeof ZodFavouriteParams>
-
+export type FavouriteCreateRequest = z.infer<typeof ZodFavouriteCreateRequest>
 export type FavouriteOrderingField = 'createdAt'
+export type FavouriteQuery = PaginationQuery &
+	OrderingQuery & {
+		id?: string | undefined
+		userId?: string | undefined
+		productId?: string | undefined
+		expand?: string | undefined
+	}

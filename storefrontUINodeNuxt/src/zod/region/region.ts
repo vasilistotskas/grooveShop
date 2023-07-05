@@ -12,15 +12,6 @@ export const ZodRegion = z.object({
 	uuid: z.string()
 })
 
-export type Region = z.infer<typeof ZodRegion>
-
-export type RegionsQuery = PaginationQuery &
-	OrderingQuery & {
-		name?: string | undefined
-		alpha?: string | undefined
-		alpha2?: string | undefined
-	}
-
 export const ZodRegionsQuery = z.object({
 	offset: z.string().nullish(),
 	limit: z.string().nullish(),
@@ -29,3 +20,11 @@ export const ZodRegionsQuery = z.object({
 	alpha: z.string().nullish(),
 	alpha2: z.string().nullish()
 })
+
+export type Region = z.infer<typeof ZodRegion>
+export type RegionsQuery = PaginationQuery &
+	OrderingQuery & {
+		name?: string | undefined
+		alpha?: string | undefined
+		alpha2?: string | undefined
+	}

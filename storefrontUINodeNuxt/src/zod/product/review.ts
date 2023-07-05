@@ -20,16 +20,6 @@ export const ZodReview = z.object({
 	uuid: z.string()
 })
 
-export type Review = z.infer<typeof ZodReview>
-
-export type ReviewQuery = PaginationQuery &
-	OrderingQuery & {
-		id?: string | undefined
-		productId?: string | undefined
-		userId?: string | undefined
-		expand?: string | undefined
-	}
-
 export const ZodReviewQuery = z.object({
 	page: z.string().nullish(),
 	ordering: z.string().nullish(),
@@ -38,8 +28,6 @@ export const ZodReviewQuery = z.object({
 	userId: z.string().nullish(),
 	expand: z.string().nullish()
 })
-
-export type ReviewOrderingField = 'id' | 'userId' | 'productId' | 'createdAt'
 
 export const ZodReviewCreateRequest = z.object({
 	product: z.string(),
@@ -53,17 +41,12 @@ export const ZodReviewCreateQuery = z.object({
 	expand: z.string().nullish()
 })
 
-export type ReviewCreateRequest = z.infer<typeof ZodReviewCreateRequest>
-export type ReviewCreateQuery = z.infer<typeof ZodReviewCreateQuery>
-
 export const ZodReviewPutRequest = z.object({
 	product: z.string(),
 	user: z.string(),
 	comment: z.string(),
 	rate: z.string()
 })
-
-export type ReviewPutRequest = z.infer<typeof ZodReviewPutRequest>
 
 export const ZodReviewParams = z.object({
 	id: z.string()
@@ -74,10 +57,20 @@ export const ZodReviewUserHadReviewedRequest = z.object({
 	user: z.string()
 })
 
+export type Review = z.infer<typeof ZodReview>
 export type ReviewParams = z.infer<typeof ZodReviewParams>
-
 export type ReviewUserHadReviewedRequest = z.infer<typeof ZodReviewUserHadReviewedRequest>
-
+export type ReviewCreateRequest = z.infer<typeof ZodReviewCreateRequest>
+export type ReviewCreateQuery = z.infer<typeof ZodReviewCreateQuery>
+export type ReviewPutRequest = z.infer<typeof ZodReviewPutRequest>
+export type ReviewOrderingField = 'id' | 'userId' | 'productId' | 'createdAt'
+export type ReviewQuery = PaginationQuery &
+	OrderingQuery & {
+		id?: string | undefined
+		productId?: string | undefined
+		userId?: string | undefined
+		expand?: string | undefined
+	}
 export type ReviewActionPayload = {
 	id: number
 	comment: string

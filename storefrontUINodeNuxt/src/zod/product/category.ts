@@ -24,8 +24,6 @@ export const ZodCategory = z.object({
 	uuid: z.string()
 })
 
-export type Category = z.infer<typeof ZodCategory>
-
 export const ZodCategoryCreateRequest = z.object({
 	name: z.string(),
 	slug: z.string(),
@@ -37,10 +35,10 @@ export const ZodCategoryCreateRequest = z.object({
 	createdAt: z.string().nullish()
 })
 
-export type CategoryCreateRequest = Readonly<z.infer<typeof ZodCategoryCreateRequest>>
-
 export const ZodCategoryParams = z.object({
 	id: z.string()
 })
 
+export type Category = z.infer<typeof ZodCategory>
 export type CategoryParams = Readonly<z.infer<typeof ZodCategoryParams>>
+export type CategoryCreateRequest = Readonly<z.infer<typeof ZodCategoryCreateRequest>>

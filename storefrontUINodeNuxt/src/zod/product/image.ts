@@ -24,7 +24,6 @@ export const ZodImageQuery = z.object({
 })
 
 export type Image = z.infer<typeof ZodImage>
-
 export type ImageQuery = PaginationQuery &
 	OrderingQuery & {
 		id?: string | undefined

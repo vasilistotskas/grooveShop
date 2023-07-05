@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { PaginationQuery } from '~/zod/pagination/pagination'
 import { OrderingQuery } from '~/zod/ordering/ordering'
 import { FloorChoicesEnum, LocationChoicesEnum } from '~/zod/global/general'
+
 export const ZodAddress = z.object({
 	id: z.number(),
 	createdAt: z.string().datetime({ offset: true }),
@@ -24,15 +25,6 @@ export const ZodAddress = z.object({
 	country: z.string().min(2).nullish(),
 	region: z.string().min(3).nullish()
 })
-
-export type Address = z.infer<typeof ZodAddress>
-
-export type AddressQuery = PaginationQuery &
-	OrderingQuery & {
-		id?: string | undefined
-		userId?: string | undefined
-		expand?: string | undefined
-	}
 
 export const ZodAddressQuery = z.object({
 	page: z.string().nullish(),
@@ -61,8 +53,6 @@ export const ZodAddressCreateRequest = z.object({
 	region: z.string().min(3).nullish()
 })
 
-export type AddressCreateRequest = z.infer<typeof ZodAddressCreateRequest>
-
 export const ZodAddressParams = z.object({
 	id: z.string()
 })
@@ -85,10 +75,17 @@ export const ZodAddressPutRequest = z.object({
 	country: z.string().min(2).nullish(),
 	region: z.string().min(3).nullish()
 })
-export type AddressPutRequest = z.infer<typeof ZodAddressPutRequest>
 
+export type Address = z.infer<typeof ZodAddress>
 export type AddressParams = z.infer<typeof ZodAddressParams>
-
+export type AddressPutRequest = z.infer<typeof ZodAddressPutRequest>
+export type AddressCreateRequest = z.infer<typeof ZodAddressCreateRequest>
+export type AddressQuery = PaginationQuery &
+	OrderingQuery & {
+		id?: string | undefined
+		userId?: string | undefined
+		expand?: string | undefined
+	}
 export type AddressOrderingField =
 	| 'id'
 	| 'user'

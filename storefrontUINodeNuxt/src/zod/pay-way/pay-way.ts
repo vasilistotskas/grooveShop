@@ -29,5 +29,5 @@ export const ZodPayWayQuery = z.object({
 	freeForOrderAmount: z.string().nullish()
 })
 
-export type PayWayQuery = z.infer<typeof ZodPayWayQuery>
 export type PayWay = z.infer<typeof ZodPayWay>
+export type PayWayQuery = z.infer<typeof ZodPayWayQuery>
