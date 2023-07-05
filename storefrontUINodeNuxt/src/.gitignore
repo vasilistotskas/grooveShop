@@ -15,3 +15,8 @@ dist
 # IDE
 .idea
 .vercel
+
+# lock files
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
