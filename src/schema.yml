@@ -98,7 +98,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -183,7 +183,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -517,7 +517,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -602,7 +602,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -928,7 +928,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -1017,7 +1017,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -1355,7 +1355,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -1452,7 +1452,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -1952,7 +1952,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -2041,7 +2041,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -2909,15 +2909,15 @@ paths:
       operationId: api_v1_country_list
       parameters:
       - in: query
-        name: alpha_2
+        name: alpha2
         schema:
           type: string
       - in: query
-        name: alpha_3
+        name: alpha3
         schema:
           type: string
       - in: query
-        name: iso_cc
+        name: isoCc
         schema:
           type: integer
       - in: query
@@ -2936,14 +2936,14 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
         schema:
           type: integer
       - in: query
-        name: phone_code
+        name: phoneCode
         schema:
           type: integer
       - name: search
@@ -2999,11 +2999,11 @@ paths:
       operationId: api_v1_country_formatted_list
       parameters:
       - in: query
-        name: alpha_2
+        name: alpha2
         schema:
           type: string
       - in: query
-        name: alpha_3
+        name: alpha3
         schema:
           type: string
       - in: path
@@ -3014,7 +3014,7 @@ paths:
           - .json
         required: true
       - in: query
-        name: iso_cc
+        name: isoCc
         schema:
           type: integer
       - in: query
@@ -3033,14 +3033,14 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
         schema:
           type: integer
       - in: query
-        name: phone_code
+        name: phoneCode
         schema:
           type: integer
       - name: search
@@ -3104,7 +3104,7 @@ paths:
       operationId: api_v1_country_retrieve
       parameters:
       - in: path
-        name: alpha_2
+        name: alpha2
         schema:
           type: string
         description: A unique value identifying this country.
@@ -3127,7 +3127,7 @@ paths:
       operationId: api_v1_country_update
       parameters:
       - in: path
-        name: alpha_2
+        name: alpha2
         schema:
           type: string
         description: A unique value identifying this country.
@@ -3162,7 +3162,7 @@ paths:
       operationId: api_v1_country_partial_update
       parameters:
       - in: path
-        name: alpha_2
+        name: alpha2
         schema:
           type: string
         description: A unique value identifying this country.
@@ -3196,7 +3196,7 @@ paths:
       operationId: api_v1_country_destroy
       parameters:
       - in: path
-        name: alpha_2
+        name: alpha2
         schema:
           type: string
         description: A unique value identifying this country.
@@ -3216,7 +3216,7 @@ paths:
       operationId: api_v1_country_formatted_retrieve
       parameters:
       - in: path
-        name: alpha_2
+        name: alpha2
         schema:
           type: string
         description: A unique value identifying this country.
@@ -3246,7 +3246,7 @@ paths:
       operationId: api_v1_country_formatted_update
       parameters:
       - in: path
-        name: alpha_2
+        name: alpha2
         schema:
           type: string
         description: A unique value identifying this country.
@@ -3288,7 +3288,7 @@ paths:
       operationId: api_v1_country_formatted_partial_update
       parameters:
       - in: path
-        name: alpha_2
+        name: alpha2
         schema:
           type: string
         description: A unique value identifying this country.
@@ -3329,7 +3329,7 @@ paths:
       operationId: api_v1_country_formatted_destroy
       parameters:
       - in: path
-        name: alpha_2
+        name: alpha2
         schema:
           type: string
         description: A unique value identifying this country.
@@ -3367,7 +3367,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -3393,13 +3393,8 @@ paths:
           * `Paid and sent` - PAID_AND_SENT
           * `Canceled` - CANCELED
           * `Pending` - PENDING
-
-          * `Sent` - SENT
-          * `Paid and sent` - PAID_AND_SENT
-          * `Canceled` - CANCELED
-          * `Pending` - PENDING
       - in: query
-        name: user_id
+        name: userId
         schema:
           type: integer
           nullable: true
@@ -3566,7 +3561,7 @@ paths:
         schema:
           type: number
       - in: query
-        name: free_for_order_amount
+        name: freeForOrderAmount
         schema:
           type: number
       - in: query
@@ -3583,11 +3578,6 @@ paths:
           * `Pay On Delivery` - PAY_ON_DELIVERY
           * `Pay On Store` - PAY_ON_STORE
           * `PayPal` - PAY_PAL
-
-          * `Credit Card` - CREDIT_CARD
-          * `Pay On Delivery` - PAY_ON_DELIVERY
-          * `Pay On Store` - PAY_ON_STORE
-          * `PayPal` - PAY_PAL
       - name: ordering
         required: false
         in: query
@@ -3600,7 +3590,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -3777,11 +3767,11 @@ paths:
         schema:
           type: integer
       - in: query
-        name: max_final_price
+        name: maxFinalPrice
         schema:
           type: number
       - in: query
-        name: min_final_price
+        name: minFinalPrice
         schema:
           type: number
       - name: offset
@@ -3866,11 +3856,11 @@ paths:
         schema:
           type: integer
       - in: query
-        name: max_final_price
+        name: maxFinalPrice
         schema:
           type: number
       - in: query
-        name: min_final_price
+        name: minFinalPrice
         schema:
           type: number
       - name: offset
@@ -4286,7 +4276,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -4371,7 +4361,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -4697,14 +4687,14 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
         schema:
           type: integer
       - in: query
-        name: product_id
+        name: productId
         schema:
           type: integer
       - name: search
@@ -4714,7 +4704,7 @@ paths:
         schema:
           type: string
       - in: query
-        name: user_id
+        name: userId
         schema:
           type: integer
       tags:
@@ -4786,14 +4776,14 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
         schema:
           type: integer
       - in: query
-        name: product_id
+        name: productId
         schema:
           type: integer
       - name: search
@@ -4803,7 +4793,7 @@ paths:
         schema:
           type: string
       - in: query
-        name: user_id
+        name: userId
         schema:
           type: integer
       tags:
@@ -5109,7 +5099,7 @@ paths:
         schema:
           type: integer
       - in: query
-        name: is_main
+        name: isMain
         schema:
           type: boolean
       - name: limit
@@ -5198,7 +5188,7 @@ paths:
         schema:
           type: integer
       - in: query
-        name: is_main
+        name: isMain
         schema:
           type: boolean
       - name: limit
@@ -5543,14 +5533,14 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
         schema:
           type: integer
       - in: query
-        name: product_id
+        name: productId
         schema:
           type: integer
       - name: search
@@ -5560,7 +5550,7 @@ paths:
         schema:
           type: string
       - in: query
-        name: user_id
+        name: userId
         schema:
           type: integer
       tags:
@@ -5631,14 +5621,14 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
         schema:
           type: integer
       - in: query
-        name: product_id
+        name: productId
         schema:
           type: integer
       - name: search
@@ -5648,7 +5638,7 @@ paths:
         schema:
           type: string
       - in: query
-        name: user_id
+        name: userId
         schema:
           type: integer
       tags:
@@ -5938,6 +5928,72 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/product/review/user_had_reviewed/:
+    post:
+      operationId: api_v1_product_review_user_had_reviewed_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductReview'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductReview'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductReview'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductReview'
+          description: ''
+  /api/v1/product/review/user_had_reviewed{format}:
+    post:
+      operationId: api_v1_product_review_user_had_reviewed_formatted_create
+      parameters:
+      - in: path
+        name: format
+        schema:
+          type: string
+          enum:
+          - .json
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProductReview'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProductReview'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductReview'
+        required: true
+      security:
+      - basicAuth: []
+      - cookieAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductReview'
+          description: ''
   /api/v1/region/:
     get:
       operationId: api_v1_region_list
@@ -5947,7 +6003,7 @@ paths:
         schema:
           type: string
       - in: query
-        name: alpha_2
+        name: alpha2
         schema:
           type: string
       - in: query
@@ -5966,7 +6022,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -6029,7 +6085,7 @@ paths:
         schema:
           type: string
       - in: query
-        name: alpha_2
+        name: alpha2
         schema:
           type: string
       - in: path
@@ -6055,7 +6111,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -6434,7 +6490,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -6471,7 +6527,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -6575,7 +6631,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -6664,7 +6720,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -7002,7 +7058,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -7087,7 +7143,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -7419,11 +7475,6 @@ paths:
           * `info` - INFO
           * `error` - ERROR
           * `warning` - WARNING
-
-          * `success` - SUCCESS
-          * `info` - INFO
-          * `error` - ERROR
-          * `warning` - WARNING
       - name: ordering
         required: false
         in: query
@@ -7436,7 +7487,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -7527,11 +7578,6 @@ paths:
           * `info` - INFO
           * `error` - ERROR
           * `warning` - WARNING
-
-          * `success` - SUCCESS
-          * `info` - INFO
-          * `error` - ERROR
-          * `warning` - WARNING
       - name: ordering
         required: false
         in: query
@@ -7544,7 +7590,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -7878,7 +7924,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -7963,7 +8009,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -8344,25 +8390,16 @@ paths:
           * `5` - FOURTH_FLOOR
           * `6` - FIFTH_FLOOR
           * `7` - SIXTH_FLOOR_PLUS
-
-          * `0` - BASEMENT
-          * `1` - GROUND_FLOOR
-          * `2` - FIRST_FLOOR
-          * `3` - SECOND_FLOOR
-          * `4` - THIRD_FLOOR
-          * `5` - FOURTH_FLOOR
-          * `6` - FIFTH_FLOOR
-          * `7` - SIXTH_FLOOR_PLUS
       - in: query
         name: id
         schema:
           type: integer
       - in: query
-        name: is_main
+        name: isMain
         schema:
           type: boolean
       - in: query
-        name: location_type
+        name: locationType
         schema:
           type: integer
           nullable: true
@@ -8371,10 +8408,6 @@ paths:
           - 1
           - 2
         description: |-
-          * `0` - HOME
-          * `1` - OFFICE
-          * `2` - OTHER
-
           * `0` - HOME
           * `1` - OFFICE
           * `2` - OTHER
@@ -8390,7 +8423,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -8489,15 +8522,6 @@ paths:
           * `5` - FOURTH_FLOOR
           * `6` - FIFTH_FLOOR
           * `7` - SIXTH_FLOOR_PLUS
-
-          * `0` - BASEMENT
-          * `1` - GROUND_FLOOR
-          * `2` - FIRST_FLOOR
-          * `3` - SECOND_FLOOR
-          * `4` - THIRD_FLOOR
-          * `5` - FOURTH_FLOOR
-          * `6` - FIFTH_FLOOR
-          * `7` - SIXTH_FLOOR_PLUS
       - in: path
         name: format
         schema:
@@ -8510,11 +8534,11 @@ paths:
         schema:
           type: integer
       - in: query
-        name: is_main
+        name: isMain
         schema:
           type: boolean
       - in: query
-        name: location_type
+        name: locationType
         schema:
           type: integer
           nullable: true
@@ -8523,10 +8547,6 @@ paths:
           - 1
           - 2
         description: |-
-          * `0` - HOME
-          * `1` - OFFICE
-          * `2` - OTHER
-
           * `0` - HOME
           * `1` - OFFICE
           * `2` - OTHER
@@ -8542,7 +8562,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -8945,7 +8965,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
@@ -9030,7 +9050,7 @@ paths:
         description: A page number within the paginated result set.
         schema:
           type: integer
-      - name: page_size
+      - name: pageSize
         required: false
         in: query
         description: Number of results to return per page.
