@@ -1,7 +1,7 @@
 import { FetchError } from 'ofetch'
 import { Account, AccountPutRequest, ZodAccount } from '~/zod/user/account'
 import { Favourite, FavouriteCreateRequest } from '~/zod/product/favourite'
-import { Review, ReviewCreateRequest, ReviewPutRequest } from '~/zod/product/review'
+import { Review } from '~/zod/product/review'
 import { Order } from '~/zod/order/order'
 import { parseDataAs } from '~/zod/parser'
 import { Address } from '~/zod/user/address'
@@ -167,62 +167,6 @@ export const useUserStore = defineStore({
 				this.pending.favourites = pending.value
 			} catch (error) {
 				this.error.favourites = error as FetchError
-			}
-		},
-		async addReview(body: ReviewCreateRequest) {
-			try {
-				const {
-					data: review,
-					error,
-					pending
-				} = await useFetch(`/api/product-reviews`, {
-					method: 'post',
-					body
-				})
-				if (review.value) {
-					this.reviews?.push(review.value)
-				}
-				this.error.reviews = error.value
-				this.pending.reviews = pending.value
-			} catch (error) {
-				this.error.reviews = error as FetchError
-			}
-		},
-		async updateReview(id: number, body: ReviewPutRequest) {
-			try {
-				const {
-					data: review,
-					error,
-					pending
-				} = await useFetch(`/api/product-reviews/${id}`, {
-					method: 'put',
-					body
-				})
-				if (review.value) {
-					this.reviews =
-						this.reviews?.map((review) => {
-							if (review.id === id) {
-								return review
-							}
-							return review
-						}) || null
-				}
-				this.error.reviews = error.value
-				this.pending.reviews = pending.value
-			} catch (error) {
-				this.error.reviews = error as FetchError
-			}
-		},
-		async removeReview(id: number) {
-			try {
-				const { error, pending } = await useFetch(`/api/product-reviews/${id}`, {
-					method: 'delete'
-				})
-				this.reviews = this.reviews?.filter((review) => review.id !== id) || null
-				this.error.reviews = error.value
-				this.pending.reviews = pending.value
-			} catch (error) {
-				this.error.reviews = error as FetchError
 			}
 		}
 	}

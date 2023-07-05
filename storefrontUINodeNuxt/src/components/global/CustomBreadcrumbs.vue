@@ -2,7 +2,7 @@
 defineSlots<{
 	breadcrumb(props: {
 		to: string | Record<string, unknown>
-		title: string
+		title: unknown
 		last: boolean
 		first: boolean
 	}): any

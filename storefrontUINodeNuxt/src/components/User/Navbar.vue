@@ -33,7 +33,7 @@ const menus = computed((): IMenuItem[] => [
 	{
 		type: 'external-link',
 		text: t('pages.accounts.security.title'),
-		href: `${config.public.djangoUrl}/accounts/email`,
+		href: `${config.public.djangoUrl}/accounts/email/`,
 		icon: userShield,
 		cssClass:
 			'text-gray-700 dark:text-gray-200 bg-gray-200 border-gray-200 hover:bg-gray-300 dark:border-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700'
