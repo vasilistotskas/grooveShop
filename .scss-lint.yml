@@ -1,5 +1,0 @@
-exclude: './src/frontend/node_modules/**'
-
-linters:
-  BorderZero:
-    enabled: false
